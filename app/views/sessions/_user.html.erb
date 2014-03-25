@@ -1,0 +1,22 @@
+<%
+form.init do |f|
+  f.caption = 'Please login'	
+  f.action_on_submit = submit_login_path	
+  f.set_fields do |filtr_name| 
+  [
+  	[label(filtr_name, "login", "Login"),
+  	 text_field(filtr_name, "login", :value => session[:current_user]["user_name"] )
+  	],
+  	[label(filtr_name, "password", "Password"),
+  	 text_field(filtr_name, "password", :value => nil )
+  	],
+  	[label(filtr_name, ""),
+  	 submit_tag("log in")
+  	],
+  	[label(filtr_name, ""),
+  	 link_to( 'Register', new_user_path)
+  	],
+  ] 
+  end
+end
+%>

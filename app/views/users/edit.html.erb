@@ -1,0 +1,9 @@
+<h1>Editing user</h1>
+
+<%= render :partial => 'form', :layout => 'application/layouts/model_form', :locals => {:item => controller.user, 
+	:html => {:turbolinks => true, :method => 'get'} } %>
+
+<%= link_to 'Show', controller.user %> |
+<%= link_to 'Back', root_path %>
+
+

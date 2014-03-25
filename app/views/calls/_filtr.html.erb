@@ -1,0 +1,49 @@
+<%
+form.init do |f|
+#  f.caption = "Filtr fields"	
+  f.set_fields do |filtr_name|
+    s = session[:filtr][filtr_name]
+    query = Call.query_hash_from_filtr_with_all_keys_excluded(session[:filtr][filtr_name])
+  [
+  	["", collection_select(filtr_name, "base_service_id", Category.where(:id => query["base_service_id"].pluck(:base_service_id).uniq ), :id, :name, 
+  	   {:include_blank => "base service", :selected => s["base_service_id"] }, {:filtr_name =>  filtr_name, :action_name => calls_path} )
+  	],
+  	["", collection_select(filtr_name, "base_subservice_id", Category.where(:id => query["base_subservice_id"].pluck(:base_subservice_id).uniq ), :id, :name, 
+  	   {:include_blank => "base subservice", :selected => s["base_subservice_id"] }, {:filtr_name =>  filtr_name, :action_name => calls_path} )
+  	],
+  	["", collection_select(filtr_name, "user_id", User.where(:id => query["user_id"].pluck(:user_id).uniq ), :id, :name, 
+  	   {:include_blank => "user", :selected => s["user_id"] }, {:filtr_name =>  filtr_name, :action_name => calls_path} )
+  	],
+  	["", select(filtr_name, "own_phone[number]", query["own_phone[number]"].collect { |q| q.own_phone['number'] }.uniq , 
+  	   {:include_blank => "own_phone[number]", :selected => (s["own_phone"]["number"] if s["own_phone"] )}, {:filtr_name =>  filtr_name, :action_name => calls_path} )
+  	],
+  	["", collection_select(filtr_name, "own_phone[operator_id]", Category.where(:id => query["own_phone[operator_id]"].collect { |q| q.own_phone['operator_id'] }.uniq ) , :id, :name, 
+  	   {:include_blank => "own_phone[operator_id]", :selected => (s["own_phone"]["operator_id"] if s["own_phone"] )}, {:filtr_name =>  filtr_name, :action_name => calls_path} )
+  	],
+  	["", collection_select(filtr_name, "own_phone[region_id]", Category.where(:id => query["own_phone[region_id]"].collect { |q| q.own_phone['region_id'] }.uniq ) , :id, :name, 
+  	   {:include_blank => "own_phone[region_id]", :selected => (s["own_phone"]["region_id"] if s["own_phone"] )}, {:filtr_name =>  filtr_name, :action_name => calls_path} )
+  	],
+  	["", select(filtr_name, "partner_phone[number]", query["partner_phone[number]"].collect { |q| q.partner_phone['number'] }.uniq , 
+  	   {:include_blank => "partner_phone[number]", :selected => (s["partner_phone"]["number"] if s["partner_phone"] )}, {:filtr_name =>  filtr_name, :action_name => calls_path} )
+  	],
+  	["", collection_select(filtr_name, "partner_phone[operator_id]", Category.where(:id => query["partner_phone[operator_id]"].collect { |q| q.partner_phone['operator_id'] }.uniq ) , :id, :name, 
+  	   {:include_blank => "partner_phone[operator_id]", :selected => (s["partner_phone"]["operator_id"] if s["partner_phone"] )}, {:filtr_name =>  filtr_name, :action_name => calls_path} )
+  	],
+  	["", collection_select(filtr_name, "partner_phone[region_id]", Category.where(:id => query["partner_phone[region_id]"].collect { |q| q.partner_phone['region_id'] }.uniq ) , :id, :name, 
+  	   {:include_blank => "partner_phone[region_id]", :selected => (s["partner_phone"]["region_id"] if s["partner_phone"] )}, {:filtr_name =>  filtr_name, :action_name => calls_path} )
+  	],   
+  	["", collection_select(filtr_name, "connect[operator_id]", Category.where(:id => query["connect[operator_id]"].collect { |q| q.connect['operator_id'] }.uniq ) , :id, :name, 
+  	   {:include_blank => "connect[operator_id]", :selected => (s["connect"]["operator_id"] if s["connect"] )}, {:filtr_name =>  filtr_name, :action_name => calls_path} )
+  	],
+  	["", collection_select(filtr_name, "connect[region_id]", Category.where(:id => query["connect[region_id]"].collect { |q| q.connect['region_id'] }.uniq ) , :id, :name, 
+  	   {:include_blank => "connect[region_id]", :selected => (s["connect"]["region_id"] if s["connect"] )}, {:filtr_name =>  filtr_name, :action_name => calls_path} )
+  	]   
+  ] 
+  end
+end
+%>
+
+      :description => {:time => nil,
+                       :duration => nil ,
+                       :volume => nil,
+                       :volume_unit_id => nil  

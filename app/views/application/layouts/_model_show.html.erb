@@ -1,0 +1,14 @@
+<%
+style_table = [
+	[/label/, {:class => "control-label span6", :style => "strong"}],
+]
+%>
+<h3><%= content_from :model_caption %></h3>
+
+<p id="notice"><%= notice %></p>
+
+<% content_from(:fields, item) do |label, field| %>
+      <p class="span1"><strong><%= add_css(label, style_table ) %>:</strong></p>
+      <p><%= add_css(field, style_table) %></p>
+<% end %>
+

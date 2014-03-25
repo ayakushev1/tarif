@@ -1,0 +1,35 @@
+<%
+style_table = [
+	[/label/, {:class => "control-label span2"}],
+	[/input.*?type.*?text/, {:class => "controls"}],
+	[/input.*?type.*?submit/, {:class => "btn"}]
+]
+
+form_html_options = {:class => "form-inline", :turbolinks => true}
+form_html_options = form_html_options.merge(html) if defined?(html)
+
+%>
+
+<%= form_for(item, :remote => true, :authenticity_token => true, :html => form_html_options) do |form| %>
+  <% if item.errors.any? %>
+	<div id="error_explanation">
+	  <h2><%= pluralize(item.errors.count, "error") %> prohibited this item from being saved:</h2>
+	
+	  <ul>
+	    <% item.errors.full_messages.each do |msg| %>
+          <li><%= msg %></li>
+	    <% end %>
+	  </ul>
+	</div>
+  <% end %>
+
+  <% content_from(:fields, form) do |label, field| %>
+    <div class="control-group">
+      <%= add_css(label, style_table ) %>
+      <%= add_css(field, style_table) %>
+    </div>
+  <% end %>
+
+<% end %>
+
+

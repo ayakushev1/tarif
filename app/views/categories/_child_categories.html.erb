@@ -1,0 +1,16 @@
+<%
+table.init do |t|
+  t.caption = 'Child categories'
+  t.heads = ['Id', 'Name', 'Level', 'Type', 'Parent']
+  t.base_name = 'child_category'
+  t.set_fields do |category| 
+  [
+    category.id, 
+    category.name, 
+    (category.level.name if category.level ), 
+    (category.type.name if category.type ), 
+    (category.parent.name if category.parent), 
+  ] 
+  end
+end
+%>

@@ -1,0 +1,20 @@
+<div class="tabbable">
+  <ul class="nav nav-tabs">
+  	<% i = 0%>
+  	<% name ||= 'tabs' %>
+  	<% active ||= 0 %>
+  	<% content_from :tabs do |caption, body| %>
+      <li class="<%= (i==active) ? 'active' : '' %>"><a href="#<%=name + "_" + i.to_s%>" data-toggle="tab"><%= caption%></a></li>
+      <% i += 1 %>
+    <% end %>
+  </ul>
+  <div class="tab-content">
+  	<% i = 0 %>
+  	<% content_from :tabs do |caption, body| %>
+      <div class="tab-pane <%= (i==active) ? 'active' : '' %>" id="<%= name + "_" + i.to_s %>"><%= body %></div>
+  	<% i += 1 %>
+    <% end %>
+
+  </div>
+</div>
+

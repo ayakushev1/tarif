@@ -1,0 +1,21 @@
+<% i = 0 %>
+<% active ||= 0 %>
+<% name ||= 'accord' %>
+<div class="accordion" id="<%= name %>">
+  <% content_from :accordion do |caption, body| %>
+    <div class="accordion-group">
+      <div class="accordion-heading">
+        <a class="accordion-toggle" data-toggle="collapse" data-parent="#<%= name %>" href="#<%= name + "_" + i.to_s %>">
+          <%= caption %>
+        </a>
+      </div>
+      <div id="<%= name + "_" + i.to_s %>" class="accordion-body collapse <%= (i==active) ? 'in' : '' %>">
+        <div class="accordion-inner">
+          <%= body %>
+          <%= (i==active) ? 'in' : '' %>
+        </div>
+      </div>
+    </div>
+    <% i += 1 %>
+  <% end %>
+</div>

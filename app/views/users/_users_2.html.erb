@@ -1,0 +1,17 @@
+<%
+table.init do |t|
+  t[:caption1] = 'Listing users 2'
+  t[:caption] = t[:caption1]
+  t.heads = ['Name', '', '', '']
+  t.base_name = 'user_2'
+  t.set_fields do |user| 
+  [
+    user.name, 
+    link_to( 'Show', user), 
+    link_to( 'Edit', edit_user_path(user)), 
+    link_to( 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } )
+  ] 
+  end
+  
+end
+%>

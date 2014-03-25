@@ -1,0 +1,4 @@
+<%= render :partial => 'user', :layout => 'application/layouts/model_show', :locals => {:item => controller.user} %>
+
+<%= link_to 'Edit', edit_user_path(controller.user) %> |
+<%= link_to 'Back', root_path %>
