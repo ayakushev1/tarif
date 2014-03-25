@@ -64,5 +64,6 @@ describe Dumy do
     Dumy.methods.include?(:query_hash_from_filtr_with_all_keys_excluded).must_be :==, true
     data = {@valid_else_key=>@valid_else_value, @valid_json_key=>@valid_json_value}
     Dumy.query_hash_from_filtr_with_all_keys_excluded(data).keys.must_be :==, ["user_id", "own_phone[number]", "own_phone[operator_id]"] 
+    Dumy.query_hash_from_filtr_with_all_keys_excluded(data).values[0].kind_of?(ActiveRecord::Relation).must_be :==, true  
   end
 end
