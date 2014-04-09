@@ -1,0 +1,25 @@
+# == Schema Information
+#
+# Table name: users
+#
+#  id              :integer          not null, primary key
+#  name            :string(255)
+#  password_digest :string(255)
+#  created_at      :datetime
+#  updated_at      :datetime
+#
+
+guest:
+  id: 0
+  name: guest
+  
+admin:
+  id: 1
+  name: 'admin'
+  password_digest: 111
+
+<% (2..21).each do |n| %>
+user_<%= n %>:
+  id: <%= n %>
+  name: <%= "user_#{n}" %>
+<% end %>
