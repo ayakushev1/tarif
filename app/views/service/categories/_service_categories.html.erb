@@ -1,0 +1,18 @@
+<%
+table.init do |t|
+  t.caption = 'Service categories'
+  t.heads = ['Id', 'Name', 'Level', 'Type', 'Parent', 'Path', 'Parents']
+  t.set_fields do |service_category| 
+  [
+    service_category.id, 
+    service_category.name, 
+    service_category.level, 
+    (service_category.type.name if service_category.type ), 
+    (service_category.parent.name if service_category.parent), 
+    service_category.path, 
+    service_category.parents.collect{|p| p.name}.join(', '), 
+    link_to( 'criteria', service_category_criteria_path(service_category) ), 
+  ] 
+  end
+end
+%>

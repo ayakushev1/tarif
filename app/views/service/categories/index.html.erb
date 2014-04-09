@@ -1,0 +1,8 @@
+<%= render :partial => 'service_category_filtr', :layout => 'application/layouts/filtr_form', :locals => {:form_item => controller.service_category_filtr}%>
+<br />
+<%= render :partial => 'service_categories', :layout => 'application/layouts/model_table', :locals => {:table => controller.service_categories}%>
+<br />
+<%= render :partial => 'child_service_categories', :layout => 'application/layouts/model_table', :locals => {:table => controller.child_service_categories}%>
+<br />
+<%= render :partial => 'service/criteria/service_criteria', :layout => 'application/layouts/model_table', :locals => {:table => controller.service_criteria}%>
+

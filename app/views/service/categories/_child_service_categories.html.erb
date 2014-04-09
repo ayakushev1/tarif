@@ -1,0 +1,18 @@
+<%
+table.init do |t|
+  t.caption = 'Child service categories'
+  t.heads = ['Id', 'Name', 'Level', 'Type', 'Parent', 'Path', 'Parents']
+  t.base_name = 'child_service_category'
+  t.set_fields do |child_service_category| 
+  [
+    child_service_category.id, 
+    child_service_category.name, 
+    child_service_category.level, 
+    (child_service_category.type.name if child_service_category.type ), 
+    (child_service_category.parent.name if child_service_category.parent), 
+    child_service_category.path,
+    child_service_category.parents.collect{|p| p.name}.join(', '), 
+  ] 
+  end
+end
+%>

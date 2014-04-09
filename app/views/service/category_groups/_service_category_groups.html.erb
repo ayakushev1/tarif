@@ -1,0 +1,15 @@
+<%
+table.init do |t|
+  t.caption = 'Service category groups'
+  t.heads = ['Id', 'Name', 'Operator', 'Tarif class' 'Group criteria']
+  t.set_fields do |service_category_group| 
+  [
+    service_category_group.id, 
+    service_category_group.name, 
+    (service_category_group.operator.name if service_category_group.operator ), 
+    (service_category_group.tarif_class.name if service_category_group.tarif_class ), 
+    service_category_group.criteria, 
+  ] 
+  end
+end
+%>

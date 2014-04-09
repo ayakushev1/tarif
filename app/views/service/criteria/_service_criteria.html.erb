@@ -1,0 +1,17 @@
+<%
+table.init do |t|
+  t.caption = 'Service criteria'
+  t.heads = ['Id', 'Service category', 'Criteria param', 'Comparison operator', 'Value Param', 'Value choose option', 'Value']
+  t.set_fields do |service_criteria| 
+  [
+    service_criteria.id, 
+    (service_criteria.service_category.name if service_criteria.service_category ), 
+    (service_criteria.criteria_param.name if service_criteria.criteria_param), 
+    (service_criteria.comparison_operator.name if service_criteria.comparison_operator), 
+    (service_criteria.value_param.name if service_criteria.value_param), 
+    (service_criteria.value_choose_option.name if service_criteria.value_choose_option), 
+    service_criteria.value, 
+  ] 
+  end
+end
+%>
