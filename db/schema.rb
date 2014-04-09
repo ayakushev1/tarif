@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140322150649) do
+ActiveRecord::Schema.define(version: 20140408211251) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -52,6 +52,157 @@ ActiveRecord::Schema.define(version: 20140322150649) do
   create_table "category_types", force: true do |t|
     t.string "name"
   end
+
+  create_table "parameters", force: true do |t|
+    t.string  "name"
+    t.string  "description"
+    t.string  "nick_name"
+    t.integer "source_type_id"
+    t.json    "source"
+    t.json    "display"
+    t.json    "unit"
+  end
+
+  add_index "parameters", ["source_type_id"], name: "index_parameters_on_source_type_id", using: :btree
+
+  create_table "price_formulas", force: true do |t|
+    t.string   "name"
+    t.integer  "price_list_id"
+    t.integer  "calculation_order"
+    t.integer  "standard_formula_id"
+    t.json     "formula"
+    t.decimal  "price"
+    t.integer  "price_unit_id"
+    t.integer  "volume_id"
+    t.integer  "volume_unit_id"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "price_formulas", ["price_list_id"], name: "index_price_formulas_on_price_list_id", using: :btree
+  add_index "price_formulas", ["standard_formula_id"], name: "index_price_formulas_on_standard_formula_id", using: :btree
+
+  create_table "price_lists", force: true do |t|
+    t.string   "name"
+    t.integer  "tarif_list_id_id"
+    t.integer  "service_category_group_id_id"
+    t.integer  "service_category_tarif_class_id_id"
+    t.boolean  "is_active"
+    t.json     "features"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "price_lists", ["service_category_group_id_id"], name: "index_price_lists_on_service_category_group_id_id", using: :btree
+  add_index "price_lists", ["service_category_tarif_class_id_id"], name: "index_price_lists_on_service_category_tarif_class_id_id", using: :btree
+  add_index "price_lists", ["tarif_list_id_id"], name: "index_price_lists_on_tarif_list_id_id", using: :btree
+
+  create_table "price_standard_formulas", force: true do |t|
+    t.string  "name"
+    t.json    "formula"
+    t.integer "price_unit_id"
+    t.integer "volume_id"
+    t.integer "volume_unit_id"
+    t.text    "description"
+  end
+
+  create_table "service_categories", force: true do |t|
+    t.string  "name"
+    t.integer "type_id"
+    t.integer "parent_id"
+    t.integer "level"
+    t.integer "path",      default: [], array: true
+  end
+
+  add_index "service_categories", ["parent_id"], name: "index_service_categories_on_parent_id", using: :btree
+  add_index "service_categories", ["path"], name: "index_service_categories_on_path", using: :gin
+  add_index "service_categories", ["type_id"], name: "index_service_categories_on_type_id", using: :btree
+
+  create_table "service_category_groups", force: true do |t|
+    t.string   "name"
+    t.integer  "operator_id"
+    t.integer  "tarif_class_id"
+    t.json     "criteria"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "service_category_groups", ["operator_id"], name: "index_service_category_groups_on_operator_id", using: :btree
+  add_index "service_category_groups", ["tarif_class_id"], name: "index_service_category_groups_on_tarif_class_id", using: :btree
+
+  create_table "service_category_tarif_classes", force: true do |t|
+    t.integer  "tarif_class_id"
+    t.integer  "service_category_rouming_id"
+    t.integer  "service_category_geo_id"
+    t.integer  "service_category_partner_type_id"
+    t.integer  "service_category_calls_id"
+    t.integer  "service_category_one_time_id"
+    t.integer  "service_category_periodic_id"
+    t.integer  "as_standard_category_group_id"
+    t.integer  "as_tarif_class_service_category_id"
+    t.integer  "tarif_class_service_categories",     default: [], array: true
+    t.integer  "standard_category_groups",           default: [], array: true
+    t.boolean  "is_active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "service_category_tarif_classes", ["as_standard_category_group_id"], name: "service_category_tarif_classes_as_standard_category_group_id", using: :btree
+  add_index "service_category_tarif_classes", ["as_tarif_class_service_category_id"], name: "service_category_tarif_classes_as_tarif_class_service_category", using: :btree
+  add_index "service_category_tarif_classes", ["service_category_calls_id"], name: "service_category_tarif_classes_service_category_calls_id", using: :btree
+  add_index "service_category_tarif_classes", ["service_category_geo_id"], name: "service_category_tarif_classes_service_category_geo_id", using: :btree
+  add_index "service_category_tarif_classes", ["service_category_one_time_id"], name: "service_category_tarif_classes_service_category_one_time_id", using: :btree
+  add_index "service_category_tarif_classes", ["service_category_partner_type_id"], name: "service_category_tarif_classes_service_category_partner_type_id", using: :btree
+  add_index "service_category_tarif_classes", ["service_category_periodic_id"], name: "service_category_tarif_classes_service_category_periodic_id", using: :btree
+  add_index "service_category_tarif_classes", ["service_category_rouming_id"], name: "service_category_tarif_classes_service_category_rouming_id", using: :btree
+  add_index "service_category_tarif_classes", ["standard_category_groups"], name: "service_category_tarif_classes_standard_category_groups", using: :gin
+  add_index "service_category_tarif_classes", ["tarif_class_id"], name: "service_category_tarif_classes_tarif_class_id", using: :btree
+  add_index "service_category_tarif_classes", ["tarif_class_service_categories"], name: "service_category_tarif_classes_tarif_class_service_categories", using: :gin
+
+  create_table "service_criteria", force: true do |t|
+    t.integer "service_category_id"
+    t.integer "criteria_param_id"
+    t.integer "comparison_operator_id"
+    t.integer "value_param_id"
+    t.integer "value_choose_option_id"
+    t.json    "value"
+  end
+
+  add_index "service_criteria", ["comparison_operator_id"], name: "index_service_criteria_on_comparison_operator_id", using: :btree
+  add_index "service_criteria", ["criteria_param_id"], name: "index_service_criteria_on_criteria_param_id", using: :btree
+  add_index "service_criteria", ["service_category_id"], name: "index_service_criteria_on_service_category_id", using: :btree
+  add_index "service_criteria", ["value_choose_option_id"], name: "index_service_criteria_on_value_choose_option_id", using: :btree
+  add_index "service_criteria", ["value_param_id"], name: "index_service_criteria_on_value_param_id", using: :btree
+
+  create_table "tarif_classes", force: true do |t|
+    t.string   "name"
+    t.integer  "operator_id"
+    t.integer  "privacy_id"
+    t.integer  "standard_service_id"
+    t.json     "features"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tarif_classes", ["operator_id"], name: "index_tarif_classes_on_operator_id", using: :btree
+  add_index "tarif_classes", ["privacy_id"], name: "index_tarif_classes_on_privacy_id", using: :btree
+  add_index "tarif_classes", ["standard_service_id"], name: "index_tarif_classes_on_standard_service_id", using: :btree
+
+  create_table "tarif_lists", force: true do |t|
+    t.string   "name"
+    t.integer  "tarif_class_id"
+    t.integer  "region_id"
+    t.json     "features"
+    t.text     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "tarif_lists", ["region_id"], name: "index_tarif_lists_on_region_id", using: :btree
+  add_index "tarif_lists", ["tarif_class_id"], name: "index_tarif_lists_on_tarif_class_id", using: :btree
 
   create_table "tests", force: true do |t|
     t.string  "name"

@@ -1,12 +1,13 @@
 class Tableable < Presenter
   attr_accessor :base_name, :caption, :heads
   attr_writer :current_raw_class
-  attr_reader :pagination_param_name, :pagination_name, :current_id_name
+  attr_reader :pagination_param_name, :pagination_name, :current_id_name, :table_name
   
   def initialize(controller, model)
     super(controller)
     @model = model
-    @base_name = model.new.class.name.downcase
+    @base_name = model.table_name.singularize
+    @table_name = "#{@base_name}_table"
     self.extend TableHelper
   end
   
@@ -36,7 +37,7 @@ class Tableable < Presenter
   end
   
   def raw_details(raw)
-    raw_name="#{c.controller_name}_#{c.action_name}_raw"
+    raw_name="#{base_name}_raw"
     ["current_id_name=#{current_id_name}",
      "action_name=#{c.request.path_info}",
      "raw_name=#{raw_name}",

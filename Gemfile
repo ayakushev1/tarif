@@ -66,7 +66,12 @@ end
 
 group :test do
   gem 'minitest-spec-rails'
+  gem 'database_cleaner'
+#  gem 'connection_pool'
 #  gem 'minitest-rails-capybara'
+  gem 'capybara_minitest_spec'
+  gem "capybara-webkit"  
+  gem 'selenium-webdriver'
 #  gem 'minitest-colorize'
 #  gem 'minitest-focus'
 end

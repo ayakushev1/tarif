@@ -1,14 +1,23 @@
 <%
 style_table = [
-	[/label/, {:class => "control-label span6", :style => "strong"}],
-]
+   ]
+
+form_html_options = {:class => "raw"}
+form_html_options = form_html_options.merge(html) if defined?(html)
+form_html_options_1 = form_html_options.collect { |key, value| "#{key}='#{value}'" }.join(" ")
+
+
 %>
-<h3><%= content_from :model_caption %></h3>
+<div id=<%= form_item.form_name %>_show <%= form_html_options_1.to_s.html_safe %> >
+	<legend><%= form_item.caption %></legend>
 
-<p id="notice"><%= notice %></p>
-
-<% content_from(:fields, item) do |label, field| %>
-      <p class="span1"><strong><%= add_css(label, style_table ) %>:</strong></p>
-      <p><%= add_css(field, style_table) %></p>
-<% end %>
+	<p id="notice" class="text-info text-alert"><%= notice %></p>
+	
+	<% form_item.fields(form_item.model) do |label, field| %>
+	  <div class="row">
+	      <p class="span3 text-right"><strong><%= add_css(label, style_table ) %>:</strong></p>
+	      <p class="span3 text-left"><%= add_css(field, style_table) %></p>
+	  </div>
+    <% end if form_item.model %>
+</div>
 

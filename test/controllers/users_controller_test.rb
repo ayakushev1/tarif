@@ -1,20 +1,67 @@
-require 'test_helper'
+require 'test_with_capibara_helper'
 
 describe UsersController do
-  it 'access method to model must return object of class of ActiveRecord' do
-    get :show, {:id => 1}
-    @controller.user.must_equal User.find(1)
-  end  
-
-  it 'access method to model collection must return collection of class of ActiveRecord' do
-    get :index
-    @controller.users.must_be_kind_of User.paginate(page: 1, :per_page => 10).class
-  end  
-
-  it 'create method must redirect to users/show' do
-    assert_difference 'User.count' do
-      post(:create, user: {:name => 'test 2', :password => '111', :password_confirmation => '111'})
+  describe 'new action' do
+    it 'must verify description of new view' do
+      SitePages::Users::NewPage.new.verify.must_be :==, true
     end
-    assert_redirected_to user_path(assigns(:model)), assigns(:model)
-  end  
+    
+    it 'must create new user if input correct' do
+      js do
+        assert_difference "User.count", 1 do
+          SitePages::Users::NewPage.new.tap do |u|
+            visit u.path
+            u.name.set('user_2222')
+            u.password.set('111')
+            u.password_confirmation.set('111')
+            u.create_user
+          end
+          assert_selector SitePages::Users::ShowPage.new.locator 
+        end
+      end
+
+    end
+      
+    it 'should not create new user with the same name' do
+#      js do
+        assert_difference "User.count", 0 do
+          SitePages::Users::NewPage.new.tap do |u|
+            visit u.path
+            u.name.set('user_111')
+            u.password.set('111')
+            u.password_confirmation.set('1111')
+            u.create_user
+          end
+          assert_no_selector SitePages::Users::ShowPage.new.locator 
+        end
+#      end
+    end
+    
+    it 'must go back if press on link Back' do
+      js do
+        SitePages::Users::NewPage.new.tap do |u|
+          visit u.path
+          u.back
+          assert_no_selector u.locator
+        end
+      end
+    end
+    
+    it 'must send ajax after updating form fields' do
+      js do
+        SitePages::Users::NewPage.new.tap do |u|
+          visit '/users/new?user_form[name]=user11'
+          u.name.value.must_be :==, 'user11'
+        end
+      end
+    end
+  end
+  
+  describe 'index action' do
+    it 'must choose correct user to edit' do
+      visit users_path
+      page.first("a[href*='/edit']").click
+      assert_selector('div[id=users_edit]')
+    end
+  end
 end

@@ -6,7 +6,7 @@ module Crudable
   
   included do
     add_access_methods
-    before_action :set_model, only: [:show, :edit, :update, :destroy]
+    before_action :set_model, only: [:new, :create, :show, :edit, :update, :destroy]
         
   end
   
@@ -17,8 +17,7 @@ module Crudable
       crudable_actions = (arr.empty? or arr.include?(:all) ) ? CRUDABLE_ACTIONS : arr
       
       delete_actions(CRUDABLE_ACTIONS - crudable_actions)
-    end
-   
+    end   
     
     def delete_actions(actions)
       existing_actions = self.action_methods.collect{ |a| a.to_sym}
@@ -26,30 +25,35 @@ module Crudable
       self.hide_action(actions_to_hide)
     end
     
+    def model_name
+      self.controller_path.gsub(/\//, "_").singularize.to_sym
+    end
+  
+    def form_model_name
+      "#{self.model_name}_form"
+    end
+  
+    def collection_name
+      collection_name = self.model_name.to_s.pluralize
+      collection_name = (collection_name == self.model_name ? collection_name + "s" : collection_name )
+    end
+  
+    def table_name
+      self.controller_path.gsub(/\//, "_").underscore.pluralize  
+    end                
+    
     def add_access_methods
-      collection_name = self.controller_name
-      model_name = self.controller_name.singularize.to_s
-
       self.send(:define_method, collection_name) do
-        Tableable.new(self, collection_name.singularize.capitalize.constantize)
+        Tableable.new(self, model_class)
       end
 
       self.send(:define_method, model_name) do
-        if self.request and self.params[:id]
-          model_name.capitalize.constantize.find(self.params[:id])
-        else
-          model_name.capitalize.constantize.new
-        end    
+        @model
       end
 
-      self.send(:define_method, :model_params) do
-        params.require(model_name.to_sym).permit!
+      self.send(:define_method, form_model_name.to_sym) do
+        @form_model
       end
-            
-      self.send(:define_method, :set_model) do
-        @model = model_name.capitalize.constantize.find(params[:id])
-      end
-            
 
     end
   end
@@ -61,18 +65,15 @@ module Crudable
     end
 
     def new
-#      super 
     end
 
     def create
-      @model = controller_name.singularize.to_s.capitalize.constantize.new(model_params)
       respond_to do |format|
         if @model.save
           format.html { redirect_to @model, notice: "#{self.controller_name.singularize.capitalize} was successfully created." }
-          format.json { render action: 'show', status: :created, location: @model }
+          format.js { redirect_to @model, notice: "#{self.controller_name.singularize.capitalize} was successfully created." }
         else
           format.html { render action: 'new' }
-          format.json { render json: @model.errors, status: :unprocessable_entity }
         end
       end
     end
@@ -82,11 +83,12 @@ module Crudable
     
     def update
       respond_to do |format|
-        if @model.update(model_params)
-          format.html { redirect_to @model, notice: "#{self.controller_name.singularize.capitalize} was successfully updated." }
+        if @model.save#update(model_params)
+          format.html { redirect_to @model, notice: "#{self.controller_name.singularize.capitalize} was successfully updated."}
+          format.js { redirect_to @model, notice: "#{self.controller_name.singularize.capitalize} was successfully updated." }
           format.json { render action: 'show', status: :created, location: @model }
         else
-          format.html { render action: 'edit' }
+          format.html { redirect_to action: 'edit' }
           format.json { render json: @model.errors, status: :unprocessable_entity }
         end
       end
@@ -95,11 +97,46 @@ module Crudable
     def destroy
       @model.destroy
       respond_to do |format|
-        format.html { redirect_to users_url }
+        format.html { redirect_to "/#{controller_name}" }
+        format.js { render_js(view_context.default_view_id_name, :index) }
         format.json { head :no_content }
       end
     end
   #end
 
+  def model_params
+    unless params[form_model_name].blank?
+      params.require(form_model_name).permit!
+    else
+      {}
+    end
+  end
+        
+  def set_model
+    @model = params[:id] ?  model_class.find(params[:id]) : model_class.new
+    @form_model = Formable.new(self, @model )    
+    params[form_model_name] = @form_model.session_model_params
+    @model.assign_attributes(model_params) 
+  end
 
+  def model_name
+    self.class.model_name
+  end
+
+  def form_model_name
+    self.class.form_model_name
+  end
+
+  def collection_name
+    self.class.collection_name
+  end
+
+  def table_name
+    self.class.table_name  
+  end             
+  
+  def model_class
+    controller_path.camelize.singularize.constantize
+  end   
+  
 end

@@ -3,6 +3,7 @@ class ApplicationController < ActionController::Base
   # For APIs, you may want to use :null_session instead.
 #  include Tableable_helper
 #  before_action :clean_session
+#  layout 'application'
   protect_from_forgery with: :exception
   before_action :set_current_session, :authorize
   attr_reader :current_user
@@ -43,15 +44,17 @@ class ApplicationController < ActionController::Base
 
   def default_render
     respond_to do |format|
-      format.js {render_js(view_context.view_id_name)}
+      format.js {render_js(view_context.default_view_id_name)}
       format.html 
     end
   end
 
   def render_js(id_of_page_to_substitute, template = action_name)
-    js_string = "\"#{view_context.escape_javascript render_to_string(template, :layout => nil)}\""
-    js_string = "$('##{id_of_page_to_substitute}').html( #{js_string});"          
-    render :inline => js_string    
+    view_context.tap do |v|
+      js_string = v.content_tag(:div, render_to_string(template), {:id => v.view_id_name})
+      js_string = "$('##{id_of_page_to_substitute}').html(\" #{v.escape_javascript js_string} \");"          
+      render :inline => js_string#, :layout => 'application'
+    end
   end
   
 end

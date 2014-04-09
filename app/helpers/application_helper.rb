@@ -27,7 +27,8 @@ module ApplicationHelper
   end
   
   def view_id_name(id_name = nil)
-    id = id_name || "#{controller_name}_#{action_name}"
+    full_controller_name = controller_path.gsub(/\//, "_")
+    id = id_name || "#{full_controller_name}_#{action_name}"
     if block_given?
       content_tag(:div, {:id => id} ) {yield}
     else
@@ -35,21 +36,26 @@ module ApplicationHelper
     end
   end
   
+  def default_view_id_name
+    "main_block_top_row_4"
+  end
+  
   def add_css(obj, style_table)
     result = obj
-    return result if obj.empty?
+    return result if obj.blank?
     style_table.each do |style|
-      if obj =~ style[0]
+      if result =~ style[0]
         style[1].each do |key, value|
-          if obj =~ /#{key.to_s}/
-            result = obj.sub(/(?<=#{key.to_s}\=\")(.*?)(?=\")/) { |match| "#{match} #{value}"}.html_safe
+          if result =~ /(?<=#{key.to_s}\=\")([.^>]*?)(?=\")/
+            result = result.sub(/(?<=#{key.to_s}\=\")([.^\]*?)(?=\")/) { |match| "#{match} #{value}"}.html_safe
           else
-            result = obj.split(" ").insert(1, " #{key.to_s}='#{value}'").join(" ").html_safe
+            result = result.split(" ").insert(1, " #{key.to_s}='#{value}'").join(" ").html_safe
           end
         end  
       end
     end
     result
   end
+    
 
 end

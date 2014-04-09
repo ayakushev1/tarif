@@ -3,6 +3,19 @@
 		<a class="brand " data-toggle="dropdown">Admin menu<span class="caret"></span></a>
 		<ul class="dropdown-menu">
 			<li class="dropdown-submenu">
+				<a>Tarifs</a>
+				<ul class="dropdown-menu">
+					<li><%= link_to 'Tarif lists', tarif_lists_path %></li>
+					<li><%= link_to 'Tarif classes', tarif_classes_path %></li>
+					<li><%= link_to 'Price lists', price_lists_path %></li>
+					<li><%= link_to 'Parameters', parameters_path %></li>
+					<li><%= link_to 'Service categories', service_categories_path %></li>
+					<li><%= link_to 'Service category groups', service_category_groups_path %></li>
+					<li><%= link_to 'Price formulas', price_formulas_path %></li>
+					<li><%= link_to 'Standard price formulas', price_standard_formulas_path %></li>
+				</ul>
+			</li>	
+			<li class="dropdown-submenu">
 				<a>Calls</a>
 				<ul class="dropdown-menu">
 					<li><%= link_to 'Set params for generating calls', calls_set_calls_generation_params_path %></li>

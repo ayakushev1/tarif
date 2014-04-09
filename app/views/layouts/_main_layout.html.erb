@@ -15,11 +15,11 @@
 		
 	</div>
 	<div id="third_row" class="container-fluid">
-		<div id="third_row_left_column" class="span2">
-		</div>
-		<div id="third_row_main_block" class="span10">
-			<div id="main_block_top_row_1" class="row-fluid">
+		<div id="third_row_left_column" class="span3">
 				<%= render '/application/menus/admin_menu'%>				
+		</div>
+		<div id="third_row_main_block" class="span12">
+			<div id="main_block_top_row_1" class="row-fluid">
 			</div>
 			<div id="main_block_top_row_2" class="row-fluid">
 				
@@ -27,10 +27,10 @@
 			<div id="main_block_top_row_3" class="row-fluid">
 				
 			</div>
-			<div id="main_block_top_row_4" class="row-fluid">
-				<%= view_id_name do %>
-				  <%= yield %>
-				<% end %>
+			<div id="main_block_top_row_4" class="row" >
+				<div id=<%= view_id_name %> >
+					  <%= yield %>
+				</div>	  
 			</div>
 		</div>
 	</div>

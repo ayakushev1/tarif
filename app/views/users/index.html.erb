@@ -1,9 +1,3 @@
 <%= render :partial => 'users', :layout => 'application/layouts/model_table', :locals => {:table => controller.users}%>
-
 <br />
-
-<%= render :partial => 'users_2', :layout => 'application/layouts/model_table', :locals => {:table => Tableable.new(controller, User.where("id < 1111") ) }%>
-
-<br />
-
 <%= link_to 'New User', new_user_path %>

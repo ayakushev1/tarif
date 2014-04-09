@@ -1,32 +1,34 @@
 <%
 style_table = [
 	[/label/, {:class => "control-label"}],
+	[/(input|select).*?action/, {:filtr_name => form_item.filtr_name, :class => "updatable "}],
+#	[/(input|select).*?action/, {:class => "updatable "}],
+	[/a.*?href.*?\/a/, {:class => "btn ", :'data-remote' => true, :turbolinks => true}],
 	[/input.*?type.*?submit/, {:class => "btn "}],
-	[/a.*?href.*?\/a/, {:class => "btn "}],
 ]
 
-form_html_options = {:class => "form-horizontal", :turbolinks => true, :method => 'get'}
+form_html_options = {:id =>form_item.filtr_name, :class => "form-horizontal", :turbolinks => true}
 form_html_options = form_html_options.merge(html) if defined?(html)
 
-form_options = {:remote => true, :authenticity_token => true}
+form_options = {:method => 'get', :remote => false, :authenticity_token => true}
+
 form_options = form_options.merge(options) if defined?(options)
 form_options = form_options.merge(form_html_options)
 
 %>
-<legend><%= form.caption %></legend>
-<div class="alert-error">
-	<%= flash[:alert]%>
-</div>
 
-<%= form_tag(form.action_on_submit, form_options) do %>
+<legend><%= form_item.caption %></legend>
+<div class="alert-error"><%= flash[:alert]%></div>
+
+<%= form_tag(form_item.action_on_submit, form_options) do %>
 	<%if form_options[:class] =~ /form-inline/ %>
-	  <% form.fields(form.filtr_name) do |label, field| %>
+	  <% form_item.fields(form_item.filtr_name) do |label, field| %>
 	      <%= add_css(label, style_table ) %>
 	      <%= add_css(field, style_table) %>
 	  <% end %>
 	<% else %>
 		<fieldset>
-		  <% form.fields(form.filtr_name) do |label, field| %>
+		  <% form_item.fields(form_item.filtr_name) do |label, field| %>
 		    <div class="control-group">
 		      <%= add_css(label, style_table ) %>
 		      <div class="controls"><%= add_css(field, style_table) %></div>

@@ -1,29 +1,49 @@
 class Formable < Presenter
+  attr_accessor :form_name, :caption, :action_on_submit
   
   def initialize(controller, model)
     super(controller)
     @model = model
-    @base_name = model.new.class.name.downcase
-    self.extend TableHelper
+    @base_name = model.class.name.underscore.gsub(/\//, "_").to_sym || controller.model_name || controller.controller_path.gsub(/\//, "_").underscore.singularize.to_sym
+    @form_name = "#{@base_name}_form"
+    init_session
+    set_session_from_params
   end
   
   def model
-    init_session
     @model
+  end
+  
+  def session_model_params
+    c.session[:form][form_name]
   end
   
   private
   
   def init_session
     c.session[:form] ||= {}
-  end
-  
-  def set_tables_current_id
-    c.session[:current_id][current_id_name] = c.params[:current_id][current_id_name] if (c.params[:current_id] and c.params[:current_id][current_id_name])
-    c.session[:current_id][current_id_name] = @raw_model.first.id if c.session[:current_id][current_id_name].blank?
-    c.session[:current_id][current_id_name] = @raw_model.first.id unless @raw_model.pluck(:id).include?(c.session[:current_id][current_id_name].to_i)
+    c.session[:form][form_name] ||= {}
   end
 
-  module TableHelper
+  def set_session_from_params
+    if c.params[:id]
+      if c.params[form_name]
+        c.session[:form][form_name][:id] = c.params[:id]
+        c.session[:form][form_name] = c.params[form_name]
+      else
+        if c.session[:form][form_name][:id] != c.params[:id]
+          c.session[:form][form_name][:id] = c.params[:id]
+          model.attributes.each do |col, value|
+            c.session[:form][form_name][col] = value    
+          end
+        end        
+      end
+    else
+      if c.params[form_name]
+        c.session[:form][form_name][:id] = nil
+        c.session[:form][form_name] = c.params[form_name]
+      end
+    end
   end
+  
 end

@@ -16,7 +16,7 @@
 // require jquery.ui.draggable
 // require jquery.ui.resizable
 // require jquery.ui.effect-blind
-// require jquery_ujs
+//= require jquery_ujs
 // Loads all Bootstrap javascripts
 //= require bootstrap
 //= require bootstrap-datepicker/core

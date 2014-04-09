@@ -10,10 +10,12 @@
 #
 
 class Category < ActiveRecord::Base
+  include WhereHelper
   belongs_to :type, :class_name =>'CategoryType', :foreign_key => :type_id
   belongs_to :level, :class_name =>'CategoryLevel', :foreign_key => :level_id
   belongs_to :parent, :class_name =>'Category', :foreign_key => :parent_id
   has_many :children, :class_name =>'Category', :foreign_key => :parent_id
+  has_many :comparison_operators, :class_name =>'Service::Criterium', :foreign_key => :comparison_operator_id
 
   scope :locations, -> {where(:type_id => 0)}
   scope :countries, -> {where(:type_id => 0, :level_id => 2)}
@@ -32,9 +34,14 @@ class Category < ActiveRecord::Base
   scope :cost_units, -> {where(:type_id => 9, :parent_id => 77)}
   scope :date_time_units, -> {where(:type_id => 9, :parent_id => 78)}
   scope :trafic_speed_units, -> {where(:type_id => 9, :parent_id => 79)}
-  scope :comparison_operations, -> {where(:type_id => 14)}
+  scope :comparison_operators, -> {where(:type_id => 14)}
+  scope :param_source_types, -> {where(:type_id => 15)}
+  scope :field_display_types, -> {where(:type_id => 16)}
+  scope :value_choose_options, -> {where(:type_id => 17)}
+  scope :service_category_types, -> {where(:type_id => 18)}
+  scope :operator_types, -> {where(:type_id => 19)}
   
-  def self.type(type_id)
+  def self.type1(type_id)
     if type_id.blank?
       where("true")
     else
@@ -42,7 +49,7 @@ class Category < ActiveRecord::Base
     end 
   end
   
-  def self.level(level_id)
+  def self.level1(level_id)
     if level_id.blank?
       where("true")
     else
@@ -50,7 +57,7 @@ class Category < ActiveRecord::Base
     end 
   end
   
-  def self.with_parent(parent_id)
+  def self.with_parent1(parent_id)
     if parent_id.blank?
       where("false")
     else

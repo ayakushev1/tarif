@@ -1,7 +1,24 @@
 Rails.application.routes.draw do
-  root 'calls#index'
+  root 'home#index'
   
-  get 'categories/' => 'categories#index'
+  resources :tarif_lists, :price_list, :price_standard_formulas
+  
+  namespace :price do
+    resoures :price_formulas, only: [:index]    
+  end
+
+  namespace :service do
+    resources :category_groups, only: [:index] 
+    resources :categories, only: [:index] do
+      resources :criteria, only: [:index]
+    end
+#    get 'categories/' => 'categories#index'    
+  end
+  
+  resources :users, :tarif_classes
+  
+  resources :parameters, only: :index
+  resources :categories, only: :index
   
   controller :calls do
     get 'calls/' => :index
@@ -18,8 +35,9 @@ Rails.application.routes.draw do
     get 'set_new_location' => :choose_location
   end
 
-  resources :users
-  resources :tests
+#for testing
+  get "formable_concerns/", :controller => 'formable_concerns', :action => :new, :as => "formable_concerns/new"     
+  get "users/new_1", :controller => 'users', :action => :new, :as => "new/users" #for testing     
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

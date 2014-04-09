@@ -23,6 +23,10 @@ class Presenter
     yield(self)
   end
   
+  def current_action_url
+    c.request.url
+  end
+  
   def [](key)
     instance_variable_get(:"@#{key.to_s}")
   end

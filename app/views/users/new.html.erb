@@ -1,5 +1,5 @@
 <h1>New user</h1>
 
-<%= render :partial => 'form', :layout => 'application/layouts/model_form', :locals => {:item => controller.user} %>
+<%= render :partial => 'form', :layout => 'application/layouts/model_form_for', :locals => {:form_item => controller.user_form} %>
 
-<%= link_to 'Back', root_path %>
+<%= link_to 'Back', users_path %>

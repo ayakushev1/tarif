@@ -1,10 +1,21 @@
-<caption><%= table.caption %></caption>
+<%
+style_table = [
+	[/a.*?href/, {:'data-remote' => true, :turbolinks => true}],
+]
 
-<div>
-	<%= will_paginate table.model, :class=>"pagination pagination-centered", :param_name => table.pagination_param_name %>
-</div>
+table_html_options = {:id =>table.table_name, :class => 'table table-hover table-bordered table-condensed'}
+table_html_options = form_html_options.merge(html) if defined?(html)
+table_html_options = table_html_options.collect { |key, value| "#{key.to_s}=\"#{value.to_s}\""}.join(" ").html_safe
 
-<table class="table table-hover table-bordered table-condensed">
+%>
+
+<%= will_paginate table.model, :class=>'pagination pagination-centered', :param_name => table.pagination_param_name %>
+
+<%= table.model.to_sql if false %>
+
+<legend><%= table.caption %></legend>
+
+<table <%= table_html_options %> >
   <thead>
     <tr>
       <% table.heads.each do |head| %>
@@ -20,7 +31,7 @@
     <tr <%= table.raw_details(item) %>>
       <% table.fields(item) do |field| %>
         <td>
-        	<%= field %>
+        	<%= add_css(field, style_table) %>
         </td>
       <% end %>
     </tr>

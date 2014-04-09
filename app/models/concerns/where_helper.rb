@@ -42,7 +42,7 @@ module WhereHelper
         filtr_data[field_to_exclude_from_query] = nil
         filtr_data
       when field_to_exclude_from_query =~ /(.*?)\[(.*?)\]/ 
-        field_to_exclude_from_query.gsub(/(.*?)\[(.*?)\]/ ) { |s| filtr_data[$1][$2] = nil }
+        field_to_exclude_from_query.gsub(/(.*?)\[(.*?)\]/ ) { |s| filtr_data[$1][$2] = nil if filtr_data[$1] }
         filtr_data
       when field_to_exclude_from_query == nil
         filtr_data

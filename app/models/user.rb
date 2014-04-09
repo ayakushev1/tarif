@@ -10,6 +10,7 @@
 #
 
 class User < ActiveRecord::Base
+  include PgJsonHelper, WhereHelper
   
   validates :name, presence: true, uniqueness: true
   has_secure_password

@@ -14,6 +14,9 @@ class CallsController < ApplicationController
   end
   
   def generate_calls
+    if session[:filtr][calls_generation_params.filtr_name].blank?        
+      session[:filtr][calls_generation_params.filtr_name] = view_context.default_calls_generation_params
+    end
     view_context.generate_calls(params[calls_generation_params.filtr_name])
     redirect_to calls_path
   end
@@ -27,7 +30,7 @@ class CallsController < ApplicationController
   end
   
   def calls
-    Tableable.new(self, Call.query_from_filtr(session[:filtr][filtr.filtr_name]))
+    Tableable.new(self, Call.query_from_filtr(filtr.session_filtr_params))
   end
   
 end

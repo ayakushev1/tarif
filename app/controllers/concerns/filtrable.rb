@@ -4,9 +4,12 @@ class Filtrable < Presenter
   def initialize(controller, filtr_name)
     super(controller)
     @filtr_name = "#{filtr_name}_filtr"
-    self.extend TableHelper
     init_session
     set_session_from_params
+  end
+  
+  def session_filtr_params
+    c.session[:filtr][filtr_name]
   end
   
   private
@@ -14,6 +17,7 @@ class Filtrable < Presenter
   def init_session
     c.session[:filtr] ||= {}
     c.session[:filtr][filtr_name] ||= {}
+    c.session[:pagination] ||= {}
   end
   
   def set_session_from_params    
@@ -26,6 +30,4 @@ class Filtrable < Presenter
     end if c.params[filtr_name]
   end
   
-  module TableHelper
-  end
 end

@@ -1,28 +1,23 @@
 ENV['RAILS_ENV'] ||= 'test'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rails/test_help'
-#require "minitest/rails"
 
-#require 'minitest/rails/capybara'
-#require 'minitest/focus'
-#require 'minitest/colorize'
-
-# Uncomment for awesome colorful output
-# require "minitest/pride"
+Dir[Rails.root.join("test/helpers/**/*.rb")].each { |f| require f }
+Dir[Rails.root.join("lib/pages/**/*.rb")].each { |f| require f }
+Rails.application.routes.eval_block( Proc.new { resources :tests } )  
 
 class ActiveSupport::TestCase
-    fixtures :all
+  fixtures :all
+  
+  def self.prepare
 
-    def self.prepare
-      # Add code that needs to be executed before test suite start
-    end
-    prepare
+  end
+  prepare
+  
+  def setup
+  end
 
-    def setup
-      # Add code that need to be executed before each test
-    end
-
-    def teardown
-      # Add code that need to be executed after each test
-    end
+  def teardown
+  end
+  
 end

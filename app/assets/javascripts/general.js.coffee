@@ -32,14 +32,14 @@ $(document).on 'click', "[type=checkbox]", ->
   else
     $(this).attr('checked', false)
 
-$(document).on 'change', "[id*=filtr]", ->
-  element_before_ajax = this
+$(document).on 'change', ".updatable", ->
+  element_before_ajax_index = $(":input").index(this) 
   filtr_url = $(this).attr("action_name")
   filtr_name = $(this).attr("filtr_name")
       
   filtr = {}
   sub_filtr = {}
-  $("[id^=#{filtr_name}]").each (index, element) ->
+  $("[name^=#{filtr_name}]").each (index, element) ->
     filtr[$(element).attr("name")] = $(element).val()
     
     if $(element).attr('type') == 'checkbox'
@@ -59,16 +59,15 @@ $(document).on 'change', "[id*=filtr]", ->
   filtr["current_tabs_page"] = get_tabs_current_page()
   filtr["current_accordion_page"] = get_accordion_current_page()
 
-  unless $.isEmptyObject(filtr_url)
-    $.ajax
-      url: filtr_url,
-      data: filtr,
-      dataType: "script"
-      success: ->
-        element_after_ajax = document.getElementById($(element_before_ajax).attr("id") )
-        $(":input")[$(":input").index(element_after_ajax)].focus() 
+#  unless $.isEmptyObject(filtr_url)
+  $.ajax
+    url: filtr_url,
+    data: filtr,
+    dataType: "script"
+    success: ->
+      $(":input")[element_before_ajax_index + 1].focus() 
         
-$(document).on 'click', "[id*=raw]", ->
+$(document).on 'click', "tr[id*=raw]", ->
   raw_name = $(this).attr("raw_name")
   $("[id^=#{raw_name}]").not(this).removeClass("current_table_raw")
   $(this).addClass("current_table_raw")
@@ -83,6 +82,7 @@ $(document).on 'click', "[id*=raw]", ->
 
   $.ajax
     url: raw_url, 
+    async: false,
     data: filtr,
     dataType: "script"
     success: (data, textStatus, jqXHR) ->

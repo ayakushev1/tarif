@@ -3,16 +3,23 @@ require 'test_helper'
 class TestsController < ApplicationController
   include Crudable
   crudable_actions :new, :index, :show, :foo
-  
 end
 
-class Test < ActiveRecord::Base
-  
+class Test < ActiveRecord::Base; end
+
+module Sub
+  module Admin 
+    class Sub::Admin::FirstTableController < ApplicationController 
+      include Crudable
+      crudable_actions :all
+    end
+  end
 end
 
 describe TestsController do
   
   before do
+#    Rails.application.routes.eval_block( Proc.new { resources :tests } )
     TestsController.crudable_actions :index, :show, :foo
   
     @valid_list = [:index, :show]
@@ -41,14 +48,29 @@ describe TestsController do
   end
   
   it 'must have define access method to model variable by model name' do
-    model_name = TestsController.controller_name.singularize.to_sym
-    assert @controller_action_list.member?(model_name), @controller_action_list << model_name
+    model_name = "sub_admin_first_table"
+    Sub::Admin::FirstTableController.new.methods.include?(model_name.to_sym).must_be :==, true, Sub::Admin::FirstTableController.new.methods
   end
 
   it 'must have define access method to model collection by controller name' do
     collection_name = TestsController.controller_name.to_sym
-    assert @controller_action_list.member?(collection_name), @controller_action_list << collection_name
+    TestsController.new.methods.include?(collection_name).must_be :==, true
   end
+
+  it 'must have define access method to form model variable by form_model name' do
+    form_model_name = :test_form
+    @controller.methods.include?(form_model_name).must_be :==, true, @controller.methods
+  end
+
+  it 'must define access method to table_name from controller class name' do
+    TestsController.new.methods.include?(:table_name).must_be :==, true
+    Sub::Admin::FirstTableController.new.table_name.must_be :==, 'sub_admin_first_tables'
+  end
+
+  it 'must correctly define access methods taking into account name_spaces function from controller class name' do
+#    Sub::Admin::FirstTableController.new.slash_name_space.must_be :==, 'sub/admin/'
+  end
+
 
 end
 
