@@ -1,0 +1,27 @@
+<%
+form_item.init do |f|
+  f.caption = 'Parameter description'
+  f.set_fields do |parameter| 
+  [
+  	['value', parameter_class_instance_value(parameter), 'dislay choice',  parameter_class_instance_display(parameter, self)],
+  	['id', parameter.id, 'name', parameter.name],
+  	['nick_name', parameter.nick_name, 'description', parameter.description],
+  	['SOURCE', '__________', '__________', '__________'],
+  	['source_type', (parameter.source_type.name if parameter.source_type), 'table', (parameter.source['table'] if parameter.source)],
+  	['query', (parameter.source['query'] if parameter.source), 'class', (parameter.source['class'] if parameter.source) ],
+  	['field', (parameter.source['field'] if parameter.source), 'field type', (parameter.source_field_type.name if parameter.source and parameter.source_field_type)],
+  	['sub field', (parameter.source['sub_field'] if parameter.source), 'sub field type', (parameter.source_sub_field_type.name if parameter.source and parameter.source_sub_field_type)],
+  	['DISPLAY', '__________', '__________', '__________'],
+  	['type', (parameter.display_field_display_type.name if parameter.display and parameter.display_field_display_type), 
+  	 'list', (parameter.display['list'] if parameter.display)],
+  	['table', (parameter.display['table'] if parameter.display), 'query', (parameter.display['query'] if parameter.display)],
+  	['class', (parameter.display['class'] if parameter.display), 'id field', (parameter.display['id_field'] if parameter.display)],
+  	['name field', (parameter.display['name_field'] if parameter.display), nil, nil],
+  	['UNIT', '__________', '__________', '__________'],
+  	['name', (parameter.unit_unit.name if parameter.unit and parameter.unit_unit), 'field name', (parameter.unit['field_name'] if parameter.unit)],
+  	['sub field name', (parameter.unit['sub_field_name'] if parameter.unit)],
+   ] 
+  end
+end
+%>
+  

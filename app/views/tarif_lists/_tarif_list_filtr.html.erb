@@ -1,0 +1,20 @@
+<%
+form_item.init do |fi|
+  s = fi.session_filtr_params	
+  fi.caption = "Tarif list filtr fields"	
+  fi.set_fields do |filtr_name|
+  	action = {:action_name => tarif_lists_path} 
+    [
+      ["", collection_select(filtr_name, "tarif_class_id", TarifClass.where(:id => TarifList.query_from_filtr(s, "tarif_class_id").pluck(:tarif_class_id).uniq ), :id, :name, 
+	  	{:include_blank => "tarif class", :selected => s["tarif_class_id"] }, action )
+	  ],
+
+      ["", collection_select(filtr_name, "region_id", Category.where(:id => TarifList.query_from_filtr(s, "region_id").pluck(:region_id).uniq ), :id, :name, 
+	  	{:include_blank => "region", :selected => s["region_id"] }, action )
+	  ],
+    ] 
+  end
+end
+%>
+#  tarif_class_id :integer
+#  region_id      :integer

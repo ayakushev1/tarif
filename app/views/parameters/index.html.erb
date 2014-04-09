@@ -1,0 +1,6 @@
+
+<%= render :partial => 'parameter_filtr', :layout => 'application/layouts/filtr_form', :locals => {:form_item => controller.parameter_filtr, :html => {:class => "form-inline"}}%>
+<br />
+<%= render :partial => 'parameters', :layout => 'application/layouts/model_table', :locals => {:table => controller.parameters}%>
+<br />
+<%= render :partial => 'parameter_show', :layout => 'application/layouts/model_show_2_columns', :locals => {:form_item => controller.parameter_show} %>

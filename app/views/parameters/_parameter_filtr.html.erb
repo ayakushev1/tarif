@@ -1,0 +1,22 @@
+<%
+form_item.init do |fi|
+  fi.set_fields do |filtr_name|
+    action = {:action_name => parameters_path}
+    s = fi.session_filtr_params
+    query = Parameter.query_hash_from_filtr_with_all_keys_excluded(s)
+  [
+  	["", collection_select(filtr_name, "source_type_id", Category.where(:id => Parameter.query_from_filtr(s, "source_type_id").pluck(:source_type_id).uniq ), :id, :name, 
+  	   {:include_blank => "source type", :selected => s["source_type_id"] }, action )
+  	],
+
+  	["", collection_select(filtr_name, "source[field_type_id]", Category.where(:id => Parameter.query_from_filtr(s, "source[field_type_id]").collect { |q| q.source['field_type_id'] }.uniq ), :id, :name, 
+  	   {:include_blank => "source[field_type_id]", :selected => (s["source"]["field_type_id"] if s["source"] )}, action )
+    ],
+
+  	["", collection_select(filtr_name, "unit[unit_id]", Category.where(:id => Parameter.query_from_filtr(s, "unit[unit_id]").collect { |q| q.unit['unit_id'] }.uniq  ), :id, :name,
+  	   {:include_blank => "unit[unit_id]", :selected => (s["unit"]["unit_id"] if s["unit"] )}, action )
+   ],
+  ] 
+  end
+end
+%>

@@ -1,0 +1,17 @@
+<%
+form_item.init do |fi|
+  fi.caption = 'Show tarif class'
+  fi.set_fields do |tarif_class| 
+	[
+#	  ['Id', tarif_class.id], 
+	  ['Name', tarif_class.name], 
+	  ['Operator', (tarif_class.operator.name if tarif_class.operator) ], 
+	  ['Privacy', (tarif_class.privacy.name if tarif_class.privacy) ], 
+	  ['Standrd service', (tarif_class.standard_service.name if tarif_class.standard_service) ], 
+#	  ['Created', (tarif_class.created_at.to_formatted_s(:short) if  tarif_class.created_at) ], 
+#	  ['Updated', (tarif_class.updated_at.to_formatted_s(:short) if tarif_class.updated_at) ],
+      [link_to('Edit', edit_tarif_class_path(tarif_class) ), link_to( 'Back', tarif_classes_path)],  
+	] 
+  end
+end	
+%>

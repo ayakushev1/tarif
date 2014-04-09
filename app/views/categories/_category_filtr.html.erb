@@ -1,0 +1,18 @@
+<%
+form_item.init do |fi|
+  fi.caption = "Filtr fields"	
+  action = {:action_name => categories_path}
+  fi.set_fields do |filtr_name| 
+  [
+  	[label(filtr_name, "type_id", "Category type"),
+  	 collection_select(filtr_name, "type_id", CategoryType.all, :id, :name, 
+  	   {:include_blank => true, :selected => fi.session_filtr_params["type_id"] }, action )
+  	],
+  	[label(filtr_name, "level_id", "Level"),
+  	 collection_select(filtr_name, "level_id", CategoryLevel.type(fi.session_filtr_params["type_id"]), :id, :name, 
+  	   {:include_blank => true, :selected => fi.session_filtr_params["level_id"] }, action )
+  	],
+  ] 
+  end
+end
+%>

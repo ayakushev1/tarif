@@ -1,0 +1,27 @@
+<%
+form_item.init do |fi|
+  fi.set_fields do |f|
+    fi.caption = f.object.id ? 'Edit tarif class' : 'New tarif class' 
+  	action_path = f.object.id ? edit_tarif_class_path(f.object) : new_tarif_class_path
+    action = {:action_name => action_path }
+    [ 
+	   [f.label(:name), f.text_field(:name, action)],
+
+	   [f.label("operator_id", "Operator"),
+     	f.collection_select("operator_id", Category.operators.all, :id, :name, 
+	  	  {:include_blank => true, :selected => fi.session_model_params["operator_id"] }, action )   ],	
+
+	   [f.label("privacy_id", "Privacy"),
+     	f.collection_select("privacy_id", Category.privacy.all, :id, :name, 
+	  	  {:include_blank => true, :selected => fi.session_model_params["privacy_id"] }, action )   ],	
+
+	   [f.label("standard_service_id", "Standard service"),
+     	f.collection_select("standard_service_id", Category.standard_services.all, :id, :name, 
+	  	  {:include_blank => true, :selected => fi.session_model_params["standard_service_id"] }, action )   ],	
+
+	   [f.label(" "), f.submit]
+	]
+  end
+end
+%>
+

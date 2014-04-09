@@ -1,0 +1,25 @@
+<%
+
+table.init do |t|
+  t.caption = 'Parameters'
+  t.base_name = 'parameters'
+  t.heads = 
+  ['Id', 'Name', 'Description', 'Source Type', 'Source class', 'Source field', 'Source sub field', 'Display list', 'Display class', 'Unit', 'Example value', 'Example display']
+  t.set_fields do |parameter| 
+  [
+  	parameter.id,
+  	parameter.name,
+  	parameter.description,
+  	(parameter.source_type.name if parameter.source_type),
+  	(parameter.source['class'] if parameter.source),
+  	(parameter.source['field'] if parameter.source),
+  	(parameter.source['sub_field'] if parameter.source),
+  	(parameter.display['list'] if parameter.display),
+  	(parameter.display['class'] if parameter.display),
+  	(parameter.unit['unit'].name if parameter.unit and parameter.unit['unit']),
+  	parameter_class_instance_value(parameter),
+  	parameter_class_instance_display(parameter, self),
+    ] 
+  end
+end
+%>

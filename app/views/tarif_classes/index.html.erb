@@ -1,0 +1,7 @@
+<%= render :partial => 'tarif_class_filtr', :layout => 'application/layouts/filtr_form', :locals => {:form_item => controller.tarif_class_filtr, :html => {:class => "form-inline"} }%>
+
+<%= link_to 'New tarif class', new_tarif_class_path %>
+
+<%= render :partial => 'tarif_classes', :layout => 'application/layouts/model_table', :locals => {:table => controller.tarif_classes}%>
+
+<%= render :partial => 'service_category_tarif_classes', :layout => 'application/layouts/model_table', :locals => {:table => controller.service_category_tarif_classes }%>
