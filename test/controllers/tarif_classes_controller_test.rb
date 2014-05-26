@@ -28,32 +28,30 @@ describe TarifClassesController do
       end
       
       it "must filter tarif classes records" do
-        get :index, 'tarif_class_filtr' => {'operator_id' => 1 }
+        get :index, 'tarif_class_filtr' => {'operator_id' => _beeline }
         assert_response :success 
-        @controller.tarif_classes.model.count.must_be :==, 1
+        @controller.tarif_classes.model.count.must_be :==, 40
 
-        xhr :get, :index, 'tarif_class_filtr' => {'privacy_id' => 1 }
+        xhr :get, :index, 'tarif_class_filtr' => {'privacy_id' => _person }
         assert_response :success 
-        @controller.tarif_classes.model.count.must_be :==, 1
+        @controller.tarif_classes.model.count.must_be :==, 31
 
-        xhr :get, :index, 'tarif_class_filtr' => {'privacy_id' => 1, 'standard_service_id' => 0 }
+        xhr :get, :index, 'tarif_class_filtr' => {'privacy_id' => _person, 'standard_service_id' => _tarif }
         assert_response :success 
-        @controller.tarif_classes.model.count.must_be :==, 0
+        @controller.tarif_classes.model.count.must_be :==, 13
       end      
     end
 
-    describe 'service_category_tarif_classes' do
+    describe 'price_lists_for_index' do
       it 'must exist' do
         get :index
-        assert_select('table[id*=?]', 'service_category_tarif_class_table')
-        sql = Service::CategoryTarifClass.where("tarif_class_id > 0")
-        if sql.count > 0
-          current_tarif_class_id = sql.first
-          get :index, :current_id => {'tarif_class_id' => current_tarif_class_id}
-          @response.body.must_be :=~, /service_category_tarif_class_raw/
-          assert_select('tr[id*=?]', 'service_category_tarif_class_raw')
+        assert :success
+        assert_select('table[id=price_list_table]')
+        if @controller.price_lists_for_index.model.count > 0
+          assert_select('tr[current_id_name=price_list_id]')
         end
       end
+            
     end
     
   end
@@ -68,6 +66,30 @@ describe TarifClassesController do
       assert_response :success      
       @response.body.html_safe.must_be :=~, /div id=\\\"tarif_classes_show\\\"/
     end
+
+    describe 'price_lists_for_show' do
+      it 'must exist' do
+        get :show, :id => 77
+        assert :success
+        assert_select('table[id=price_list_table]')
+        if @controller.price_lists_for_show.model.count > 0
+          assert_select('tr[current_id_name=price_list_id]')
+        end
+      end
+    end
+
+    describe 'formulas_for_show' do
+      it 'must exist' do
+        get :show, :id => 109
+        assert :success
+        assert_select('table[id=price_formula_table]')
+        if @controller.price_formulas.model.count > 0
+          assert_select('tr[current_id_name=price_formula_id]')
+        end
+      end
+    end
+
+
   end
 
   describe 'new action' do

@@ -7,6 +7,8 @@
 #  password_digest :string(255)
 #  created_at      :datetime
 #  updated_at      :datetime
+#  description     :json
+#  location_id     :integer
 #
 
 class User < ActiveRecord::Base

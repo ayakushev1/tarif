@@ -9,13 +9,15 @@ describe UsersController do
     it 'must create new user if input correct' do
       js do
         assert_difference "User.count", 1 do
+          user_name = User.last ? User.last.name + "_1" : 'user_222'
           SitePages::Users::NewPage.new.tap do |u|
             visit u.path
-            u.name.set('user_2222')
+            u.name.set(user_name)
             u.password.set('111')
             u.password_confirmation.set('111')
             u.create_user
           end
+          assert_selector SitePages::Users::NewPage.new.locator 
           assert_selector SitePages::Users::ShowPage.new.locator 
         end
       end
@@ -25,9 +27,10 @@ describe UsersController do
     it 'should not create new user with the same name' do
 #      js do
         assert_difference "User.count", 0 do
+          user_name = User.last ? User.last.name + "_1" : 'user_222'
           SitePages::Users::NewPage.new.tap do |u|
             visit u.path
-            u.name.set('user_111')
+            u.name.set(user_name)
             u.password.set('111')
             u.password_confirmation.set('1111')
             u.create_user

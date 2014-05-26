@@ -4,7 +4,7 @@ style_table = [
 	[/(input|select)/, {:filtr_name => form_item.form_name}],
 	[/(?=.*(input|select))(?!.*(password))(.+)/, {:class => "updatable "}],
 	[/input.*?type.*?submit/, {:class => "btn "}],
-	[/a.*?href.*?\/a/, {:class => "btn ", :'data-remote' => true, :turbolinks => true}],
+	[/a.*?href.*?\/a/, {:class => "btn ", :'data-remote' => true}], #, :turbolinks => true
 ]
 
 form_html_options = {:class => "form-horizontal", :turbolinks => true, :as => form_item.form_name}

@@ -8,7 +8,7 @@ form_item.init do |fi|
 	   [f.label(:name), f.text_field(:name, action)],
 
 	   [f.label("operator_id", "Operator"),
-     	f.collection_select("operator_id", Category.operators.all, :id, :name, 
+     	f.collection_select("operator_id", Category.russian_operators.all, :id, :name, 
 	  	  {:include_blank => true, :selected => fi.session_model_params["operator_id"] }, action )   ],	
 
 	   [f.label("privacy_id", "Privacy"),

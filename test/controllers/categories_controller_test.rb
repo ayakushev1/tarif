@@ -28,7 +28,7 @@ describe CategoriesController do
       it "must filter categories records" do
         get :index, 'category_filtr' => {'type_id' => 3 }
         assert_response :success 
-        @controller.categories.model.count.must_be :==, 127
+        @controller.categories.model.count.must_be :==, 171
 
       end      
     end

@@ -1,5 +1,6 @@
 module CallsHelper
-  include Calls::CallsGeneration  
+  extend ActiveSupport::Concern
+#  include Calls::CallsGeneration  
     
 end
 

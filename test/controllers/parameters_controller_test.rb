@@ -2,7 +2,7 @@ require 'test_helper'
 
 describe ParametersController do
   before do
-    Call.create(:base_subservice_id => 50, :own_phone => {"number" => "+7 000 000000", "operator_id" => "1025", "region_id" =>"1501"})      
+    Customer::Call.create(:base_subservice_id => 50, :own_phone => {"number" => "7000000000", "operator_id" => "1025", "region_id" =>"1501"})      
   end
   
   describe 'index action' do

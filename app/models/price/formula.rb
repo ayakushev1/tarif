@@ -25,4 +25,8 @@ class Price::Formula < ActiveRecord::Base
   belongs_to :volume, :class_name =>'::Parameter', :foreign_key => :volume_id
   belongs_to :volume_unit, :class_name =>'::Category', :foreign_key => :volume_unit_id
 
+  def self.with_price_list(price_list_id)
+    !price_list_id.blank? ? where("price_list_id = ?", price_list_id.to_i) : where(false) 
+  end
+  
 end

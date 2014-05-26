@@ -1,6 +1,8 @@
 <%
 
 table.init do |t|
+  @fq_tarif_region_id = 1134
+  @fq_tarif_operator_id = 1025
   t.caption = 'Parameters'
   t.base_name = 'parameters'
   t.heads = 
@@ -17,7 +19,7 @@ table.init do |t|
   	(parameter.display['list'] if parameter.display),
   	(parameter.display['class'] if parameter.display),
   	(parameter.unit['unit'].name if parameter.unit and parameter.unit['unit']),
-  	parameter_class_instance_value(parameter),
+  	parameter_class_instance_value(parameter, self),
   	parameter_class_instance_display(parameter, self),
     ] 
   end

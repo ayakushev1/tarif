@@ -2,6 +2,7 @@ source 'http://rubygems.org'
 ruby "2.1.1"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
+#TODO обновить до 4.1.0
 gem 'rails', '4.1.0.rc1'
 
 gem 'pg'

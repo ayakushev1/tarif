@@ -16,5 +16,6 @@ class Price::StandardFormula < ActiveRecord::Base
   belongs_to :price_unit, :class_name =>'::Category', :foreign_key => :price_unit_id
   belongs_to :volume, :class_name =>'::Parameter', :foreign_key => :volume_id
   belongs_to :volume_unit, :class_name =>'::Category', :foreign_key => :volume_unit_id
+  has_many :formulas, :class_name =>'Price::Formula', :foreign_key => :standard_formula_id
 
 end

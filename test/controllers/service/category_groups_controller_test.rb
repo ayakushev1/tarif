@@ -38,7 +38,7 @@ describe Service::CategoryGroupsController do
       end
       
       it "must filter service_category_group_filtr records" do
-        get :index, 'service_category_groups_filtr' => {'service_category_groups_filtr_operator_id' => 1025 }
+        get :index, 'service_category_group_filtr' => {'operator_id' => 1025 }
         assert_response :success 
         assert_select('table[id=?]', 'service_category_group_table')
 
@@ -51,33 +51,20 @@ describe Service::CategoryGroupsController do
         assert :success
         assert_select('table[id*=?]', 'service_category_tarif_class_table')
         if Service::CategoryTarifClass.count > 0
-          assert_select('tr[id*=?]', 'service_category_tarif_class_raw')
+          assert_select('tr[current_id_name=service_category_tarif_class_id]')
         end
       end
       
-      it 'must filtr when filtr is changed' do
-        get :index
-        assert :success
-        count_before = @controller.service_category_tarif_classes.model.count
-        if count_before > 0
-          last_raw = @controller.service_category_tarif_classes.model.last
-          get :index, 'service_category_groups_filtr' => {'service_category_groups_filtr_operator_id' => last_raw.tarif_class_id }
-          assert :success
-          count_after = @controller.service_category_tarif_classes.model.count
-          count_after.must_be :>, count_before
-        end
-      end
-
       it 'must filtr when service_category_group_raw is changed' do
         get :index
         assert :success
         count_before = @controller.service_category_tarif_classes.model.count
         if count_before > 1
+          raw_id_before = @controller.service_category_tarif_classes.model.first.id
           next_raw_id = @controller.service_category_tarif_classes.model.last.id
-          get :index, 'current_id' => {'service_category_group' => next_raw_id }
+          get :index, 'current_id' => {'service_category_group_id' => next_raw_id }
           assert :success
-          count_after = @controller.service_category_tarif_classes.model.count
-          count_after.must_be :>, count_before
+          next_raw_id.must_be :!=, raw_id_before
         end
       end
     end

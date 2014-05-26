@@ -1,4 +1,5 @@
 module ApplicationHelper
+  include Patches::WillPaginate
   extend ActiveSupport::Concern
   
   included do 
@@ -49,7 +50,7 @@ module ApplicationHelper
           if result =~ /(?<=#{key.to_s}\=\")([.^>]*?)(?=\")/
             result = result.sub(/(?<=#{key.to_s}\=\")([.^\]*?)(?=\")/) { |match| "#{match} #{value}"}.html_safe
           else
-            result = result.split(" ").insert(1, " #{key.to_s}='#{value}'").join(" ").html_safe
+            result = result.split(" ").insert(1, " #{key.to_s}='#{value}' ").join(" ").html_safe
           end
         end  
       end

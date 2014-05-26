@@ -5,13 +5,14 @@ form_item.init do |fi|
   fi.set_fields do |filtr_name|
   	action = {:action_name => service_category_groups_path} 
     [
-      ["", collection_select(filtr_name, "operator_id", Category.operators , :id, :name, 
+      ["", collection_select(filtr_name, "operator_id", Category.russian_operators , :id, :name, 
 	  	{:include_blank => "operator", :selected => s["operator_id"] }, action )
 	  ],
 
       ["", collection_select(filtr_name, "tarif_class_id", 
-      	TarifClass.where(:id => Service::CategoryTarifClass.with_operator(s['operator_id'] ).query_from_filtr(s, "tarif_class_id").pluck(:tarif_class_id).uniq ),
-      	 :id, :name, {:include_blank => "tarif class", :selected => s["tarif_class_id"] }, action )
+      	TarifClass.where(:id => Service::CategoryTarifClass.with_operator(s['operator_id'].to_i ).
+          query_from_filtr(s, "tarif_class_id").pluck(:tarif_class_id).uniq.map{|id| id.to_i} ),
+          :id, :name, {:include_blank => "tarif class", :selected => s["tarif_class_id"] }, action )
 	  ],
     ] 
   end

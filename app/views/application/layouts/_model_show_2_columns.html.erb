@@ -15,9 +15,9 @@ form_html_options_1 = form_html_options.collect { |key, value| "#{key}='#{value}
 	
 	<% form_item.fields(form_item.model) do |label_1, field_1, label_2, field_2| %>
 	  <div class="row span12">
-	      <p class="span2 text-right"><strong><%= add_css(label_1, style_table ) %>:</strong></p>
+	      <p class="span2 text-right"><strong><%= add_css(label_1, style_table ) %></strong></p>
 	      <p class="span2 text-left"><%= add_css(field_1, style_table) %></p>
-	      <p class="span3 text-right"><strong><%= add_css(label_2, style_table ) %>:</strong></p>
+	      <p class="span3 text-right"><strong><%= add_css(label_2, style_table ) %></strong></p>
 	      <p class="span3 text-left"><%= add_css(field_2, style_table) %></p>
 	  </div>
     <% end if form_item.model %>

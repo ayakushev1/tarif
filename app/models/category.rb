@@ -20,7 +20,9 @@ class Category < ActiveRecord::Base
   scope :locations, -> {where(:type_id => 0)}
   scope :countries, -> {where(:type_id => 0, :level_id => 2)}
   scope :regions, -> {where(:type_id => 0, :level_id => 3)}
-  scope :operators, -> {where(:type_id => 2)}
+  scope :operators, -> {where(:type_id => 2).where.not(:parent_id => nil)}
+  scope :russian_operators, -> {where(:type_id => 2).where(:parent_id => 1018)}
+  scope :foreign_operators, -> {where(:type_id => 2).where(:parent_id => 1019)}
   scope :privacy, -> {where(:type_id => 3)}
   scope :standard_services, -> {where(:type_id => 4)}
   scope :base_services, -> {where(:type_id => 5)}
@@ -40,6 +42,15 @@ class Category < ActiveRecord::Base
   scope :value_choose_options, -> {where(:type_id => 17)}
   scope :service_category_types, -> {where(:type_id => 18)}
   scope :operator_types, -> {where(:type_id => 19)}
+  scope :user_service_status, -> {where(:type_id => 20)}
+  scope :relation_type, -> {where(:type_id => 21)}
+  scope :phone_usage_types_where, -> {where(:type_id => 22, :parent_id => nil)}
+  scope :phone_usage_types_own_region, -> {where(:type_id => 22, :parent_id => 200)}
+  scope :phone_usage_types_home_region, -> {where(:type_id => 22, :parent_id => 210)}
+  scope :phone_usage_types_own_country, -> {where(:type_id => 22, :parent_id => 220)}
+  scope :phone_usage_types_abroad, -> {where(:type_id => 22, :parent_id => 230)}
+  scope :priority_type, -> {where(:type_id => 23)}
+  scope :priority_relation, -> {where(:type_id => 24)}
   
   def self.type1(type_id)
     if type_id.blank?
@@ -57,7 +68,7 @@ class Category < ActiveRecord::Base
     end 
   end
   
-  def self.with_parent1(parent_id)
+  def self.with_parent(parent_id)
     if parent_id.blank?
       where("false")
     else

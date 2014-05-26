@@ -3,11 +3,12 @@ get_accordion_current_page = ->
   $("[class*=accordion]").each (index, accordion) ->
     if $(accordion).hasClass("accordion")
       accordion_name = $(accordion).attr("name")
+      i = 0
       $(accordion).find("[class*=accordion-toggle]").each (index, element) ->
         body_accordion_id = $(element).attr("href")        
         if $(body_accordion_id).hasClass("in")
-          filtr[accordion_name] = body_accordion_id
-      filtr[accordion_name] = "" if $.isEmptyObject(filtr[accordion_name])
+          filtr[accordion_name] = i
+        i += 1  
   filtr  
 
 
@@ -15,15 +16,20 @@ get_tabs_current_page = ->
   filtr={}
   $("[class*=tabbable]").each (index, tabs) ->
     tabs_name = $(tabs).attr("name")
-    current_tabs_page = $(tabs).attr("active") || ""
     
+    i = 0
     $(tabs).children("[class*=tab-content]").children("[class*=tab-pane]").each (index, element) ->
       body_tab_id = $(element).attr("id")
       if $(element).hasClass("active")
-        filtr[tabs_name] = body_tab_id 
-    filtr[tabs_name] = "" if $.isEmptyObject(filtr[tabs_name])
+        filtr[tabs_name] = i 
+      i +=1
 
   filtr  
+
+#change history for browser to correctly replay on refresh and back button after ajax
+$(document).on 'click', 'a', (e) ->
+#  e.preventDefault
+  history.pushState {page: this.href}, '', this.href
 
 
 $(document).on 'click', "[type=checkbox]", ->
@@ -84,5 +90,6 @@ $(document).on 'click', "tr[id*=raw]", ->
     url: raw_url, 
     async: false,
     data: filtr,
-    dataType: "script"
+    dataType: "script",
+    headers: referer: raw_url
     success: (data, textStatus, jqXHR) ->

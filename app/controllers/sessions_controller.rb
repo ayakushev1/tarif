@@ -4,7 +4,7 @@ class SessionsController < ApplicationController
   end
   
   def create
-    @login = params["login"]
+    @login = params["login_filtr"]
     if @login 
       user =User.find_by_name(@login["login"])
       if user and user.authenticate(@login["password"])

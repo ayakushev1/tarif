@@ -15,6 +15,7 @@ class Service::CategoryGroup < ActiveRecord::Base
   include WhereHelper, PgJsonHelper
   belongs_to :operator, :class_name =>'::Category', :foreign_key => :operator_id
   belongs_to :tarif_class, :class_name =>'::TarifClass', :foreign_key => :tarif_class_id
+  has_many :service_category_tarif_classes, :class_name =>'Service::CategoryTarifClass', :foreign_key => :as_standard_category_group_id
   
 end
 

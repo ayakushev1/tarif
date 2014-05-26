@@ -11,24 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140408211251) do
+ActiveRecord::Schema.define(version: 20140428092439) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
-
-  create_table "calls", force: true do |t|
-    t.integer "base_service_id"
-    t.integer "base_subservice_id"
-    t.integer "user_id"
-    t.json    "own_phone"
-    t.json    "partner_phone"
-    t.json    "connect"
-    t.json    "description"
-  end
-
-  add_index "calls", ["base_service_id"], name: "index_calls_on_base_service_id", using: :btree
-  add_index "calls", ["base_subservice_id"], name: "index_calls_on_base_subservice_id", using: :btree
-  add_index "calls", ["user_id"], name: "index_calls_on_user_id", using: :btree
 
   create_table "categories", force: true do |t|
     t.string  "name"
@@ -52,6 +38,51 @@ ActiveRecord::Schema.define(version: 20140408211251) do
   create_table "category_types", force: true do |t|
     t.string "name"
   end
+
+  create_table "customer_calls", force: true do |t|
+    t.integer "base_service_id"
+    t.integer "base_subservice_id"
+    t.integer "user_id"
+    t.json    "own_phone"
+    t.json    "partner_phone"
+    t.json    "connect"
+    t.json    "description"
+  end
+
+  add_index "customer_calls", ["base_service_id"], name: "index_customer_calls_on_base_service_id", using: :btree
+  add_index "customer_calls", ["base_subservice_id"], name: "index_customer_calls_on_base_subservice_id", using: :btree
+  add_index "customer_calls", ["user_id"], name: "index_customer_calls_on_user_id", using: :btree
+
+  create_table "customer_services", force: true do |t|
+    t.integer  "user_id"
+    t.string   "phone_number"
+    t.integer  "tarif_class_id"
+    t.integer  "tarif_list_id"
+    t.integer  "status_id"
+    t.datetime "valid_from"
+    t.datetime "valid_till"
+    t.json     "description"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "customer_services", ["status_id"], name: "index_customer_services_on_status_id", using: :btree
+  add_index "customer_services", ["tarif_class_id"], name: "index_customer_services_on_tarif_class_id", using: :btree
+  add_index "customer_services", ["tarif_list_id"], name: "index_customer_services_on_tarif_list_id", using: :btree
+  add_index "customer_services", ["user_id"], name: "index_customer_services_on_user_id", using: :btree
+
+  create_table "customer_stats", force: true do |t|
+    t.integer  "user_id"
+    t.string   "phone_number"
+    t.text     "filtr"
+    t.json     "result"
+    t.datetime "stat_from"
+    t.datetime "stat_till"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "customer_stats", ["user_id"], name: "index_customer_stats_on_user_id", using: :btree
 
   create_table "parameters", force: true do |t|
     t.string  "name"
@@ -85,9 +116,10 @@ ActiveRecord::Schema.define(version: 20140408211251) do
 
   create_table "price_lists", force: true do |t|
     t.string   "name"
-    t.integer  "tarif_list_id_id"
-    t.integer  "service_category_group_id_id"
-    t.integer  "service_category_tarif_class_id_id"
+    t.integer  "tarif_class_id"
+    t.integer  "tarif_list_id"
+    t.integer  "service_category_group_id"
+    t.integer  "service_category_tarif_class_id"
     t.boolean  "is_active"
     t.json     "features"
     t.text     "description"
@@ -95,9 +127,10 @@ ActiveRecord::Schema.define(version: 20140408211251) do
     t.datetime "updated_at"
   end
 
-  add_index "price_lists", ["service_category_group_id_id"], name: "index_price_lists_on_service_category_group_id_id", using: :btree
-  add_index "price_lists", ["service_category_tarif_class_id_id"], name: "index_price_lists_on_service_category_tarif_class_id_id", using: :btree
-  add_index "price_lists", ["tarif_list_id_id"], name: "index_price_lists_on_tarif_list_id_id", using: :btree
+  add_index "price_lists", ["service_category_group_id"], name: "index_price_lists_on_service_category_group_id", using: :btree
+  add_index "price_lists", ["service_category_tarif_class_id"], name: "index_price_lists_on_service_category_tarif_class_id", using: :btree
+  add_index "price_lists", ["tarif_class_id"], name: "index_price_lists_on_tarif_class_id", using: :btree
+  add_index "price_lists", ["tarif_list_id"], name: "index_price_lists_on_tarif_list_id", using: :btree
 
   create_table "price_standard_formulas", force: true do |t|
     t.string  "name"
@@ -107,6 +140,17 @@ ActiveRecord::Schema.define(version: 20140408211251) do
     t.integer "volume_unit_id"
     t.text    "description"
   end
+
+  create_table "relations", force: true do |t|
+    t.integer "type_id"
+    t.string  "name"
+    t.integer "owner_id"
+    t.integer "parent_id"
+    t.integer "children",       default: [], array: true
+    t.integer "children_level", default: 1
+  end
+
+  add_index "relations", ["type_id"], name: "index_relations_on_type_id", using: :btree
 
   create_table "service_categories", force: true do |t|
     t.string  "name"
@@ -168,6 +212,7 @@ ActiveRecord::Schema.define(version: 20140408211251) do
     t.integer "value_param_id"
     t.integer "value_choose_option_id"
     t.json    "value"
+    t.text    "eval_string"
   end
 
   add_index "service_criteria", ["comparison_operator_id"], name: "index_service_criteria_on_comparison_operator_id", using: :btree
@@ -175,6 +220,20 @@ ActiveRecord::Schema.define(version: 20140408211251) do
   add_index "service_criteria", ["service_category_id"], name: "index_service_criteria_on_service_category_id", using: :btree
   add_index "service_criteria", ["value_choose_option_id"], name: "index_service_criteria_on_value_choose_option_id", using: :btree
   add_index "service_criteria", ["value_param_id"], name: "index_service_criteria_on_value_param_id", using: :btree
+
+  create_table "service_priorities", force: true do |t|
+    t.integer "type_id"
+    t.integer "main_tarif_class_id"
+    t.integer "dependent_tarif_class_id"
+    t.integer "relation_id"
+    t.integer "value"
+    t.integer "arr_value",                default: [], array: true
+  end
+
+  add_index "service_priorities", ["dependent_tarif_class_id"], name: "index_service_priorities_on_dependent_tarif_class_id", using: :btree
+  add_index "service_priorities", ["main_tarif_class_id"], name: "index_service_priorities_on_main_tarif_class_id", using: :btree
+  add_index "service_priorities", ["relation_id"], name: "index_service_priorities_on_relation_id", using: :btree
+  add_index "service_priorities", ["type_id"], name: "index_service_priorities_on_type_id", using: :btree
 
   create_table "tarif_classes", force: true do |t|
     t.string   "name"
@@ -214,6 +273,8 @@ ActiveRecord::Schema.define(version: 20140408211251) do
     t.string   "password_digest"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.json     "description"
+    t.integer  "location_id"
   end
 
 end

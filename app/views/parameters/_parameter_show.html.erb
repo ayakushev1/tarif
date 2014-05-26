@@ -3,7 +3,7 @@ form_item.init do |f|
   f.caption = 'Parameter description'
   f.set_fields do |parameter| 
   [
-  	['value', parameter_class_instance_value(parameter), 'dislay choice',  parameter_class_instance_display(parameter, self)],
+  	['value', parameter_class_instance_value(parameter ,self), 'dislay choice',  parameter_class_instance_display(parameter, self)],
   	['id', parameter.id, 'name', parameter.name],
   	['nick_name', parameter.nick_name, 'description', parameter.description],
   	['SOURCE', '__________', '__________', '__________'],

@@ -1,10 +1,29 @@
 Rails.application.routes.draw do
   root 'home#index'
   
-  resources :tarif_lists, :price_list, :price_standard_formulas
+  resources :tarif_lists, :price_lists
   
+  namespace :customer do
+    controller :tarif_optimizator do
+      get 'tarif_optimizator/index' => :index
+      get 'tarif_optimizator/recalculate' => :recalculate
+    end   
+
+    resources :services, only: [:index] do
+      get 'calculate_statistic', on: :collection
+    end   
+
+    controller :calls do
+      get 'calls/' => :index
+      get 'calls/set_calls_generation_params' => :set_calls_generation_params
+      get 'calls/set_default_calls_generation_params' => :set_default_calls_generation_params
+      get 'calls/generate_calls' => :generate_calls
+    end
+  end
+
   namespace :price do
-    resoures :price_formulas, only: [:index]    
+    resources :formulas, only: [:index]    
+    resources :standard_formulas, only: [:index]    
   end
 
   namespace :service do
@@ -20,12 +39,6 @@ Rails.application.routes.draw do
   resources :parameters, only: :index
   resources :categories, only: :index
   
-  controller :calls do
-    get 'calls/' => :index
-    get 'calls/set_calls_generation_params' => :set_calls_generation_params
-    get 'calls/set_default_calls_generation_params' => :set_default_calls_generation_params
-    get 'calls/generate_calls' => :generate_calls
-  end
 
   controller :sessions do
     get 'login' => :new

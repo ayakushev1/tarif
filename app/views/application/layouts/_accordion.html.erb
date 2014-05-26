@@ -1,7 +1,7 @@
 <% i = 0 %>
 <% active ||= 0 %>
 <% name ||= 'accord' %>
-<div class="accordion" id="<%= name %>">
+<div class="accordion" id="<%= name %>" name=<%= name %> >
   <% content_from :accordion do |caption, body| %>
     <div class="accordion-group">
       <div class="accordion-heading">

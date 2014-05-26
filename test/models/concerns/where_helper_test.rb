@@ -1,7 +1,7 @@
 require 'test_helper'
 class Dumy < ActiveRecord::Base
   include WhereHelper
-  self.table_name = 'calls'
+  self.table_name = 'customer_calls'
 end
 
 describe Dumy do

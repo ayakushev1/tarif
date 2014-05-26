@@ -18,8 +18,8 @@ class TarifClass < ActiveRecord::Base
   belongs_to :operator, :class_name =>'Category', :foreign_key => :operator_id
   belongs_to :privacy, :class_name =>'Category', :foreign_key => :privacy_id
   belongs_to :standard_service, :class_name =>'Category', :foreign_key => :standard_service_id
-#  has_and_belongs_to_many :service_categories, :join_table => ':service_category_tarif_classes', :class_name => 'Service::Category'
-#  has_many :children, :class_name =>'Category', :foreign_key => :parent_id
+  has_many :service_category_tarif_classes, :class_name => 'Service::CategoryTarifClass', :foreign_key => :tarif_class_id
+  has_many :tarif_lists, :class_name => 'TarifList', :foreign_key => :tarif_class_id
 
 end
 

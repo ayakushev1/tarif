@@ -61,7 +61,7 @@ describe UsersController do
 
   describe 'edit action' do
     it 'must preserve field value after edit' do
-      xhr :get, :edit, :id=> 12, 'user_form' => {'name' => 'user_2222'}
+      xhr :get, :edit, :id=> 2, 'user_form' => {'name' => 'user_2222'}
       @c.session[:form]['user_form']['name'].must_be :==, 'user_2222'            
     end
   end
@@ -76,7 +76,7 @@ describe UsersController do
   describe 'delete action' do
     it 'must delete model' do
       assert_difference 'User.count', -1 do
-        delete :destroy, 'id' => 3
+        delete :destroy, 'id' => 2
       end      
     end
   end

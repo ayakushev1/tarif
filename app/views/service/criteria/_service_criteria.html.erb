@@ -1,7 +1,7 @@
 <%
 table.init do |t|
   t.caption = 'Service criteria'
-  t.heads = ['Id', 'Service category', 'Criteria param', 'Comparison operator', 'Value Param', 'Value choose option', 'Value']
+  t.heads = ['Id', 'Service category', 'Criteria param', 'Comparison operator', 'Value Param', 'Value choose option', 'Value', 'Eval string']
   t.set_fields do |service_criteria| 
   [
     service_criteria.id, 
@@ -11,6 +11,7 @@ table.init do |t|
     (service_criteria.value_param.name if service_criteria.value_param), 
     (service_criteria.value_choose_option.name if service_criteria.value_choose_option), 
     service_criteria.value, 
+    service_criteria.eval_string, 
   ] 
   end
 end
