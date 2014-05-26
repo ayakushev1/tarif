@@ -1,0 +1,39 @@
+<%
+form_item.init do |fi|
+  s = fi.session_filtr_params	
+  tarif_list_id = controller.tarif_list.id
+  fi.caption = "Price list filtr fields"	
+  fi.set_fields do |filtr_name|
+  	action = {:action_name => tarif_list_path(tarif_list_id)} 
+    [
+      ["", collection_select(filtr_name, "service_category_group_id", Service::CategoryGroup.where(
+      	:id => PriceList.with_tarif_list(tarif_list_id).query_from_filtr(s, "service_category_group_id").pluck(:service_category_group_id).uniq ), :id, :name, 
+	  	{:include_blank => "service_category_group", :selected => s["service_category_group_id"] }, action )
+	  ],
+
+#      ["", collection_select(filtr_name, "service_category_tarif_class_id", Service::CategoryTarifClass.where(
+#      	:id => PriceList.with_tarif_list(tarif_list_id).query_from_filtr(s, "service_category_tarif_class_id").pluck(:service_category_tarif_class_id).uniq ), :id, :name, 
+#	  	{:include_blank => "service_category_tarif_class_id", :selected => s["service_category_tarif_class_id"] }, action )
+#	  ],
+
+	  [
+	  	"", select(filtr_name, 'is_active', [['active', true], ['not active', false]],	  	
+	  	{:include_blank => "is active?", :selected => s["is_active"] }, action )
+	  ],
+
+	  [
+	  	"", select(filtr_name, 'price_list_to_show', 
+	  	[
+	  		['all_price_lists', 'all_price_lists'],
+	  		['direct_tarif_price_lists', 'direct_tarif_price_lists'],
+	  		['tarif_class_price_lists', 'tarif_class_price_lists'],
+	  		['tarif_class_price_lists_not_in_direct', 'tarif_class_price_lists_not_in_direct'],
+	  		['category_group_price_lists', 'category_group_price_lists'],
+	  		['category_group_price_lists_not_in_direct', 'category_group_price_lists_not_in_direct']
+	  	],	  	
+	  	{:include_blank => "price_list_to_show", :selected => s["price_list_to_show"] }, action )
+	  ],
+    ] 
+  end
+end
+%>

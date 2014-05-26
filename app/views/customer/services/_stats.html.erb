@@ -1,0 +1,37 @@
+<%
+table.init do |t|
+  t.caption = 'Customer statistics'
+  t.heads = ['Id', 'Count', 'service_category_tarif_class_id']
+#  t.heads = ['Id', 'Customer', 'Phone number', 'Count', 'service_category_tarif_class_id', 'service_category_tarif_class_name', 'Filtr', ]
+  t.set_fields do |f| 
+  [
+    f.id, 
+#    (f.user.name if f.user), 
+#    f.phone_number,
+    (f.result['count'] if f.result ), 
+    (f.result['tarif_class_service_category_id'] if f.result ), 
+#    (Service::CategoryTarifClass.find(f.result['tarif_class_service_category_id']).name if f.result and f.result['tarif_class_service_category_id']), 
+#    (TarifClass.find(f.result['tarif_class_id']).name if f.result and f.result['tarif_class_id']), 
+#    f.filtr,
+
+#    (f.tarif_class.name if f.tarif_class), 
+#    (f.service_category_one_time.name if f.service_category_one_time), 
+#    (f.service_category_periodic.name if f.service_category_periodic), 
+#    (f.as_standard_category_group.name if f.as_standard_category_group), 
+#    (f.as_tarif_class_service_category.name if f.as_tarif_class_service_category), 
+#    f.tarif_class_service_categories, 
+#    f.standard_category_groups, 
+#    (f.service_category_rouming.name if f.service_category_rouming), 
+#    (f.service_category_geo.name if f.service_category_geo), 
+#    (f.service_category_calls.name if f.service_category_calls), 
+#    (f.service_category_partner_type.name if f.service_category_partner_type), 
+
+#    (f.stat_from.to_formatted_s(:long) if  f.stat_from), 
+#    (f.stat_till.to_formatted_s(:long) if  f.stat_till), 
+#    (f.created_at.to_formatted_s(:short) if  f.created_at), 
+#    (f.updated_at.to_formatted_s(:short) if f.updated_at), 
+  ] 
+  end
+end
+%>
+

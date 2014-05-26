@@ -1,0 +1,3 @@
+<%= render :partial => 'price_list_filtr', :layout => 'application/layouts/filtr_form', :locals => {:form_item => controller.price_list_filtr, :html => {:class => "form-inline"} }%>
+
+<%= render :partial => 'price_lists', :layout => 'application/layouts/model_table', :locals => {:table => controller.price_lists}%>

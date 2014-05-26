@@ -1,0 +1,20 @@
+<%
+table.init do |t|
+  t.caption = 'Tarif results details'
+  t.base_name = 'tarif_results_details'
+  t.id_name = 'service_category_tarif_class_id'
+  t.heads = 
+  ['tarif class id', 'service category group id', 'service category tarif class id', 'price_formula_id', 	'call_id_count', 'price value', 'call ids']
+  t.set_fields do |t| 
+  [
+  	t['tarif_class_id'],
+  	t['service_category_group_id'],
+  	t['service_category_tarif_class_id'],
+  	t['price_formula_id'],
+  	t['call_id_count'],
+  	t['price_value'],
+  	t['call_ids'],
+  ] 
+  end
+end
+%>

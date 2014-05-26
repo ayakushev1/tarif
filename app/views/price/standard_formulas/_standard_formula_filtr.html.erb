@@ -1,0 +1,15 @@
+<%
+form_item.init do |fi|
+  s = fi.session_filtr_params	
+  fi.caption = "Price standard formula filtr fields"	
+  fi.set_fields do |filtr_name|
+  	action = {:action_name => price_standard_formulas_path} 
+    [
+      ["", collection_select(filtr_name, "volume_id", Parameter.where(:id => Price::StandardFormula.query_from_filtr(s, "volume_id").pluck(:volume_id).uniq ), :id, :name, 
+	  	{:include_blank => "volume", :selected => s["volume_id"] }, action )
+	  ],
+
+    ] 
+  end
+end
+%>

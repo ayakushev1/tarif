@@ -1,0 +1,87 @@
+<%
+
+form_item.init do |f|
+#  f.caption = "Calls generation params abroad"
+#  f.filtr_name = 'customer_calls_generation_params'
+  f.action_on_submit = customer_calls_generate_calls_path	
+  s_filtr = controller.customer_calls_generation_params_filtr[:abroad].session_filtr_params	
+  f.set_fields do |filtr_name| 
+    html_options = {:action_name => customer_calls_set_calls_generation_params_path}
+  [  	
+  	['Выберите вариант использования телефона',
+  	 collection_select(filtr_name, "phone_usage_type_id", Category.phone_usage_types_abroad, :id, :name,  {:include_blank => false, :selected => s_filtr["phone_usage_type_id"] }, html_options ),  	 
+  	],   
+
+  	[],
+  	
+  	[label(filtr_name, " "),
+  	 link_to( 'Set default params', customer_calls_set_default_calls_generation_params_path),
+
+  	 label(filtr_name, " "),
+  	 submit_tag("Generate calls")
+  	],
+  	
+  	[
+  	 label(filtr_name, "continent_id", "Континент"),
+  	 collection_select(filtr_name, "continent_id", Category.where(:level => 1), :id, :name,  {:include_blank => true, :selected => s_filtr["continent_id"] }, html_options ),
+  	 
+  	 label(filtr_name, "[foreign_country_id]", "Страна назначения"),
+  	 collection_select(filtr_name, "foreign_country_id", Category.where(:parent_id => s_filtr["continent_id"]), :id, :name, 
+  	   {:include_blank => true, :selected => s_filtr["foreign_country_id"] }, html_options )
+  	],   
+  	
+  	[label(filtr_name, "number_of_day_calls", "Количество звонков в день"),
+     text_field(filtr_name, "number_of_day_calls", html_options.merge({:type => 'range', :min => 0, :max => 100.0, :step => 0.1, :value => s_filtr["number_of_day_calls"] }) )+
+  	 content_tag(:div, {:class => "input-append"}) { content_tag(:span, s_filtr["number_of_day_calls"], {:class => "add-on"}) },   
+  	 
+  	 label(filtr_name, "duration_of_calls", "Средняя продолжительность звонка, мин"),
+     text_field(filtr_name, "duration_of_calls", html_options.merge({:type => 'range', :min => 0, :max => 60.0, :step => 0.1, :value => s_filtr["duration_of_calls"] }) )+
+  	 content_tag(:div, {:class => "input-append"}) { content_tag(:span, s_filtr["duration_of_calls"], {:class => "add-on"}) }
+  	],   
+  	
+  	[label(filtr_name, "share_of_incoming_calls", "Доля входящих звонков, %"),
+     text_field(filtr_name, "share_of_incoming_calls", html_options.merge({:type => 'range', :min => 0, :max =>1.0, :step => 0.01, :value => s_filtr["share_of_incoming_calls"] }) )+
+  	 content_tag(:div, {:class => "input-append"}) { content_tag(:span, number_to_percentage(s_filtr["share_of_incoming_calls"].to_f*100.0, :precision => 0), {:class => "add-on"}) },   
+  	 
+  	 label(filtr_name, "share_of_incoming_calls_from_own_mobile", "Из них со своего оператора, %"),
+     text_field(filtr_name, "share_of_incoming_calls_from_own_mobile", html_options.merge({:type => 'range', :min => 0, :max =>1.0, :step => 0.01, :value => s_filtr["share_of_incoming_calls_from_own_mobile"] }) )+
+  	 content_tag(:div, {:class => "input-append"}) { content_tag(:span, number_to_percentage(s_filtr["share_of_incoming_calls_from_own_mobile"].to_f*100.0, :precision => 0), {:class => "add-on"}) }
+  	],   
+  	
+  	[label(filtr_name, "share_of_calls_to_other_mobile", "Доля звонков к другим операторам, %"),
+     text_field(filtr_name, "share_of_calls_to_other_mobile", html_options.merge({:type => 'range', :min => 0, :max =>1.0, :step => 0.01, :value => s_filtr["share_of_calls_to_other_mobile"] }) )+
+  	 content_tag(:div, {:class => "input-append"}) { content_tag(:span, number_to_percentage(s_filtr["share_of_calls_to_other_mobile"].to_f*100.0, :precision => 0), {:class => "add-on"}) },   
+  	 
+  	 label(filtr_name, "share_of_calls_to_fix_line", "Доля звонков на фиксированную линию, %"),
+     text_field(filtr_name, "share_of_calls_to_fix_line", html_options.merge({:type => 'range', :min => 0, :max =>1.0, :step => 0.01, :value => s_filtr["share_of_calls_to_fix_line"] }) )+
+  	 content_tag(:div, {:class => "input-append"}) { content_tag(:span, number_to_percentage(s_filtr["share_of_calls_to_fix_line"].to_f*100.0, :precision => 0), {:class => "add-on"}) }
+  	],   
+  	
+  	[label(filtr_name, "share_of_regional_calls", "Доля междугородних звонков, %"),
+     text_field(filtr_name, "share_of_regional_calls", html_options.merge({:type => 'range', :min => 0, :max =>1.0, :step => 0.01, :value => s_filtr["share_of_regional_calls"] }) )+
+  	 content_tag(:div, {:class => "input-append"}) { content_tag(:span, number_to_percentage(s_filtr["share_of_regional_calls"].to_f*100.0, :precision => 0), {:class => "add-on"}) },   
+  	 
+  	 label(filtr_name, "share_of_international_calls", "Доля международных звонков, %"),
+     text_field(filtr_name, "share_of_international_calls",  html_options.merge({:type => 'range', :min => 0, :max =>1.0, :step => 0.01, :value => s_filtr["share_of_international_calls"] }) )+
+  	 content_tag(:div, {:class => "input-append"}) { content_tag(:span, number_to_percentage(s_filtr["share_of_international_calls"].to_f*100.0, :precision => 0), {:class => "add-on"}) }
+  	],   
+  	
+  	[label(filtr_name, "number_of_sms_per_day", "Количество СМС, шт"),
+     text_field(filtr_name, "number_of_sms_per_day", html_options.merge({:type => 'text', :value => s_filtr["number_of_sms_per_day"] }) ),   
+  	 
+  	 label(filtr_name, "number_of_mms_per_day", "Количество ММС, шт"),
+     text_field(filtr_name, "number_of_mms_per_day", html_options.merge({:type => 'text', :value => s_filtr["number_of_mms_per_day"] }) )
+  	],   
+  	
+  	[label(filtr_name, "internet_trafic_per_month", "Трафик интернета в месяц, Гб"),
+     text_field(filtr_name, "internet_trafic_per_month", html_options.merge({:type => 'range', :min => 0, :max => 20.0, :step => 1, :value => s_filtr["internet_trafic_per_month"] }) )+
+  	 content_tag(:div, {:class => "input-append"}) { content_tag(:span, s_filtr["internet_trafic_per_month"], {:class => "add-on"}) },   
+  	 
+  	 label(filtr_name, ""),
+  	 submit_tag("Generate calls")
+  	],
+  ] 
+  end
+end
+%>
+

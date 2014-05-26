@@ -1,0 +1,5 @@
+<%= render( :partial => 'consolidate_customer_services', :locals => {:table => controller.consolidate_customer_services} )%>
+
+<%= render( :partial => 'index', :layout => 'application/layouts/tabs', :locals => {:name => 'index_tabs', :active => session[:current_tabs_page]['index_tabs'].to_i} )%>
+
+

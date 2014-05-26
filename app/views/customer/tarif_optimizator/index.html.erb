@@ -1,0 +1,8 @@
+<%= link_to 'Recalculate', customer_tarif_optimizator_recalculate_path  %>
+
+<%= render :partial => 'service_sets', :layout => 'application/layouts/model_table', :locals => {:table => controller.service_sets}%>
+
+<%= render :partial => 'tarif_results', :layout => 'application/layouts/model_table', :locals => {:table => controller.tarif_results}%>
+
+<%= render :partial => 'tarif_results_details', :layout => 'application/layouts/model_table', :locals => {:table => controller.tarif_results_details}%>
+

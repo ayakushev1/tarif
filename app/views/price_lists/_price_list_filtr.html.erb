@@ -1,0 +1,26 @@
+<%
+form_item.init do |fi|
+  s = fi.session_filtr_params	
+  fi.caption = "Price list filtr fields"	
+  fi.set_fields do |filtr_name|
+  	action = {:action_name => price_lists_path} 
+    [
+      ["", collection_select(filtr_name, "tarif_class_id", TarifList.where(:id => PriceList.query_from_filtr(s, "tarif_class_id").pluck(:tarif_class_id).uniq ), :id, :name, 
+	  	{:include_blank => "tarif class", :selected => s["tarif_class_id"] }, action )
+	  ],
+
+      ["", collection_select(filtr_name, "tarif_list_id", TarifList.where(:id => PriceList.query_from_filtr(s, "tarif_list_id").pluck(:tarif_list_id).uniq ), :id, :name, 
+	  	{:include_blank => "tarif list", :selected => s["tarif_list_id"] }, action )
+	  ],
+
+      ["", collection_select(filtr_name, "service_category_group_id", Service::CategoryGroup.where(:id => PriceList.query_from_filtr(s, "service_category_group_id").pluck(:service_category_group_id).uniq ), :id, :name, 
+	  	{:include_blank => "service category group", :selected => s["service_category_group_id"] }, action )
+	  ],
+	  [
+	  	"", select(filtr_name, 'is_active', [['active', true], ['not active', false]],	  	
+	  	{:include_blank => "is active?", :selected => s["is_active"] }, action )
+	  ],
+    ] 
+  end
+end
+%>

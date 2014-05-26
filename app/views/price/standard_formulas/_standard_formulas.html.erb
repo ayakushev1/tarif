@@ -1,0 +1,22 @@
+<%
+table.init do |t|
+  t.caption = 'Price formulas'
+  t.heads = ['Id', 'Name', 'Formula', 'Price unit', 'Volume', 'Volume unit', 'Description']
+  t.set_fields do |f| 
+  [
+    f.id, 
+    f.name, 
+    f.formula, 
+    (f.price_unit.name if f.price_unit), 
+    (f.volume.name if f.volume), 
+    (f.volume_unit.name if f.volume_unit), 
+    f.description, 
+#    (f.created_at.to_formatted_s(:short) if  f.created_at), 
+#    (f.updated_at.to_formatted_s(:short) if f.updated_at), 
+#    link_to( 'Show', f), 
+#    link_to( 'Edit', edit_price_standard_formula_path(f)), 
+#    link_to( 'Destroy', f, method: :delete, data: { confirm: 'Are you sure?' } )
+  ] 
+  end
+end
+%>

@@ -1,0 +1,15 @@
+<%
+form_item.init do |fi|
+  fi.caption = 'Show tarif list'
+  fi.set_fields do |f| 
+	[
+      ['Name', f.name], 
+	  ['Tarif class', (f.tarif_class.name if f.tarif_class)], 
+	  ['Region', (f.region.name if f.region)], 
+	  ['Features', f.features], 
+	  ['Description', f.description], 
+	  [link_to( 'Back', tarif_lists_path), '']#link_to( 'Edit', edit_tarif_list_path(f) ) ], 
+	] 
+  end
+end	
+%>

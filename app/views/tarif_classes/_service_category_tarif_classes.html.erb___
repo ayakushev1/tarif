@@ -1,0 +1,25 @@
+<%
+table.init do |t|
+  t.caption = 'Tarif class service categories'
+  t.pagination_per_page = 10
+  t.heads = ['Id', 'Active?','Operator', 'Tarif class', 'Onetime', 'Periodic', 'As standard category group', 'As tarif class category', 'Tarif class categories', 'Standard category groups' ,'Rouming', 'Geo', 'Calls', 'Partner type']
+  t.set_fields do |f| 
+  [
+    f.id, 
+    f.is_active, 
+    (f.tarif_class.operator.name if f.tarif_class and f.tarif_class.operator), 
+    (f.tarif_class.name if f.tarif_class), 
+    (f.service_category_one_time.name if f.service_category_one_time), 
+    (f.service_category_periodic.name if f.service_category_periodic), 
+    (f.as_standard_category_group.name if f.as_standard_category_group), 
+    (f.as_tarif_class_service_category.name if f.as_tarif_class_service_category), 
+    f.tarif_class_service_categories, 
+    f.standard_category_groups, 
+    (f.service_category_rouming.name if f.service_category_rouming), 
+    (f.service_category_geo.name if f.service_category_geo), 
+    (f.service_category_calls.name if f.service_category_calls), 
+    (f.service_category_partner_type.name if f.service_category_partner_type), 
+  ] 
+  end
+end
+%>

@@ -1,0 +1,19 @@
+<%
+
+content_in :tabs do |user| 
+  [
+    ['Customer services',
+    	(render :partial => 'services', :layout => 'application/layouts/model_table', :locals => {:table => controller.customer_services}) +
+    	 
+    	(render :partial => 'calls', :layout => 'application/layouts/model_table', :locals => {:table => controller.customer_calls})     	
+    ], 
+    ['Customer stats',
+      (
+    	(content_tag(:div, controller.bench) ) +
+    	link_to('Calculate statistic', calculate_statistic_customer_services_path , {:id => 'calculate_statistic', :class => "btn ", :'data-remote' => true} ) +
+    	render( :partial => 'stats', :layout => 'application/layouts/model_table', :locals => {:table => controller.stats} )
+      ) 
+    ], 
+  ] 
+end
+%>

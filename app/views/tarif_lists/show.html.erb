@@ -1,0 +1,8 @@
+<%= render :partial => 'tarif_list', :layout => 'application/layouts/model_show', :locals => {:form_item => controller.tarif_list_form} %>
+
+<%= render :partial => 'price_list_filtr', :layout => 'application/layouts/filtr_form', :locals => {:form_item => controller.price_list_filtr, :html => {:class => "form-inline"} }%>
+
+<%= render :partial => 'price_lists', :layout => 'application/layouts/model_table', :locals => {:table => controller.price_lists_for_show}%>
+
+<%= render :partial => 'price_formulas', :layout => 'application/layouts/model_table', :locals => {:table => controller.price_formulas}%>
+

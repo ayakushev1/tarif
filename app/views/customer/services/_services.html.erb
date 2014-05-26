@@ -1,0 +1,26 @@
+<%
+table.init do |t|
+  t.caption = 'Customer services'
+  t.heads = ['Id', 'Tarif class', 'Tarif name', 'Status', 'Valid from', 'Valid till', 'Description']
+#  t.heads = ['Id', 'Customer', 'Phone number', 'Tarif class', 'Tarif name', 'Status', 'Valid from', 'Valid till', 'Description']
+  t.set_fields do |f| 
+  [
+    f.id, 
+#    (f.user.name if f.user), 
+#    f.phone_number, 
+    (f.tarif_class.name if f.tarif_class), 
+    (f.tarif_list.name if f.tarif_list), 
+    (f.status.name if f.status), 
+    (f.valid_from.to_formatted_s(:long) if  f.valid_from), 
+    (f.valid_till.to_formatted_s(:long) if  f.valid_till), 
+    f.description, 
+#    (f.created_at.to_formatted_s(:short) if  f.created_at), 
+#    (f.updated_at.to_formatted_s(:short) if f.updated_at), 
+#    link_to( 'Show', f), 
+#    link_to( 'Edit', edit_tarif_class_path(f)), 
+#    link_to( 'Destroy', f, method: :delete, data: { confirm: 'Are you sure?' } )
+  ] 
+  end
+end
+%>
+
