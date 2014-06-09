@@ -6,11 +6,12 @@ table.init do |t|
   t.heads = 
   ['tarif_class_id', 'call_ids', 'call_id_count', 'price_value']
   t.set_fields do |t| 
+  	duplicates = t['call_ids'].uniq! ? (t['call_ids'] + t['call_ids'] - t['call_ids'].uniq).sort.to_s : [] if t['call_ids']
   [
   	t['tarif_class_id'],
-  	t['call_ids'],
+  	(t['call_ids'].uniq! ? "there are duplicates: " + duplicates : t['call_ids'].sort.to_s if t['call_ids']),
   	t['call_id_count'],
-  	t['price_value'],
+  	(t['price_value'].round(2) if t['price_value']),
 #  	t['price_values']
   ] 
   end

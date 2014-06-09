@@ -1,11 +1,24 @@
 Price::StandardFormula.delete_all
 stf =[]
 
+stf << { :id => _stf_price_by_1_month, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _month, :name => 'monthly fee', 
+         :description => '',  :formula => {:params => nil, :stat_params => {:count_volume => "((1.0)::float)"}, :method => 'price_formulas.price * count_volume'} }#
+
+stf << { :id => _stf_price_by_30_day, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _day, :name => 'daily fee', 
+         :description => '',  :formula => {:params => nil, :stat_params => {:count_volume => "((30.0)::float)"}, :method => 'price_formulas.price * count_volume'} }#
+
+stf << { :id => _stf_price_by_1_item, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _item, :name => 'onetime fee', 
+         :description => '',  :formula => {:params => nil, :stat_params => {:count_volume => "((1.0)::float)"}, :method => 'price_formulas.price * count_volume'} }#
+
+
 stf << { :id => _stf_zero_sum_duration_second, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _second, :name => '0 * sum_duration in seconds', 
         :description => '',  :formula => {:params => nil, :stat_params => {:sum_duration => "sum((description->>'duration')::float)"}, :method => '0.0 * sum_duration'} } #
 
 stf << { :id => _stf_zero_count_volume_item, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _item, :name => '0 * count_volume in items', 
          :description => '',  :formula => {:params => nil, :stat_params => {:count_volume => "count((description->>'volume')::integer)"}, :method => '0.0 * count_volume'} } #
+
+stf << { :id => _stf_zero_sum_volume_m_byte, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => '0 * sum_volume in Mbytes', 
+         :description => '',  :formula => {:params => nil, :stat_params => {:sum_volume => "sum((description->>'volume')::float)"}, :method => '0.0 * sum_volume'} }
 
 stf << { :id => _stf_price_by_sum_duration_second, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _second, :name => 'price * sum_duration in seconds', 
          :description => '',  :formula => {:params => nil, :stat_params => {:sum_duration => "sum((description->>'duration')::float)"}, :method => :'price_formulas.price * sum_duration'} } 
@@ -16,17 +29,28 @@ stf << { :id => _stf_price_by_count_volume_item, :price_unit_id => _rur, :volume
 stf << { :id => _stf_price_by_sum_volume_m_byte, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'price * sum_volume in Mbytes', 
          :description => '',  :formula => {:params => nil, :stat_params => {:sum_volume => "sum((description->>'volume')::float)"}, :method => 'price_formulas.price * sum_volume'} }
 
-stf << { :id => _stf_price_by_1_month, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _month, :name => 'monthly fee', 
-         :description => '',  :formula => {:params => nil, :stat_params => {:count_volume => "((1.0)::float)"}, :method => 'price_formulas.price * count_volume'} }#
+stf << { :id => _stf_price_by_sum_duration_minute, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute, :name => 'price * sum_duration in minutes', 
+         :description => '',  :formula => {:params => nil, :stat_params => {:sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"}, :method => :'price_formulas.price * sum_duration_minute'} } 
 
-stf << { :id => _stf_price_by_30_day, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _day, :name => 'daily fee', 
-         :description => '',  :formula => {:params => nil, :stat_params => {:count_volume => "((30.0)::float)"}, :method => 'price_formulas.price * count_volume'} }#
 
-stf << { :id => _stf_price_by_1_item, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _item, :name => 'onetime fee', 
-         :description => '',  :formula => {:params => nil, :stat_params => {:count_volume => "((1.0)::float)"}, :method => 'price_formulas.price * count_volume'} }#
 
-stf << { :id => _stf_zero_sum_volume_m_byte, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => '0 * sum_volume in Mbytes', 
-         :description => '',  :formula => {:params => nil, :stat_params => {:sum_volume => "sum((description->>'volume')::float)"}, :method => '0.0 * sum_volume'} }
+stf << { :id => _stf_zero_group_sum_duration_second, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _second, :name => '0 * group_sum_duration in seconds', 
+        :description => '',  :formula => {:params => nil, :stat_params => {:group_sum_duration => "sum((description->>'duration')::float)"}, :method => '0.0 * group_sum_duration'} } #
+
+stf << { :id => _stf_zero_group_count_volume_item, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _item, :name => '0 * group_count_volume in items', 
+         :description => '',  :formula => {:params => nil, :stat_params => {:group_count_volume => "count((description->>'volume')::integer)"}, :method => '0.0 * group_count_volume'} } #
+                
+stf << { :id => _stf_zero_group_sum_volume_m_byte, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => '0 * group_sum_volume in Mbytes', 
+         :description => '',  :formula => {:params => nil, :stat_params => {:group_sum_volume => "sum((description->>'volume')::float)"}, :method => '0.0 * group_sum_volume'} }
+
+stf << { :id => _stf_price_by_group_sum_duration_second, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _second, :name => 'price * group_sum_duration in seconds', 
+         :description => '',  :formula => {:params => nil, :stat_params => {:group_sum_duration => "sum((description->>'duration')::float)"}, :method => :'price_formulas.price * group_sum_duration'} } 
+
+stf << { :id => _stf_price_by_group_count_volume_item, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _item, :name => 'price * group_count_volume in items', 
+         :description => '',  :formula => {:params => nil, :stat_params => {:group_count_volume => "count((description->>'volume')::float)"}, :method => 'price_formulas.price * group_count_volume'} }
+                
+stf << { :id => _stf_price_by_group_sum_volume_m_byte, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'price * group_sum_volume in Mbytes', 
+         :description => '',  :formula => {:params => nil, :stat_params => {:group_sum_volume => "sum((description->>'volume')::float)"}, :method => 'price_formulas.price * group_sum_volume'} }
 
 Price::StandardFormula.transaction do
   Price::StandardFormula.create(stf)

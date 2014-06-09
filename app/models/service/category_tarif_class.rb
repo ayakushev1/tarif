@@ -17,6 +17,7 @@
 #  is_active                          :boolean
 #  created_at                         :datetime
 #  updated_at                         :datetime
+#  name                               :text
 #
 
 class Service::CategoryTarifClass < ActiveRecord::Base
@@ -28,9 +29,10 @@ class Service::CategoryTarifClass < ActiveRecord::Base
   belongs_to :service_category_one_time, :class_name =>'Service::Category', :foreign_key => :service_category_one_time_id
   belongs_to :service_category_periodic, :class_name =>'Service::Category', :foreign_key => :service_category_periodic_id
   belongs_to :as_standard_category_group, :class_name =>'Service::CategoryGroup', :foreign_key => :as_standard_category_group_id
-  belongs_to :as_tarif_class_service_category, :class_name =>'Service::CategoryTarifClass', :foreign_key => :as_tarif_class_service_category_id
+  belongs_to :as_service_category, :class_name =>'Service::CategoryTarifClass', :foreign_key => :as_tarif_class_service_category_id
   belongs_to :tarif_class, :class_name =>'TarifClass', :foreign_key => :tarif_class_id
   has_many :price_list, :class_name => '::PriceList', :foreign_key => :service_category_tarif_class_id
+  has_many :as_service_categories, :class_name =>'Service::CategoryTarifClass', :foreign_key => :as_tarif_class_service_category_id
 
   def self.active; where(:is_active => true); end
   def self.original; where('as_standard_category_group_id is null and as_tarif_class_service_category_id is null'); end
@@ -74,6 +76,10 @@ class Service::CategoryTarifClass < ActiveRecord::Base
   
   def self.with_standard_category_groups(group_id)
     group_id ? where("array[standard_category_groups] @> array[#{group_id.to_i}] ") : self 
+  end
+
+  def self.find_ids_by_tarif_class_ids(tarif_class_ids)
+    where(:tarif_class_id => tarif_class_ids).pluck(:id).uniq
   end
   
 end

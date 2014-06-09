@@ -1,10 +1,17 @@
 Price::Formula.delete_all
 prf = []
+#price_list_to_real_category_groups
+  #all operators
+prf << {:id => _prf_free_sum_duration, :price_list_id => _prf_free_sum_duration, :calculation_order => 0, :standard_formula_id => _stf_zero_sum_duration_second, :price => 0.0, :description => '' }
+prf << {:id => _prf_free_count_volume, :price_list_id => _prf_free_count_volume, :calculation_order => 0, :standard_formula_id => _stf_zero_count_volume_item, :price => 0.0, :description => '' }
+prf << {:id => _prf_free_sum_volume, :price_list_id => _prf_free_sum_volume, :calculation_order => 0, :standard_formula_id => _stf_zero_sum_volume_m_byte, :price => 0.0, :description => '' }
 
-prf << {:id => _prf_free_sum_duration, :calculation_order => 0, :standard_formula_id => _stf_zero_sum_duration_second, :price => 0.0, :description => '' }
-prf << {:id => _prf_free_count_volume, :calculation_order => 0, :standard_formula_id => _stf_zero_count_volume_item, :price => 0.0, :description => '' }
-prf << {:id => _prf_free_sum_volume, :calculation_order => 0, :standard_formula_id => _stf_zero_sum_volume_m_byte, :price => 0.0, :description => '' }
+prf << {:id => _prf_free_group_sum_duration, :price_list_id => _prf_free_group_sum_duration, :calculation_order => 0, :standard_formula_id => _stf_zero_group_sum_duration_second, :price => 0.0, :description => '' }
+prf << {:id => _prf_free_group_count_volume, :price_list_id => _prf_free_group_count_volume, :calculation_order => 0, :standard_formula_id => _stf_zero_group_count_volume_item, :price => 0.0, :description => '' }
+prf << {:id => _prf_free_group_sum_volume, :price_list_id => _prf_free_group_sum_volume, :calculation_order => 0, :standard_formula_id => _stf_zero_group_sum_volume_m_byte, :price => 0.0, :description => '' }
 
+last_real_price_formula_id = _prf_free_group_sum_volume 
+  
 Price::Formula.transaction do
   Price::Formula.create(prf)
 end
@@ -22,7 +29,7 @@ filtrs << {
 
 filtrs << {
   :condition =>{
-    :service_category_rouming_id => [_own_region_rouming, _own_home_rouming, _own_country_rouming, _all_world_rouming],
+    :service_category_rouming_id => [_own_region_rouming, _home_region_rouming, _own_country_rouming, _all_world_rouming],
     :service_category_calls_id => [_sms_in, _mms_in],
   },
   :create => {:standard_formula_id => _stf_zero_count_volume_item, :formula => {}, :price => 0.0, :volume_id => nil, :volume_unit_id => nil}  
@@ -30,7 +37,7 @@ filtrs << {
 
 filtrs << {
   :condition =>{
-    :service_category_rouming_id => [_own_region_rouming, _own_home_rouming, _own_country_rouming],
+    :service_category_rouming_id => [_own_region_rouming, _home_region_rouming, _own_country_rouming],
     :service_category_calls_id => [_calls_out],
   },
   :create => {:standard_formula_id => _stf_price_by_sum_duration_second, :formula => {}, :price => 5.0, :volume_id => nil, :volume_unit_id => nil}  
@@ -38,7 +45,7 @@ filtrs << {
 
 filtrs << {
   :condition =>{
-    :service_category_rouming_id => [_own_region_rouming, _own_home_rouming, _own_country_rouming],
+    :service_category_rouming_id => [_own_region_rouming, _home_region_rouming, _own_country_rouming],
     :service_category_calls_id => [_sms_out, _mms_out] ,
   },
   :create => {:standard_formula_id => _stf_price_by_count_volume_item, :formula => {}, :price => 1.0, :volume_id => nil, :volume_unit_id => nil}  
@@ -84,27 +91,40 @@ filtrs << {
 prlst_tarif_list = []; prlst_tarif_class = []; prlst_service_group = []
 prlst = []
 
-i = _prf_free_sum_volume + 1
+i = last_real_price_formula_id + 1
+
 filtrs.reverse.each do |f|
   prf = []; new_prlst_tarif_list = []; new_prlst_tarif_class = []; new_prlst_service_group = []
   
   new_prlst_tarif_list += PriceList.where.not(:tarif_list_id => nil).joins(:service_category_tarif_class).
     merge(Service::CategoryTarifClass.active.original).
-    where(:service_category_tarif_classes => f[:condition]).where.not(:id => prlst).pluck(:id).uniq
+    where(:service_category_tarif_classes => f[:condition]).
+    where.not(:service_category_tarif_classes => {:tarif_class_id => _correct_tarif_class_ids}).
+    where.not(:id => prlst).pluck(:id).uniq
     
   prlst += new_prlst_tarif_list
 
+#  raise(StandardError, '') if new_prlst_tarif_list.include?(2294)
+
   new_prlst_tarif_class += PriceList.where.not(:tarif_class_id => nil).joins(:service_category_tarif_class).
     merge(Service::CategoryTarifClass.active.original).
-    where(:service_category_tarif_classes => f[:condition]).where.not(:id => prlst).pluck(:id).uniq
+    where(:service_category_tarif_classes => f[:condition]).
+    where.not(:service_category_tarif_classes => {:tarif_class_id => _correct_tarif_class_ids}).
+    where.not(:id => prlst).pluck(:id).uniq
     
   prlst += new_prlst_tarif_class
 
+#  raise(StandardError, '') if new_prlst_tarif_class.include?(2294)
+
   new_prlst_service_group += PriceList.where.not(:service_category_group_id => nil).joins(service_category_group: :service_category_tarif_classes).
     merge(Service::CategoryTarifClass.active.where.not(:as_standard_category_group_id => nil) ).
-    where(:service_category_tarif_classes => f[:condition]).where.not(:id => prlst).pluck(:id).uniq
+    where(:service_category_tarif_classes => f[:condition]).
+    where.not(:service_category_tarif_classes => {:tarif_class_id => _correct_tarif_class_ids}).
+    where.not(:id => prlst).pluck(:id).uniq
     
   prlst += new_prlst_service_group
+  
+#  raise(StandardError, '') if new_prlst_service_group.include?(2294)
 
   prlst_tarif_list += new_prlst_tarif_list 
   prlst_tarif_class += new_prlst_tarif_class
@@ -142,7 +162,7 @@ end
 
 #ServiceCategories
   #rouming
-#  _own_region_rouming = 2; _own_home_rouming = 3; _own_country_rouming = 4; _all_world_rouming = 6;
+#  _own_region_rouming = 2; _home_region_rouming = 3; _own_country_rouming = 4; _all_world_rouming = 6;
   #география услуг
 #  _service_to_own_region = 101; _service_to_home_region = 102; _service_to_own_ountry = 103; _service_to_all_world = 105;
   #partner type

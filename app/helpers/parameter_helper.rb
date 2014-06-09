@@ -19,9 +19,30 @@ module ParameterHelper
       @external_value = external_value[0]
     end
     
-    def param_class; param['source']['class'].constantize; end;
+#    def param_class; param['source']['class'].constantize; end;
+    def param_class; param.source['class'].constantize; end;
     
     def field; param.source['field']; end;
+
+    def field_type; category_field_type(param.source['field_type_id']); end;
+
+    def sub_field_type; category_field_type(param.source['sub_field_type_id']); end;
+         
+    def category_field_type(category_field_type_id)
+       case category_field_type_id
+       when 3; 'boolean';
+       when 4; 'integer';
+       when 5; 'string';
+       when 6; 'text';
+       when 7; 'decimal';
+#       when 8; 'list';
+       when 9; 'integer';# instead of reference
+       when 10; 'timestamp';# instead of datetime
+       when 11; 'json';
+#       when 12; 'array';
+       else 'text';
+       end
+    end
 
     def sub_field; param.source['sub_field']; end;
 
@@ -69,7 +90,7 @@ module ParameterHelper
 
     def sql_name
       sql_name_before_pg_json = "#{table}.#{field}"
-      (field_type_id == 11 ) ? "#{sql_name_before_pg_json}->>'#{sub_field}'" : sql_name_before_pg_json
+      (field_type_id == 11 ) ? "(#{sql_name_before_pg_json}->>'#{sub_field}')::#{sub_field_type}" : sql_name_before_pg_json
     end
     
     def choice_to_word(display_type_id)

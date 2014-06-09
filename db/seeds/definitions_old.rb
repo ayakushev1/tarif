@@ -87,7 +87,7 @@ _mts_world = 10200; _mts_europe = 10201; _mts_asia = 10202; _mts__noth_america =
 
 #ServiceCategories
   #rouming
-  _own_region_rouming = 2; _own_home_rouming = 3; _own_country_rouming = 4; _all_world_rouming = 12;
+  _own_region_rouming = 2; _home_region_rouming = 3; _own_country_rouming = 4; _all_world_rouming = 12;
   #география услуг
   _service_to_own_region = 101; _service_to_home_region = 102; _service_to_own_ountry = 103; _service_to_all_world = 105;
   #partner type
@@ -214,7 +214,7 @@ end
     :home_region => {
       :one_time => [_tarif_switch_on],
       :periodic => [_periodic_monthly_fee],
-      :rouming_id => _own_home_rouming, 
+      :rouming_id => _home_region_rouming, 
       :service_type => {
         :one_side => { :stan_serv => _one_side_services },
         :two_side_in => { :stan_serv => _two_side_services_in_way},

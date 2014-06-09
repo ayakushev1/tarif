@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140428092439) do
+ActiveRecord::Schema.define(version: 20140530063706) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -111,6 +111,7 @@ ActiveRecord::Schema.define(version: 20140428092439) do
     t.datetime "updated_at"
   end
 
+  add_index "price_formulas", ["name"], name: "index_price_formulas_on_name", using: :btree
   add_index "price_formulas", ["price_list_id"], name: "index_price_formulas_on_price_list_id", using: :btree
   add_index "price_formulas", ["standard_formula_id"], name: "index_price_formulas_on_standard_formula_id", using: :btree
 
@@ -127,6 +128,7 @@ ActiveRecord::Schema.define(version: 20140428092439) do
     t.datetime "updated_at"
   end
 
+  add_index "price_lists", ["name"], name: "index_price_lists_on_name", using: :btree
   add_index "price_lists", ["service_category_group_id"], name: "index_price_lists_on_service_category_group_id", using: :btree
   add_index "price_lists", ["service_category_tarif_class_id"], name: "index_price_lists_on_service_category_tarif_class_id", using: :btree
   add_index "price_lists", ["tarif_class_id"], name: "index_price_lists_on_tarif_class_id", using: :btree
@@ -140,6 +142,8 @@ ActiveRecord::Schema.define(version: 20140428092439) do
     t.integer "volume_unit_id"
     t.text    "description"
   end
+
+  add_index "price_standard_formulas", ["name"], name: "index_price_standard_formulas_on_name", using: :btree
 
   create_table "relations", force: true do |t|
     t.integer "type_id"
@@ -173,6 +177,7 @@ ActiveRecord::Schema.define(version: 20140428092439) do
     t.datetime "updated_at"
   end
 
+  add_index "service_category_groups", ["name"], name: "index_service_category_groups_on_name", using: :btree
   add_index "service_category_groups", ["operator_id"], name: "index_service_category_groups_on_operator_id", using: :btree
   add_index "service_category_groups", ["tarif_class_id"], name: "index_service_category_groups_on_tarif_class_id", using: :btree
 
@@ -191,6 +196,7 @@ ActiveRecord::Schema.define(version: 20140428092439) do
     t.boolean  "is_active"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "name"
   end
 
   add_index "service_category_tarif_classes", ["as_standard_category_group_id"], name: "service_category_tarif_classes_as_standard_category_group_id", using: :btree
@@ -246,6 +252,7 @@ ActiveRecord::Schema.define(version: 20140428092439) do
     t.datetime "updated_at"
   end
 
+  add_index "tarif_classes", ["name"], name: "index_tarif_classes_on_name", using: :btree
   add_index "tarif_classes", ["operator_id"], name: "index_tarif_classes_on_operator_id", using: :btree
   add_index "tarif_classes", ["privacy_id"], name: "index_tarif_classes_on_privacy_id", using: :btree
   add_index "tarif_classes", ["standard_service_id"], name: "index_tarif_classes_on_standard_service_id", using: :btree
@@ -260,6 +267,7 @@ ActiveRecord::Schema.define(version: 20140428092439) do
     t.datetime "updated_at"
   end
 
+  add_index "tarif_lists", ["name"], name: "index_tarif_lists_on_name", using: :btree
   add_index "tarif_lists", ["region_id"], name: "index_tarif_lists_on_region_id", using: :btree
   add_index "tarif_lists", ["tarif_class_id"], name: "index_tarif_lists_on_tarif_class_id", using: :btree
 

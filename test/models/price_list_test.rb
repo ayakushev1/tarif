@@ -99,6 +99,13 @@ describe 'PriceList' do
         (@all_price_list_ids - @direct_price_list_ids - @class_price_list_ids - @category_group_price_list_ids).must_be :==, []
       end
     end
+
+    describe 'find_ids_by_tarif_class_ids' do
+      it 'must return array' do
+        PriceList.find_ids_by_tarif_class_ids(203).is_a?(Array).must_be :==, true
+      end
+    end 
+  
     
   end
 end

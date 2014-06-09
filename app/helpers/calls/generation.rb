@@ -7,7 +7,8 @@ module Calls::Generation
   
     def initialize(context, customer_calls_generation_params = {}, user_params = {})
       @context = context
-      @customer_generation_params = (customer_generation_params.blank? ? default_calls_generation_params : customer_generation_params)
+      @customer_generation_params = (customer_calls_generation_params.blank? ? default_calls_generation_params : customer_calls_generation_params)
+#      raise(StandardError, [customer_generation_params])
       @user_params = set_user_params(user_params)
       @common_params = set_common_params
       @initial_inputs = set_initial_inputs
@@ -68,7 +69,7 @@ module Calls::Generation
         "start_date" => DateTime.civil_from_format(:local, 2014, 1, 1),
         "max_number_of_all_services_per_day" => 10000,
         "number_of_days_in_call_list" => 30,
-        "max_duration_of_call" => 60, 
+        "max_duration_of_call" => 60.0, 
         "others_phone_number" => '9999999999',
         "fixed_operator_id" => _fixed_line_operator, 
         "partner_operator_ids" => set_partner_operator_ids(customer_generation_params[:own_region]["operator_id"]),
@@ -336,12 +337,12 @@ module Calls::Generation
     end
  
     def choose_random_from_array(arr)
-      arr[(rand * arr.count).floor]
+      arr ? arr[(rand * arr.count).floor] : nil
     end
     
     def average_duration_of_call(rouming)
       p = customer_generation_params
-      ( (p[rouming]["duration_of_calls"].to_f > 1.0) ?  p[rouming]["duration_of_calls"].to_f : 1.0 )
+      ( (p[rouming]["duration_of_calls"].to_f > 10.0 / 60.0) ?  p[rouming]["duration_of_calls"].to_f : 10.0 / 60.0 )
     end
     
     def share_of_calls_to_own_mobile(rouming)
@@ -410,7 +411,7 @@ module Calls::Generation
     end
         
     def duration_by_base_service(rouming, base_service_id)
-      base_service_id == _calls ? random(initial_inputs[rouming]["average_duration_of_call"]) : nil
+      base_service_id == _calls ? random(initial_inputs[rouming]["average_duration_of_call"]) * 60.0 : nil
     end
         
     def volume_by_base_service(rouming, base_service_id)
@@ -443,7 +444,7 @@ module Calls::Generation
           'phone_usage_type_id' => _own_region_active_caller,
           'country_id' => _russia,
           'region_id' => _moscow, 
-          'operator_id' => _beeline,
+          'operator_id' => _mts,
           'privacy_id' => _person,
           'region_for_region_calls_ids' => _piter,
           'country_for_international_calls_ids' => _ukraiun,

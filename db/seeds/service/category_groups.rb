@@ -2,20 +2,24 @@ Service::CategoryGroup.delete_all
 scg = []
 
 scg << { :id => _scg_all_local_incoming_calls_free, :name => 'all_local_incoming_calls_free', :criteria => {:service_category_rouming_id => _own_region_rouming, :service_category_calls_id => _calls_in, } }
-scg << { :id => _scg_all_home_region_incoming_calls_free, :name => 'all_home_region_incoming_calls_free', :criteria => {:service_category_rouming_id => _own_home_rouming, :service_category_calls_id => _calls_in, } }
+scg << { :id => _scg_all_home_region_incoming_calls_free, :name => 'all_home_region_incoming_calls_free', :criteria => {:service_category_rouming_id => _home_region_rouming, :service_category_calls_id => _calls_in, } }
 scg << { :id => _scg_all_own_country_intra_net_incoming_calls_free, :name => 'all_own_country_intra_net_incoming_calls_free', :criteria => {:service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_in, } }
 
 scg << { :id => _scg_all_local_incoming_sms_free, :name => 'all_local_incoming_sms_free', :criteria => {:service_category_rouming_id => _own_region_rouming, :service_category_calls_id => _sms_in, } }
-scg << { :id => _scg_all_home_region_incoming_sms_free, :name => 'all_home_region_incoming_sms_free', :criteria => {:service_category_rouming_id => _own_home_rouming, :service_category_calls_id => _sms_in, } }
+scg << { :id => _scg_all_home_region_incoming_sms_free, :name => 'all_home_region_incoming_sms_free', :criteria => {:service_category_rouming_id => _home_region_rouming, :service_category_calls_id => _sms_in, } }
 scg << { :id => _scg_all_own_country_intra_net_incoming_sms_free, :name => 'all_own_country_intra_net_incoming_sms_free', :criteria => {:service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _sms_in, } }
 
 scg << { :id => _scg_all_local_incoming_mms_free, :name => 'all_local_incoming_mms_free', :criteria => {:service_category_rouming_id => _own_region_rouming, :service_category_calls_id => _mms_in, } }
-scg << { :id => _scg_all_home_region_incoming_mms_free, :name => 'all_home_region_incoming_mms_free', :criteria => {:service_category_rouming_id => _own_home_rouming, :service_category_calls_id => _mms_in, } }
+scg << { :id => _scg_all_home_region_incoming_mms_free, :name => 'all_home_region_incoming_mms_free', :criteria => {:service_category_rouming_id => _home_region_rouming, :service_category_calls_id => _mms_in, } }
 scg << { :id => _scg_all_own_country_intra_net_incoming_mms_free, :name => 'all_own_country_intra_net_incoming_mms_free', :criteria => {:service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _mms_in, } }
-
+#real all operators
 scg << { :id => _scg_free_sum_duration, :name => 'free_sum_duration' }
 scg << { :id => _scg_free_count_volume, :name => 'free_count_volume'}
 scg << { :id => _scg_free_sum_volume, :name => 'free_sum_volume'}
+
+scg << { :id => _scg_free_group_sum_duration, :name => 'free_group_sum_duration' }
+scg << { :id => _scg_free_group_count_volume, :name => 'free_group_count_volume'}
+scg << { :id => _scg_free_group_sum_volume, :name => 'free_group_sum_volume'}
 
 Service::CategoryGroup.transaction do
   Service::CategoryGroup.create(scg)

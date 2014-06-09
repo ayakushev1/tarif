@@ -1,85 +1,151 @@
 Service::Category.delete_all; Service::Criterium.delete_all;
 cat = []; crit = [];
 #роуминг
-cat << {:id => 0, :name => 'роуминг', :type_id => _common, :parent_id => nil, :level => 0, :path => []}
+cat << {:id => _category_rouming, :name => 'роуминг', :type_id => _common, :parent_id => nil, :level => 0, :path => []}
 
-cat << {:id => 1, :name => 'внутрисетевой роуминг', :type_id => _common, :parent_id => 0, :level => 1, :path => [0]}
+cat << {:id => _intra_net_rouming, :name => 'внутрисетевой роуминг', :type_id => _common, :parent_id => _category_rouming, :level => 1, :path => [_category_rouming]}
   crit << {:id => 10 , :criteria_param_id => _call_connect_operator_id, :comparison_operator_id => _equal, :value_choose_option_id => _field, 
-           :value_param_id => _fq_tarif_operator_id, :value => nil, :service_category_id => 1}
+           :value_param_id => _fq_tarif_operator_id, :value => nil, :service_category_id => _intra_net_rouming}
 
-cat << {:id => 2, :name => 'свой регион', :type_id => _common, :parent_id => 1, :level => 2, :path => [0, 1]}
+cat << {:id => _own_region_rouming, :name => 'свой регион', :type_id => _common, :parent_id => _intra_net_rouming, :level => 2, :path => [_category_rouming, _intra_net_rouming]}
   crit << {:id => 20 , :criteria_param_id => _call_connect_region_id, :comparison_operator_id => _equal, :value_choose_option_id => _field, 
-           :value_param_id => _fq_tarif_region_id, :value => nil, :service_category_id => 2}
+           :value_param_id => _fq_tarif_region_id, :value => nil, :service_category_id => _own_region_rouming}
 
-cat << {:id => 3, :name => 'домашний регион', :type_id => _common, :parent_id => 1, :level => 2, :path => [0, 1]}
+cat << {:id => _home_region_rouming, :name => 'домашний регион', :type_id => _common, :parent_id => _intra_net_rouming, :level => 2, :path => [_category_rouming, _intra_net_rouming]}
   crit << {:id => 30 , :criteria_param_id => _call_connect_region_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
-           :value_param_id => _fq_tarif_home_region_ids, :value => nil, :service_category_id => 3}
+           :value_param_id => _fq_tarif_home_region_ids, :value => nil, :service_category_id => _home_region_rouming}
 
-cat << {:id => 4, :name => 'своя страна', :type_id => _common, :parent_id => 1, :level => 2, :path => [0, 1]}
+cat << {:id => _own_country_rouming, :name => 'своя страна', :type_id => _common, :parent_id => _intra_net_rouming, :level => 2, :path => [_category_rouming, _intra_net_rouming]}
   crit << {:id => 40 , :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _equal, :value_choose_option_id => _field, 
-           :value_param_id => _fq_tarif_country_id, :value => nil, :service_category_id => 4}
+           :value_param_id => _fq_tarif_country_id, :value => nil, :service_category_id => _own_country_rouming}
   crit << {:id => 41 , :criteria_param_id => _call_connect_region_id, :comparison_operator_id => _not_equal, :value_choose_option_id => _field, 
-           :value_param_id => _fq_tarif_region_id, :value => nil, :service_category_id => 4}
+           :value_param_id => _fq_tarif_region_id, :value => nil, :service_category_id => _own_country_rouming}
   crit << {:id => 42 , :criteria_param_id => _call_connect_region_id, :comparison_operator_id => _not_in_array, :value_choose_option_id => _field, 
-           :value_param_id => _fq_tarif_home_region_ids, :value => nil, :service_category_id => 4}
+           :value_param_id => _fq_tarif_home_region_ids, :value => nil, :service_category_id => _own_country_rouming}
 
-cat << {:id => 5, :name => 'группы стран', :type_id => _common, :parent_id => 1, :level => 2, :path => [0, 1]}
+cat << {:id => 5, :name => 'группы стран', :type_id => _common, :parent_id => _intra_net_rouming, :level => 2, :path => [_category_rouming, _intra_net_rouming]}
 cat << {:id => 6, :name => 'весь мир', :type_id => _common, :parent_id => 5, :level => 3, :path => [0, 1, 5]}
   crit << {:id => 61 , :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
            :eval_string => 'Relation.operator_country_groups(nil, 1600)', :service_category_id => 6}
 
-cat << {:id => 10, :name => 'чужой оператор', :type_id => _common, :parent_id => 0, :level => 1, :path => [0]}
+cat << {:id => 10, :name => 'чужой оператор', :type_id => _common, :parent_id => _category_rouming, :level => 1, :path => [_category_rouming]}
   crit << {:id => 100 , :criteria_param_id => _call_connect_operator_id, :comparison_operator_id => _not_equal, :value_choose_option_id => _field, 
            :value_param_id => _fq_tarif_operator_id, :value => nil, :service_category_id => 10}
            
-cat << {:id => 11, :name => 'национальный роуминг', :type_id => _common, :parent_id => 10, :level => 2, :path => [0, 10]}
+cat << {:id => 11, :name => 'национальный роуминг', :type_id => _common, :parent_id => 10, :level => 2, :path => [_category_rouming, 10]}
   crit << {:id => 110 , :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _equal, :value_choose_option_id => _field, 
            :value_param_id => _fq_tarif_country_id, :value => nil, :service_category_id => 11}
            
-cat << {:id => 12, :name => 'международный роуминг', :type_id => _common, :parent_id => 10, :level => 2, :path => [0, 10]}
+cat << {:id => _all_world_rouming, :name => 'международный роуминг', :type_id => _common, :parent_id => 10, :level => 2, :path => [_category_rouming, 10]}
   crit << {:id => 120 , :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _not_equal, :value_choose_option_id => _field, 
            :value_param_id => _fq_tarif_country_id, :value => nil, :service_category_id => 12}
 
+cat << {:id => _sc_mts_europe_rouming, :name => '_sc_mts_europe_rouming', :type_id => _common, :parent_id => 10, :level => 2, :path => [_category_rouming, 10]}
+  crit << {:id => 130 , :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mts_europe_countries})", :service_category_id => _sc_mts_europe_rouming}
+
+cat << {:id => _sc_mts_sic_rouming, :name => '_sc_mts_sic_rouming', :type_id => _common, :parent_id => 10, :level => 2, :path => [_category_rouming, 10]}
+  crit << {:id => 140 , :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mts_sic_countries})", :service_category_id => _sc_mts_sic_rouming}
+
+cat << {:id => _sc_mts_sic_1_rouming, :name => '_sc_mts_sic_1_rouming', :type_id => _common, :parent_id => 10, :level => 2, :path => [_category_rouming, 10]}
+  crit << {:id => 150 , :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mts_sic_1_countries})", :service_category_id => _sc_mts_sic_1_rouming}
+
+cat << {:id => _sc_mts_sic_2_rouming, :name => '_sc_mts_sic_2_rouming', :type_id => _common, :parent_id => 10, :level => 2, :path => [_category_rouming, 10]}
+  crit << {:id => 160 , :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mts_sic_2_countries})", :service_category_id => _sc_mts_sic_2_rouming}
+
+cat << {:id => _sc_mts_sic_3_rouming, :name => '_sc_mts_sic_3_rouming', :type_id => _common, :parent_id => 10, :level => 2, :path => [_category_rouming, 10]}
+  crit << {:id => 170 , :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mts_sic_3_countries})", :service_category_id => _sc_mts_sic_3_rouming}
+
+cat << {:id => _sc_mts_other_countries_rouming, :name => '_sc_mts_other_countries_rouming', :type_id => _common, :parent_id => 10, :level => 2, :path => [_category_rouming, 10]}
+  crit << {:id => 180 , :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mts_other_countries})", :service_category_id => _sc_mts_other_countries_rouming}
+
+
 #география услуг
-cat << {:id => 100, :name => 'география услуг', :type_id => _common, :parent_id => nil, :level => 0, :path => []}
-cat << {:id => 101, :name => 'услуги в свой регион', :type_id => _common, :parent_id => 100, :level => 1, :path => [100]}
+cat << {:id => _geography_services, :name => 'география услуг', :type_id => _common, :parent_id => nil, :level => 0, :path => []}
+cat << {:id => _service_to_own_region, :name => 'услуги в свой регион', :type_id => _common, :parent_id => _geography_services, :level => 1, :path => [_geography_services]}
   crit << {:id => 1010 , :criteria_param_id => _call_partner_phone_region_id, :comparison_operator_id => _equal, :value_choose_option_id => _field, 
-           :value_param_id => _fq_tarif_region_id, :value => nil, :service_category_id => 101}
+           :value_param_id => _fq_tarif_region_id, :value => nil, :service_category_id => _service_to_own_region}
 
-cat << {:id => 102, :name => 'услуги в домашний регион', :type_id => _common, :parent_id => 100, :level => 1, :path => [100]}
+cat << {:id => _service_to_home_region, :name => 'услуги в домашний регион', :type_id => _common, :parent_id => _geography_services, :level => 1, :path => [_geography_services]}
   crit << {:id => 1020 , :criteria_param_id => _call_partner_phone_region_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
-           :value_param_id => _fq_tarif_home_region_ids, :value => nil, :service_category_id => 102}
+           :value_param_id => _fq_tarif_home_region_ids, :value => nil, :service_category_id => _service_to_home_region}
 #TODO исправить плохой критерий 1030
-cat << {:id => 103, :name => 'услуги в свою страну', :type_id => _common, :parent_id => 100, :level => 1, :path => [100]}
+cat << {:id => _service_to_own_country, :name => 'услуги в свою страну', :type_id => _common, :parent_id => _geography_services, :level => 1, :path => [_geography_services]}
   crit << {:id => 1030 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _equal, :value_choose_option_id => _field, 
-           :value_param_id => _fq_tarif_country_id, :value => nil, :service_category_id => 103}
+           :value_param_id => _fq_tarif_country_id, :value => nil, :service_category_id => _service_to_own_country}
   crit << {:id => 1031 , :criteria_param_id => _call_partner_phone_region_id, :comparison_operator_id => _not_equal, :value_choose_option_id => _field, 
-           :value_param_id => _fq_tarif_region_id, :value => nil, :service_category_id => 103}
+           :value_param_id => _fq_tarif_region_id, :value => nil, :service_category_id => _service_to_own_country}
   crit << {:id => 1032 , :criteria_param_id => _call_partner_phone_region_id, :comparison_operator_id => _not_in_array, :value_choose_option_id => _field, 
-           :value_param_id => _fq_tarif_home_region_ids, :value => nil, :service_category_id => 103}
+           :value_param_id => _fq_tarif_home_region_ids, :value => nil, :service_category_id => _service_to_own_country}
 
-cat << {:id => 104, :name => 'услуги в группу стран', :type_id => _common, :parent_id => 100, :level => 1, :path => [100]}
-cat << {:id => 105, :name => 'весь мир', :type_id => _common, :parent_id => 104, :level => 2, :path => [100, 104]}
-  crit << {:id => 1051 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
-           :eval_string => 'Relation.operator_country_groups(nil, 1600)', :service_category_id => 105}
+cat << {:id => _service_to_group_of_countries, :name => 'услуги в группу стран', :type_id => _common, :parent_id => _geography_services, :level => 1, :path => [_geography_services]}
+cat << {:id => _service_to_not_own_country, :name => 'весь мир', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => 1050 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _not_equal, :value_choose_option_id => _field, 
+           :value_param_id => _fq_tarif_country_id, :value => nil, :service_category_id => _service_to_not_own_country}
+
+cat << {:id => _service_to_mts_europe, :name => 'mts Europe', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => 1061 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mts_europe_countries})", :service_category_id => _service_to_mts_europe}
+cat << {:id => _service_to_mts_sic, :name => 'mts SIC', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => 1071 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mts_sic_countries})", :service_category_id => _service_to_mts_sic}
+cat << {:id => _service_to_mts_other_countries, :name => 'mts other countries', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => 1081 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mts_other_countries})", :service_category_id => _service_to_mts_other_countries}
+
+
+cat << {:id => _sc_service_to_russia, :name => '_service_to_russia', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => 1090 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _equal, :value_choose_option_id => _field, 
+           :value => _russia, :service_category_id => _sc_service_to_russia}
+
+cat << {:id => _sc_service_to_rouming_country, :name => '_service_to_rouming_country', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => 1100 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _equal, :value_choose_option_id => _value_param_is_criterium_param, 
+           :value_param_id => _call_connect_country_id, :value => nil, :service_category_id => _sc_service_to_rouming_country}
+
+cat << {:id => _sc_service_to_not_rouming_not_russia, :name => '_sc_service_to_not_rouming_not_russia', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => 1110 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _not_equal, :value_choose_option_id => _field, 
+           :value => _russia, :service_category_id => _sc_service_to_not_rouming_not_russia}
+  crit << {:id => 1111 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _not_equal, :value_choose_option_id => _value_param_is_criterium_param, 
+           :value_param_id => _call_connect_country_id, :value => nil, :service_category_id => _sc_service_to_not_rouming_not_russia}
+
+cat << {:id => _sc_service_not_rouming_not_russia_to_sic, :name => '_sc_service_to_sic_countries', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => 1120 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _not_equal, :value_choose_option_id => _field, 
+           :value => _russia, :service_category_id => _sc_service_not_rouming_not_russia_to_sic}
+  crit << {:id => 1121 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _not_equal, :value_choose_option_id => _value_param_is_criterium_param, 
+           :value_param_id => _call_connect_country_id, :value => nil, :service_category_id => _sc_service_not_rouming_not_russia_to_sic}
+  crit << {:id => 1122 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mts_sic_countries})", :service_category_id => _sc_service_not_rouming_not_russia_to_sic}
+
+cat << {:id => _sc_service_to_not_rouming_not_russia_not_sic, :name => '_sc_service_to_not_rouming_not_russia_not_sic', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => 1130 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _not_equal, :value_choose_option_id => _field, 
+           :value => _russia, :service_category_id => _sc_service_to_not_rouming_not_russia_not_sic}
+  crit << {:id => 1131 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _not_equal, :value_choose_option_id => _value_param_is_criterium_param, 
+           :value_param_id => _call_connect_country_id, :value => nil, :service_category_id => _sc_service_to_not_rouming_not_russia_not_sic}
+  crit << {:id => 1132 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _not_in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mts_sic_countries})", :service_category_id => _sc_service_to_not_rouming_not_russia_not_sic}
 
 #оператор второй стороны
-cat << {:id => 190, :name => 'оператор второй стороны', :type_id => _common, :parent_id => nil, :level => 0, :path => []}
-cat << {:id => 191, :name => 'свой оператор', :type_id => _common, :parent_id => 190, :level => 1, :path => [190]}
+cat << {:id => _partner_operator_services, :name => 'оператор второй стороны', :type_id => _common, :parent_id => nil, :level => 0, :path => []}
+cat << {:id => _service_to_own_operator, :name => 'свой оператор', :type_id => _common, :parent_id => _partner_operator_services, :level => 1, :path => [_partner_operator_services]}
   crit << {:id => 1910 , :criteria_param_id => _call_partner_phone_operator_id, :comparison_operator_id => _equal, :value_choose_option_id => _field, 
-           :value_param_id => _fq_tarif_operator_id, :value => nil, :service_category_id => 191}
+           :value_param_id => _fq_tarif_operator_id, :value => nil, :service_category_id => _service_to_own_operator}
 
-cat << {:id => 192, :name => 'другой мобильный оператор', :type_id => _common, :parent_id => 190, :level => 1, :path => [190]}
+cat << {:id => _service_to_other_operator, :name => 'другой мобильный оператор', :type_id => _common, :parent_id => _partner_operator_services, :level => 1, :path => [_partner_operator_services]}
   crit << {:id => 1920 , :criteria_param_id => _call_partner_phone_operator_id, :comparison_operator_id => _not_equal, :value_choose_option_id => _field, 
-           :value_param_id => _fq_tarif_operator_id, :value => nil, :service_category_id => 192}
+           :value_param_id => _fq_tarif_operator_id, :value => nil, :service_category_id => _service_to_other_operator}
   crit << {:id => 1921 , :criteria_param_id => _call_partner_phone_operator_type_id, :comparison_operator_id => _equal, :value_choose_option_id => _single_value, 
-           :value_param_id => _category_operator_type_id, :value => {:integer => _mobile}, :service_category_id => 192}
+           :value_param_id => _category_operator_type_id, :value => {:integer => _mobile}, :service_category_id => _service_to_other_operator}
 
-cat << {:id => 193, :name => 'фиксированная линия', :type_id => _common, :parent_id => 190, :level => 1, :path => [190]}
+cat << {:id => _service_to_fixed_line, :name => 'фиксированная линия', :type_id => _common, :parent_id => _partner_operator_services, :level => 1, :path => [_partner_operator_services]}
   crit << {:id => 1930 , :criteria_param_id => _call_partner_phone_operator_id, :comparison_operator_id => _not_equal, :value_choose_option_id => _field, 
-           :value_param_id => _fq_tarif_operator_id, :value => nil, :service_category_id => 193}
+           :value_param_id => _fq_tarif_operator_id, :value => nil, :service_category_id => _service_to_fixed_line}
   crit << {:id => 1931 , :criteria_param_id => _call_partner_phone_operator_type_id, :comparison_operator_id => _equal, :value_choose_option_id => _single_value, 
-           :value_param_id => _category_operator_type_id, :value => {:integer => _fixed_line}, :service_category_id => 193}
+           :value_param_id => _category_operator_type_id, :value => {:integer => _fixed_line}, :service_category_id => _service_to_fixed_line}
 
 
 #виды услуг
@@ -106,14 +172,14 @@ cat << {:id => 216, :name => 'доступ в личный интернет ка
 cat << {:id => 217, :name => 'доступ в личный мобильный кабинет', :type_id => _common, :parent_id => 201, :level => 2, :path => [200, 201]}
 
 cat << {:id => 280, :name => 'периодические', :type_id => _common, :parent_id => 200, :level => 1, :path => [200]}
-cat << {:id => 281, :name => 'месячная абонентская плата', :type_id => _common, :parent_id => 280, :level => 2, :path => [200, 280]}
+cat << {:id => _periodic_monthly_fee, :name => 'месячная абонентская плата', :type_id => _common, :parent_id => 280, :level => 2, :path => [200, 280]}
 #TODO откорректировать
   crit << {:id => 2810 , :criteria_param_id => _call_base_service_id, :comparison_operator_id => _equal, :value_choose_option_id => _field, 
-           :value_param_id => nil, :value => _periodic, :service_category_id => 281}
-cat << {:id => 282, :name => 'ежедневная плата', :type_id => _common, :parent_id => 280, :level => 2, :path => [200, 280]}
+           :value_param_id => nil, :value => _periodic, :service_category_id => _periodic_monthly_fee}
+cat << {:id => _periodic_day_fee, :name => 'ежедневная плата', :type_id => _common, :parent_id => 280, :level => 2, :path => [200, 280]}
 #TODO откорректировать
   crit << {:id => 2820 , :criteria_param_id => _call_base_service_id, :comparison_operator_id => _equal, :value_choose_option_id => _field, 
-           :value_param_id => nil, :value => _periodic, :service_category_id => 282}
+           :value_param_id => nil, :value => _periodic, :service_category_id => _periodic_day_fee}
 
 cat << {:id => 300, :name => 'телефонные', :type_id => _common, :parent_id => 200, :level => 1, :path => [200]}
 cat << {:id => 301, :name => 'звонки', :type_id => _common, :parent_id => 300, :level => 2, :path => [200, 300]}

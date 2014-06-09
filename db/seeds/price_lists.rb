@@ -1,11 +1,19 @@
 PriceList.delete_all
 plst =[]
 #price_list_to_real_category_groups
+  #all operators
 plst << {:id => _pl_free_sum_duration, :name => "price for _scg_free_sum_duration", :service_category_group_id => _scg_free_sum_duration, :is_active => true}
 plst << {:id => _pl_free_count_volume, :name => "price for _scg_free_count_volume", :service_category_group_id => _scg_free_count_volume, :is_active => true}
 plst << {:id => _pl_free_sum_volume, :name => "price for _scg_free_sum_volume", :service_category_group_id => _scg_free_sum_volume, :is_active => true}
 
-i =  _pl_free_sum_volume + 1
+plst << {:id => _pl_free_group_sum_duration, :name => "price for _scg_free_group_sum_duration", :service_category_group_id => _scg_free_group_sum_duration, :is_active => true}
+plst << {:id => _pl_free_group_count_volume, :name => "price for _scg_free_group_count_volume", :service_category_group_id => _scg_free_group_count_volume, :is_active => true}
+plst << {:id => _pl_free_group_sum_volume, :name => "price for _scg_free_group_sum_volume", :service_category_group_id => _scg_free_group_sum_volume, :is_active => true}
+
+last_real_price_list_id = _pl_free_group_sum_volume
+
+i =  last_real_price_list_id + 1
+
 TarifList.where(:region_id => [_moscow, _piter] ).each do |tarif_list|
   next if _correct_tarif_list_ids.include?(tarif_list.id)
   Service::CategoryTarifClass.active.original.where({:tarif_class_id => tarif_list.tarif_class_id}).

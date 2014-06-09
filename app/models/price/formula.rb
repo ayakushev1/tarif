@@ -29,4 +29,17 @@ class Price::Formula < ActiveRecord::Base
     !price_list_id.blank? ? where("price_list_id = ?", price_list_id.to_i) : where(false) 
   end
   
+  def self.find_ids_by_tarif_class_ids(tarif_class_ids)
+    (
+    joins(price_list: :service_category_tarif_class).where(:service_category_tarif_classes => {:tarif_class_id => tarif_class_ids}).pluck(:id) +
+    joins(price_list: {service_category_group: :service_category_tarif_classes}).
+      where(:service_category_tarif_classes => {:tarif_class_id => tarif_class_ids}).
+      where.not(:service_category_groups => {:tarif_class_id => nil}).pluck(:id) 
+      ).uniq     
+  end
+  
+  def self.find_ids_by_tarif_class_group_ids(tarif_class_group_ids)
+    joins(price_list: :service_category_group).where(:service_category_groups => {:id => tarif_class_group_ids}).uniq.pluck(:id)     
+  end
+  
 end

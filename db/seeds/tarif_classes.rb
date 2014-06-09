@@ -83,9 +83,9 @@ TarifClass.create(id: 177 , operator_id: 1028, privacy_id: 2, standard_service_i
 #Мегафон, услуги
 #МТС, частные, тарифы
 TarifClass.create(id: 200, operator_id: 1030, privacy_id: 2, standard_service_id: 40, name: 'RED Energy')
-TarifClass.create(id: 201, operator_id: 1030, privacy_id: 2, standard_service_id: 40, name: 'Smart')
-TarifClass.create(id: 202, operator_id: 1030, privacy_id: 2, standard_service_id: 40, name: 'Smart mini')
-TarifClass.create(id: 203, operator_id: 1030, privacy_id: 2, standard_service_id: 40, name: 'Smart+')
+TarifClass.create(id: _mts_smart, operator_id: 1030, privacy_id: 2, standard_service_id: 40, name: 'Smart')
+TarifClass.create(id: _mts_smart_mini, operator_id: 1030, privacy_id: 2, standard_service_id: 40, name: 'Smart mini')
+TarifClass.create(id: _mts_smart_plus, operator_id: 1030, privacy_id: 2, standard_service_id: 40, name: 'Smart+')
 TarifClass.create(id: 204, operator_id: 1030, privacy_id: 2, standard_service_id: 40, name: 'Ultra')
 TarifClass.create(id: 205, operator_id: 1030, privacy_id: 2, standard_service_id: 40, name: 'МТС Коннект-4')
 TarifClass.create(id: 206, operator_id: 1030, privacy_id: 2, standard_service_id: 40, name: 'Проще простого')
@@ -111,8 +111,8 @@ TarifClass.create(id: 272 , operator_id: 1030, privacy_id: 1, standard_service_i
 TarifClass.create(id: 273 , operator_id: 1030, privacy_id: 1, standard_service_id: 41, name: 'Международный роуминг для бизнеса')
 
 TarifClass.create(id: 275 , operator_id: 1030, privacy_id: 2, standard_service_id: 41, name: 'Внутрисетевой роуминг')
-TarifClass.create(id: 276 , operator_id: 1030, privacy_id: 2, standard_service_id: 41, name: 'Национальный роуминг')
-TarifClass.create(id: 277 , operator_id: 1030, privacy_id: 2, standard_service_id: 41, name: 'Международный роуминг')
+TarifClass.create(id: _mts_own_country_rouming , operator_id: 1030, privacy_id: 2, standard_service_id: 41, name: 'Own country rouming')
+TarifClass.create(id: _mts_international_rouming , operator_id: 1030, privacy_id: 2, standard_service_id: 41, name: 'International rouming')
 TarifClass.create(id: 278 , operator_id: 1030, privacy_id: 2, standard_service_id: 41, name: 'Международный и национальный роуминг')
 TarifClass.create(id: 279 , operator_id: 1030, privacy_id: 2, standard_service_id: 41, name: 'Легкий роуминг и международный доступ')
 #МТС, услуги
@@ -129,3 +129,12 @@ TarifClass.create(id: 289 , operator_id: 1030, privacy_id: 2, standard_service_i
 TarifClass.create(id: 290 , operator_id: 1030, privacy_id: 2, standard_service_id: 42, name: 'SMS-пакет')#международный роуминг
 TarifClass.create(id: 291 , operator_id: 1030, privacy_id: 2, standard_service_id: 42, name: '100 Мб в Литве и Латвии ')#международный роуминг
 TarifClass.create(id: 292 , operator_id: 1030, privacy_id: 2, standard_service_id: 42, name: 'Исходящие звонки от 11,9 руб.')#международный роуминг
+TarifClass.create(id: _mts_everywhere_as_home , operator_id: 1030, privacy_id: 2, standard_service_id: 42, name: 'Везде как дома')#звонки в другие города и в поездке по России для тарифа SMART
+
+TarifClass.create(id: _mts_smart_groups, operator_id: 1030, privacy_id: 2, standard_service_id: 40, name: 'Smart_groups')
+TarifClass.create(id: _mts_smart_mini_groups, operator_id: 1030, privacy_id: 2, standard_service_id: 40, name: 'Smart_mini_groups')
+TarifClass.create(id: _mts_smart_plus_groups, operator_id: 1030, privacy_id: 2, standard_service_id: 40, name: 'Smart_plus_groups')
+
+TarifClass.create(id: _mts_smart_groups_with_everywhere_as_home, operator_id: 1030, privacy_id: 2, standard_service_id: 40, name: 'Smart_groups_with_everywhere_as_home')
+TarifClass.create(id: _mts_smart_mini_groups_with_everywhere_as_home, operator_id: 1030, privacy_id: 2, standard_service_id: 40, name: 'Smart_mini_groups_with_everywhere_as_home')
+TarifClass.create(id: _mts_smart_plus_groups_with_everywhere_as_home, operator_id: 1030, privacy_id: 2, standard_service_id: 40, name: 'Smart_plus_groups_with_everywhere_as_home')

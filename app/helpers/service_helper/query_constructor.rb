@@ -47,20 +47,20 @@ class ServiceHelper::QueryConstructor
   def joined_tarif_classes_category_where_hash(tarif_classes_category_ids)
     where = ["false"]
     tarif_classes_category_ids.each do |tarif_classes_category_id|
-      tcc = tarif_class_categories[tarif_classes_category_id.to_s] 
-      where << "( #{tarif_classes_categories_where_hash[tcc.id.to_s]} )" if tcc 
+      tcc = tarif_class_categories[tarif_classes_category_id] 
+      where << "( #{tarif_classes_categories_where_hash[tcc.id]} )" if tcc 
     end
     where.join(' or ')
   end
   
   def tarif_classes_category_where_hash(tarif_classes_category_id)
-    tcc = tarif_class_categories[tarif_classes_category_id.to_s]
-    tcc ? tarif_classes_categories_where_hash[tcc.id.to_s] : nil
+    tcc = tarif_class_categories[tarif_classes_category_id]
+    tcc ? tarif_classes_categories_where_hash[tcc.id] : nil
   end
   
   def calculate_tarif_classes_categories_where_hash
     @tarif_classes_categories_where_hash = {}
-    tarif_class_categories.each {|key, value| tarif_classes_categories_where_hash[value[:id].to_s] = initial_tarif_classes_category_where_hash(value)}
+    tarif_class_categories.each {|key, value| tarif_classes_categories_where_hash[value[:id]] = initial_tarif_classes_category_where_hash(value)}
   end
   
   def initial_tarif_classes_category_where_hash(tarif_classes_category)
@@ -124,13 +124,21 @@ class ServiceHelper::QueryConstructor
     value_param = parameter_class_instance_value(parameters[criterium.value_param_id], context, criterium.value) if criterium.value_param_id      
     value_param = eval(criterium.eval_string) if criterium.eval_string
     
+    if criterium.value_choose_option_id == 153#_value_param_is_criterium_param
+      value_param_string = parameter_class_sql_name(parameters[criterium.value_param_id], context)
+    else
+      value_param_string = "'#{value_param}'"
+    end
+    
+     
+    
     case comparison_operator
     when 'in'
       "(#{criteria_param} = any('{#{value_param.join(', ')}}') )"
     when 'not_in'
       "(#{criteria_param} != all('{#{value_param.join(', ')}}') )"
     else
-      "(#{criteria_param} #{comparison_operator} '#{value_param}')"
+      "(#{criteria_param} #{comparison_operator} #{value_param_string})"
     end      
   end
       
@@ -161,7 +169,7 @@ class ServiceHelper::QueryConstructor
     pluck(:as_standard_category_group_id).uniq
     
     Service::CategoryGroup.where(:id => category_group_ids).each do |st|
-      category_groups[st.id.to_s] = st
+      category_groups[st.id] = st
     end
   end
   
@@ -169,20 +177,20 @@ class ServiceHelper::QueryConstructor
     @service_category_group_ids_by_tarif_class = {}
     category_group_ids = Service::CategoryTarifClass.where(:tarif_class_id => tarif_class_ids).active.where.not(:as_standard_category_group_id => nil).
       group("tarif_class_id").pluck("tarif_class_id, array_agg(as_standard_category_group_id)").
-      each {|ctc| service_category_group_ids_by_tarif_class[ctc[0].to_s] =  ctc[1]}        
+      each {|ctc| service_category_group_ids_by_tarif_class[ctc[0]] =  ctc[1]}        
   end
   
   def load_required_service_category_tarif_class_ids
     @tarif_class_categories = {}
     Service::CategoryTarifClass.where(:tarif_class_id => tarif_class_ids).active.#original.
-      uniq.each {|ctc| tarif_class_categories[ctc.id.to_s] = ctc }        
+      uniq.each {|ctc| tarif_class_categories[ctc.id] = ctc }        
   end
   
   def load_service_category_tarif_class_ids_by_tarif_class
     @tarif_class_categories_by_tarif_class = {}
     Service::CategoryTarifClass.where(:tarif_class_id => tarif_class_ids).active.where(:as_standard_category_group_id => nil).#original.
       group("tarif_class_id").pluck("tarif_class_id, array_agg(id)").
-      each {|ctc| tarif_class_categories_by_tarif_class[ctc[0].to_s] =  ctc[1]}        
+      each {|ctc| tarif_class_categories_by_tarif_class[ctc[0]] =  ctc[1]}        
   end
   
   def load_category_ids

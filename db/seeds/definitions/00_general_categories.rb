@@ -1,17 +1,53 @@
 def access_methods_to_constant_general_categories
 #category constant definition
 #0 locations
-  _world = 1600; _europe = 1601; _asia = 1602; _noth_america = 1603; _south_america = 1604; _africa = 1605
+  _world = 1590; _europe = 1591; _asia = 1592; _noth_america = 1593; _south_america = 1594; _africa = 1595
+   
+  _austria = 1600; _albania = 1601; _andorra = 1602; _belgium = 1603; _bulgaria = 1604; _bosnia_and_herzegovina = 1605; 
+  _vatican = 1606; _great_britain = 1607; _hungary = 1608; _germany = 1609; _gibraltar = 1610;
+  _greenland = 1611; _denmark = 1612; _greece = 1613; _ireland = 1614; _israel = 1615;
+  _iceland = 1616; _spain = 1617; _italy = 1618; _cyprus = 1619; _latvia = 1620;
+  _liechtenstein = 1621; _lithuania = 1622; _luxembourg = 1623; _macedonia = 1624; _malta = 1625;
+  _monaco = 1626; _netherlands = 1627; _norway = 1628; _poland = 1629; _portugal = 1630;
+  _romania = 1631; _san_marino = 1632; _serbia = 1633; _slovakia = 1634; _slovenia = 1635; 
+  _turkey = 1636; _the_faroe_islands = 1637; _finland = 1638; _france = 1639; _croatia = 1640;
+  _montenegro = 1641; _czech_republic = 1642; _switzerland = 1643; _sweden = 1644; _estonia = 1645;
+   
+  _belarus = 1646; _moldova = 1647; 
+  _russia = 1100; _ukraiun = 1500;  
+ 
+  _china = 1700; _india = 1701;
+  _abkhazia = 1702; _armenia = 1703; _azerbaijan = 1704; _georgia = 1705; _kazakhstan = 1706; 
+  _kyrgyzstan = 1707; _tajikistan = 1708; _turkmenistan = 1709; _uzbekistan = 1710; _south_ossetia = 1711;
+  
 
-  _russia = 1100; _ukraiun = 1500;  _great_britain = 1606; _germany = 1607; _france = 1608; _spain = 1609; _poland = 1610; _holand = 1611;
-  _china = 1630; _india = 1631; _turkey = 1632; _abhazia = 1633; _azerbaigan = 1634; _armenia = 1635; _gruzia = 1636;
-  _usa = 1700; _canada = 1701; _mexica = 1702; _cuba = 1703; _yamayka = 1704;
-  _brasilia = 1750; _argentina = 1751; _chily = 1752; _bolivia = 1753;
-  _egypt = 1780; _uae = 1781; _south_africa = 1782; _livia = 1783  
+  _usa = 1800; _canada = 1801; _mexica = 1802; _cuba = 1803; _yamayka = 1804;
 
-  _europe_countries = [_russia, _ukraiun, _great_britain, _germany, _france, _spain, _poland, _holand]
-  _europe_countries_without_russia = [_ukraiun, _great_britain, _germany, _france, _spain, _poland, _holand]
-  _asia_countries = [_china, _india, _turkey, _abhazia, _azerbaigan, _armenia, _gruzia]
+  _brasilia = 1850; _argentina = 1851; _chily = 1852; _bolivia = 1853;
+
+  _egypt = 1880; _uae = 1881; _south_africa = 1882; _livia = 1883  
+
+  _mts_europe_countries = [
+    _austria,  _albania, _andorra, _belgium, _bulgaria, _bosnia_and_herzegovina, _vatican, _great_britain, _hungary, _germany, _gibraltar,
+    _greenland, _denmark, _greece, _ireland, _israel, _iceland, _spain, _italy, _cyprus, _latvia,
+    _liechtenstein, _lithuania, _luxembourg, _macedonia, _malta, _monaco, _netherlands, _norway, _poland, _portugal,
+    _romania, _san_marino, _serbia, _slovakia, _slovenia,  _turkey, _the_faroe_islands, _finland, _france, _croatia,
+    _montenegro, _czech_republic, _switzerland, _sweden, _estonia 
+    ]
+  _mts_sic_countries = [_belarus, _moldova, _ukraiun, _abkhazia, _armenia, _azerbaijan, _georgia, _kazakhstan, _kyrgyzstan, _tajikistan, _turkmenistan, _uzbekistan, _south_ossetia]          
+  _mts_sic_1_countries = [_belarus, _ukraiun, _armenia, _turkmenistan,]              
+  _mts_sic_2_countries = [_abkhazia, _azerbaijan, _georgia, _kazakhstan,  _kyrgyzstan, _tajikistan, _uzbekistan,]  
+  _mts_sic_3_countries = [ _south_ossetia]  
+  _mts_other_countries = [
+    _china, _india,
+    _usa, _canada, _mexica, _cuba, _yamayka,
+    _brasilia, _argentina, _chily, _bolivia,
+    _egypt, _uae, _south_africa, _livia,
+    ]      
+
+  _europe_countries = [_russia, _ukraiun, _great_britain, _germany, _france, _spain, _poland]
+  _europe_countries_without_russia = [_ukraiun, _great_britain, _germany, _france, _spain, _poland]
+  _asia_countries = [_china, _india]
   _noth_america_countries = [_usa, _canada, _mexica, _cuba, _yamayka]
   _south_america_countries = [_brasilia, _argentina, _chily, _bolivia]
   _africa_countries = [_egypt, _uae, _south_africa, _livia]
@@ -29,6 +65,9 @@ def access_methods_to_constant_general_categories
   _operator_usa = 1063; _operator_canada = 1064; _operator_mexica = 1065; _operator_cuba = 1066; _operator_yamayka = 1067; 
   _operator_brasilia = 1068; _operator_argentina = 1069;  _operator_chily = 1070; _operator_bolivia = 1071; 
   _operator_egypt = 1072; _operator_uae = 1073; _operator_south_africa = 1074; _operator_livia = 1075; 
+  _operator_kazakhstan = 1076; _operator_kyrgyzstan = 1077; _operator_tajikistan = 1078; _operator_turkmenistan = 1079;
+  _operator_uzbekistan = 1080; _operator_south_ossetia = 1081; _operator_belarus = 1082; _operator_belarus = 1083; 
+  _operator_moldova = 1084;
      
   _operators = [_beeline, _megafon, _mts]
 #3 
@@ -54,7 +93,7 @@ _outbound = 70; _inbound = 71; _unspecified_direction = 72;
 #16 display type
   _value = 135; _list = 136; _table = 137; _string = 138; _query = 139;
 #17 value_choose_option_id 
-  _field = 150; _single_value = 151; _multiple_value = 152;
+  _field = 150; _single_value = 151; _multiple_value = 152; _value_param_is_criterium_param = 153
 #18 service_category_type_id 
   _common = 160; _specific = 161;
 #19 values for operator_type_id = 19

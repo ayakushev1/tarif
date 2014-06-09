@@ -15,6 +15,7 @@ class Customer::CallsController < ApplicationController
   
   def generate_calls
     setting_if_nil_default_calls_generation_params
+#    raise(StandardError, [customer_calls_generation_params])
     Calls::Generation::Generator.new(self, customer_calls_generation_params ).generate_calls
     redirect_to customer_calls_path
   end
@@ -42,9 +43,11 @@ class Customer::CallsController < ApplicationController
   end
   
   def customer_calls_generation_params
-    @customer_calls_generation_params_filtr.keys.collect do |key|
-      {key => @customer_calls_generation_params_filtr[key].session_filtr_params}
+    result = {}
+    @customer_calls_generation_params_filtr.keys.each do |key|
+      result[key] = @customer_calls_generation_params_filtr[key].session_filtr_params
     end
+    result
   end
   
   def init_calls_generator

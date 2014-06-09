@@ -101,15 +101,15 @@ describe ServiceHelper do
       
       it 'must calculate initial_tarif_classes_category_where_hash and return array of them' do
         first = Service::CategoryTarifClass.where.not(:service_category_rouming_id => nil).first
-        @q.tarif_classes_categories_where_hash[first.id.to_s].wont_be_nil
-        @q.tarif_classes_categories_where_hash[first.id.to_s].must_be :==, @q.initial_tarif_classes_category_where_hash(first)
+        @q.tarif_classes_categories_where_hash[first.id].wont_be_nil
+        @q.tarif_classes_categories_where_hash[first.id].must_be :==, @q.initial_tarif_classes_category_where_hash(first)
       end
       
 #      it 'load_secondary_service_category_tarif_class_ids' do
 #        first = Service::CategoryTarifClass.where.not(:as_tarif_class_service_category_id => nil).first
 #        original = Service::CategoryTarifClass.find(first.as_tarif_class_service_category_id)
-#        @q.tarif_classes_categories_where_hash[first.id.to_s].wont_be_nil
-#        @q.tarif_classes_categories_where_hash[first.id.to_s].must_be :==, @q.initial_tarif_classes_category_where_hash(original)
+#        @q.tarif_classes_categories_where_hash[first.id].wont_be_nil
+#        @q.tarif_classes_categories_where_hash[first.id].must_be :==, @q.initial_tarif_classes_category_where_hash(original)
 #      end
     end
     
@@ -134,26 +134,26 @@ describe ServiceHelper do
         first = Service::CategoryTarifClass.where('service_category_one_time_id is null and service_category_periodic_id is null').
         active.original.first
         @q.tarif_classes_category_where_hash(first.id).wont_be_nil
-        @q.tarif_classes_category_where_hash(first.id).must_be :==, @q.tarif_classes_categories_where_hash[first.id.to_s]
+        @q.tarif_classes_category_where_hash(first.id).must_be :==, @q.tarif_classes_categories_where_hash[first.id]
       end
 
 #      it 'must returm correct values for secondary records' do
 #        first = Service::CategoryTarifClass.where.not(:as_tarif_class_service_category_id => nil).active.first
 #        @q.tarif_classes_category_where_hash(first.id).wont_be_nil
-#        @q.tarif_classes_category_where_hash(first.id).must_be :==, @q.tarif_classes_categories_where_hash[first.as_tarif_class_service_category_id.to_s]
+#        @q.tarif_classes_category_where_hash(first.id).must_be :==, @q.tarif_classes_categories_where_hash[first.as_tarif_class_service_category_id]
 #      end
 
 #      it 'must returm correct values for groupped records' do
 #        first = Service::CategoryTarifClass.where.not(:as_standard_category_group_id => nil).active.first
 #        @q.tarif_classes_category_where_hash(first.id).wont_be_nil
-#        @q.tarif_classes_category_where_hash(first.id).must_be :==, @q.category_groups_where_hash[first.as_standard_category_group_id.to_s]
+#        @q.tarif_classes_category_where_hash(first.id).must_be :==, @q.category_groups_where_hash[first.as_standard_category_group_id]
 #      end
 
       it 'must returm correct values for choosen records' do
 #        @q.calculate_stat({}).must_be :==, true
 #        first = Service::CategoryTarifClass.find(1208100)
-#        @q.tarif_classes_category_where_hash(first.id).wont_be_nil @q.category_groups_where_hash.keys#[first.as_standard_category_group_id.to_s]
-#        @q.tarif_classes_category_where_hash(first.id).must_be :==, @q.category_groups_where_hash[first.as_standard_category_group_id.to_s]
+#        @q.tarif_classes_category_where_hash(first.id).wont_be_nil @q.category_groups_where_hash.keys#[first.as_standard_category_group_id]
+#        @q.tarif_classes_category_where_hash(first.id).must_be :==, @q.category_groups_where_hash[first.as_standard_category_group_id]
       end
     end
     

@@ -67,5 +67,13 @@ class PriceList < ActiveRecord::Base
 
     category_group_price_lists(service_category_group_ids)#.where.not(:service_category_tarif_class_id => direct_service_category_tarif_class_ids + tarif_class_price_lists_not_in_direct_ids)
   end
+  
+  def self.find_ids_by_tarif_class_ids(tarif_class_ids)
+    (joins(:service_category_tarif_class).where(:service_category_tarif_classes => {:tarif_class_id => tarif_class_ids}).pluck(:id) +
+    joins(service_category_group: :service_category_tarif_classes).where(:service_category_tarif_classes => {:tarif_class_id => tarif_class_ids}).
+      where.not(:service_category_groups => {:tarif_class_id => nil}).pluck(:id) ).
+    uniq
+  end
+  
 
 end

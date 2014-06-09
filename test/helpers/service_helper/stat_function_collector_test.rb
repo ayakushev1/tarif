@@ -3,7 +3,7 @@ require 'test_helper'
 describe ServiceHelper::StatFunctionCollector do
   before do
     @tarif_list_generator = ServiceHelper::TarifListGenerator.new
-    @sfc = ServiceHelper::StatFunctionCollector.new(@tarif_list_generator.all_services[0])
+    @sfc = ServiceHelper::StatFunctionCollector.new(@tarif_list_generator.all_services[2])
   end
   
   it 'must exists' do

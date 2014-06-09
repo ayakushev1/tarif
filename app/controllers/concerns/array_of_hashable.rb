@@ -87,7 +87,7 @@ class ArrayOfHashable < Presenter
     c.session[:current_id][current_id_name] = @raw_model.first[id_name] if c.session[:current_id][current_id_name].blank? and @raw_model.first
     check_if_current_id_exist_in_row_model = false
     @raw_model.each do |row|
-      check_if_current_id_exist_in_row_model = true if row[id_name] == c.session[:current_id][current_id_name]
+      check_if_current_id_exist_in_row_model = true if row[id_name].to_s == c.session[:current_id][current_id_name].to_s
       break if check_if_current_id_exist_in_row_model
     end
     c.session[:current_id][current_id_name] = @raw_model.first[id_name] unless check_if_current_id_exist_in_row_model

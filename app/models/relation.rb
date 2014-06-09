@@ -33,11 +33,12 @@ class Relation < ActiveRecord::Base
 
   def self.operator_country_groups(operator_id, parent_location_id)
     result = where(:type_id => 191, :owner_id => operator_id, :parent_id => parent_location_id).first
-    if result
-      result.children
-    else
-      []
-    end 
+    result ? result.children : []
+  end
+
+  def self.operator_country_groups_by_group_id(group_id)
+    result = where(:id => group_id).first
+    result ? result.children : []
   end
 
 end

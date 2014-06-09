@@ -1,16 +1,26 @@
 class ServiceHelper::TarifListGenerator
   attr_reader :operators, :all_services, :tarifs, :tarif_sets, :common_services, :tarif_options, :all_tarif_options, 
-              :max_tarif_slice, :tarif_slices
-  def initialize
-    @operators = [1025, 1028, 1030]
-    @tarifs = [[0], [100], [200]]#tarifs are groupped by operator
-    @tarif_sets = [[[0, 93, 77]], [[100, 175, 176, 177]], [[200, 275, 276, 277]]] #tarif_sets are groupped by operator and tarif
-    @common_services = [[[93, 77]], [[175, 176, 177]], [[275, 276, 277]]] #common_services are groupped by operator
-    @tarif_options = [[[[81]]], [[[nil]]], [[[nil]]]]#tarif_options are groupped by operator and tarif
-    @tarif_options = [[[[nil, 80, 81]]], [[[nil]]], [[[nil]]]]#tarif_options are groupped by operator and tarif
+              :max_tarif_slice, :tarif_slices, :uniq_tarif_option_combinations, :max_tarif_option_combinations, :tarif_options_slices
+  def initialize(options = {} )
+    @options = options
+    @operators = options[:operators] || [1025, 1028, 1030]
+    @tarifs = options[:tarifs] || [[], [], [203]]#tarifs are groupped by operator
+#    @tarifs = [[0], [100], [200]]#tarifs are groupped by operator
+    @tarif_sets = options[:tarif_sets] || [[[]], [[]], [[203]]] #tarif_sets are groupped by operator and tarif
+#    @tarif_sets = options[:tarif_sets] || [[[]], [[]], [[203, 276, 277]]] #tarif_sets are groupped by operator and tarif
+#    @tarif_sets = [[[]], [[]], [[203, 276, 277]]] #tarif_sets are groupped by operator and tarif
+#    @tarif_sets = [[[0, 93, 77]], [[100, 175, 176, 177]], [[200, 276, 277]]] #tarif_sets are groupped by operator and tarif
+    @common_services = options[:common_services] || [[[]], [[]], [[]]] #common_services are groupped by operator
+#    @common_services = options[:common_services] || [[[]], [[]], [[276, 277]]] #common_services are groupped by operator
+#    @common_services = [[[]], [[]], [[276, 277]]] #common_services are groupped by operator
+#    @common_services = [[[93, 77]], [[175, 176, 177]], [[276, 277]]] #common_services are groupped by operator
+    @tarif_options = options[:tarif_options] || [[[[nil]]], [[[nil]]], [[[299]]]]#tarif_options are groupped by operator and tarif
+#    @tarif_options = [[[[nil, 80, 81]]], [[[nil]]], [[[nil]]]]#tarif_options are groupped by operator and tarif
 #    @tarif_options = [[[[nil, 80, 81], [nil, 82, 83, 84, 85, 86]]], [[[nil]]], [[[nil]]]]#tarif_options are groupped by operator and tarif
     @all_services = calculate_all_services
     @all_tarif_options = calculate_all_tarif_options
+    calculate_uniq_tarif_option_combinations
+    calculate_tarif_options_slices
     calculate_max_tarif_slice
     calculate_tarif_slices
   end
@@ -32,19 +42,21 @@ class ServiceHelper::TarifListGenerator
     operators.each_index do |i| 
       tarif_slices[i] = []
       max_tarif_slice[i].times do |slice|
-        tarif_slices[i][slice] = {:ids => [], :prev_ids => []}
+        tarif_slices[i][slice] = {:ids => [], :prev_ids => [], :set_ids => [], :prev_set_ids => []}
         j = 0
         tarif_sets[i].each_index do |tarif_set_index|
           tarif_option_combinations(tarif_options[i][tarif_set_index]).each do |tarif_option_combination|
-            if slice == 0
-              tarif_slices[i][slice][:ids] << tarif_sets[i][tarif_set_index].reverse[slice]
-              tarif_slices[i][slice][:prev_ids] << tarif_option_combination
+            prev_ids = if slice == 0
+              (tarif_option_combination || [])
             else 
-              tarif_slices[i][slice][:ids] << tarif_sets[i][tarif_set_index].reverse[slice]
-              prev = tarif_slices[i][slice - 1][:prev_ids][j] if tarif_slices[i][slice - 1][:prev_ids]
-              prev = ( [tarif_slices[i][slice - 1][:ids][j] ] + prev ) if tarif_slices[i][slice - 1][:ids]
-              tarif_slices[i][slice][:prev_ids][j] = prev
+              prev = tarif_slices[i][slice - 1][:prev_ids][j]# if tarif_slices[i][slice - 1][:prev_ids]
+              ([tarif_slices[i][slice - 1][:ids][j] ] + prev )# if tarif_slices[i][slice - 1][:ids]
             end
+            tarif_slices[i][slice][:ids] << tarif_sets[i][tarif_set_index].reverse[slice]
+            tarif_slices[i][slice][:prev_ids] << prev_ids
+            tarif_slices[i][slice][:prev_set_ids] << tarif_set_id(prev_ids)
+            tarif_slices[i][slice][:set_ids] << tarif_set_id([tarif_sets[i][tarif_set_index].reverse[slice]] + prev_ids)
+
             j += 1
           end
         end
@@ -53,7 +65,49 @@ class ServiceHelper::TarifListGenerator
   end
   
   def calculate_max_tarif_slice
-    @max_tarif_slice = [3, 4, 4]
+    @max_tarif_slice = tarif_sets.collect do |operator_tarif_sets|
+      result = 0
+      operator_tarif_sets.each {|tarif_set| set_size = tarif_set.count; result = set_size if result < set_size } if operator_tarif_sets
+      result
+    end
+  end
+  
+  def calculate_uniq_tarif_option_combinations
+    @uniq_tarif_option_combinations = []
+    @max_tarif_option_combinations = []
+    operators.each_index do |i| 
+      uniq_tarif_option_combinations[i] = {}
+      max_tarif_option_combinations[i] = 0
+      tarif_sets[i].each_index do |tarif_set_index|
+        tarif_option_combinations(tarif_options[i][tarif_set_index]).each do |tarif_option_combination|
+          tarif_option_set_id = tarif_set_id(tarif_option_combination)
+          unless tarif_option_set_id.blank? or uniq_tarif_option_combinations[i][tarif_option_set_id]
+            uniq_tarif_option_combinations[i][tarif_option_set_id] = tarif_option_combination.compact
+            tarif_option_combinations_count = tarif_option_combination.count
+            max_tarif_option_combinations[i] = tarif_option_combinations_count if tarif_option_combinations_count > max_tarif_option_combinations[i]
+          end
+        end
+      end
+    end
+  end
+  
+  def calculate_tarif_options_slices
+    @tarif_options_slices = []
+    operators.each_index do |i|
+      tarif_options_slices[i] = []
+      max_tarif_option_combinations[i].times do |slice|
+        tarif_options_slices[i][slice] = {:ids => [], :prev_ids => [], :set_ids => [], :prev_set_ids => []}
+        uniq_tarif_option_combinations[i].each do |key, combination|          
+          if combination.count == (slice + 1)
+            prev_ids = (slice == 0) ? [] : combination[0..(slice - 1)]
+            tarif_options_slices[i][slice][:prev_ids] = prev_ids
+            tarif_options_slices[i][slice][:ids] << combination[slice]
+            tarif_options_slices[i][slice][:prev_set_ids] << tarif_set_id(prev_ids)
+            tarif_options_slices[i][slice][:set_ids] << tarif_set_id([combination[slice]] + prev_ids)
+          end
+        end
+      end
+    end
   end
   
   def tarif_option_combinations(tarif_option_ids)
@@ -73,7 +127,7 @@ class ServiceHelper::TarifListGenerator
   end 
   
   def tarif_set_id(tarif_ids)
-    tarif_ids.collect {|tarif_id| tarif_id.to_s if tarif_id}.compact.join('_')
+    tarif_ids.collect {|tarif_id| tarif_id if tarif_id}.compact.join('_')
   end
 
 end
