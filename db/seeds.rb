@@ -1,25 +1,21 @@
+# users categories tarif_classes parameters service/categories service/category_groups 
+# tarif_lists price_lists price/standard_formulas price/formulas customer/service relations customer/calls service/priorities
+
 # users categories tarif_classes parameters service/categories service/category_tarif_classes service/category_groups 
 # tarif_lists price_lists price/standard_formulas price/formulas customer/service relations customer/calls service/priorities
+
+#  tarif_classes service/category_tarif_classes service/category_groups price_lists price/formulas
 
 Dir[Rails.root.join("db/seeds/definitions/*.rb")].sort.each { |f| require f }
 
 %w{
+  customer/calls
 }.each do |part|
   require File.expand_path(File.dirname(__FILE__))+"/seeds/#{part}.rb"
 end
 
+#Dir[Rails.root.join("db/seeds/tarif_tests/mts/tarifs/smart_plus.rb")].each { |f| require f }
 #Dir[Rails.root.join("db/seeds/tarifs/**/*.rb")].each { |f| require f }
 
-#  tarif_classes service/category_tarif_classes service/category_groups 
-#  price_lists price/formulas
+#@tc.load_repositories
 
-#  tarif_classes service/categories relations
-#tarif_classes price/standard_formulas  
-#  tarif_tests/mts/tarifs/smart+  
-#  customer/calls
-
-#  tarifs/mts/common_services/international_rouming
-#  tarif_tests/mts/common_services/international_rouming
-
-# tarif_tests/mts/tarif_options/smart_plus_groups_with_everywhere_as_home
-#tarif_tests/mts/tarif_options/everywhere_as_home

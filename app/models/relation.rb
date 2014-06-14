@@ -21,6 +21,11 @@ class Relation < ActiveRecord::Base
     result ? result.children : []
   end
 
+  def self.own_home_regions(operator_id, parent_region_id)
+    result = where(:type_id => 190, :owner_id => operator_id, :parent_id => parent_region_id).first
+    result ? (result.children + [parent_region_id]) : [parent_region_id]
+  end
+
   def self.country_operators(country_id)
     result = where(:type_id => 192, :owner_id => country_id, :parent_id => nil).first
     result ? result.children : nil

@@ -1,5 +1,6 @@
 User.where('id > 1').delete_all
 Customer::Service.delete_all
+=begin
 csv =[]; usr = [];
 
 tarif = TarifClass.find(_tarif_classes[:Beeline][:private][:tarif].to_a[0])
@@ -30,15 +31,4 @@ Customer::Service.transaction do
   Customer::Service.create(csv)
 end
 
-#  id             :integer          not null, primary key
-#  user_id        :integer
-#  phone_number   :string(255)
-#  tarif_class_id :integer
-#  tarif_list_id  :integer
-#  status_id      :integer
-#  valid_from     :datetime
-#  valid_till     :datetime
-#  description    :json
-#  created_at     :datetime
-#  updated_at     :datetime
-#
+=end

@@ -130,11 +130,3 @@ TarifClass.create(id: 290 , operator_id: 1030, privacy_id: 2, standard_service_i
 TarifClass.create(id: 291 , operator_id: 1030, privacy_id: 2, standard_service_id: 42, name: '100 Мб в Литве и Латвии ')#международный роуминг
 TarifClass.create(id: 292 , operator_id: 1030, privacy_id: 2, standard_service_id: 42, name: 'Исходящие звонки от 11,9 руб.')#международный роуминг
 TarifClass.create(id: _mts_everywhere_as_home , operator_id: 1030, privacy_id: 2, standard_service_id: 42, name: 'Везде как дома')#звонки в другие города и в поездке по России для тарифа SMART
-
-TarifClass.create(id: _mts_smart_groups, operator_id: 1030, privacy_id: 2, standard_service_id: 40, name: 'Smart_groups')
-TarifClass.create(id: _mts_smart_mini_groups, operator_id: 1030, privacy_id: 2, standard_service_id: 40, name: 'Smart_mini_groups')
-TarifClass.create(id: _mts_smart_plus_groups, operator_id: 1030, privacy_id: 2, standard_service_id: 40, name: 'Smart_plus_groups')
-
-TarifClass.create(id: _mts_smart_groups_with_everywhere_as_home, operator_id: 1030, privacy_id: 2, standard_service_id: 40, name: 'Smart_groups_with_everywhere_as_home')
-TarifClass.create(id: _mts_smart_mini_groups_with_everywhere_as_home, operator_id: 1030, privacy_id: 2, standard_service_id: 40, name: 'Smart_mini_groups_with_everywhere_as_home')
-TarifClass.create(id: _mts_smart_plus_groups_with_everywhere_as_home, operator_id: 1030, privacy_id: 2, standard_service_id: 40, name: 'Smart_plus_groups_with_everywhere_as_home')

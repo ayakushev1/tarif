@@ -4,11 +4,11 @@ table.init do |t|
   t.base_name = 'service_sets'
   t.id_name = 'service_sets_id'
   t.heads = 
-  ['service_sets_id', 'set_service_ids']
+  ['service_sets_id', 'service_set_price']
   t.set_fields do |t| 
   [
   	t['service_sets_id'],
-  	t['set_service_ids'],
+  	(t['service_set_price'].round(2) if t['service_set_price']),
   ] 
   end
 end

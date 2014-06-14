@@ -121,8 +121,12 @@ class ServiceHelper::QueryConstructor
     comparison_operator = comparison_operators[criterium.comparison_operator_id]
     
     value_param = criterium.value
-    value_param = parameter_class_instance_value(parameters[criterium.value_param_id], context, criterium.value) if criterium.value_param_id      
-    value_param = eval(criterium.eval_string) if criterium.eval_string
+    value_param = parameter_class_instance_value(parameters[criterium.value_param_id], context, criterium.value) if criterium.value_param_id
+    begin      
+      value_param = eval(criterium.eval_string) if criterium.eval_string
+    rescue
+      raise(StandardError, [criterium, criterium.eval_string])
+    end
     
     if criterium.value_choose_option_id == 153#_value_param_is_criterium_param
       value_param_string = parameter_class_sql_name(parameters[criterium.value_param_id], context)

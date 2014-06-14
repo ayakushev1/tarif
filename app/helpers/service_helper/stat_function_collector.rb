@@ -21,16 +21,41 @@ class ServiceHelper::StatFunctionCollector
         r = row.attributes
 #        raise(StandardError, r) if r['service_category_group_id'] ==  11
 
-        service_stat[r['price_formula_calculation_order']] ||= {}
-        service_stat[r['price_formula_calculation_order']][r['tarif_class_id']] ||= []
-        service_stat[r['price_formula_calculation_order']][r['tarif_class_id']] << {
-        :service_category_group_id => (r['service_category_group_id'] || -1),
-        :stat_params => r['stat_params'],
-        :price_formula_id => r['price_formula_id'],        
-        :service_category_tarif_class_ids => r['service_category_tarif_class_ids'],          
-        :price_formula_calculation_order => r['price_formula_calculation_order'],
-        :price_lists_id => r['price_lists_id'],
+        service_stat[r['price_formula_calculation_order']] ||= {:categories => {}, :category_groups => {:services => {}, :groups => {}}}
+        service_stat[r['price_formula_calculation_order']][:categories][r['tarif_class_id']] ||= {}
+        service_stat[r['price_formula_calculation_order']][:category_groups][:services][r['tarif_class_id']] ||= {}
+        stat = {
+          :service_category_group_id => (r['service_category_group_id'] || -1),
+          :stat_params => r['stat_params'],
+          :price_formula_id => r['price_formula_id'],        
+          :service_category_tarif_class_ids => r['service_category_tarif_class_ids'],          
+          :price_formula_calculation_order => r['price_formula_calculation_order'],
+          :price_lists_id => r['price_lists_id'],
+          :service_category_group_ids => ( (service_stat[r['price_formula_calculation_order']][:category_groups][:services][r['tarif_class_id']][:service_category_group_ids] || []) + 
+            [r['service_category_group_id'] ] ).compact,
+          :tarif_class_ids => [r['tarif_class_id']],
         }
+        if r['service_category_group_id']
+          service_stat[r['price_formula_calculation_order']][:category_groups][:services][r['tarif_class_id']][r['service_category_group_id'] ] = stat
+          
+          service_stat[r['price_formula_calculation_order']][:category_groups][:groups][r['service_category_group_id']] ||= {:service_category_tarif_class_ids_by_service_id => {} }
+          service_stat[r['price_formula_calculation_order']][:category_groups][:groups][r['service_category_group_id']] = {
+            :service_category_group_id => r['service_category_group_id'],
+            :stat_params => r['stat_params'],
+            :price_formula_id => r['price_formula_id'],
+            :price_formula_calculation_order => r['price_formula_calculation_order'],
+            :price_lists_id => r['price_lists_id'],
+            
+            :tarif_class_ids => (service_stat[r['price_formula_calculation_order']][:category_groups][:groups][r['service_category_group_id']][:tarif_class_ids] || []) + 
+              [r['tarif_class_id']], 
+            :service_category_tarif_class_ids => (service_stat[r['price_formula_calculation_order']][:category_groups][:groups][r['service_category_group_id']][:service_category_tarif_class_ids] || []) +
+              r['service_category_tarif_class_ids'], 
+            :service_category_tarif_class_ids_by_service_id => service_stat[r['price_formula_calculation_order']][:category_groups][:groups][r['service_category_group_id']][:service_category_tarif_class_ids_by_service_id].
+              merge({r['tarif_class_id'] => r['service_category_tarif_class_ids']})
+          }
+        else
+          service_stat[r['price_formula_calculation_order']][:categories][r['tarif_class_id']][r['service_category_tarif_class_ids'][0] ] = stat
+        end
       end
     end  
   end

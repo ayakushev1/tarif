@@ -15,7 +15,7 @@
 
 class Customer::Stat < ActiveRecord::Base
   include PgJsonHelper, WhereHelper, PgCreateHelper
-
+#  serialize :result
   belongs_to :user, :class_name =>'User', :foreign_key => :user_id
   
 end

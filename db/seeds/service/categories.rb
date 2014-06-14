@@ -15,6 +15,10 @@ cat << {:id => _home_region_rouming, :name => 'домашний регион', :
   crit << {:id => 30 , :criteria_param_id => _call_connect_region_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
            :value_param_id => _fq_tarif_home_region_ids, :value => nil, :service_category_id => _home_region_rouming}
 
+cat << {:id => _own_and_home_regions_rouming, :name => '_own_and_home_regions_rouming', :type_id => _common, :parent_id => _intra_net_rouming, :level => 2, :path => [_category_rouming, _intra_net_rouming]}
+  crit << {:id => _own_and_home_regions_rouming * 10 + 0 , :criteria_param_id => _call_connect_region_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value_param_id => _fq_tarif_own_and_home_region_ids, :value => nil, :service_category_id => _own_and_home_regions_rouming}
+
 cat << {:id => _own_country_rouming, :name => 'своя страна', :type_id => _common, :parent_id => _intra_net_rouming, :level => 2, :path => [_category_rouming, _intra_net_rouming]}
   crit << {:id => 40 , :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _equal, :value_choose_option_id => _field, 
            :value_param_id => _fq_tarif_country_id, :value => nil, :service_category_id => _own_country_rouming}
@@ -74,6 +78,15 @@ cat << {:id => _service_to_own_region, :name => 'услуги в свой рег
 cat << {:id => _service_to_home_region, :name => 'услуги в домашний регион', :type_id => _common, :parent_id => _geography_services, :level => 1, :path => [_geography_services]}
   crit << {:id => 1020 , :criteria_param_id => _call_partner_phone_region_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
            :value_param_id => _fq_tarif_home_region_ids, :value => nil, :service_category_id => _service_to_home_region}
+
+cat << {:id => _service_to_own_and_home_regions, :name => '_service_to_own_and_home_regions', :type_id => _common, :parent_id => _geography_services, :level => 1, :path => [_geography_services]}
+  crit << {:id => _service_to_own_and_home_regions * 10, :criteria_param_id => _call_partner_phone_region_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value_param_id => _fq_tarif_own_and_home_region_ids, :value => nil, :service_category_id => _service_to_own_and_home_regions}
+
+cat << {:id => _service_to_all_own_country_regions, :name => '_service_to_all_own_country_regions', :type_id => _common, :parent_id => _geography_services, :level => 1, :path => [_geography_services]}
+  crit << {:id => _service_to_all_own_country_regions * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _equal, :value_choose_option_id => _field, 
+           :value_param_id => _fq_tarif_country_id, :value => nil, :service_category_id => _service_to_all_own_country_regions}
+
 #TODO исправить плохой критерий 1030
 cat << {:id => _service_to_own_country, :name => 'услуги в свою страну', :type_id => _common, :parent_id => _geography_services, :level => 1, :path => [_geography_services]}
   crit << {:id => 1030 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _equal, :value_choose_option_id => _field, 
@@ -132,19 +145,23 @@ cat << {:id => _sc_service_to_not_rouming_not_russia_not_sic, :name => '_sc_serv
 #оператор второй стороны
 cat << {:id => _partner_operator_services, :name => 'оператор второй стороны', :type_id => _common, :parent_id => nil, :level => 0, :path => []}
 cat << {:id => _service_to_own_operator, :name => 'свой оператор', :type_id => _common, :parent_id => _partner_operator_services, :level => 1, :path => [_partner_operator_services]}
-  crit << {:id => 1910 , :criteria_param_id => _call_partner_phone_operator_id, :comparison_operator_id => _equal, :value_choose_option_id => _field, 
+  crit << {:id => _service_to_own_operator * 10 , :criteria_param_id => _call_partner_phone_operator_id, :comparison_operator_id => _equal, :value_choose_option_id => _field, 
            :value_param_id => _fq_tarif_operator_id, :value => nil, :service_category_id => _service_to_own_operator}
 
+cat << {:id => _service_to_not_own_operator, :name => '_service_to_not_own_operator', :type_id => _common, :parent_id => _partner_operator_services, :level => 1, :path => [_partner_operator_services]}
+  crit << {:id => _service_to_not_own_operator * 10 , :criteria_param_id => _call_partner_phone_operator_id, :comparison_operator_id => _not_equal, :value_choose_option_id => _field, 
+           :value_param_id => _fq_tarif_operator_id, :value => nil, :service_category_id => _service_to_not_own_operator}
+
 cat << {:id => _service_to_other_operator, :name => 'другой мобильный оператор', :type_id => _common, :parent_id => _partner_operator_services, :level => 1, :path => [_partner_operator_services]}
-  crit << {:id => 1920 , :criteria_param_id => _call_partner_phone_operator_id, :comparison_operator_id => _not_equal, :value_choose_option_id => _field, 
+  crit << {:id => _service_to_other_operator * 10 + 0 , :criteria_param_id => _call_partner_phone_operator_id, :comparison_operator_id => _not_equal, :value_choose_option_id => _field, 
            :value_param_id => _fq_tarif_operator_id, :value => nil, :service_category_id => _service_to_other_operator}
-  crit << {:id => 1921 , :criteria_param_id => _call_partner_phone_operator_type_id, :comparison_operator_id => _equal, :value_choose_option_id => _single_value, 
+  crit << {:id => _service_to_other_operator * 10 + 1 , :criteria_param_id => _call_partner_phone_operator_type_id, :comparison_operator_id => _equal, :value_choose_option_id => _single_value, 
            :value_param_id => _category_operator_type_id, :value => {:integer => _mobile}, :service_category_id => _service_to_other_operator}
 
 cat << {:id => _service_to_fixed_line, :name => 'фиксированная линия', :type_id => _common, :parent_id => _partner_operator_services, :level => 1, :path => [_partner_operator_services]}
-  crit << {:id => 1930 , :criteria_param_id => _call_partner_phone_operator_id, :comparison_operator_id => _not_equal, :value_choose_option_id => _field, 
+  crit << {:id => _service_to_fixed_line * 10 + 0 , :criteria_param_id => _call_partner_phone_operator_id, :comparison_operator_id => _not_equal, :value_choose_option_id => _field, 
            :value_param_id => _fq_tarif_operator_id, :value => nil, :service_category_id => _service_to_fixed_line}
-  crit << {:id => 1931 , :criteria_param_id => _call_partner_phone_operator_type_id, :comparison_operator_id => _equal, :value_choose_option_id => _single_value, 
+  crit << {:id => _service_to_fixed_line * 10 + 1 , :criteria_param_id => _call_partner_phone_operator_type_id, :comparison_operator_id => _equal, :value_choose_option_id => _single_value, 
            :value_param_id => _category_operator_type_id, :value => {:integer => _fixed_line}, :service_category_id => _service_to_fixed_line}
 
 

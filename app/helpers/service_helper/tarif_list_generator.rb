@@ -5,18 +5,20 @@ class ServiceHelper::TarifListGenerator
     @options = options
     @operators = options[:operators] || [1025, 1028, 1030]
     @tarifs = options[:tarifs] || [[], [], [203]]#tarifs are groupped by operator
-#    @tarifs = [[0], [100], [200]]#tarifs are groupped by operator
+    @tarifs = options[:tarifs] || [[], [], [201, 202, 203]]#tarifs are groupped by operator
+
     @tarif_sets = options[:tarif_sets] || [[[]], [[]], [[203]]] #tarif_sets are groupped by operator and tarif
-#    @tarif_sets = options[:tarif_sets] || [[[]], [[]], [[203, 276, 277]]] #tarif_sets are groupped by operator and tarif
-#    @tarif_sets = [[[]], [[]], [[203, 276, 277]]] #tarif_sets are groupped by operator and tarif
-#    @tarif_sets = [[[0, 93, 77]], [[100, 175, 176, 177]], [[200, 276, 277]]] #tarif_sets are groupped by operator and tarif
+    @tarif_sets = options[:tarif_sets] || [[[]], [[]], [[276, 277, 203]]] #tarif_sets are groupped by operator and tarif
+    @tarif_sets = options[:tarif_sets] || [[[]], [[]], [[276, 277, 201], [276, 277, 202], [276, 277, 203]]] #tarif_sets are groupped by operator and tarif
+
     @common_services = options[:common_services] || [[[]], [[]], [[]]] #common_services are groupped by operator
-#    @common_services = options[:common_services] || [[[]], [[]], [[276, 277]]] #common_services are groupped by operator
-#    @common_services = [[[]], [[]], [[276, 277]]] #common_services are groupped by operator
-#    @common_services = [[[93, 77]], [[175, 176, 177]], [[276, 277]]] #common_services are groupped by operator
-    @tarif_options = options[:tarif_options] || [[[[nil]]], [[[nil]]], [[[299]]]]#tarif_options are groupped by operator and tarif
-#    @tarif_options = [[[[nil, 80, 81]]], [[[nil]]], [[[nil]]]]#tarif_options are groupped by operator and tarif
-#    @tarif_options = [[[[nil, 80, 81], [nil, 82, 83, 84, 85, 86]]], [[[nil]]], [[[nil]]]]#tarif_options are groupped by operator and tarif
+    @common_services = options[:common_services] || [[[]], [[]], [[276, 277]]] #common_services are groupped by operator
+
+    @tarif_options = options[:tarif_options] || [[[[nil]]], [[[nil]]], [[[nil]]]]#tarif_options are groupped by operator and tarif
+    @tarif_options = options[:tarif_options] || [[[[nil]]], [[[nil]]], [[[283]]]]#tarif_options are groupped by operator and tarif
+    @tarif_options = options[:tarif_options] || [[[[nil]]], [[[nil]]], [[[nil, 283, 293]]]]#tarif_options are groupped by operator and tarif
+    @tarif_options = options[:tarif_options] || [[[[nil]]], [[[nil]]], [[[nil, 283, 293]], [[nil, 283, 293]], [[nil, 283, 293]]]]#tarif_options are groupped by operator and tarif
+
     @all_services = calculate_all_services
     @all_tarif_options = calculate_all_tarif_options
     calculate_uniq_tarif_option_combinations

@@ -90,7 +90,7 @@ class ArrayOfHashable < Presenter
       check_if_current_id_exist_in_row_model = true if row[id_name].to_s == c.session[:current_id][current_id_name].to_s
       break if check_if_current_id_exist_in_row_model
     end
-    c.session[:current_id][current_id_name] = @raw_model.first[id_name] unless check_if_current_id_exist_in_row_model
+    c.session[:current_id][current_id_name] = @raw_model.first[id_name] if @raw_model and @raw_model.first and !check_if_current_id_exist_in_row_model
   end
 
   module TableHelper

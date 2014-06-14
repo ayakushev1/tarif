@@ -35,7 +35,7 @@ class ServiceHelper::MaxPriceFormulaOrderCollector
       maximum(:calculation_order)
     
     result = {}
-    (max_by_service_category_tarif_class.keys + max_by_service_category_group.keys).uniq.each do |key|
+    (max_by_service_category_tarif_class.keys + max_by_service_category_group.keys + service_ids).uniq.each do |key|
       result[key] = [(result[key] || -1), (max_by_service_category_tarif_class[key] || -1), (max_by_service_category_group[key] || -1)].max
     end
     raise(StandardError, [Price::Formula.joins(price_list: :service_category_tarif_class ).

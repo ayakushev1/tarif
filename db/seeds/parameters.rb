@@ -105,12 +105,15 @@ pars << { :id => _fq_tarif_home_region_ids, :source_type_id => _intermediate_dat
           :display => {:display_type_id => _value, :list => '', :table => '', :string => '', :query => '', :class => '',:id_field => '', :name_field => ''},
           :unit => {:unit_id => nil, :field_name => '', :sub_field_name => ''} }
 
+pars << { :id => _fq_tarif_own_and_home_region_ids, :source_type_id => _intermediate_data, :nick_name => '_fq_tarif_own_and_home_region_ids', :name => '_fq_tarif_own_and_home_region_ids', :description => '', 
+          :source => { :string => 'Relation.own_home_regions(@fq_tarif_operator_id, @fq_tarif_region_id)', :class => 'Relation', :field => 'children', :sub_field =>  nil, :field_type_id => _array, :sub_field_type_id => nil},          
+          :display => {:display_type_id => _value, :list => '', :table => '', :string => '', :query => '', :class => '',:id_field => '', :name_field => ''},
+          :unit => {:unit_id => nil, :field_name => '', :sub_field_name => ''} }
+
 pars << { :id => _fq_tarif_country_id, :source_type_id => _intermediate_data, :nick_name => 'fq_tarif_country_id', :name => 'fq_tarif_country_id', :description => '', 
           :source => { :string => 'Category.locations.where(:id => @fq_tarif_region_id).first.parent_id', :class => 'Category', :field => 'parent_id', :sub_field =>  nil, :field_type_id => _integer, :sub_field_type_id => nil},          
           :display => {:display_type_id => _value, :list => '', :table => '', :string => '', :query => '', :class => '',:id_field => '', :name_field => ''},
           :unit => {:unit_id => nil, :field_name => '', :sub_field_name => ''} }
-
-
 
 
 ActiveRecord::Base.transaction do

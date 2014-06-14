@@ -1,6 +1,6 @@
 #International rouming
 @tc = ServiceHelper::TarifCreator.new(_mts)
-@tc.create_tarif_class('International rouming')
+  @tc.create_tarif_class({:name => 'International rouming'})
 
 #Europe rouming
 _sctcg_mts_europe_calls_incoming = {:name => '_sctcg_mts_europe_calls_incoming', :service_category_rouming_id => _sc_mts_europe_rouming, :service_category_calls_id => _calls_in}
@@ -140,7 +140,7 @@ _sctcg_mts_other_countries_internet = {:name => '_sctcg_mts_other_countries_inte
   @tc.add_one_service_category_tarif_class(_sctcg_mts_other_countries_internet, {}, {:standard_formula_id => _stf_price_by_sum_volume_m_byte, :price => 750.0})  
 
 
-@tc.load_repositories
+#@tc.load_repositories
 
 #Тарификация поминутная, с округлением до целых минут в большую сторону
 

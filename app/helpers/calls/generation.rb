@@ -502,7 +502,7 @@ module Calls::Generation
         'share_of_incoming_calls' => 0.5, 'share_of_incoming_calls_from_own_mobile'=> 0.3}
       when _home_region_no_activity
         {"number_of_day_calls" => 1, "duration_of_calls" => 1, "share_of_calls_to_other_mobile" => 0.7, "share_of_calls_to_fix_line" => 0.1,
-        "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.05, "number_of_sms_per_day" => 1, "number_of_mms_per_day" => 1, "internet_trafic_per_month" => 20,
+        "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.05, "number_of_sms_per_day" => 1, "number_of_mms_per_day" => 1, "internet_trafic_per_month" => 0,
         'share_of_incoming_calls' => 0.5, 'share_of_incoming_calls_from_own_mobile'=> 0.3}
       when _own_country_active_caller
         {"number_of_day_calls" => 1, "duration_of_calls" => 5, "share_of_calls_to_other_mobile" => 0.7, "share_of_calls_to_fix_line" => 0.1,
@@ -518,7 +518,7 @@ module Calls::Generation
         'share_of_incoming_calls' => 0.5, 'share_of_incoming_calls_from_own_mobile'=> 0.3}
       when _own_country_no_activity
         {"number_of_day_calls" => 1, "duration_of_calls" => 1, "share_of_calls_to_other_mobile" => 0.7, "share_of_calls_to_fix_line" => 0.1,
-        "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.05, "number_of_sms_per_day" => 1, "number_of_mms_per_day" => 1, "internet_trafic_per_month" => 20,
+        "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.05, "number_of_sms_per_day" => 1, "number_of_mms_per_day" => 1, "internet_trafic_per_month" => 0,
         'share_of_incoming_calls' => 0.5, 'share_of_incoming_calls_from_own_mobile'=> 0.3}
       when _abroad_active_caller
         {"number_of_day_calls" => 1, "duration_of_calls" => 5, "share_of_calls_to_other_mobile" => 0.7, "share_of_calls_to_fix_line" => 0.1,
@@ -534,7 +534,7 @@ module Calls::Generation
         'share_of_incoming_calls' => 0.5, 'share_of_incoming_calls_from_own_mobile'=> 0.3}
       when _abroad_no_activity
         {"number_of_day_calls" => 1, "duration_of_calls" => 1, "share_of_calls_to_other_mobile" => 0.7, "share_of_calls_to_fix_line" => 0.1,
-        "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.05, "number_of_sms_per_day" => 1, "number_of_mms_per_day" => 1, "internet_trafic_per_month" => 20,
+        "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.05, "number_of_sms_per_day" => 1, "number_of_mms_per_day" => 1, "internet_trafic_per_month" => 0,
         'share_of_incoming_calls' => 0.5, 'share_of_incoming_calls_from_own_mobile'=> 0.3}
       else
         {"number_of_day_calls" => 1, "duration_of_calls" => 5, "share_of_calls_to_other_mobile" => 0.7, "share_of_calls_to_fix_line" => 0.1,
