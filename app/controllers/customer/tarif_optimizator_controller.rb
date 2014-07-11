@@ -78,11 +78,11 @@ class Customer::TarifOptimizatorController < ApplicationController
   def recalculate    
 #    background_process_informer.clear_completed_process_info_model
     background_process_informer.init
-#    Spawnling.new(:argv => 'tarif_optimization') do
+    Spawnling.new(:argv => 'tarif_optimization') do
       @operator = 1030 #mts
       @tarif_optimizator = ServiceHelper::TarifOptimizator.new({:background_process_informer => background_process_informer})
       @tarif_optimizator.calculate_one_operator_tarifs(@operator)
-#    end     
+    end     
     redirect_to(:action => :calculation_status)
   end
   
