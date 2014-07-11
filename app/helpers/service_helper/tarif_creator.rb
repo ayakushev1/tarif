@@ -8,10 +8,12 @@ class ServiceHelper::TarifCreator
   end
   
   def create_tarif_class(tarif_class_values)
+    i = 0
     begin
       tarif_class = TarifClass.find_or_create_by(:name => tarif_class_values[:name])
     rescue ActiveRecord::RecordNotUnique
-      retry
+      retry if i < 5
+      i += 1 
     end    
     @tarif_class_id = tarif_class[:id]
     tarif_class = TarifClass.update(tarif_class[:id], {:operator_id => operator_id}.merge(tarif_class_values) )
