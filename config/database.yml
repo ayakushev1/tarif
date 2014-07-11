@@ -1,11 +1,13 @@
 default: &default
   adapter: postgresql
   encoding: unicode
-  pool: 5
+  pool: 50
   username: postgres
   password: postgres
   host: localhost
   template: template0
+  reconnect: true
+#  work_mem: 128MB
 
 development:
   <<: *default

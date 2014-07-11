@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140530063706) do
+ActiveRecord::Schema.define(version: 20140625012159) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -175,6 +175,7 @@ ActiveRecord::Schema.define(version: 20140530063706) do
     t.json     "criteria"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.json     "conditions"
   end
 
   add_index "service_category_groups", ["name"], name: "index_service_category_groups_on_name", using: :btree
@@ -197,6 +198,9 @@ ActiveRecord::Schema.define(version: 20140530063706) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "name"
+    t.json     "conditions"
+    t.integer  "tarif_option_id"
+    t.integer  "tarif_option_order"
   end
 
   add_index "service_category_tarif_classes", ["as_standard_category_group_id"], name: "service_category_tarif_classes_as_standard_category_group_id", using: :btree
@@ -210,6 +214,7 @@ ActiveRecord::Schema.define(version: 20140530063706) do
   add_index "service_category_tarif_classes", ["standard_category_groups"], name: "service_category_tarif_classes_standard_category_groups", using: :gin
   add_index "service_category_tarif_classes", ["tarif_class_id"], name: "service_category_tarif_classes_tarif_class_id", using: :btree
   add_index "service_category_tarif_classes", ["tarif_class_service_categories"], name: "service_category_tarif_classes_tarif_class_service_categories", using: :gin
+  add_index "service_category_tarif_classes", ["tarif_option_id"], name: "index_service_category_tarif_classes_on_tarif_option_id", using: :btree
 
   create_table "service_criteria", force: true do |t|
     t.integer "service_category_id"
@@ -250,6 +255,7 @@ ActiveRecord::Schema.define(version: 20140530063706) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.json     "dependency"
   end
 
   add_index "tarif_classes", ["name"], name: "index_tarif_classes_on_name", using: :btree

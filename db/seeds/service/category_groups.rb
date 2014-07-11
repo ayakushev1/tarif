@@ -1,4 +1,5 @@
 Service::CategoryGroup.delete_all
+=begin
 scg = []
 
 scg << { :id => _scg_free_sum_duration, :name => 'free_sum_duration' }
@@ -9,3 +10,4 @@ Service::CategoryGroup.transaction do
   Service::CategoryGroup.create(scg)
 end
 
+=end

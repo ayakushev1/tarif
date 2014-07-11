@@ -4,15 +4,16 @@ table.init do |t|
   t.base_name = 'tarif_results'
   t.id_name = 'tarif_class_id'
   t.heads = 
-  ['tarif_class_id', 'call_ids', 'call_id_count', 'price_value']
+  ['part', 'tarif_class_id', 'call_ids', 'call_id_count', 'price_value']
   t.set_fields do |t| 
   	duplicates = t['call_ids'].uniq! ? (t['call_ids'] + t['call_ids'] - t['call_ids'].uniq).sort.to_s : [] if t['call_ids']
   	show_if_no_duplicates = ""#t['call_ids'].sort.to_s
   [
+  	t['part'],
   	t['tarif_class_id'],
   	(t['call_ids'].uniq! ? "there are duplicates: " + duplicates : show_if_no_duplicates if t['call_ids']),
   	t['call_id_count'],
-  	(t['price_value'].round(2) if t['price_value']),
+  	(t['price_value'].to_f.round(2) if t['price_value']),
 #  	t['price_values']
   ] 
   end

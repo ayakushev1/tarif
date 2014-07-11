@@ -1,4 +1,5 @@
 PriceList.delete_all
+=begin
 plst =[]
 #price_list_to_real_category_groups
   #all operators
@@ -9,3 +10,5 @@ plst << {:id => _pl_free_sum_volume, :name => "price for _scg_free_sum_volume", 
 PriceList.transaction do
   PriceList.create(plst)
 end
+
+=end

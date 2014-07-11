@@ -18,6 +18,9 @@
 #  created_at                         :datetime
 #  updated_at                         :datetime
 #  name                               :text
+#  conditions                         :json
+#  tarif_option_id                    :integer
+#  tarif_option_order                 :integer
 #
 
 class Service::CategoryTarifClass < ActiveRecord::Base

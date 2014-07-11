@@ -83,8 +83,8 @@ class ServiceHelper::QueryConstructor
   
   def correct_category_criteria(category_id)
     (parents_category_criteria(category_id) || [] ) +
-    (category_criteria_stand_alone(category_id) || [] ) +
-    (childs_category_criteria(category_id) || [])
+    (category_criteria_stand_alone(category_id) || [] ) #+
+#    (childs_category_criteria(category_id) || [])
   end
 
   def parents_category_criteria(category_id)
@@ -186,8 +186,11 @@ class ServiceHelper::QueryConstructor
   
   def load_required_service_category_tarif_class_ids
     @tarif_class_categories = {}
-    Service::CategoryTarifClass.where(:tarif_class_id => tarif_class_ids).active.#original.
-      uniq.each {|ctc| tarif_class_categories[ctc.id] = ctc }        
+    Service::CategoryTarifClass.where(:tarif_class_id => tarif_class_ids).active.#original.uniq
+      each do |ctc| 
+        tarif_class_categories[ctc.id] = ctc 
+        raise(StandardError, []) if !ctc
+      end        
   end
   
   def load_service_category_tarif_class_ids_by_tarif_class

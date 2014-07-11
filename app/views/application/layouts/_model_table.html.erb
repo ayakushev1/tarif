@@ -18,6 +18,7 @@ table_html_options = table_html_options.collect { |key, value| "#{key.to_s}=\"#{
 <br />
 <%= session[:filtr] if show_debug %>
 <%= session[:current_id] if show_debug %>
+<div><%=session[:progress_bar] if false%></div>
 
 <legend><%= table.caption %></legend>
 

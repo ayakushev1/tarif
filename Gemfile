@@ -3,7 +3,7 @@ ruby "2.1.1"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 #TODO обновить до 4.1.0
-gem 'rails', '4.1.0.rc1'
+gem 'rails', '4.1.0'
 
 gem 'pg'
 gem 'nokogiri'
@@ -81,10 +81,10 @@ group :production do
   gem 'rails_12factor'
 end
 
+#gem 'spawnling', '~>2.1' #background processing
+gem 'spawnling', :git => 'git://github.com/tra/spawnling'
 
-
-
-
+gem 'puma'
 
 
 

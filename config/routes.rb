@@ -7,6 +7,7 @@ Rails.application.routes.draw do
     controller :tarif_optimizator do
       get 'tarif_optimizator/index' => :index
       get 'tarif_optimizator/recalculate' => :recalculate
+      get 'tarif_optimizator/calculation_status' => :calculation_status
     end   
 
     resources :services, only: [:index] do

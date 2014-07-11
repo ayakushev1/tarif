@@ -11,17 +11,17 @@ describe ServiceHelper::TarifSeedTester do
 
   before do
     unless Foo.class_variable_get(:@@init_tarif_optimizator_for_tarif_seed_test)
-      options = {:operators => [1030], :tarifs => [[203]], :tarif_sets => [[[203]]], :common_services => [[[]]], :tarif_options => [[[[nil]]]]}
-#      options = {:operators => [1030], :tarifs => [[203]], :tarif_sets => [[[276, 277, 203]]], :common_services => [[[276, 277]]], :tarif_options => [[[[nil, 283, 293]]]]}
+      options = {:operators => [1030], :tarifs => [[203]], :tarif_sets => [[[203]]], :common_services => [[[]]], :tarif_options => [[[[304]]]]}
+#      options = {:operators => [1030], :tarifs => [[203]], :tarif_sets => [[[276, 277, 203]]], :common_services => [[[276, 277]]], :tarif_options => [[[[283],[289]]]]}
       tarif_seed_tester = ServiceHelper::TarifSeedTester.new(options)
       tarif_seed_tester.tarif_optimizator.calculate_one_operator_tarifs(0)
       Foo.class_variable_set(:@@tarif_seed_tester, tarif_seed_tester)
       Foo.class_variable_set(:@@init_tarif_optimizator_for_tarif_seed_test, 'done')
     end
     @tarif_optimizator = Foo.class_variable_get(:@@tarif_seed_tester).tarif_optimizator
-    @tarif_set_id = '203'
-#    @tarif_set_id = '276_277_203_293'
-    @tarif_id = 203
+    @tarif_set_id = '203_304'
+#    @tarif_set_id = '276_277_203_283_289'
+    @tarif_id = 304
     @prev_service_call_ids = @tarif_optimizator.prev_service_call_ids[@tarif_set_id][@tarif_id]
   end
 
@@ -32,7 +32,7 @@ describe ServiceHelper::TarifSeedTester do
 
   describe 'service_category_tarif_class' do
     it 'must has at least one calls record' do
-      raise(StandardError, [@tarif_optimizator.tarif_results_ord.keys ]) if !@tarif_optimizator or !@tarif_optimizator.tarif_results_ord or !@tarif_optimizator.tarif_results_ord[@tarif_set_id] or !@tarif_optimizator.tarif_results_ord[@tarif_set_id][@tarif_id]
+#      raise(StandardError, [@tarif_optimizator.tarif_results_ord.keys ]) if !@tarif_optimizator or !@tarif_optimizator.tarif_results_ord or !@tarif_optimizator.tarif_results_ord[@tarif_set_id] or !@tarif_optimizator.tarif_results_ord[@tarif_set_id][@tarif_id]
       @tarif_optimizator.tarif_results_ord[@tarif_set_id][@tarif_id].each do |key, details_by_order|
         details_by_order['price_values'].each do |tarif_result_detail|
           tarif_classes_category_where_hash_sql = if tarif_result_detail['service_category_tarif_class_id'] > 1 
@@ -49,9 +49,9 @@ describe ServiceHelper::TarifSeedTester do
             when 'one_time_tarif_switch_on'
               tarif_result_detail['price_value'].must_be :==, 0
             when 'periodic_monthly_fee'
-              tarif_result_detail['price_value'].must_be :==, 900
+              tarif_result_detail['price_value'].must_be :==, 135
             when 'periodic_day_fee'
-              tarif_result_detail['price_value'].must_be :==, 150
+              tarif_result_detail['price_value'].must_be :==, 0
             else
               tarif_classes_category_where_hash_sql.must_be :==, true, [tarif_result_detail].join("\n") 
 #              tarif_classes_category_where_hash_sql.must_be :==, true, [tarif_result_detail, @prev_service_call_ids].join("\n") 
@@ -79,8 +79,8 @@ describe ServiceHelper::TarifSeedTester do
             ids_and_names << {:ids_to_add => ids_to_add, :service_category_name => tarif_result_detail['service_category_name']}
 #            raise(StandardError, [tarif_result_detail, tarif_classes_category_where_hash_sql].join("\n") ) if tarif_result_detail['service_category_name'] == '_sctcg_mts_europe_sms_outcoming'
             if  tarif_result_detail['service_category_tarif_class_id'] > -1
-#              (ids_to_add & call_ids).count.must_be :==, 0, ['duplicated:', ids_to_add & call_ids, ids_and_names, tarif_classes_category_where_hash_sql, tarif_result_detail['service_category_name']].join("\n") 
-#              (ids_to_add & call_ids).count.must_be :==, 0, [ids_to_add & call_ids, tarif_classes_category_where_hash_sql, tarif_result_detail['service_category_name']].join("\n") 
+              (ids_to_add & call_ids).count.must_be :==, 0, ['duplicated:', ids_to_add & call_ids, ids_and_names, tarif_classes_category_where_hash_sql, tarif_result_detail['service_category_name']].join("\n") 
+              (ids_to_add & call_ids).count.must_be :==, 0, [ids_to_add & call_ids, tarif_classes_category_where_hash_sql, tarif_result_detail['service_category_name']].join("\n") 
             end
             call_ids = (call_ids + ids_to_add).flatten.compact.uniq
             call_ids.include?('mms_outcoming').must_be :==, false, [tarif_result_detail, nil, (tarif_result_detail['call_ids'] || []).flatten.compact].join("\n") 
@@ -99,7 +99,8 @@ describe ServiceHelper::TarifSeedTester do
         @tarif_optimizator.tarif_results_ord[@tarif_set_id][tarif_id.to_i].each do |key, details_by_order|
           service_category_tarif_class_ids = [], service_category_group_ids = []
           details_by_order['price_values'].each do |tarif_result_detail|
-            service_category_tarif_class_ids.include?(tarif_result_detail['service_category_tarif_class_id']).must_be :==, false, tarif_result_detail['service_category_tarif_class_id']
+            service_category_tarif_class_ids.include?(tarif_result_detail['service_category_tarif_class_id']).must_be :==, false, 
+              [tarif_result_detail['service_category_tarif_class_id'], tarif_result_detail]
             service_category_tarif_class_ids << tarif_result_detail['service_category_tarif_class_id'] unless tarif_result_detail['service_category_tarif_class_id'] == -1
 
             service_category_group_ids.include?(tarif_result_detail['service_category_group_id']).must_be :==, false, tarif_result_detail['service_category_group_id']

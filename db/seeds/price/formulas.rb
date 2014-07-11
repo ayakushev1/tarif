@@ -1,4 +1,5 @@
 Price::Formula.delete_all
+=begin
 prf = []
 #price_list_to_real_category_groups
   #all operators
@@ -11,3 +12,4 @@ Price::Formula.transaction do
   Price::Formula.create(prf)
 end
 
+=end

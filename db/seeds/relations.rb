@@ -50,47 +50,50 @@ rln << {:id => _relation_mts_europe_countries, :type_id => _operator_country_gro
 rln << {:id => _relation_mts_sic_countries, :type_id => _operator_country_groups, :owner_id => _mts, :parent_id => nil, :children => _mts_sic_countries,:name => 'MTS, SIC'}
 rln << {:id => _relation_mts_sic_1_countries, :type_id => _operator_country_groups, :owner_id => _mts, :parent_id => nil, :children => _mts_sic_1_countries,:name => 'MTS, SIC 1'}
 rln << {:id => _relation_mts_sic_2_countries, :type_id => _operator_country_groups, :owner_id => _mts, :parent_id => nil, :children => _mts_sic_2_countries,:name => 'MTS, SIC 2'}
+rln << {:id => _relation_mts_sic_2_1_countries, :type_id => _operator_country_groups, :owner_id => _mts, :parent_id => nil, :children => _mts_sic_2_1_countries,:name => 'MTS, SIC 2_1'}
+rln << {:id => _relation_mts_sic_2_2_countries, :type_id => _operator_country_groups, :owner_id => _mts, :parent_id => nil, :children => _mts_sic_2_2_countries,:name => 'MTS, SIC 2_2'}
 rln << {:id => _relation_mts_sic_3_countries, :type_id => _operator_country_groups, :owner_id => _mts, :parent_id => nil, :children => _mts_sic_3_countries,:name => 'MTS, SIC 3'}
 rln << {:id => _relation_mts_other_countries, :type_id => _operator_country_groups, :owner_id => _mts, :parent_id => nil, :children => _mts_other_countries,:name => 'MTS, Other World'}
+rln << {:id => _relation_mts_calls_from_11_9_option_countries_1, :type_id => _operator_country_groups, :owner_id => _mts, :parent_id => nil, :children => _mts_from_11_9_option_countries_1,:name => 'MTS, countries 1 from 11.9 rur tarif option'}
+rln << {:id => _relation_mts_calls_from_11_9_option_countries_2, :type_id => _operator_country_groups, :owner_id => _mts, :parent_id => nil, :children => _mts_from_11_9_option_countries_2,:name => 'MTS, countries 2 from 11.9 rur tarif option'}
+rln << {:id => _relation_mts_internet_bit_abrod_1, :type_id => _operator_country_groups, :owner_id => _mts, :parent_id => nil, :children => _mts_bit_abrod_1,:name => 'MTS, countries from bit_abrod_1 tarif option'}
+rln << {:id => _relation_mts_internet_bit_abrod_2, :type_id => _operator_country_groups, :owner_id => _mts, :parent_id => nil, :children => _mts_bit_abrod_2,:name => 'MTS, countries from bit_abrod_2 tarif option'}
+rln << {:id => _relation_mts_internet_bit_abrod_3, :type_id => _operator_country_groups, :owner_id => _mts, :parent_id => nil, :children => _mts_bit_abrod_3,:name => 'MTS, countries from bit_abrod_3 tarif option'}
+rln << {:id => _relation_mts_internet_bit_abrod_4, :type_id => _operator_country_groups, :owner_id => _mts, :parent_id => nil, :children => _mts_bit_abrod_4,:name => 'MTS, countries from bit_abrod_4 tarif option'}
+
+rln << {:id => _relation_mts_love_countries_4_9, :type_id => _operator_country_groups, :owner_id => _mts, :parent_id => nil, :children => _mts_love_countries_4_9,:name => 'MTS, countries from _mts_love_countries_4_9 tarif option'}
+rln << {:id => _relation_mts_love_countries_5_5, :type_id => _operator_country_groups, :owner_id => _mts, :parent_id => nil, :children => _mts_love_countries_5_5,:name => 'MTS, countries from _mts_love_countries_5_5 tarif option'}
+rln << {:id => _relation_mts_love_countries_5_9, :type_id => _operator_country_groups, :owner_id => _mts, :parent_id => nil, :children => _mts_love_countries_5_9,:name => 'MTS, countries from _mts_love_countries_5_9 tarif option'}
+rln << {:id => _relation_mts_love_countries_6_9, :type_id => _operator_country_groups, :owner_id => _mts, :parent_id => nil, :children => _mts_love_countries_6_9,:name => 'MTS, countries from _mts_love_countries_6_9 tarif option'}
+rln << {:id => _relation_mts_love_countries_7_9, :type_id => _operator_country_groups, :owner_id => _mts, :parent_id => nil, :children => _mts_love_countries_7_9,:name => 'MTS, countries from _mts_love_countries_7_9 tarif option'}
+rln << {:id => _relation_mts_love_countries_8_9, :type_id => _operator_country_groups, :owner_id => _mts, :parent_id => nil, :children => _mts_love_countries_8_9,:name => 'MTS, countries from _mts_love_countries_8_9 tarif option'}
+rln << {:id => _relation_mts_love_countries_9_9, :type_id => _operator_country_groups, :owner_id => _mts, :parent_id => nil, :children => _mts_love_countries_9_9,:name => 'MTS, countries from _mts_love_countries_9_9 tarif option'}
+rln << {:id => _relation_mts_love_countries_11_5, :type_id => _operator_country_groups, :owner_id => _mts, :parent_id => nil, :children => _mts_love_countries_11_5,:name => 'MTS, countries from _mts_love_countries_11_5 tarif option'}
+rln << {:id => _relation_mts_love_countries_12_9, :type_id => _operator_country_groups, :owner_id => _mts, :parent_id => nil, :children => _mts_love_countries_12_9,:name => 'MTS, countries from _mts_love_countries_12_9 tarif option'}
+rln << {:id => _relation_mts_love_countries_14_9, :type_id => _operator_country_groups, :owner_id => _mts, :parent_id => nil, :children => _mts_love_countries_14_9,:name => 'MTS, countries from _mts_love_countries_14_9 tarif option'}
+rln << {:id => _relation_mts_love_countries_19_9, :type_id => _operator_country_groups, :owner_id => _mts, :parent_id => nil, :children => _mts_love_countries_19_9,:name => 'MTS, countries from _mts_love_countries_19_9 tarif option'}
+rln << {:id => _relation_mts_love_countries_29_9, :type_id => _operator_country_groups, :owner_id => _mts, :parent_id => nil, :children => _mts_love_countries_29_9,:name => 'MTS, countries from _mts_love_countries_29_9 tarif option'}
+rln << {:id => _relation_mts_love_countries_49_9, :type_id => _operator_country_groups, :owner_id => _mts, :parent_id => nil, :children => _mts_love_countries_49_9,:name => 'MTS, countries from _mts_love_countries_49_9 tarif option'}
+
+rln << {:id => _relation_mts_your_country_1, :type_id => _operator_country_groups, :owner_id => _mts, :parent_id => nil, :children => _mts_your_country_1,:name => 'MTS, countries from _mts_your_country_1 tarif option'}
+rln << {:id => _relation_mts_your_country_2, :type_id => _operator_country_groups, :owner_id => _mts, :parent_id => nil, :children => _mts_your_country_2,:name => 'MTS, countries from _mts_your_country_2 tarif option'}
+rln << {:id => _relation_mts_your_country_3, :type_id => _operator_country_groups, :owner_id => _mts, :parent_id => nil, :children => _mts_your_country_3,:name => 'MTS, countries from _mts_your_country_3 tarif option'}
+rln << {:id => _relation_mts_your_country_4, :type_id => _operator_country_groups, :owner_id => _mts, :parent_id => nil, :children => _mts_your_country_4,:name => 'MTS, countries from _mts_your_country_4 tarif option'}
+rln << {:id => _relation_mts_your_country_5, :type_id => _operator_country_groups, :owner_id => _mts, :parent_id => nil, :children => _mts_your_country_5,:name => 'MTS, countries from _mts_your_country_5 tarif option'}
+rln << {:id => _relation_mts_your_country_6, :type_id => _operator_country_groups, :owner_id => _mts, :parent_id => nil, :children => _mts_your_country_6,:name => 'MTS, countries from _mts_your_country_6 tarif option'}
+rln << {:id => _relation_mts_your_country_7, :type_id => _operator_country_groups, :owner_id => _mts, :parent_id => nil, :children => _mts_your_country_7,:name => 'MTS, countries from _mts_your_country_7 tarif option'}
+rln << {:id => _relation_mts_your_country_8, :type_id => _operator_country_groups, :owner_id => _mts, :parent_id => nil, :children => _mts_your_country_8,:name => 'MTS, countries from _mts_your_country_8 tarif option'}
+rln << {:id => _relation_mts_your_country_9, :type_id => _operator_country_groups, :owner_id => _mts, :parent_id => nil, :children => _mts_your_country_9,:name => 'MTS, countries from _mts_your_country_9 tarif option'}
+
 
 rln << {:id => 20000, :type_id => _main_operator_by_country, :owner_id => _ukraiun, :parent_id => nil, :children => [_mts_ukrain],:name => ''}
-rln << {:id => 20100, :type_id => _main_operator_by_country, :owner_id => _great_britain, :parent_id => nil, :children => [_operator_great_britain],:name => ''}
-rln << {:id => 20200, :type_id => _main_operator_by_country, :owner_id => _germany, :parent_id => nil, :children => [_operator_germany],:name => ''}
-rln << {:id => 20300, :type_id => _main_operator_by_country, :owner_id => _france, :parent_id => nil, :children => [_operator_france],:name => ''}
-rln << {:id => 20400, :type_id => _main_operator_by_country, :owner_id => _spain, :parent_id => nil, :children => [_operator_spain],:name => ''}
-rln << {:id => 20500, :type_id => _main_operator_by_country, :owner_id => _poland, :parent_id => nil, :children => [_operator_poland],:name => ''}
-rln << {:id => 20700, :type_id => _main_operator_by_country, :owner_id => _china, :parent_id => nil, :children => [_operator_china],:name => ''}
-rln << {:id => 20800, :type_id => _main_operator_by_country, :owner_id => _india, :parent_id => nil, :children => [_operator_india],:name => ''}
-rln << {:id => 20900, :type_id => _main_operator_by_country, :owner_id => _turkey, :parent_id => nil, :children => [_operator_turkey],:name => ''}
-rln << {:id => 21000, :type_id => _main_operator_by_country, :owner_id => _abkhazia, :parent_id => nil, :children => [_operator_abhazia],:name => ''}
-rln << {:id => 21100, :type_id => _main_operator_by_country, :owner_id => _azerbaijan, :parent_id => nil, :children => [_operator_azerbaigan],:name => ''}
-rln << {:id => 21200, :type_id => _main_operator_by_country, :owner_id => _armenia, :parent_id => nil, :children => [_operator_armenia],:name => ''}
-rln << {:id => 21300, :type_id => _main_operator_by_country, :owner_id => _georgia, :parent_id => nil, :children => [_operator_gruzia],:name => ''}
-rln << {:id => 21400, :type_id => _main_operator_by_country, :owner_id => _usa, :parent_id => nil, :children => [_operator_usa],:name => ''}
-rln << {:id => 21500, :type_id => _main_operator_by_country, :owner_id => _canada, :parent_id => nil, :children => [_operator_canada],:name => ''}
-rln << {:id => 21600, :type_id => _main_operator_by_country, :owner_id => _mexica, :parent_id => nil, :children => [_operator_mexica],:name => ''}
-rln << {:id => 21700, :type_id => _main_operator_by_country, :owner_id => _cuba, :parent_id => nil, :children => [_operator_cuba],:name => ''}
-rln << {:id => 21800, :type_id => _main_operator_by_country, :owner_id => _yamayka, :parent_id => nil, :children => [_operator_yamayka],:name => ''}
-rln << {:id => 21900, :type_id => _main_operator_by_country, :owner_id => _brasilia, :parent_id => nil, :children => [_operator_brasilia],:name => ''}
-rln << {:id => 22000, :type_id => _main_operator_by_country, :owner_id => _argentina, :parent_id => nil, :children => [_operator_argentina],:name => ''}
-rln << {:id => 22100, :type_id => _main_operator_by_country, :owner_id => _chily, :parent_id => nil, :children => [_operator_chily],:name => ''}
-rln << {:id => 22200, :type_id => _main_operator_by_country, :owner_id => _bolivia, :parent_id => nil, :children => [_operator_bolivia],:name => ''}
-rln << {:id => 22300, :type_id => _main_operator_by_country, :owner_id => _egypt, :parent_id => nil, :children => [_operator_egypt],:name => ''}
-rln << {:id => 22400, :type_id => _main_operator_by_country, :owner_id => _uae, :parent_id => nil, :children => [_operator_uae],:name => ''}
-rln << {:id => 22500, :type_id => _main_operator_by_country, :owner_id => _south_africa, :parent_id => nil, :children => [_operator_south_africa],:name => ''}
-rln << {:id => 22600, :type_id => _main_operator_by_country, :owner_id => _livia, :parent_id => nil, :children => [_operator_livia],:name => ''}
+rln << {:id => 20001, :type_id => _main_operator_by_country, :owner_id => _russia, :parent_id => nil, :children => [_mts, _beeline, _megafon],:name => ''}
 
-rln << {:id => 22700, :type_id => _main_operator_by_country, :owner_id => _kazakhstan, :parent_id => nil, :children => [_operator_kazakhstan],:name => ''}
-rln << {:id => 22800, :type_id => _main_operator_by_country, :owner_id => _kyrgyzstan, :parent_id => nil, :children => [_operator_kyrgyzstan],:name => ''}
-rln << {:id => 22900, :type_id => _main_operator_by_country, :owner_id => _tajikistan, :parent_id => nil, :children => [_operator_tajikistan],:name => ''}
-rln << {:id => 23000, :type_id => _main_operator_by_country, :owner_id => _turkmenistan, :parent_id => nil, :children => [_operator_turkmenistan],:name => ''}
-rln << {:id => 23100, :type_id => _main_operator_by_country, :owner_id => _uzbekistan, :parent_id => nil, :children => [_operator_uzbekistan],:name => ''}
-rln << {:id => 23200, :type_id => _main_operator_by_country, :owner_id => _south_ossetia, :parent_id => nil, :children => [_operator_south_ossetia],:name => ''}
-rln << {:id => 23300, :type_id => _main_operator_by_country, :owner_id => _belarus, :parent_id => nil, :children => [_operator_belarus],:name => ''}
-rln << {:id => 23400, :type_id => _main_operator_by_country, :owner_id => _moldova, :parent_id => nil, :children => [_operator_moldova],:name => ''}
-
-#  raise(StandardError, [rln, _mts_cis, Relation.create(rln).to_sql])
-   
+i = 20002
+_all_country_list_in_string.each do |country_name|
+  rln << {:id => i, :type_id => _main_operator_by_country, :owner_id => eval(country_name), :parent_id => nil, :children => [eval("_operator#{country_name}")], :name => ''}
+  i += 1
+end
 
 Relation.transaction do
   Relation.create(rln)

@@ -19,6 +19,8 @@ CategoryType.create(id: 21, name: "relation types")
 CategoryType.create(id: 22, name: "phone usage patterns")
 CategoryType.create(id: 23, name: "priority_type")
 CategoryType.create(id: 24, name: "priority_relation")
+CategoryType.create(id: 25, name: "general_priority")
+CategoryType.create(id: 26, name: "tarif_class_general_service_categories")
 
 CategoryLevel.delete_all
 CategoryLevel.create(id: 0,type_id: 0, level: 0, name: "world")
@@ -33,20 +35,21 @@ Category.create(id: 1, type_id: 3, level_id: nil, parent_id: nil, name: "Legal")
 Category.create(id: 2, type_id: 3, level_id: nil, parent_id: nil, name: "Person")
 
 Category.create(id: 40, type_id: 4, level_id: nil, parent_id: nil, name: "Тариф")
-Category.create(id: 41, type_id: 4, level_id: nil, parent_id: nil, name: "Роуминг")
+Category.create(id: 41, type_id: 4, level_id: nil, parent_id: nil, name: "Общая услуга")
 Category.create(id: 42, type_id: 4, level_id: nil, parent_id: nil, name: "Специальная услуга")
 Category.create(id: 43, type_id: 4, level_id: nil, parent_id: nil, name: "Опция тарифа")
 
-Category.create(id: 50, type_id: 5, level_id: nil, parent_id: nil, name: "Звонок")
-Category.create(id: 51, type_id: 5, level_id: nil, parent_id: nil, name: "СМС")
-Category.create(id: 52, type_id: 5, level_id: nil, parent_id: nil, name: "ММС")
-Category.create(id: 53, type_id: 5, level_id: nil, parent_id: nil, name: "2G")
-Category.create(id: 54, type_id: 5, level_id: nil, parent_id: nil, name: "3G")
-Category.create(id: 55, type_id: 5, level_id: nil, parent_id: nil, name: "4G")
-Category.create(id: 56, type_id: 5, level_id: nil, parent_id: nil, name: "CDMA")
-Category.create(id: 57, type_id: 5, level_id: nil, parent_id: nil, name: "WiFi")
-Category.create(id: 58, type_id: 5, level_id: nil, parent_id: nil, name: "periodic")
-Category.create(id: 59, type_id: 5, level_id: nil, parent_id: nil, name: "one_time")
+Category.create(id: _calls, type_id: 5, level_id: nil, parent_id: nil, name: "Звонок")
+Category.create(id: _sms, type_id: 5, level_id: nil, parent_id: nil, name: "СМС")
+Category.create(id: _mms, type_id: 5, level_id: nil, parent_id: nil, name: "ММС")
+Category.create(id: _wap, type_id: 5, level_id: nil, parent_id: nil, name: "wap")
+Category.create(id: _2g, type_id: 5, level_id: nil, parent_id: nil, name: "2G")
+Category.create(id: _3g, type_id: 5, level_id: nil, parent_id: nil, name: "3G")
+Category.create(id: _4g, type_id: 5, level_id: nil, parent_id: nil, name: "4G")
+Category.create(id: _cdma, type_id: 5, level_id: nil, parent_id: nil, name: "CDMA")
+Category.create(id: _wifi, type_id: 5, level_id: nil, parent_id: nil, name: "WiFi")
+Category.create(id: _periodic, type_id: 5, level_id: nil, parent_id: nil, name: "periodic")
+Category.create(id: _one_time, type_id: 5, level_id: nil, parent_id: nil, name: "one_time")
 
 Category.create(id: 70, type_id: 6, level_id: nil, parent_id: nil, name: "Входящий")
 Category.create(id: 71, type_id: 6, level_id: nil, parent_id: nil, name: "Исходящий")
@@ -169,6 +172,17 @@ Category.create(id: 303, type_id: 23, level_id: nil, parent_id: nil, name: "main
 Category.create(id: 310, type_id: 24, level_id: nil, parent_id: nil, name: "main has higher priority")
 Category.create(id: 311, type_id: 24, level_id: nil, parent_id: nil, name: "main has lower priority")
 
+Category.create(id: 320, type_id: 25, level_id: nil, parent_id: nil, name: "tarif_option")
+Category.create(id: 321, type_id: 25, level_id: nil, parent_id: nil, name: "tarif_without_limits")
+Category.create(id: 322, type_id: 25, level_id: nil, parent_id: nil, name: "tarif_with_limits")
+Category.create(id: 323, type_id: 25, level_id: nil, parent_id: nil, name: "tarif_option_with_limits")
+Category.create(id: 324, type_id: 25, level_id: nil, parent_id: nil, name: "common_service")
+
+Category.create(id: 330, type_id: 26, level_id: nil, parent_id: nil, name: "calls")
+Category.create(id: 331, type_id: 26, level_id: nil, parent_id: nil, name: "sms")
+Category.create(id: 332, type_id: 26, level_id: nil, parent_id: nil, name: "mms")
+Category.create(id: 333, type_id: 26, level_id: nil, parent_id: nil, name: "internet")
+
 Category.create(id: _russian_operators, type_id: 2, level_id: nil, parent_id: nil, name: "Russian operators")
 Category.create(id: _foreign_operators, type_id: 2, level_id: nil, parent_id: nil, name: "Foreign operators")
 Category.create(id: 1020, type_id: 2, level_id: nil, parent_id: _russian_operators, name: "Djuice")
@@ -182,45 +196,11 @@ Category.create(id: 1027, type_id: 2, level_id: nil, parent_id: _russian_operato
 Category.create(id: _megafon, type_id: 2, level_id: nil, parent_id: _russian_operators, name: "Мегафон")
 Category.create(id: 1029, type_id: 2, level_id: nil, parent_id: _russian_operators, name: "Мотив")
 Category.create(id: _mts, type_id: 2, level_id: nil, parent_id: _russian_operators, name: "МТС")
-Category.create(id: _mts_ukrain, type_id: 2, level_id: nil, parent_id: _russian_operators, name: "МТС-Украина")
+Category.create(id: _mts_ukrain, type_id: 2, level_id: nil, parent_id: _foreign_operators, name: "МТС-Украина")
 Category.create(id: 1032, type_id: 2, level_id: nil, parent_id: _russian_operators, name: "Скайлинк")
 Category.create(id: 1033, type_id: 2, level_id: nil, parent_id: _russian_operators, name: "СМАРТС")
 Category.create(id: _fixed_line_operator, type_id: 2, level_id: nil, parent_id: _russian_operators, name: "Ростелеком Fixed line")
-Category.create(id: _operator_great_britain, type_id: 2, level_id: nil, parent_id: _foreign_operators, name: "operator_great_britain")
-Category.create(id: _operator_germany, type_id: 2, level_id: nil, parent_id: _foreign_operators, name: "operator_germany")
-Category.create(id: _operator_france, type_id: 2, level_id: nil, parent_id: _foreign_operators, name: "operator_france")
-Category.create(id: _operator_spain, type_id: 2, level_id: nil, parent_id: _foreign_operators, name: "operator_spain")
-Category.create(id: _operator_poland, type_id: 2, level_id: nil, parent_id: _foreign_operators, name: "operator_poland")
-Category.create(id: _operator_holand, type_id: 2, level_id: nil, parent_id: _foreign_operators, name: "operator_holand")
-Category.create(id: _operator_china, type_id: 2, level_id: nil, parent_id: _foreign_operators, name: "operator_china")
-Category.create(id: _operator_india, type_id: 2, level_id: nil, parent_id: _foreign_operators, name: "operator_india")
-Category.create(id: _operator_turkey, type_id: 2, level_id: nil, parent_id: _foreign_operators, name: "operator_turkey")
-Category.create(id: _operator_abhazia, type_id: 2, level_id: nil, parent_id: _foreign_operators, name: "operator_abhazia")
-Category.create(id: _operator_azerbaigan, type_id: 2, level_id: nil, parent_id: _foreign_operators, name: "operator_azerbaigan")
-Category.create(id: _operator_armenia, type_id: 2, level_id: nil, parent_id: _foreign_operators, name: "operator_armenia")
-Category.create(id: _operator_gruzia, type_id: 2, level_id: nil, parent_id: _foreign_operators, name: "operator_gruzia")
-Category.create(id: _operator_usa, type_id: 2, level_id: nil, parent_id: _foreign_operators, name: "operator_usa")
-Category.create(id: _operator_canada, type_id: 2, level_id: nil, parent_id: _foreign_operators, name: "operator_canada")
-Category.create(id: _operator_mexica, type_id: 2, level_id: nil, parent_id: _foreign_operators, name: "operator_mexica")
-Category.create(id: _operator_cuba, type_id: 2, level_id: nil, parent_id: _foreign_operators, name: "operator_cuba")
-Category.create(id: _operator_yamayka, type_id: 2, level_id: nil, parent_id: _foreign_operators, name: "operator_yamayka")
-Category.create(id: _operator_brasilia, type_id: 2, level_id: nil, parent_id: _foreign_operators, name: "operator_brasilia")
-Category.create(id: _operator_argentina, type_id: 2, level_id: nil, parent_id: _foreign_operators, name: "operator_argentina")
-Category.create(id: _operator_chily, type_id: 2, level_id: nil, parent_id: _foreign_operators, name: "operator_chily")
-Category.create(id: _operator_bolivia, type_id: 2, level_id: nil, parent_id: _foreign_operators, name: "operator_bolivia")
-Category.create(id: _operator_egypt, type_id: 2, level_id: nil, parent_id: _foreign_operators, name: "operator_egypt")
-Category.create(id: _operator_uae, type_id: 2, level_id: nil, parent_id: _foreign_operators, name: "operator_uae")
-Category.create(id: _operator_south_africa, type_id: 2, level_id: nil, parent_id: _foreign_operators, name: "operator_south_africa")
-Category.create(id: _operator_livia, type_id: 2, level_id: nil, parent_id: _foreign_operators, name: "operator_livia")
 
-Category.create(id: _operator_kazakhstan, type_id: 2, level_id: nil, parent_id: _foreign_operators, name: "operator_kazakhstan")
-Category.create(id: _operator_kyrgyzstan, type_id: 2, level_id: nil, parent_id: _foreign_operators, name: "operator_kyrgyzstan")
-Category.create(id: _operator_tajikistan, type_id: 2, level_id: nil, parent_id: _foreign_operators, name: "operator_tajikistan")
-Category.create(id: _operator_turkmenistan, type_id: 2, level_id: nil, parent_id: _foreign_operators, name: "operator_turkmenistan")
-Category.create(id: _operator_uzbekistan, type_id: 2, level_id: nil, parent_id: _foreign_operators, name: "operator_uzbekistan")
-Category.create(id: _operator_south_ossetia, type_id: 2, level_id: nil, parent_id: _foreign_operators, name: "operator_south_ossetia")
-Category.create(id: _operator_belarus, type_id: 2, level_id: nil, parent_id: _foreign_operators, name: "operator_belarus")
-Category.create(id: _operator_moldova, type_id: 2, level_id: nil, parent_id: _foreign_operators, name: "_operator_moldova")
 
 Category.create(id: 1101, type_id: 0, level_id: 3, parent_id: _russia, name: "Владимирская область")
 Category.create(id: 1102, type_id: 0, level_id: 3, parent_id: _russia, name: "Волгоградская область")
@@ -258,7 +238,7 @@ Category.create(id: 1133, type_id: 0, level_id: 3, parent_id: _russia, name: "М
 Category.create(id: 1134, type_id: 0, level_id: 3, parent_id: _russia, name: "Санкт-Петербург")
 Category.create(id: 1135, type_id: 0, level_id: 3, parent_id: _russia, name: "Екатеринбург")
 
-Category.create(id: 1501, type_id: 0, level_id: 3, parent_id: _ukraiun, name: "Украина")
+Category.create(id: 1501, type_id: 0, level_id: 3, parent_id: _ukraiun, name: "регион Украины")
 
 Category.create(id: _world, type_id: 0, level_id: 0, parent_id: nil, name: "World")
 
@@ -267,84 +247,35 @@ Category.create(id: _asia, type_id: 0, level_id: 1, parent_id: _world, name: "As
 Category.create(id: _noth_america, type_id: 0, level_id: 1, parent_id: _world, name: "Noth America")
 Category.create(id: _south_america, type_id: 0, level_id: 1, parent_id: _world, name: "South America")
 Category.create(id: _africa, type_id: 0, level_id: 1, parent_id: _world, name: "Africa")
+Category.create(id: _australia_continent, type_id: 0, level_id: 1, parent_id: _world, name: "Australia")
 
-Category.create(id: _austria, type_id: 0, level_id: 2, parent_id: _europe, name: "Austria")
-Category.create(id: _albania, type_id: 0, level_id: 2, parent_id: _europe, name: "Albania")
-Category.create(id: _andorra, type_id: 0, level_id: 2, parent_id: _europe, name: "Andorra")
-Category.create(id: _belgium, type_id: 0, level_id: 2, parent_id: _europe, name: "Belgium")
-Category.create(id: _bulgaria, type_id: 0, level_id: 2, parent_id: _europe, name: "Bulgaria")
-Category.create(id: _bosnia_and_herzegovina, type_id: 0, level_id: 2, parent_id: _europe, name: "Bosnia and Herzegovina")
-Category.create(id: _vatican, type_id: 0, level_id: 2, parent_id: _europe, name: "The Vatican")
-Category.create(id: _great_britain, type_id: 0, level_id: 2, parent_id: _europe, name: "Great Britain")
-Category.create(id: _hungary, type_id: 0, level_id: 2, parent_id: _europe, name: "Hungary")
-Category.create(id: _germany, type_id: 0, level_id: 2, parent_id: _europe, name: "Germany")
-Category.create(id: _gibraltar, type_id: 0, level_id: 2, parent_id: _europe, name: "Gibraltar")
-Category.create(id: _greenland, type_id: 0, level_id: 2, parent_id: _europe, name: "Greenland")
-Category.create(id: _denmark, type_id: 0, level_id: 2, parent_id: _europe, name: "Denmark")
-Category.create(id: _greece, type_id: 0, level_id: 2, parent_id: _europe, name: "Greece")
-Category.create(id: _ireland, type_id: 0, level_id: 2, parent_id: _europe, name: "Ireland")
-Category.create(id: _israel, type_id: 0, level_id: 2, parent_id: _europe, name: "Israel")
-Category.create(id: _iceland, type_id: 0, level_id: 2, parent_id: _europe, name: "Iceland")
-Category.create(id: _spain, type_id: 0, level_id: 2, parent_id: _europe, name: "Spain")
-Category.create(id: _italy, type_id: 0, level_id: 2, parent_id: _europe, name: "Italy")
-Category.create(id: _cyprus, type_id: 0, level_id: 2, parent_id: _europe, name: "Cyprus")
-Category.create(id: _latvia, type_id: 0, level_id: 2, parent_id: _europe, name: "Latvia")
-Category.create(id: _liechtenstein, type_id: 0, level_id: 2, parent_id: _europe, name: "Liechtenstein")
-Category.create(id: _lithuania, type_id: 0, level_id: 2, parent_id: _europe, name: "Lithuania")
-Category.create(id: _luxembourg, type_id: 0, level_id: 2, parent_id: _europe, name: "Luxembourg")
-Category.create(id: _macedonia, type_id: 0, level_id: 2, parent_id: _europe, name: "Macedonia")
-Category.create(id: _malta, type_id: 0, level_id: 2, parent_id: _europe, name: "Malta")
-Category.create(id: _monaco, type_id: 0, level_id: 2, parent_id: _europe, name: "Monaco")
-Category.create(id: _netherlands, type_id: 0, level_id: 2, parent_id: _europe, name: "Netherlands")
-Category.create(id: _norway, type_id: 0, level_id: 2, parent_id: _europe, name: "Norway")
-Category.create(id: _poland, type_id: 0, level_id: 2, parent_id: _europe, name: "Poland")
-Category.create(id: _portugal, type_id: 0, level_id: 2, parent_id: _europe, name: "Portugal")
-Category.create(id: _romania, type_id: 0, level_id: 2, parent_id: _europe, name: "Romania")
-Category.create(id: _san_marino, type_id: 0, level_id: 2, parent_id: _europe, name: "San Marino")
-Category.create(id: _serbia, type_id: 0, level_id: 2, parent_id: _europe, name: "Serbia")
-Category.create(id: _slovakia, type_id: 0, level_id: 2, parent_id: _europe, name: "Slovakia")
-Category.create(id: _slovenia, type_id: 0, level_id: 2, parent_id: _europe, name: "Slovenia")
-Category.create(id: _turkey, type_id: 0, level_id: 2, parent_id: _europe, name: "Turkey")
-Category.create(id: _the_faroe_islands, type_id: 0, level_id: 2, parent_id: _europe, name: "the Faroe Islands")
-Category.create(id: _finland, type_id: 0, level_id: 2, parent_id: _europe, name: "Finland")
-Category.create(id: _france, type_id: 0, level_id: 2, parent_id: _europe, name: "France")
-Category.create(id: _croatia, type_id: 0, level_id: 2, parent_id: _europe, name: "Croatia")
-Category.create(id: _montenegro, type_id: 0, level_id: 2, parent_id: _europe, name: "Montenegro")
-Category.create(id: _czech_republic, type_id: 0, level_id: 2, parent_id: _europe, name: "Czech Republic")
-Category.create(id: _switzerland, type_id: 0, level_id: 2, parent_id: _europe, name: "Switzerland")
-Category.create(id: _sweden, type_id: 0, level_id: 2, parent_id: _europe, name: "Sweden")
-Category.create(id: _estonia, type_id: 0, level_id: 2, parent_id: _europe, name: "Estonia")
+ctr = []
+ctr << {:id => _ukraiun, :type_id => 0, :level_id => 2, :parent_id => _europe, :name => "Ukraine"}
+ctr << {:id => _russia, :type_id => 0, :level_id => 2, :parent_id => _europe, :name => "Russia"}
+_all_country_list_in_array_with_russian_names.each do |country_array|
+  parent_id = case
+  when _europe_countries.include?(country_array[0]); _europe;
+  when _asia_countries.include?(country_array[0]); _asia;
+  when _noth_america_countries.include?(country_array[0]); _noth_america;
+  when _south_america_countries.include?(country_array[0]); _south_america;
+  when _africa_countries.include?(country_array[0]); _africa;
+  when _australia_countries.include?(country_array[0]); _australia_continent;
+  else 
+    raise(StandardError, "country is not defined: #{country_array}")
+  end
 
-Category.create(id: _belarus, type_id: 0, level_id: 2, parent_id: _europe, name: "Belarus")
-Category.create(id: _moldova, type_id: 0, level_id: 2, parent_id: _europe, name: "Moldova")
-Category.create(id: _ukraiun, type_id: 0, level_id: 2, parent_id: _europe, name: "Ukraine")
-Category.create(id: _russia, type_id: 0, level_id: 2, parent_id: _europe, name: "Russia")
+  ctr << {:id => country_array[0], :type_id => 0, :level_id => 2, :parent_id => parent_id, :name => country_array[1]}
+end
 
-Category.create(id: _china, type_id: 0, level_id: 2, parent_id: _asia, name: "China")
-Category.create(id: _india, type_id: 0, level_id: 2, parent_id: _asia, name: "India")
-Category.create(id: _abkhazia, type_id: 0, level_id: 2, parent_id: _asia, name: "Abkhazia")
-Category.create(id: _armenia, type_id: 0, level_id: 2, parent_id: _asia, name: "Armenia")
-Category.create(id: _azerbaijan, type_id: 0, level_id: 2, parent_id: _asia, name: "Azerbaijan")
-Category.create(id: _georgia, type_id: 0, level_id: 2, parent_id: _asia, name: "Georgia")
-Category.create(id: _kazakhstan, type_id: 0, level_id: 2, parent_id: _asia, name: "Kazakhstan")
-Category.create(id: _kyrgyzstan, type_id: 0, level_id: 2, parent_id: _asia, name: "Kyrgyzstan")
-Category.create(id: _tajikistan, type_id: 0, level_id: 2, parent_id: _asia, name: "Tajikistan")
-Category.create(id: _turkmenistan, type_id: 0, level_id: 2, parent_id: _asia, name: "Turkmenistan")
-Category.create(id: _uzbekistan, type_id: 0, level_id: 2, parent_id: _asia, name: "Uzbekistan")
-Category.create(id: _south_ossetia, type_id: 0, level_id: 2, parent_id: _asia, name: "South Ossetia")
+i = _first_country_operator_id
+_all_country_list_in_string.each do |country_name|
+  ctr << {:id => i, :type_id => 2, :level_id => nil, :parent_id => _foreign_operators, :name => "operator#{country_name}"}
+  i += 1
+end
 
-Category.create(id: _usa, type_id: 0, level_id: 2, parent_id: _noth_america, name: "USA")
-Category.create(id: _canada, type_id: 0, level_id: 2, parent_id: _noth_america, name: "Canada")
-Category.create(id: _mexica, type_id: 0, level_id: 2, parent_id: _noth_america, name: "Mexica")
-Category.create(id: _cuba, type_id: 0, level_id: 2, parent_id: _noth_america, name: "Cuba")
-Category.create(id: _yamayka, type_id: 0, level_id: 2, parent_id: _noth_america, name: "Yamayka")
+ActiveRecord::Base.transaction do
+  Category.create(ctr)
+end
 
-Category.create(id: _brasilia, type_id: 0, level_id: 2, parent_id: _south_america, name: "Brasilia")
-Category.create(id: _argentina, type_id: 0, level_id: 2, parent_id: _south_america, name: "Argentina")
-Category.create(id: _chily, type_id: 0, level_id: 2, parent_id: _south_america, name: "Chily")
-Category.create(id: _bolivia, type_id: 0, level_id: 2, parent_id: _south_america, name: "Bolivia")
+#raise(StandardError, [Category.find(_operator_austria).name])#.join("\n"))
 
-Category.create(id: _egypt, type_id: 0, level_id: 2, parent_id: _africa, name: "Egypt")
-Category.create(id: _uae, type_id: 0, level_id: 2, parent_id: _africa, name: "UAE")
-Category.create(id: _south_africa, type_id: 0, level_id: 2, parent_id: _africa, name: "South Africa")
-Category.create(id: _livia, type_id: 0, level_id: 2, parent_id: _africa, name: "Livia")

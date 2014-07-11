@@ -1,0 +1,9 @@
+<%
+progress_bar.init do |p|
+  p.caption = 'Tarif optimization progress'
+  p.action_on_update_progress = customer_tarif_optimizator_calculation_status_path	
+  p.min_value = session[:progress_bar][p.progress_bar_name]['min_value'] || 0.0
+  p.max_value = session[:progress_bar][p.progress_bar_name]['max_value'] || 100.0
+  p.current_value = session[:progress_bar][p.progress_bar_name]['current_value'] || 50.0
+end
+%>
