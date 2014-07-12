@@ -122,7 +122,7 @@ TarifClass.create(id: _mts_rodnye_goroda , operator_id: 1030, privacy_id: 2, sta
 TarifClass.create(id: _mts_love_country , operator_id: 1030, privacy_id: 2, standard_service_id: 42, name: 'Любимая страна')#звонки в другие города
 TarifClass.create(id: _mts_everywhere_as_home_Ultra , operator_id: 1030, privacy_id: 2, standard_service_id: 42, name: 'Везде как дома ULTRA')#звонки в другие города и в поездке по России для тарифа ULTRA
 TarifClass.create(id: _mts_everywhere_as_home_smart , operator_id: 1030, privacy_id: 2, standard_service_id: 42, name: 'Везде как дома SMART')#звонки в другие города и в поездке по России для тарифа SMART
-TarifClass.create(id: 284 , operator_id: 1030, privacy_id: 2, standard_service_id: 42, name: 'Любимая страна') #международные звонки
+TarifClass.create(id: 284 , operator_id: 1030, privacy_id: 2, standard_service_id: 42, name: 'Любимая страна1') #международные звонки
 TarifClass.create(id: 285 , operator_id: 1030, privacy_id: 2, standard_service_id: 42, name: 'Страны МТС')#международные звонки на МТС абонентов
 TarifClass.create(id: 286 , operator_id: 1030, privacy_id: 2, standard_service_id: 42, name: 'Звонки в Узбекистан') #международные звонки в Узбекистан
 TarifClass.create(id: 287 , operator_id: 1030, privacy_id: 2, standard_service_id: 42, name: 'Звонки на Tcell от1 руб.')#международные звонки
