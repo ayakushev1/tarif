@@ -22,5 +22,22 @@ class TarifClass < ActiveRecord::Base
   has_many :service_category_tarif_classes, :class_name => 'Service::CategoryTarifClass', :foreign_key => :tarif_class_id
   has_many :tarif_lists, :class_name => 'TarifList', :foreign_key => :tarif_class_id
 
+  scope :tarifs, -> {where(:standard_service_id => 40)}
+  scope :common_services, -> {where(:standard_service_id => 41)}
+  scope :special_services, -> {where(:standard_service_id => 42)}
+  scope :options_of_tarif, -> {where(:standard_service_id => 43)}
+
+  def self.services_by_operator(operator_ids)
+    if operator_ids.blank?
+      none
+    else
+      where(:operator_id => operator_ids)
+    end
+  end
+  
+  def self.with_not_null_dependency
+    where("dependency is not null")
+  end
+
 end
 

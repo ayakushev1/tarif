@@ -16,13 +16,15 @@
 	</div>
 	<div id="third_row" class="container-fluid">
 		<div id="third_row_left_column" class="span3">
-				<%= render '/application/menus/admin_menu'%>				
+				<%= render('/application/menus/admin_menu') if controller.current_user.name == 'admin'%>				
+				<%= render('/application/menus/user_menu') %>				
 		</div>
 		<div id="third_row_main_block" class="span12">
 			<div id="main_block_top_row_1" class="row-fluid">
+				<%= (controller.flash[:notice] || '')%>
 			</div>
 			<div id="main_block_top_row_2" class="row-fluid">
-				
+				<%= controller.flash[:error]%>
 			</div>
 			<div id="main_block_top_row_3" class="row-fluid">
 				

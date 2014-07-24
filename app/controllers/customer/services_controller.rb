@@ -28,7 +28,7 @@ class Customer::ServicesController < ApplicationController
     tarif_class_id = current_customer_service.tarif_class_id if current_customer_service
     query_constructor = ServiceHelper::QueryConstructor.new(self, {:tarif_class_ids => [tarif_class_id]})
     @bench = query_constructor.bench
-    call_ids = query_constructor.call_ids_by_tarif_class_id[(tarif_class_id || 0)]
+    call_ids = query_constructor.call_ids_by_tarif_class_id[(tarif_class_id || 0)] if query_constructor.call_ids_by_tarif_class_id
     Tableable.new(self, Customer::Call.includes(:base_service, :base_subservice, :user).where(:id => call_ids) )
   end
 

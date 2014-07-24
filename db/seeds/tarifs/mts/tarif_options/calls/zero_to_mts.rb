@@ -1,7 +1,7 @@
 #Ноль на МТС
 @tc = ServiceHelper::TarifCreator.new(_mts)
 @tc.create_tarif_class({
-  :id => _mts_zero_to_mts, :name => 'Ноль на МТС', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _gp_tarif_option,
+  :id => _mts_zero_to_mts, :name => 'Ноль на МТС', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _special_service,
   :dependency => {
     :categories => [_tcgsc_calls],
     :incompatibility => {}, 

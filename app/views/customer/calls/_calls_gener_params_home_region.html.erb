@@ -32,7 +32,7 @@ form_item.init do |f|
   	],   
   	
   	[label(filtr_name, "number_of_day_calls", "Количество звонков в день"),
-     text_field(filtr_name, "number_of_day_calls", html_options.merge({:type => 'range', :min => 0, :max => 100.0, :step => 0.1, :value => s_filtr["number_of_day_calls"] }) )+
+     text_field(filtr_name, "number_of_day_calls", html_options.merge({:type => 'range', :min => 0, :max => 100.0, :step => 1, :value => s_filtr["number_of_day_calls"] }) )+
   	 content_tag(:div, {:class => "input-append"}) { content_tag(:span, s_filtr["number_of_day_calls"], {:class => "add-on"}) },   
   	 
   	 label(filtr_name, "duration_of_calls", "Средняя продолжительность звонка, мин"),
@@ -75,7 +75,7 @@ form_item.init do |f|
   	],   
   	
   	[label(filtr_name, "internet_trafic_per_month", "Трафик интернета в месяц, Гб"),
-     text_field(filtr_name, "internet_trafic_per_month", html_options.merge({:type => 'range', :min => 0, :max => 20.0, :step => 1, :value => s_filtr["internet_trafic_per_month"] }) )+
+     text_field(filtr_name, "internet_trafic_per_month", html_options.merge({:type => 'range', :min => 0, :max => 20.0, :step => 0.01, :value => s_filtr["internet_trafic_per_month"] }) )+
   	 content_tag(:div, {:class => "input-append"}) { content_tag(:span, s_filtr["internet_trafic_per_month"], {:class => "add-on"}) },   
   	 
   	 label(filtr_name, ""),

@@ -1,7 +1,7 @@
 <%
 style_table = [
 	[/label/, {:class => "control-label span2"}],
-	[/(input|select).*?type.*?text/, {:class => "controls updatable", :filtr_name => form_item.form_name}],
+	[/(input|select|textarea).*?type.*?text/, {:class => "controls updatable", :filtr_name => form_item.form_name}],
 	[/input.*?type.*?submit/, {:class => "btn", :filtr_name => form_item.form_name}],
 	[/a.*?href.*?\/a/, {:class => "btn ", :'data-remote' => true, :turbolinks => true}],
 	
@@ -16,7 +16,9 @@ form_options = form_options.merge(:html => form_html_options)
 
 %>
 
-<legend><%= form_item.caption %></legend>
+<% if form_item.caption %> 
+  <legend><%= form_item.caption %></legend>
+<% end %>
 <div class="alert-error"><%= flash[:alert] %></div>
 <%= form_options %>
 <%= form_tag(options[:url], form_options) do %>

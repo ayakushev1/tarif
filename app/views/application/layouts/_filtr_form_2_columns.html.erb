@@ -1,7 +1,7 @@
 <%
 style_table = [
 	[/label/, {:class => "control-label"}],
-	[/(input|select).*?action/, {:filtr_name => form_item.filtr_name, :class => "updatable control"}],
+	[/(input|select|textarea).*?action/, {:filtr_name => form_item.filtr_name, :class => "updatable control"}],
 #	[/(input|select).*?action/, {:class => "updatable "}],
 	[/a.*?href.*?\/a/, {:class => "btn ", :'data-remote' => true, :turbolinks => true}],
 	[/input.*?type.*?submit/, {:class => "btn "}],
@@ -16,11 +16,12 @@ form_options = form_options.merge(options) if defined?(options)
 form_options = form_options.merge(form_html_options)
 
 %>
-<%= session[:filtr] if false%>
+<%= session[:filtr] if false %>
 
 <%= form_tag(form_item.action_on_submit, form_options) do %>
+  <% if form_item.caption %> 
 	<legend><%= form_item.caption %></legend>
-
+  <% end %>
 	<p id="notice" class="text-info text-alert"><%= notice %></p>
 	<div class="alert-error"><%= flash[:alert]%></div>
 

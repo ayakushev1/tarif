@@ -1,7 +1,7 @@
 #International rouming
 @tc = ServiceHelper::TarifCreator.new(_mts)
 @tc.create_tarif_class({
-  :id => _mts_international_rouming, :name => 'International rouming', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _tarif,
+  :id => _mts_international_rouming, :name => 'International rouming', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _common_service,
   :dependency => {
     :categories => [_tcgsc_calls, _tcgsc_sms, _tcgsc_internet],
     :incompatibility => {}, #{group_name => [tarif_class_ids]}

@@ -2,8 +2,8 @@ require 'will_paginate/array'
 #TODO сделать возможность виртуальной модели для запросов с группировками без id поля
 class ArrayOfHashable < Presenter
   attr_accessor :base_name, :caption, :heads, :pagination_per_page, :id_name
-  attr_writer :current_raw_class
-  attr_reader :pagination_param_name, :pagination_name, :current_id_name, :table_name
+  attr_writer :current_raw_class, :current_id_name
+  attr_reader :pagination_param_name, :pagination_name, :table_name
   
   def initialize(controller, array_of_hash)
     super(controller)

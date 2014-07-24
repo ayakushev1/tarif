@@ -38,6 +38,8 @@ Category.create(id: 40, type_id: 4, level_id: nil, parent_id: nil, name: "Тар
 Category.create(id: 41, type_id: 4, level_id: nil, parent_id: nil, name: "Общая услуга")
 Category.create(id: 42, type_id: 4, level_id: nil, parent_id: nil, name: "Специальная услуга")
 Category.create(id: 43, type_id: 4, level_id: nil, parent_id: nil, name: "Опция тарифа")
+Category.create(id: 44, type_id: 4, level_id: nil, parent_id: nil, name: "Тестовые")
+Category.create(id: 45, type_id: 4, level_id: nil, parent_id: nil, name: "Для специальных задач")
 
 Category.create(id: _calls, type_id: 5, level_id: nil, parent_id: nil, name: "Звонок")
 Category.create(id: _sms, type_id: 5, level_id: nil, parent_id: nil, name: "СМС")
@@ -51,8 +53,8 @@ Category.create(id: _wifi, type_id: 5, level_id: nil, parent_id: nil, name: "WiF
 Category.create(id: _periodic, type_id: 5, level_id: nil, parent_id: nil, name: "periodic")
 Category.create(id: _one_time, type_id: 5, level_id: nil, parent_id: nil, name: "one_time")
 
-Category.create(id: 70, type_id: 6, level_id: nil, parent_id: nil, name: "Входящий")
-Category.create(id: 71, type_id: 6, level_id: nil, parent_id: nil, name: "Исходящий")
+Category.create(id: 70, type_id: 6, level_id: nil, parent_id: nil, name: "Исходящий")
+Category.create(id: 71, type_id: 6, level_id: nil, parent_id: nil, name: "Входящий")
 Category.create(id: 72, type_id: 6, level_id: nil, parent_id: nil, name: "Без категории")
 
 Category.create(id: 3, type_id: 7, level_id: nil, parent_id: nil, name: "boolean")

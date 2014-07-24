@@ -19,6 +19,9 @@ style_table = []
 <br />
 <div><%=progress_bar.current_value  if false %></div>
 <div><%=progress_bar.max_value  if false %></div>
+<div><%="session #{session[:tarif_options_slices] } ddd" if false %></div>
+<br />
+<div><%=session[:tarifs_slices]  if false %></div>
 
 <div class="progress">
   <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="<%=progress_bar.current_value%>" aria-valuemin="<%=progress_bar.min_value%>" 

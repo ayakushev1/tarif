@@ -121,6 +121,14 @@ _sctcg_all_world_sms_incoming = {:name => '_sctcg_all_world_sms_incoming', :serv
 
 #Own and home regions, Internet
   @tc.add_grouped_service_category_tarif_class(_sctcg_own_home_regions_internet, scg_mts_smart_mini_included_in_tarif_internet[:id])
+#TODO разобраться есть все-таки доступ к интернету при исчерпании лимита, или только с турбо-кнопками
+  category = {:name => '_sctcg_own_home_regions_internet', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _internet}
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_volume_m_byte, :price => 9.9})
+
+#Own and home regions, wap-internet
+  category = {:name => '_sctcg_own_home_regions_wap_internet', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _wap_internet}
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_volume_k_byte, :price => 2.75})
+
 
 #Базовый тариф на междугородние и международные звонки при путешествии по России - как в собственном регионе - не забывать добавлять в тарифах!
 #При этом звонки на МТС - по тарифу для роуминга

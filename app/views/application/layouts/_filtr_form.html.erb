@@ -1,7 +1,7 @@
 <%
 style_table = [
 	[/label/, {:class => "control-label"}],
-	[/(input|select).*?action/, {:filtr_name => form_item.filtr_name, :class => "updatable "}],
+	[/(input|select|textarea).*?action/, {:filtr_name => form_item.filtr_name, :class => "updatable "}],
 #	[/(input|select).*?action/, {:class => "updatable "}],
 	[/a.*?href.*?\/a/, {:class => "btn ", :'data-remote' => true, :turbolinks => true}],
 	[/input.*?type.*?submit/, {:class => "btn "}],
@@ -19,13 +19,12 @@ form_options = form_options.merge(form_html_options)
 
 <% show_debug = false %>
 <%= params['customer_calls_generation_params_filtr'] if show_debug %>
-<br />
-<br />
-<%= session[:filtr]['customer_calls_generation_params_filtr'] if show_debug %>
+<%= session[:filtr]["calls_stat_options_filtr"] if false %>
 
-
-<legend><%= form_item.caption %></legend>
-<div class="alert-error"><%= flash[:alert]%></div>
+<% if form_item.caption %> 
+  <legend><%= form_item.caption %></legend>
+<% end %>
+<div class="alert-error"><%= flash[:alert] %></div>
 
 <%= form_tag(form_item.action_on_submit, form_options) do %>
 	<%if form_options[:class] =~ /form-inline/ %>

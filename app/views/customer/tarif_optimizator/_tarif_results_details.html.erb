@@ -2,10 +2,14 @@
 table.init do |t|
   t.caption = 'Tarif results details'
   t.base_name = 'tarif_results_details'
+  t.current_id_name = 'service_category_name'
   t.pagination_per_page = 100
   t.id_name = 'price_formula_id'#'service_category_tarif_class_id'
-  model_keys = t.model.collect {|row| row.keys }.flatten.uniq.collect{|key| key unless ['sctc_ids', 'call_ids'].include?(key)}.compact  
-  model_keys = t.model.collect {|row| row.keys }.flatten.uniq.collect{|key| key unless ['sctc_ids','call_ids', 'all_stat'].include?(key)}.compact  
+#  model_keys = t.model.collect {|row| row.keys }.flatten.uniq.collect{|key| key unless ['sctc_ids', 'call_ids'].include?(key)}.compact  
+  model_keys = t.model.collect {|row| row.keys }.flatten.uniq.collect{|key| key unless ['tarif_class_id_0', 'service_category_tarif_class_id', 
+  	'service_category_group_id', 'sctc_ids','call_ids', 'all_stat'].include?(key)}.compact  
+#  model_keys = t.model.collect {|row| row.keys }.flatten.uniq.collect{|key| key unless ['sctc_ids','call_ids', 'all_stat'].include?(key)}.compact  
+#  model_keys = t.model.collect {|row| row.keys }.flatten.uniq.collect{|key| key unless ['sctc_ids', 'all_stat'].include?(key)}.compact  
   t.heads = model_keys.collect{|model_key| model_key.split('_').join(' ')}
 #  ['tarif class id', 'service category group name', 'service category group id', 'service category tarif class id', 'price_formula_id', 'price_formula_calculation_order',	'call_id_count', 'price value', 'call ids']
   t.set_fields do |f| 
@@ -16,18 +20,6 @@ table.init do |t|
   	  	f[key]
   	  end 
     end
-#  [
-#  	f['tarif_class_id'],
-#  	f['service_category_name'],
-#  	f['service_category_group_id'],
-#  	f['service_category_tarif_class_id'],
-#  	f['price_formula_id'],
-#  	f['price_formula_calculation_order'],
-#  	f['call_id_count'],
-#  	f['price_value'],
-#  	f['call_ids'],
-#  	f['all_stat'],
-#  ] 
   end
 end
 %>

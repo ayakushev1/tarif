@@ -47,7 +47,9 @@ total_steps = (2 * 1 * 1 * 3 * 2) +(2 * 1 * 2 * p.size * 1) + 1
     [_outbound].each do |direction_id|
       [p[:p_own_country_own_operator], p[:p_own_country_other_operator], p[:p_own_country_fixed_line]].each do |partner|
         [c[:c_own_region_own_operator], c[:c_home_region_own_operator]].each do |connect|
-          calls << {:base_service_id => service_id, :base_subservice_id => direction_id, :partner_phone => partner, :connect => connect, :description => {:time => set_date_time(start_date, i, total_steps), :duration => call_duration, :volume => sms_count}, :user_id => user, :own_phone => own_phone}
+          calls << {:base_service_id => service_id, :base_subservice_id => direction_id, :partner_phone => partner, :connect => connect, 
+            :description => {:time => set_date_time(start_date, i, total_steps), :day => (30.0*i/total_steps).floor, :month => 1, :year => 2014,  
+              :duration => call_duration, :volume => sms_count}, :user_id => user, :own_phone => own_phone}
           i += 1; 
         end
       end
@@ -60,7 +62,9 @@ end
     [_inbound, _outbound].each do |direction_id|
       p.each do |partner_key, partner|
         [c[:c_rouming_region_own_operator]].each do |connect|
-          calls << {:base_service_id => service_id, :base_subservice_id => direction_id, :partner_phone => partner, :connect => connect, :description => {:time => set_date_time(start_date, i, total_steps), :duration => call_duration, :volume => sms_count}, :user_id => user, :own_phone => own_phone}
+          calls << {:base_service_id => service_id, :base_subservice_id => direction_id, :partner_phone => partner, :connect => connect, 
+            :description => {:time => set_date_time(start_date, i, total_steps), :day => (30.0*i/total_steps).floor, :month => 1, :year => 2014,  
+              :duration => call_duration, :volume => sms_count}, :user_id => user, :own_phone => own_phone}
           i += 1; 
         end
       end

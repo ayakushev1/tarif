@@ -38,13 +38,14 @@ class ServiceHelper::MaxPriceFormulaOrderCollector
       maximum(:calculation_order)
     
     result = {}
-    raise(StandardError, [operator, service_ids]) if !service_ids
+    raise(StandardError, [operator, service_ids, tarif_list_generator.all_services_by_operator[operator]]) if !service_ids
+    
     (max_by_service_category_tarif_class.keys + max_by_service_category_group.keys + service_ids).uniq.each do |key|
       result[key] = [(result[key] || -1), (max_by_service_category_tarif_class[key] || -1), (max_by_service_category_group[key] || -1)].max
     end
-    raise(StandardError, [Price::Formula.joins(price_list: :service_category_tarif_class ).
-      where(:service_category_tarif_classes => {:tarif_class_id => service_ids}).
-      group("service_category_tarif_classes.tarif_class_id").to_sql]) if result.blank?
+    sql = Price::Formula.joins(price_list: :service_category_tarif_class ).where(:service_category_tarif_classes => {:tarif_class_id => service_ids}).
+      group("service_category_tarif_classes.tarif_class_id").to_sql
+    raise(StandardError, [tarif_list_generator.calculate_all_services, result, service_ids, sql]) if !result #result.blank?
     result
   end
   

@@ -9,7 +9,7 @@ def access_methods_to_constant_general_categories
 #4 standard services
 #TODO надо удалить определения строчкой ниже
   _tarif = 40; _rouming = 41; _special_service = 42; _tarif_option = 43; 
-  _tarif = 40; _common_service = 41; _special_service = 42; _option_of_tarif = 43; 
+  _tarif = 40; _common_service = 41; _special_service = 42; _option_of_tarif = 43; _test_tarif = 44; _special_purpose_tarif = 45;
 #5 base_service
 _calls = 50; _sms = 51; _mms = 52; _2g = 53; _3g = 54; _4g = 55; _cdma = 56; _wifi = 57; _periodic = 58; _one_time = 59; _wap = 60;
 #6 service_direction

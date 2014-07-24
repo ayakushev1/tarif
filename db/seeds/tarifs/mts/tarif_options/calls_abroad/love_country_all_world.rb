@@ -1,7 +1,7 @@
 #Любимая страна. Весь мир
 @tc = ServiceHelper::TarifCreator.new(_mts)
 @tc.create_tarif_class({
-  :id => _mts_love_country_all_world, :name => 'Любимая страна. Весь мир', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _gp_tarif_option,
+  :id => _mts_love_country_all_world, :name => 'Любимая страна. Весь мир', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _special_service,
   :dependency => {
     :categories => [_tcgsc_calls],
     :incompatibility => {:love_country => [_mts_love_country, _mts_love_country_all_world]}, 

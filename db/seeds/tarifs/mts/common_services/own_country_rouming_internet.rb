@@ -1,7 +1,7 @@
 #Интернет во внутресетевом роуминге 
 @tc = ServiceHelper::TarifCreator.new(_mts)
 @tc.create_tarif_class({
-  :id => _mts_own_country_rouming_internet, :name => 'Интернет во внутресетевом роуминге', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _tarif,
+  :id => _mts_own_country_rouming_internet, :name => 'Интернет во внутресетевом роуминге', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _common_service,
   :dependency => {
     :categories => [_tcgsc_internet],
     :incompatibility => {}, #{group_name => [tarif_class_ids]}

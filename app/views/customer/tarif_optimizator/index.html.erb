@@ -1,5 +1,6 @@
-<%= link_to 'Recalculate', customer_tarif_optimizator_recalculate_path  %>
-
+<br />
+<%= render :partial => 'information', :layout => 'application/layouts/accordion', :locals => {:name => 'customer_tarif_optimization_accord', :active => session[:current_accordion_page]['customer_tarif_optimization_accord'].to_i} %>
+<br />
 <%= render :partial => 'service_sets', :layout => 'application/layouts/model_table', :locals => {:table => controller.service_sets}%>
 
 <%= render :partial => 'tarif_results', :layout => 'application/layouts/model_table', :locals => {:table => controller.tarif_results}%>

@@ -9,7 +9,9 @@ form_html_options_1 = form_html_options.collect { |key, value| "#{key}='#{value}
 
 %>
 <div id=<%= form_item.form_name %>_show <%= form_html_options_1.to_s.html_safe %> >
-	<legend><%= form_item.caption %></legend>
+	<% if form_item.caption %> 
+	  <legend><%= form_item.caption %></legend>
+	<% end %>
 
 	<p id="notice" class="text-info text-alert"><%= notice %></p>
 	

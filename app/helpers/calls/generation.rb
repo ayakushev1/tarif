@@ -7,8 +7,9 @@ module Calls::Generation
   
     def initialize(context, customer_calls_generation_params = {}, user_params = {})
       @context = context
+#      raise(StandardError, [customer_calls_generation_params.blank?, customer_calls_generation_params])
       @customer_generation_params = (customer_calls_generation_params.blank? ? default_calls_generation_params : customer_calls_generation_params)
-#      raise(StandardError, [customer_generation_params])
+#      raise(StandardError, [customer_calls_generation_params.blank?, customer_generation_params])
       @user_params = set_user_params(user_params)
       @common_params = set_common_params
       @initial_inputs = set_initial_inputs
@@ -25,14 +26,14 @@ module Calls::Generation
         i = 0
         [_calls, _sms, _mms,  _3g].each do |base_service_id|
           rouming = choose_rouming_option
-          (1..([1, count_per_day_by_base_service(rouming, base_service_id)].max)).each do |day_item|
+          (0..([0, count_per_day_by_base_service(rouming, base_service_id)].max)).each do |day_item|
             call_destination = choose_call_destination(rouming)
             call_direction = choose_call_direction(rouming)
             partner_operator_id, partner_operator_type_id = choose_call_operator(rouming, call_direction, call_destination)
             
-            break if ( partner_operator_type_id == _fixed_line ) and [_sms, _mms].include?(base_service_id)
+            next if ( partner_operator_type_id == _fixed_line ) and [_sms, _mms].include?(base_service_id)
  
-            calls << {
+            call_item = {
               :base_service_id => base_service_id, :base_subservice_id => choose_call_direction(rouming), :user_id => common_params["user_id"],
               :own_phone => {
                 :number => common_params["own_phone_number"], :operator_id => common_params["own_operator_id"],
@@ -42,10 +43,23 @@ module Calls::Generation
                 :region_id => initial_inputs[rouming][call_destination]['partner_region_id'], :country_id => initial_inputs[rouming][call_destination]['partner_country_id'] },
               :connect => {
                 :operator_id => initial_inputs[rouming]["connection_operator"], :region_id => initial_inputs[rouming]["connection_region"], :country_id => initial_inputs[rouming]["connection_country"] },
-              :description => {:time => set_date_time(day, i), :duration => duration_by_base_service(rouming, base_service_id),
+              :description => {
+                :time => set_date_time(day, i), :day => day, :month => set_month, :year => set_year, 
+                :duration => duration_by_base_service(rouming, base_service_id),
                 :volume => volume_by_base_service(rouming, base_service_id) },
             }
             i += 1
+            next if (call_item[:description][:duration].to_f == 0.0 and call_item[:description][:volume].to_f == 0.0)
+            p = customer_generation_params
+#            raise(StandardError, [call_item,
+#              p[:home_region]["phone_usage_type_id"] == _home_region_no_activity, p[:home_region]["phone_usage_type_id"],
+#              p[:own_country]["phone_usage_type_id"] == _own_country_no_activity, p[:own_country]["phone_usage_type_id"],
+#              p[:abroad]["phone_usage_type_id"] == _abroad_no_activity, p[:abroad]["phone_usage_type_id"],
+#              ]) if [:home_region, :own_country, :abroad].include?(rouming) or call_item[:connect][:country_id] != 1100
+
+
+
+            calls << call_item
             raise(StandardError, "Calls::generation - region_id is null") if !calls.last[:partner_phone][:region_id] and !(call_destination == :calls_to_abroad)
             raise(StandardError, "Calls::generation - sms or mms on fixed line") if (calls.last[:partner_phone][:operator_type_id] == _fixed_line) and [_sms, _mms].include?(calls.last[:base_service_id]) 
           end
@@ -209,7 +223,7 @@ module Calls::Generation
               "partner_region_id" => nil,
               "partner_country_id" => p[:own_region]["country_for_international_calls_ids"],
             },  
-            "connection_region" => p[:own_country]["travel_region_id"],
+            "connection_region" => p[:own_country]["travel_region_id"].to_i,
             "connection_country" => p[:own_region]["country_id"].to_i,
             "connection_operator" => p[:own_region]["operator_id"].to_i,
             "average_duration_of_call" => average_duration_of_call(:own_country),  
@@ -249,13 +263,13 @@ module Calls::Generation
               "partner_phone_number" => common_params["others_phone_number"], 
               "partner_operator_ids" => Relation.country_operators(p[:own_region]["country_for_international_calls_ids"]), 
               "partner_region_id" => nil,
-              "partner_country_id" => p[:own_region]["country_for_international_calls_ids"],
+              "partner_country_id" => p[:own_region]["country_for_international_calls_ids"].to_i,
             },  
             "connection_region" => nil,
-            "connection_country" => p[:abroad]["foreign_country_id"],
-            "connection_operator" => Relation.country_operator(p[:abroad]["foreign_country_id"]),
-            "average_duration_of_call" => average_duration_of_call(:abroad),  
-            "number_of_day_calls" => p[:abroad]["number_of_day_calls"],  
+            "connection_country" => p[:abroad]["foreign_country_id"].to_i,
+            "connection_operator" => Relation.country_operator(p[:abroad]["foreign_country_id"]).to_i,
+            "average_duration_of_call" => average_duration_of_call(:abroad).to_i,  
+            "number_of_day_calls" => p[:abroad]["number_of_day_calls"].to_i,  
             "share_of_calls_to_own_mobile" => share_of_calls_to_own_mobile(:abroad),
             "share_of_calls_to_others_mobile" => share_of_calls_to_others_mobile(:abroad),
             "share_of_calls_to_fix_line" => share_of_calls_to_fix_line(:abroad),
@@ -263,9 +277,9 @@ module Calls::Generation
             "share_of_international_calls" => share_of_international_calls(:abroad),
             "share_of_incoming_calls" => share_of_incoming_calls(:abroad),
             "share_of_incoming_calls_from_own_mobile" => share_of_incoming_calls_from_own_mobile(:abroad),
-            'number_of_sms_per_day' => p[:abroad]["number_of_sms_per_day"],
-            'number_of_mms_per_day' => p[:abroad]["number_of_mms_per_day"],
-            'internet_trafic_per_month' => p[:abroad]["internet_trafic_per_month"],            
+            'number_of_sms_per_day' => p[:abroad]["number_of_sms_per_day"].to_i,
+            'number_of_mms_per_day' => p[:abroad]["number_of_mms_per_day"].to_i,
+            'internet_trafic_per_month' => p[:abroad]["internet_trafic_per_month"].to_f,            
          },
       }
     end
@@ -280,11 +294,11 @@ module Calls::Generation
       when 0..own_reg
         :own_region
       when own_reg..home_reg
-        :home_region
+        p[:home_region]["phone_usage_type_id"].to_i == _home_region_no_activity ? :own_region : :home_region
       when home_reg..country_reg
-        :own_country
+        p[:own_country]["phone_usage_type_id"].to_i == _own_country_no_activity ? :own_region : :own_country        
       else
-        :abroad
+        p[:abroad]["phone_usage_type_id"].to_i == _abroad_no_activity ? :own_region : :abroad                
       end
     end
     
@@ -386,11 +400,14 @@ module Calls::Generation
     end
     
     def default_calls_generation_params
-      self.class.default_calls_generation_params
+      [:own_region, :home_region, :own_country, :abroad].each do |rouming|
+        self.class.default_calls_generation_params(rouming)
+      end
     end
     
     def average_internet_volume_per_day(rouming)
-      initial_inputs[rouming]["internet_trafic_per_month"].to_f*1000.0/ common_params['number_of_days_in_call_list'].to_f
+#      raise(StandardError, [rouming, initial_inputs[rouming]["internet_trafic_per_month"]]) if rouming == :own_region 
+      initial_inputs[rouming]["internet_trafic_per_month"].to_f * 1000.0/ common_params['number_of_days_in_call_list'].to_f
     end
     
     def count_per_day_by_base_service(rouming, base_service_id)
@@ -398,7 +415,7 @@ module Calls::Generation
       when _calls
         initial_inputs[rouming]["number_of_day_calls"].to_i
       when _2g, _3g, _4g, _cdma
-        1
+        initial_inputs[rouming]["internet_trafic_per_month"] == 0.0 ? 0 : 1
       when _sms
         initial_inputs[rouming]["number_of_sms_per_day"].to_i
       when _mms
@@ -411,7 +428,7 @@ module Calls::Generation
     end
         
     def duration_by_base_service(rouming, base_service_id)
-      base_service_id == _calls ? random(initial_inputs[rouming]["average_duration_of_call"]) * 60.0 : nil
+      base_service_id == _calls ? random(initial_inputs[rouming]["average_duration_of_call"]) * 60.0 : 0.0
     end
         
     def volume_by_base_service(rouming, base_service_id)
@@ -419,7 +436,7 @@ module Calls::Generation
       when _calls
         nil
       when _2g, _3g, _4g, _cdma
-        average_internet_volume_per_day(rouming).to_i
+        average_internet_volume_per_day(rouming).to_f
       when _sms
         1
       when _mms
@@ -431,114 +448,136 @@ module Calls::Generation
       end 
     end
     
+    def set_year
+      2014
+    end
+    
+    def set_month
+      1
+    end
+    
     def set_date_time(day, i)
       n = common_params["max_number_of_all_services_per_day"]
       hour = (24.0*i/n).floor; min = ((24.0*i/n - hour)*60.0).floor; sec = (((24.0*i/n - hour)*60.0 - min)*60.0).floor 
-      date_time = common_params["start_date"].change({:year=>2014, :month=>1, :day => day, :hour => hour, :min => min, :sec => sec })                
+      date_time = common_params["start_date"].change({:year=>set_year, :month=>set_month, :day => day, :hour => hour, :min => min, :sec => sec })                
     end
         
-    def self.default_calls_generation_params(usage_pattern_id = nil)
-      {
-        :own_region => 
+    def self.default_calls_generation_params(rouming, usage_pattern_id = nil)
+#      raise(StandardError, usage_pattern_id)
+      case rouming
+      when :own_region
+        {
+          :own_region => 
           {
-          'phone_usage_type_id' => _own_region_active_caller,
+          'phone_usage_type_id' => usage_pattern_id.to_i || _own_region_active_caller,
           'country_id' => _russia,
           'region_id' => _moscow, 
           'operator_id' => _mts,
           'privacy_id' => _person,
           'region_for_region_calls_ids' => _piter,
           'country_for_international_calls_ids' => _ukraiun,
-         }.merge(usage_pattern(usage_pattern_id || _own_region_active_caller) ),
+           }.merge(usage_pattern(usage_pattern_id || _own_region_active_caller) )
+         }
+      when :home_region
+        {
         :home_region => 
           {
-          'phone_usage_type_id' => _home_region_no_activity,
+          'phone_usage_type_id' => usage_pattern_id.to_i || _home_region_no_activity,
           'country_id' => _russia,
           'home_region_id' => _moscow_region, 
-         }.merge(usage_pattern(usage_pattern_id || _home_region_no_activity) ),
+         }.merge(usage_pattern(usage_pattern_id || _home_region_no_activity) )          
+        }
+      when :own_country
+        {
         :own_country => 
           {
-          'phone_usage_type_id' => _own_country_no_activity,
+          'phone_usage_type_id' => usage_pattern_id.to_i || _own_country_no_activity,
           'country_id' => _russia,
           'travel_region_id' => _piter, 
-         }.merge(usage_pattern(usage_pattern_id || _own_country_no_activity) ),
+         }.merge(usage_pattern(usage_pattern_id || _own_country_no_activity) )
+        }
+      when :abroad
+        {
         :abroad => 
           {
-          'phone_usage_type_id' => _abroad_no_activity,
+          'phone_usage_type_id' => usage_pattern_id.to_i || _abroad_no_activity,
           'continent_id' => _europe, 
           'foreign_country_id' => _ukraiun,
-         }.merge(usage_pattern(usage_pattern_id || _abroad_no_activity) ),
-        
-      }
+         }.merge(usage_pattern(usage_pattern_id || _abroad_no_activity) )
+        }
+      else
+        raise(StandardError, "wrong rouming: #{rouming}")
+      end
     end
     
     def self.usage_pattern(usage_pattern_id)
       case usage_pattern_id.to_i
       when _own_region_active_caller
-        {"number_of_day_calls" => 1, "duration_of_calls" => 5, "share_of_calls_to_other_mobile" => 0.7, "share_of_calls_to_fix_line" => 0.1,
-        "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.05, "number_of_sms_per_day" => 1, "number_of_mms_per_day" => 2, "internet_trafic_per_month" => 2,
-        'share_of_incoming_calls' => 0.5, 'share_of_incoming_calls_from_own_mobile'=> 0.3, 'share_of_time_in_own_region' => 0.6, 
-        'share_of_time_in_home_region' => 0.2,'share_of_time_in_own_country' => 0.15, 'share_of_time_abroad' => 0.05 }
+        {"number_of_day_calls" => 10, "duration_of_calls" => 5, "share_of_calls_to_other_mobile" => 0.6, "share_of_calls_to_fix_line" => 0.1,
+        "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.00, "number_of_sms_per_day" => 1, "number_of_mms_per_day" => 0, "internet_trafic_per_month" => 0.2,
+        'share_of_incoming_calls' => 0.5, 'share_of_incoming_calls_from_own_mobile'=> 0.3, 'share_of_time_in_own_region' => 0.75, 
+        'share_of_time_in_home_region' => 0.25,'share_of_time_in_own_country' => 0.0, 'share_of_time_abroad' => 0.00 }
       when _own_region_active_sms
-        {"number_of_day_calls" => 1, "duration_of_calls" => 5, "share_of_calls_to_other_mobile" => 0.7, "share_of_calls_to_fix_line" => 0.1,
-        "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.05, "number_of_sms_per_day" => 1, "number_of_mms_per_day" => 2, "internet_trafic_per_month" => 2,
-        'share_of_incoming_calls' => 0.5, 'share_of_incoming_calls_from_own_mobile'=> 0.3, 'share_of_time_in_own_region' => 0.7, 
-        'share_of_time_in_home_region' => 0.2, 'share_of_time_in_own_country' => 0.1, 'share_of_time_abroad' => 0.0 }
+        {"number_of_day_calls" => 1, "duration_of_calls" => 5, "share_of_calls_to_other_mobile" => 0.6, "share_of_calls_to_fix_line" => 0.1,
+        "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.00, "number_of_sms_per_day" => 10, "number_of_mms_per_day" => 0, "internet_trafic_per_month" => 0.2,
+        'share_of_incoming_calls' => 0.5, 'share_of_incoming_calls_from_own_mobile'=> 0.3, 'share_of_time_in_own_region' => 0.75, 
+        'share_of_time_in_home_region' => 0.25, 'share_of_time_in_own_country' => 0.0, 'share_of_time_abroad' => 0.0 }
       when _own_region_active_internet
-        {"number_of_day_calls" => 1, "duration_of_calls" => 5, "share_of_calls_to_other_mobile" => 0.7, "share_of_calls_to_fix_line" => 0.1,
-        "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.05, "number_of_sms_per_day" => 1, "number_of_mms_per_day" => 2, "internet_trafic_per_month" => 10,
-        'share_of_incoming_calls' => 0.5, 'share_of_incoming_calls_from_own_mobile'=> 0.3, 'share_of_time_in_own_region' => 0.7, 
-        'share_of_time_in_home_region' => 0.2, 'share_of_time_in_own_country' => 0.1, 'share_of_time_abroad' => 0.0 }
+        {"number_of_day_calls" => 1, "duration_of_calls" => 5, "share_of_calls_to_other_mobile" => 0.6, "share_of_calls_to_fix_line" => 0.1,
+        "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.00, "number_of_sms_per_day" => 1, "number_of_mms_per_day" => 0, "internet_trafic_per_month" => 2,
+        'share_of_incoming_calls' => 0.5, 'share_of_incoming_calls_from_own_mobile'=> 0.3, 'share_of_time_in_own_region' => 0.75, 
+        'share_of_time_in_home_region' => 0.25, 'share_of_time_in_own_country' => 0.0, 'share_of_time_abroad' => 0.0 }
       when _home_region_active_caller
-        {"number_of_day_calls" => 1, "duration_of_calls" => 5, "share_of_calls_to_other_mobile" => 0.7, "share_of_calls_to_fix_line" => 0.1,
-        "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.05, "number_of_sms_per_day" => 1, "number_of_mms_per_day" => 2, "internet_trafic_per_month" => 2,
+        {"number_of_day_calls" => 1, "duration_of_calls" => 5, "share_of_calls_to_other_mobile" => 0.6, "share_of_calls_to_fix_line" => 0.1,
+        "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.00, "number_of_sms_per_day" => 1, "number_of_mms_per_day" => 0, "internet_trafic_per_month" => 0.2,
         'share_of_incoming_calls' => 0.5, 'share_of_incoming_calls_from_own_mobile'=> 0.3}
       when _home_region_active_sms
-        {"number_of_day_calls" => 1, "duration_of_calls" => 5, "share_of_calls_to_other_mobile" => 0.7, "share_of_calls_to_fix_line" => 0.1,
-        "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.05, "number_of_sms_per_day" => 1, "number_of_mms_per_day" => 2, "internet_trafic_per_month" => 2,
+        {"number_of_day_calls" => 1, "duration_of_calls" => 5, "share_of_calls_to_other_mobile" => 0.6, "share_of_calls_to_fix_line" => 0.1,
+        "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.00, "number_of_sms_per_day" => 10, "number_of_mms_per_day" => 0, "internet_trafic_per_month" => 0.2,
         'share_of_incoming_calls' => 0.5, 'share_of_incoming_calls_from_own_mobile'=> 0.3}
       when _home_region_active_internet
-        {"number_of_day_calls" => 1, "duration_of_calls" => 5, "share_of_calls_to_other_mobile" => 0.7, "share_of_calls_to_fix_line" => 0.1,
-        "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.05, "number_of_sms_per_day" => 1, "number_of_mms_per_day" => 2, "internet_trafic_per_month" => 10,
+        {"number_of_day_calls" => 1, "duration_of_calls" => 5, "share_of_calls_to_other_mobile" => 0.6, "share_of_calls_to_fix_line" => 0.1,
+        "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.00, "number_of_sms_per_day" => 1, "number_of_mms_per_day" => 0, "internet_trafic_per_month" => 2.0,
         'share_of_incoming_calls' => 0.5, 'share_of_incoming_calls_from_own_mobile'=> 0.3}
       when _home_region_no_activity
-        {"number_of_day_calls" => 1, "duration_of_calls" => 1, "share_of_calls_to_other_mobile" => 0.7, "share_of_calls_to_fix_line" => 0.1,
-        "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.05, "number_of_sms_per_day" => 1, "number_of_mms_per_day" => 1, "internet_trafic_per_month" => 0,
+        {"number_of_day_calls" => 0, "duration_of_calls" => 0, "share_of_calls_to_other_mobile" => 0.6, "share_of_calls_to_fix_line" => 0.1,
+        "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.00, "number_of_sms_per_day" => 0, "number_of_mms_per_day" => 0, "internet_trafic_per_month" => 0.0,
         'share_of_incoming_calls' => 0.5, 'share_of_incoming_calls_from_own_mobile'=> 0.3}
       when _own_country_active_caller
-        {"number_of_day_calls" => 1, "duration_of_calls" => 5, "share_of_calls_to_other_mobile" => 0.7, "share_of_calls_to_fix_line" => 0.1,
-        "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.05, "number_of_sms_per_day" => 1, "number_of_mms_per_day" => 2, "internet_trafic_per_month" => 2,
+        {"number_of_day_calls" => 1, "duration_of_calls" => 5, "share_of_calls_to_other_mobile" => 0.6, "share_of_calls_to_fix_line" => 0.1,
+        "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.00, "number_of_sms_per_day" => 1, "number_of_mms_per_day" => 0, "internet_trafic_per_month" => 0.0,
         'share_of_incoming_calls' => 0.5, 'share_of_incoming_calls_from_own_mobile'=> 0.3}
       when _own_country_active_sms
-        {"number_of_day_calls" => 1, "duration_of_calls" => 5, "share_of_calls_to_other_mobile" => 0.7, "share_of_calls_to_fix_line" => 0.1,
-        "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.05, "number_of_sms_per_day" => 1, "number_of_mms_per_day" => 2, "internet_trafic_per_month" => 2,
+        {"number_of_day_calls" => 1, "duration_of_calls" => 5, "share_of_calls_to_other_mobile" => 0.6, "share_of_calls_to_fix_line" => 0.1,
+        "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.00, "number_of_sms_per_day" => 10, "number_of_mms_per_day" => 0, "internet_trafic_per_month" => 0.0,
         'share_of_incoming_calls' => 0.5, 'share_of_incoming_calls_from_own_mobile'=> 0.3}
       when _own_country_active_internet
-        {"number_of_day_calls" => 1, "duration_of_calls" => 5, "share_of_calls_to_other_mobile" => 0.7, "share_of_calls_to_fix_line" => 0.1,
-        "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.05, "number_of_sms_per_day" => 1, "number_of_mms_per_day" => 2, "internet_trafic_per_month" => 10,
+        {"number_of_day_calls" => 1, "duration_of_calls" => 5, "share_of_calls_to_other_mobile" => 0.6, "share_of_calls_to_fix_line" => 0.1,
+        "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.00, "number_of_sms_per_day" => 1, "number_of_mms_per_day" => 0, "internet_trafic_per_month" => 2.0,
         'share_of_incoming_calls' => 0.5, 'share_of_incoming_calls_from_own_mobile'=> 0.3}
       when _own_country_no_activity
-        {"number_of_day_calls" => 1, "duration_of_calls" => 1, "share_of_calls_to_other_mobile" => 0.7, "share_of_calls_to_fix_line" => 0.1,
-        "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.05, "number_of_sms_per_day" => 1, "number_of_mms_per_day" => 1, "internet_trafic_per_month" => 0,
+        {"number_of_day_calls" => 0, "duration_of_calls" => 0, "share_of_calls_to_other_mobile" => 0.6, "share_of_calls_to_fix_line" => 0.1,
+        "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.00, "number_of_sms_per_day" => 0, "number_of_mms_per_day" => 0, "internet_trafic_per_month" => 0.0,
         'share_of_incoming_calls' => 0.5, 'share_of_incoming_calls_from_own_mobile'=> 0.3}
       when _abroad_active_caller
-        {"number_of_day_calls" => 1, "duration_of_calls" => 5, "share_of_calls_to_other_mobile" => 0.7, "share_of_calls_to_fix_line" => 0.1,
-        "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.05, "number_of_sms_per_day" => 1, "number_of_mms_per_day" => 2, "internet_trafic_per_month" => 2,
+        {"number_of_day_calls" => 1, "duration_of_calls" => 5, "share_of_calls_to_other_mobile" => 0.6, "share_of_calls_to_fix_line" => 0.1,
+        "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.00, "number_of_sms_per_day" => 1, "number_of_mms_per_day" => 0, "internet_trafic_per_month" => 0.0,
         'share_of_incoming_calls' => 0.5, 'share_of_incoming_calls_from_own_mobile'=> 0.3}
       when _abroad_active_sms
-        {"number_of_day_calls" => 1, "duration_of_calls" => 5, "share_of_calls_to_other_mobile" => 0.7, "share_of_calls_to_fix_line" => 0.1,
-        "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.05, "number_of_sms_per_day" => 1, "number_of_mms_per_day" => 2, "internet_trafic_per_month" => 2,
+        {"number_of_day_calls" => 1, "duration_of_calls" => 5, "share_of_calls_to_other_mobile" => 0.6, "share_of_calls_to_fix_line" => 0.1,
+        "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.00, "number_of_sms_per_day" => 10, "number_of_mms_per_day" => 0, "internet_trafic_per_month" => 0.0,
         'share_of_incoming_calls' => 0.5, 'share_of_incoming_calls_from_own_mobile'=> 0.3}
       when _abroad_active_internet
-        {"number_of_day_calls" => 1, "duration_of_calls" => 5, "share_of_calls_to_other_mobile" => 0.7, "share_of_calls_to_fix_line" => 0.1,
-        "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.05, "number_of_sms_per_day" => 1, "number_of_mms_per_day" => 2, "internet_trafic_per_month" => 10,
+        {"number_of_day_calls" => 1, "duration_of_calls" => 5, "share_of_calls_to_other_mobile" => 0.6, "share_of_calls_to_fix_line" => 0.1,
+        "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.00, "number_of_sms_per_day" => 1, "number_of_mms_per_day" => 0, "internet_trafic_per_month" => 2.0,
         'share_of_incoming_calls' => 0.5, 'share_of_incoming_calls_from_own_mobile'=> 0.3}
       when _abroad_no_activity
-        {"number_of_day_calls" => 1, "duration_of_calls" => 1, "share_of_calls_to_other_mobile" => 0.7, "share_of_calls_to_fix_line" => 0.1,
-        "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.05, "number_of_sms_per_day" => 1, "number_of_mms_per_day" => 1, "internet_trafic_per_month" => 0,
+        {"number_of_day_calls" => 0, "duration_of_calls" => 0, "share_of_calls_to_other_mobile" => 0.6, "share_of_calls_to_fix_line" => 0.1,
+        "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.00, "number_of_sms_per_day" => 0, "number_of_mms_per_day" => 0, "internet_trafic_per_month" => 0.0,
         'share_of_incoming_calls' => 0.5, 'share_of_incoming_calls_from_own_mobile'=> 0.3}
       else
-        {"number_of_day_calls" => 1, "duration_of_calls" => 5, "share_of_calls_to_other_mobile" => 0.7, "share_of_calls_to_fix_line" => 0.1,
-        "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.05, "number_of_sms_per_day" => 1, "number_of_mms_per_day" => 2, "internet_trafic_per_month" => 2,
+        {"number_of_day_calls" => 1, "duration_of_calls" => 5, "share_of_calls_to_other_mobile" => 0.6, "share_of_calls_to_fix_line" => 0.1,
+        "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.00, "number_of_sms_per_day" => 1, "number_of_mms_per_day" => 0, "internet_trafic_per_month" => 2,
         'share_of_incoming_calls' => 0.5, 'share_of_incoming_calls_from_own_mobile'=> 0.3}
       end
     end
@@ -550,7 +589,7 @@ module Calls::Generation
         if x < 0.25
           Math.sin(x * average * pi) * average
         else
-          average * 5.0 + Math.sin((x - 3.0/4.0) * pi) * average * 4.0
+          average * 2.0 + Math.sin((x - 3.0/4.0) * pi) * average 
         end
       end
       

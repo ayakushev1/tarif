@@ -15,12 +15,13 @@ table_html_options = table_html_options.collect { |key, value| "#{key.to_s}=\"#{
 
 <%= table.model.to_sql if show_debug %>
 <%= params if show_debug %>
-<br />
 <%= session[:filtr] if show_debug %>
-<%= session[:current_id] if show_debug %>
+<%= session[:current_id] if false %>
 <div><%=session[:progress_bar] if false%></div>
 
-<legend><%= table.caption %></legend>
+<% if table.caption %> 
+  <legend><%= table.caption %></legend>
+<% end %>
 
 <table <%= table_html_options %> >
   <thead>

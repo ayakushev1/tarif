@@ -10,7 +10,7 @@ class ServiceHelper::BackgroundProcessInformer
   end      
   
   def current_values
-    process_info_model.first['result']['background_processing']
+    process_info_model.first['result']['background_processing'] if process_info_model.first and process_info_model.first['result']
   end
   
   def calculating?

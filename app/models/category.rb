@@ -21,8 +21,8 @@ class Category < ActiveRecord::Base
   scope :countries, -> {where(:type_id => 0, :level_id => 2)}
   scope :regions, -> {where(:type_id => 0, :level_id => 3)}
   scope :operators, -> {where(:type_id => 2).where.not(:parent_id => nil)}
-  scope :russian_operators, -> {where(:type_id => 2).where(:parent_id => 1018)}
-  scope :foreign_operators, -> {where(:type_id => 2).where(:parent_id => 1019)}
+  scope :russian_operators, -> {where(:type_id => 2).where(:parent_id => 3001)}
+  scope :foreign_operators, -> {where(:type_id => 2).where(:parent_id => 3002)}
   scope :privacy, -> {where(:type_id => 3)}
   scope :standard_services, -> {where(:type_id => 4)}
   scope :base_services, -> {where(:type_id => 5)}
