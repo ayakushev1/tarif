@@ -44,7 +44,7 @@ class ServiceHelper::TarifOptimizator
   end
   
   def init_output_params
-    @save_tarif_results_ord = true; @output_call_ids_to_tarif_results = false; @output_call_count_to_tarif_results = false
+    @save_tarif_results_ord = false; @output_call_ids_to_tarif_results = false; @output_call_count_to_tarif_results = false
   end
   
   def calculate_all_operator_tarifs
