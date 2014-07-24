@@ -100,10 +100,10 @@ class ServiceHelper::TarifOptimizator
         :calls_stat => calls_stat_calculator.calculate_calls_stat(query_constructor), 
         operator.to_i => {
           :operator => operator.to_i, 
+          :final_tarif_sets => tarif_list_generator.final_tarif_sets,
+          :tarif_sets => tarif_list_generator.tarif_sets,
           :tarif_results => current_tarif_optimization_results.tarif_results, 
           :tarif_results_ord => (save_tarif_results_ord ? current_tarif_optimization_results.tarif_results_ord : {}), 
-          :tarif_sets => tarif_list_generator.tarif_sets,
-          :final_tarif_sets => tarif_list_generator.final_tarif_sets,
           } } 
       optimization_result_saver.save(output)
     end

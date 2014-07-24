@@ -11,7 +11,8 @@ class Customer::TarifOptimizatorController < ApplicationController
     end
   end
   
-  def recalculate   
+  def recalculate
+    session[:filtr1] = {}   
     if service_choices.session_filtr_params['calculate_on_background'] == 'true'
       background_process_informer.clear_completed_process_info_model
       background_process_informer.init
@@ -29,6 +30,8 @@ class Customer::TarifOptimizatorController < ApplicationController
     else
       @tarif_optimizator = ServiceHelper::TarifOptimizator.new(options)
       @tarif_optimizator.calculate_one_operator_tarifs(operator)
+          session[:filtr1]['final_tarif_sets'] = @tarif_optimizator.tarif_list_generator.final_tarif_sets.keys
+          session[:filtr1]['tarif_sets'] = @tarif_optimizator.tarif_list_generator.tarif_sets.keys
       redirect_to(:action => :index)
     end
   end 

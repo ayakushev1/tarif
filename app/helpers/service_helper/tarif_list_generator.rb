@@ -18,7 +18,7 @@ class ServiceHelper::TarifListGenerator
 #    raise(StandardError, [@tarifs, !options[:tarifs].blank?, options] )
     @common_services = (!options[:common_services].blank? ? options[:common_services] : {1025 => [], 1028 => [], 1030 => [
         #312,
-        276, 277, 312, # _mts_own_country_rouming, _mts_international_rouming, _mts_own_country_rouming_internet
+        #276, 277, 312, # _mts_own_country_rouming, _mts_international_rouming, _mts_own_country_rouming_internet
         ]} )
     @tarif_options = (!options[:tarif_options].blank? ? options[:tarif_options] : {1025 => [], 1028 => [], 1030 => [
         #283,
