@@ -105,7 +105,8 @@ class ServiceHelper::TarifOptimizator
           :tarif_results => current_tarif_optimization_results.tarif_results, 
           :tarif_results_ord => (save_tarif_results_ord ? current_tarif_optimization_results.tarif_results_ord : {}), 
           } } 
-      optimization_result_saver.save(output)
+      a = optimization_result_saver.save(output)
+#      raise(StandardError, a.attributes)
     end
   end
   

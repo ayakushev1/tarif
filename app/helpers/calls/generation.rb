@@ -79,6 +79,7 @@ module Calls::Generation
     end
     
     def set_common_params
+        begin
       {
         "start_date" => DateTime.civil_from_format(:local, 2014, 1, 1),
         "max_number_of_all_services_per_day" => 10000,
@@ -93,6 +94,9 @@ module Calls::Generation
         "own_region_id" => customer_generation_params[:own_region]["region_id"].to_i, 
         "own_country_id" => customer_generation_params[:own_region]["country_id"].to_i, 
       }
+        rescue
+          raise(StandardError, customer_generation_params)
+        end
     end
     
     def set_partner_operator_ids(own_operator_id)
@@ -400,9 +404,11 @@ module Calls::Generation
     end
     
     def default_calls_generation_params
+      result = {}
       [:own_region, :home_region, :own_country, :abroad].each do |rouming|
-        self.class.default_calls_generation_params(rouming)
+        result = result.merge(self.class.default_calls_generation_params(rouming))
       end
+      result
     end
     
     def average_internet_volume_per_day(rouming)
