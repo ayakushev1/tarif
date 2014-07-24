@@ -104,9 +104,9 @@ class ServiceHelper::OptimizationResultPresenter
 #      next if fobidden[service_set_id]
       result << {'short_set_id' => service_set_id.split('_').uniq.join('_'), 'service_sets_id' => service_set_id,  
         'service_set_price' => service_sets_result, 'service_set_count' => service_set_count[service_set_id], 
-        'tarif_sets_by_part' => (tarif_sets_by_part[service_set_id] || []).sort_by{|t| t[0]},
-        'stat_results' => stat_results[service_set_id], 'fobidden' => fobidden[service_set_id], 
-        'fobidden_services' => (fobidden_services[service_set_id] || []).sort_by{|f| f[0]} 
+#        'tarif_sets_by_part' => (tarif_sets_by_part[service_set_id] || []).sort_by{|t| t[0]},
+#        'stat_results' => stat_results[service_set_id], 'fobidden' => fobidden[service_set_id], 
+#        'fobidden_services' => (fobidden_services[service_set_id] || []).sort_by{|f| f[0]} 
         } 
     end
     result.sort_by!{|item| item['service_set_price']}
