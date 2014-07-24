@@ -103,10 +103,9 @@ class ServiceHelper::TarifOptimizator
           :final_tarif_sets => tarif_list_generator.final_tarif_sets,
           :tarif_sets => tarif_list_generator.tarif_sets,
           :tarif_results => current_tarif_optimization_results.tarif_results, 
-          :tarif_results_ord => (save_tarif_results_ord ? current_tarif_optimization_results.tarif_results_ord : {}), 
+#          :tarif_results_ord => (save_tarif_results_ord ? current_tarif_optimization_results.tarif_results_ord : {}), 
           } } 
-      a = optimization_result_saver.save(output)
-#      raise(StandardError, a.attributes)
+      optimization_result_saver.save(output)
     end
   end
   
