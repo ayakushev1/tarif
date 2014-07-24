@@ -16,7 +16,7 @@ form_options = form_options.merge(options) if defined?(options)
 form_options = form_options.merge(form_html_options)
 
 %>
-<%= session[:filtr] if false %>
+<%= session[:filtr1] if true %>
 
 <%= form_tag(form_item.action_on_submit, form_options) do %>
   <% if form_item.caption %> 

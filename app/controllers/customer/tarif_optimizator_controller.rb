@@ -30,8 +30,8 @@ class Customer::TarifOptimizatorController < ApplicationController
     else
       @tarif_optimizator = ServiceHelper::TarifOptimizator.new(options)
       @tarif_optimizator.calculate_one_operator_tarifs(operator)
-#          session[:filtr1]['final_tarif_sets'] = @tarif_optimizator.tarif_list_generator.final_tarif_sets.keys
-#          session[:filtr1]['tarif_sets'] = @tarif_optimizator.tarif_list_generator.tarif_sets.keys
+          session[:filtr1]['operator'] = operator
+          session[:filtr1]['options'] = options
 #          session[:filtr1]['service_sets_array'] =  optimization_result_presenter#.service_sets_array.count
       redirect_to(:action => :index)
     end
