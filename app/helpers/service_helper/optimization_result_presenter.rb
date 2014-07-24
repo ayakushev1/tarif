@@ -93,7 +93,7 @@ class ServiceHelper::OptimizationResultPresenter
         service_set_price[service_set_id] ||= 0
         service_sets_result.each do |part, part_result|
           part_result.each do |tarif_id, tarif_result |
-            service_set_price[service_set_id] += (tarif_result['price_value'] || 0.0).to_f..round(2)
+            service_set_price[service_set_id] += (tarif_result['price_value'] || 0.0).to_f.round(2)
           end
         end if service_sets_result
       end if tarif_results
