@@ -20,8 +20,8 @@ class Customer::TarifOptimizatorController < ApplicationController
         begin
           @tarif_optimizator = ServiceHelper::TarifOptimizator.new(options)
           @tarif_optimizator.calculate_one_operator_tarifs(operator)
-        rescue => e
-          raise(e)
+#        rescue => e
+#          raise(e)
         ensure
           background_process_informer.finish
         end            
@@ -38,7 +38,7 @@ class Customer::TarifOptimizatorController < ApplicationController
   end 
   
   def service_choices
-    @service_choices ||= Filtrable.new(self, "service_choices")
+    @service_choices = Filtrable.new(self, "service_choices")
   end
   
   def service_sets
@@ -54,7 +54,7 @@ class Customer::TarifOptimizatorController < ApplicationController
   end
   
   def calls_stat_options
-    @calls_stat_options ||= Filtrable.new(self, "calls_stat_options")
+    @calls_stat_options = Filtrable.new(self, "calls_stat_options")
   end
   
   def calls_stat
@@ -73,7 +73,7 @@ class Customer::TarifOptimizatorController < ApplicationController
   
   def optimization_result_presenter
     options = {:service_set_based_on_tarif_sets_or_tarif_results => service_choices.session_filtr_params['service_set_based_on_tarif_sets_or_tarif_results']}
-    @optimization_result_presenter ||= ServiceHelper::OptimizationResultPresenter.new(operator, options)
+    @optimization_result_presenter = ServiceHelper::OptimizationResultPresenter.new(operator, options)
   end
   
   def operator
