@@ -29,7 +29,7 @@ module Calls::Generation
           (0..([0, count_per_day_by_base_service(rouming, base_service_id)].max)).each do |day_item|
             call_destination = choose_call_destination(rouming)
             call_direction = choose_call_direction(rouming)
-            partner_operator_id, partner_operator_type_id = choose_call_operator(rouming, call_direction, call_destination)
+            partner_operator_id, partner_operator_type_id, partner_region_id, partner_country_id = choose_call_operator(rouming, call_direction, call_destination)
             
             next if ( partner_operator_type_id == _fixed_line ) and [_sms, _mms].include?(base_service_id)
  
@@ -40,7 +40,7 @@ module Calls::Generation
                 :region_id => common_params["own_region_id"], :country_id => common_params["own_country_id"] },
               :partner_phone => {
                 :number => common_params["others_phone_number"], :operator_id => partner_operator_id, :operator_type_id => partner_operator_type_id,
-                :region_id => initial_inputs[rouming][call_destination]['partner_region_id'], :country_id => initial_inputs[rouming][call_destination]['partner_country_id'] },
+                :region_id => partner_region_id, :country_id => partner_country_id },
               :connect => {
                 :operator_id => initial_inputs[rouming]["connection_operator"], :region_id => initial_inputs[rouming]["connection_region"], :country_id => initial_inputs[rouming]["connection_country"] },
               :description => {
@@ -316,28 +316,57 @@ module Calls::Generation
     end
     
     def choose_call_operator(rouming, call_direction, call_destination = nil)
-      (call_direction == _inbound) ? choose_incoming_calls_operator(rouming) : choose_outcoming_calls_operator(rouming, call_destination)
+      (call_direction == _inbound) ? choose_incoming_calls_operator(rouming, call_destination) : choose_outcoming_calls_operator(rouming, call_destination)
     end
     
-    def choose_incoming_calls_operator(rouming)
+    def choose_incoming_calls_operator(rouming, call_destination)
       case rand 
       when 0..share_of_incoming_calls_from_own_mobile(rouming).to_f
-        [common_params["own_operator_id"], _mobile]
+        partner_operator_id = if call_destination == :calls_to_abroad
+          choose_random_from_array( initial_inputs[rouming][call_destination]["partner_operator_ids"])
+        else
+          common_params["own_operator_id"]
+        end
+        [partner_operator_id, _mobile,
+         initial_inputs[rouming][call_destination]['partner_region_id'], initial_inputs[rouming][call_destination]['partner_country_id']
+        ]
       else
-        [choose_random_from_array( initial_inputs[rouming][:calls_to_own_region]["partner_operator_ids"] ), _mobile]
+        [choose_random_from_array( initial_inputs[rouming][call_destination]["partner_operator_ids"]), _mobile,
+         initial_inputs[rouming][call_destination]['partner_region_id'], initial_inputs[rouming][call_destination]['partner_country_id']
+         ]
       end
-    end
-    
+    end    
+ 
     def choose_outcoming_calls_operator(rouming, call_destination)
       case rand 
       when 0..share_of_calls_to_fix_line(rouming)
-        [common_params['fixed_operator_id'], _fixed_line]
+        if call_destination == :calls_to_abroad
+          [choose_random_from_array( initial_inputs[rouming][call_destination]["partner_operator_ids"] ), _mobile,
+           initial_inputs[rouming][call_destination]['partner_region_id'], initial_inputs[rouming][call_destination]['partner_country_id']
+          ]
+        else
+          [common_params['fixed_operator_id'], _fixed_line,
+           initial_inputs[rouming][call_destination]['partner_region_id'], initial_inputs[rouming][call_destination]['partner_country_id']
+          ]
+        end
       when share_of_calls_to_fix_line(rouming)..(share_of_calls_to_fix_line(rouming) + share_of_calls_to_others_mobile(rouming) )
-        [choose_random_from_array( initial_inputs[rouming][call_destination]["partner_operator_ids"] ), _mobile]        
+        [choose_random_from_array( initial_inputs[rouming][call_destination]["partner_operator_ids"] ), _mobile,
+         initial_inputs[rouming][call_destination]['partner_region_id'], initial_inputs[rouming][call_destination]['partner_country_id']
+        ]        
       when ( share_of_calls_to_fix_line(rouming) + share_of_calls_to_others_mobile(rouming) )..1
-        [common_params["own_operator_id"], _mobile]
+        if call_destination == :calls_to_abroad
+          [choose_random_from_array( initial_inputs[rouming][call_destination]["partner_operator_ids"]), _mobile,
+           initial_inputs[rouming][call_destination]['partner_region_id'], initial_inputs[rouming][call_destination]['partner_country_id']
+          ]
+        else
+          [common_params["own_operator_id"], _mobile,
+           initial_inputs[rouming][call_destination]['partner_region_id'], initial_inputs[rouming][call_destination]['partner_country_id']
+          ]
+        end
       else
-        [common_params["own_operator_id"], _mobile]
+        [common_params["own_operator_id"], _mobile,
+         initial_inputs[rouming][call_destination]['partner_region_id'], initial_inputs[rouming][call_destination]['partner_country_id']
+        ]
       end
     end
     
