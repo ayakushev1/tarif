@@ -510,7 +510,7 @@ module Calls::Generation
           'operator_id' => _mts,
           'privacy_id' => _person,
           'region_for_region_calls_ids' => _piter,
-          'country_for_international_calls_ids' => _ukraiun,
+          'country_for_international_calls_ids' => _great_britain,
            }.merge(usage_pattern(usage_pattern_id || _own_region_active_caller) )
          }
       when :home_region

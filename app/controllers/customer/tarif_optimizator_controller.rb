@@ -1,6 +1,7 @@
 class Customer::TarifOptimizatorController < ApplicationController
   include Crudable
   crudable_actions :index
+  before_action :check_if_optimization_options_are_in_session, only: [:index]
   before_action :validate_tarifs, only: [:index, :recalculate]
   before_action :init_background_process_informer, only: [:tarif_optimization_progress_bar, :calculation_status, :recalculate, :index]
   attr_reader :operator, :background_process_informer#, :optimization_result_presenter
@@ -108,6 +109,21 @@ class Customer::TarifOptimizatorController < ApplicationController
   
   def common_services
     service_choices.session_filtr_params['common_services_id']  || []
+  end
+  
+  def check_if_optimization_options_are_in_session
+    if !session[:filtr] or session[:filtr]['service_choices_filtr'].blank?
+      session[:filtr] ||= {}; session[:filtr]['service_choices_filtr'] ||= {}
+      session[:filtr]['service_choices_filtr']  = {
+        'tarifs_id' => [],
+        'tarif_options_id' => [],
+        'common_services_id' => [],
+        'calculate_on_background' => 'true',
+        'service_set_based_on_tarif_sets_or_tarif_results' => 'true',
+        'operator_id' => 1030,
+        'use_short_tarif_set_name' => 'true',
+      } 
+    end
   end
   
 end

@@ -2,7 +2,7 @@ class Customer::CallsController < ApplicationController
   include Crudable
   crudable_actions :index
 #  attr_accessor :customer_calls_generation_params_filtr #:calls_generator
-#  before_action :init_calls_generator
+  before_action :setting_if_nil_default_calls_generation_params, only: [:set_calls_generation_params, :generate_calls]
 
   def set_default_calls_generation_params
     setting_default_calls_generation_params
@@ -15,7 +15,7 @@ class Customer::CallsController < ApplicationController
   
   def generate_calls
 #    raise(StandardError, customer_calls_generation_params)
-    setting_if_nil_default_calls_generation_params
+#    setting_if_nil_default_calls_generation_params
     calls_generator.new(self, customer_calls_generation_params ).generate_calls
     redirect_to customer_calls_path
   end
