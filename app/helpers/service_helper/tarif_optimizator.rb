@@ -24,10 +24,10 @@ class ServiceHelper::TarifOptimizator
   def init_additional_general_classes
     @performance_checker = ServiceHelper::PerformanceChecker.new()
     performance_checker.clean_history;
-    performance_checker.run_check_point('init_additional_general_classes', 1) do
+#    performance_checker.run_check_point('init_additional_general_classes', 1) do
       @controller = options[:controller]
       @background_process_informer = options[:background_process_informer] || ServiceHelper::BackgroundProcessInformer.new('tarif_optimization')
-    end
+#    end
   end
   
   def init_input_data(options)
@@ -57,10 +57,10 @@ class ServiceHelper::TarifOptimizator
       
       optimization_result_saver.clean_output_results
       
-      performance_checker.run_check_point('calculate_calls_count_by_parts', 2) do
+#      performance_checker.run_check_point('calculate_calls_count_by_parts', 2) do
         @calls_count_by_parts = calls_stat_calculator.calculate_calls_count_by_parts(query_constructor, 
           tarif_list_generator.uniq_parts_by_operator[operator], tarif_list_generator.uniq_parts_criteria_by_operator[operator])
-      end
+#      end
       
       background_process_informer.init(0.0, tarif_list_generator.all_tarif_parts_count[operator])
   
@@ -69,13 +69,14 @@ class ServiceHelper::TarifOptimizator
       end
       
       current_tarif_optimization_results.update_all_tarif_results_with_missing_prev_results
-      save_tarif_results(operator)
+      final_tarif_sets = save_tarif_results(operator)
       background_process_informer.finish
-    end
+      final_tarif_sets
+    end    
   end
   
   def init_input_for_one_operator_tarif_calculation(operator)
-    performance_checker.run_check_point('init_input_for_one_operator_tarif_calculation', 2) do
+#    performance_checker.run_check_point('init_input_for_one_operator_tarif_calculation', 2) do
       @optimization_result_saver = ServiceHelper::OptimizationResultSaver.new()
       @calls_stat_calculator = ServiceHelper::CallsStatCalculator.new()
       @tarif_optimization_sql_builder = ServiceHelper::TarifOptimizationSqlBuilder.new(self)
@@ -90,23 +91,25 @@ class ServiceHelper::TarifOptimizator
         @query_constructor = ServiceHelper::QueryConstructor.new(self, {:tarif_class_ids => tarif_list_generator.all_services_by_operator[operator]} )
       end
       @max_formula_order_collector = ServiceHelper::MaxPriceFormulaOrderCollector.new(tarif_list_generator, operator)
-    end
+#    end
   end
   
   def save_tarif_results(operator)
 #    raise(StandardError, [tarif_list_generator.final_tarif_sets])
-    performance_checker.run_check_point('save_tarif_results', 2) do
+#    performance_checker.run_check_point('save_tarif_results', 2) do
+     final_tarif_sets = tarif_list_generator.final_tarif_sets
       output = {
         :calls_stat => calls_stat_calculator.calculate_calls_stat(query_constructor), 
         operator.to_i => {
           :operator => operator.to_i, 
-          :final_tarif_sets => tarif_list_generator.final_tarif_sets,
+          :final_tarif_sets => final_tarif_sets,
           :tarif_sets => tarif_list_generator.tarif_sets,
           :tarif_results => current_tarif_optimization_results.tarif_results, 
           :tarif_results_ord => (save_tarif_results_ord ? current_tarif_optimization_results.tarif_results_ord : {}), 
           } } 
       optimization_result_saver.save(output)
-    end
+#    end
+    final_tarif_sets
   end
   
   def calculate_tarif_results(operator, service_slice)
