@@ -20,8 +20,8 @@ class Customer::TarifOptimizatorController < ApplicationController
         begin
           @tarif_optimizator = ServiceHelper::TarifOptimizator.new(options)
           @tarif_optimizator.calculate_one_operator_tarifs(operator)
-#        rescue => e
-#          raise(e)
+        rescue => e
+          raise(e)
         ensure
           background_process_informer.finish
         end            
@@ -30,10 +30,10 @@ class Customer::TarifOptimizatorController < ApplicationController
     else
       @tarif_optimizator = ServiceHelper::TarifOptimizator.new(options)
       final_tarif_sets = @tarif_optimizator.calculate_one_operator_tarifs(operator)
-          session[:filtr1]['operator'] = operator
-          session[:filtr1]['options'] = options[:services_by_operator]
-          session[:filtr1]['controller'] = @tarif_optimizator.controller.session[:filtr]
-          session[:filtr1]['final_tarif_sets'] = final_tarif_sets
+#          session[:filtr1]['operator'] = operator
+#          session[:filtr1]['options'] = options[:services_by_operator]
+#          session[:filtr1]['controller'] = @tarif_optimizator.controller.session[:filtr]
+#          session[:filtr1]['final_tarif_sets'] = final_tarif_sets
 #          session[:filtr1]['service_sets_array'] =  optimization_result_presenter#.service_sets_array.count
       redirect_to(:action => :index)
     end
