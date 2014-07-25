@@ -11,14 +11,14 @@ class ServiceHelper::TarifListGenerator
     @options = options
     @operators = (!options[:operators].blank? ? options[:operators] : [1025, 1028, 1030])
     @tarifs = (options[:tarifs] and !options[:tarifs][1030].blank? ? options[:tarifs] : {1025 => [], 1028 => [], 1030 => [
-        200, #202, 203, 204, 205,#_mts_red_energy, _mts_smart, _mts_smart_mini, _mts_smart_plus, _mts_ultra, _mts_mts_connect_4
-        #200, 201, 202, 203, 204, 205,#_mts_red_energy, _mts_smart, _mts_smart_mini, _mts_smart_plus, _mts_ultra, _mts_mts_connect_4
-        #206, 207, 208, 210,# 209, #_mts_mayak, _mts_your_country, _mts_super_mts, _mts_umnyi_dom, _mts_super_mts_star
+        #200, #202, 203, 204, 205,#_mts_red_energy, _mts_smart, _mts_smart_mini, _mts_smart_plus, _mts_ultra, _mts_mts_connect_4
+        200, 201, 202, 203, 204, 205,#_mts_red_energy, _mts_smart, _mts_smart_mini, _mts_smart_plus, _mts_ultra, _mts_mts_connect_4
+        206, 207, 208, 210,# 209, #_mts_mayak, _mts_your_country, _mts_super_mts, _mts_umnyi_dom, _mts_super_mts_star
         ]} )
 #    raise(StandardError, [@tarifs, !options[:tarifs].blank?, options] )
     @common_services = (options[:common_services] and !options[:common_services][1030].blank? ? options[:common_services] : {1025 => [], 1028 => [], 1030 => [
         #312,
-        #276, 277, 312, # _mts_own_country_rouming, _mts_international_rouming, _mts_own_country_rouming_internet
+        276, 277, 312, # _mts_own_country_rouming, _mts_international_rouming, _mts_own_country_rouming_internet
         ]} )
     @tarif_options = (options[:tarif_options] and !options[:tarif_options][1030].blank? ? options[:tarif_options] : {1025 => [], 1028 => [], 1030 => [
         #283,
