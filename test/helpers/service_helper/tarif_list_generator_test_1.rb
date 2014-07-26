@@ -34,7 +34,7 @@ describe ServiceHelper::TarifListGenerator do
       })
 =end      
     @trg = ServiceHelper::TarifListGenerator.new({
-      :use_short_tarif_set_name => 'true',})
+      :use_short_tarif_set_name => 'true', :tarifs => {_beeline => [], _megafon => [], _mts => [200]}})
   end
   
   it 'must return' do

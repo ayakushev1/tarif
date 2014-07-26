@@ -2,7 +2,10 @@ require 'test_helper'
 
 describe ServiceHelper::TarifOptimizator do
   before do
-    @tarif_optimizator = ServiceHelper::TarifOptimizator.new({:services_by_operator => {:use_short_tarif_set_name => 'true'}})
+    @tarif_optimizator = ServiceHelper::TarifOptimizator.new({:services_by_operator => 
+      {:use_short_tarif_set_name => 'true',
+       :tarifs => {_beeline => [], _megafon => [], _mts => [200]}
+        }})
 #    @tarif_optimizator = ServiceHelper::TarifOptimizator.new({:services_by_operator => {:operators => [1030], :tarifs => {1030 => []} } } )
 #    @tarif_optimizator = ServiceHelper::TarifOptimizator.new({:services_by_operator => {:operators => [1030], :tarifs => {1030 => [200]} } } )
     @tarif_optimizator.calculate_one_operator_tarifs(_mts)
