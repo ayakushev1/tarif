@@ -2,7 +2,7 @@ require 'test_helper'
 
 describe ServiceHelper::TarifOptimizator do
   before do
-    @tarif_optimizator = ServiceHelper::TarifOptimizator.new({})
+    @tarif_optimizator = ServiceHelper::TarifOptimizator.new({:services_by_operator => {:use_short_tarif_set_name => 'true'}})
 #    @tarif_optimizator = ServiceHelper::TarifOptimizator.new({:services_by_operator => {:operators => [1030], :tarifs => {1030 => []} } } )
 #    @tarif_optimizator = ServiceHelper::TarifOptimizator.new({:services_by_operator => {:operators => [1030], :tarifs => {1030 => [200]} } } )
     @tarif_optimizator.calculate_one_operator_tarifs(_mts)
@@ -19,7 +19,7 @@ describe ServiceHelper::TarifOptimizator do
       it 'must return' do
 #        @tarif_optimizator.tarif_list_generator.tarif_options.must_be :==, true, @tarif_optimizator.tarif_list_generator.options
 #        @tarif_optimizator.calculate_tarif_results(0)
-        @tarif_optimizator.current_tarif_optimization_results.tarif_results.keys.must_be :==, true, 
+        @tarif_optimizator.tarif_list_generator.final_tarif_sets.keys.must_be :==, @tarif_optimizator.tarif_list_generator.final_tarif_sets.keys.size, 
 #          @tarif_optimizator.current_tarif_optimization_results.tarif_results.count
 #          @tarif_optimizator.current_tarif_optimization_results.tarif_results
           @tarif_optimizator.performance_checker.show_stat

@@ -32,7 +32,10 @@ describe ServiceHelper::TarifListGenerator do
       ]},
       })
 =end
-      @empty_trg = ServiceHelper::TarifListGenerator.new()
+      @@service_helper_tarif_list_generator_for_test ||= ServiceHelper::TarifListGenerator.new({:use_short_tarif_set_name => 'true'})
+      @empty_trg = @@service_helper_tarif_list_generator_for_test
+      #raise(StandardError, [@empty_trg.final_tarif_sets[_mts], @empty_trg.final_tarif_sets[_mts].size])
+
   end
   
   describe 'calculate_all_services' do
@@ -151,7 +154,7 @@ describe ServiceHelper::TarifListGenerator do
   describe 'calculate_tarif_sets' do
     it 'must return' do
 #      @trg.tarif_sets[_mts_red_energy]['own-country-rouming/mobile-connection'].keys.sort.must_be :==, ["276_277_312_200", "276_277_312_200_302", "276_277_312_200_302_341", "276_277_312_200_303", "276_277_312_200_303_341", "276_277_312_200_304", "276_277_312_200_304_302", "276_277_312_200_304_303", "276_277_312_200_304_315", "276_277_312_200_304_316", "276_277_312_200_304_317", "276_277_312_200_304_318", "276_277_312_200_304_340", "276_277_312_200_304_340_341", "276_277_312_200_304_341", "276_277_312_200_304_341_302", "276_277_312_200_304_341_303", "276_277_312_200_304_341_315", "276_277_312_200_304_341_316", "276_277_312_200_304_341_317", "276_277_312_200_304_341_318", "276_277_312_200_315", "276_277_312_200_315_341", "276_277_312_200_316", "276_277_312_200_316_341", "276_277_312_200_317", "276_277_312_200_317_341", "276_277_312_200_318", "276_277_312_200_318_341", "276_277_312_200_340", "276_277_312_200_340_341", "276_277_312_200_341"]  
-      @empty_trg.tarif_sets[203].must_be :==, 1
+      @empty_trg.tarif_sets[200].must_be :==, 1
       @empty_trg.tarif_sets[200].must_be :==, {"all-world-rouming/sms"=>{"200"=>[200]}, "own-country-rouming/sms"=>{"200"=>[200]}, "own-country-rouming/mms"=>{"200"=>[200]}, "all-world-rouming/mms"=>{"200"=>[200]}, "own-country-rouming/calls"=>{"200_281"=>[200, 281], "200_309"=>[200, 309], "200"=>[200]}, "own-country-rouming/mobile-connection"=>{"200"=>[200]}, "periodic"=>{"200_281"=>[200, 281], "200_309"=>[200, 309], "200"=>[200]}, "onetime"=>{"200"=>[200]}}
       @empty_trg.tarif_sets.must_be :==, {200=>{"all-world-rouming/sms"=>{"200"=>[200]}, "own-country-rouming/sms"=>{"200"=>[200]}, "own-country-rouming/mms"=>{"200"=>[200]}, "all-world-rouming/mms"=>{"200"=>[200]}, "own-country-rouming/calls"=>{"200_281"=>[200, 281], "200_309"=>[200, 309], "200"=>[200]}, "own-country-rouming/mobile-connection"=>{"200"=>[200]}, "periodic"=>{"200_281"=>[200, 281], "200_309"=>[200, 309], "200"=>[200]}, "onetime"=>{"200"=>[200]}}} 
     end
@@ -159,7 +162,7 @@ describe ServiceHelper::TarifListGenerator do
 
   describe 'calculate_final_tarif_sets' do
     it 'must return' do
-      @empty_trg.final_tarif_sets.keys.must_be :==, 1
+      @empty_trg.final_tarif_sets.keys.must_be :==, 1, @empty_trg.final_tarif_sets.keys.size
 
       @empty_trg.final_tarif_sets.keys.must_be :==, ["200_281", "200_281_309", "200_309_281", "200_309", "200"] 
       @empty_trg.final_tarif_sets["200_281"][:tarif_sets_by_part].keys.must_be :==, ["200_281"]

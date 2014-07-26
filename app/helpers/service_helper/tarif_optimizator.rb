@@ -79,7 +79,9 @@ class ServiceHelper::TarifOptimizator
       @optimization_result_saver = ServiceHelper::OptimizationResultSaver.new()
       @calls_stat_calculator = ServiceHelper::CallsStatCalculator.new()
       @tarif_optimization_sql_builder = ServiceHelper::TarifOptimizationSqlBuilder.new(self)
-      @tarif_list_generator = ServiceHelper::TarifListGenerator.new(options[:services_by_operator] || {})
+      performance_checker.run_check_point('@tarif_list_generator', 3) do
+        @tarif_list_generator = ServiceHelper::TarifListGenerator.new(options[:services_by_operator] || {})
+      end
       @current_tarif_optimization_results = ServiceHelper::CurrentTarifOptimizationResults.new(self)
       @fq_tarif_operator_id = operator#tarif_list_generator.operators[operator_index]
       @operator_id = operator#tarif_list_generator.operators[operator_index]
