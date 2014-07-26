@@ -20,7 +20,7 @@ class Customer::TarifOptimizatorController < ApplicationController
       Spawnling.new(:argv => 'tarif_optimization') do
         begin
           @tarif_optimizator = ServiceHelper::TarifOptimizator.new(options)
-          raise(StandardError, 'check')
+#          raise(StandardError, 'check')
           @tarif_optimizator.calculate_one_operator_tarifs(operator)
         rescue => e
           ServiceHelper::OptimizationResultSaver.new('Error on optimization').save({:error => e})
