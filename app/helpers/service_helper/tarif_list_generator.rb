@@ -444,8 +444,8 @@ class ServiceHelper::TarifListGenerator
                   load_current_uniq_service_sets_to_final_tarif_sets(current_uniq_service_sets, fobidden_info)
                   update_final_tarif_sets_with_common_services if calculate_final_tarif_sets_first_without_common_services
                   
-                  raise(StandardError, [max_final_tarif_set_number, 
-                    prev_final_tarif_sets_size, current_uniq_service_sets.keys.size, final_tarif_sets.keys.size, current_uniq_service_sets_number])
+#                  raise(StandardError, [max_final_tarif_set_number, 
+#                    prev_final_tarif_sets_size, current_uniq_service_sets.keys.size, final_tarif_sets.keys.size, current_uniq_service_sets_number])
                   return "finish as limit of max_final_tarif_set_number is reached"
                 end
                 current_uniq_service_sets_number += 1
