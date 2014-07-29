@@ -416,7 +416,7 @@ class ServiceHelper::TarifListGenerator
               prev_uniq_service_sets[current_uniq_service_set_id] = current_uniq_service_set if !current_uniq_service_set[:fobidden]
             end
             current_uniq_service_sets = {}
-            current_uniq_service_sets_number = final_tarif_sets.keys.size
+            current_uniq_service_sets_number = final_tarif_sets.keys.size + prev_uniq_service_sets.keys.size
             prev_uniq_service_sets.each do |uniq_service_set_id, uniq_service_set|
               tarif_sets_by_part_services_list = tarif_sets_by_part.collect{|tarif_set_by_part_id, services| services - common_services_to_exclude}.collect{|f| tarif_set_id(f).to_sym}
               tarif_sets_by_part.each do |tarif_set_by_part_id, services|
