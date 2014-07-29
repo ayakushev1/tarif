@@ -54,7 +54,8 @@ class ServiceHelper::CurrentTarifOptimizationResults
     tarif_results[tarif_set_id] ||= {}
     tarif_results[tarif_set_id][part] ||= {}
 #    current_tarif_results_ord = tarif_results_ord[tarif_set_id][part][tarif_class_id][price_formula_order]   
-    if price_formula_order == 0          
+#    if price_formula_order == 0          
+    if tarif_results[tarif_set_id][part][tarif_class_id].blank?
       tarif_results[tarif_set_id][part][tarif_class_id] = stat            
 
     else
@@ -74,7 +75,8 @@ class ServiceHelper::CurrentTarifOptimizationResults
     prev_service_call_ids[tarif_set_id][part] ||= {};  
     prev_service_call_ids[tarif_set_id][part][tarif_class_id] ||= [] 
 #    current_tarif_results_ord = tarif_results_ord[tarif_set_id][part][tarif_class_id][price_formula_order]  
-    if price_formula_order == 0              
+#    if price_formula_order == 0              
+    if tarif_results[tarif_set_id][part][tarif_class_id].blank?
       prev_service_call_ids[tarif_set_id][part][tarif_class_id] = stat['call_ids']            
     else
       prev_service_call_ids[tarif_set_id][part][tarif_class_id] += stat['call_ids'] #if tarif_optimizator.output_call_ids_to_tarif_results

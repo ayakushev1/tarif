@@ -9,7 +9,7 @@ class ServiceHelper::TarifOptimizator
 # параметры оптимизации 
   attr_reader :optimization_params, :check_sql_before_running, :execute_additional_sql, :service_ids_batch_size
 #настройки вывода результатов
-  attr_reader  :save_tarif_results_ord, :analyze_memory_used, :output_call_ids_to_tarif_results, :output_call_count_to_tarif_results, 
+  attr_reader  :save_tarif_results, :save_tarif_results_ord, :analyze_memory_used, :output_call_ids_to_tarif_results, :output_call_count_to_tarif_results, 
                :analyze_query_constructor_performance
 #local
   attr_reader :calls_count_by_parts, :controller
@@ -45,6 +45,7 @@ class ServiceHelper::TarifOptimizator
   end
   
   def init_output_params(options)
+    @save_tarif_results = (options[:save_tarif_results] == 'true' ? true : false) 
     @save_tarif_results_ord = (options[:save_tarif_results_ord] == 'true' ? true : false) 
     @analyze_memory_used = (options[:analyze_memory_used] == 'true' ? true : false) 
     @analyze_query_constructor_performance = (options[:analyze_query_constructor_performance] == 'true' ? true : false) 
@@ -74,6 +75,7 @@ class ServiceHelper::TarifOptimizator
       
       current_tarif_optimization_results.update_all_tarif_results_with_missing_prev_results
       current_tarif_optimization_results.calculate_all_cons_tarif_results_by_parts
+      
       save_tarif_results(operator)
       
       clean_memory

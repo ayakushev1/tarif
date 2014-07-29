@@ -4,7 +4,8 @@ describe ServiceHelper::TarifOptimizator do
   before do
     @tarif_optimizator = ServiceHelper::TarifOptimizator.new({:services_by_operator => 
       {:use_short_tarif_set_name => 'true',
-       :tarifs => {_beeline => [], _megafon => [], _mts => [203]}
+       :if_update_tarif_sets_to_calculate_from_with_cons_tarif_results => 'true',
+       :tarifs => {_beeline => [], _megafon => [], _mts => []},
         }})
 #    @tarif_optimizator = ServiceHelper::TarifOptimizator.new({:services_by_operator => {:operators => [1030], :tarifs => {1030 => []} } } )
 #    @tarif_optimizator = ServiceHelper::TarifOptimizator.new({:services_by_operator => {:operators => [1030], :tarifs => {1030 => [200]} } } )
@@ -22,7 +23,7 @@ describe ServiceHelper::TarifOptimizator do
       it 'must return' do
 #        @tarif_optimizator.tarif_list_generator.tarif_options.must_be :==, true, @tarif_optimizator.tarif_list_generator.options
 #        @tarif_optimizator.calculate_tarif_results(0)
-        @tarif_optimizator.tarif_list_generator.final_tarif_sets.keys.must_be :==, @tarif_optimizator.tarif_list_generator.final_tarif_sets.keys.size, 
+        @tarif_optimizator.tarif_list_generator.final_tarif_sets.keys[0..10].must_be :==, @tarif_optimizator.tarif_list_generator.final_tarif_sets.keys.size, 
 #          @tarif_optimizator.current_tarif_optimization_results.tarif_results.count
 #          @tarif_optimizator.current_tarif_optimization_results.tarif_results
           @tarif_optimizator.performance_checker.show_stat

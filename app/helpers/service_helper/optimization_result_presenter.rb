@@ -73,7 +73,7 @@ class ServiceHelper::OptimizationResultPresenter
         service_set_count[service_set_id] = 0        
         final_tarif_set['tarif_sets_by_part'].each do |tarif_set_by_part|
           part = tarif_set_by_part[0]; tarif_set_by_part_id = tarif_set_by_part[1]
-          tarif_results_for_service_set_and_part = tarif_results[tarif_set_by_part_id][part] if tarif_results[tarif_set_by_part_id]
+          tarif_results_for_service_set_and_part = tarif_results[tarif_set_by_part_id][part] if tarif_results and tarif_results[tarif_set_by_part_id]
           tarif_results_for_service_set_and_part.each do |tarif_id_from_tarif_results, tarif_result_for_service_set_and_part |
             
 #            stat_results[service_set_id] ||= {}; stat_detail_keys_to_exclude = ['month', 'call_ids']
@@ -135,7 +135,7 @@ class ServiceHelper::OptimizationResultPresenter
     when 'final_tarif_sets'
       final_tarif_sets[service_set_id]['tarif_sets_by_part'].each do |tarif_set_by_part|
         part = tarif_set_by_part[0]; tarif_set_by_part_id = tarif_set_by_part[1]
-        tarif_results_for_service_set_and_part = tarif_results[tarif_set_by_part_id][part] if tarif_results[tarif_set_by_part_id]
+        tarif_results_for_service_set_and_part = tarif_results[tarif_set_by_part_id][part] if tarif_results and tarif_results[tarif_set_by_part_id]
 
         tarif_results_for_service_set_and_part.each do |tarif_id_from_tarif_results, tarif_result_for_service_set_and_part|
 
@@ -200,7 +200,7 @@ class ServiceHelper::OptimizationResultPresenter
     if @service_set_based_on_tarif_sets_or_tarif_results
       final_tarif_sets[service_set_id]['tarif_sets_by_part'].each do |tarif_set_by_part|
         part = tarif_set_by_part[0]; tarif_set_by_part_id = tarif_set_by_part[1]
-        tarif_results_for_service_set_and_part = tarif_results[tarif_set_by_part_id][part] if tarif_results[tarif_set_by_part_id]
+        tarif_results_for_service_set_and_part = tarif_results[tarif_set_by_part_id][part] if tarif_results and tarif_results[tarif_set_by_part_id]
         tarif_results_for_service_set_and_part.each do |tarif_id_from_tarif_results, tarif_result_for_service_set_and_part |
           tarif_results_for_service_set_and_part[tarif_id_from_tarif_results]['price_values'].each do |price_value_detail|
             tarif_class_id_1_eqv = "#{part}_#{service_set_id}__#{tarif_id_from_tarif_results}"
@@ -261,7 +261,7 @@ class ServiceHelper::OptimizationResultPresenter
   end
   
   def tarif_results
-    results[operator.to_s]['tarif_results'] if results and results[operator.to_s]
+    results[operator.to_s]['tarif_results'] if results and results[operator.to_s] 
   end
   
   def cons_tarif_results

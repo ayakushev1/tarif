@@ -6,13 +6,14 @@ class ServiceHelper::TarifListGenerator
                 :service_packs_by_general_priority, :tarif_option_by_compatibility, :tarif_option_combinations, :tarif_sets_without_common_services, :tarif_sets, :final_tarif_sets                
   attr_accessor :tarif_options_slices, :tarif_options_count, :max_tarif_options_slice, :tarifs_slices, :tarifs_count, :max_tarifs_slice, :all_tarif_parts_count
   attr_reader :gp_tarif_option, :gp_tarif_without_limits, :gp_tarif_with_limits, :gp_tarif_option_with_limits, :gp_common_service, :use_short_tarif_set_name       
-  attr_reader :calculate_final_tarif_sets_first_without_common_services, :if_update_tarif_sets_to_calculate_from_with_cons_tarif_results
+  attr_reader :calculate_final_tarif_sets_first_without_common_services, :if_update_tarif_sets_to_calculate_from_with_cons_tarif_results,
+              :max_final_tarif_set_number
   
   def initialize(options = {} )
     @options = options
     @operators = (!options[:operators].blank? ? options[:operators] : [1025, 1028, 1030])
     @tarifs = (options and options[:tarifs] and !options[:tarifs][1030].blank?) ? options[:tarifs] : {1025 => [], 1028 => [], 1030 => [
-        200,#202, #203, 204, 205,#_mts_red_energy, _mts_smart, _mts_smart_mini, _mts_smart_plus, _mts_ultra, _mts_mts_connect_4
+        200, 203#202, #203, 204, 205,#_mts_red_energy, _mts_smart, _mts_smart_mini, _mts_smart_plus, _mts_ultra, _mts_mts_connect_4
         #200, 201, 202, 203, 204, 205,#_mts_red_energy, _mts_smart, _mts_smart_mini, _mts_smart_plus, _mts_ultra, _mts_mts_connect_4
         #206, 207, 208, 210,# 209, #_mts_mayak, _mts_your_country, _mts_super_mts, _mts_umnyi_dom, _mts_super_mts_star
         ]} 
@@ -29,17 +30,17 @@ class ServiceHelper::TarifListGenerator
         #321, 322, #_mts_additional_minutes_150, _mts_additional_minutes_300, #country_rouming
         #288, 289, 290, 291, 292, #_mts_zero_without_limits, _mts_bit_abroad, _mts_maxi_bit_abroad, _mts_super_bit_abroad, _mts_100mb_in_latvia_and_litva, #international_rouming
         #302, 303, 304, #_mts_bit, _mts_super_bit, _mts_mini_bit, #internet
-        #310, 311, #_mts_additional_internet_500_mb, _mts_additional_internet_1_gb, #internet
+        #310, #311, #_mts_additional_internet_500_mb, _mts_additional_internet_1_gb, #internet
         #313, 314, #_mts_turbo_button_500_mb, _mts_turbo_button_2_gb, #internet
         #315, 316, 317, 318, #_mts_internet_mini, _mts_internet_maxi, _mts_internet_super, _mts_internet_vip,#internet
-        #340, 341, #_mts_mts_planshet, _mts_mts_planshet_online,#internet
-        #342, #_mts_unlimited_internet_on_day,#internet
-        #326, 323, 324, 325, 326, #_mts_mms_packet_10, _mts_mms_packet_20, _mts_mms_packet_50, _mts_mms_discount_50_percent, #mms
-        #280, #_mts_rodnye_goroda, #service_to_country
-        #295, 296, #_mts_50_sms_travelling_in_russia, _mts_100_sms_travelling_in_russia,#sms
-        #305, 306, 307, 308, #_mts_50_sms_in_europe, _mts_100_sms_in_europe, _mts_50_sms_travelling_in_all_world, _mts_100_sms_travelling_in_all_world,#sms
-        #333, 334, 335, #_mts_onetime_sms_packet_50, _mts_onetime_sms_packet_150, _mts_onetime_sms_packet_300,#sms
-        #336, 337, 338, 339, #_mts_monthly_sms_packet_100, _mts_monthly_sms_packet_300, _mts_monthly_sms_packet_500, _mts_monthly_sms_packet_1000,#sms        
+        340, 341, #_mts_mts_planshet, _mts_mts_planshet_online,#internet
+        342, #_mts_unlimited_internet_on_day,#internet
+        323, 324, 325, 326, #_mts_mms_packet_10, _mts_mms_packet_20, _mts_mms_packet_50, _mts_mms_discount_50_percent, #mms
+        280, #_mts_rodnye_goroda, #service_to_country
+        295, 296, #_mts_50_sms_travelling_in_russia, _mts_100_sms_travelling_in_russia,#sms
+        305, 306, 307, 308, #_mts_50_sms_in_europe, _mts_100_sms_in_europe, _mts_50_sms_travelling_in_all_world, _mts_100_sms_travelling_in_all_world,#sms
+        333, 334, 335, #_mts_onetime_sms_packet_50, _mts_onetime_sms_packet_150, _mts_onetime_sms_packet_300,#sms
+        336, 337, 338, 339, #_mts_monthly_sms_packet_100, _mts_monthly_sms_packet_300, _mts_monthly_sms_packet_500, _mts_monthly_sms_packet_1000,#sms        
       ]} 
     set_constant
     set_generation_params(options)
@@ -77,6 +78,7 @@ class ServiceHelper::TarifListGenerator
   def set_generation_params(options)
     @calculate_final_tarif_sets_first_without_common_services = false      
     @if_update_tarif_sets_to_calculate_from_with_cons_tarif_results = options[:if_update_tarif_sets_to_calculate_from_with_cons_tarif_results] == 'true' ? true : false
+    @max_final_tarif_set_number = options[:max_final_tarif_set_number].to_i < 1 ? 1000 : options[:max_final_tarif_set_number].to_i
   end
   
   def check_input_from_options
@@ -351,7 +353,7 @@ class ServiceHelper::TarifListGenerator
                   tarif_option_group << tarif_option if tarif_option_general_priority == gp_tarif_option
                   tarif_option_with_limit_group << tarif_option if tarif_option_general_priority == gp_tarif_option_with_limits
                   
-                  raise(StandardError, "tarif_option #{tarif_option} has wrong general_priority") if ![gp_tarif_option, gp_tarif_option_with_limits].include?(tarif_option_general_priority)
+#                  raise(StandardError, "tarif_option #{tarif_option} has wrong general_priority") if false#![gp_tarif_option, gp_tarif_option_with_limits].include?(tarif_option_general_priority)
                   if !tarif_option_group.blank? and ( tarif_option_general_priority == gp_tarif_option_with_limits )
 #TODO убрать                    raise(StandardError, "tarif_option #{tarif_option} has wrong general_priority #{tarif_option_group}  #{tarif_options}")                 
                   end
@@ -414,6 +416,7 @@ class ServiceHelper::TarifListGenerator
               prev_uniq_service_sets[current_uniq_service_set_id] = current_uniq_service_set if !current_uniq_service_set[:fobidden]
             end
             current_uniq_service_sets = {}
+            current_uniq_service_sets_number = final_tarif_sets.keys.size
             prev_uniq_service_sets.each do |uniq_service_set_id, uniq_service_set|
               tarif_sets_by_part_services_list = tarif_sets_by_part.collect{|tarif_set_by_part_id, services| services - common_services_to_exclude}.collect{|f| tarif_set_id(f).to_sym}
               tarif_sets_by_part.each do |tarif_set_by_part_id, services|
@@ -435,6 +438,17 @@ class ServiceHelper::TarifListGenerator
                 prev_tarif_sets_by_part = (prev_uniq_service_sets[uniq_service_set_id][:tarif_sets_by_part] || [])
                 current_uniq_service_sets[new_uniq_service_set_name][:tarif_sets_by_part] = 
                   (existing_tarif_sets_by_part + prev_tarif_sets_by_part + [[part, tarif_set_by_part_id]]).uniq  
+                  
+                if current_uniq_service_sets_number > max_final_tarif_set_number  
+                  prev_final_tarif_sets_size = final_tarif_sets.keys.size
+                  load_current_uniq_service_sets_to_final_tarif_sets(current_uniq_service_sets, fobidden_info)
+                  update_final_tarif_sets_with_common_services if calculate_final_tarif_sets_first_without_common_services
+                  
+                  raise(StandardError, [max_final_tarif_set_number, 
+                    prev_final_tarif_sets_size, current_uniq_service_sets.keys.size, final_tarif_sets.keys.size, current_uniq_service_sets_number])
+                  return "finish as limit of max_final_tarif_set_number is reached"
+                end
+                current_uniq_service_sets_number += 1
               end
             end            
           end

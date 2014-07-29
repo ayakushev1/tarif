@@ -121,6 +121,7 @@ class Customer::TarifOptimizatorController < ApplicationController
       :common_services => {operator => common_services}, 
       :use_short_tarif_set_name => service_choices.session_filtr_params['use_short_tarif_set_name'], 
       :if_update_tarif_sets_to_calculate_from_with_cons_tarif_results => service_choices.session_filtr_params['if_update_tarif_sets_to_calculate_from_with_cons_tarif_results'],
+      :max_final_tarif_set_number => service_choices.session_filtr_params['max_final_tarif_set_number']
       } 
    }
   end
@@ -147,6 +148,7 @@ class Customer::TarifOptimizatorController < ApplicationController
         'calculate_on_background' => 'true',
         'service_set_based_on_tarif_sets_or_tarif_results' => 'final_tarif_sets',
         'operator_id' => 1030,
+        'save_tarif_results' => 'false',
         'save_tarif_results_ord' => 'false',
         'analyze_memory_used' => 'false',
         'analyze_query_constructor_performance' => 'false',
@@ -154,6 +156,7 @@ class Customer::TarifOptimizatorController < ApplicationController
         'use_short_tarif_set_name' => 'true',
         'show_zero_tarif_result_by_parts' => 'false',
         'if_update_tarif_sets_to_calculate_from_with_cons_tarif_results' => 'true',
+        'max_final_tarif_set_number' => 1000,
       } 
     end
 #    service_choices.session_filtr_params
