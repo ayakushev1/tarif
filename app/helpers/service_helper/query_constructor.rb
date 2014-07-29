@@ -3,29 +3,46 @@ class ServiceHelper::QueryConstructor
   attr_reader :context, :parameters, :criteria_where_hash, :criteria_category, :categories_where_hash,
               :tarif_classes_categories_where_hash, :category_groups_where_hash
   attr_reader :comparison_operators, :categories, :childs_category, :tarif_class_categories, :category_groups, 
-              :options, :tarif_class_ids, :criterium_ids, :category_ids, :service_priorities, :call_ids_by_tarif_class_id, :bench,
+              :options, :tarif_class_ids, :criterium_ids, :category_ids, :service_priorities, :call_ids_by_tarif_class_id,
               :tarif_class_categories_by_tarif_class, :service_category_group_ids_by_tarif_class
+  attr_reader :performance_checker
   
   def initialize(context, options = {})
     @context = context
     @options = options
     @tarif_class_ids = options[:tarif_class_ids]
     @criterium_ids = options[:criterium_ids]
-    last = Time.now; @bench = {:start => Time.now - last}; start = last
-    load_comparison_operators; @bench[:load_comparison_operators] = ((Time.now - last)*1000).round; last = Time.now
-    load_category_ids; @bench[:load_category_ids] = ((Time.now - last)*1000).round; last = Time.now
-    load_required_service_category_tarif_class_ids; @bench[:load_required_service_category_tarif_class_ids] = ((Time.now - last)*1000).round; last = Time.now
-    load_service_category_tarif_class_ids_by_tarif_class
-    load_service_category_group_ids_by_tarif_class
-    load_category_groups; @bench[:load_category_groups] = ((Time.now - last)*1000).round; last = Time.now
-    load_service_categories; @bench[:load_service_categories] = ((Time.now - last)*1000).round; last = Time.now
-    load_service_criteria      ; @bench[:load_service_criteria] = ((Time.now - last)*1000).round; last = Time.now
-    load_parameters(options[:parameter_ids]); @bench[:load_parameters] = ((Time.now - last)*1000).round; last = Time.now
+    @performance_checker = options[:performance_checker]
+    if performance_checker
+      performance_checker.run_check_point('load_comparison_operators', 15) {load_comparison_operators}
+      performance_checker.run_check_point('load_category_ids', 15) {load_category_ids}
+      performance_checker.run_check_point('load_required_service_category_tarif_class_ids', 15) {load_required_service_category_tarif_class_ids}
+      performance_checker.run_check_point('load_service_category_tarif_class_ids_by_tarif_class', 15) {load_service_category_tarif_class_ids_by_tarif_class}
+      performance_checker.run_check_point('load_service_category_group_ids_by_tarif_class', 15) {load_service_category_group_ids_by_tarif_class}
+      performance_checker.run_check_point('load_category_groups', 15) {load_category_groups}
+      performance_checker.run_check_point('load_service_categories', 15) {load_service_categories}
+      performance_checker.run_check_point('load_service_criteria', 15) {load_service_criteria}
+      performance_checker.run_check_point('load_parameters', 15) {load_parameters(options[:parameter_ids])}
+          
+      performance_checker.run_check_point('calculate_service_criteria_where_hash', 15) {calculate_service_criteria_where_hash}
+      performance_checker.run_check_point('calculate_service_categories_where_hash', 15) {calculate_service_categories_where_hash}
+      performance_checker.run_check_point('calculate_tarif_classes_categories_where_hash', 15) {calculate_tarif_classes_categories_where_hash}
+    else
+      load_comparison_operators
+      load_category_ids
+      load_required_service_category_tarif_class_ids
+      load_service_category_tarif_class_ids_by_tarif_class
+      load_service_category_group_ids_by_tarif_class
+      load_category_groups
+      load_service_categories
+      load_service_criteria
+      load_parameters(options[:parameter_ids])
+      
+      calculate_service_criteria_where_hash
+      calculate_service_categories_where_hash
+      calculate_tarif_classes_categories_where_hash      
+    end
     
-    calculate_service_criteria_where_hash; @bench[:calculate_service_criteria_where_hash] = ((Time.now - last)*1000).round; last = Time.now
-    calculate_service_categories_where_hash; @bench[:calculate_service_categories_where_has] = ((Time.now - last)*1000).round; last = Time.now
-    calculate_tarif_classes_categories_where_hash; @bench[:calculate_tarif_classes_categories_where_hash] = ((Time.now - last)*1000).round; last = Time.now
-    @bench[:total] = ((start - last)*1000).round
   end
   
   def calculate_call_ids_by_tarif_class_id

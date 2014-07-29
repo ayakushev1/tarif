@@ -4,7 +4,7 @@ describe ServiceHelper::TarifOptimizator do
   before do
     @tarif_optimizator = ServiceHelper::TarifOptimizator.new({:services_by_operator => 
       {:use_short_tarif_set_name => 'true',
-       :tarifs => {_beeline => [], _megafon => [], _mts => [200]}
+       :tarifs => {_beeline => [], _megafon => [], _mts => [203]}
         }})
 #    @tarif_optimizator = ServiceHelper::TarifOptimizator.new({:services_by_operator => {:operators => [1030], :tarifs => {1030 => []} } } )
 #    @tarif_optimizator = ServiceHelper::TarifOptimizator.new({:services_by_operator => {:operators => [1030], :tarifs => {1030 => [200]} } } )

@@ -99,4 +99,23 @@ class ServiceHelper::PerformanceChecker
     result_string << "\n"
     result_string.join("\n\n")
   end
+
+  def show_stat_hash
+    result = []
+    last_results = results
+    last_results.keys.sort_by{|check_point| last_results[check_point]['level'].to_i}.each do |check_point|
+      s = {
+        'level' => last_results[check_point]['level'],
+        'duration' => last_results[check_point]['duration'],
+        'accumulated_duration' => last_results[check_point]['accumulated_duration'],
+        'max_duration' => last_results[check_point]['max_duration'],
+        'average_duration' => (last_results[check_point]['accumulated_duration'].to_f / last_results[check_point]['count'].to_f),
+        'max_duration_count' => last_results[check_point]['max_duration_count'],
+        'count' => last_results[check_point]['count'],
+        'check_point' => check_point,
+      }
+      result << s 
+    end
+    result
+  end
 end

@@ -9,17 +9,19 @@ class ServiceHelper::TarifOptimizationSqlBuilder
   
 # параметры из ServiceHelper::CurrentTarifOptimizationResults
   def tarif_results; current_tarif_optimization_results.tarif_results; end
-  def tarif_results_ord; current_tarif_optimization_results.tarif_results_ord; end
-  def prev_service_call_ids; current_tarif_optimization_results.prev_service_call_ids; end
+  def cons_tarif_results_by_parts; current_tarif_optimization_results.cons_tarif_results_by_parts; end  
+  
+#  def tarif_results_ord; current_tarif_optimization_results.tarif_results_ord; end
+#  def prev_service_call_ids; current_tarif_optimization_results.prev_service_call_ids; end
   def prev_service_call_ids_by_parts; current_tarif_optimization_results.prev_service_call_ids_by_parts; end
-  def prev_service_group_call_ids; current_tarif_optimization_results.prev_service_group_call_ids; end
-  def service_ids_to_calculate; current_tarif_optimization_results.service_ids_to_calculate; end
+#  def prev_service_group_call_ids; current_tarif_optimization_results.prev_service_group_call_ids; end
+#  def service_ids_to_calculate; current_tarif_optimization_results.service_ids_to_calculate; end
   
 # optimization params from ServiceHelper::TarifOptimizator
-  def optimization_params; tarif_optimizator.optimization_params; end
+#  def optimization_params; tarif_optimizator.optimization_params; end
   def check_sql_before_running; tarif_optimizator.check_sql_before_running; end
   def execute_additional_sql; tarif_optimizator.execute_additional_sql; end
-  def service_ids_batch_size; tarif_optimizator.service_ids_batch_size; end
+#  def service_ids_batch_size; tarif_optimizator.service_ids_batch_size; end
   def calls_count_by_parts; tarif_optimizator.calls_count_by_parts; end
 
 # optimization classes from ServiceHelper::TarifOptimizator
@@ -31,12 +33,11 @@ class ServiceHelper::TarifOptimizationSqlBuilder
   def performance_checker; tarif_optimizator.performance_checker; end
   
 #настройки вывода результатов
-  def save_tarif_results_ord; tarif_optimizator.save_tarif_results_ord; end
-  def output_call_ids_to_tarif_results; tarif_optimizator.output_call_ids_to_tarif_results; end
-  def output_call_count_to_tarif_results; tarif_optimizator.output_call_count_to_tarif_results; end
+#  def save_tarif_results_ord; tarif_optimizator.save_tarif_results_ord; end
+#  def output_call_ids_to_tarif_results; tarif_optimizator.output_call_ids_to_tarif_results; end
+#  def output_call_count_to_tarif_results; tarif_optimizator.output_call_count_to_tarif_results; end
 
   def calculate_service_part_sql(service_list, price_formula_order)
-    performance_checker.add_check_point('calculate_service_part_sql', 5)
     sql = calculate_service_list_sql(service_list, price_formula_order) 
 
     fields = [
@@ -69,6 +70,12 @@ class ServiceHelper::TarifOptimizationSqlBuilder
       tarif_results[set_id][part].each do |service_id_1, tarif_results_value |  
         prev_call_ids_count += tarif_results_value['call_id_count'] 
       end
+      
+      raise(StandardError, [set_id, part, prev_call_ids_count.to_f, cons_tarif_results_by_parts[set_id][part]['call_id_count'].to_f, 
+        tarif_results[set_id][part].map{|t| "#{t[0]} = #{t[1]['call_id_count'].to_f}"}, cons_tarif_results_by_parts[set_id][part],
+        ]) if false and (prev_call_ids_count != 0 and cons_tarif_results_by_parts[set_id][part] != {}) and 
+        prev_call_ids_count != cons_tarif_results_by_parts[set_id][part]['call_id_count']
+        
 #TODO подумать чтобы убрать !(calls_count_by_parts[part] == 0)
       if !(calls_count_by_parts[part] == 0) and prev_call_ids_count == calls_count_by_parts[part]
         empty_service_cost_sql(service_id, set_id, price_formula_order, part)
@@ -206,9 +213,7 @@ class ServiceHelper::TarifOptimizationSqlBuilder
 
   def service_category_cost_sql(base_stat_sql, service_category_tarif_class_id, service_category_group_id, price_formula_id, service_id, set_id,
       part, prev_group_call_ids, prev_stat_values_string)#, excluded_group_call_ids_by_part = [])
-      
-    raise(StandardError, prev_service_call_ids) unless true#excluded_call_ids_by_part
-    
+        
     price_formula = stat_function_collector.price_formula(price_formula_id)
     
     stat_sql_fields = ["coalesce(month, -1)::integer as month", "coalesce(call_ids, '{}') as call_ids", "coalesce(call_id_count, 0) as call_id_count",]
@@ -279,6 +284,11 @@ class ServiceHelper::TarifOptimizationSqlBuilder
   def service_category_choice_sql(base_stat_sql, price_formula_id, set_id, part, prev_group_call_ids, prev_stat_values_string)
     excluded_call_ids_by_part = prev_service_call_ids_by_parts[set_id][part] 
 
+    raise(StandardError, [
+     prev_group_call_ids, prev_group_call_ids.size, excluded_call_ids_by_part, excluded_call_ids_by_part.uniq.size
+    ]) if set_id == '200_309_' and price_formula_id == 2789
+    
+    
     sql = if !stat_function_collector.price_formula(price_formula_id)['window_condition'].blank?
       service_category_accumulated_stat_sql(base_stat_sql, price_formula_id, excluded_call_ids_by_part, :window, prev_group_call_ids, prev_stat_values_string)
     elsif !stat_function_collector.price_formula(price_formula_id)['tarif_condition'].blank?

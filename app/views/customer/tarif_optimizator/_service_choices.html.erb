@@ -10,28 +10,50 @@ form_item.init do |f|
   	[
      label(filtr_name, "calculate_on_background", "calculate_on_background"),
  	 select(filtr_name, "calculate_on_background", [["background calculation", true], ["direct calculation", false]], {:selected => s["calculate_on_background"]}, html_options ),
-#     checkbox(filtr_name, "calculate_on_background", html_options.merge({:type => 'checkbox', :value => s["calculate_on_background"]}), true, :false ),   
 
      label(filtr_name, "service_set_based_on_tarif_sets_or_tarif_results", "What to show"),
- 	 select(filtr_name, "service_set_based_on_tarif_sets_or_tarif_results", [["final tarif sets", true], ["all tarif sets", false]], {:selected => s["service_set_based_on_tarif_sets_or_tarif_results"]}, html_options ),
+ 	 select(filtr_name, "service_set_based_on_tarif_sets_or_tarif_results", [
+ 	 	["final tarif sets", "final_tarif_sets"], ["all tarif sets", "all_tarif_sets"], ["cons tarif results", "cons_tarif_results"]], {:selected => s["service_set_based_on_tarif_sets_or_tarif_results"]}, html_options ),
   	],
 
   	[
   	 label(filtr_name, "operator_id", "Оператор"),
-  	 collection_select(filtr_name, "operator_id", Category.where(:id => [1025, 1028, 1030]), :id, :name, {:selected => s["operator_id"] || 1030}, html_options ),
+  	 collection_select(filtr_name, "operator_id", Category.where(:id => [1025, 1028, 1030]), :id, :name, {:selected => s["operator_id"]}, html_options ),
 
      label(filtr_name, "use_short_tarif_set_name", "Use_short_tarif_set_name?"),
  	 select(filtr_name, "use_short_tarif_set_name", [["Yes", true], ["No, use long", false]], {:selected => s["use_short_tarif_set_name"]}, html_options ),
   	],
   	
   	[
-  		"",
-  		"",
+     label(filtr_name, "save_tarif_results_ord", "Save tarif_results_ord?"),
+ 	 select(filtr_name, "save_tarif_results_ord", [["Save", true], ["Do not save", false]], {:selected => s["save_tarif_results_ord"] || false}, html_options ),
 
-  	label(filtr_name, "tarifs_id", "Тарифы для оптимизации"),
-    text_area(filtr_name, "tarifs_id", html_options.merge({:type => 'textarea', :value => s["tarifs_id"], :rows => 2 }) ),   
-#  	 collection_select(filtr_name, "tarif_ids", TarifClass.services_by_operator(s['operator_id']), :id, :name, 
-#  	 {:include_blank => 'tarifs', :selected => s["tarif_ids"] }, html_options.merge({:multiple => 'multiple'}) )
+     label(filtr_name, "analyze_memory_used", "Analyze memory used?"),
+ 	 select(filtr_name, "analyze_memory_used", [["Analyse", true], ["Do not analyse", false]], {:selected => s["analyze_memory_used"]}, html_options ),
+  	],
+  	
+  	[
+     label(filtr_name, "analyze_query_constructor_performance", "Analyze query_constructor_performance?"),
+ 	 select(filtr_name, "analyze_query_constructor_performance", [["Analyse", true], ["Do not analyse", false]], {:selected => s["analyze_query_constructor_performance"]}, html_options ),
+
+     label(filtr_name, "service_ids_batch_size", "Service_ids batch size"),
+     text_field(filtr_name, "service_ids_batch_size", html_options.merge({:type => 'text', :value => s["service_ids_batch_size"] }) ),
+  	],
+  	
+  	[
+     label(filtr_name, "if_update_tarif_sets_to_calculate_from_with_cons_tarif_results", "Take out zero cons_tarif_result?"),
+ 	 select(filtr_name, "if_update_tarif_sets_to_calculate_from_with_cons_tarif_results", [["Take out", true], ["Keep", false]], {:selected => s["if_update_tarif_sets_to_calculate_from_with_cons_tarif_results"]}, html_options ),
+
+     label(filtr_name, "show_zero_tarif_result_by_parts", "Show zero tarif_result_by_parts?"),
+ 	 select(filtr_name, "show_zero_tarif_result_by_parts", [["Show", true], ["Do not show", false]], {:selected => s["show_zero_tarif_result_by_parts"]}, html_options ),
+  	],
+  	
+  	[
+     "",
+     "",
+
+     label(filtr_name, "tarifs_id", "Тарифы для оптимизации"),
+     text_area(filtr_name, "tarifs_id", html_options.merge({:type => 'textarea', :value => s["tarifs_id"], :rows => 2 }) ),   
   	],
   	
   	[
@@ -40,7 +62,9 @@ form_item.init do |f|
 
   	label(filtr_name, "common_services_id", "Общие сервисы"),
     text_area(filtr_name, "common_services_id", html_options.merge({:type => 'textarea', :value => s["common_services_id"], :rows => 2  }) ),     		
-  	]
+  	],
+  	
+  	  	
   ]
 	    
   end

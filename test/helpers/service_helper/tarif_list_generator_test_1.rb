@@ -16,8 +16,8 @@ describe ServiceHelper::TarifListGenerator do
         _mts_region, _mts_95_cop_in_moscow_region, _mts_unlimited_calls, _mts_call_free_to_mts_russia_100, _mts_zero_to_mts, #calls
         _mts_love_country, _mts_love_country_all_world, _mts_outcoming_calls_from_11_9_rur, #calls_abroad
         _mts_everywhere_as_home, _mts_everywhere_as_home_Ultra, _mts_everywhere_as_home_smart, _mts_incoming_travelling_in_russia, #country_rouming
-        _mts_additional_minutes_150, _mts_additional_minutes_300, #country_rouming
-        _mts_zero_without_limits, _mts_bit_abroad, _mts_maxi_bit_abroad, _mts_super_bit_abroad, _mts_100mb_in_latvia_and_litva, #international_rouming
+        #_mts_additional_minutes_150, _mts_additional_minutes_300, #country_rouming
+        #_mts_zero_without_limits, _mts_bit_abroad, _mts_maxi_bit_abroad, _mts_super_bit_abroad, _mts_100mb_in_latvia_and_litva, #international_rouming
         #_mts_bit, _mts_super_bit, _mts_mini_bit, #internet
         #_mts_additional_internet_500_mb, _mts_additional_internet_1_gb, #internet
         #_mts_turbo_button_500_mb, _mts_turbo_button_2_gb, #internet
@@ -34,13 +34,13 @@ describe ServiceHelper::TarifListGenerator do
       })
 =end      
     @trg = ServiceHelper::TarifListGenerator.new({
-      :use_short_tarif_set_name => 'true', :tarifs => {_beeline => [], _megafon => [], _mts => [200]}})
+      :use_short_tarif_set_name => 'true', :tarifs => {_beeline => [], _megafon => [], _mts => []}})
   end
   
   it 'must return' do
 #      @trg.tarif_sets[200].must_be :==, 11#, @trg.tarif_sets[200].size
 #      @trg.final_tarif_sets.keys.must_be :==, 11, @trg.tarif_sets[200]#@trg.final_tarif_sets.size
-    @trg.final_tarif_sets.keys.must_be :==, @trg.final_tarif_sets.size
+    @trg.final_tarif_sets.keys[0..10].must_be :==, @trg.final_tarif_sets.size
 #      @trg.final_tarif_sets.keys.count.must_be :==, 11, @trg.final_tarif_sets.size
   end
 

@@ -12,7 +12,7 @@ class ServiceHelper::OptimizationResultSaver
   def save(output)
     result = if output_model.exists?
       merged_output = results ? results.merge(output) : output
-      output_model.update_all({:result => {name => merged_output } }, "(result->'#{@name}') is not null" )    
+      output_model.update_all({:result => {@name => merged_output } })#, "(result->'#{@name}') is not null" )    
 #      output_model.update_attributes!({:result => {name => merged_output } } )    
     else
       output_model.create({:result => {name => output} } )    

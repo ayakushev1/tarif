@@ -1,7 +1,7 @@
 class ServiceHelper::TarifOptimizator
 #TODO - обновить в тарифах поля с month, day or week
 #дополнительные классы
-  attr_reader :tarif_list_generator, :stat_function_collector, :query_constructor, :background_process_informer, :optimization_result_saver, 
+  attr_reader :tarif_list_generator, :stat_function_collector, :query_constructor, :background_process_informer, :optimization_result_saver, :minor_result_saver,
               :performance_checker, :current_tarif_optimization_results, :tarif_optimization_sql_builder, :max_formula_order_collector, 
               :calls_stat_calculator
 #входные данные              
@@ -9,7 +9,8 @@ class ServiceHelper::TarifOptimizator
 # параметры оптимизации 
   attr_reader :optimization_params, :check_sql_before_running, :execute_additional_sql, :service_ids_batch_size
 #настройки вывода результатов
-  attr_reader  :save_tarif_results_ord, :output_call_ids_to_tarif_results, :output_call_count_to_tarif_results
+  attr_reader  :save_tarif_results_ord, :analyze_memory_used, :output_call_ids_to_tarif_results, :output_call_count_to_tarif_results, 
+               :analyze_query_constructor_performance
 #local
   attr_reader :calls_count_by_parts, :controller
   
@@ -18,7 +19,7 @@ class ServiceHelper::TarifOptimizator
     init_input_data(options)
     init_additional_general_classes    
     init_optimization_params
-    init_output_params
+    init_output_params(options)
   end
   
   def init_additional_general_classes
@@ -40,11 +41,14 @@ class ServiceHelper::TarifOptimizator
 #    @optimization_params = {:common => ['single_use_of_tarif_option'], :onetime => [], :periodic => [], :calls => [], :sms => [], :internet => ['single_use_of_tarif_option']}
     @check_sql_before_running = false
     @execute_additional_sql = false
-    @service_ids_batch_size = 10
+    @service_ids_batch_size = (options[:service_ids_batch_size] ? options[:service_ids_batch_size].to_i : 10)
   end
   
-  def init_output_params
-    @save_tarif_results_ord = false; @output_call_ids_to_tarif_results = false; @output_call_count_to_tarif_results = false
+  def init_output_params(options)
+    @save_tarif_results_ord = (options[:save_tarif_results_ord] == 'true' ? true : false) 
+    @analyze_memory_used = (options[:analyze_memory_used] == 'true' ? true : false) 
+    @analyze_query_constructor_performance = (options[:analyze_query_constructor_performance] == 'true' ? true : false) 
+    @output_call_ids_to_tarif_results = false; @output_call_count_to_tarif_results = false
   end
   
   def calculate_all_operator_tarifs
@@ -55,7 +59,7 @@ class ServiceHelper::TarifOptimizator
     performance_checker.run_check_point('calculate_one_operator_tarifs', 1) do      
       init_input_for_one_operator_tarif_calculation(operator)      
       
-      optimization_result_saver.clean_output_results
+      optimization_result_saver.clean_output_results; minor_result_saver.clean_output_results;
       
       performance_checker.run_check_point('calculate_calls_count_by_parts', 2) do
         @calls_count_by_parts = calls_stat_calculator.calculate_calls_count_by_parts(query_constructor, 
@@ -69,14 +73,29 @@ class ServiceHelper::TarifOptimizator
       end
       
       current_tarif_optimization_results.update_all_tarif_results_with_missing_prev_results
+      current_tarif_optimization_results.calculate_all_cons_tarif_results_by_parts
       save_tarif_results(operator)
+      
+      clean_memory
+      
+      performance_checker.run_check_point('calculate_final_tarif_sets', 2) do
+        tarif_list_generator.calculate_final_tarif_sets(current_tarif_optimization_results.cons_tarif_results)
+      end
+      
+      performance_checker.run_check_point('save_final_tarif_sets', 2) do
+        output = {operator.to_i => {:final_tarif_sets => tarif_list_generator.final_tarif_sets } } 
+        ServiceHelper::OptimizationResultSaver.new('final_tarif_sets').save(output)
+      end
+      
       background_process_informer.finish
     end
-  end
+    minor_result_saver.save({:calls_stat => calls_stat_calculator.calculate_calls_stat(query_constructor), :performance_results => performance_checker.show_stat_hash})
+  end 
   
   def init_input_for_one_operator_tarif_calculation(operator)
-#    performance_checker.run_check_point('init_input_for_one_operator_tarif_calculation', 2) do
+    performance_checker.run_check_point('init_input_for_one_operator_tarif_calculation', 2) do
       @optimization_result_saver = ServiceHelper::OptimizationResultSaver.new()
+      @minor_result_saver = ServiceHelper::OptimizationResultSaver.new('minor_results')
       @calls_stat_calculator = ServiceHelper::CallsStatCalculator.new()
       @tarif_optimization_sql_builder = ServiceHelper::TarifOptimizationSqlBuilder.new(self)
       performance_checker.run_check_point('@tarif_list_generator', 3) do
@@ -89,27 +108,59 @@ class ServiceHelper::TarifOptimizator
         @stat_function_collector = ServiceHelper::StatFunctionCollector.new(tarif_list_generator.all_services_by_operator[operator], optimization_params)
       end
       performance_checker.run_check_point('@query_constructor', 3) do
-        @query_constructor = ServiceHelper::QueryConstructor.new(self, {:tarif_class_ids => tarif_list_generator.all_services_by_operator[operator]} )
+        @query_constructor = ServiceHelper::QueryConstructor.new(self, {:tarif_class_ids => tarif_list_generator.all_services_by_operator[operator], 
+          :performance_checker => (analyze_query_constructor_performance ? performance_checker : nil)} )
       end
       @max_formula_order_collector = ServiceHelper::MaxPriceFormulaOrderCollector.new(tarif_list_generator, operator)
-#    end
+    end
   end
   
   def save_tarif_results(operator)
-#    raise(StandardError, [tarif_list_generator.final_tarif_sets])
+    output = {}
     performance_checker.run_check_point('save_tarif_results', 2) do
       output = {
-        :calls_stat => calls_stat_calculator.calculate_calls_stat(query_constructor), 
         operator.to_i => {
           :operator => operator.to_i, 
-          :final_tarif_sets => tarif_list_generator.final_tarif_sets,
           :tarif_sets => tarif_list_generator.tarif_sets,
+          :cons_tarif_results => current_tarif_optimization_results.cons_tarif_results,
+          :cons_tarif_results_by_parts => current_tarif_optimization_results.cons_tarif_results_by_parts,
           :tarif_results => current_tarif_optimization_results.tarif_results, 
           :tarif_results_ord => (save_tarif_results_ord ? current_tarif_optimization_results.tarif_results_ord : {}), 
           } } 
+
       optimization_result_saver.save(output)
-#      raise(StandardError, a.attributes)
     end
+
+    performance_checker.run_check_point('memory_usage_analyze_for_output', 2) do      
+      minor_result_saver.save({:used_memory_by_output => calculate_used_memory})
+    end if analyze_memory_used    
+  end
+  
+  def calculate_used_memory
+    {
+      :output => General::MemoryUsage.analyze(output),
+      :optimization_result_saver => General::MemoryUsage.analyze(@optimization_result_saver),
+      :minor_result_saver => General::MemoryUsage.analyze(@minor_result_saver),
+      :calls_stat_calculator => General::MemoryUsage.analyze(@calls_stat_calculator),
+      :tarif_optimization_sql_builder => General::MemoryUsage.analyze(@tarif_optimization_sql_builder),
+      :current_tarif_optimization_results => General::MemoryUsage.analyze(@current_tarif_optimization_results),
+      :stat_function_collector => General::MemoryUsage.analyze(@stat_function_collector),
+      :query_constructor => General::MemoryUsage.analyze(@query_constructor),
+      :max_formula_order_collector => General::MemoryUsage.analyze(@max_formula_order_collector),
+      :tarif_list_generator => General::MemoryUsage.analyze(@tarif_list_generator),
+      :max_formula_order_collector => General::MemoryUsage.analyze(@max_formula_order_collector),
+      :performance_checker => General::MemoryUsage.analyze(@performance_checker),
+      :controller => General::MemoryUsage.analyze(@controller),
+      :background_process_informer => General::MemoryUsage.analyze(@background_process_informer),
+    }
+  end
+  
+  def clean_memory
+    current_tarif_optimization_results = nil 
+#TODO    tarif_optimization_sql_builder = nil #очищать только если для разных операторов вводятся разные данные
+    current_tarif_optimization_results = nil
+    query_constructor = nil
+    max_formula_order_collector = nil
   end
   
   def calculate_tarif_results(operator, service_slice)
