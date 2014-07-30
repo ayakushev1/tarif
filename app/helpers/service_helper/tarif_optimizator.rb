@@ -9,7 +9,7 @@ class ServiceHelper::TarifOptimizator
 # параметры оптимизации 
   attr_reader :optimization_params, :check_sql_before_running, :execute_additional_sql, :service_ids_batch_size
 #настройки вывода результатов
-  attr_reader  :save_tarif_results, :save_tarif_results_ord, :analyze_memory_used, :output_call_ids_to_tarif_results, :output_call_count_to_tarif_results, 
+  attr_reader  :save_tarif_results, :simplify_tarif_results, :save_tarif_results_ord, :analyze_memory_used, :output_call_ids_to_tarif_results, :output_call_count_to_tarif_results, 
                :analyze_query_constructor_performance
 #local
   attr_reader :calls_count_by_parts, :controller
@@ -17,9 +17,9 @@ class ServiceHelper::TarifOptimizator
   def initialize(options = {})
     self.extend Helper
     init_input_data(options)
+    init_output_params(options)
     init_additional_general_classes    
     init_optimization_params
-    init_output_params(options)
   end
   
   def init_additional_general_classes
@@ -46,6 +46,7 @@ class ServiceHelper::TarifOptimizator
   
   def init_output_params(options)
     @save_tarif_results = (options[:save_tarif_results] == 'true' ? true : false) 
+    @simplify_tarif_results = (options[:simplify_tarif_results] == 'true' ? true : false) 
     @save_tarif_results_ord = (options[:save_tarif_results_ord] == 'true' ? true : false) 
     @analyze_memory_used = (options[:analyze_memory_used] == 'true' ? true : false) 
     @analyze_query_constructor_performance = (options[:analyze_query_constructor_performance] == 'true' ? true : false) 
@@ -104,6 +105,7 @@ class ServiceHelper::TarifOptimizator
         @tarif_list_generator = ServiceHelper::TarifListGenerator.new(options[:services_by_operator] || {})
       end
       @current_tarif_optimization_results = ServiceHelper::CurrentTarifOptimizationResults.new(self)
+#    raise(StandardError, [simplify_tarif_results, options[:simplify_tarif_results]])
       @fq_tarif_operator_id = operator#tarif_list_generator.operators[operator_index]
       @operator_id = operator#tarif_list_generator.operators[operator_index]
       performance_checker.run_check_point('@stat_function_collector', 3) do

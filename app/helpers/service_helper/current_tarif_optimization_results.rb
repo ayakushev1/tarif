@@ -2,7 +2,7 @@ class ServiceHelper::CurrentTarifOptimizationResults
   attr_reader :tarif_optimizator, :performance_checker, :options
   attr_reader :service_ids_to_calculate, :cons_tarif_results, :cons_tarif_results_by_parts, :tarif_results, :tarif_results_ord, :prev_service_call_ids, 
               :prev_service_group_call_ids, :prev_service_call_ids_by_parts#, :calls_count_by_parts
-  attr_reader :save_tarif_results_ord
+  attr_reader :save_tarif_results_ord, :simplify_tarif_results
   
   def initialize(tarif_optimizator, options = {})
     self.extend Helper
@@ -20,8 +20,12 @@ class ServiceHelper::CurrentTarifOptimizationResults
   end
   
   def init_inputs_from_tarif_optimizator
+    
     @performance_checker = tarif_optimizator.performance_checker || ServiceHelper::PerformanceChecker.new()
-    @save_tarif_results_ord = tarif_optimizator.save_tarif_results_ord || true
+    @save_tarif_results_ord = tarif_optimizator.save_tarif_results_ord 
+    @simplify_tarif_results = tarif_optimizator.simplify_tarif_results
+#    raise(StandardError, [tarif_optimizator.simplify_tarif_results, @simplify_tarif_results, simplify_tarif_results])
+    
 #    @operator_id = operator#tarif_list_generator.operators[operator_index]
   end
   
@@ -31,7 +35,8 @@ class ServiceHelper::CurrentTarifOptimizationResults
         tarif_class_id = stat['tarif_class_id']
         tarif_set_id = stat['set_id']
         part = stat['part']
-    
+        
+#TODO строчка возникает в empty_service_cost_sql судя по всему      raise(StandardError, [stat.attributes]) if stat['call_ids'].is_a?(String)
         process_tarif_results_batch_tarif_resuts_ord(tarif_set_id, tarif_class_id, part, stat, price_formula_order) if save_tarif_results_ord
         process_tarif_results_batch_tarif_resuts(tarif_set_id, tarif_class_id, part, stat, price_formula_order)
         process_tarif_results_batch_prev_calls(tarif_set_id, tarif_class_id, part, stat, price_formula_order)
@@ -53,17 +58,31 @@ class ServiceHelper::CurrentTarifOptimizationResults
   def process_tarif_results_batch_tarif_resuts(tarif_set_id, tarif_class_id, part, stat, price_formula_order)
     tarif_results[tarif_set_id] ||= {}
     tarif_results[tarif_set_id][part] ||= {}
+    
+    processed_stat = {}
+    if simplify_tarif_results
+      processed_stat = stat.attributes.merge({'price_values' => [], 'call_ids'=>[], 'call_id_count' => stat['call_id_count'].to_i}) 
+      (stat['price_values'] || []).each do |price_value_item|
+        all_stat_call_count_id = price_value_item['all_stat']['call_id_count'].to_i if price_value_item['all_stat'] and price_value_item['all_stat']['call_id_count']
+        all_stat = price_value_item['all_stat'].merge({'call_ids'=>[], 'call_id_count' => all_stat_call_count_id}) if price_value_item['all_stat']
+        processed_stat['price_values'] << price_value_item.merge({'call_ids'=>[], 'all_stat' => all_stat, 'call_id_count' => price_value_item['call_id_count'].to_i})
+      end
+    else
+      processed_stat = stat
+    end
+
 #    current_tarif_results_ord = tarif_results_ord[tarif_set_id][part][tarif_class_id][price_formula_order]   
 #    if price_formula_order == 0          
     if tarif_results[tarif_set_id][part][tarif_class_id].blank?
-      tarif_results[tarif_set_id][part][tarif_class_id] = stat            
+      tarif_results[tarif_set_id][part][tarif_class_id] = processed_stat            
 
     else
-      tarif_results[tarif_set_id][part][tarif_class_id]['call_id_count'] += stat['call_id_count'] #if tarif_optimizator.output_call_count_to_tarif_results
-      tarif_results[tarif_set_id][part][tarif_class_id]['price_value'] += (stat['price_value'] || 0)
-      tarif_results[tarif_set_id][part][tarif_class_id]['price_values'] << (stat['price_values'] || 0)
+      tarif_results[tarif_set_id][part][tarif_class_id]['call_id_count'] += processed_stat['call_id_count'] #if tarif_optimizator.output_call_count_to_tarif_results
+      tarif_results[tarif_set_id][part][tarif_class_id]['price_value'] += (processed_stat['price_value'] || 0)
+      tarif_results[tarif_set_id][part][tarif_class_id]['price_values'] += (processed_stat['price_values'] || [])
     end
-
+    
+#    raise(StandardError, [stat.attributes, stat['price_values'], stat['price_values'][0]['all_stat'], processed_stat].join("\n"))
     raise(StandardError, [stat['call_id_count'].to_i, 
       tarif_results[tarif_set_id][part][tarif_class_id]['call_id_count'].to_i,
       ]) if stat['price_values'].map{|p| p['service_category_name']}.include?('_sctcg__own_home_regions_calls_to_own_country_own_operator') and
@@ -75,11 +94,12 @@ class ServiceHelper::CurrentTarifOptimizationResults
     prev_service_call_ids[tarif_set_id][part] ||= {};  
     prev_service_call_ids[tarif_set_id][part][tarif_class_id] ||= [] 
 #    current_tarif_results_ord = tarif_results_ord[tarif_set_id][part][tarif_class_id][price_formula_order]  
-#    if price_formula_order == 0              
+#    if price_formula_order == 0    
+          
     if tarif_results[tarif_set_id][part][tarif_class_id].blank?
-      prev_service_call_ids[tarif_set_id][part][tarif_class_id] = stat['call_ids']            
+      prev_service_call_ids[tarif_set_id][part][tarif_class_id] = (flatten_call_ids_as_string(stat['call_ids']) || [])            
     else
-      prev_service_call_ids[tarif_set_id][part][tarif_class_id] += stat['call_ids'] #if tarif_optimizator.output_call_ids_to_tarif_results
+      prev_service_call_ids[tarif_set_id][part][tarif_class_id] +=  (flatten_call_ids_as_string(stat['call_ids']) || [])# #if tarif_optimizator.output_call_ids_to_tarif_results
     end
     prev_service_call_ids[tarif_set_id][part][tarif_class_id] += (prev_service_call_ids[tarif_set_id][part][tarif_class_id] || [] )
     prev_service_call_ids[tarif_set_id][part][tarif_class_id].uniq!
@@ -375,8 +395,14 @@ class ServiceHelper::CurrentTarifOptimizationResults
   
   module Helper
     def flatten_call_ids_as_string(call_ids_as_string)
-      null = nil
-      eval(call_ids_as_string).flatten.compact unless call_ids_as_string.blank?
+      if call_ids_as_string.is_a?(String)
+        null = nil
+        result = []
+        result = eval(call_ids_as_string).flatten.compact unless call_ids_as_string.blank?
+        result
+      else
+        call_ids_as_string
+      end
     end
   end  
 end

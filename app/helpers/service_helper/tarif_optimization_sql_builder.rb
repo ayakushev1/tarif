@@ -19,6 +19,7 @@ class ServiceHelper::TarifOptimizationSqlBuilder
   
 # optimization params from ServiceHelper::TarifOptimizator
 #  def optimization_params; tarif_optimizator.optimization_params; end
+#  def check_sql_before_running; true; end
   def check_sql_before_running; tarif_optimizator.check_sql_before_running; end
   def execute_additional_sql; tarif_optimizator.execute_additional_sql; end
 #  def service_ids_batch_size; tarif_optimizator.service_ids_batch_size; end

@@ -112,6 +112,8 @@ class Customer::TarifOptimizatorController < ApplicationController
   def options
   {:controller => self,
    :background_process_informer => background_process_informer,    
+   :save_tarif_results => service_choices.session_filtr_params['save_tarif_results'], 
+   :simplify_tarif_results => service_choices.session_filtr_params['simplify_tarif_results'], 
    :save_tarif_results_ord => service_choices.session_filtr_params['save_tarif_results_ord'], 
    :analyze_memory_used => service_choices.session_filtr_params['analyze_memory_used'], 
    :analyze_query_constructor_performance => service_choices.session_filtr_params['analyze_query_constructor_performance'], 
@@ -148,7 +150,8 @@ class Customer::TarifOptimizatorController < ApplicationController
         'calculate_on_background' => 'true',
         'service_set_based_on_tarif_sets_or_tarif_results' => 'final_tarif_sets',
         'operator_id' => 1030,
-        'save_tarif_results' => 'false',
+        'save_tarif_results' => 'true',
+        'simplify_tarif_results' => 'true',
         'save_tarif_results_ord' => 'false',
         'analyze_memory_used' => 'false',
         'analyze_query_constructor_performance' => 'false',
@@ -161,7 +164,7 @@ class Customer::TarifOptimizatorController < ApplicationController
     end
 #    service_choices.session_filtr_params
   end
-  
+
   def process_selecting_services
     if params['services_select_filtr']
       set_selected_services('tarifs_id', 'tarifs_1')

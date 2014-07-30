@@ -139,32 +139,32 @@ class ServiceHelper::OptimizationResultPresenter
 
         tarif_results_for_service_set_and_part.each do |tarif_id_from_tarif_results, tarif_result_for_service_set_and_part|
 
-          stat_results = {}; stat_detail_keys_to_exclude = ['month', 'call_ids']
-          tarif_result_for_service_set_and_part['price_values'].each do |price_value_detail|            
-            (price_value_detail['all_stat'].keys - stat_detail_keys_to_exclude).each do |stat_key|
-              if price_value_detail['all_stat'][stat_key].is_a?(Array)
-                stat_results[stat_key] ||= []
-                stat_results[stat_key] += price_value_detail['all_stat'][stat_key].round(2)
-              else
-                stat_results[stat_key] ||= 0
-                stat_results[stat_key] += (price_value_detail['all_stat'][stat_key] || 0).round(2)
-              end
-            end if price_value_detail['all_stat']
-          end
-          
-          result << {
+        stat_results = {}; stat_detail_keys_to_exclude = ['month', 'call_ids']
+        tarif_result_for_service_set_and_part['price_values'].each do |price_value_detail|            
+          (price_value_detail['all_stat'].keys - stat_detail_keys_to_exclude).each do |stat_key|
+            if price_value_detail['all_stat'][stat_key].is_a?(Array)
+              stat_results[stat_key] ||= []
+              stat_results[stat_key] += price_value_detail['all_stat'][stat_key].round(2)
+            else
+              stat_results[stat_key] ||= 0
+              stat_results[stat_key] += (price_value_detail['all_stat'][stat_key] || 0).round(2)
+            end
+          end if price_value_detail['all_stat']
+        end
+        
+        result << {
 #            'part' => part,
-            'tarif_class_id' => "#{part}_#{service_set_id}__#{tarif_id_from_tarif_results}",
-            'tarif_set_by_part_id' => tarif_set_by_part_id, 
-            'tarif_class_id_0' => tarif_id_from_tarif_results,
-            'price_value' => (tarif_result_for_service_set_and_part['price_value'] || 0.0).to_f,
-            'call_id_count' => tarif_result_for_service_set_and_part['call_id_count'],
-            'stat_results' => stat_results,
+          'tarif_class_id' => "#{part}_#{service_set_id}__#{tarif_id_from_tarif_results}",
+          'tarif_set_by_part_id' => tarif_set_by_part_id, 
+          'tarif_class_id_0' => tarif_id_from_tarif_results,
+          'price_value' => (tarif_result_for_service_set_and_part['price_value'] || 0.0).to_f,
+          'call_id_count' => tarif_result_for_service_set_and_part['call_id_count'],
+          'stat_results' => stat_results,
 #            'tarif_results_keys' => tarif_results[tarif_set_by_part_id][part].keys,
 #            'final_tarif_sets' => tarif_results[tarif_set_by_part_id][part][tarif_id_from_tarif_results]['price_values'],
 #            'tarif_id_from_tarif_results' => tarif_result_for_service_set_and_part['price_values'],
 #            'tarif_results_for_service_set_and_part' => (tarif_results_for_service_set_and_part['203'] ? tarif_results_for_service_set_and_part['203'].keys : nil) #final_tarif_sets[service_set_id]['tarif_sets_by_part'][service_set_id].map{|s| s if s[0] == "own-country-rouming/calls"},
-            }
+          }
         end if tarif_results_for_service_set_and_part
       end if final_tarif_sets and final_tarif_sets[service_set_id] and final_tarif_sets[service_set_id]['tarif_sets_by_part']
     when 'cons_tarif_results'
