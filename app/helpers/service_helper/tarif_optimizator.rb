@@ -134,11 +134,11 @@ class ServiceHelper::TarifOptimizator
     end
 
     performance_checker.run_check_point('memory_usage_analyze_for_output', 2) do      
-      minor_result_saver.save({:used_memory_by_output => calculate_used_memory})
+      minor_result_saver.save({:used_memory_by_output => calculate_used_memory(output)})
     end if analyze_memory_used    
   end
   
-  def calculate_used_memory
+  def calculate_used_memory(output)
     {
       :output => General::MemoryUsage.analyze(output),
       :optimization_result_saver => General::MemoryUsage.analyze(@optimization_result_saver),
