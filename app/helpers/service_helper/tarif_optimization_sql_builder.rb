@@ -9,13 +9,13 @@ class ServiceHelper::TarifOptimizationSqlBuilder
   
 # параметры из ServiceHelper::CurrentTarifOptimizationResults
   def tarif_results; current_tarif_optimization_results.tarif_results; end
-  def cons_tarif_results_by_parts; current_tarif_optimization_results.cons_tarif_results_by_parts; end  
   
 #  def tarif_results_ord; current_tarif_optimization_results.tarif_results_ord; end
 #  def prev_service_call_ids; current_tarif_optimization_results.prev_service_call_ids; end
   def prev_service_call_ids_by_parts; current_tarif_optimization_results.prev_service_call_ids_by_parts; end
 #  def prev_service_group_call_ids; current_tarif_optimization_results.prev_service_group_call_ids; end
 #  def service_ids_to_calculate; current_tarif_optimization_results.service_ids_to_calculate; end
+  def calls_count_by_parts; tarif_optimizator.calls_count_by_parts; end
   
 # optimization params from ServiceHelper::TarifOptimizator
 #  def optimization_params; tarif_optimizator.optimization_params; end
@@ -23,7 +23,6 @@ class ServiceHelper::TarifOptimizationSqlBuilder
   def check_sql_before_running; tarif_optimizator.check_sql_before_running; end
   def execute_additional_sql; tarif_optimizator.execute_additional_sql; end
 #  def service_ids_batch_size; tarif_optimizator.service_ids_batch_size; end
-  def calls_count_by_parts; tarif_optimizator.calls_count_by_parts; end
 
 # optimization classes from ServiceHelper::TarifOptimizator
   def current_tarif_optimization_results; tarif_optimizator.current_tarif_optimization_results; end
@@ -72,11 +71,6 @@ class ServiceHelper::TarifOptimizationSqlBuilder
         prev_call_ids_count += tarif_results_value['call_id_count'] 
       end
       
-      raise(StandardError, [set_id, part, prev_call_ids_count.to_f, cons_tarif_results_by_parts[set_id][part]['call_id_count'].to_f, 
-        tarif_results[set_id][part].map{|t| "#{t[0]} = #{t[1]['call_id_count'].to_f}"}, cons_tarif_results_by_parts[set_id][part],
-        ]) if false and (prev_call_ids_count != 0 and cons_tarif_results_by_parts[set_id][part] != {}) and 
-        prev_call_ids_count != cons_tarif_results_by_parts[set_id][part]['call_id_count']
-        
 #TODO подумать чтобы убрать !(calls_count_by_parts[part] == 0)
       if !(calls_count_by_parts[part] == 0) and prev_call_ids_count == calls_count_by_parts[part]
         empty_service_cost_sql(service_id, set_id, price_formula_order, part)
@@ -285,11 +279,6 @@ class ServiceHelper::TarifOptimizationSqlBuilder
   def service_category_choice_sql(base_stat_sql, price_formula_id, set_id, part, prev_group_call_ids, prev_stat_values_string)
     excluded_call_ids_by_part = prev_service_call_ids_by_parts[set_id][part] 
 
-    raise(StandardError, [
-     prev_group_call_ids, prev_group_call_ids.size, excluded_call_ids_by_part, excluded_call_ids_by_part.uniq.size
-    ]) if set_id == '200_309_' and price_formula_id == 2789
-    
-    
     sql = if !stat_function_collector.price_formula(price_formula_id)['window_condition'].blank?
       service_category_accumulated_stat_sql(base_stat_sql, price_formula_id, excluded_call_ids_by_part, :window, prev_group_call_ids, prev_stat_values_string)
     elsif !stat_function_collector.price_formula(price_formula_id)['tarif_condition'].blank?
@@ -336,7 +325,7 @@ class ServiceHelper::TarifOptimizationSqlBuilder
     sql
   end
   
-  def first_stat_sql(base_stat_sql, price_formula_id, all_excluded_call_ids, check_out_call_ids)
+  def first_stat_sql(base_stat_sql, price_formula_id, excluded_call_ids_by_part, check_out_call_ids)
     price_formula = stat_function_collector.price_formula(price_formula_id)
     group_by = "extract(#{price_formula['group_by'] || 'month'} from (description->>'time')::timestamp)"
     case check_out_call_ids
@@ -353,7 +342,7 @@ class ServiceHelper::TarifOptimizationSqlBuilder
       raise(StandardError, 'wrong check_out_call_ids in first_stat_sql')
     end
 
-    sql = base_stat_sql.select("#{fields.join(', ')}").where.not(:id => all_excluded_call_ids)
+    sql = base_stat_sql.select("#{fields.join(', ')}").where.not(:id => excluded_call_ids_by_part)
       
     sql = if price_formula['window_over']
       "#{sql.to_sql} WINDOW m as (partition by extract(#{price_formula['window_over'] || 'month'} from (description->>'time')::timestamp) order by (description->>'time')::timestamp )"    

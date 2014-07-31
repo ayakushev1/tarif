@@ -1,3 +1,4 @@
+#TODO убрать part 'mms'
 class ServiceHelper::TarifOptimizator
 #TODO - обновить в тарифах поля с month, day or week
 #дополнительные классы
@@ -143,6 +144,10 @@ class ServiceHelper::TarifOptimizator
   def calculate_used_memory(output)
     {
       :output => General::MemoryUsage.analyze(output),
+      :cons_tarif_results => General::MemoryUsage.analyze(current_tarif_optimization_results.cons_tarif_results),
+      :cons_tarif_results_by_parts => General::MemoryUsage.analyze(current_tarif_optimization_results.cons_tarif_results_by_parts),
+      :prev_service_call_ids_by_parts => General::MemoryUsage.analyze(current_tarif_optimization_results.prev_service_call_ids_by_parts),
+      :prev_service_group_call_ids => General::MemoryUsage.analyze(current_tarif_optimization_results.prev_service_group_call_ids),
       :optimization_result_saver => General::MemoryUsage.analyze(@optimization_result_saver),
       :minor_result_saver => General::MemoryUsage.analyze(@minor_result_saver),
       :calls_stat_calculator => General::MemoryUsage.analyze(@calls_stat_calculator),

@@ -1,6 +1,6 @@
 class ServiceHelper::CurrentTarifOptimizationResults
   attr_reader :tarif_optimizator, :performance_checker, :options
-  attr_reader :service_ids_to_calculate, :cons_tarif_results, :cons_tarif_results_by_parts, :tarif_results, :tarif_results_ord, :prev_service_call_ids, 
+  attr_reader :service_ids_to_calculate, :cons_tarif_results, :cons_tarif_results_by_parts, :tarif_results, :tarif_results_ord, #:prev_service_call_ids, 
               :prev_service_group_call_ids, :prev_service_call_ids_by_parts#, :calls_count_by_parts
   attr_reader :save_tarif_results_ord, :simplify_tarif_results
   
@@ -13,7 +13,7 @@ class ServiceHelper::CurrentTarifOptimizationResults
     @cons_tarif_results = {}
     @cons_tarif_results_by_parts = {}
     @tarif_results = {}
-    @prev_service_call_ids = {}
+#    @prev_service_call_ids = {}
     @prev_service_call_ids_by_parts = {}
     @prev_service_group_call_ids = {}
     init_inputs_from_tarif_optimizator
@@ -39,7 +39,7 @@ class ServiceHelper::CurrentTarifOptimizationResults
 #TODO строчка возникает в empty_service_cost_sql судя по всему      raise(StandardError, [stat.attributes]) if stat['call_ids'].is_a?(String)
         process_tarif_results_batch_tarif_resuts_ord(tarif_set_id, tarif_class_id, part, stat, price_formula_order) if save_tarif_results_ord
         process_tarif_results_batch_tarif_resuts(tarif_set_id, tarif_class_id, part, stat, price_formula_order)
-        process_tarif_results_batch_prev_calls(tarif_set_id, tarif_class_id, part, stat, price_formula_order)
+#        process_tarif_results_batch_prev_calls(tarif_set_id, tarif_class_id, part, stat, price_formula_order)
         process_tarif_results_batch_prev_calls_by_parts(tarif_set_id, tarif_class_id, part, stat, price_formula_order)
         process_tarif_results_batch_prev_group_calls(tarif_set_id, tarif_class_id, part, stat, price_formula_order)
       end if executed_tarif_result_batch_sql
@@ -66,7 +66,7 @@ class ServiceHelper::CurrentTarifOptimizationResults
         all_stat_call_count_id = price_value_item['all_stat']['call_id_count'].to_i if price_value_item['all_stat'] and price_value_item['all_stat']['call_id_count']
         all_stat = price_value_item['all_stat'].merge({'call_ids'=>[], 'call_id_count' => all_stat_call_count_id}) if price_value_item['all_stat']
         processed_stat['price_values'] << price_value_item.merge({'call_ids'=>[], 'all_stat' => all_stat, 'call_id_count' => price_value_item['call_id_count'].to_i})
-      end
+      end if false
     else
       processed_stat = stat
     end
@@ -96,22 +96,17 @@ class ServiceHelper::CurrentTarifOptimizationResults
 #    current_tarif_results_ord = tarif_results_ord[tarif_set_id][part][tarif_class_id][price_formula_order]  
 #    if price_formula_order == 0    
           
-    if tarif_results[tarif_set_id][part][tarif_class_id].blank?
-      prev_service_call_ids[tarif_set_id][part][tarif_class_id] = (flatten_call_ids_as_string(stat['call_ids']) || [])            
-    else
-      prev_service_call_ids[tarif_set_id][part][tarif_class_id] +=  (flatten_call_ids_as_string(stat['call_ids']) || [])# #if tarif_optimizator.output_call_ids_to_tarif_results
-    end
-    prev_service_call_ids[tarif_set_id][part][tarif_class_id] += (prev_service_call_ids[tarif_set_id][part][tarif_class_id] || [] )
+    prev_service_call_ids[tarif_set_id][part][tarif_class_id] += (flatten_call_ids_as_string(stat['call_ids']) || [])            
+
+#    prev_service_call_ids[tarif_set_id][part][tarif_class_id] += (prev_service_call_ids[tarif_set_id][part][tarif_class_id] || [] )
     prev_service_call_ids[tarif_set_id][part][tarif_class_id].uniq!
   end
 
   def process_tarif_results_batch_prev_calls_by_parts(tarif_set_id, tarif_class_id, part, stat, price_formula_order)
     prev_service_call_ids_by_parts[tarif_set_id] ||= {};   
-    prev_service_call_ids_by_parts[tarif_set_id][part] ||= {}#[];   
-#    current_tarif_results_ord = tarif_results_ord[tarif_set_id][part][tarif_class_id][price_formula_order]  
 
     prev_service_call_ids_by_parts[tarif_set_id][part] ||= []
-    prev_service_call_ids_by_parts[tarif_set_id][part] += prev_service_call_ids[tarif_set_id][part][tarif_class_id]
+    prev_service_call_ids_by_parts[tarif_set_id][part] += (flatten_call_ids_as_string(stat['call_ids']) || []) #prev_service_call_ids[tarif_set_id][part][tarif_class_id]
     prev_service_call_ids_by_parts[tarif_set_id][part].uniq!
   end
 
@@ -142,14 +137,6 @@ class ServiceHelper::CurrentTarifOptimizationResults
         end if price_formula['stat_params']# stat_function_collector.service_stat[price_formula_order][:category_groups][:groups][category_group_id][:stat_params]
       end
     end unless stat['price_values'].blank? 
-    
-    raise(StandardError, [
-#      tarif_results_ord[tarif_set_id][part][tarif_class_id][price_formula_order],
-#      tarif_results_ord[tarif_set_id][part][tarif_class_id][price_formula_order].attributes,
-      prev_service_call_ids[tarif_set_id][part][tarif_class_id],
-      tarif_results_ord[tarif_set_id][part][tarif_class_id][price_formula_order]['call_ids']
-    ]) if tarif_set_id == '200_309_' and tarif_class_id == 200 and part == 'own-country-rouming/calls'
-    
   end
 
   def set_current_results(current_service_slice)
@@ -173,7 +160,7 @@ class ServiceHelper::CurrentTarifOptimizationResults
           
           if tarif_results[prev_tarif_set_id] and tarif_results[prev_tarif_set_id][part]
             set_current_tarif_results_ord(tarif_set_id, prev_tarif_set_id, service_id) if save_tarif_results_ord
-            set_current_prev_service_call_ids(tarif_set_id, prev_tarif_set_id, service_id)
+#            set_current_prev_service_call_ids(tarif_set_id, prev_tarif_set_id, service_id)
             set_current_prev_service_group_call_ids(tarif_set_id, prev_tarif_set_id, service_id)
             set_current_prev_service_call_ids_by_parts(tarif_set_id, prev_tarif_set_id, service_id)
             set_current_tarif_results(tarif_set_id, prev_tarif_set_id, service_id)
@@ -189,7 +176,7 @@ class ServiceHelper::CurrentTarifOptimizationResults
   
   def init_current_results_hashes_first_step(tarif_set_id)
     tarif_results_ord[tarif_set_id] ||= {} if save_tarif_results_ord
-    prev_service_call_ids[tarif_set_id] ||= {}    
+#    prev_service_call_ids[tarif_set_id] ||= {}    
     prev_service_call_ids_by_parts[tarif_set_id] ||= {}    
     prev_service_group_call_ids[tarif_set_id] ||= {}    
     tarif_results[tarif_set_id] ||= {}
@@ -197,7 +184,7 @@ class ServiceHelper::CurrentTarifOptimizationResults
 
   def init_current_results_hashes_second_step(tarif_set_id, part)
     tarif_results_ord[tarif_set_id][part] ||= {} if save_tarif_results_ord
-    prev_service_call_ids[tarif_set_id][part] ||= {}
+#    prev_service_call_ids[tarif_set_id][part] ||= {}
     prev_service_call_ids_by_parts[tarif_set_id][part] ||= []
     prev_service_group_call_ids[tarif_set_id][part] ||= {}
     tarif_results[tarif_set_id][part] ||= {}
@@ -209,39 +196,7 @@ class ServiceHelper::CurrentTarifOptimizationResults
       prev_tarif_results_by_part.each do |key_ord, prev_tarif_results_ord_val|
         tarif_results_ord[tarif_set_id][part][key_ord] ||= {}
         prev_tarif_results_ord_val.each do |key, prev_tarif_result_ord| 
-#          if tarif_results_ord[tarif_set_id][part][key_ord][key]
-#            raise(StandardError) if tarif_results_ord[tarif_set_id][part][key_ord][key]['part'] != prev_tarif_result_ord['part']
-#            raise(StandardError) if tarif_results_ord[tarif_set_id][part][key_ord][key]['tarif_class_id'] != prev_tarif_result_ord['tarif_class_id']
-#            tarif_results_ord[tarif_set_id][part][key_ord][key]['call_ids'] += prev_tarif_result_ord['call_ids']
-#            if tarif_results_ord[tarif_set_id][part][key_ord][key]['call_ids'].uniq!
-#              tarif_results_ord[tarif_set_id][part][key_ord][key]['call_id_count'] = tarif_results_ord[tarif_set_id][part][key_ord][key]['call_ids'].count
-#            end
-#            tarif_results_ord[tarif_set_id][part][key_ord][key]['price_value'] += prev_tarif_result_ord['price_value']
-#            tarif_results_ord[tarif_set_id][part][key_ord][key]['call_id_count'] += prev_tarif_result_ord['call_id_count']
-#            raise(StandardError) if tarif_results_ord[tarif_set_id][part][key_ord][key]['set_id'] != prev_tarif_result_ord['set_id']
-#            tarif_results_ord[tarif_set_id][part][key_ord][key]['price_values'] += prev_tarif_result_ord['price_values']
-
-=begin            
-            raise(StandardError) if tarif_results_ord[tarif_set_id][part][key_ord][key]['call_ids'].include?(5224) or tarif_results_ord[tarif_set_id][part][key_ord][key]['call_ids'].include?('5224')
-            prev_tarif_result_ord['price_values'].each do |price_value_item|
-              raise(StandardError) if price_value_item['call_ids'].include?(5224) or price_value_item['call_ids'].include?('5224')
-              prev_price_value_item_uniq_key = "#{price_value_item['service_category_tarif_class_id']}_#{price_value_item['service_category_group_id']}_#{price_value_item['month']}_#{price_value_item['price_formula_id']}"
-              tarif_results_ord[tarif_set_id][part][key_ord][key]['price_values'].each_index do |current_price_value_index|
-                current_price_value_item = tarif_results_ord[tarif_set_id][part][key_ord][key]['price_values'][current_price_value_index]
-                current_price_value_item_uniq_key = "#{current_price_value_item['service_category_tarif_class_id']}_#{current_price_value_item['service_category_group_id']}_#{current_price_value_item['month']}_#{current_price_value_item['price_formula_id']}"
-                raise(StandardError) if current_price_value_item['call_ids'].include?(5224) or current_price_value_item['call_ids'].include?('5224')
-                if current_price_value_item_uniq_key == prev_price_value_item_uniq_key
-#                  tarif_results_ord[tarif_set_id][part][key_ord][key]['price_values'][current_price_value_index]['call_ids'] += price_value_item['call_ids']
-#                  tarif_results_ord[tarif_set_id][part][key_ord][key]['price_values'][current_price_value_index]['call_ids'].uniq
-                else
-                  tarif_results_ord[tarif_set_id][part][key_ord][key]['price_values'] << price_value_item
-                end 
-              end              
-            end
-=end            
-#          else
             tarif_results_ord[tarif_set_id][part][key_ord][key] = prev_tarif_result_ord
-#          end               
         end
       end
     end          
@@ -263,7 +218,8 @@ class ServiceHelper::CurrentTarifOptimizationResults
       prev_service_call_ids_by_parts[tarif_set_id] ||= {} 
       prev_tarif_result_by_part.each do |tarif_class_id, prev_tarif_result| 
         prev_service_call_ids_by_parts[tarif_set_id][part] ||= []
-        prev_service_call_ids_by_parts[tarif_set_id][part] += (prev_service_call_ids_by_parts[prev_tarif_set_id][part] || [] ) - prev_service_call_ids_by_parts[tarif_set_id][part]
+        prev_service_call_ids_by_parts[tarif_set_id][part] += (prev_service_call_ids_by_parts[prev_tarif_set_id][part] || [] )
+          prev_service_call_ids_by_parts[tarif_set_id][part]
       end
     end
   end
@@ -272,12 +228,7 @@ class ServiceHelper::CurrentTarifOptimizationResults
     prev_service_group_call_ids[tarif_set_id] ||= {}
     prev_service_group_call_ids[prev_tarif_set_id].each do |part, prev_service_group_call_ids_by_part|
       prev_service_group_call_ids[tarif_set_id][part] ||= {}
-      begin
-        prev_service_group_call_ids[tarif_set_id][part] = (prev_service_group_call_ids_by_part || [])
-      rescue
-        raise(StandardError, [prev_service_group_call_ids].join("\n"))
-      end
-#TODO нужно ли правильно обрабатывать так как уже не пустой      #raise(StandardError, "prev_service_group_call_ids[tarif_set_id][part]") if prev_service_group_call_ids[tarif_set_id][part]
+#TODO нужно ли правильно обрабатывать так как уже не пустой      
       prev_service_group_call_ids[tarif_set_id][part] = (prev_service_group_call_ids_by_part || [])
     end
   end
@@ -292,7 +243,7 @@ class ServiceHelper::CurrentTarifOptimizationResults
       tarif_results[tarif_set_id][part] ||= {} 
       prev_tarif_result_by_part.each do |key, prev_tarif_result|
         tarif_results[tarif_set_id][part][key] ||= {} 
-#TODO нужно ли правильно обрабатывать так как уже не пустой      #raise(StandardError, "prev_service_group_call_ids[tarif_set_id][part]") if prev_service_group_call_ids[tarif_set_id][part]
+#TODO нужно ли правильно обрабатывать так как уже не пустой      
 #        tarif_results[tarif_set_id][part][key]['price_values'] = prev_tarif_result['price_values']  
         tarif_results[tarif_set_id][part][key] = prev_tarif_result
 #        tarif_results[tarif_set_id][part][key]['call_id_count'] = 0
@@ -357,30 +308,26 @@ class ServiceHelper::CurrentTarifOptimizationResults
 
 #TODO - преобразовать в разовый обработчик как другие
   def find_prev_group_call_ids(set_id, part, service_category_group_id)
-    excluded_group_call_ids_by_part = prev_service_group_call_ids[set_id][part]
-    excluded_call_ids_for_category_group = excluded_group_call_ids_by_part[service_category_group_id] if excluded_group_call_ids_by_part
     prev_group_call_ids = [];     
-    excluded_call_ids_for_category_group.each do |month, prev_stat_fun_values_by_month|
+    prev_service_group_call_ids[set_id][part][service_category_group_id].each do |month, prev_stat_fun_values_by_month|
       prev_group_call_ids += prev_stat_fun_values_by_month['call_ids']
-    end if excluded_call_ids_for_category_group    
+    end if prev_service_group_call_ids[set_id][part] and prev_service_group_call_ids[set_id][part][service_category_group_id]    
     prev_group_call_ids 
   end
 
 #TODO - преобразовать в разовый обработчик как другие
   def prev_stat_function_values(price_formula_id, set_id, part, service_category_group_id)
-    excluded_group_call_ids_by_part = prev_service_group_call_ids[set_id][part]
-    excluded_call_ids_for_category_group = excluded_group_call_ids_by_part[service_category_group_id] if excluded_group_call_ids_by_part
 #TODO разобраться с price_formula
     price_formula = tarif_optimizator.stat_function_collector.price_formula(price_formula_id)
     prev_stat_values_string = [] 
     
-    excluded_call_ids_for_category_group.each do |month, prev_stat_fun_values_by_month|
+    prev_service_group_call_ids[set_id][part][service_category_group_id].each do |month, prev_stat_fun_values_by_month|
       str = ["#{month || -1}", "'{#{(prev_stat_fun_values_by_month['call_ids'] || []).join(', ')} }'"]
       price_formula['stat_params'].each do |stat_key, stat_function|
         str << "#{prev_stat_fun_values_by_month[stat_key.to_s] || 'null'}" 
       end if price_formula['stat_params']
       prev_stat_values_string << "(#{str.join(', ')})"
-    end if excluded_call_ids_for_category_group
+    end if prev_service_group_call_ids[set_id][part] and prev_service_group_call_ids[set_id][part][service_category_group_id]
 
     if prev_stat_values_string.blank?
       prev_stat_values_string = ['-1', "'{}'"]

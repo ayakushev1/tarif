@@ -23,16 +23,16 @@ class ServiceHelper::TarifListGenerator
         #276, 277, 312, # _mts_own_country_rouming, _mts_international_rouming, _mts_own_country_rouming_internet
         ]} 
     @tarif_options = (options and options[:tarif_options] and !options[:tarif_options][1030].blank?) ? options[:tarif_options] : {1025 => [], 1028 => [], 1030 => [
-        #283,
-        #328, 329, 330, 331, 332,#_mts_region, _mts_95_cop_in_moscow_region, _mts_unlimited_calls, _mts_call_free_to_mts_russia_100, _mts_zero_to_mts, #calls
-        #281, 309, 293, #_mts_love_country, _mts_love_country_all_world, _mts_outcoming_calls_from_11_9_rur, #calls_abroad
-        #294, 282, 283, 297, #_mts_everywhere_as_home, _mts_everywhere_as_home_Ultra, _mts_everywhere_as_home_smart, _mts_incoming_travelling_in_russia, #country_rouming
-        #321, 322, #_mts_additional_minutes_150, _mts_additional_minutes_300, #country_rouming
-        #288, 289, 290, 291, 292, #_mts_zero_without_limits, _mts_bit_abroad, _mts_maxi_bit_abroad, _mts_super_bit_abroad, _mts_100mb_in_latvia_and_litva, #international_rouming
-        #302, 303, 304, #_mts_bit, _mts_super_bit, _mts_mini_bit, #internet
-        #310, #311, #_mts_additional_internet_500_mb, _mts_additional_internet_1_gb, #internet
-        #313, 314, #_mts_turbo_button_500_mb, _mts_turbo_button_2_gb, #internet
-        #315, 316, 317, 318, #_mts_internet_mini, _mts_internet_maxi, _mts_internet_super, _mts_internet_vip,#internet
+        283,
+        328, 329, 330, 331, 332,#_mts_region, _mts_95_cop_in_moscow_region, _mts_unlimited_calls, _mts_call_free_to_mts_russia_100, _mts_zero_to_mts, #calls
+        281, 309, 293, #_mts_love_country, _mts_love_country_all_world, _mts_outcoming_calls_from_11_9_rur, #calls_abroad
+        294, 282, 283, 297, #_mts_everywhere_as_home, _mts_everywhere_as_home_Ultra, _mts_everywhere_as_home_smart, _mts_incoming_travelling_in_russia, #country_rouming
+        321, 322, #_mts_additional_minutes_150, _mts_additional_minutes_300, #country_rouming
+        288, 289, 290, 291, 292, #_mts_zero_without_limits, _mts_bit_abroad, _mts_maxi_bit_abroad, _mts_super_bit_abroad, _mts_100mb_in_latvia_and_litva, #international_rouming
+        302, 303, 304, #_mts_bit, _mts_super_bit, _mts_mini_bit, #internet
+        310, #311, #_mts_additional_internet_500_mb, _mts_additional_internet_1_gb, #internet
+        313, 314, #_mts_turbo_button_500_mb, _mts_turbo_button_2_gb, #internet
+        315, 316, 317, 318, #_mts_internet_mini, _mts_internet_maxi, _mts_internet_super, _mts_internet_vip,#internet
         340, 341, #_mts_mts_planshet, _mts_mts_planshet_online,#internet
         342, #_mts_unlimited_internet_on_day,#internet
         323, 324, 325, 326, #_mts_mms_packet_10, _mts_mms_packet_20, _mts_mms_packet_50, _mts_mms_discount_50_percent, #mms
@@ -44,7 +44,6 @@ class ServiceHelper::TarifListGenerator
       ]} 
     set_constant
     set_generation_params(options)
-    set_use_short_tarif_set_name
     check_input_from_options
 #=begin
     calculate_all_services
@@ -61,7 +60,7 @@ class ServiceHelper::TarifListGenerator
     calculate_tarif_option_combinations_with_multiple_use if true # на будущее
     calculate_tarif_sets_without_common_services
     calculate_tarif_sets
-#    calculate_final_tarif_sets
+##    calculate_final_tarif_sets
     calculate_tarif_options_slices
     calculate_max_tarif_options_slice
     calculate_tarifs_slices
@@ -76,6 +75,7 @@ class ServiceHelper::TarifListGenerator
   end
   
   def set_generation_params(options)
+    @use_short_tarif_set_name = options[:use_short_tarif_set_name] == 'true' ? true : false
     @calculate_final_tarif_sets_first_without_common_services = false      
     @if_update_tarif_sets_to_calculate_from_with_cons_tarif_results = options[:if_update_tarif_sets_to_calculate_from_with_cons_tarif_results] == 'true' ? true : false
     @max_final_tarif_set_number = options[:max_final_tarif_set_number].to_i < 1 ? 1000 : options[:max_final_tarif_set_number].to_i
@@ -91,10 +91,6 @@ class ServiceHelper::TarifListGenerator
       @common_services[operator] = [] if !common_services or !common_services[operator] or !common_services[operator].is_a?(Array)
       @tarif_options[operator] = [] if !tarif_options or !tarif_options[operator] or !tarif_options[operator].is_a?(Array)
     end    
-  end
-  
-  def set_use_short_tarif_set_name
-    @use_short_tarif_set_name = options[:use_short_tarif_set_name] == 'true' ? true : false
   end
   
   def calculate_all_services
@@ -119,9 +115,12 @@ class ServiceHelper::TarifListGenerator
     all_services_by_operator.each do |operator, services|
       @uniq_parts_by_operator[operator] ||= []; @uniq_parts_criteria_by_operator[operator] ||= []
       services.each do |service|
+        next if dependencies[service]['parts'] == 'periodic'
 #        raise(StandardError, dependencies[service] ) if service == 206 #!dependencies[service]['parts_criteria'] and dependencies[service]['parts']
-        @uniq_parts_by_operator[operator] += dependencies[service]['parts']; @uniq_parts_criteria_by_operator[operator] += dependencies[service]['parts_criteria']
-        @uniq_parts_by_operator[operator].uniq!; @uniq_parts_criteria_by_operator[operator].uniq!
+        @uniq_parts_by_operator[operator] += dependencies[service]['parts'] - @uniq_parts_by_operator[operator]; 
+        @uniq_parts_criteria_by_operator[operator] += dependencies[service]['parts_criteria'] - @uniq_parts_criteria_by_operator[operator]
+#        @uniq_parts_by_operator[operator].uniq!; 
+#        @uniq_parts_criteria_by_operator[operator].uniq!
       end
     end
   end
@@ -131,11 +130,13 @@ class ServiceHelper::TarifListGenerator
     all_services_by_operator.each do |operator, services|
       all_services_by_parts[operator] = {}
       uniq_parts_by_operator[operator].each do |part|
+        next if part == 'periodic'
         all_services_by_parts[operator][part] = []
       end
       
       services.each do |service|
         dependencies[service]['parts'].each do |part|
+          next if part == 'periodic'
           all_services_by_parts[operator][part] << service
         end
       end      
@@ -147,11 +148,13 @@ class ServiceHelper::TarifListGenerator
     common_services.each do |operator, services|
       common_services_by_parts[operator] = {}
       uniq_parts_by_operator[operator].each do |part|
+        next if part == 'periodic'
         common_services_by_parts[operator][part] = []
       end if uniq_parts_by_operator and uniq_parts_by_operator[operator] 
       
       services.each do |service|
         dependencies[service]['parts'].each do |part|
+          next if part == 'periodic'
           common_services_by_parts[operator][part] << service
         end
       end      
@@ -187,6 +190,7 @@ class ServiceHelper::TarifListGenerator
       @service_packs_by_parts[tarif] ||= {}
       service_pack.each do |service|
         dependencies[service]['parts'].each do |part|
+          next if part == 'periodic'
           @service_packs_by_parts[tarif][part] ||= []
           @service_packs_by_parts[tarif][part] << service
         end
@@ -241,7 +245,6 @@ class ServiceHelper::TarifListGenerator
       tarif_option_combinations[tarif] ||= {}
       service_pack.each do |part, incompatibility_groups|
         tarif_option_combinations[tarif][part] ||= {}
-
         incompatibility_groups.each do |incompatibility_group_name, incompatibility_group_1|
           incompatibility_group = incompatibility_group_1 + [nil]
           if tarif_option_combinations[tarif][part].blank?
@@ -303,6 +306,8 @@ class ServiceHelper::TarifListGenerator
   end
 
   def calculate_tarif_option_combinations_with_multiple_use
+    parts_used_as_multiple = ['all-world-rouming/sms', 'own-country-rouming/sms', 'all-world-rouming/mms', 'mms', 'own-country-rouming/mms', 
+      'all-world-rouming/mobile-connection', 'own-country-rouming/mobile-connection' ]
     ordered_tarif_option_combinations = tarif_option_combinations.dup
     @tarif_option_combinations = {}
     ordered_tarif_option_combinations.each do |tarif, service_pack|
@@ -315,7 +320,8 @@ class ServiceHelper::TarifListGenerator
             next if service.blank?
             multiple_use = dependencies[service]['multiple_use']
             new_services << service
-            break if multiple_use
+#TODO разобраться когда можно использовать multiple_use (для каких parts), и связать с параметрами оптимизации 
+            #break if multiple_use and parts_used_as_multiple.include?(part)
           end
           new_tarif_set_id = tarif_set_id(new_services)
           tarif_option_combinations[tarif][part][new_tarif_set_id] = new_services
@@ -331,6 +337,7 @@ class ServiceHelper::TarifListGenerator
         operator = service_description[tarif][:operator_id].to_i
         tarif_sets_without_common_services[tarif] ||= {}
         dependencies[tarif]['parts'].each do |part|
+          next if part == 'periodic'
           tarif_option_sets = tarif_option_combinations[tarif][part]
           tarif_sets_without_common_services[tarif][part] ||= {}
           tarif_general_priority = dependencies[tarif]['general_priority']
@@ -464,6 +471,7 @@ class ServiceHelper::TarifListGenerator
   def update_tarif_sets_to_calculate_from_with_cons_tarif_results(tarif_sets_to_calculate_from, cons_tarif_results)
 #    raise(StandardError, [cons_tarif_results])
     sub_tarif_sets_with_zero_results = calculate_sub_tarif_sets_with_zero_results(cons_tarif_results)
+    
     updated_tarif_sets = {}
     tarif_sets_to_calculate_from.each do |tarif, tarif_sets_to_calculate_from_by_tarif|
       updated_tarif_sets[tarif] ||= {}
@@ -666,20 +674,19 @@ class ServiceHelper::TarifListGenerator
             next if tarif_option.blank?
             tarif_options_slices[operator][slice] ||= {:ids => [], :prev_ids => [], :set_ids => [], :prev_set_ids => [], :uniq_set_ids => {}, :parts => []}
             tarif_option_general_priority = dependencies[tarif_option]['general_priority']
-            if tarif_option_general_priority == gp_tarif_option
-              set_ids = tarif_options.reverse[0..slice].reverse
-              set_id = tarif_set_id(set_ids)
-              uniq_set_id = tarif_set_id_with_part(set_ids, part)
-              if !tarif_options_slices[operator][slice][:uniq_set_ids][uniq_set_id]
-                tarif_options_slices[operator][slice][:uniq_set_ids][uniq_set_id] = uniq_set_id
-                
-                prev_ids = (slice == 0) ? [] : tarif_options.reverse[0..(slice - 1)].reverse
-                tarif_options_slices[operator][slice][:prev_ids] << prev_ids
-                tarif_options_slices[operator][slice][:ids] << tarif_option
-                tarif_options_slices[operator][slice][:prev_set_ids] << tarif_set_id(prev_ids)
-                tarif_options_slices[operator][slice][:set_ids] << set_id 
-                tarif_options_slices[operator][slice][:parts] << part 
-              end
+            break if tarif_option_general_priority != gp_tarif_option  #change next on break 31/07/14
+            set_ids = tarif_options.reverse[0..slice].reverse
+            set_id = tarif_set_id(set_ids)
+            uniq_set_id = tarif_set_id_with_part(set_ids, part)
+            if !tarif_options_slices[operator][slice][:uniq_set_ids][uniq_set_id]
+              tarif_options_slices[operator][slice][:uniq_set_ids][uniq_set_id] = uniq_set_id
+              
+              prev_ids = (slice == 0) ? [] : tarif_options.reverse[0..(slice - 1)].reverse
+              tarif_options_slices[operator][slice][:prev_ids] << prev_ids
+              tarif_options_slices[operator][slice][:ids] << tarif_option
+              tarif_options_slices[operator][slice][:prev_set_ids] << tarif_set_id(prev_ids)
+              tarif_options_slices[operator][slice][:set_ids] << set_id 
+              tarif_options_slices[operator][slice][:parts] << part 
             end
             slice += 1
           end          
@@ -695,7 +702,6 @@ class ServiceHelper::TarifListGenerator
       tarifs_slices[operator] ||= []
       service_pack.each do |part, tarif_sets|
         tarif_sets.each do |tarif_set_id, services|
-#          raise(StandardError, [service_pack]) if tarif == 203 #tarif_set_id == "203_283"  and part == 'own-country-rouming/sms'
           slice = 0; tarif_option_slice = 0
           services.reverse.each do |service|
             next if service.blank?
@@ -719,10 +725,8 @@ class ServiceHelper::TarifListGenerator
                   uniq_set_id = tarif_set_id_with_part(set_ids, part)
                 else
                   set_ids = services.reverse[0..tarif_option_slice].reverse
-#                  set_ids = [service] + services.reverse[0..tarif_option_slice].reverse
                   set_id = tarif_set_id(set_ids)
                   prev_ids = services.reverse[0..(current_service_index - 1)].reverse
-  #                prev_ids = (tarif_option_slice == 0) ? [] : services.reverse[0..(tarif_option_slice - 1)].reverse
                   uniq_set_id = tarif_set_id_with_part(set_ids, part)
                 end
                 if !tarifs_slices[operator][slice][:uniq_set_ids][uniq_set_id] 
@@ -732,8 +736,6 @@ class ServiceHelper::TarifListGenerator
                   tarifs_slices[operator][slice][:prev_set_ids] << tarif_set_id(prev_ids)
                   tarifs_slices[operator][slice][:set_ids] << set_id 
                   tarifs_slices[operator][slice][:parts] << part 
-            raise(StandardError, [part, uniq_set_id, set_ids, service, 
-              services, slice, tarif_option_slice, set_ids, prev_ids]) if tarif_set_id == "276_203_283"  and part == 'own-country-rouming/calls_'
                 end
               else #if tarif_option_slice != 0
                 set_ids = services.reverse[0..(current_service_index )].reverse
@@ -747,13 +749,8 @@ class ServiceHelper::TarifListGenerator
                   tarifs_slices[operator][slice][:prev_set_ids] << tarif_set_id(prev_ids)
                   tarifs_slices[operator][slice][:set_ids] << set_id 
                   tarifs_slices[operator][slice][:parts] << part 
-              raise(StandardError, [part, uniq_set_id, set_ids, service, current_service_index, (tarif_option_slice + slice),
-                services, slice, tarif_option_slice]) if tarif_set_id == "276_203_283"  and part == 'own-country-rouming/calls_'
                 end
               end  
-              raise(StandardError, [part, uniq_set_id, set_ids, service, 
-                services, slice, tarif_option_slice]) if tarif_set_id == "276_203_283"  and part == 'own-country-rouming/calls_'
-              #tarif_option_slice = 0
               slice += 1            
             end
           end
