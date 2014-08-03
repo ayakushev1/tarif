@@ -192,8 +192,10 @@ class ServiceHelper::TarifCreator
     classified_service_category_onetime = classify_service_category_onetime(service_category_full_path['category_onetime_ids'])
     classified_service_category_periodic = classify_service_category_periodic(service_category_full_path['category_periodic_ids'])
 
-    service_parts << classified_service_category_rouming[0]; service_parts_criteria = classified_service_category_rouming[1] 
-    service_parts << classified_service_category_calls[0]; service_parts_criteria.merge!(classified_service_category_calls[1]) 
+    if classified_service_category_calls[0] != :'mms'
+      service_parts << classified_service_category_rouming[0]; service_parts_criteria = classified_service_category_rouming[1]
+    end 
+    service_parts << classified_service_category_calls[0]; service_parts_criteria.merge!(classified_service_category_calls[1])
     service_parts << classified_service_category_onetime[0]; service_parts_criteria.merge!(classified_service_category_onetime[1]) 
     service_parts << classified_service_category_periodic[0]; service_parts_criteria.merge!(classified_service_category_periodic[1]) 
 

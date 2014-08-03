@@ -25,8 +25,8 @@ form_item.init do |f|
   	],
   	
   	[
-     label(filtr_name, "save_tarif_results", "Save tarif_results?"),
- 	 select(filtr_name, "save_tarif_results", [["Save", true], ["Do not save", false]], {:selected => s["save_tarif_results"]}, html_options ),
+     label(filtr_name, "calculate_with_multiple_use", "Calculate with multiple_use of tarif_options"),
+ 	 select(filtr_name, "calculate_with_multiple_use", [["Yes", true], ["No", false]], {:selected => s["calculate_with_multiple_use"]}, html_options ),
 
      label(filtr_name, "simplify_tarif_results", "Simplify tarif_results?"),
  	 select(filtr_name, "simplify_tarif_results", [["Simplify", true], ["Do not simplify", false]], {:selected => s["simplify_tarif_results"]}, html_options ),

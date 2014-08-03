@@ -3,7 +3,7 @@ class ServiceHelper::PerformanceChecker
   attr_accessor :results
   def initialize(name = nil)
     @name = name || 'performance_checker'
-    @output_model = Customer::Stat.where("(result->'#{@name}') is not null")
+    @output_model = Customer::Stat.where(:result_type => 'performance_checker').where(:result_name => @name)
     @start = current
     @results = {}
   end
@@ -69,9 +69,9 @@ class ServiceHelper::PerformanceChecker
     last_results = results
     if output_model.exists?
       merged_output = last_results ? last_results.merge(output) : output
-      output_model.first.update_attributes!({:result => {name => merged_output } } )    
+      output_model.first.update_attributes!({:result => merged_output} )    
     else
-      output_model.create({:result => {name => output} } )    
+      output_model.create({:result_type => 'performance_checker', :result_name => name, :result => output} )    
     end    
   end
   

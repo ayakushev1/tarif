@@ -1,9 +1,9 @@
 class ServiceHelper::MaxPriceFormulaOrderCollector
-  attr_reader :tarif_list_generator, :operator, :max_order_by_operator, :max_order_by_service, :max_order_by_price_list
+  attr_reader :tarif_class_ids, :operator, :max_order_by_operator, :max_order_by_service, :max_order_by_price_list
   attr_reader :max_order_by_service_and_part, :max_order_by_price_list_and_part
 
-  def initialize(tarif_list_generator, operator)
-    @tarif_list_generator = tarif_list_generator
+  def initialize(tarif_class_ids, operator)
+    @tarif_class_ids = tarif_class_ids
     @operator = operator
     @max_order_by_operator = calculate_max_order_by_operator
     @max_order_by_service = calculate_max_order_by_service
@@ -13,7 +13,7 @@ class ServiceHelper::MaxPriceFormulaOrderCollector
   end
   
   def calculate_max_order_by_operator
-    operator_id = operator#tarif_list_generator.operators[operator_index]
+    operator_id = operator
     max_by_service_category_tarif_class = Price::Formula.joins(price_list: {service_category_tarif_class: :tarif_class}).
     where(:tarif_classes => {:operator_id => operator_id}).
     maximum(:calculation_order)
@@ -26,7 +26,7 @@ class ServiceHelper::MaxPriceFormulaOrderCollector
   end
   
   def calculate_max_order_by_service
-    service_ids = tarif_list_generator.all_services_by_operator[operator]
+    service_ids = tarif_class_ids
     max_by_service_category_tarif_class = Price::Formula.joins(price_list: :service_category_tarif_class ).
       where(:service_category_tarif_classes => {:tarif_class_id => service_ids}).
       group("service_category_tarif_classes.tarif_class_id").
@@ -38,19 +38,19 @@ class ServiceHelper::MaxPriceFormulaOrderCollector
       maximum(:calculation_order)
     
     result = {}
-    raise(StandardError, [operator, service_ids, tarif_list_generator.all_services_by_operator[operator]]) if !service_ids
+    raise(StandardError, [operator, service_ids, tarif_class_ids]) if !service_ids
     
     (max_by_service_category_tarif_class.keys + max_by_service_category_group.keys + service_ids).uniq.each do |key|
       result[key] = [(result[key] || -1), (max_by_service_category_tarif_class[key] || -1), (max_by_service_category_group[key] || -1)].max
     end
     sql = Price::Formula.joins(price_list: :service_category_tarif_class ).where(:service_category_tarif_classes => {:tarif_class_id => service_ids}).
       group("service_category_tarif_classes.tarif_class_id").to_sql
-    raise(StandardError, [tarif_list_generator.calculate_all_services, result, service_ids, sql]) if !result #result.blank?
+    raise(StandardError, [tarif_class_ids, result, service_ids, sql]) if !result #result.blank?
     result
   end
   
   def calculate_max_order_by_service_and_part
-    service_ids = tarif_list_generator.all_services_by_operator[operator]
+    service_ids = tarif_class_ids
     max_by_service_category_tarif_class = Price::Formula.joins(price_list: :service_category_tarif_class ).
     where(:service_category_tarif_classes => {:tarif_class_id => service_ids}).
     select("service_category_tarif_classes.tarif_class_id as tarif_class_id, service_category_tarif_classes.conditions->>'parts' as parts, max(calculation_order) as max_calculation_order").
@@ -79,7 +79,7 @@ class ServiceHelper::MaxPriceFormulaOrderCollector
 
 
   def calculate_max_order_by_price_list
-    service_ids = tarif_list_generator.all_services_by_operator[operator]
+    service_ids = tarif_class_ids
     max_by_service_category_tarif_class = Price::Formula.joins(price_list: :service_category_tarif_class ).
     where(:service_category_tarif_classes => {:tarif_class_id => service_ids}).
     group("price_lists.id").
@@ -98,7 +98,7 @@ class ServiceHelper::MaxPriceFormulaOrderCollector
   end
   
   def calculate_max_order_by_price_list_and_part
-    service_ids = tarif_list_generator.all_services_by_operator[operator]
+    service_ids = tarif_class_ids
     max_by_service_category_tarif_class = Price::Formula.joins(price_list: :service_category_tarif_class ).
     where(:service_category_tarif_classes => {:tarif_class_id => service_ids}).
     select("price_lists.id as price_list_id, service_category_tarif_classes.conditions->>'parts' as parts, max(calculation_order) as max_calculation_order").

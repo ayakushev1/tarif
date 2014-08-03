@@ -20,30 +20,24 @@ class ServiceHelper::CurrentTarifOptimizationResults
   end
   
   def init_inputs_from_tarif_optimizator
-    
     @performance_checker = tarif_optimizator.performance_checker || ServiceHelper::PerformanceChecker.new()
     @save_tarif_results_ord = tarif_optimizator.save_tarif_results_ord 
     @simplify_tarif_results = tarif_optimizator.simplify_tarif_results
-#    raise(StandardError, [tarif_optimizator.simplify_tarif_results, @simplify_tarif_results, simplify_tarif_results])
-    
-#    @operator_id = operator#tarif_list_generator.operators[operator_index]
   end
   
   def process_tarif_results_batch(executed_tarif_result_batch_sql, price_formula_order)
-    performance_checker.run_check_point('process_tarif_results_batch', 5) do
-      executed_tarif_result_batch_sql.each do |stat|
-        tarif_class_id = stat['tarif_class_id']
-        tarif_set_id = stat['set_id']
-        part = stat['part']
-        
+    executed_tarif_result_batch_sql.each do |stat|
+      tarif_class_id = stat['tarif_class_id']
+      tarif_set_id = stat['set_id']
+      part = stat['part']
+      
 #TODO строчка возникает в empty_service_cost_sql судя по всему      raise(StandardError, [stat.attributes]) if stat['call_ids'].is_a?(String)
-        process_tarif_results_batch_tarif_resuts_ord(tarif_set_id, tarif_class_id, part, stat, price_formula_order) if save_tarif_results_ord
-        process_tarif_results_batch_tarif_resuts(tarif_set_id, tarif_class_id, part, stat, price_formula_order)
+      process_tarif_results_batch_tarif_resuts_ord(tarif_set_id, tarif_class_id, part, stat, price_formula_order) if save_tarif_results_ord
+      process_tarif_results_batch_tarif_resuts(tarif_set_id, tarif_class_id, part, stat, price_formula_order)
 #        process_tarif_results_batch_prev_calls(tarif_set_id, tarif_class_id, part, stat, price_formula_order)
-        process_tarif_results_batch_prev_calls_by_parts(tarif_set_id, tarif_class_id, part, stat, price_formula_order)
-        process_tarif_results_batch_prev_group_calls(tarif_set_id, tarif_class_id, part, stat, price_formula_order)
-      end if executed_tarif_result_batch_sql
-    end
+      process_tarif_results_batch_prev_calls_by_parts(tarif_set_id, tarif_class_id, part, stat, price_formula_order)
+      process_tarif_results_batch_prev_group_calls(tarif_set_id, tarif_class_id, part, stat, price_formula_order)
+    end if executed_tarif_result_batch_sql
   end
   
   def process_tarif_results_batch_tarif_resuts_ord(tarif_set_id, tarif_class_id, part, stat, price_formula_order)    
@@ -140,7 +134,7 @@ class ServiceHelper::CurrentTarifOptimizationResults
   end
 
   def set_current_results(current_service_slice)
-    performance_checker.run_check_point('set_current_tarif_results', 3) do
+    performance_checker.run_check_point('set_current_tarif_results', 9) do
       i = 0
       @service_ids_to_calculate = []#{:ids => [], :set_ids => [], :parts => []}
       current_service_slice[:ids].each do |service_id|      
@@ -253,7 +247,7 @@ class ServiceHelper::CurrentTarifOptimizationResults
   end
 
   def update_all_tarif_results_with_missing_prev_results
-    performance_checker.run_check_point('update_all_tarif_results_with_missing_prev_results', 3) do
+    performance_checker.run_check_point('update_all_tarif_results_with_missing_prev_results', 4) do
       tarif_results.keys.sort{|t| t.split('_').size}.each do |tarif_set_id|
         tarif_result = tarif_results[tarif_set_id]
         service_id = tarif_set_id.split('_')[0].to_i

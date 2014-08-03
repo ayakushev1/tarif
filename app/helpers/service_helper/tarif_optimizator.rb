@@ -2,7 +2,8 @@
 class ServiceHelper::TarifOptimizator
 #TODO - обновить в тарифах поля с month, day or week
 #дополнительные классы
-  attr_reader :tarif_list_generator, :stat_function_collector, :query_constructor, :background_process_informer, :optimization_result_saver, :minor_result_saver,
+  attr_reader :tarif_list_generator, :stat_function_collector, :query_constructor, :optimization_result_saver, :minor_result_saver, 
+              :final_tarif_sets_saver, :background_process_informer_operators, :background_process_informer_tarifs, :background_process_informer_tarif, 
               :performance_checker, :current_tarif_optimization_results, :tarif_optimization_sql_builder, :max_formula_order_collector, 
               :calls_stat_calculator
 #входные данные              
@@ -23,26 +24,9 @@ class ServiceHelper::TarifOptimizator
     init_optimization_params
   end
   
-  def init_additional_general_classes
-    @performance_checker = ServiceHelper::PerformanceChecker.new()
-    performance_checker.clean_history;
-    performance_checker.run_check_point('init_additional_general_classes', 1) do
-      @controller = options[:controller]
-      @background_process_informer = options[:background_process_informer] || ServiceHelper::BackgroundProcessInformer.new('tarif_optimization')
-    end
-  end
-  
   def init_input_data(options)
     @options = options
     @fq_tarif_region_id = options[:user_region_id] || 1133
-  end
-  
-  def init_optimization_params
-    @optimization_params = {:common => ['multiple_use_of_tarif_option', 'auto_turbo_buttons'], :onetime => [], :periodic => [], :calls => [], :sms => [], :internet => ['multiple_use_of_tarif_option']}
-#    @optimization_params = {:common => ['single_use_of_tarif_option'], :onetime => [], :periodic => [], :calls => [], :sms => [], :internet => ['single_use_of_tarif_option']}
-    @check_sql_before_running = false
-    @execute_additional_sql = false
-    @service_ids_batch_size = (options[:service_ids_batch_size] ? options[:service_ids_batch_size].to_i : 10)
   end
   
   def init_output_params(options)
@@ -54,91 +38,187 @@ class ServiceHelper::TarifOptimizator
     @output_call_ids_to_tarif_results = false; @output_call_count_to_tarif_results = false
   end
   
-  def calculate_all_operator_tarifs
-    tarif_list_generator.operators.each { |operator| calculate_one_operator_tarifs(operator) }
+  def init_additional_general_classes
+    @performance_checker = ServiceHelper::PerformanceChecker.new()
+    performance_checker.clean_history;
+    performance_checker.run_check_point('init_additional_general_classes', 1) do
+      @optimization_result_saver = ServiceHelper::OptimizationResultSaver.new()
+      @final_tarif_sets_saver = ServiceHelper::OptimizationResultSaver.new('final_tarif_sets')
+      @calls_stat_calculator = ServiceHelper::CallsStatCalculator.new()
+      @tarif_optimization_sql_builder = ServiceHelper::TarifOptimizationSqlBuilder.new(self)
+      @minor_result_saver = ServiceHelper::OptimizationResultSaver.new('minor_results')
+      @tarif_list_generator = ServiceHelper::TarifListGenerator.new(options[:services_by_operator] || {})
+      @controller = options[:controller]
+      @background_process_informer_operators = options[:background_process_informer_operators] || ServiceHelper::BackgroundProcessInformer.new('operators_optimization')
+      @background_process_informer_tarifs = options[:background_process_informer_tarifs] || ServiceHelper::BackgroundProcessInformer.new('tarifs_optimization')
+      @background_process_informer_tarif = options[:background_process_informer_tarif] || ServiceHelper::BackgroundProcessInformer.new('tarif_optimization')
+    end
   end
   
-  def calculate_one_operator_tarifs(operator)
-    performance_checker.run_check_point('calculate_one_operator_tarifs', 1) do      
-      init_input_for_one_operator_tarif_calculation(operator)      
+  def init_optimization_params
+    @optimization_params = {:common => ['multiple_use_of_tarif_option', 'auto_turbo_buttons'], :onetime => [], :periodic => [], :calls => [], :sms => [], :internet => ['multiple_use_of_tarif_option']}
+#    @optimization_params = {:common => ['single_use_of_tarif_option'], :onetime => [], :periodic => [], :calls => [], :sms => [], :internet => ['single_use_of_tarif_option']}
+    @check_sql_before_running = false
+    @execute_additional_sql = false
+    @service_ids_batch_size = (options[:service_ids_batch_size] ? options[:service_ids_batch_size].to_i : 10)
+  end
+  
+  def calculate_all_operator_tarifs
+    performance_checker.run_check_point('calculate_all_operator_tarifs', 1) do
+#      background_process_informer_tarif.clear_completed_process_info_model
+      background_process_informer_operators.init(0.0, tarif_list_generator.operators.size)
       
-      optimization_result_saver.clean_output_results; minor_result_saver.clean_output_results;
+      [optimization_result_saver, final_tarif_sets_saver, minor_result_saver].each {|saver| saver.clean_output_results} 
+
+      tarif_list_generator.operators.each do |operator| 
+        calculate_one_operator(operator) if !tarif_list_generator.tarifs[operator].blank?
+        background_process_informer_operators.increase_current_value(1)
+      end
+    end
+
+    minor_result_saver.save({:result => {:performance_results => performance_checker.show_stat_hash}})
+    minor_result_saver.save({:result => {:calls_stat => calls_stat_calculator.calculate_calls_stat(query_constructor)}})
+    tarif_list_generator.calculate_service_packs; tarif_list_generator.calculate_service_packs_by_parts
+    minor_result_saver.save({:result => {:service_packs_by_parts => tarif_list_generator.service_packs_by_parts}})
+
+    background_process_informer_operators.finish
+  end
+  
+  def calculate_one_operator(operator)
+    performance_checker.run_check_point('calculate_one_operator', 2) do      
+      background_process_informer_tarifs.init(0.0, tarif_list_generator.tarifs[operator].size )
       
-      performance_checker.run_check_point('calculate_calls_count_by_parts', 2) do
+      init_input_for_one_operator_calculation(operator)                
+      performance_checker.run_check_point('calculate_calls_count_by_parts', 3) do
         @calls_count_by_parts = calls_stat_calculator.calculate_calls_count_by_parts(query_constructor, 
           tarif_list_generator.uniq_parts_by_operator[operator], tarif_list_generator.uniq_parts_criteria_by_operator[operator])
-      end
+      end      
       
-      background_process_informer.init(0.0, tarif_list_generator.all_tarif_parts_count[operator])
+      tarif_list_generator.tarifs[operator].each do |tarif|
+        calculate_one_tarif(operator, tarif)
+        background_process_informer_tarifs.increase_current_value(1)
+      end        
+      background_process_informer_tarifs.finish
+    end
+  end 
+  
+  def init_input_for_one_operator_calculation(operator)
+    performance_checker.run_check_point('init_input_for_one_operator_calculation', 3) do
+      @fq_tarif_operator_id = operator#tarif_list_generator.operators[operator_index]
+      @operator_id = operator#tarif_list_generator.operators[operator_index]
+      performance_checker.run_check_point('@stat_function_collector', 4) do
+        @stat_function_collector = ServiceHelper::StatFunctionCollector.new(tarif_list_generator.all_services_by_operator[operator], optimization_params)
+      end
+      performance_checker.run_check_point('@query_constructor', 4) do
+        @query_constructor = ServiceHelper::QueryConstructor.new(self, {:tarif_class_ids => tarif_list_generator.all_services_by_operator[operator], 
+          :performance_checker => (analyze_query_constructor_performance ? performance_checker : nil)} )
+      end
+      performance_checker.run_check_point('@max_formula_order_collector', 4) do
+        @max_formula_order_collector = ServiceHelper::MaxPriceFormulaOrderCollector.new(tarif_list_generator.all_services_by_operator[operator], operator)
+      end
+    end
+  end
+  
+  def calculate_one_tarif(operator, tarif)
+    performance_checker.run_check_point('calculate_one_tarif', 3) do      
+      init_input_for_one_tarif_calculation(operator, tarif)  
+      
+      background_process_informer_tarif.init(0.0, tarif_list_generator.all_tarif_parts_count[operator])
   
       [tarif_list_generator.tarif_options_slices, tarif_list_generator.tarifs_slices].each do |service_slice| 
         calculate_tarif_results(operator, service_slice)
       end
       
       current_tarif_optimization_results.update_all_tarif_results_with_missing_prev_results
-      current_tarif_optimization_results.calculate_all_cons_tarif_results_by_parts
-      
-      save_tarif_results(operator)
-      
-      clean_memory
-      
-      performance_checker.run_check_point('calculate_final_tarif_sets', 2) do
-        tarif_list_generator.calculate_final_tarif_sets(current_tarif_optimization_results.cons_tarif_results)
+      current_tarif_optimization_results.calculate_all_cons_tarif_results_by_parts  
+          
+      save_tarif_results(operator, tarif)    
+
+      performance_checker.run_check_point('calculate_final_tarif_sets', 4) do
+        tarif_list_generator.calculate_final_tarif_sets(current_tarif_optimization_results.cons_tarif_results, current_tarif_optimization_results.tarif_results, operator, tarif)
       end
       
-      performance_checker.run_check_point('save_final_tarif_sets', 2) do
-        output = {operator.to_i => {:final_tarif_sets => tarif_list_generator.final_tarif_sets } } 
-        ServiceHelper::OptimizationResultSaver.new('final_tarif_sets').save(output)
+      performance_checker.run_check_point('save_final_tarif_sets', 4) do
+        final_tarif_sets_saver.save({:operator_id => operator.to_i, :tarif_id => tarif.to_i, :result => {:final_tarif_sets => tarif_list_generator.final_tarif_sets}})
       end
       
-      background_process_informer.finish
-    end
-    minor_result_saver.save({:calls_stat => calls_stat_calculator.calculate_calls_stat(query_constructor), :performance_results => performance_checker.show_stat_hash})
-  end 
-  
-  def init_input_for_one_operator_tarif_calculation(operator)
-    performance_checker.run_check_point('init_input_for_one_operator_tarif_calculation', 2) do
-      @optimization_result_saver = ServiceHelper::OptimizationResultSaver.new()
-      @minor_result_saver = ServiceHelper::OptimizationResultSaver.new('minor_results')
-      @calls_stat_calculator = ServiceHelper::CallsStatCalculator.new()
-      @tarif_optimization_sql_builder = ServiceHelper::TarifOptimizationSqlBuilder.new(self)
-      performance_checker.run_check_point('@tarif_list_generator', 3) do
-        @tarif_list_generator = ServiceHelper::TarifListGenerator.new(options[:services_by_operator] || {})
-      end
-      @current_tarif_optimization_results = ServiceHelper::CurrentTarifOptimizationResults.new(self)
-#    raise(StandardError, [simplify_tarif_results, options[:simplify_tarif_results]])
-      @fq_tarif_operator_id = operator#tarif_list_generator.operators[operator_index]
-      @operator_id = operator#tarif_list_generator.operators[operator_index]
-      performance_checker.run_check_point('@stat_function_collector', 3) do
-        @stat_function_collector = ServiceHelper::StatFunctionCollector.new(tarif_list_generator.all_services_by_operator[operator], optimization_params)
-      end
-      performance_checker.run_check_point('@query_constructor', 3) do
-        @query_constructor = ServiceHelper::QueryConstructor.new(self, {:tarif_class_ids => tarif_list_generator.all_services_by_operator[operator], 
-          :performance_checker => (analyze_query_constructor_performance ? performance_checker : nil)} )
-      end
-      @max_formula_order_collector = ServiceHelper::MaxPriceFormulaOrderCollector.new(tarif_list_generator, operator)
+      background_process_informer_tarif.finish
     end
   end
   
-  def save_tarif_results(operator)
+  def init_input_for_one_tarif_calculation(operator, tarif = nil)
+    performance_checker.run_check_point('init_input_for_one_tarif_calculation', 4) do
+      performance_checker.run_check_point('@tarif_list_generator', 3) do
+        tarif_list_generator.calculate_tarif_sets_and_slices(operator, tarif)
+      end
+      @current_tarif_optimization_results = ServiceHelper::CurrentTarifOptimizationResults.new(self)
+    end
+  end
+  
+  def save_tarif_results(operator, tarif = nil)
     output = {}
-    performance_checker.run_check_point('save_tarif_results', 2) do
-      output = {
-        operator.to_i => {
-          :operator => operator.to_i, 
-          :tarif_sets => tarif_list_generator.tarif_sets,
-          :cons_tarif_results => current_tarif_optimization_results.cons_tarif_results,
-          :cons_tarif_results_by_parts => current_tarif_optimization_results.cons_tarif_results_by_parts,
-          :tarif_results => current_tarif_optimization_results.tarif_results, 
-          :tarif_results_ord => (save_tarif_results_ord ? current_tarif_optimization_results.tarif_results_ord : {}), 
-          } } 
-
-      optimization_result_saver.save(output)
+    performance_checker.run_check_point('save_tarif_results', 4) do
+      optimization_result_saver.save({:operator_id => operator.to_i, :tarif_id => tarif.to_i, :result => {
+        :tarif_sets => tarif_list_generator.tarif_sets,
+        :cons_tarif_results => current_tarif_optimization_results.cons_tarif_results,
+        :cons_tarif_results_by_parts => current_tarif_optimization_results.cons_tarif_results_by_parts,
+        :tarif_results => current_tarif_optimization_results.tarif_results, 
+        :tarif_results_ord => (save_tarif_results_ord ? current_tarif_optimization_results.tarif_results_ord : {}), 
+        } } )
     end
 
-    performance_checker.run_check_point('memory_usage_analyze_for_output', 2) do      
-      minor_result_saver.save({:used_memory_by_output => calculate_used_memory(output)})
+    performance_checker.run_check_point('memory_usage_analyze_for_output', 4) do      
+      minor_result_saver.save({:result => {:used_memory_by_output => calculate_used_memory(output)}})
     end if analyze_memory_used    
+  end
+  
+  def calculate_tarif_results(operator, service_slice)
+    performance_checker.run_check_point('calculate_tarif_results', 5) do
+      service_slice_id = 0    
+      begin
+        break if !service_slice or !service_slice[operator] or !service_slice[operator][service_slice_id]
+        current_tarif_optimization_results.set_current_results(service_slice[operator][service_slice_id])
+        (max_formula_order_collector.max_order_by_operator + 1).times do |price_formula_order|
+          calculate_tarif_results_batches(price_formula_order)
+        end
+        service_slice_id += 1
+      end while current_tarif_optimization_results.service_ids_to_calculate and current_tarif_optimization_results.service_ids_to_calculate.count > 0
+    end
+  end
+  
+  def calculate_tarif_results_batches(price_formula_order)
+    performance_checker.run_check_point('calculate_tarif_results_batches', 6) do
+      batch_count = 1    
+      while batch_count <= ( current_tarif_optimization_results.service_ids_to_calculate.count / service_ids_batch_size + 1) 
+        batch_low_limit = service_ids_batch_size * (batch_count - 1)
+        batch_high_limit = [batch_low_limit + service_ids_batch_size - 1, current_tarif_optimization_results.service_ids_to_calculate.count - 1].min
+        
+        calculate_tarif_results_batch(batch_low_limit, batch_high_limit, price_formula_order)
+        
+        batch_count += 1
+        background_process_informer_tarif.increase_current_value(batch_high_limit - batch_low_limit + 1) 
+      end if current_tarif_optimization_results.service_ids_to_calculate
+    end
+  end
+  
+  def calculate_tarif_results_batch(batch_low_limit, batch_high_limit, price_formula_order)
+    performance_checker.run_check_point('calculate_tarif_results_batch', 7) do
+      sql = ""
+      performance_checker.run_check_point('calculate_service_part_sql', 8) do
+        sql = tarif_optimization_sql_builder.calculate_service_part_sql(current_tarif_optimization_results.service_ids_to_calculate[batch_low_limit..batch_high_limit], price_formula_order)
+      end
+      executed_tarif_result_batch_sql = execute_tarif_result_batch_sql(sql)  
+      performance_checker.run_check_point('process_tarif_results_batch', 8) do
+        current_tarif_optimization_results.process_tarif_results_batch(executed_tarif_result_batch_sql, price_formula_order)
+      end   
+    end
+  end
+  
+  def execute_tarif_result_batch_sql(sql)
+    performance_checker.run_check_point('execute_tarif_result_batch_sql', 8) do
+      tarif_optimization_sql_builder.check_sql(sql, current_tarif_optimization_results.service_ids_to_calculate.count, sql.split(' ').size)
+      Customer::Call.find_by_sql(sql) unless sql.blank?
+    end
   end
   
   def calculate_used_memory(output)
@@ -160,60 +240,10 @@ class ServiceHelper::TarifOptimizator
       :max_formula_order_collector => General::MemoryUsage.analyze(@max_formula_order_collector),
       :performance_checker => General::MemoryUsage.analyze(@performance_checker),
       :controller => General::MemoryUsage.analyze(@controller),
-      :background_process_informer => General::MemoryUsage.analyze(@background_process_informer),
+      :background_process_informer_operators => General::MemoryUsage.analyze(@background_process_informer_operators),
+      :background_process_informer_tarifs => General::MemoryUsage.analyze(@background_process_informer_tarifs),
+      :background_process_informer_tarif => General::MemoryUsage.analyze(@background_process_informer_tarif),
     }
-  end
-  
-  def clean_memory
-    current_tarif_optimization_results = nil 
-#TODO    tarif_optimization_sql_builder = nil #очищать только если для разных операторов вводятся разные данные
-    current_tarif_optimization_results = nil
-    query_constructor = nil
-    max_formula_order_collector = nil
-  end
-  
-  def calculate_tarif_results(operator, service_slice)
-    performance_checker.run_check_point('calculate_tarif_results', 2) do
-      service_slice_id = 0    
-      begin
-        break if !service_slice or !service_slice[operator] or !service_slice[operator][service_slice_id]
-        current_tarif_optimization_results.set_current_results(service_slice[operator][service_slice_id])
-        (max_formula_order_collector.max_order_by_operator + 1).times do |price_formula_order|
-          calculate_tarif_results_batches(price_formula_order)
-        end
-        service_slice_id += 1
-      end while current_tarif_optimization_results.service_ids_to_calculate and current_tarif_optimization_results.service_ids_to_calculate.count > 0
-    end
-  end
-  
-  def calculate_tarif_results_batches(price_formula_order)
-    performance_checker.run_check_point('calculate_tarif_results_batches', 3) do
-      batch_count = 1    
-      while batch_count <= ( current_tarif_optimization_results.service_ids_to_calculate.count / service_ids_batch_size + 1) 
-        batch_low_limit = service_ids_batch_size * (batch_count - 1)
-        batch_high_limit = [batch_low_limit + service_ids_batch_size - 1, current_tarif_optimization_results.service_ids_to_calculate.count - 1].min
-        
-        calculate_tarif_results_batch(batch_low_limit, batch_high_limit, price_formula_order)
-        
-        batch_count += 1
-        background_process_informer.increase_current_value(batch_high_limit - batch_low_limit + 1) 
-      end if current_tarif_optimization_results.service_ids_to_calculate
-    end
-  end
-  
-  def calculate_tarif_results_batch(batch_low_limit, batch_high_limit, price_formula_order)
-    performance_checker.run_check_point('calculate_tarif_results_batch', 4) do
-      sql = tarif_optimization_sql_builder.calculate_service_part_sql(current_tarif_optimization_results.service_ids_to_calculate[batch_low_limit..batch_high_limit], price_formula_order)
-      executed_tarif_result_batch_sql = execute_tarif_result_batch_sql(sql)     
-      current_tarif_optimization_results.process_tarif_results_batch(executed_tarif_result_batch_sql, price_formula_order)
-    end
-  end
-  
-  def execute_tarif_result_batch_sql(sql)
-    performance_checker.run_check_point('execute_tarif_result_batch_sql', 5) do
-      tarif_optimization_sql_builder.check_sql(sql, current_tarif_optimization_results.service_ids_to_calculate.count, sql.split(' ').size)
-      Customer::Call.find_by_sql(sql) unless sql.blank?
-    end
   end
   
   module Helper

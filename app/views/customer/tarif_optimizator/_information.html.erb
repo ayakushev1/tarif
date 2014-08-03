@@ -22,6 +22,7 @@ content_in :accordion do |user|
     [
      'Performance results',
      render(:partial => 'performance_results', :layout => 'application/layouts/model_table', :locals => {:table => controller.performance_results}) +	
+     render(:partial => 'service_packs_by_parts', :layout => 'application/layouts/model_table', :locals => {:table => controller.service_packs_by_parts}) +	
      render(:partial => 'memory_used', :layout => 'application/layouts/model_table', :locals => {:table => controller.memory_used})	
     ], 
   ] 

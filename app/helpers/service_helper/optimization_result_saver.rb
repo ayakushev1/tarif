@@ -2,7 +2,7 @@ class ServiceHelper::OptimizationResultSaver
   attr_reader :name, :output_model
   def initialize(name = nil)
     @name = name || 'default_output_results_name'
-    @output_model = Customer::Stat.where("(result->'#{@name}') is not null")
+    @output_model = Customer::Stat.where(:result_type => 'optimization_results').where(:result_name => @name)
   end
   
   def clean_output_results
@@ -10,21 +10,20 @@ class ServiceHelper::OptimizationResultSaver
   end
   
   def save(output)
-    result = if output_model.exists?
-      merged_output = results ? results.merge(output) : output
-      output_model.update_all({:result => {@name => merged_output } })#, "(result->'#{@name}') is not null" )    
-#      output_model.update_attributes!({:result => {name => merged_output } } )    
+    where_hash = {:operator_id => output[:operator], :tarif_id => output[:tarif]} if output
+    model_to_save = output_model.where(where_hash)
+    result = if model_to_save.exists?
+#     raise(StandardError, [results.keys, output.keys])
+      merged_output = results ? {:result => results.merge(output[:result])} : output
+      model_to_save.first.update_attributes!(merged_output)    
     else
-      output_model.create({:result => {name => output} } )    
+      model_to_save.create({:result_type => 'optimization_results', :result_name => name}.merge(output) )    
     end    
-#    raise(StandardError, results.keys)
     result
   end
   
   def results
-    result = output_model.select("result->'#{name}' as #{name}").first
-#    raise(StandardError, result.attributes[name].keys) if result
-#    result
+    result = output_model.select("result as #{name}").first
     result.attributes[name] if result
   end
 end

@@ -38,8 +38,9 @@ describe ServiceHelper::TarifListGenerator do
   end
   
   it 'must return' do
+    tarif = 200
 #      @trg.tarif_options_slices[1030].map{|s| s[:ids].size}.sum.must_be :==, @trg.tarifs_slices[1030].map{|s| s[:ids].size}.sum
-    @trg.tarif_sets[200].map{|c| {c[0] => c[1].keys.size}}.must_be :==, 1, @trg.tarif_option_combinations[200].map{|c| {c[0] => c[1].keys.size}}.join("\n")
+    @trg.tarif_sets[tarif].map{|c| {c[0] => c[1].keys.size}}.must_be :==, 1, @trg.tarif_option_combinations[tarif].map{|c| {c[0] => c[1].keys.size}}.join("\n")
 #      @trg.final_tarif_sets.keys.must_be :==, 11, @trg.tarif_sets[200]#@trg.final_tarif_sets.size
     @trg.final_tarif_sets.keys[0..10].must_be :==, @trg.final_tarif_sets.size
 #      @trg.final_tarif_sets.keys.count.must_be :==, 11, @trg.final_tarif_sets.size

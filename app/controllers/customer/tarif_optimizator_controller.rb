@@ -4,7 +4,7 @@ class Customer::TarifOptimizatorController < ApplicationController
   before_action :check_if_optimization_options_are_in_session, only: [:index]
   before_action :validate_tarifs, only: [:index, :recalculate]
   before_action :init_background_process_informer, only: [:tarif_optimization_progress_bar, :calculation_status, :recalculate, :index]
-  attr_reader :operator, :background_process_informer#, :optimization_result_presenter
+  attr_reader :operator, :background_process_informer_operators, :background_process_informer_tarifs, :background_process_informer_tarif
 
   def select_services
     process_selecting_services
@@ -12,7 +12,7 @@ class Customer::TarifOptimizatorController < ApplicationController
   end
   
   def calculation_status
-    if !background_process_informer.calculating?      
+    if !background_process_informer_operators.calculating?      
       redirect_to(:action => :index)
     end
   end
@@ -20,24 +20,28 @@ class Customer::TarifOptimizatorController < ApplicationController
   def recalculate
     session[:filtr1] = {}   
     if service_choices.session_filtr_params['calculate_on_background'] == 'true'
-      background_process_informer.clear_completed_process_info_model
-      background_process_informer.init
+      [background_process_informer_operators, background_process_informer_tarifs, background_process_informer_tarif].each do |background_process_informer|
+        background_process_informer.clear_completed_process_info_model
+        background_process_informer.init
+      end
+      
       Spawnling.new(:argv => 'tarif_optimization') do
         begin
           @tarif_optimizator = ServiceHelper::TarifOptimizator.new(options)
-#          raise(StandardError, 'check')
-          @tarif_optimizator.calculate_one_operator_tarifs(operator)
+          @tarif_optimizator.calculate_all_operator_tarifs
         rescue => e
           ServiceHelper::OptimizationResultSaver.new('Error on optimization').save({:error => e})
           raise(e)
         ensure
-          background_process_informer.finish
+          [@background_process_informer_operators, @background_process_informer_tarifs, @background_process_informer_tarif].each do |background_process_informer|
+            background_process_informer.finish
+          end          
         end            
       end     
       redirect_to(:action => :calculation_status)
     else
       @tarif_optimizator = ServiceHelper::TarifOptimizator.new(options)
-      final_tarif_sets = @tarif_optimizator.calculate_one_operator_tarifs(operator)
+      @tarif_optimizator.calculate_all_operator_tarifs #calculate_one_operator_tarifs(operator)
       redirect_to(:action => :index)
     end
   end 
@@ -76,16 +80,30 @@ class Customer::TarifOptimizatorController < ApplicationController
     ArrayOfHashable.new(self, minor_result_presenter.performance_results )    
   end
   
+  def service_packs_by_parts
+    ArrayOfHashable.new(self, minor_result_presenter.service_packs_by_parts_array )    
+  end
+  
   def memory_used
     ArrayOfHashable.new(self, minor_result_presenter.used_memory_by_output )    
   end
   
+  def operators_optimization_progress_bar
+    ProgressBarable.new(self, 'operators_optimization', background_process_informer_operators.current_values)
+  end
+  
+  def tarifs_optimization_progress_bar
+    ProgressBarable.new(self, 'tarifs_optimization', background_process_informer_tarifs.current_values)
+  end
+  
   def tarif_optimization_progress_bar
-    ProgressBarable.new(self, 'tarif_optimization', background_process_informer.current_values)
+    ProgressBarable.new(self, 'tarif_optimization', background_process_informer_tarif.current_values)
   end
   
   def init_background_process_informer
-    @background_process_informer = ServiceHelper::BackgroundProcessInformer.new('tarif_optimization')
+    @background_process_informer_operators ||= ServiceHelper::BackgroundProcessInformer.new('operators_optimization')
+    @background_process_informer_tarifs ||= ServiceHelper::BackgroundProcessInformer.new('tarifs_optimization')
+    @background_process_informer_tarif ||= ServiceHelper::BackgroundProcessInformer.new('tarif_optimization')
   end
   
   def optimization_result_presenter
@@ -111,8 +129,9 @@ class Customer::TarifOptimizatorController < ApplicationController
   
   def options
   {:controller => self,
-   :background_process_informer => background_process_informer,    
-   :save_tarif_results => service_choices.session_filtr_params['save_tarif_results'], 
+   :background_process_informer_operators => @background_process_informer_operators,        
+   :background_process_informer_tarifs => @background_process_informer_tarifs,        
+   :background_process_informer_tarif => @background_process_informer_tarif,        
    :simplify_tarif_results => service_choices.session_filtr_params['simplify_tarif_results'], 
    :save_tarif_results_ord => service_choices.session_filtr_params['save_tarif_results_ord'], 
    :analyze_memory_used => service_choices.session_filtr_params['analyze_memory_used'], 
@@ -122,6 +141,7 @@ class Customer::TarifOptimizatorController < ApplicationController
       :operators => [operator], :tarifs => {operator => tarifs}, :tarif_options => {operator => tarif_options}, 
       :common_services => {operator => common_services}, 
       :use_short_tarif_set_name => service_choices.session_filtr_params['use_short_tarif_set_name'], 
+      :calculate_with_multiple_use => service_choices.session_filtr_params['calculate_with_multiple_use'],
       :if_update_tarif_sets_to_calculate_from_with_cons_tarif_results => service_choices.session_filtr_params['if_update_tarif_sets_to_calculate_from_with_cons_tarif_results'],
       :max_final_tarif_set_number => service_choices.session_filtr_params['max_final_tarif_set_number']
       } 
@@ -150,7 +170,7 @@ class Customer::TarifOptimizatorController < ApplicationController
         'calculate_on_background' => 'true',
         'service_set_based_on_tarif_sets_or_tarif_results' => 'final_tarif_sets',
         'operator_id' => 1030,
-        'save_tarif_results' => 'true',
+        'calculate_with_multiple_use' => 'true',
         'simplify_tarif_results' => 'true',
         'save_tarif_results_ord' => 'false',
         'analyze_memory_used' => 'false',

@@ -9,7 +9,7 @@ describe ServiceHelper::TarifOptimizator do
         }})
 #    @tarif_optimizator = ServiceHelper::TarifOptimizator.new({:services_by_operator => {:operators => [1030], :tarifs => {1030 => []} } } )
 #    @tarif_optimizator = ServiceHelper::TarifOptimizator.new({:services_by_operator => {:operators => [1030], :tarifs => {1030 => [200]} } } )
-    @tarif_optimizator.calculate_one_operator_tarifs(_mts)
+    @tarif_optimizator.calculate_all_operator_tarifs #calculate_one_operator_tarifs(_mts)
 #    @tarif_results = @tarif_optimizator.tarif_option_stat_results
   end
   

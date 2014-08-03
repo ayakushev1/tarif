@@ -5,7 +5,7 @@ class ServiceHelper::OptimizationResultPresenter
   def initialize(operator, options = {}, input = nil, name = nil)
     @operator = operator
     @name = name || 'default_output_results_name'
-    @output_model = Customer::Stat.where("(result->'#{@name}') is not null")
+    @output_model = Customer::Stat.where(:result_type => 'optimization_results').where(:result_name => @name)
     init_results(input)
     init_output_choices(options)
   end
@@ -14,14 +14,22 @@ class ServiceHelper::OptimizationResultPresenter
     if input
       @results = input[name]       
     else
-      @results = output_model.select("result->'#{name}' as #{name}").first
-      @results = results.attributes[name] if results
+      @results ||= {}
+      output_model.select("result as #{name}").each do |result_item|
+        result_item.attributes[name].each do |result_type, result_value|
+#          raise(StandardError, [result_value, result_type, name])
+          if result_value.is_a?(Hash)
+            @results[result_type] ||= {}
+            @results[result_type].merge!(result_value)
+          else
+            @results[result_type] = result_value
+          end
+        end
+      end
     end
-    
   end
   
   def init_output_choices(options = {})
-#    raise(StandardError, [options, options[:service_set_based_on_tarif_sets_or_tarif_results]])
     @service_set_based_on_tarif_sets_or_tarif_results = options[:service_set_based_on_tarif_sets_or_tarif_results]
     @level_to_show_tarif_result_by_parts = options[:show_zero_tarif_result_by_parts] == 'true' ? -1.0 : 0.0
   end
@@ -249,35 +257,60 @@ class ServiceHelper::OptimizationResultPresenter
       r['price_value'].to_f > level_to_show_tarif_result_by_parts}.compact
   end
   
-  def final_tarif_sets
-    name = 'final_tarif_sets'
-    local_results = Customer::Stat.where("(result->'#{name}') is not null").select("result->'#{name}' as #{name}").first
-#    raise(StandardError, local_results.attributes)
-    local_results['final_tarif_sets'][operator.to_s]['final_tarif_sets'] if local_results and local_results['final_tarif_sets'] and local_results['final_tarif_sets'][operator.to_s]
+  def service_packs_by_parts_array
+    result = []
+    service_packs_by_parts.each do |tarif, services_by_tarif|
+      temp_result = {:tarif => tarif}
+      services_by_tarif.each do |part, services|
+        temp_result.merge!({part => services.size})
+      end
+      result << temp_result
+    end if service_packs_by_parts
+    result
   end
   
+  def final_tarif_sets
+    name = 'final_tarif_sets'    
+    local_results ||= {}
+    Customer::Stat.where(:result_type => 'optimization_results').where(:result_name => name).select("result as #{name}").each do |result_item|
+      result_item.attributes[name].each do |result_type, result_value|
+        if result_value.is_a?(Hash)
+          local_results[result_type] ||= {}
+          local_results[result_type].merge!(result_value)
+        else
+          local_results[result_type] = result_value
+        end
+      end
+    end
+    local_results[name] if local_results
+  end
+
   def tarif_sets
-    results[operator.to_s]['tarif_sets'] if results and results[operator.to_s]
+    results['tarif_sets'] if results
   end
   
   def tarif_results
-    results[operator.to_s]['tarif_results'] if results and results[operator.to_s] 
+    results['tarif_results'] if results    
   end
   
   def cons_tarif_results
-    results[operator.to_s]['cons_tarif_results'] if results and results[operator.to_s]
+    results['cons_tarif_results'] if results
   end
 
   def cons_tarif_results_by_parts
-    results[operator.to_s]['cons_tarif_results_by_parts'] if results and results[operator.to_s]
+    results['cons_tarif_results_by_parts'] if results
   end
   
   def tarif_results_ord
-    results[operator.to_s]['tarif_results_ord'] if results and results[operator.to_s]
+    results['tarif_results_ord'] if results
   end
   
   def calls_stat
     results['calls_stat'] if results
+  end
+  
+  def service_packs_by_parts
+    results['service_packs_by_parts'] if results
   end
   
   def used_memory_by_output
