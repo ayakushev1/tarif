@@ -6,6 +6,13 @@ class Customer::TarifOptimizatorController < ApplicationController
   before_action :init_background_process_informer, only: [:tarif_optimization_progress_bar, :calculation_status, :recalculate, :index]
   attr_reader :operator, :background_process_informer_operators, :background_process_informer_tarifs, :background_process_informer_tarif
 
+  def update_minor_results
+    @tarif_optimizator = ServiceHelper::TarifOptimizator.new(options)
+    @tarif_optimizator.init_input_for_one_operator_calculation(operator)
+    @tarif_optimizator.update_minor_results
+    redirect_to(:action => :index)
+  end
+  
   def select_services
     process_selecting_services
     redirect_to(:action => :index)

@@ -77,11 +77,15 @@ class ServiceHelper::TarifOptimizator
     end
 
     minor_result_saver.save({:result => {:performance_results => performance_checker.show_stat_hash}})
+    update_minor_results
+
+    background_process_informer_operators.finish
+  end
+  
+  def update_minor_results
     minor_result_saver.save({:result => {:calls_stat => calls_stat_calculator.calculate_calls_stat(query_constructor)}})
     tarif_list_generator.calculate_service_packs; tarif_list_generator.calculate_service_packs_by_parts
     minor_result_saver.save({:result => {:service_packs_by_parts => tarif_list_generator.service_packs_by_parts}})
-
-    background_process_informer_operators.finish
   end
   
   def calculate_one_operator(operator)

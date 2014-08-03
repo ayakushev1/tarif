@@ -1,0 +1,19 @@
+<%
+
+content_in :accordion do |user| 
+  [
+    [
+     'Calls statistics',
+     link_to('Update calls stat', customer_tarif_optimizator_update_minor_results_path ) + 
+     render(:partial => 'calls_stat_options', :layout => 'application/layouts/filtr_form', :locals => {:form_item => controller.calls_stat_options, :html => {:class => "form-inline"}} ) +
+     render(:partial => 'calls_stat', :layout => 'application/layouts/model_table', :locals => {:table => controller.calls_stat})	
+    ], 
+    [
+     'Performance results',
+     render(:partial => 'performance_results', :layout => 'application/layouts/model_table', :locals => {:table => controller.performance_results}) +	
+     render(:partial => 'service_packs_by_parts', :layout => 'application/layouts/model_table', :locals => {:table => controller.service_packs_by_parts}) +	
+     render(:partial => 'memory_used', :layout => 'application/layouts/model_table', :locals => {:table => controller.memory_used})	
+    ], 
+  ] 
+end
+%>
