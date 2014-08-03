@@ -10,7 +10,7 @@ class Customer::TarifOptimizatorController < ApplicationController
     @tarif_optimizator = ServiceHelper::TarifOptimizator.new(options)
     @tarif_optimizator.init_input_for_one_operator_calculation(operator)
     @tarif_optimizator.update_minor_results
-    redirect_to(:action => :index)
+    redirect_to(:action => :show_additional_info)
   end
   
   def select_services

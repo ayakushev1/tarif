@@ -2,7 +2,7 @@
 form_item.init do |f|
 #  f.caption = "Choice of service"	
   f.set_fields do |filtr_name|
-    html_options = {:action_name => customer_tarif_optimizator_index_path }
+    html_options = {:action_name => customer_tarif_optimizator_show_additional_info_path }
     s = f.session_filtr_params
     #raise(StandardError, select(filtr_name, "rouming", [["show", true], ["not show", false]], {:selected => s["rouming"]}, html_options ))
 	
