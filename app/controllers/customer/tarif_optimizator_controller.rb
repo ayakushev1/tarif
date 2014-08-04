@@ -11,6 +11,7 @@ class Customer::TarifOptimizatorController < ApplicationController
     @tarif_optimizator.init_input_for_one_operator_calculation(operator)
 #    @tarif_optimizator.calculate_tarif_sets_and_slices(operator, 203)
     @tarif_optimizator.update_minor_results
+    @tarif_optimizator.calculate_and_save_final_tarif_sets
     redirect_to(:action => :show_additional_info)
   end
   

@@ -15,7 +15,7 @@ class ServiceHelper::TarifListGenerator
     @options = options
     @operators = (!options[:operators].blank? ? options[:operators] : [1025, 1028, 1030])
     @tarifs = (options and options[:tarifs] and !options[:tarifs][1030].blank?) ? options[:tarifs] : {1025 => [], 1028 => [], 1030 => [
-        200, 203#202, #203, 204, 205,#_mts_red_energy, _mts_smart, _mts_smart_mini, _mts_smart_plus, _mts_ultra, _mts_mts_connect_4
+        200, #203#202, #203, 204, 205,#_mts_red_energy, _mts_smart, _mts_smart_mini, _mts_smart_plus, _mts_ultra, _mts_mts_connect_4
         #200, 201, 202, 203, 204, 205,#_mts_red_energy, _mts_smart, _mts_smart_mini, _mts_smart_plus, _mts_ultra, _mts_mts_connect_4
         #206, 207, 208, 210,# 209, #_mts_mayak, _mts_your_country, _mts_super_mts, _mts_umnyi_dom, _mts_super_mts_star
         ]} 
@@ -27,8 +27,8 @@ class ServiceHelper::TarifListGenerator
     @tarif_options = (options and options[:tarif_options] and !options[:tarif_options][1030].blank?) ? options[:tarif_options] : {1025 => [], 1028 => [], 1030 => [
         #294, 329, 309, 304,
         #283,
-        328, 329, 330, 331, 332,#_mts_region, _mts_95_cop_in_moscow_region, _mts_unlimited_calls, _mts_call_free_to_mts_russia_100, _mts_zero_to_mts, #calls
-        281, 309, 293, #_mts_love_country, _mts_love_country_all_world, _mts_outcoming_calls_from_11_9_rur, #calls_abroad
+        #328, 329, 330, 331, 332,#_mts_region, _mts_95_cop_in_moscow_region, _mts_unlimited_calls, _mts_call_free_to_mts_russia_100, _mts_zero_to_mts, #calls
+        #281, 309, 293, #_mts_love_country, _mts_love_country_all_world, _mts_outcoming_calls_from_11_9_rur, #calls_abroad
         #294, 282, 283, 297, #_mts_everywhere_as_home, _mts_everywhere_as_home_Ultra, _mts_everywhere_as_home_smart, _mts_incoming_travelling_in_russia, #country_rouming
         #321, 322, #_mts_additional_minutes_150, _mts_additional_minutes_300, #country_rouming
         #288, 289, 290, 291, 292, #_mts_zero_without_limits, _mts_bit_abroad, _mts_maxi_bit_abroad, _mts_super_bit_abroad, _mts_100mb_in_latvia_and_litva, #international_rouming
@@ -477,6 +477,7 @@ class ServiceHelper::TarifListGenerator
   def calculate_final_tarif_sets(cons_tarif_results = {}, tarif_results = {}, operator_1 = nil, tarif_1 = nil)
     @final_tarif_sets = {}
     tarif_sets_to_calculate_from = @calculate_final_tarif_sets_first_without_common_services ? tarif_sets_without_common_services : tarif_sets
+#    raise(StandardError, [tarif_sets_to_calculate_from.keys])      
     tarif_sets_to_calculate_from = update_tarif_sets_to_calculate_from_with_cons_tarif_results(
       tarif_sets_to_calculate_from, cons_tarif_results, tarif_results) if if_update_tarif_sets_to_calculate_from_with_cons_tarif_results
     (operator_1 ? [operator_1] : operators).each do |operator|     
@@ -566,7 +567,7 @@ class ServiceHelper::TarifListGenerator
         end
         updated_tarif_sets[tarif].extract!(part) if updated_tarif_sets[tarif][part].blank?
       end
-    end
+    end if tarif_sets_to_calculate_from
     
     updated_tarif_sets
   end
@@ -580,7 +581,7 @@ class ServiceHelper::TarifListGenerator
         services = tarif_set_id.split('_').map(&:to_i)
         sub_tarif_sets_with_zero_results += (services - sub_tarif_sets_with_zero_results) if (services & depended_on_services).blank?
       end
-    end    
+    end if cons_tarif_results  
 #    raise(StandardError, [sub_tarif_sets_with_zero_results_0, services_that_depended_on])
     sub_tarif_sets_with_zero_results
   end
@@ -603,7 +604,7 @@ class ServiceHelper::TarifListGenerator
         new_tarif_set_id = tarif_set_id(new_services)
         sub_tarif_sets_with_zero_results << tarif_set_id if !tarif_results(new_tarif_set_id).blank?
       end
-    end    
+    end if tarif_results
     sub_tarif_sets_with_zero_results
   end
   

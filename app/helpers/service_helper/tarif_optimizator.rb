@@ -88,6 +88,17 @@ class ServiceHelper::TarifOptimizator
     minor_result_saver.save({:result => {:service_packs_by_parts => tarif_list_generator.service_packs_by_parts}})
   end
   
+  def calculate_and_save_final_tarif_sets
+    tarif_list_generator.operators.each do |operator|
+      tarif_list_generator.tarifs[operator].each do |tarif|
+        tarif_list_generator.calculate_tarif_sets_and_slices(operator, tarif)
+        tarif_results = optimization_result_saver.results({:operator_id => operator, :tarif_id => tarif})['tarif_results']
+        tarif_list_generator.calculate_final_tarif_sets(tarif_results, tarif_results, operator, tarif)
+        final_tarif_sets_saver.save({:operator_id => operator.to_i, :tarif_id => tarif.to_i, :result => {:final_tarif_sets => tarif_list_generator.final_tarif_sets}})
+      end
+    end
+  end
+  
   def calculate_one_operator(operator)
     performance_checker.run_check_point('calculate_one_operator', 2) do      
       background_process_informer_tarifs.init(0.0, tarif_list_generator.tarifs[operator].size )

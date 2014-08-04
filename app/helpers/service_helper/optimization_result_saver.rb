@@ -22,8 +22,8 @@ class ServiceHelper::OptimizationResultSaver
     result
   end
   
-  def results
-    result = output_model.select("result as #{name}").first
+  def results(where_hash = {})
+    result = output_model.where(where_hash).select("result as #{name}").first
     result.attributes[name] if result
   end
 end
