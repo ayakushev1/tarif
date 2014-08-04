@@ -139,11 +139,11 @@ class ServiceHelper::TarifOptimizator
       save_tarif_results(operator, tarif)    
 
       performance_checker.run_check_point('calculate_final_tarif_sets', 4) do
-        tarif_list_generator.calculate_final_tarif_sets(current_tarif_optimization_results.cons_tarif_results, current_tarif_optimization_results.tarif_results, operator, tarif)
+#        tarif_list_generator.calculate_final_tarif_sets(current_tarif_optimization_results.cons_tarif_results, current_tarif_optimization_results.tarif_results, operator, tarif)
       end
       
       performance_checker.run_check_point('save_final_tarif_sets', 4) do
-        final_tarif_sets_saver.save({:operator_id => operator.to_i, :tarif_id => tarif.to_i, :result => {:final_tarif_sets => tarif_list_generator.final_tarif_sets}})
+#        final_tarif_sets_saver.save({:operator_id => operator.to_i, :tarif_id => tarif.to_i, :result => {:final_tarif_sets => tarif_list_generator.final_tarif_sets}})
       end
       
       background_process_informer_tarif.finish
@@ -152,7 +152,7 @@ class ServiceHelper::TarifOptimizator
   
   def init_input_for_one_tarif_calculation(operator, tarif = nil)
     performance_checker.run_check_point('init_input_for_one_tarif_calculation', 4) do
-      performance_checker.run_check_point('@tarif_list_generator', 3) do
+      performance_checker.run_check_point('@tarif_list_generator', 5) do
         tarif_list_generator.calculate_tarif_sets_and_slices(operator, tarif)
       end
       @current_tarif_optimization_results = ServiceHelper::CurrentTarifOptimizationResults.new(self)
