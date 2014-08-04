@@ -426,12 +426,17 @@ class ServiceHelper::TarifListGenerator
         
         services_that_depended_on_service_ids = services_that_depended_on.keys.map(&:to_i) 
         tarif_sets_without_common_services[tarif]['periodic'] ||= {}
-        tarif_sets_without_common_services[tarif].each do |part, tarif_sets_without_common_services_by_part|          
+        tarif_sets_without_common_services[tarif].each do |part, tarif_sets_without_common_services_by_part|    
+          next if part == 'periodic'      
           tarif_sets_without_common_services_by_part.each do |tarif_set_id, services|
             (services_that_depended_on_service_ids & services).each do |main_depended_service|
               new_periodic_services = [main_depended_service] + services_that_depended_on[main_depended_service]
               new_tarif_set_id = tarif_set_id(new_periodic_services)
-              tarif_sets_without_common_services[tarif]['periodic'][new_tarif_set_id] = new_periodic_services              
+#              begin
+              tarif_sets_without_common_services[tarif]['periodic'][new_tarif_set_id] = new_periodic_services
+#              rescue => e
+#                raise(e, [operator, tarif, new_periodic_services, tarif_sets_without_common_services[tarif]['periodic'].keys])#.join("\n"))
+#              end              
             end
           end
         end
