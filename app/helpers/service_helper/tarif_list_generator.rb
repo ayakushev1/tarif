@@ -435,7 +435,7 @@ class ServiceHelper::TarifListGenerator
 #              begin
               tarif_sets_without_common_services[tarif]['periodic'][new_tarif_set_id] = new_periodic_services
 #              rescue => e
-#                raise(e, [operator, tarif, new_periodic_services, tarif_sets_without_common_services[tarif]['periodic'].keys])#.join("\n"))
+#                raise(e, [operator, tarif, new_periodic_services, services_that_depended_on, tarif_sets_without_common_services[tarif]['periodic'].keys])#.join("\n"))
 #              end              
             end
           end

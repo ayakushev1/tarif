@@ -15,6 +15,7 @@ module Calls::Generation
       @initial_inputs = set_initial_inputs
       self.extend Helper
       @a = _operators
+#      raise(StandardError, [customer_calls_generation_params, user_params, common_params, initial_inputs].join("\n\n"))
     end
     
     def generate_calls#(params_to_search_optimal_tarif)
@@ -293,8 +294,9 @@ module Calls::Generation
       own_reg = p[:own_region]["share_of_time_in_own_region"].to_f
       home_reg = own_reg + p[:own_region]["share_of_time_in_home_region"].to_f
       country_reg = home_reg + p[:own_region]["share_of_time_in_own_country"].to_f
+      abroad = country_reg + p[:own_region]["share_of_time_in_own_country"].to_f
       
-      case rand 
+      case rand * abroad
       when 0..own_reg
         :own_region
       when own_reg..home_reg
