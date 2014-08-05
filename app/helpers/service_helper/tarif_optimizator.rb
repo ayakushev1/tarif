@@ -150,11 +150,11 @@ class ServiceHelper::TarifOptimizator
       save_tarif_results(operator, tarif)    
 
       performance_checker.run_check_point('calculate_final_tarif_sets', 4) do
-#        tarif_list_generator.calculate_final_tarif_sets(current_tarif_optimization_results.cons_tarif_results, current_tarif_optimization_results.tarif_results, operator, tarif)
+        tarif_list_generator.calculate_final_tarif_sets(current_tarif_optimization_results.cons_tarif_results, current_tarif_optimization_results.tarif_results, operator, tarif)
       end
       
       performance_checker.run_check_point('save_final_tarif_sets', 4) do
-#        final_tarif_sets_saver.save({:operator_id => operator.to_i, :tarif_id => tarif.to_i, :result => {:final_tarif_sets => tarif_list_generator.final_tarif_sets}})
+        final_tarif_sets_saver.save({:operator_id => operator.to_i, :tarif_id => tarif.to_i, :result => {:final_tarif_sets => tarif_list_generator.final_tarif_sets}})
       end
       
       background_process_informer_tarif.finish
