@@ -554,7 +554,7 @@ class ServiceHelper::TarifListGenerator
   def update_tarif_sets_to_calculate_from_with_cons_tarif_results(tarif_sets_to_calculate_from, cons_tarif_results, tarif_results)
 #    raise(StandardError, [cons_tarif_results])
     sub_tarif_sets_with_zero_results_0 = calculate_sub_tarif_sets_with_zero_results_0(cons_tarif_results)
-    sub_tarif_sets_with_zero_results_1 = calculate_sub_tarif_sets_with_zero_results_1(tarif_results)
+#    sub_tarif_sets_with_zero_results_1 = calculate_sub_tarif_sets_with_zero_results_1(tarif_results)
     
     updated_tarif_sets = {}
     tarif_sets_to_calculate_from.each do |tarif, tarif_sets_to_calculate_from_by_tarif|
@@ -564,6 +564,7 @@ class ServiceHelper::TarifListGenerator
         updated_tarif_sets[tarif][part] ||= {}
         tarif_sets_to_calculate_from_by_tarif_by_part.each do |tarif_set_id, services|
           if (services & sub_tarif_sets_with_zero_results_0).blank?
+            sub_tarif_sets_with_zero_results_1 = calculate_sub_tarif_sets_with_zero_results_1(tarif_results, tarif_set_id)
             updated_tarif_sets[tarif][part][tarif_set_id] = services if !sub_tarif_sets_with_zero_results_1.include?(tarif_set_id)
           end
           raise(StandardError, [sub_tarif_sets_with_zero_results_1]) if tarif_set_id == '200_294_329_309_304_'
@@ -589,9 +590,10 @@ class ServiceHelper::TarifListGenerator
     sub_tarif_sets_with_zero_results
   end
   
-  def calculate_sub_tarif_sets_with_zero_results_1(tarif_results)
+  def calculate_sub_tarif_sets_with_zero_results_1(tarif_results, tarif_set_id)
     sub_tarif_sets_with_zero_results = []
-    tarif_results.each do |tarif_set_id, tarif_results_by_part| 
+    if tarif_results
+      tarif_results_by_part =  tarif_results[tarif_set_id]
       zero_tarif_ids = []
       non_zero_tarif_ids = []     
       tarif_results_by_part.each do |part, tarif_result_by_part|
@@ -609,7 +611,7 @@ class ServiceHelper::TarifListGenerator
         new_tarif_set_id = tarif_set_id(new_services)
         sub_tarif_sets_with_zero_results << tarif_set_id if !tarif_results[new_tarif_set_id].blank?
       end
-    end if tarif_results
+    end 
     sub_tarif_sets_with_zero_results
   end
   
