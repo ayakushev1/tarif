@@ -23,7 +23,7 @@ describe ServiceHelper::TarifOptimizator do
       it 'must return' do
 #        @tarif_optimizator.tarif_list_generator.tarif_options.must_be :==, true, @tarif_optimizator.tarif_list_generator.options
 #        @tarif_optimizator.calculate_tarif_results(0)
-        @tarif_optimizator.tarif_list_generator.final_tarif_sets.keys[0..10].must_be :==, @tarif_optimizator.tarif_list_generator.final_tarif_sets.keys.size, 
+        @tarif_optimizator.final_tarif_set_generator.final_tarif_sets.keys[0..10].must_be :==, @tarif_optimizator.final_tarif_set_generator.final_tarif_sets.keys.size, 
 #          @tarif_optimizator.current_tarif_optimization_results.tarif_results.count
 #          @tarif_optimizator.current_tarif_optimization_results.tarif_results
           @tarif_optimizator.performance_checker.show_stat

@@ -2,7 +2,7 @@
 class ServiceHelper::TarifOptimizator
 #TODO - обновить в тарифах поля с month, day or week
 #дополнительные классы
-  attr_reader :tarif_list_generator, :stat_function_collector, :query_constructor, :optimization_result_saver, :minor_result_saver, 
+  attr_reader :tarif_list_generator, :final_tarif_set_generator, :stat_function_collector, :query_constructor, :optimization_result_saver, :minor_result_saver, 
               :final_tarif_sets_saver, :background_process_informer_operators, :background_process_informer_tarifs, :background_process_informer_tarif, 
               :performance_checker, :current_tarif_optimization_results, :tarif_optimization_sql_builder, :max_formula_order_collector, 
               :calls_stat_calculator
@@ -48,6 +48,7 @@ class ServiceHelper::TarifOptimizator
       @tarif_optimization_sql_builder = ServiceHelper::TarifOptimizationSqlBuilder.new(self)
       @minor_result_saver = ServiceHelper::OptimizationResultSaver.new('minor_results')
       @tarif_list_generator = ServiceHelper::TarifListGenerator.new(options[:services_by_operator] || {})
+      @final_tarif_set_generator = ServiceHelper::FinalTarifSetGenerator.new(options[:services_by_operator] || {})
       @controller = options[:controller]
       @background_process_informer_operators = options[:background_process_informer_operators] || ServiceHelper::BackgroundProcessInformer.new('operators_optimization')
       @background_process_informer_tarifs = options[:background_process_informer_tarifs] || ServiceHelper::BackgroundProcessInformer.new('tarifs_optimization')
@@ -91,11 +92,7 @@ class ServiceHelper::TarifOptimizator
   def calculate_and_save_final_tarif_sets
     tarif_list_generator.operators.each do |operator|
       tarif_list_generator.tarifs[operator].each do |tarif|
-        tarif_list_generator.calculate_tarif_sets_and_slices(operator, tarif)
-        tarif_results = optimization_result_saver.results({:operator_id => operator, :tarif_id => tarif})['tarif_results']
-        cons_tarif_results = optimization_result_saver.results({:operator_id => operator, :tarif_id => tarif})['cons_tarif_results']
-        tarif_list_generator.calculate_final_tarif_sets(cons_tarif_results, tarif_results, operator, tarif)
-        final_tarif_sets_saver.save({:operator_id => operator.to_i, :tarif_id => tarif.to_i, :result => {:final_tarif_sets => tarif_list_generator.final_tarif_sets}})
+        calculate_and_save_final_tarif_set_by_tarif(operator, tarif)
       end
     end
   end
@@ -150,12 +147,8 @@ class ServiceHelper::TarifOptimizator
           
       save_tarif_results(operator, tarif)    
 
-      performance_checker.run_check_point('calculate_final_tarif_sets', 4) do
-#        tarif_list_generator.calculate_final_tarif_sets(current_tarif_optimization_results.cons_tarif_results, current_tarif_optimization_results.tarif_results, operator, tarif)
-      end
-      
-      performance_checker.run_check_point('save_final_tarif_sets', 4) do
-#        final_tarif_sets_saver.save({:operator_id => operator.to_i, :tarif_id => tarif.to_i, :result => {:final_tarif_sets => tarif_list_generator.final_tarif_sets}})
+      performance_checker.run_check_point('calculate_and_save_final_tarif_set_by_tarif', 4) do
+        calculate_and_save_final_tarif_set_by_tarif(operator, tarif)
       end
       
       background_process_informer_tarif.finish
@@ -180,12 +173,35 @@ class ServiceHelper::TarifOptimizator
         :cons_tarif_results_by_parts => current_tarif_optimization_results.cons_tarif_results_by_parts,
         :tarif_results => current_tarif_optimization_results.tarif_results, 
         :tarif_results_ord => (save_tarif_results_ord ? current_tarif_optimization_results.tarif_results_ord : {}), 
+
+        :tarif_sets_without_common_services => tarif_list_generator.tarif_sets_without_common_services,
+        :services_that_depended_on => tarif_list_generator.services_that_depended_on,      
+        :service_description => tarif_list_generator.service_description,   
+        :common_services_by_parts => tarif_list_generator.common_services_by_parts,   
+        :common_services => tarif_list_generator.common_services,
         } } )
     end
 
     performance_checker.run_check_point('memory_usage_analyze_for_output', 4) do      
       minor_result_saver.save({:result => {:used_memory_by_output => calculate_used_memory(output)}})
     end if analyze_memory_used    
+  end
+  
+  def calculate_and_save_final_tarif_set_by_tarif(operator, tarif)
+    saved_results = optimization_result_saver.results({:operator_id => operator, :tarif_id => tarif})
+    
+    tarif_results = saved_results['tarif_results']
+    cons_tarif_results = saved_results['cons_tarif_results']
+    final_tarif_set_generator.set_input_data({
+      :tarif_sets_without_common_services => saved_results['tarif_sets_without_common_services'],
+      :tarif_sets => saved_results['tarif_sets'],          
+      :services_that_depended_on => saved_results['services_that_depended_on'],
+      :service_description => saved_results['service_description'],      
+      :common_services_by_parts => saved_results['common_services_by_parts'], 
+      :common_services => saved_results['common_services'],  
+    })
+    final_tarif_set_generator.calculate_final_tarif_sets(cons_tarif_results, tarif_results, operator, tarif)
+    final_tarif_sets_saver.save({:operator_id => operator.to_i, :tarif_id => tarif.to_i, :result => {:final_tarif_sets => final_tarif_set_generator.final_tarif_sets}})
   end
   
   def calculate_tarif_results(operator, service_slice)
