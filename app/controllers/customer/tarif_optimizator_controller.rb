@@ -3,16 +3,41 @@ class Customer::TarifOptimizatorController < ApplicationController
   crudable_actions :index
   before_action :check_if_optimization_options_are_in_session, only: [:index]
   before_action :validate_tarifs, only: [:index, :recalculate]
-  before_action :init_background_process_informer, only: [:tarif_optimization_progress_bar, :calculation_status, :recalculate, :index]
+  before_action :init_background_process_informer, only: [:tarif_optimization_progress_bar, :calculation_status, :recalculate, :update_minor_results, :index]
   attr_reader :operator, :background_process_informer_operators, :background_process_informer_tarifs, :background_process_informer_tarif
 
   def update_minor_results
+    if service_choices.session_filtr_params['calculate_on_background'] == 'true'
+      [background_process_informer_operators, background_process_informer_tarifs, background_process_informer_tarif].each do |background_process_informer|
+        background_process_informer.clear_completed_process_info_model
+        background_process_informer.init
+      end
+      
+      Spawnling.new(:argv => 'updating_minor_results') do
+        begin
+          updating_minor_results
+        rescue => e
+          ServiceHelper::OptimizationResultSaver.new('Error on updating_minor_results').save({:error => e})
+          raise(e)
+        ensure
+          [@background_process_informer_operators, @background_process_informer_tarifs, @background_process_informer_tarif].each do |background_process_informer|
+            background_process_informer.finish
+          end          
+        end            
+      end     
+      redirect_to(:action => :calculation_status)
+    else
+      updating_minor_results
+      redirect_to(:action => :index)
+    end
+  end
+  
+  def updating_minor_results
     @tarif_optimizator = ServiceHelper::TarifOptimizator.new(options)
     @tarif_optimizator.init_input_for_one_operator_calculation(operator)
 #    @tarif_optimizator.calculate_tarif_sets_and_slices(operator, 203)
     @tarif_optimizator.update_minor_results
     @tarif_optimizator.calculate_and_save_final_tarif_sets
-    redirect_to(:action => :show_additional_info)
   end
   
   def select_services

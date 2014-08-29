@@ -90,11 +90,17 @@ class ServiceHelper::TarifOptimizator
   end
   
   def calculate_and_save_final_tarif_sets
+    background_process_informer_operators.init(0.0, tarif_list_generator.operators.size)
     tarif_list_generator.operators.each do |operator|
+      background_process_informer_tarifs.init(0.0, tarif_list_generator.tarifs[operator].size )
       tarif_list_generator.tarifs[operator].each do |tarif|
         calculate_and_save_final_tarif_set_by_tarif(operator, tarif)
+        background_process_informer_tarifs.increase_current_value(1)
       end
+      background_process_informer_tarifs.finish
+      background_process_informer_operators.increase_current_value(1)
     end
+    background_process_informer_operators.finish
   end
   
   def calculate_one_operator(operator)
@@ -148,7 +154,7 @@ class ServiceHelper::TarifOptimizator
       save_tarif_results(operator, tarif)    
 
       performance_checker.run_check_point('calculate_and_save_final_tarif_set_by_tarif', 4) do
-        calculate_and_save_final_tarif_set_by_tarif(operator, tarif)
+#        calculate_and_save_final_tarif_set_by_tarif(operator, tarif)
       end
       
       background_process_informer_tarif.finish

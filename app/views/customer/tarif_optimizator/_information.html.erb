@@ -6,6 +6,7 @@ content_in :accordion do |user|
      'Optimization options',
      (
 	  link_to('Recalculate', customer_tarif_optimizator_recalculate_path ) + "    ".html_safe +
+      link_to('Update calls stat', customer_tarif_optimizator_update_minor_results_path ) + "    ".html_safe +
 	  render(:partial => 'service_choices', :layout => 'application/layouts/filtr_form_2_columns', :locals => {:form_item => controller.service_choices} )
 		
      )          
