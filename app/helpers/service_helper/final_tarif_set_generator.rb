@@ -276,7 +276,7 @@ class ServiceHelper::FinalTarifSetGenerator
       non_zero_tarif_ids = []     
       tarif_results_by_part.each do |part, tarif_result_by_part|
         tarif_result_by_part.each do |service_id, tarif_result_by_part_and_service|        
-            raise(StandardError) if tarif_set_id == '200_294_297_309'
+#            raise(StandardError) if tarif_set_id == '200_294_297_309'
           if tarif_result_by_part_and_service['call_id_count'] == 0 and tarif_result_by_part_and_service['price_value'] == 0
             zero_tarif_ids += ([tarif_result_by_part_and_service['tarif_class_id'].to_i] - zero_tarif_ids)
           else
