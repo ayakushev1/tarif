@@ -95,6 +95,7 @@ class ServiceHelper::TarifOptimizator
       background_process_informer_tarifs.init(0.0, tarif_list_generator.tarifs[operator].size )
       tarif_list_generator.tarifs[operator].each do |tarif|
         calculate_and_save_final_tarif_set_by_tarif(operator, tarif)
+#        raise(StandardError) if tarif == 200
         background_process_informer_tarifs.increase_current_value(1)
       end
       background_process_informer_tarifs.finish
@@ -194,6 +195,7 @@ class ServiceHelper::TarifOptimizator
   end
   
   def calculate_and_save_final_tarif_set_by_tarif(operator, tarif)
+    background_process_informer_tarif.init(0.0, 10.0)
     saved_results = optimization_result_saver.results({:operator_id => operator, :tarif_id => tarif})
     
     tarif_results = saved_results['tarif_results']
@@ -206,8 +208,9 @@ class ServiceHelper::TarifOptimizator
       :common_services_by_parts => saved_results['common_services_by_parts'], 
       :common_services => saved_results['common_services'],  
     })
-    final_tarif_set_generator.calculate_final_tarif_sets(cons_tarif_results, tarif_results, operator, tarif)
+    final_tarif_set_generator.calculate_final_tarif_sets(cons_tarif_results, tarif_results, operator, tarif, background_process_informer_tarif)
     final_tarif_sets_saver.save({:operator_id => operator.to_i, :tarif_id => tarif.to_i, :result => {:final_tarif_sets => final_tarif_set_generator.final_tarif_sets}})
+    background_process_informer_tarif.finish
   end
   
   def calculate_tarif_results(operator, service_slice)

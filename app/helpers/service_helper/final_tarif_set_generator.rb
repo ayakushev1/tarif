@@ -31,7 +31,7 @@ class ServiceHelper::FinalTarifSetGenerator
     @service_description = input_data[:service_description]
   end
   
-  def calculate_final_tarif_sets(cons_tarif_results = {}, tarif_results = {}, operator_1 = nil, tarif_1 = nil)
+  def calculate_final_tarif_sets(cons_tarif_results = {}, tarif_results = {}, operator_1 = nil, tarif_1 = nil, background_process_informer_tarif = nil)
     @final_tarif_sets = {}
     tarif_sets_to_calculate_from = @calculate_final_tarif_sets_first_without_common_services ? tarif_sets_without_common_services : tarif_sets
     tarif_sets_to_calculate_from = update_tarif_sets_to_calculate_from_with_cons_tarif_results(
@@ -41,16 +41,17 @@ class ServiceHelper::FinalTarifSetGenerator
       (tarif_1 ? [tarif_1] : tarifs[operator]).each do |tarif_2|
         tarif = tarif_2.to_s  
         operator = service_description[tarif]['operator_id'].to_s
-        current_uniq_service_sets, fobidden_info = calculate_final_tarif_sets_by_tarif(tarif_sets_to_calculate_from[tarif], operator, tarif)
+        current_uniq_service_sets, fobidden_info = calculate_final_tarif_sets_by_tarif(tarif_sets_to_calculate_from[tarif], operator, tarif, background_process_informer_tarif)
         update_current_uniq_sets_with_periodic_part(current_uniq_service_sets, tarif_sets_to_calculate_from[tarif])
         load_current_uniq_service_sets_to_final_tarif_sets(current_uniq_service_sets, fobidden_info)
       end
     end
 #TODO # проверить правильно ли исправил вариант (true, вариант считается чуть быстрее) когда in common_services есть новые parts    
     update_final_tarif_sets_with_common_services if calculate_final_tarif_sets_first_without_common_services 
+#    raise(StandardError)
   end
   
-  def calculate_final_tarif_sets_by_tarif(tarif_sets_to_calculate_from_by_tarif, operator, tarif)
+  def calculate_final_tarif_sets_by_tarif(tarif_sets_to_calculate_from_by_tarif, operator, tarif, background_process_informer_tarif = nil)
     parts, tarif_sets_names_as_array, tarif_sets_services_as_array = init_tarif_sets_as_array(tarif_sets_to_calculate_from_by_tarif)
     current_uniq_service_sets = {}
     fobidden_info = {}
@@ -106,6 +107,8 @@ class ServiceHelper::FinalTarifSetGenerator
 
       current_part_index, current_tarif_set_by_part_index = calculate_next_tarif_set_by_part(
         parts, tarif_sets_names_as_array, current_uniq_service_sets[current_tarif_set_by_part_name][:fobidden], max_part_index, max_tarif_set_by_part_index, current_part_index, current_tarif_set_by_part_index)
+        
+      background_process_informer_tarif.increase_current_value(1) if background_process_informer_tarif
 
     end 
 #    raise(StandardError, current_uniq_service_sets)
@@ -463,16 +466,19 @@ class ServiceHelper::FinalTarifSetGenerator
             final_tarif_sets[final_tarif_set_id_with_common_services][:tarif_sets_by_part] <<
               [part, tarif_set_id(common_service)] 
           end
-        else
+        end
+#        else
           common_services_by_part_to_add = (common_services_by_parts[operator][part] || [])
           tarif_sets_by_part_with_common_services = common_services_by_part_to_add + tarif_sets_by_part[1].split('_')
           tarif_sets_by_part_with_common_services_id = tarif_set_id(tarif_sets_by_part_with_common_services)
         
           final_tarif_sets[final_tarif_set_id_with_common_services][:tarif_sets_by_part] <<
             [part, tarif_sets_by_part_with_common_services_id] 
-        end
+#          raise(StandardError) if part == 'periodic'
+#        end
       end if final_tarif_set[:tarif_sets_by_part]      
     end
+#    raise(StandardError)
   end
   
   def tarif_set_id(tarif_ids)
