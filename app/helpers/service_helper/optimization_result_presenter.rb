@@ -111,6 +111,26 @@ class ServiceHelper::OptimizationResultPresenter
           service_set_count[service_set_id] += (part_result['call_id_count'] || 0).to_i
         end if service_sets_result
       end if tarif_results
+    when 'source_to_calculate_final_tarif_sets'
+      tarif_sets_to_calculate_from_final_tarif_sets.each do |tarif_id, service_sets_result|
+        service_sets_result.each do |part, part_result|
+          part_result.each do |service_set_id, services |
+            service_set_price[service_set_id] = 0.0 #(tarif_result['price_value'] || 0.0).to_f.round(2)
+            service_set_count[service_set_id] = 0#(tarif_result['call_id_count'] || 0).to_i
+          end
+        end if service_sets_result
+      end if tarif_sets_to_calculate_from_final_tarif_sets
+    when 'updated_tarif_results'
+      updated_tarif_results.each do |service_set_id, service_sets_result|
+        service_set_price[service_set_id] ||= 0.0
+        service_set_count[service_set_id] ||= 0
+        service_sets_result.each do |part, part_result|
+          part_result.each do |tarif_id, tarif_result |
+            service_set_price[service_set_id] += (tarif_result['price_value'] || 0.0).to_f.round(2)
+            service_set_count[service_set_id] += (tarif_result['call_id_count'] || 0).to_i
+          end
+        end if service_sets_result
+      end if updated_tarif_results
     else
       tarif_results.each do |service_set_id, service_sets_result|
         service_set_price[service_set_id] ||= 0.0
@@ -185,6 +205,26 @@ class ServiceHelper::OptimizationResultPresenter
           'call_id_count' => tarif_result_by_part['call_id_count'],
         }
       end if cons_tarif_results_by_parts and cons_tarif_results_by_parts[service_set_id]
+    when 'source_to_calculate_final_tarif_sets'
+      tarif_sets_to_calculate_from_final_tarif_sets.each do |tarif_id, service_sets_result|
+        service_sets_result.each do |part, part_result|
+          part_result.each do |service_set_id_1, services |
+            result << {'service_set_id' => service_set_id_1, 'part' => part} if service_set_id_1 == service_set_id
+          end
+        end if service_sets_result
+      end if tarif_sets_to_calculate_from_final_tarif_sets
+    when 'updated_tarif_results'
+      updated_tarif_results[service_set_id].each do |part, tarif_results_by_part|
+        tarif_results_by_part.each do |service_id, tarif_result_by_part|
+          result << {
+#            'part' => part,
+            'tarif_class_id' => "#{part}__#{tarif_result_by_part['tarif_class_id']}",
+            'tarif_class_id_0' => tarif_result_by_part['tarif_class_id'],
+            'price_value' => (tarif_result_by_part['price_value'] || 0.0).to_f,
+            'call_id_count' => tarif_result_by_part['call_id_count'],
+          }
+        end          
+      end if updated_tarif_results and updated_tarif_results[service_set_id]
     else
       tarif_results[service_set_id].each do |part, tarif_results_by_part|
         tarif_results_by_part.each do |service_id, tarif_result_by_part|
@@ -270,6 +310,7 @@ class ServiceHelper::OptimizationResultPresenter
   end
   
   def final_tarif_sets
+    return @final_tarif_sets if @final_tarif_sets
     name = 'final_tarif_sets'    
     local_results ||= {}
     Customer::Stat.where(:result_type => 'optimization_results').where(:result_name => name).select("result as #{name}").each do |result_item|
@@ -282,7 +323,43 @@ class ServiceHelper::OptimizationResultPresenter
         end
       end
     end
-    local_results[name] if local_results
+    @final_tarif_sets = local_results[name] if local_results
+  end
+
+  def  tarif_sets_to_calculate_from_final_tarif_sets
+    return @tarif_sets_to_calculate_from_final_tarif_sets if @tarif_sets_to_calculate_from_final_tarif_sets
+    name1 = 'final_tarif_sets'    
+    name2 = 'tarif_sets_to_calculate_from_final_tarif_sets'
+    local_results ||= {}
+    Customer::Stat.where(:result_type => 'optimization_results').where(:result_name => name1).select("result as #{name1}").each do |result_item|
+      result_item.attributes[name1].each do |result_type, result_value|
+        if result_value.is_a?(Hash)
+          local_results[result_type] ||= {}
+          local_results[result_type].merge!(result_value)
+        else
+          local_results[result_type] = result_value
+        end
+      end
+    end
+    @tarif_sets_to_calculate_from_final_tarif_sets = local_results[name2] if local_results
+  end
+  
+  def updated_tarif_results
+    return @updated_tarif_results if @updated_tarif_results
+    name1 = 'final_tarif_sets'    
+    name2 = 'updated_tarif_results'
+    local_results ||= {}
+    Customer::Stat.where(:result_type => 'optimization_results').where(:result_name => name1).select("result as #{name1}").each do |result_item|
+      result_item.attributes[name1].each do |result_type, result_value|
+        if result_value.is_a?(Hash)
+          local_results[result_type] ||= {}
+          local_results[result_type].merge!(result_value)
+        else
+          local_results[result_type] = result_value
+        end
+      end
+    end
+    @updated_tarif_results = local_results[name2] if local_results
   end
 
   def tarif_sets

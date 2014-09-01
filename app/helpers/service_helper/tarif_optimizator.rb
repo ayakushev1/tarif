@@ -209,7 +209,13 @@ class ServiceHelper::TarifOptimizator
       :common_services => saved_results['common_services'],  
     })
     final_tarif_set_generator.calculate_final_tarif_sets(cons_tarif_results, tarif_results, operator, tarif, background_process_informer_tarif)
-    final_tarif_sets_saver.save({:operator_id => operator.to_i, :tarif_id => tarif.to_i, :result => {:final_tarif_sets => final_tarif_set_generator.final_tarif_sets}})
+    final_tarif_sets_saver.save({:operator_id => operator.to_i, :tarif_id => tarif.to_i, :result => {
+      :final_tarif_sets => final_tarif_set_generator.final_tarif_sets,
+      :tarif_sets_to_calculate_from_final_tarif_sets => final_tarif_set_generator.tarif_sets_to_calculate_from_final_tarif_sets,
+      :updated_tarif_results => final_tarif_set_generator.updated_tarif_results,
+      }})
+#    raise(StandardError, final_tarif_set_generator.updated_tarif_results)
+
     background_process_informer_tarif.finish
   end
   

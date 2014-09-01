@@ -1,6 +1,6 @@
 class ServiceHelper::FinalTarifSetGenerator  
   attr_reader :options             
-  attr_accessor :final_tarif_sets                
+  attr_accessor :final_tarif_sets, :tarif_sets_to_calculate_from_final_tarif_sets, :updated_tarif_results  
   attr_accessor :tarif_sets_without_common_services, :tarif_sets, :services_that_depended_on, :service_description, :common_services, :common_services_by_parts 
   
   attr_reader :use_short_tarif_set_name
@@ -34,7 +34,7 @@ class ServiceHelper::FinalTarifSetGenerator
   def calculate_final_tarif_sets(cons_tarif_results = {}, tarif_results = {}, operator_1 = nil, tarif_1 = nil, background_process_informer_tarif = nil)
     @final_tarif_sets = {}
     tarif_sets_to_calculate_from = @calculate_final_tarif_sets_first_without_common_services ? tarif_sets_without_common_services : tarif_sets
-    tarif_sets_to_calculate_from = update_tarif_sets_to_calculate_from_with_cons_tarif_results(
+    tarif_sets_to_calculate_from, updated_tarif_results = update_tarif_sets_to_calculate_from_with_cons_tarif_results(
       tarif_sets_to_calculate_from, cons_tarif_results, tarif_results) if if_update_tarif_sets_to_calculate_from_with_cons_tarif_results
 #    raise(StandardError, [tarif_sets_without_common_services['200'], tarif_sets_to_calculate_from['200']].join("\n"))  
     (operator_1 ? [operator_1] : operators).each do |operator|     
@@ -48,6 +48,8 @@ class ServiceHelper::FinalTarifSetGenerator
     end
 #TODO # проверить правильно ли исправил вариант (true, вариант считается чуть быстрее) когда in common_services есть новые parts    
     update_final_tarif_sets_with_common_services if calculate_final_tarif_sets_first_without_common_services 
+    @tarif_sets_to_calculate_from_final_tarif_sets = tarif_sets_to_calculate_from
+    @updated_tarif_results = updated_tarif_results
 #    raise(StandardError)
   end
   
@@ -236,7 +238,7 @@ class ServiceHelper::FinalTarifSetGenerator
     sub_tarif_sets_with_zero_results_0 = calculate_sub_tarif_sets_with_zero_results_0(cons_tarif_results)
 #    sub_tarif_sets_with_zero_results_1 = calculate_sub_tarif_sets_with_zero_results_1(tarif_results)
     
-    updated_tarif_sets = {}
+    updated_tarif_sets = {}; updated_tarif_results = {}
     tarif_sets_to_calculate_from.each do |tarif, tarif_sets_to_calculate_from_by_tarif|
       updated_tarif_sets[tarif] ||= {}
       tarif_sets_to_calculate_from_by_tarif.each do |part, tarif_sets_to_calculate_from_by_tarif_by_part|
@@ -246,15 +248,22 @@ class ServiceHelper::FinalTarifSetGenerator
 #            raise(StandardError) if tarif_set_id == '200_294_297_309'
           if (services & sub_tarif_sets_with_zero_results_0).blank?
             sub_tarif_sets_with_zero_results_1 = calculate_sub_tarif_sets_with_zero_results_1(tarif_results, tarif_set_id)
-            updated_tarif_sets[tarif][part][tarif_set_id] = services if !sub_tarif_sets_with_zero_results_1.include?(tarif_set_id)
+            if !sub_tarif_sets_with_zero_results_1.include?(tarif_set_id)
+              updated_tarif_sets[tarif][part][tarif_set_id] = services 
+
+              updated_tarif_results[tarif_set_id] ||= {}
+              updated_tarif_results[tarif_set_id][part] ||= {}
+              updated_tarif_results[tarif_set_id][part] = tarif_results[tarif_set_id][part]
+            end            
           end
-#          raise(StandardError, [sub_tarif_sets_with_zero_results_1]) if tarif_set_id == '200_293_281_294_329'
+          raise(StandardError, [sub_tarif_sets_with_zero_results_1]) if tarif_set_id == '288_' #and part == "all-world-rouming/calls"
         end
         updated_tarif_sets[tarif].extract!(part) if updated_tarif_sets[tarif][part].blank?
       end
     end if tarif_sets_to_calculate_from
 #    raise(StandardError, [tarif_sets_to_calculate_from['200'], updated_tarif_sets['200']].join("\n"))
-    updated_tarif_sets
+#    raise(StandardError, updated_tarif_results)
+    [updated_tarif_sets, updated_tarif_results]
   end
   
   def calculate_sub_tarif_sets_with_zero_results_0(cons_tarif_results)
@@ -262,7 +271,7 @@ class ServiceHelper::FinalTarifSetGenerator
     depended_on_services = services_that_depended_on.map{|d| d[1]}.flatten.uniq
     sub_tarif_sets_with_zero_results = []
     cons_tarif_results.each do |tarif_set_id, cons_tarif_result|
-      if cons_tarif_result['call_id_count'] == 0 and cons_tarif_result['price_value'] == 0
+      if cons_tarif_result['call_id_count'].to_i == 0 and cons_tarif_result['price_value'].to_f == 0.0
         services = tarif_set_id.split('_').map(&:to_i)
         sub_tarif_sets_with_zero_results += (services - sub_tarif_sets_with_zero_results) if (services & depended_on_services).blank?
       end
@@ -272,6 +281,7 @@ class ServiceHelper::FinalTarifSetGenerator
   end
   
   def calculate_sub_tarif_sets_with_zero_results_1(tarif_results, tarif_set_id)
+#TODO разобраться откуда появляются tarif_result_by_part_and_service['price_value'] типа string
     sub_tarif_sets_with_zero_results = []
     if tarif_results
       tarif_results_by_part =  tarif_results[tarif_set_id]
@@ -279,11 +289,11 @@ class ServiceHelper::FinalTarifSetGenerator
       non_zero_tarif_ids = []     
       tarif_results_by_part.each do |part, tarif_result_by_part|
         tarif_result_by_part.each do |service_id, tarif_result_by_part_and_service|        
-#            raise(StandardError) if tarif_set_id == '200_294_297_309'
-          if tarif_result_by_part_and_service['call_id_count'] == 0 and tarif_result_by_part_and_service['price_value'] == 0
+          if tarif_result_by_part_and_service['call_id_count'].to_i == 0 and tarif_result_by_part_and_service['price_value'].to_f == 0
             zero_tarif_ids += ([tarif_result_by_part_and_service['tarif_class_id'].to_i] - zero_tarif_ids)
           else
             non_zero_tarif_ids += ([tarif_result_by_part_and_service['tarif_class_id'].to_i] - non_zero_tarif_ids)
+            raise(StandardError) if tarif_set_id == '200_292' and non_zero_tarif_ids.include?(292)
           end
         end
       end
