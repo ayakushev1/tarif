@@ -91,6 +91,7 @@ class ServiceHelper::TarifOptimizator
   
   def calculate_and_save_final_tarif_sets
     background_process_informer_operators.init(0.0, tarif_list_generator.operators.size)
+    [final_tarif_sets_saver].each {|saver| saver.clean_output_results}
     tarif_list_generator.operators.each do |operator|
       background_process_informer_tarifs.init(0.0, tarif_list_generator.tarifs[operator].size )
       tarif_list_generator.tarifs[operator].each do |tarif|
@@ -198,8 +199,6 @@ class ServiceHelper::TarifOptimizator
     background_process_informer_tarif.init(0.0, 10.0)
     saved_results = optimization_result_saver.results({:operator_id => operator, :tarif_id => tarif})
     
-    tarif_results = saved_results['tarif_results']
-    cons_tarif_results = saved_results['cons_tarif_results']
     final_tarif_set_generator.set_input_data({
       :tarif_sets_without_common_services => saved_results['tarif_sets_without_common_services'],
       :tarif_sets => saved_results['tarif_sets'],          
@@ -207,12 +206,16 @@ class ServiceHelper::TarifOptimizator
       :service_description => saved_results['service_description'],      
       :common_services_by_parts => saved_results['common_services_by_parts'], 
       :common_services => saved_results['common_services'],  
+      :cons_tarif_results_by_parts => saved_results['cons_tarif_results_by_parts'],
+      :tarif_results => saved_results['tarif_results'],
+      :cons_tarif_results => saved_results['cons_tarif_results'],
     })
-    final_tarif_set_generator.calculate_final_tarif_sets(cons_tarif_results, tarif_results, operator, tarif, background_process_informer_tarif)
+    final_tarif_set_generator.calculate_final_tarif_sets(operator, tarif, background_process_informer_tarif)
     final_tarif_sets_saver.save({:operator_id => operator.to_i, :tarif_id => tarif.to_i, :result => {
       :final_tarif_sets => final_tarif_set_generator.final_tarif_sets,
       :tarif_sets_to_calculate_from_final_tarif_sets => final_tarif_set_generator.tarif_sets_to_calculate_from_final_tarif_sets,
       :updated_tarif_results => final_tarif_set_generator.updated_tarif_results,
+      :current_tarif_set_calculation_history => final_tarif_set_generator.current_tarif_set_calculation_history,
       }})
 #    raise(StandardError, final_tarif_set_generator.updated_tarif_results)
 

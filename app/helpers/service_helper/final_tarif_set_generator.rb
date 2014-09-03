@@ -1,7 +1,8 @@
 class ServiceHelper::FinalTarifSetGenerator  
   attr_reader :options             
-  attr_accessor :final_tarif_sets, :tarif_sets_to_calculate_from_final_tarif_sets, :updated_tarif_results  
-  attr_accessor :tarif_sets_without_common_services, :tarif_sets, :services_that_depended_on, :service_description, :common_services, :common_services_by_parts 
+  attr_accessor :final_tarif_sets, :tarif_sets_to_calculate_from_final_tarif_sets, :updated_tarif_results, :current_tarif_set_calculation_history 
+  attr_accessor :tarif_sets_without_common_services, :tarif_sets, :services_that_depended_on, :service_description, :common_services, :common_services_by_parts,
+                :cons_tarif_results_by_parts, :tarif_results, :cons_tarif_results
   
   attr_reader :use_short_tarif_set_name
          
@@ -29,23 +30,22 @@ class ServiceHelper::FinalTarifSetGenerator
     @common_services_by_parts = input_data[:common_services_by_parts]
     @common_services = input_data[:common_services]
     @service_description = input_data[:service_description]
+    @cons_tarif_results_by_parts = input_data[:cons_tarif_results_by_parts]
+    @tarif_results = input_data[:tarif_results]
+    @cons_tarif_results = input_data[:cons_tarif_results]    
   end
   
-  def calculate_final_tarif_sets(cons_tarif_results = {}, tarif_results = {}, operator_1 = nil, tarif_1 = nil, background_process_informer_tarif = nil)
+  def calculate_final_tarif_sets(operator_1 = nil, tarif_1 = nil, background_process_informer_tarif = nil)
     @final_tarif_sets = {}
     tarif_sets_to_calculate_from = @calculate_final_tarif_sets_first_without_common_services ? tarif_sets_without_common_services : tarif_sets
-    tarif_sets_to_calculate_from, updated_tarif_results = update_tarif_sets_to_calculate_from_with_cons_tarif_results(
-      tarif_sets_to_calculate_from, cons_tarif_results, tarif_results) if if_update_tarif_sets_to_calculate_from_with_cons_tarif_results
-#    raise(StandardError, [tarif_sets_without_common_services['200'], tarif_sets_to_calculate_from['200']].join("\n"))  
-    (operator_1 ? [operator_1] : operators).each do |operator|     
-      (tarif_1 ? [tarif_1] : tarifs[operator]).each do |tarif_2|
-        tarif = tarif_2.to_s  
-        operator = service_description[tarif]['operator_id'].to_s
-        current_uniq_service_sets, fobidden_info = calculate_final_tarif_sets_by_tarif(tarif_sets_to_calculate_from[tarif], operator, tarif, background_process_informer_tarif)
-        update_current_uniq_sets_with_periodic_part(current_uniq_service_sets, tarif_sets_to_calculate_from[tarif])
-        load_current_uniq_service_sets_to_final_tarif_sets(current_uniq_service_sets, fobidden_info)
-      end
-    end
+    tarif_sets_to_calculate_from, updated_tarif_results = update_tarif_sets_to_calculate_from_with_cons_tarif_results(tarif_sets_to_calculate_from) if if_update_tarif_sets_to_calculate_from_with_cons_tarif_results
+
+    tarif = tarif_1.to_s  
+    operator = service_description[tarif]['operator_id'].to_s
+    current_uniq_service_sets, fobidden_info = calculate_final_tarif_sets_by_tarif(tarif_sets_to_calculate_from[tarif], operator, tarif, background_process_informer_tarif)
+    update_current_uniq_sets_with_periodic_part(current_uniq_service_sets, tarif_sets_to_calculate_from[tarif])
+    load_current_uniq_service_sets_to_final_tarif_sets(current_uniq_service_sets, fobidden_info)
+
 #TODO # проверить правильно ли исправил вариант (true, вариант считается чуть быстрее) когда in common_services есть новые parts    
     update_final_tarif_sets_with_common_services if calculate_final_tarif_sets_first_without_common_services 
     @tarif_sets_to_calculate_from_final_tarif_sets = tarif_sets_to_calculate_from
@@ -54,188 +54,68 @@ class ServiceHelper::FinalTarifSetGenerator
   end
   
   def calculate_final_tarif_sets_by_tarif(tarif_sets_to_calculate_from_by_tarif, operator, tarif, background_process_informer_tarif = nil)
-    parts, tarif_sets_names_as_array, tarif_sets_services_as_array = init_tarif_sets_as_array(tarif_sets_to_calculate_from_by_tarif)
     current_uniq_service_sets = {}
     fobidden_info = {}
-    max_part_index = parts.size
-    max_tarif_set_by_part_index = tarif_sets_names_as_array.map{|ts| ts.size}
-
-    current_part_index = 0
-    current_part = parts[current_part_index] if parts
-    current_tarif_set_by_part_index = [0] if current_part and tarif_sets_to_calculate_from_by_tarif[current_part]
+    
+    current_tarif_set = ServiceHelper::CurrentTarifSet.new(tarif_sets_to_calculate_from_by_tarif, cons_tarif_results_by_parts, tarif.to_s)
+#    current_tarif_set.next_tarif_set_by_part(false)
         
-    while !current_tarif_set_by_part_index.blank? do
+    while !current_tarif_set.current_tarif_set_by_part_index.blank? do
 #      raise(StandardError, [current_tarif_set_by_part_index, tarif_sets_services_as_array])
-      current_part = parts[current_part_index]
-      current_services = tarif_sets_services_as_array[current_part_index][current_tarif_set_by_part_index[current_part_index]]
-      current_tarif_set_by_part_services = []
-      i = 0
-      current_tarif_set_by_part_index.each do |tsi| 
-        current_tarif_set_by_part_services += tarif_sets_services_as_array[i][tsi]
-        i += 1
-      end       
+      current_part = current_tarif_set.current_part
+      current_services = current_tarif_set.current_services
+      current_tarif_set_by_part_services = current_tarif_set.current_tarif_set_by_part_services
       current_tarif_set_by_part_name = tarif_set_id(current_tarif_set_by_part_services)
       
       common_services_to_exclude = (common_services_by_parts[operator][current_part] || [])
       tarif_sets_by_part_services_list = tarif_sets_to_calculate_from_by_tarif[current_part].
         collect{|tarif_set_by_part_id, services| services - common_services_to_exclude}.collect{|f| tarif_set_id(f).to_sym}
       
-      if current_part_index == 0
+      if current_tarif_set.current_part_index == 0
         current_uniq_service_sets[current_tarif_set_by_part_name] = {:service_ids => current_tarif_set_by_part_services, :tarif_sets_by_part => [[current_part, current_tarif_set_by_part_name]], }              
         fobidden_info[current_tarif_set_by_part_name] = init_fobidden_info(tarif_sets_by_part_services_list, current_tarif_set_by_part_services - common_services_to_exclude, tarif.to_s.to_sym)
       else
-        new_uniq_services = current_services
-        new_uniq_service_set_services = current_tarif_set_by_part_services
-        new_uniq_service_set_name = current_tarif_set_by_part_name
-        
-        uniq_service_set = new_uniq_service_set_services[0..(new_uniq_service_set_services.size - current_services.size - 1)] 
+        uniq_service_set = current_tarif_set_by_part_services[0..(current_tarif_set_by_part_services.size - current_services.size - 1)] 
         uniq_service_set_id = tarif_set_id(uniq_service_set)
         tarif_set_by_part_id = tarif_set_id(current_services)
         
-        current_uniq_service_sets[new_uniq_service_set_name] ||= {}
-        current_uniq_service_sets[new_uniq_service_set_name][:service_ids] = new_uniq_service_set_services
-        current_uniq_service_sets[new_uniq_service_set_name][:tarif_sets_by_part] ||= []
+        current_uniq_service_sets[current_tarif_set_by_part_name] ||= {}
+        current_uniq_service_sets[current_tarif_set_by_part_name][:service_ids] = current_tarif_set_by_part_services
+        current_uniq_service_sets[current_tarif_set_by_part_name][:tarif_sets_by_part] ||= []
         
-        current_uniq_service_sets[new_uniq_service_set_name][:fobidden] = check_if_final_tarif_set_is_fobidden(
-          fobidden_info, tarif_sets_by_part_services_list, new_uniq_service_set_name, uniq_service_set_id, tarif_set_by_part_id, current_services - common_services_to_exclude,
+        current_uniq_service_sets[current_tarif_set_by_part_name][:fobidden] = check_if_final_tarif_set_is_fobidden(
+          fobidden_info, tarif_sets_by_part_services_list, current_tarif_set_by_part_name, uniq_service_set_id, tarif_set_by_part_id, current_services - common_services_to_exclude,
             current_uniq_service_sets, uniq_service_set, tarif_sets_to_calculate_from_by_tarif) 
 
-        existing_tarif_sets_by_part = (current_uniq_service_sets[new_uniq_service_set_name][:tarif_sets_by_part] || [])                
+        existing_tarif_sets_by_part = (current_uniq_service_sets[current_tarif_set_by_part_name][:tarif_sets_by_part] || [])                
         prev_tarif_sets_by_part = (current_uniq_service_sets[uniq_service_set_id][:tarif_sets_by_part] || [])
-        current_uniq_service_sets[new_uniq_service_set_name][:tarif_sets_by_part] = 
+        current_uniq_service_sets[current_tarif_set_by_part_name][:tarif_sets_by_part] = 
           (existing_tarif_sets_by_part + prev_tarif_sets_by_part + [[current_part, tarif_set_by_part_id]]).uniq  
       end
-
-
-      current_part_index, current_tarif_set_by_part_index = calculate_next_tarif_set_by_part(
-        parts, tarif_sets_names_as_array, current_uniq_service_sets[current_tarif_set_by_part_name][:fobidden], max_part_index, max_tarif_set_by_part_index, current_part_index, current_tarif_set_by_part_index)
+      
+#      raise(StandardError) if !current_uniq_service_sets[current_tarif_set_by_part_name][:fobidden]
+      current_tarif_set.next_tarif_set_by_part(current_uniq_service_sets[current_tarif_set_by_part_name][:fobidden])
         
       background_process_informer_tarif.increase_current_value(1) if background_process_informer_tarif
 
     end 
 #    raise(StandardError, current_uniq_service_sets)
+    @current_tarif_set_calculation_history = current_tarif_set.history
+#    raise(StandardError, current_tarif_set.history.join("\n")) if tarif.to_i == 200
     current_uniq_service_sets.each do |current_uniq_service_set_id, current_uniq_service_set|
       if current_uniq_service_set[:fobidden]
         current_uniq_service_sets.extract!(current_uniq_service_set_id)
       end        
-      if current_uniq_service_set[:tarif_sets_by_part].size < max_part_index
+      if current_uniq_service_set[:tarif_sets_by_part].size < current_tarif_set.max_part_index
         current_uniq_service_sets.extract!(current_uniq_service_set_id)
       end
     end
     [current_uniq_service_sets, fobidden_info]
   end
-  
-  def init_tarif_sets_as_array(tarif_sets_to_calculate_from_by_tarif)
-    parts = tarif_sets_to_calculate_from_by_tarif.keys - ['periodic']
-    tarif_sets_names_as_array = []
-    tarif_sets_services_as_array = []
-    tarif_sets_to_calculate_from_by_tarif.each do |part, tarif_sets_by_part|
-      tarif_sets_names_as_array << tarif_sets_by_part.keys
-      tarif_sets_services_as_array << tarif_sets_by_part.map{|ts| ts[1]}
-    end
-    [parts, tarif_sets_names_as_array, tarif_sets_services_as_array]
-  end
-  
-  def calculate_next_tarif_set_by_part(parts, tarif_sets_names_as_array, if_current_tarif_set_by_part_fobbiden, max_part_index, max_tarif_set_by_part_index, current_part_index, current_tarif_set_by_part_index)
-    next_tarif_set_by_part_index = []
-    if if_current_tarif_set_by_part_fobbiden
-      if current_tarif_set_by_part_index[current_part_index] < (max_tarif_set_by_part_index[current_part_index] - 1)
-        next_part_index = current_part_index
-        next_tarif_set_by_part_index = current_tarif_set_by_part_index
-        next_tarif_set_by_part_index[current_part_index] = current_tarif_set_by_part_index[current_part_index] + 1
-      else
-        next_part_index = current_part_index - 1
-        if next_part_index > -1 and current_tarif_set_by_part_index[next_part_index] < (max_tarif_set_by_part_index[next_part_index] - 1)
-          next_tarif_set_by_part_index = current_tarif_set_by_part_index[0..next_part_index]
-          next_tarif_set_by_part_index[next_part_index] = current_tarif_set_by_part_index[next_part_index] + 1
-        end
-        while  (next_part_index > -1) and next_tarif_set_by_part_index.blank? do
-          next_part_index = next_part_index - 1
-          if next_part_index > -1 and current_tarif_set_by_part_index[next_part_index] < (max_tarif_set_by_part_index[next_part_index] - 1)
-            next_tarif_set_by_part_index = current_tarif_set_by_part_index[0..next_part_index]
-            next_tarif_set_by_part_index[next_part_index] = current_tarif_set_by_part_index[next_part_index] + 1
-          end
-        end
-      end
-    else
-      if current_part_index < (max_part_index - 1)
-        next_part_index = current_part_index + 1
-        next_tarif_set_by_part_index = current_tarif_set_by_part_index << 0
-      else
-        if current_tarif_set_by_part_index[current_part_index] < (max_tarif_set_by_part_index[current_part_index] - 1)
-          next_part_index = current_part_index
-          next_tarif_set_by_part_index = current_tarif_set_by_part_index
-          next_tarif_set_by_part_index[current_part_index] = current_tarif_set_by_part_index[current_part_index] + 1
-        else
-          next_part_index = current_part_index - 1
-          if next_part_index > -1 and current_tarif_set_by_part_index[next_part_index] < (max_tarif_set_by_part_index[next_part_index] - 1)
-            next_tarif_set_by_part_index = current_tarif_set_by_part_index[0..next_part_index]
-            next_tarif_set_by_part_index[next_part_index] = current_tarif_set_by_part_index[next_part_index] + 1
-          end
-          while  (next_part_index > -1) and next_tarif_set_by_part_index.blank? do
-            next_part_index = next_part_index - 1
-            if next_part_index > -1 and current_tarif_set_by_part_index[next_part_index] < (max_tarif_set_by_part_index[next_part_index] - 1)
-              next_tarif_set_by_part_index = current_tarif_set_by_part_index[0..next_part_index]
-              next_tarif_set_by_part_index[next_part_index] = current_tarif_set_by_part_index[next_part_index] + 1
-            end
-          end
-        end
-      end
-    end
-    [next_part_index, next_tarif_set_by_part_index]
-  end
-  
-  def calculate_final_tarif_sets_by_tarif_1(tarif_sets_to_calculate_from_by_tarif, operator, tarif)
-    current_uniq_service_sets = {}
-    fobidden_info = {}
-    tarif_sets_to_calculate_from_by_tarif.each do |part, tarif_sets_by_part|
-      next if part == 'periodic'
-      common_services_to_exclude = (common_services_by_parts[operator][part] || [])
-      if current_uniq_service_sets.blank?
-        tarif_sets_by_part_services_list = tarif_sets_by_part.collect{|tarif_set_by_part_id, services| services - common_services_to_exclude}.collect{|f| tarif_set_id(f).to_sym}
-        tarif_sets_by_part.each do |tarif_set_by_part_id, services|
-          current_uniq_service_sets[tarif_set_by_part_id] = {:service_ids => services, :tarif_sets_by_part => [[part, tarif_set_by_part_id]], }              
-          fobidden_info[tarif_set_by_part_id] = init_fobidden_info(tarif_sets_by_part_services_list, services - common_services_to_exclude, tarif.to_s.to_sym)
-        end 
-      else            
-        prev_uniq_service_sets = {}
-        current_uniq_service_sets.each do |current_uniq_service_set_id, current_uniq_service_set|
-          prev_uniq_service_sets[current_uniq_service_set_id] = current_uniq_service_set if !current_uniq_service_set[:fobidden]
-        end
-        current_uniq_service_sets = {}
-        prev_uniq_service_sets.each do |uniq_service_set_id, uniq_service_set|
-          tarif_sets_by_part_services_list = tarif_sets_by_part.collect{|tarif_set_by_part_id, services| services - common_services_to_exclude}.collect{|f| tarif_set_id(f).to_sym}
-          tarif_sets_by_part.each do |tarif_set_by_part_id, services|
-            next if part == 'periodic'
-            new_uniq_services = services
-            new_uniq_service_set_services = (uniq_service_set[:service_ids] + new_uniq_services)
-            new_uniq_service_set_name = tarif_set_id(new_uniq_service_set_services)
-            
-            current_uniq_service_sets[new_uniq_service_set_name] ||= {}
-            current_uniq_service_sets[new_uniq_service_set_name][:service_ids] = new_uniq_service_set_services
-            current_uniq_service_sets[new_uniq_service_set_name][:tarif_sets_by_part] ||= []
-            
-            current_uniq_service_sets[new_uniq_service_set_name][:fobidden] = check_if_final_tarif_set_is_fobidden(
-              fobidden_info, tarif_sets_by_part_services_list, new_uniq_service_set_name, uniq_service_set_id, tarif_set_by_part_id, services - common_services_to_exclude,
-                current_uniq_service_sets, uniq_service_set, tarif_sets_to_calculate_from_by_tarif) 
-
-            next if current_uniq_service_sets[new_uniq_service_set_name][:fobidden]
-            
-            existing_tarif_sets_by_part = (current_uniq_service_sets[new_uniq_service_set_name][:tarif_sets_by_part] || [])                
-            prev_tarif_sets_by_part = (prev_uniq_service_sets[uniq_service_set_id][:tarif_sets_by_part] || [])
-            current_uniq_service_sets[new_uniq_service_set_name][:tarif_sets_by_part] = 
-              (existing_tarif_sets_by_part + prev_tarif_sets_by_part + [[part, tarif_set_by_part_id]]).uniq  
-              
-          end
-        end            
-      end
-    end if tarif_sets_to_calculate_from_by_tarif  
-    [current_uniq_service_sets, fobidden_info]
-  end
-  
-  def update_tarif_sets_to_calculate_from_with_cons_tarif_results(tarif_sets_to_calculate_from, cons_tarif_results, tarif_results)
+ 
+  def update_tarif_sets_to_calculate_from_with_cons_tarif_results(tarif_sets_to_calculate_from)
 #    raise(StandardError, [cons_tarif_results])
-    sub_tarif_sets_with_zero_results_0 = calculate_sub_tarif_sets_with_zero_results_0(cons_tarif_results)
+    sub_tarif_sets_with_zero_results_0 = calculate_sub_tarif_sets_with_zero_results_0
 #    sub_tarif_sets_with_zero_results_1 = calculate_sub_tarif_sets_with_zero_results_1(tarif_results)
     
     updated_tarif_sets = {}; updated_tarif_results = {}
@@ -247,7 +127,7 @@ class ServiceHelper::FinalTarifSetGenerator
         tarif_sets_to_calculate_from_by_tarif_by_part.each do |tarif_set_id, services|          
 #            raise(StandardError) if tarif_set_id == '200_294_297_309'
           if (services & sub_tarif_sets_with_zero_results_0).blank?
-            sub_tarif_sets_with_zero_results_1 = calculate_sub_tarif_sets_with_zero_results_1(tarif_results, tarif_set_id)
+            sub_tarif_sets_with_zero_results_1 = calculate_sub_tarif_sets_with_zero_results_1(tarif_set_id)
             if !sub_tarif_sets_with_zero_results_1.include?(tarif_set_id)
               updated_tarif_sets[tarif][part][tarif_set_id] = services 
 
@@ -262,11 +142,12 @@ class ServiceHelper::FinalTarifSetGenerator
       end
     end if tarif_sets_to_calculate_from
 #    raise(StandardError, [tarif_sets_to_calculate_from['200'], updated_tarif_sets['200']].join("\n"))
+    updated_tarif_sets = reorder_tarif_sets_to_calculate_from(updated_tarif_sets, updated_tarif_results)
 #    raise(StandardError, updated_tarif_results)
     [updated_tarif_sets, updated_tarif_results]
   end
   
-  def calculate_sub_tarif_sets_with_zero_results_0(cons_tarif_results)
+  def calculate_sub_tarif_sets_with_zero_results_0
 #TODO подумать какие еще наборы услуг добавить
     depended_on_services = services_that_depended_on.map{|d| d[1]}.flatten.uniq
     sub_tarif_sets_with_zero_results = []
@@ -280,7 +161,7 @@ class ServiceHelper::FinalTarifSetGenerator
     sub_tarif_sets_with_zero_results
   end
   
-  def calculate_sub_tarif_sets_with_zero_results_1(tarif_results, tarif_set_id)
+  def calculate_sub_tarif_sets_with_zero_results_1(tarif_set_id)
 #TODO разобраться откуда появляются tarif_result_by_part_and_service['price_value'] типа string
     sub_tarif_sets_with_zero_results = []
     if tarif_results
@@ -307,6 +188,20 @@ class ServiceHelper::FinalTarifSetGenerator
     sub_tarif_sets_with_zero_results
   end
   
+  def reorder_tarif_sets_to_calculate_from(updated_tarif_sets, updated_tarif_results)    
+    reordered_tarif_sets = {}
+    updated_tarif_sets.each do |tarif, updated_tarif_sets_by_tarif|
+      reordered_tarif_sets[tarif] ||= {}
+      updated_tarif_sets_by_tarif.each do |part, updated_tarif_sets_by_part|
+        reordered_tarif_sets[tarif][part] ||= {}
+        updated_tarif_sets_by_part.keys.sort_by!{|u| cons_tarif_results_by_parts[u][part]['price_value'].to_f }.each do |ordered_tarif_set_by_part_key|
+          reordered_tarif_sets[tarif][part][ordered_tarif_set_by_part_key] = updated_tarif_sets[tarif][part][ordered_tarif_set_by_part_key] 
+        end
+      end
+    end
+    reordered_tarif_sets
+  end
+  
   def update_current_uniq_sets_with_periodic_part(current_uniq_service_sets, tarif_sets_to_calculate_from_by_tarif)
     services_that_depended_on_service_ids = services_that_depended_on.keys.map(&:to_i)    
     current_uniq_service_sets.each do |uniq_service_set_id, uniq_service_set|
@@ -316,14 +211,14 @@ class ServiceHelper::FinalTarifSetGenerator
           if !(uniq_service_set[:service_ids] & services_that_depended_on[main_depended_service.to_s]).blank?
             new_periodic_services = [main_depended_service] + services_that_depended_on[main_depended_service.to_s]
             new_tarif_set_id = tarif_set_id(new_periodic_services)
-            current_uniq_service_sets[uniq_service_set_id][:tarif_sets_by_part] << ['periodic', new_tarif_set_id]
+            current_uniq_service_sets[uniq_service_set_id][:tarif_sets_by_part] << (['periodic', new_tarif_set_id] - current_uniq_service_sets[uniq_service_set_id][:tarif_sets_by_part])
             counted_depended_on_services += new_periodic_services
           end
         end
         
         #raise(StandardError, [(uniq_service_set[:service_ids] - counted_depended_on_services)])
         (uniq_service_set[:service_ids] - counted_depended_on_services).uniq.each do |service|
-          current_uniq_service_sets[uniq_service_set_id][:tarif_sets_by_part] << ['periodic', tarif_set_id([service])]
+          current_uniq_service_sets[uniq_service_set_id][:tarif_sets_by_part] << (['periodic', tarif_set_id([service])] - current_uniq_service_sets[uniq_service_set_id][:tarif_sets_by_part])
         end
       end
     end
