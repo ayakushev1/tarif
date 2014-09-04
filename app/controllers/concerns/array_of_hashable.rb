@@ -7,8 +7,8 @@ class ArrayOfHashable < Presenter
   
   def initialize(controller, array_of_hash)
     super(controller)
-    @model = array_of_hash
-    @model_size = array_of_hash.size
+    @model = array_of_hash ? array_of_hash : [{}]
+    @model_size = array_of_hash ? array_of_hash.size : -1
     @base_name = 'array_table'
     @table_name = "#{@base_name}_table"
     @id_name = model[0].keys.first if model[0]

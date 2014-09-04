@@ -350,7 +350,7 @@ class ServiceHelper::OptimizationResultPresenter
     @final_tarif_sets = get_optimization_results('final_tarif_sets', 'final_tarif_sets')
   end
 
-  def  tarif_sets_to_calculate_from_final_tarif_sets
+  def tarif_sets_to_calculate_from_final_tarif_sets
     return @tarif_sets_to_calculate_from_final_tarif_sets if @tarif_sets_to_calculate_from_final_tarif_sets
     @tarif_sets_to_calculate_from_final_tarif_sets = get_optimization_results('final_tarif_sets', 'tarif_sets_to_calculate_from_final_tarif_sets')
   end
