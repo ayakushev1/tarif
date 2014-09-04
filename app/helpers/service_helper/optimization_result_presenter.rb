@@ -1,6 +1,6 @@
 class ServiceHelper::OptimizationResultPresenter
   attr_reader :name, :output_model, :results, :operator
-  attr_reader :service_set_based_on_tarif_sets_or_tarif_results, :level_to_show_tarif_result_by_parts
+  attr_reader :service_set_based_on_tarif_sets_or_tarif_results, :level_to_show_tarif_result_by_parts, :use_price_comparison_in_current_tarif_set_calculation
   
   def initialize(operator, options = {}, input = nil, name = nil)
     @operator = operator
@@ -47,6 +47,7 @@ class ServiceHelper::OptimizationResultPresenter
   def init_output_choices(options = {})
     @service_set_based_on_tarif_sets_or_tarif_results = options[:service_set_based_on_tarif_sets_or_tarif_results]
     @level_to_show_tarif_result_by_parts = options[:show_zero_tarif_result_by_parts] == 'true' ? -1.0 : 0.0
+    @use_price_comparison_in_current_tarif_set_calculation = options[:use_price_comparison_in_current_tarif_set_calculation] == 'true' ? true : false
   end
   
   def performance_results
@@ -87,7 +88,7 @@ class ServiceHelper::OptimizationResultPresenter
   
   def service_sets_array
 #    raise(StandardError, final_tarif_sets)
-    service_set_price = {}; service_set_count = {}; stat_results = {}; identical_services = {} #fobidden = {}; fobidden_services = {}; tarif_sets_by_part = {}
+    service_set_price = {}; service_set_count = {}; stat_results = {}; identical_services = {}; tarifs = {} #fobidden = {}; fobidden_services = {}; tarif_sets_by_part = {}
 #    raise(StandardError, @service_set_based_on_tarif_sets_or_tarif_results)
     case service_set_based_on_tarif_sets_or_tarif_results
     when 'final_tarif_sets'
@@ -107,6 +108,7 @@ class ServiceHelper::OptimizationResultPresenter
 #                stat_results[service_set_id][stat_key] += (price_value_detail['all_stat'][stat_key] || 0).round(2)
 #              end if price_value_detail['all_stat']
 #            end
+            tarifs[service_set_id] = final_tarif_set['tarif']
             identical_services[service_set_id] ||= []            
             identical_services[service_set_id] << groupped_identical_services[tarif_set_by_part_id]['identical_services'] if groupped_identical_services and groupped_identical_services[tarif_set_by_part_id]
             identical_services[service_set_id].uniq!
@@ -168,8 +170,16 @@ class ServiceHelper::OptimizationResultPresenter
     end
     
     result = []
+    max_count_per_tarif = use_price_comparison_in_current_tarif_set_calculation ? 3 : 100000000
+    count_per_tarif = {}
     service_set_price.each do |service_set_id, service_sets_result|
 #      next if fobidden[service_set_id]
+      if tarifs[service_set_id]
+        count_per_tarif[tarifs[service_set_id]] ||= 0
+        count_per_tarif[tarifs[service_set_id]] += 1
+#      raise(StandardError) if count_per_tarif[tarifs[service_set_id]] > max_count_per_tarif
+        next if count_per_tarif[tarifs[service_set_id]] > max_count_per_tarif
+      end
       result << {'short_set_id' => service_set_id.split('_').uniq.join('_'), 'service_sets_id' => service_set_id,  
         'service_set_price' => service_sets_result, 'service_set_count' => service_set_count[service_set_id], 
         'identical_services' => identical_services[service_set_id],

@@ -87,7 +87,8 @@ class ServiceHelper::FinalTarifSetGenerator
         collect{|tarif_set_by_part_id, services| services - common_services_to_exclude}.collect{|f| tarif_set_id(f).to_sym}
       
       if current_tarif_set.current_part_index == 0
-        current_uniq_service_sets[current_tarif_set_by_part_name] = {:service_ids => current_tarif_set_by_part_services, :tarif_sets_by_part => [[current_part, current_tarif_set_by_part_name]], }              
+        current_uniq_service_sets[current_tarif_set_by_part_name] = {
+          :service_ids => current_tarif_set_by_part_services, :tarif_sets_by_part => [[current_part, current_tarif_set_by_part_name]], :tarif => tarif}              
         fobidden_info[current_tarif_set_by_part_name] = init_fobidden_info(tarif_sets_by_part_services_list, current_tarif_set_by_part_services - common_services_to_exclude, tarif.to_s.to_sym)
       else
         uniq_service_set = current_tarif_set_by_part_services[0..(current_tarif_set_by_part_services.size - current_services.size - 1)] 
@@ -96,6 +97,7 @@ class ServiceHelper::FinalTarifSetGenerator
         
         current_uniq_service_sets[current_tarif_set_by_part_name] ||= {}
         current_uniq_service_sets[current_tarif_set_by_part_name][:service_ids] = current_tarif_set_by_part_services
+        current_uniq_service_sets[current_tarif_set_by_part_name][:tarif] = tarif
         current_uniq_service_sets[current_tarif_set_by_part_name][:tarif_sets_by_part] ||= []
         
         current_uniq_service_sets[current_tarif_set_by_part_name][:fobidden] = check_if_final_tarif_set_is_fobidden(

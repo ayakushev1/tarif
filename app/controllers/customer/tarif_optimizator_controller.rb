@@ -141,8 +141,11 @@ class Customer::TarifOptimizatorController < ApplicationController
   end
   
   def optimization_result_presenter
-    options = {:service_set_based_on_tarif_sets_or_tarif_results => service_choices.session_filtr_params['service_set_based_on_tarif_sets_or_tarif_results'],
-      :show_zero_tarif_result_by_parts => service_choices.session_filtr_params['show_zero_tarif_result_by_parts'],}
+    options = {
+      :service_set_based_on_tarif_sets_or_tarif_results => service_choices.session_filtr_params['service_set_based_on_tarif_sets_or_tarif_results'],
+      :show_zero_tarif_result_by_parts => service_choices.session_filtr_params['show_zero_tarif_result_by_parts'],
+      :use_price_comparison_in_current_tarif_set_calculation => service_choices.session_filtr_params['use_price_comparison_in_current_tarif_set_calculation'],
+      }
     @optimization_result_presenter ||= ServiceHelper::OptimizationResultPresenter.new(operator, options)
   end
   
