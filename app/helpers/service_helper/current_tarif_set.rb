@@ -97,7 +97,8 @@ class ServiceHelper::CurrentTarifSet
     when :reverse_min_value
       -min_value
     when :auto
-      tarif_price > 0.0 ? min_value : (max_value > 0 ? 1.0 - min_value / max_value : 1.0)
+#      raise(StandardError)
+      tarif_price > 0.0 ? (max_value > 0 ? 1.0 - min_value / max_value : 1.0) : min_value
     else
       part
     end
