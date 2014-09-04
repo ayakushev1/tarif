@@ -72,6 +72,8 @@ class ServiceHelper::FinalTarifSetGenerator
         :updated_tarif_results => updated_tarif_results,
         :calculate_final_tarif_sets_first_without_common_services => calculate_final_tarif_sets_first_without_common_services,
         :use_price_comparison_in_current_tarif_set_calculation => options[:use_price_comparison_in_current_tarif_set_calculation],
+        :save_current_tarif_set_calculation_history => options[:save_current_tarif_set_calculation_history],
+        :use_price_comparison_in_current_tarif_set_calculation => options[:part_sort_criteria_in_price_optimization],
       })
 #    current_tarif_set.next_tarif_set_by_part(false)
         
@@ -118,7 +120,7 @@ class ServiceHelper::FinalTarifSetGenerator
     end 
 #    raise(StandardError, current_uniq_service_sets)
     @current_tarif_set_calculation_history = current_tarif_set.history
-#    raise(StandardError, current_tarif_set.history.join("\n")) if tarif.to_i == 203
+#    raise(StandardError, [current_tarif_set.history.size, current_tarif_set.history].join("\n")) if tarif.to_i == 203
     current_uniq_service_sets.each do |current_uniq_service_set_id, current_uniq_service_set|
       if current_uniq_service_set[:fobidden]
         current_uniq_service_sets.extract!(current_uniq_service_set_id)

@@ -89,15 +89,15 @@ class Customer::TarifOptimizatorController < ApplicationController
   end
   
   def service_sets
-    ArrayOfHashable.new(self, optimization_result_presenter.service_sets_array)
+    @service_sets ||= ArrayOfHashable.new(self, optimization_result_presenter.service_sets_array)
   end
   
   def tarif_results
-    ArrayOfHashable.new(self, optimization_result_presenter.tarif_results_array( session[:current_id]['service_sets_id']))
+    @tarif_results ||= ArrayOfHashable.new(self, optimization_result_presenter.tarif_results_array( session[:current_id]['service_sets_id']))
   end
   
   def tarif_results_details
-    ArrayOfHashable.new(self, optimization_result_presenter.tarif_results_details_array(session[:current_id]['service_sets_id'], session[:current_id]['tarif_class_id']))
+    @tarif_results_details ||= ArrayOfHashable.new(self, optimization_result_presenter.tarif_results_details_array(session[:current_id]['service_sets_id'], session[:current_id]['tarif_class_id']))
   end
   
   def calls_stat_options
@@ -107,19 +107,23 @@ class Customer::TarifOptimizatorController < ApplicationController
   def calls_stat
     filtr = calls_stat_options.session_filtr_params
     calls_stat_options = filtr.keys.map{|key| key if filtr[key] == 'true'}
-    ArrayOfHashable.new(self, minor_result_presenter.calls_stat_array(calls_stat_options) )
+    @calls_stat ||= ArrayOfHashable.new(self, minor_result_presenter.calls_stat_array(calls_stat_options) )
   end
   
   def performance_results
-    ArrayOfHashable.new(self, minor_result_presenter.performance_results )    
+    @performance_results ||= ArrayOfHashable.new(self, minor_result_presenter.performance_results )    
   end
   
   def service_packs_by_parts
-    ArrayOfHashable.new(self, minor_result_presenter.service_packs_by_parts_array )    
+    @service_packs_by_parts ||= ArrayOfHashable.new(self, minor_result_presenter.service_packs_by_parts_array )    
   end
   
   def memory_used
-    ArrayOfHashable.new(self, minor_result_presenter.used_memory_by_output )    
+    @memory_used ||= ArrayOfHashable.new(self, minor_result_presenter.used_memory_by_output )    
+  end
+  
+  def current_tarif_set_calculation_history
+    @current_tarif_set_calculation_history ||= ArrayOfHashable.new(self, optimization_result_presenter.current_tarif_set_calculation_history )   
   end
   
   def operators_optimization_progress_bar
@@ -145,6 +149,7 @@ class Customer::TarifOptimizatorController < ApplicationController
       :service_set_based_on_tarif_sets_or_tarif_results => service_choices.session_filtr_params['service_set_based_on_tarif_sets_or_tarif_results'],
       :show_zero_tarif_result_by_parts => service_choices.session_filtr_params['show_zero_tarif_result_by_parts'],
       :use_price_comparison_in_current_tarif_set_calculation => service_choices.session_filtr_params['use_price_comparison_in_current_tarif_set_calculation'],
+      :max_tarif_set_count_per_tarif => service_choices.session_filtr_params['max_tarif_set_count_per_tarif'],
       }
     @optimization_result_presenter ||= ServiceHelper::OptimizationResultPresenter.new(operator, options)
   end
@@ -182,7 +187,9 @@ class Customer::TarifOptimizatorController < ApplicationController
       :if_update_tarif_sets_to_calculate_from_with_cons_tarif_results => service_choices.session_filtr_params['if_update_tarif_sets_to_calculate_from_with_cons_tarif_results'],
       :eliminate_identical_tarif_sets => service_choices.session_filtr_params['eliminate_identical_tarif_sets'],
       :use_price_comparison_in_current_tarif_set_calculation => service_choices.session_filtr_params['use_price_comparison_in_current_tarif_set_calculation'],
-      :max_final_tarif_set_number => service_choices.session_filtr_params['max_final_tarif_set_number']
+      :max_tarif_set_count_per_tarif => service_choices.session_filtr_params['max_tarif_set_count_per_tarif'],
+      :save_current_tarif_set_calculation_history => service_choices.session_filtr_params['save_current_tarif_set_calculation_history'],
+      :part_sort_criteria_in_price_optimization => service_choices.session_filtr_params['part_sort_criteria_in_price_optimization'],
       } 
    }
   end
@@ -218,9 +225,11 @@ class Customer::TarifOptimizatorController < ApplicationController
         'use_short_tarif_set_name' => 'true',
         'show_zero_tarif_result_by_parts' => 'false',
         'if_update_tarif_sets_to_calculate_from_with_cons_tarif_results' => 'true',
-        'max_final_tarif_set_number' => 1000,
+        'max_tarif_set_count_per_tarif' => 3,
         'eliminate_identical_tarif_sets' => 'true',
         'use_price_comparison_in_current_tarif_set_calculation' => 'true',
+        'save_current_tarif_set_calculation_history' => 'true',
+        'part_sort_criteria_in_price_optimization' => 'max_value',
       } 
     end
 #    service_choices.session_filtr_params

@@ -67,8 +67,18 @@ form_item.init do |f|
   	],
   	
   	[
-     label(filtr_name, "max_final_tarif_set_number", "Max final_tarif_set number"),
-     text_field(filtr_name, "max_final_tarif_set_number", html_options.merge({:type => 'text', :value => s["max_final_tarif_set_number"] }) ),
+     label(filtr_name, "save_current_tarif_set_calculation_history", "save current_tarif_set calculation history?"),
+ 	 select(filtr_name, "save_current_tarif_set_calculation_history", [["Save", true], ["Do not save", false]], {:selected => s["save_current_tarif_set_calculation_history"]}, html_options ),
+
+     label(filtr_name, "part_sort_criteria_in_price_optimization", "part sort_criteria in price_optimization"),
+ 	 select(filtr_name, "part_sort_criteria_in_price_optimization", 
+ 	 [["max_value", 'max_value'], ["min_value", 'min_value'], ["min_max_difference", 'min_max_difference'], ["min_max_difference_to_max_value", 'min_max_difference_to_max_value'], 
+ 	 ["by_part_order", 'by_part_order']], {:selected => s["part_sort_criteria_in_price_optimization"]}, html_options ),
+  	],
+  	
+  	[
+     label(filtr_name, "max_tarif_set_count_per_tarif", "Max final_tarif_set number per tarif"),
+     text_field(filtr_name, "max_tarif_set_count_per_tarif", html_options.merge({:type => 'text', :value => s["max_tarif_set_count_per_tarif"] }) ),
 
      label(filtr_name, "tarifs_id", "Тарифы для оптимизации"),
      text_area(filtr_name, "tarifs_id", html_options.merge({:type => 'textarea', :value => s["tarifs_id"], :rows => 1 }) ),   

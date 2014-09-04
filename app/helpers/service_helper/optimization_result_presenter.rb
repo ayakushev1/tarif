@@ -1,6 +1,7 @@
 class ServiceHelper::OptimizationResultPresenter
   attr_reader :name, :output_model, :results, :operator
-  attr_reader :service_set_based_on_tarif_sets_or_tarif_results, :level_to_show_tarif_result_by_parts, :use_price_comparison_in_current_tarif_set_calculation
+  attr_reader :service_set_based_on_tarif_sets_or_tarif_results, :level_to_show_tarif_result_by_parts, :use_price_comparison_in_current_tarif_set_calculation,
+              :max_tarif_set_count_per_tarif
   
   def initialize(operator, options = {}, input = nil, name = nil)
     @operator = operator
@@ -48,6 +49,7 @@ class ServiceHelper::OptimizationResultPresenter
     @service_set_based_on_tarif_sets_or_tarif_results = options[:service_set_based_on_tarif_sets_or_tarif_results]
     @level_to_show_tarif_result_by_parts = options[:show_zero_tarif_result_by_parts] == 'true' ? -1.0 : 0.0
     @use_price_comparison_in_current_tarif_set_calculation = options[:use_price_comparison_in_current_tarif_set_calculation] == 'true' ? true : false
+    @max_tarif_set_count_per_tarif = options[:max_tarif_set_count_per_tarif].to_i
   end
   
   def performance_results
@@ -170,7 +172,7 @@ class ServiceHelper::OptimizationResultPresenter
     end
     
     result = []
-    max_count_per_tarif = use_price_comparison_in_current_tarif_set_calculation ? 3 : 100000000
+    max_count_per_tarif = use_price_comparison_in_current_tarif_set_calculation ? max_tarif_set_count_per_tarif : 100000000
     count_per_tarif = {}
     service_set_price.each do |service_set_id, service_sets_result|
 #      next if fobidden[service_set_id]
@@ -361,6 +363,12 @@ class ServiceHelper::OptimizationResultPresenter
   def groupped_identical_services
     return @groupped_identical_services if @groupped_identical_services
     @groupped_identical_services = get_optimization_results('final_tarif_sets', 'groupped_identical_services')
+  end
+
+  def current_tarif_set_calculation_history
+    return @current_tarif_set_calculation_history if @current_tarif_set_calculation_history
+    @current_tarif_set_calculation_history = get_optimization_results('final_tarif_sets', 'current_tarif_set_calculation_history')
+#    raise(StandardError)
   end
 
   def tarif_sets

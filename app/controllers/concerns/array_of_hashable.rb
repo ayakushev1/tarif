@@ -3,11 +3,12 @@ require 'will_paginate/array'
 class ArrayOfHashable < Presenter
   attr_accessor :base_name, :caption, :heads, :pagination_per_page, :id_name
   attr_writer :current_raw_class, :current_id_name
-  attr_reader :pagination_param_name, :pagination_name, :table_name
+  attr_reader :pagination_param_name, :pagination_name, :table_name, :model_size
   
   def initialize(controller, array_of_hash)
     super(controller)
     @model = array_of_hash
+    @model_size = array_of_hash.size
     @base_name = 'array_table'
     @table_name = "#{@base_name}_table"
     @id_name = model[0].keys.first if model[0]

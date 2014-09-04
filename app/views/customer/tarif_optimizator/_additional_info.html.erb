@@ -13,6 +13,11 @@ content_in :accordion do |user|
      render(:partial => 'service_packs_by_parts', :layout => 'application/layouts/model_table', :locals => {:table => controller.service_packs_by_parts}) +	
      render(:partial => 'memory_used', :layout => 'application/layouts/model_table', :locals => {:table => controller.memory_used})	
     ], 
+    [
+     'current_tarif_set_calculation_history',
+     content_tag(:div, "current_tarif_set calculation history cycles is #{controller.current_tarif_set_calculation_history.model_size}") + 
+     render(:partial => 'current_tarif_set_calculation_history', :layout => 'application/layouts/model_table', :locals => {:table => controller.current_tarif_set_calculation_history}) 	
+    ], 
   ] 
 end
 %>

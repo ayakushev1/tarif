@@ -5,7 +5,8 @@ class ServiceHelper::CurrentTarifSet
   attr_reader :current_price, :best_possible_price
   attr_reader :current_part_index, :current_part, :current_tarif_set_by_part_index
   attr_reader :history
-  attr_reader :save_current_tarif_set_calculation_history, :use_price_comparison_in_current_tarif_set_calculation, :calculate_final_tarif_sets_first_without_common_services
+  attr_reader :save_current_tarif_set_calculation_history, :part_sort_criteria_in_price_optimization,
+              :use_price_comparison_in_current_tarif_set_calculation, :calculate_final_tarif_sets_first_without_common_services
   
   def initialize(options)    
     @history = []
@@ -27,6 +28,8 @@ class ServiceHelper::CurrentTarifSet
     @updated_tarif_results = options[:updated_tarif_results]
     @calculate_final_tarif_sets_first_without_common_services = options[:calculate_final_tarif_sets_first_without_common_services]
     @use_price_comparison_in_current_tarif_set_calculation = options[:use_price_comparison_in_current_tarif_set_calculation] == 'true' ? true : false
+    @save_current_tarif_set_calculation_history = options[:save_current_tarif_set_calculation_history] == 'true' ? true : false
+    @use_price_comparison_in_current_tarif_set_calculation = options[:use_price_comparison_in_current_tarif_set_calculation].to_sym
   end
   
   def init_calculation_params
@@ -50,7 +53,15 @@ class ServiceHelper::CurrentTarifSet
   
   def init_tarif_sets_as_array
 #TODO проанализировать как влияет на расчеты порядок parts (например по минимальной цене или по разнице между максимальной и минимальной ценой)
-    @parts = tarif_sets_to_calculate_from_by_tarif.keys.sort - ['periodic']
+    @parts = tarif_sets_to_calculate_from_by_tarif.keys.sort_by do |part| 
+      min_value = new_cons_tarif_results_by_parts.collect do |tarif_sets_name, new_cons_tarif_results_by_part| 
+        new_cons_tarif_results_by_part[part]['price_value'].to_f if new_cons_tarif_results_by_part[part]
+      end.compact.min
+      max_value = new_cons_tarif_results_by_parts.collect do |tarif_sets_name, new_cons_tarif_results_by_part| 
+        new_cons_tarif_results_by_part[part]['price_value'].to_f if new_cons_tarif_results_by_part[part]
+      end.compact.max
+      parts_sort_criteria(:max_value, part, min_value, max_value)
+    end - ['periodic']
     @tarif_sets_names_as_array = []
     @tarif_sets_services_as_array = []
     @tarif_sets_prices = []
@@ -71,6 +82,23 @@ class ServiceHelper::CurrentTarifSet
       @tarif_sets_counts << tarif_sets_counts_by_part
     end
 #    raise(StandardError, [new_cons_tarif_results_by_parts.keys - @tarif_sets_names_as_array.flatten])
+  end
+  
+  def parts_sort_criteria(sort_type, part, min_value, max_value)
+    case sort_type
+    when :max_value
+      min_value
+    when :min_value
+      min_value
+    when :min_max_difference
+      max_value - min_value
+    when :min_max_difference_to_max_value
+      max_value > 0 ? 1.0 - min_value / max_value : 1.0
+    when :by_part_order
+      part
+    else
+      part
+    end
   end
   
   def calculate_additional_values
