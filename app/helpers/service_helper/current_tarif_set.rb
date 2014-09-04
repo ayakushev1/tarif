@@ -87,15 +87,15 @@ class ServiceHelper::CurrentTarifSet
   def parts_sort_criteria(sort_type, part, min_value, max_value)
     case sort_type
     when :max_value
-      min_value
+      max_value
     when :min_value
       min_value
     when :min_max_difference
       max_value - min_value
     when :min_max_difference_to_max_value
       max_value > 0 ? 1.0 - min_value / max_value : 1.0
-    when :by_part_order
-      part
+    when :reverse_min_value
+      -min_value
     else
       part
     end

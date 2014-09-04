@@ -229,7 +229,7 @@ class Customer::TarifOptimizatorController < ApplicationController
         'eliminate_identical_tarif_sets' => 'true',
         'use_price_comparison_in_current_tarif_set_calculation' => 'true',
         'save_current_tarif_set_calculation_history' => 'true',
-        'part_sort_criteria_in_price_optimization' => 'max_value',
+        'part_sort_criteria_in_price_optimization' => 'min_value',
       } 
     end
 #    service_choices.session_filtr_params
