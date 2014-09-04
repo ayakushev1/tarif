@@ -73,7 +73,7 @@ class ServiceHelper::FinalTarifSetGenerator
         :calculate_final_tarif_sets_first_without_common_services => calculate_final_tarif_sets_first_without_common_services,
         :use_price_comparison_in_current_tarif_set_calculation => options[:use_price_comparison_in_current_tarif_set_calculation],
         :save_current_tarif_set_calculation_history => options[:save_current_tarif_set_calculation_history],
-        :use_price_comparison_in_current_tarif_set_calculation => options[:part_sort_criteria_in_price_optimization],
+        :part_sort_criteria_in_price_optimization => options[:part_sort_criteria_in_price_optimization],
       })
 #    current_tarif_set.next_tarif_set_by_part(false)
         

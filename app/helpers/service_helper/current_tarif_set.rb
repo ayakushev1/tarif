@@ -29,7 +29,7 @@ class ServiceHelper::CurrentTarifSet
     @calculate_final_tarif_sets_first_without_common_services = options[:calculate_final_tarif_sets_first_without_common_services]
     @use_price_comparison_in_current_tarif_set_calculation = options[:use_price_comparison_in_current_tarif_set_calculation] == 'true' ? true : false
     @save_current_tarif_set_calculation_history = options[:save_current_tarif_set_calculation_history] == 'true' ? true : false
-    @use_price_comparison_in_current_tarif_set_calculation = options[:use_price_comparison_in_current_tarif_set_calculation].to_sym
+    @part_sort_criteria_in_price_optimization = options[:part_sort_criteria_in_price_optimization].to_sym
   end
   
   def init_calculation_params
@@ -60,7 +60,7 @@ class ServiceHelper::CurrentTarifSet
       max_value = new_cons_tarif_results_by_parts.collect do |tarif_sets_name, new_cons_tarif_results_by_part| 
         new_cons_tarif_results_by_part[part]['price_value'].to_f if new_cons_tarif_results_by_part[part]
       end.compact.max
-      parts_sort_criteria(:max_value, part, min_value, max_value)
+      parts_sort_criteria(part_sort_criteria_in_price_optimization, part, min_value, max_value)
     end - ['periodic']
     @tarif_sets_names_as_array = []
     @tarif_sets_services_as_array = []
