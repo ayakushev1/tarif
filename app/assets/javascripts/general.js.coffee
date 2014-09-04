@@ -3,12 +3,14 @@ get_accordion_current_page = ->
   $("[class*=accordion]").each (index, accordion) ->
     if $(accordion).hasClass("accordion")
       accordion_name = $(accordion).attr("name")
+      filtr[accordion_name] = -1
       i = 0
       $(accordion).find("[class*=accordion-toggle]").each (index, element) ->
         body_accordion_id = $(element).attr("href")        
         if $(body_accordion_id).hasClass("in")
           filtr[accordion_name] = i
-        i += 1  
+        i += 1
+#      alert(filtr[accordion_name])
   filtr  
 
 
@@ -16,14 +18,12 @@ get_tabs_current_page = ->
   filtr={}
   $("[class*=tabbable]").each (index, tabs) ->
     tabs_name = $(tabs).attr("name")
-    
+    filtr[tabs_name] = -1
     i = 0
     $(tabs).children("[class*=tab-content]").children("[class*=tab-pane]").each (index, element) ->
       body_tab_id = $(element).attr("id")
       if $(element).hasClass("active")
         filtr[tabs_name] = i 
-      i +=1
-
   filtr  
 
 #change history for browser to correctly replay on refresh and back button after ajax

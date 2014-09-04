@@ -35,6 +35,14 @@ form_item.init do |f|
   	],
   	
   	[
+     label(filtr_name, "eliminate_identical_tarif_sets", "eliminate_identical_tarif_sets"),
+ 	 select(filtr_name, "eliminate_identical_tarif_sets", [["Yes", true], ["No", false]], {:selected => s["eliminate_identical_tarif_sets"]}, html_options ),
+
+     label(filtr_name, "use_price_comparison_in_current_tarif_set_calculation", "use price comparison in current_tarif_set calculation?"),
+ 	 select(filtr_name, "use_price_comparison_in_current_tarif_set_calculation", [["Use", true], ["Do not use", false]], {:selected => s["use_price_comparison_in_current_tarif_set_calculation"]}, html_options ),
+  	],
+  	
+  	[
      label(filtr_name, "save_tarif_results_ord", "Save tarif_results_ord?"),
  	 select(filtr_name, "save_tarif_results_ord", [["Save", true], ["Do not save", false]], {:selected => s["save_tarif_results_ord"]}, html_options ),
 

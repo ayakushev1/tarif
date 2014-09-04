@@ -281,6 +281,7 @@ class ServiceHelper::CurrentTarifOptimizationResults
           
         end
       end
+#            raise(StandardError)
     end 
   end
 

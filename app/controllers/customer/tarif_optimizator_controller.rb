@@ -177,6 +177,8 @@ class Customer::TarifOptimizatorController < ApplicationController
       :use_short_tarif_set_name => service_choices.session_filtr_params['use_short_tarif_set_name'], 
       :calculate_with_multiple_use => service_choices.session_filtr_params['calculate_with_multiple_use'],
       :if_update_tarif_sets_to_calculate_from_with_cons_tarif_results => service_choices.session_filtr_params['if_update_tarif_sets_to_calculate_from_with_cons_tarif_results'],
+      :eliminate_identical_tarif_sets => service_choices.session_filtr_params['eliminate_identical_tarif_sets'],
+      :use_price_comparison_in_current_tarif_set_calculation => service_choices.session_filtr_params['use_price_comparison_in_current_tarif_set_calculation'],
       :max_final_tarif_set_number => service_choices.session_filtr_params['max_final_tarif_set_number']
       } 
    }
@@ -214,6 +216,8 @@ class Customer::TarifOptimizatorController < ApplicationController
         'show_zero_tarif_result_by_parts' => 'false',
         'if_update_tarif_sets_to_calculate_from_with_cons_tarif_results' => 'true',
         'max_final_tarif_set_number' => 1000,
+        'eliminate_identical_tarif_sets' => 'true',
+        'use_price_comparison_in_current_tarif_set_calculation' => 'true',
       } 
     end
 #    service_choices.session_filtr_params
