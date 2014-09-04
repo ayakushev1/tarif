@@ -73,7 +73,7 @@ form_item.init do |f|
      label(filtr_name, "part_sort_criteria_in_price_optimization", "part sort_criteria in price_optimization"),
  	 select(filtr_name, "part_sort_criteria_in_price_optimization", 
  	 [["max_value", 'max_value'], ["min_value", 'min_value'], ["min_max_difference", 'min_max_difference'], ["min_max_difference_to_max_value", 'min_max_difference_to_max_value'], 
- 	 ["reverse_min_value", 'reverse_min_value']], {:selected => s["part_sort_criteria_in_price_optimization"]}, html_options ),
+ 	 ["reverse_min_value", 'reverse_min_value'], ["auto", 'auto']], {:selected => s["part_sort_criteria_in_price_optimization"]}, html_options ),
   	],
   	
   	[

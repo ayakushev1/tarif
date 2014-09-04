@@ -52,7 +52,7 @@ class ServiceHelper::CurrentTarifSet
   end
   
   def init_tarif_sets_as_array
-#TODO проанализировать как влияет на расчеты порядок parts (например по минимальной цене или по разнице между максимальной и минимальной ценой)
+    @tarif_price = new_cons_tarif_results_by_parts[tarif]['periodic']['price_value'].to_f
     @parts = tarif_sets_to_calculate_from_by_tarif.keys.sort_by do |part| 
       min_value = new_cons_tarif_results_by_parts.collect do |tarif_sets_name, new_cons_tarif_results_by_part| 
         new_cons_tarif_results_by_part[part]['price_value'].to_f if new_cons_tarif_results_by_part[part]
@@ -96,6 +96,8 @@ class ServiceHelper::CurrentTarifSet
       max_value > 0 ? 1.0 - min_value / max_value : 1.0
     when :reverse_min_value
       -min_value
+    when :auto
+      tarif_price > 0.0 ? min_value : (max_value > 0 ? 1.0 - min_value / max_value : 1.0)
     else
       part
     end
@@ -110,7 +112,6 @@ class ServiceHelper::CurrentTarifSet
     all_services = tarif_sets_services_as_array.flatten
     @current_price = tarif_sets_prices.collect{|tarif_sets_price_by_parts| tarif_sets_price_by_parts.last}.sum + calculate_periodic_part_price_from_services(all_services)
     @best_possible_price = 0.0
-    @tarif_price = new_cons_tarif_results_by_parts[tarif]['periodic']['price_value'].to_f
     @min_periodic_price = @tarif_price 
     
 #    raise(StandardError)
