@@ -42,7 +42,7 @@ class Calls::CallHistoryParser
     return [{}] unless check_if_table_correct
     table_rows_to_process = table_rows(max_row_number)
     background_process_informer_parsing.init(0.0, table_rows_to_process.size) if background_process_informer_parsing and table_rows_to_process
-    update_step = 1
+    update_step = 100
     i = 1
     @processed = table_rows_to_process.collect do |row| 
       result = parse_row(row) 
