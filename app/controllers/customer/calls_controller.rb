@@ -53,7 +53,7 @@ class Customer::CallsController < ApplicationController
       message = check_uploaded_call_history(uploaded_call_history)
       if message[:file_is_good]
         parser = Calls::CallHistoryParser.new(self, user_params_for_call_history_parser, uploaded_call_history, false, @background_process_informer_parsing)
-        parser.parse(1000)
+        parser.parse(2000)
         processed_percent = parser.processed.size.to_f * 100.0 / (parser.original_row_number || 1.0).to_f
         message = {:file_is_good => false, :message => "Обработано #{processed_percent}%"}
         call_history_to_save = {
