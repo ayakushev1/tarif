@@ -24,7 +24,7 @@ class Calls::CallHistoryParser
   end
   
   def set_constant
-    @max_number_of_rows_to_process = 5000
+    @max_number_of_rows_to_process = 2000
   end
   
   def load_db_data
