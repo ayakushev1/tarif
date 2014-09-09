@@ -43,7 +43,7 @@ class Calls::CallHistoryParser
     result = []
 #    table_rows_to_process = table_rows(max_row_number)
     background_process_informer_parsing.init(0.0, [max_number_of_rows_to_process, max_number_of_rows_to_process].min) if background_process_informer_parsing# and table_rows_to_process
-    update_step = 100
+    update_step = 10
     i = 1
     doc.css('table table tbody tr')[0, max_row_number].each do |row_1|
       row = row_1.css('td').to_a.map{|column| column.text}      
