@@ -19,7 +19,7 @@ class Customer::CallsController < ApplicationController
   
   def upload_call_history
     
-    if true #optimization_params.session_filtr_params['calculate_on_background'] == 'true'
+    if false #optimization_params.session_filtr_params['calculate_on_background'] == 'true'
       @background_process_informer_parsing.clear_completed_process_info_model
       @background_process_informer_parsing.init(0, 100)
       
