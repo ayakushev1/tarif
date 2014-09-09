@@ -19,7 +19,7 @@ class Customer::CallsController < ApplicationController
   
   def upload_call_history
     
-    if false #optimization_params.session_filtr_params['calculate_on_background'] == 'true'
+    if true #optimization_params.session_filtr_params['calculate_on_background'] == 'true'
       @background_process_informer_parsing.clear_completed_process_info_model
       @background_process_informer_parsing.init(0, 100)
       
@@ -52,8 +52,8 @@ class Customer::CallsController < ApplicationController
       call_history_saver.clean_output_results
       message = check_uploaded_call_history(uploaded_call_history)
       if message[:file_is_good]
-        parser = Calls::CallHistoryParser.new(self, user_params_for_call_history_parser, uploaded_call_history, @background_process_informer_parsing)
-        parser.parse(50)
+        parser = Calls::CallHistoryParser.new(self, user_params_for_call_history_parser, uploaded_call_history, false, @background_process_informer_parsing)
+        parser.parse#(50)
         processed_percent = parser.processed.size.to_f * 100.0 / (parser.original_row_number || 1.0).to_f
         message = {:file_is_good => false, :message => "Обработано #{processed_percent}%"}
         call_history_to_save = {

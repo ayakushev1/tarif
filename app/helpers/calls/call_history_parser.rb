@@ -11,7 +11,7 @@ class Calls::CallHistoryParser
   def initialize(controller, user_params, call_history_file, parse_saved_file = false, background_process_informer_parsing = nil)
     @controller = controller
     @user_params = user_params
-    local_file = 'tmp/call_details_vgy_08092014.html' #'tmp/mts-details-27012014-25072014.html'
+    local_file = 'tmp/call_details_vgy_08092014.html___' #'tmp/mts-details-27012014-25072014.html'
     @call_history_file = parse_saved_file ? File.open(local_file) : call_history_file
     @background_process_informer_parsing = background_process_informer_parsing || ServiceHelper::BackgroundProcessInformer.new('parsing_uploaded_file', controller.current_user.id)
     @doc = Nokogiri::HTML(@call_history_file) do |config|
