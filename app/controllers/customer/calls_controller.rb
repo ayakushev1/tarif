@@ -57,7 +57,7 @@ class Customer::CallsController < ApplicationController
         processed_percent = parser.processed.size.to_f * 100.0 / (parser.original_row_number || 1.0).to_f
         message = {:file_is_good => false, :message => "Обработано #{processed_percent}%"}
         call_history_to_save = {
-          'processed' => parser.processed,
+#          'processed' => parser.processed,
           'unprocessed' => parser.unprocessed,
           'ignorred' => parser.ignorred,
           'message' => message,

@@ -24,7 +24,7 @@ class Calls::CallHistoryParser
   end
   
   def set_constant
-    @max_number_of_rows_to_process = 10000
+    @max_number_of_rows_to_process = 5000
   end
   
   def load_db_data
@@ -40,16 +40,20 @@ class Calls::CallHistoryParser
   def parse(max_row_number = max_number_of_rows_to_process)
     return[{}] unless call_history_file
     return [{}] unless check_if_table_correct
-    table_rows_to_process = table_rows(max_row_number)
-    background_process_informer_parsing.init(0.0, table_rows_to_process.size) if background_process_informer_parsing and table_rows_to_process
+    result = []
+#    table_rows_to_process = table_rows(max_row_number)
+    background_process_informer_parsing.init(0.0, [max_number_of_rows_to_process, max_number_of_rows_to_process].min) if background_process_informer_parsing# and table_rows_to_process
     update_step = 100
     i = 1
-    @processed = table_rows_to_process.collect do |row| 
-      result = parse_row(row) 
+    doc.css('table table tbody tr')[0, max_row_number].each do |row_1|
+      row = row_1.css('td').to_a.map{|column| column.text}      
+      result << parse_row(row) 
       background_process_informer_parsing.increase_current_value(update_step) if background_process_informer_parsing and i.divmod(update_step)[1] == 0
       i += 1
-      result
-    end.compact
+    end
+    result.compact!
+    @original_row_number = result.size
+    @processed = result
   end
   
   def parse_row(row)

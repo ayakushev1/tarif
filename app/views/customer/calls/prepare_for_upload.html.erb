@@ -1,4 +1,4 @@
-<%= form_tag({action: :upload_call_history}, method: 'post', remote: false, multipart: true, turbolinks: false) do %>
+<%= form_tag({action: :upload_call_history}, method: 'post', remote: true, multipart: true, turbolinks: true) do %>
 	<p><label for="call_history">Выберите файл</label>
 	<%= file_field_tag 'call_history' %>
 	<%= submit_tag "Загрузить" %>  
