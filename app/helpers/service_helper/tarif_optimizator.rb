@@ -14,7 +14,7 @@ class ServiceHelper::TarifOptimizator
   attr_reader  :save_tarif_results, :simplify_tarif_results, :save_tarif_results_ord, :analyze_memory_used, :output_call_ids_to_tarif_results, :output_call_count_to_tarif_results, 
                :analyze_query_constructor_performance
 #local
-  attr_reader :calls_count_by_parts, :controller
+  attr_reader :calls_count_by_parts, :user_id
   
   def initialize(options = {})
     self.extend Helper
@@ -26,7 +26,8 @@ class ServiceHelper::TarifOptimizator
   
   def init_input_data(options)
     @options = options
-    @fq_tarif_region_id = options[:user_region_id] || 1133
+    @fq_tarif_region_id = (options[:user_region_id] and options[:user_region_id] != 0 ? options[:user_region_id] : 1238)
+    @user_id = options[:user_id] || 0
   end
   
   def init_output_params(options)
@@ -42,17 +43,16 @@ class ServiceHelper::TarifOptimizator
     @performance_checker = ServiceHelper::PerformanceChecker.new()
     performance_checker.clean_history;
     performance_checker.run_check_point('init_additional_general_classes', 1) do
-      @optimization_result_saver = ServiceHelper::OptimizationResultSaver.new()
-      @final_tarif_sets_saver = ServiceHelper::OptimizationResultSaver.new('final_tarif_sets')
-      @calls_stat_calculator = ServiceHelper::CallsStatCalculator.new()
-      @tarif_optimization_sql_builder = ServiceHelper::TarifOptimizationSqlBuilder.new(self)
-      @minor_result_saver = ServiceHelper::OptimizationResultSaver.new('minor_results')
+      @optimization_result_saver = ServiceHelper::OptimizationResultSaver.new('optimization_results', nil, user_id)
+      @final_tarif_sets_saver = ServiceHelper::OptimizationResultSaver.new('optimization_results', 'final_tarif_sets', user_id)
+      @calls_stat_calculator = ServiceHelper::CallsStatCalculator.new({:user_id => user_id})
+      @tarif_optimization_sql_builder = ServiceHelper::TarifOptimizationSqlBuilder.new(self, {:user_id => user_id})
+      @minor_result_saver = ServiceHelper::OptimizationResultSaver.new('optimization_results', 'minor_results', user_id)
       @tarif_list_generator = ServiceHelper::TarifListGenerator.new(options[:services_by_operator] || {})
       @final_tarif_set_generator = ServiceHelper::FinalTarifSetGenerator.new(options[:services_by_operator] || {})
-      @controller = options[:controller]
-      @background_process_informer_operators = options[:background_process_informer_operators] || ServiceHelper::BackgroundProcessInformer.new('operators_optimization')
-      @background_process_informer_tarifs = options[:background_process_informer_tarifs] || ServiceHelper::BackgroundProcessInformer.new('tarifs_optimization')
-      @background_process_informer_tarif = options[:background_process_informer_tarif] || ServiceHelper::BackgroundProcessInformer.new('tarif_optimization')
+      @background_process_informer_operators = options[:background_process_informer_operators] || ServiceHelper::BackgroundProcessInformer.new('operators_optimization', user_id)
+      @background_process_informer_tarifs = options[:background_process_informer_tarifs] || ServiceHelper::BackgroundProcessInformer.new('tarifs_optimization', user_id)
+      @background_process_informer_tarif = options[:background_process_informer_tarif] || ServiceHelper::BackgroundProcessInformer.new('tarif_optimization', user_id)
     end
   end
   
@@ -125,14 +125,17 @@ class ServiceHelper::TarifOptimizator
   
   def init_input_for_one_operator_calculation(operator)
     performance_checker.run_check_point('init_input_for_one_operator_calculation', 3) do
-      @fq_tarif_operator_id = operator#tarif_list_generator.operators[operator_index]
-      @operator_id = operator#tarif_list_generator.operators[operator_index]
+      @fq_tarif_operator_id = operator
+      @operator_id = operator
       performance_checker.run_check_point('@stat_function_collector', 4) do
         @stat_function_collector = ServiceHelper::StatFunctionCollector.new(tarif_list_generator.all_services_by_operator[operator], optimization_params)
       end
       performance_checker.run_check_point('@query_constructor', 4) do
-        @query_constructor = ServiceHelper::QueryConstructor.new(self, {:tarif_class_ids => tarif_list_generator.all_services_by_operator[operator], 
-          :performance_checker => (analyze_query_constructor_performance ? performance_checker : nil)} )
+        @query_constructor = ServiceHelper::QueryConstructor.new(self, {
+          :tarif_class_ids => tarif_list_generator.all_services_by_operator[operator], 
+          :performance_checker => (analyze_query_constructor_performance ? performance_checker : nil),
+          :user_id => user_id,
+          } )
       end
       performance_checker.run_check_point('@max_formula_order_collector', 4) do
         @max_formula_order_collector = ServiceHelper::MaxPriceFormulaOrderCollector.new(tarif_list_generator.all_services_by_operator[operator], operator)
@@ -156,7 +159,7 @@ class ServiceHelper::TarifOptimizator
       save_tarif_results(operator, tarif)    
 
       performance_checker.run_check_point('calculate_and_save_final_tarif_set_by_tarif', 4) do
-#        calculate_and_save_final_tarif_set_by_tarif(operator, tarif)
+        calculate_and_save_final_tarif_set_by_tarif(operator, tarif)
       end
       
       background_process_informer_tarif.finish
@@ -290,7 +293,6 @@ class ServiceHelper::TarifOptimizator
       :tarif_list_generator => General::MemoryUsage.analyze(@tarif_list_generator),
       :max_formula_order_collector => General::MemoryUsage.analyze(@max_formula_order_collector),
       :performance_checker => General::MemoryUsage.analyze(@performance_checker),
-      :controller => General::MemoryUsage.analyze(@controller),
       :background_process_informer_operators => General::MemoryUsage.analyze(@background_process_informer_operators),
       :background_process_informer_tarifs => General::MemoryUsage.analyze(@background_process_informer_tarifs),
       :background_process_informer_tarif => General::MemoryUsage.analyze(@background_process_informer_tarif),

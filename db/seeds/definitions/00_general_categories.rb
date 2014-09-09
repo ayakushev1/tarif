@@ -1,7 +1,7 @@
 def access_methods_to_constant_general_categories
 #category constant definition
 #1 locations - regions
-  _moscow = 1133; _moscow_region = 1109; _piter = 1134; _piter_region = 1123; _ekaterin = 1135; _ekaterin_region = 1125;
+  _moscow = 1238; _moscow_region = 1127; _piter = 1255; _piter_region = 1124; _ekaterin = 1217; _ekaterin_region = 1162;
   _regions = [_moscow, _moscow_region, _piter, _piter_region, _ekaterin, _ekaterin_region]
   
 #3 
@@ -43,6 +43,7 @@ _own_region_active_caller = 201; _own_region_active_sms = 202; _own_region_activ
 _home_region_active_caller = 211; _home_region_active_sms = 212; _home_region_active_internet = 213; _home_region_no_activity = 214;
 _own_country_active_caller = 221; _own_country_active_sms = 222; _own_country_active_internet = 223; _own_country_no_activity = 224;
 _abroad_active_caller = 231; _abroad_active_sms = 232; _abroad_active_internet = 233; _abroad_no_activity = 234;
+_general_home_sitter = 241; _general_home_region_sitter = 242; _general_active_russia_traveller = 243; _general_active_foreign_traveller = 244;
 #23 priority type
 _general_priority = 300; _individual_priority = 301; _dependent_is_required_for_main = 302; _main_is_incompatible_with_dependent = 303;
 #24 priority relation

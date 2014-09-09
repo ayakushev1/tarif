@@ -40,7 +40,7 @@ describe PriceListsController do
       end
       
       it "must filter price_list_filtr records" do
-        get :index, 'price_lists_filtr' => {'tarif_list_id' => 1133 }
+        get :index, 'price_lists_filtr' => {'tarif_list_id' => 1238 }
         assert_response :success 
         assert_select('table[id=?]', 'price_list_table')
 

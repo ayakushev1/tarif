@@ -15,6 +15,8 @@ class Relation < ActiveRecord::Base
   include PgArrayHelper
 
   belongs_to :type, :class_name =>'Category', :foreign_key => :type_id
+
+  scope :operators_by_country, -> {where(:type_id => 192).where(:parent_id => nil)}
   
   def self.home_regions(operator_id, parent_region_id)
     result = where(:type_id => 190, :owner_id => operator_id, :parent_id => parent_region_id).first

@@ -1,28 +1,23 @@
 class ServiceHelper::TarifOptimizationSqlBuilder
-  attr_reader :tarif_optimizator, :performance_checker, :options
+  attr_reader :tarif_optimizator, :performance_checker, :options, :user_id
 
   def initialize(tarif_optimizator, options = {})
     self.extend Helper
     @options = options
+    @user_id = options[:user_id] || 0
     @tarif_optimizator = tarif_optimizator
+#    raise(StandardError)
   end
   
 # параметры из ServiceHelper::CurrentTarifOptimizationResults
   def tarif_results; current_tarif_optimization_results.tarif_results; end
   
-#  def tarif_results_ord; current_tarif_optimization_results.tarif_results_ord; end
-#  def prev_service_call_ids; current_tarif_optimization_results.prev_service_call_ids; end
   def prev_service_call_ids_by_parts; current_tarif_optimization_results.prev_service_call_ids_by_parts; end
-#  def prev_service_group_call_ids; current_tarif_optimization_results.prev_service_group_call_ids; end
-#  def service_ids_to_calculate; current_tarif_optimization_results.service_ids_to_calculate; end
   def calls_count_by_parts; tarif_optimizator.calls_count_by_parts; end
   
 # optimization params from ServiceHelper::TarifOptimizator
-#  def optimization_params; tarif_optimizator.optimization_params; end
-#  def check_sql_before_running; true; end
   def check_sql_before_running; tarif_optimizator.check_sql_before_running; end
   def execute_additional_sql; tarif_optimizator.execute_additional_sql; end
-#  def service_ids_batch_size; tarif_optimizator.service_ids_batch_size; end
 
 # optimization classes from ServiceHelper::TarifOptimizator
   def current_tarif_optimization_results; tarif_optimizator.current_tarif_optimization_results; end
@@ -32,11 +27,6 @@ class ServiceHelper::TarifOptimizationSqlBuilder
   def max_formula_order_collector; tarif_optimizator.max_formula_order_collector; end
   def performance_checker; tarif_optimizator.performance_checker; end
   
-#настройки вывода результатов
-#  def save_tarif_results_ord; tarif_optimizator.save_tarif_results_ord; end
-#  def output_call_ids_to_tarif_results; tarif_optimizator.output_call_ids_to_tarif_results; end
-#  def output_call_count_to_tarif_results; tarif_optimizator.output_call_count_to_tarif_results; end
-
   def calculate_service_part_sql(service_list, price_formula_order)
     sql = calculate_service_list_sql(service_list, price_formula_order) 
 
@@ -201,7 +191,7 @@ class ServiceHelper::TarifOptimizationSqlBuilder
   end
   
   def calculate_base_stat_sql(service_category_tarif_class_ids)
-    result = Customer::Call.where(query_constructor.joined_tarif_classes_category_where_hash(service_category_tarif_class_ids))
+    result = Customer::Call.where(:user_id => user_id).where(query_constructor.joined_tarif_classes_category_where_hash(service_category_tarif_class_ids))
     execute_additional_sql_to_check_performance(result.to_sql, 'calculate_base_stat_sql', 9)
     result
   end

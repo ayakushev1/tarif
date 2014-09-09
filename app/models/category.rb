@@ -49,6 +49,7 @@ class Category < ActiveRecord::Base
   scope :phone_usage_types_home_region, -> {where(:type_id => 22, :parent_id => 210)}
   scope :phone_usage_types_own_country, -> {where(:type_id => 22, :parent_id => 220)}
   scope :phone_usage_types_abroad, -> {where(:type_id => 22, :parent_id => 230)}
+  scope :phone_usage_types_general, -> {where(:type_id => 22, :parent_id => 240)}
   scope :priority_type, -> {where(:type_id => 23)}
   scope :priority_relation, -> {where(:type_id => 24)}
   

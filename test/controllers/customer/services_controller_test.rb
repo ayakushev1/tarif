@@ -73,7 +73,7 @@ describe Customer::ServicesController do
       
       it 'check' do
         @fq_tarif_operator_id = 1025
-        @fq_tarif_region_id = 1133
+        @fq_tarif_region_id = 1238
         get :index
         session[:current_user]["user_id"] = 2
         get :index, :current_id => {'customer_service_id' => 2, 'consolidated_customer_service_id' => 7000000000}

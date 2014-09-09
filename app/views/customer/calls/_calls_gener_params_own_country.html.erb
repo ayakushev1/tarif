@@ -8,18 +8,12 @@ form_item.init do |f|
   f.set_fields do |filtr_name| 
     html_options = {:action_name => customer_calls_set_calls_generation_params_path}
   [
-  	[label(filtr_name, " "),
-  	 link_to( 'Set default params', customer_calls_set_default_calls_generation_params_path),
+  	['Выберите вариант использования телефона',
+  	 collection_select(filtr_name, "phone_usage_type_id", Category.phone_usage_types_own_country, :id, :name,  {:include_blank => false, :selected => s_filtr["phone_usage_type_id"] }, html_options ),  	 
 
   	 label(filtr_name, " "),
   	 submit_tag("Generate calls")
   	],
-  	
-  	[],
-  	
-  	['Выберите вариант использования телефона',
-  	 collection_select(filtr_name, "phone_usage_type_id", Category.phone_usage_types_own_country, :id, :name,  {:include_blank => false, :selected => s_filtr["phone_usage_type_id"] }, html_options ),  	 
-  	],   
   	
   	[],
   	

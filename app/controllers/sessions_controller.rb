@@ -28,16 +28,16 @@ class SessionsController < ApplicationController
   end
   
   def choose_location
-    session[:current_user]["country_id"] = params["location"]["country_id"]
-    unless params["location"]["country_id"].blank?
-      session[:current_user]["country_name"] = Category.find(params["location"]["country_id"]).name
+    session[:current_user]["country_id"] = params["location_filtr"]["country_id"]
+    unless params["location_filtr"]["country_id"].blank?
+      session[:current_user]["country_name"] = Category.find(params["location_filtr"]["country_id"]).name
     else  
       session[:current_user]["country_name"] = nil
     end
     
-    session[:current_user]["region_id"] = params["location"]["region_id"]    
-    unless params["location"]["region_id"].blank?
-      session[:current_user]["region_name"] = Category.find(params["location"]["region_id"]).name
+    session[:current_user]["region_id"] = params["location_filtr"]["region_id"]    
+    unless params["location_filtr"]["region_id"].blank?
+      session[:current_user]["region_name"] = Category.find(params["location_filtr"]["region_id"]).name
     else  
       session[:current_user]["region_name"] = nil
     end

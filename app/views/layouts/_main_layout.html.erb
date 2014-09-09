@@ -27,7 +27,13 @@
 				<%= controller.flash[:error]%>
 			</div>
 			<div id="main_block_top_row_3" class="row-fluid">
-				
+				<% if controller.flash[:alert]%>
+					<div class="alert alert-block">
+					  <button type="button" class="close" data-dismiss="alert">&times;</button>
+					  <h4>Предупреждение!</h4>
+	  					<%= controller.flash[:alert]%>				
+					</div>
+				<% end %>
 			</div>
 			<div id="main_block_top_row_4" class="row" >
 				<div id=<%= view_id_name %> >

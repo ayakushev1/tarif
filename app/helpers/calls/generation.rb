@@ -14,14 +14,12 @@ module Calls::Generation
       @common_params = set_common_params
       @initial_inputs = set_initial_inputs
       self.extend Helper
-      @a = _operators
+#      @a = _operators
 #      raise(StandardError, [customer_calls_generation_params, user_params, common_params, initial_inputs].join("\n\n"))
     end
     
     def generate_calls#(params_to_search_optimal_tarif)
       calls = []
-#      Customer::Call.where("(id = ?) and (own_phone->>'number' = ?)", user_params[:user_id], user_params['phone_number']).delete_all
-       Customer::Call.delete_all
       
       (1..common_params["number_of_days_in_call_list"] ).each do |day|
         i = 0
@@ -45,7 +43,7 @@ module Calls::Generation
               :connect => {
                 :operator_id => initial_inputs[rouming]["connection_operator"], :region_id => initial_inputs[rouming]["connection_region"], :country_id => initial_inputs[rouming]["connection_country"] },
               :description => {
-                :time => set_date_time(day, i), :day => day, :month => set_month, :year => set_year, 
+                :time => set_date_time(day, i).to_s, :day => day, :month => set_month, :year => set_year, 
                 :duration => duration_by_base_service(rouming, base_service_id),
                 :volume => volume_by_base_service(rouming, base_service_id) },
             }
@@ -66,12 +64,11 @@ module Calls::Generation
           end
         end
       end
+      
+      Calls::CustomerCallSaver.save(calls, user_params["user_id"])
 
-      ActiveRecord::Base.transaction do
-        Customer::Call.create(calls)
-      end
     end
-    
+
     def set_user_params(user_params)
       {
         "user_id" => ( ( user_params["user_id"] if user_params ) || 2 ).to_i, 
@@ -88,12 +85,12 @@ module Calls::Generation
         "max_duration_of_call" => 60.0, 
         "others_phone_number" => '9999999999',
         "fixed_operator_id" => _fixed_line_operator, 
-        "partner_operator_ids" => set_partner_operator_ids(customer_generation_params[:own_region]["operator_id"].to_i),
+        "partner_operator_ids" => set_partner_operator_ids(customer_generation_params[:general]["operator_id"].to_i),
         "user_id" =>  user_params["user_id"],
         "own_phone_number" => user_params["own_phone_number"], 
-        "own_operator_id" => customer_generation_params[:own_region]["operator_id"].to_i, 
-        "own_region_id" => customer_generation_params[:own_region]["region_id"].to_i, 
-        "own_country_id" => customer_generation_params[:own_region]["country_id"].to_i, 
+        "own_operator_id" => customer_generation_params[:general]["operator_id"].to_i, 
+        "own_region_id" => customer_generation_params[:general]["region_id"].to_i, 
+        "own_country_id" => customer_generation_params[:general]["country_id"].to_i, 
       }
         rescue
           raise(StandardError, customer_generation_params)
@@ -123,20 +120,20 @@ module Calls::Generation
             :calls_to_own_region => {
               "partner_phone_number" => common_params["others_phone_number"], 
               "partner_operator_ids" => common_params["partner_operator_ids"], 
-              "partner_region_id" => p[:own_region]["region_id"].to_i,
-              "partner_country_id" => p[:own_region]["country_id"].to_i,
+              "partner_region_id" => p[:general]["region_id"].to_i,
+              "partner_country_id" => p[:general]["country_id"].to_i,
             },  
             :calls_to_home_region => {
               "partner_phone_number" => common_params["others_phone_number"], 
               "partner_operator_ids" => common_params["partner_operator_ids"], 
               "partner_region_id" => p[:home_region]["home_region_id"].to_i,
-              "partner_country_id" => p[:own_region]["country_id"].to_i,
+              "partner_country_id" => p[:general]["country_id"].to_i,
             },  
             :calls_to_own_country => {
               "partner_phone_number" => common_params["others_phone_number"], 
               "partner_operator_ids" => common_params["partner_operator_ids"], 
               "partner_region_id" => p[:own_region]["region_for_region_calls_ids"].to_i,
-              "partner_country_id" => p[:own_region]["country_id"].to_i,
+              "partner_country_id" => p[:general]["country_id"].to_i,
             },  
             :calls_to_abroad => {
               "partner_phone_number" => common_params["others_phone_number"], 
@@ -144,9 +141,9 @@ module Calls::Generation
               "partner_region_id" => nil,
               "partner_country_id" => p[:own_region]["country_for_international_calls_ids"],
             },  
-            "connection_region" => p[:own_region]["region_id"].to_i,
-            "connection_country" => p[:own_region]["country_id"].to_i,
-            "connection_operator" => p[:own_region]["operator_id"].to_i,
+            "connection_region" => p[:general]["region_id"].to_i,
+            "connection_country" => p[:general]["country_id"].to_i,
+            "connection_operator" => p[:general]["operator_id"].to_i,
             "average_duration_of_call" => average_duration_of_call(:own_region),  
             "number_of_day_calls" => p[:own_region]["number_of_day_calls"],  
             "share_of_calls_to_own_mobile" => share_of_calls_to_own_mobile(:own_region),
@@ -165,20 +162,20 @@ module Calls::Generation
             :calls_to_own_region => {
               "partner_phone_number" => common_params["others_phone_number"], 
               "partner_operator_ids" => common_params["partner_operator_ids"], 
-              "partner_region_id" => p[:own_region]["region_id"].to_i,
-              "partner_country_id" => p[:own_region]["country_id"].to_i,
+              "partner_region_id" => p[:general]["region_id"].to_i,
+              "partner_country_id" => p[:general]["country_id"].to_i,
             },  
             :calls_to_home_region => {
               "partner_phone_number" => common_params["others_phone_number"], 
               "partner_operator_ids" => common_params["partner_operator_ids"], 
               "partner_region_id" => p[:home_region]["home_region_id"].to_i,
-              "partner_country_id" => p[:own_region]["country_id"].to_i,
+              "partner_country_id" => p[:general]["country_id"].to_i,
             },  
             :calls_to_own_country => {
               "partner_phone_number" => common_params["others_phone_number"], 
               "partner_operator_ids" => common_params["partner_operator_ids"], 
               "partner_region_id" => p[:own_region]["region_for_region_calls_ids"].to_i,
-              "partner_country_id" => p[:own_region]["country_id"].to_i,
+              "partner_country_id" => p[:general]["country_id"].to_i,
             },  
             :calls_to_abroad => {
               "partner_phone_number" => common_params["others_phone_number"], 
@@ -187,8 +184,8 @@ module Calls::Generation
               "partner_country_id" => p[:own_region]["country_for_international_calls_ids"],
             },  
             "connection_region" => p[:home_region]["home_region_id"].to_i,
-            "connection_country" => p[:own_region]["country_id"].to_i,
-            "connection_operator" => p[:own_region]["operator_id"].to_i,
+            "connection_country" => p[:general]["country_id"].to_i,
+            "connection_operator" => p[:general]["operator_id"].to_i,
             "average_duration_of_call" => average_duration_of_call(:home_region),  
             "number_of_day_calls" => p[:home_region]["number_of_day_calls"],  
             "share_of_calls_to_own_mobile" => share_of_calls_to_own_mobile(:home_region),
@@ -207,20 +204,20 @@ module Calls::Generation
             :calls_to_own_region => {
               "partner_phone_number" => common_params["others_phone_number"], 
               "partner_operator_ids" => common_params["partner_operator_ids"], 
-              "partner_region_id" => p[:own_region]["region_id"].to_i,
-              "partner_country_id" => p[:own_region]["country_id"].to_i,
+              "partner_region_id" => p[:general]["region_id"].to_i,
+              "partner_country_id" => p[:general]["country_id"].to_i,
             },  
             :calls_to_home_region => {
               "partner_phone_number" => common_params["others_phone_number"], 
               "partner_operator_ids" => common_params["partner_operator_ids"], 
               "partner_region_id" => p[:home_region]["home_region_id"].to_i,
-              "partner_country_id" => p[:own_region]["country_id"].to_i,
+              "partner_country_id" => p[:general]["country_id"].to_i,
             },  
             :calls_to_own_country => {
               "partner_phone_number" => common_params["others_phone_number"], 
               "partner_operator_ids" => common_params["partner_operator_ids"], 
               "partner_region_id" => p[:own_region]["region_for_region_calls_ids"].to_i,
-              "partner_country_id" => p[:own_region]["country_id"].to_i,
+              "partner_country_id" => p[:general]["country_id"].to_i,
             },  
             :calls_to_abroad => {
               "partner_phone_number" => common_params["others_phone_number"], 
@@ -229,8 +226,8 @@ module Calls::Generation
               "partner_country_id" => p[:own_region]["country_for_international_calls_ids"],
             },  
             "connection_region" => p[:own_country]["travel_region_id"].to_i,
-            "connection_country" => p[:own_region]["country_id"].to_i,
-            "connection_operator" => p[:own_region]["operator_id"].to_i,
+            "connection_country" => p[:general]["country_id"].to_i,
+            "connection_operator" => p[:general]["operator_id"].to_i,
             "average_duration_of_call" => average_duration_of_call(:own_country),  
             "number_of_day_calls" => p[:own_country]["number_of_day_calls"],  
             "share_of_calls_to_own_mobile" => share_of_calls_to_own_mobile(:own_country),
@@ -249,20 +246,20 @@ module Calls::Generation
             :calls_to_own_region => {
               "partner_phone_number" => common_params["others_phone_number"], 
               "partner_operator_ids" => common_params["partner_operator_ids"], 
-              "partner_region_id" => p[:own_region]["region_id"].to_i,
-              "partner_country_id" => p[:own_region]["country_id"].to_i,
+              "partner_region_id" => p[:general]["region_id"].to_i,
+              "partner_country_id" => p[:general]["country_id"].to_i,
             },  
             :calls_to_home_region => {
               "partner_phone_number" => common_params["others_phone_number"], 
               "partner_operator_ids" => common_params["partner_operator_ids"], 
               "partner_region_id" => p[:home_region]["home_region_id"].to_i,
-              "partner_country_id" => p[:own_region]["country_id"].to_i,
+              "partner_country_id" => p[:general]["country_id"].to_i,
             },  
             :calls_to_own_country => {
               "partner_phone_number" => common_params["others_phone_number"], 
               "partner_operator_ids" => common_params["partner_operator_ids"], 
               "partner_region_id" => p[:own_region]["region_for_region_calls_ids"].to_i,
-              "partner_country_id" => p[:own_region]["country_id"].to_i,
+              "partner_country_id" => p[:general]["country_id"].to_i,
             },  
             :calls_to_abroad => {
               "partner_phone_number" => common_params["others_phone_number"], 
@@ -291,10 +288,10 @@ module Calls::Generation
     
     def choose_rouming_option
       p = customer_generation_params
-      own_reg = p[:own_region]["share_of_time_in_own_region"].to_f
-      home_reg = own_reg + p[:own_region]["share_of_time_in_home_region"].to_f
-      country_reg = home_reg + p[:own_region]["share_of_time_in_own_country"].to_f
-      abroad = country_reg + p[:own_region]["share_of_time_in_own_country"].to_f
+      own_reg = p[:general]["share_of_time_in_own_region"].to_f
+      home_reg = own_reg + p[:general]["share_of_time_in_home_region"].to_f
+      country_reg = home_reg + p[:general]["share_of_time_in_own_country"].to_f
+      abroad = country_reg + p[:general]["share_of_time_in_own_country"].to_f
       
       case rand * abroad
       when 0..own_reg
@@ -436,7 +433,7 @@ module Calls::Generation
     
     def default_calls_generation_params
       result = {}
-      [:own_region, :home_region, :own_country, :abroad].each do |rouming|
+      [:general, :own_region, :home_region, :own_country, :abroad].each do |rouming|
         result = result.merge(self.class.default_calls_generation_params(rouming))
       end
       result
@@ -502,11 +499,22 @@ module Calls::Generation
     def self.default_calls_generation_params(rouming, usage_pattern_id = nil)
 #      raise(StandardError, usage_pattern_id)
       case rouming
+      when :general
+        {
+          :general => 
+          {
+          'phone_usage_type_id' => ((usage_pattern_id and usage_pattern_id.to_i != 0) ? usage_pattern_id.to_i : _general_home_sitter),
+          'country_id' => _russia,
+          'region_id' => _moscow, 
+          'operator_id' => _mts,
+          'privacy_id' => _person,
+           }.merge(usage_pattern(usage_pattern_id || _general_home_sitter) )
+         }
       when :own_region
         {
           :own_region => 
           {
-          'phone_usage_type_id' => usage_pattern_id.to_i || _own_region_active_caller,
+          'phone_usage_type_id' => ((usage_pattern_id and usage_pattern_id.to_i != 0) ? usage_pattern_id.to_i : _own_region_active_caller),
           'country_id' => _russia,
           'region_id' => _moscow, 
           'operator_id' => _mts,
@@ -519,7 +527,7 @@ module Calls::Generation
         {
         :home_region => 
           {
-          'phone_usage_type_id' => usage_pattern_id.to_i || _home_region_no_activity,
+          'phone_usage_type_id' => ((usage_pattern_id and usage_pattern_id.to_i != 0) ? usage_pattern_id.to_i : _home_region_no_activity),
           'country_id' => _russia,
           'home_region_id' => _moscow_region, 
          }.merge(usage_pattern(usage_pattern_id || _home_region_no_activity) )          
@@ -528,7 +536,7 @@ module Calls::Generation
         {
         :own_country => 
           {
-          'phone_usage_type_id' => usage_pattern_id.to_i || _own_country_no_activity,
+          'phone_usage_type_id' => ((usage_pattern_id and usage_pattern_id.to_i != 0) ? usage_pattern_id.to_i : _own_country_no_activity),
           'country_id' => _russia,
           'travel_region_id' => _piter, 
          }.merge(usage_pattern(usage_pattern_id || _own_country_no_activity) )
@@ -537,7 +545,7 @@ module Calls::Generation
         {
         :abroad => 
           {
-          'phone_usage_type_id' => usage_pattern_id.to_i || _abroad_no_activity,
+          'phone_usage_type_id' => ((usage_pattern_id and usage_pattern_id.to_i != 0) ? usage_pattern_id.to_i : _abroad_no_activity),
           'continent_id' => _europe, 
           'foreign_country_id' => _ukraiun,
          }.merge(usage_pattern(usage_pattern_id || _abroad_no_activity) )
@@ -546,24 +554,58 @@ module Calls::Generation
         raise(StandardError, "wrong rouming: #{rouming}")
       end
     end
+
+    def self.update_all_usage_patterns_based_on_general_usage_type(general_phone_usage_type_id)
+      case general_phone_usage_type_id.to_i
+      when _general_home_sitter
+        {'customer_calls_generation_params_own_region_filtr' => {'phone_usage_type_id' => _own_region_active_caller}, 
+         'customer_calls_generation_params_home_region_filtr' => {'phone_usage_type_id' => _home_region_no_activity},
+         'customer_calls_generation_params_own_country_filtr' => {'phone_usage_type_id' => _own_country_no_activity}, 
+         'customer_calls_generation_params_abroad_filtr' => {'phone_usage_type_id' => _abroad_no_activity} }
+      when _general_home_region_sitter
+        {'customer_calls_generation_params_own_region_filtr' => {'phone_usage_type_id' => _own_region_active_caller}, 
+         'customer_calls_generation_params_home_region_filtr' => {'phone_usage_type_id' => _home_region_active_caller},
+         'customer_calls_generation_params_own_country_filtr' => {'phone_usage_type_id' => _own_country_no_activity}, 
+         'customer_calls_generation_params_abroad_filtr' => {'phone_usage_type_id' => _abroad_no_activity} }
+      when _general_active_russia_traveller
+        {'customer_calls_generation_params_own_region_filtr' => {'phone_usage_type_id' => _own_region_active_caller}, 
+         'customer_calls_generation_params_home_region_filtr' => {'phone_usage_type_id' => _home_region_active_caller},
+         'customer_calls_generation_params_own_country_filtr' => {'phone_usage_type_id' => _own_country_active_caller}, 
+         'customer_calls_generation_params_abroad_filtr' => {'phone_usage_type_id' => _abroad_no_activity} }
+      when _general_active_foreign_traveller
+        {'customer_calls_generation_params_own_region_filtr' => {'phone_usage_type_id' => _own_region_active_caller}, 
+         'customer_calls_generation_params_home_region_filtr' => {'phone_usage_type_id' => _home_region_active_caller},
+         'customer_calls_generation_params_own_country_filtr' => {'phone_usage_type_id' => _own_country_active_caller}, 
+         'customer_calls_generation_params_abroad_filtr' => {'phone_usage_type_id' => _abroad_active_caller} }
+      else
+        raise(StandardError, ["Wrong general_phone_usage_type_id #{general_phone_usage_type_id}", _general_home_sitter, _general_active_foreign_traveller])
+      end
+    end
     
+      
     def self.usage_pattern(usage_pattern_id)
       case usage_pattern_id.to_i
+      when _general_home_sitter
+        {'share_of_time_in_own_region' => 1.00,'share_of_time_in_home_region' => 0.00,'share_of_time_in_own_country' => 0.0, 'share_of_time_abroad' => 0.00 }
+      when _general_home_region_sitter
+        {'share_of_time_in_own_region' => 0.75,'share_of_time_in_home_region' => 0.25,'share_of_time_in_own_country' => 0.0, 'share_of_time_abroad' => 0.00 }
+      when _general_active_russia_traveller
+        {'share_of_time_in_own_region' => 0.35,'share_of_time_in_home_region' => 0.15,'share_of_time_in_own_country' => 0.5, 'share_of_time_abroad' => 0.00 }
+      when _general_active_foreign_traveller
+        {'share_of_time_in_own_region' => 0.35,'share_of_time_in_home_region' => 0.15,'share_of_time_in_own_country' => 0.0, 'share_of_time_abroad' => 0.50 }
+
       when _own_region_active_caller
         {"number_of_day_calls" => 10, "duration_of_calls" => 5, "share_of_calls_to_other_mobile" => 0.6, "share_of_calls_to_fix_line" => 0.1,
         "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.00, "number_of_sms_per_day" => 1, "number_of_mms_per_day" => 0, "internet_trafic_per_month" => 0.2,
-        'share_of_incoming_calls' => 0.5, 'share_of_incoming_calls_from_own_mobile'=> 0.3, 'share_of_time_in_own_region' => 0.75, 
-        'share_of_time_in_home_region' => 0.25,'share_of_time_in_own_country' => 0.0, 'share_of_time_abroad' => 0.00 }
+        'share_of_incoming_calls' => 0.5, 'share_of_incoming_calls_from_own_mobile'=> 0.3 }
       when _own_region_active_sms
         {"number_of_day_calls" => 1, "duration_of_calls" => 5, "share_of_calls_to_other_mobile" => 0.6, "share_of_calls_to_fix_line" => 0.1,
         "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.00, "number_of_sms_per_day" => 10, "number_of_mms_per_day" => 0, "internet_trafic_per_month" => 0.2,
-        'share_of_incoming_calls' => 0.5, 'share_of_incoming_calls_from_own_mobile'=> 0.3, 'share_of_time_in_own_region' => 0.75, 
-        'share_of_time_in_home_region' => 0.25, 'share_of_time_in_own_country' => 0.0, 'share_of_time_abroad' => 0.0 }
+        'share_of_incoming_calls' => 0.5, 'share_of_incoming_calls_from_own_mobile'=> 0.3 }
       when _own_region_active_internet
         {"number_of_day_calls" => 1, "duration_of_calls" => 5, "share_of_calls_to_other_mobile" => 0.6, "share_of_calls_to_fix_line" => 0.1,
         "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.00, "number_of_sms_per_day" => 1, "number_of_mms_per_day" => 0, "internet_trafic_per_month" => 2,
-        'share_of_incoming_calls' => 0.5, 'share_of_incoming_calls_from_own_mobile'=> 0.3, 'share_of_time_in_own_region' => 0.75, 
-        'share_of_time_in_home_region' => 0.25, 'share_of_time_in_own_country' => 0.0, 'share_of_time_abroad' => 0.0 }
+        'share_of_incoming_calls' => 0.5, 'share_of_incoming_calls_from_own_mobile'=> 0.3 }
       when _home_region_active_caller
         {"number_of_day_calls" => 1, "duration_of_calls" => 5, "share_of_calls_to_other_mobile" => 0.6, "share_of_calls_to_fix_line" => 0.1,
         "share_of_regional_calls" => 0.1, "share_of_international_calls" => 0.00, "number_of_sms_per_day" => 1, "number_of_mms_per_day" => 0, "internet_trafic_per_month" => 0.2,

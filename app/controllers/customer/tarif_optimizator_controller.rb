@@ -7,17 +7,17 @@ class Customer::TarifOptimizatorController < ApplicationController
   attr_reader :operator, :background_process_informer_operators, :background_process_informer_tarifs, :background_process_informer_tarif
 
   def update_minor_results
-    if service_choices.session_filtr_params['calculate_on_background'] == 'true'
+    if optimization_params.session_filtr_params['calculate_on_background'] == 'true'
       [background_process_informer_operators, background_process_informer_tarifs, background_process_informer_tarif].each do |background_process_informer|
         background_process_informer.clear_completed_process_info_model
         background_process_informer.init
       end
       
-      Spawnling.new(:argv => 'updating_minor_results') do
+      Spawnling.new(:argv => "updating_minor_results for #{current_user.id}") do
         begin
           updating_minor_results
         rescue => e
-          ServiceHelper::OptimizationResultSaver.new('Error on updating_minor_results').save({:error => e})
+          ServiceHelper::OptimizationResultSaver.new('optimization_results', 'Error on updating_minor_results', current_user.id).({:result => {:error => e}})
           raise(e)
         ensure
           [@background_process_informer_operators, @background_process_informer_tarifs, @background_process_informer_tarif].each do |background_process_informer|
@@ -35,7 +35,6 @@ class Customer::TarifOptimizatorController < ApplicationController
   def updating_minor_results
     @tarif_optimizator = ServiceHelper::TarifOptimizator.new(options)
     @tarif_optimizator.init_input_for_one_operator_calculation(operator)
-#    @tarif_optimizator.calculate_tarif_sets_and_slices(operator, 203)
     @tarif_optimizator.update_minor_results
     @tarif_optimizator.calculate_and_save_final_tarif_sets
   end
@@ -53,7 +52,7 @@ class Customer::TarifOptimizatorController < ApplicationController
   
   def recalculate
     session[:filtr1] = {}   
-    if service_choices.session_filtr_params['calculate_on_background'] == 'true'
+    if optimization_params.session_filtr_params['calculate_on_background'] == 'true'
       [background_process_informer_operators, background_process_informer_tarifs, background_process_informer_tarif].each do |background_process_informer|
         background_process_informer.clear_completed_process_info_model
         background_process_informer.init
@@ -64,7 +63,7 @@ class Customer::TarifOptimizatorController < ApplicationController
           @tarif_optimizator = ServiceHelper::TarifOptimizator.new(options)
           @tarif_optimizator.calculate_all_operator_tarifs
         rescue => e
-          ServiceHelper::OptimizationResultSaver.new('Error on optimization').save({:error => e})
+          ServiceHelper::OptimizationResultSaver.new('optimization_results', 'Error on optimization', current_user.id).save({:result => {:error => e}})
           raise(e)
         ensure
           [@background_process_informer_operators, @background_process_informer_tarifs, @background_process_informer_tarif].each do |background_process_informer|
@@ -78,7 +77,12 @@ class Customer::TarifOptimizatorController < ApplicationController
       @tarif_optimizator.calculate_all_operator_tarifs #calculate_one_operator_tarifs(operator)
       redirect_to(:action => :index)
     end
+    tarif_optimization_inputs_saver('user_input').save({:result => service_choices.session_filtr_params})
   end 
+  
+  def optimization_params
+    @optimization_params ||= Filtrable.new(self, "optimization_params")
+  end
   
   def service_choices
     @service_choices ||= Filtrable.new(self, "service_choices")
@@ -139,27 +143,33 @@ class Customer::TarifOptimizatorController < ApplicationController
   end
   
   def init_background_process_informer
-    @background_process_informer_operators ||= ServiceHelper::BackgroundProcessInformer.new('operators_optimization')
-    @background_process_informer_tarifs ||= ServiceHelper::BackgroundProcessInformer.new('tarifs_optimization')
-    @background_process_informer_tarif ||= ServiceHelper::BackgroundProcessInformer.new('tarif_optimization')
+    @background_process_informer_operators ||= ServiceHelper::BackgroundProcessInformer.new('operators_optimization', current_user.id)
+    @background_process_informer_tarifs ||= ServiceHelper::BackgroundProcessInformer.new('tarifs_optimization', current_user.id)
+    @background_process_informer_tarif ||= ServiceHelper::BackgroundProcessInformer.new('tarif_optimization', current_user.id)
   end
   
   def optimization_result_presenter
     options = {
-      :service_set_based_on_tarif_sets_or_tarif_results => service_choices.session_filtr_params['service_set_based_on_tarif_sets_or_tarif_results'],
-      :show_zero_tarif_result_by_parts => service_choices.session_filtr_params['show_zero_tarif_result_by_parts'],
-      :use_price_comparison_in_current_tarif_set_calculation => service_choices.session_filtr_params['use_price_comparison_in_current_tarif_set_calculation'],
-      :max_tarif_set_count_per_tarif => service_choices.session_filtr_params['max_tarif_set_count_per_tarif'],
+      :user_id=> (current_user ? current_user.id.to_i : nil),
+      :service_set_based_on_tarif_sets_or_tarif_results => optimization_params.session_filtr_params['service_set_based_on_tarif_sets_or_tarif_results'],
+      :show_zero_tarif_result_by_parts => optimization_params.session_filtr_params['show_zero_tarif_result_by_parts'],
+      :use_price_comparison_in_current_tarif_set_calculation => optimization_params.session_filtr_params['use_price_comparison_in_current_tarif_set_calculation'],
+      :max_tarif_set_count_per_tarif => optimization_params.session_filtr_params['max_tarif_set_count_per_tarif'],
       }
     @optimization_result_presenter ||= ServiceHelper::OptimizationResultPresenter.new(operator, options)
   end
   
   def minor_result_presenter
-    @minor_result_presenter ||= ServiceHelper::OptimizationResultPresenter.new(operator, {}, nil, 'minor_results')
+    @minor_result_presenter ||= ServiceHelper::OptimizationResultPresenter.new(operator, {:user_id=> (current_user ? current_user.id.to_i : nil)}, nil, 'minor_results')
   end 
   
+  def tarif_optimization_inputs_saver(name)
+    @tarif_optimization_inputs_saver ||= ServiceHelper::OptimizationResultSaver.new('tarif_optimization_inputs', name, current_user.id)
+    @tarif_optimization_inputs_saver
+  end
+
   def operator
-    service_choices.session_filtr_params['operator_id'].blank? ? 1030 : service_choices.session_filtr_params['operator_id'].to_i
+    optimization_params.session_filtr_params['operator_id'].blank? ? 1030 : optimization_params.session_filtr_params['operator_id'].to_i
   end
   
   def validate_tarifs
@@ -170,26 +180,27 @@ class Customer::TarifOptimizatorController < ApplicationController
   end
   
   def options
-  {:controller => self,
+  {:user_id=> (current_user ? current_user.id.to_i : nil),
+   :user_region_id => (session[:current_user] ? session[:current_user]["region_id"].to_i : nil),  
    :background_process_informer_operators => @background_process_informer_operators,        
    :background_process_informer_tarifs => @background_process_informer_tarifs,        
    :background_process_informer_tarif => @background_process_informer_tarif,        
-   :simplify_tarif_results => service_choices.session_filtr_params['simplify_tarif_results'], 
-   :save_tarif_results_ord => service_choices.session_filtr_params['save_tarif_results_ord'], 
-   :analyze_memory_used => service_choices.session_filtr_params['analyze_memory_used'], 
-   :analyze_query_constructor_performance => service_choices.session_filtr_params['analyze_query_constructor_performance'], 
-   :service_ids_batch_size => service_choices.session_filtr_params['service_ids_batch_size'], 
+   :simplify_tarif_results => optimization_params.session_filtr_params['simplify_tarif_results'], 
+   :save_tarif_results_ord => optimization_params.session_filtr_params['save_tarif_results_ord'], 
+   :analyze_memory_used => optimization_params.session_filtr_params['analyze_memory_used'], 
+   :analyze_query_constructor_performance => optimization_params.session_filtr_params['analyze_query_constructor_performance'], 
+   :service_ids_batch_size => optimization_params.session_filtr_params['service_ids_batch_size'], 
    :services_by_operator => {
       :operators => [operator], :tarifs => {operator => tarifs}, :tarif_options => {operator => tarif_options}, 
       :common_services => {operator => common_services}, 
-      :use_short_tarif_set_name => service_choices.session_filtr_params['use_short_tarif_set_name'], 
-      :calculate_with_multiple_use => service_choices.session_filtr_params['calculate_with_multiple_use'],
-      :if_update_tarif_sets_to_calculate_from_with_cons_tarif_results => service_choices.session_filtr_params['if_update_tarif_sets_to_calculate_from_with_cons_tarif_results'],
-      :eliminate_identical_tarif_sets => service_choices.session_filtr_params['eliminate_identical_tarif_sets'],
-      :use_price_comparison_in_current_tarif_set_calculation => service_choices.session_filtr_params['use_price_comparison_in_current_tarif_set_calculation'],
-      :max_tarif_set_count_per_tarif => service_choices.session_filtr_params['max_tarif_set_count_per_tarif'],
-      :save_current_tarif_set_calculation_history => service_choices.session_filtr_params['save_current_tarif_set_calculation_history'],
-      :part_sort_criteria_in_price_optimization => service_choices.session_filtr_params['part_sort_criteria_in_price_optimization'],
+      :use_short_tarif_set_name => optimization_params.session_filtr_params['use_short_tarif_set_name'], 
+      :calculate_with_multiple_use => optimization_params.session_filtr_params['calculate_with_multiple_use'],
+      :if_update_tarif_sets_to_calculate_from_with_cons_tarif_results => optimization_params.session_filtr_params['if_update_tarif_sets_to_calculate_from_with_cons_tarif_results'],
+      :eliminate_identical_tarif_sets => optimization_params.session_filtr_params['eliminate_identical_tarif_sets'],
+      :use_price_comparison_in_current_tarif_set_calculation => optimization_params.session_filtr_params['use_price_comparison_in_current_tarif_set_calculation'],
+      :max_tarif_set_count_per_tarif => optimization_params.session_filtr_params['max_tarif_set_count_per_tarif'],
+      :save_current_tarif_set_calculation_history => optimization_params.session_filtr_params['save_current_tarif_set_calculation_history'],
+      :part_sort_criteria_in_price_optimization => optimization_params.session_filtr_params['part_sort_criteria_in_price_optimization'],
       } 
    }
   end
@@ -208,11 +219,18 @@ class Customer::TarifOptimizatorController < ApplicationController
   
   def check_if_optimization_options_are_in_session
     if !session[:filtr] or session[:filtr]['service_choices_filtr'].blank?
+      saved_tarif_optimization_inputs = tarif_optimization_inputs_saver('user_input').results
       session[:filtr] ||= {}; session[:filtr]['service_choices_filtr'] ||= {}
-      session[:filtr]['service_choices_filtr']  = {
-        'tarifs_id' => [200],
-        'tarif_options_id' => [],
-        'common_services_id' => [],
+      session[:filtr]['service_choices_filtr']  = if saved_tarif_optimization_inputs.blank?
+        {'tarifs_id' => [200], 'tarif_options_id' => [], 'common_services_id' => [],}
+      else
+        saved_tarif_optimization_inputs
+      end 
+    end
+
+    if !session[:filtr] or session[:filtr]['optimization_params_filtr'].blank?
+      session[:filtr] ||= {}; session[:filtr]['optimization_params_filtr'] ||= {}
+      session[:filtr]['optimization_params_filtr']  = {
         'calculate_on_background' => 'true',
         'service_set_based_on_tarif_sets_or_tarif_results' => 'final_tarif_sets',
         'operator_id' => 1030,
@@ -264,7 +282,7 @@ class Customer::TarifOptimizatorController < ApplicationController
   
   def set_selected_services(services_to_set, which_services)
     if params['services_select_filtr'][which_services] != session[:filtr]['services_select_filtr'][which_services]
-      session[:filtr]['service_choices_filtr'][services_to_set] = params['services_select_filtr'][which_services] == 'true' ? 
+      session[:filtr]['service_choices_filtr'][services_to_set] = (params['services_select_filtr'][which_services] == 'true') ? 
         (service_choices.session_filtr_params[services_to_set].map(&:to_i) + which_services_values(which_services)).uniq.sort : 
         (service_choices.session_filtr_params[services_to_set].map(&:to_i) - which_services_values(which_services))
     end

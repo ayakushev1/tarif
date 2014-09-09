@@ -1,12 +1,13 @@
 class ServiceHelper::OptimizationResultPresenter
-  attr_reader :name, :output_model, :results, :operator
+  attr_reader :name, :output_model, :results, :operator, :user_id
   attr_reader :service_set_based_on_tarif_sets_or_tarif_results, :level_to_show_tarif_result_by_parts, :use_price_comparison_in_current_tarif_set_calculation,
               :max_tarif_set_count_per_tarif
   
   def initialize(operator, options = {}, input = nil, name = nil)
     @operator = operator
     @name = name || 'default_output_results_name'
-    @output_model = Customer::Stat.where(:result_type => 'optimization_results').where(:result_name => @name)
+    @user_id = options[:user_id] || 0
+    @output_model = Customer::Stat.where(:result_type => 'optimization_results').where(:result_name => @name, :user_id => @user_id)
     init_results(input)
     init_output_choices(options)
   end
@@ -32,7 +33,9 @@ class ServiceHelper::OptimizationResultPresenter
   
   def get_optimization_results(name1, name2)
     local_results ||= {}
-    Customer::Stat.where(:result_type => 'optimization_results').where(:result_name => name1).select("result as #{name1}").each do |result_item|
+    model = Customer::Stat.where(:result_type => 'optimization_results').where(:result_name => name1, :user_id => user_id).select("result as #{name1}")
+#    raise(StandardError, model.to_sql)
+    model.each do |result_item|
       result_item.attributes[name1].each do |result_type, result_value|
         if result_value.is_a?(Hash)
           local_results[result_type] ||= {}

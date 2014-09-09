@@ -38,7 +38,7 @@ describe TarifListsController do
       end
       
       it "must filter tarif_list_filtr records" do
-        get :index, 'tarif_list_filtr' => {'region_id' => 1109 }
+        get :index, 'tarif_list_filtr' => {'region_id' => 1127 }
         assert_response :success 
         assert_select('table[id=?]', 'tarif_list_table')
 

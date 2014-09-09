@@ -3,7 +3,7 @@ class ServiceHelper::QueryConstructor
   attr_reader :context, :parameters, :criteria_where_hash, :criteria_category, :categories_where_hash,
               :tarif_classes_categories_where_hash, :category_groups_where_hash
   attr_reader :comparison_operators, :categories, :childs_category, :tarif_class_categories, :category_groups, 
-              :options, :tarif_class_ids, :criterium_ids, :category_ids, :service_priorities, :call_ids_by_tarif_class_id,
+              :options, :tarif_class_ids, :criterium_ids, :user_id, :category_ids, :service_priorities, :call_ids_by_tarif_class_id,
               :tarif_class_categories_by_tarif_class, :service_category_group_ids_by_tarif_class
   attr_reader :performance_checker
   
@@ -13,6 +13,7 @@ class ServiceHelper::QueryConstructor
     @tarif_class_ids = options[:tarif_class_ids]
     @criterium_ids = options[:criterium_ids]
     @performance_checker = options[:performance_checker]
+    @user_id = options[:user_id] || 0
     if performance_checker
       performance_checker.run_check_point('load_comparison_operators', 15) {load_comparison_operators}
       performance_checker.run_check_point('load_category_ids', 15) {load_category_ids}
@@ -49,7 +50,7 @@ class ServiceHelper::QueryConstructor
     @call_ids_by_tarif_class_id = []
     accumulated_call_ids = []
     service_priorities.compact.each do |sp|
-      call_ids_by_tarif_class_id[sp.main_tarif_class_id] = Customer::Call.where(tarif_class_where_hash(sp.main_tarif_class_id) ).
+      call_ids_by_tarif_class_id[sp.main_tarif_class_id] = Customer::Call.where(:user_id => user_id).where.where(tarif_class_where_hash(sp.main_tarif_class_id) ).
         where.not(:id => accumulated_call_ids ).pluck(:id)
       accumulated_call_ids += call_ids_by_tarif_class_id[sp.main_tarif_class_id]
     end

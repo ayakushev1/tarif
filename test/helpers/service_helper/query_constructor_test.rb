@@ -7,7 +7,7 @@ describe ServiceHelper do
   
   describe 'QueryConstructor class' do
     before do            
-      @fq_tarif_operator_id = 1025; @fq_tarif_region_id = 1133; #context variables
+      @fq_tarif_operator_id = 1025; @fq_tarif_region_id = 1238; #context variables
       @tarif_class_id = [0, 75, 77, 80, 93]
             
       @q = ServiceHelper::QueryConstructor.new(self, {:tarif_class_ids => @tarif_class_id})
@@ -85,7 +85,7 @@ describe ServiceHelper do
 #          @q.childs_category[p.id].must_be :==, true
 #          @q.categories.must_be :==, true
           @q.categories_where_hash[1].wont_be_nil @q.categories_where_hash
-          @q.categories_where_hash[2].must_be :==, "(customer_calls.connect->>'operator_id' = '1025') and (customer_calls.connect->>'region_id' = '1133')" 
+          @q.categories_where_hash[2].must_be :==, "(customer_calls.connect->>'operator_id' = '1025') and (customer_calls.connect->>'region_id' = '1238')" 
           @q.categories_where_hash[302].must_be :==, "(customer_calls.base_service_id = '50') and (customer_calls.base_subservice_id = '71')"
         end 
       end

@@ -1,12 +1,15 @@
 class ServiceHelper::BackgroundProcessInformer
-  attr_reader :name, :process_info_model
-  def initialize(name)
+  attr_reader :name, :process_info_model, :user_id
+  def initialize(name, user_id)
     @name = name || 'default_background_process_name'
-    @process_info_model = Customer::Stat.where(:result_type => 'background_processes').where(:result_name => @name)#.where("(result_key->>'calculating')::boolean = true")
+    @user_id = user_id
+    @process_info_model = Customer::Stat.where(:result_type => 'background_processes', :user_id => user_id).
+      where(:result_name => @name)#.where("(result_key->>'calculating')::boolean = true")
   end
   
   def clear_completed_process_info_model
-    Customer::Stat.where(:result_type => 'background_processes').where(:result_name => name).where("(result_key->>'calculating')::boolean = false").delete_all
+    Customer::Stat.where(:result_type => 'background_processes', :user_id => user_id).
+      where(:result_name => name).where("(result_key->>'calculating')::boolean = false").delete_all
   end      
   
   def current_values
@@ -27,7 +30,7 @@ class ServiceHelper::BackgroundProcessInformer
       process_info_model.first.update_attributes!({:result_key => {:calculating => true}, :result => {
         :name => name, :max_value => max_value, :min_value => min_value, :current_value => min_value}})
     else
-      process_info_model.create({:result_type => 'background_processes', :result_name => name, :result_key => {:calculating => true}, :result => {
+      process_info_model.create({:result_type => 'background_processes', :result_name => name, :user_id => user_id, :result_key => {:calculating => true}, :result => {
         :name => name, :max_value => max_value, :min_value => min_value, :current_value => min_value}})
     end       
   end

@@ -1,13 +1,14 @@
 Dir[Rails.root.join("db/seeds/definitions/01_service_categories.rb")].sort.each { |f| require f }
 class ServiceHelper::CallsStatCalculator
-#  attr_reader :tarif_optimizator
+  attr_reader :user_id
+  
   def initialize(options = {})
-
+    @user_id = options[:user_id] || 0
   end
   
   def calculate_calls_stat(query_constructor)
     sql = calculate_calls_stat_sql(query_constructor)
-#    raise(StandardError, Customer::Call.find_by_sql(sql))
+#    raise(StandardError, sql)
     Customer::Call.find_by_sql(sql) unless sql.blank?
   end
   
@@ -25,7 +26,7 @@ class ServiceHelper::CallsStatCalculator
         "'[#{call_types}]' as call_types",
         "#{calls_stat_functions_string(calls_stat_category_criteria[:stat_functions])}",
       ]
-      calls_stat_category_sql << Customer::Call.
+      calls_stat_category_sql << Customer::Call.where(:user_id => user_id).
         select(fields.join(', ')).where(where_condition.join(' and ')).to_sql
     end
     calls_stat_category_sql.join(' union ')

@@ -31,6 +31,7 @@ gem 'turbolinks'
 
 gem 'jquery-turbolinks'
 
+gem 'remotipart', '~> 1.2' #for ajax file upload
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 2.0'
 

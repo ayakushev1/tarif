@@ -3,11 +3,20 @@
 content_in :accordion do |user| 
   [
     [
-     'Optimization options',
+     'Choice of services',
      (
 	  link_to('Recalculate', customer_tarif_optimizator_recalculate_path ) + "    ".html_safe +
-      link_to('Update calls stat', customer_tarif_optimizator_update_minor_results_path ) + "    ".html_safe +
+      link_to('Update final_taif_sets and calls stat', customer_tarif_optimizator_update_minor_results_path ) + "    ".html_safe +
 	  render(:partial => 'service_choices', :layout => 'application/layouts/filtr_form_2_columns', :locals => {:form_item => controller.service_choices} )
+		
+     )          
+    ], 
+    [
+     'Optimization params',
+     (
+	  link_to('Recalculate', customer_tarif_optimizator_recalculate_path ) + "    ".html_safe +
+      link_to('Update final_taif_sets and calls stat', customer_tarif_optimizator_update_minor_results_path ) + "    ".html_safe +
+	  render(:partial => 'optimization_params', :layout => 'application/layouts/filtr_form_2_columns', :locals => {:form_item => controller.optimization_params} )
 		
      )          
     ], 
