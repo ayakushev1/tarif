@@ -22,12 +22,12 @@ class Customer::HistoryParserController < ApplicationController
   end
 
   def upload
-    max_time = parsing_params[:sleep_after_file_uploading]
-    i = 0
-    begin
-      sleep 1
-      i +=1
-    end while !params[:call_history] and i < max_time
+#    max_time = parsing_params[:sleep_after_file_uploading]
+#    i = 0
+#    begin
+#      sleep 1
+#      i +=1
+#    end while !params[:call_history] and i < max_time
     @uploaded_call_history_file = params[:call_history]
 #    raise(StandardError, [@uploaded_call_history_file.inspect, @uploaded_call_history_file.methods])
 #    sleep parsing_params[:sleep_after_file_uploading]
@@ -40,10 +40,19 @@ class Customer::HistoryParserController < ApplicationController
     if parsing_params[:calculate_on_background]
       @background_process_informer.clear_completed_process_info_model
       @background_process_informer.init(0, 100)
-      
+            
       Spawnling.new(:argv => "parsing call history file for #{current_user.id}") do
         begin
           @background_process_informer.init(0, 100)
+
+    max_time = parsing_params[:sleep_after_file_uploading]
+    i = 0
+    begin
+      sleep 1
+      i +=1
+    end while !call_history_file and i < max_time
+      
+
           message = send(parser_starter, call_history_file)
           call_history_saver.save({:result => {'message' => {'message' => message}}})
         rescue => e
