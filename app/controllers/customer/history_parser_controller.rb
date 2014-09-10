@@ -22,10 +22,10 @@ class Customer::HistoryParserController < ApplicationController
   end
 
   def upload
-    uploaded_call_history_file = params[:call_history]
+    @uploaded_call_history_file = params[:call_history]
     sleep parsing_params[:sleep_after_file_uploading]
 #    raise(StandardError, params)
-    background_parser_processor(:calculation_status, :prepare_for_upload, :parse_uploaded_file, uploaded_call_history_file)
+    background_parser_processor(:calculation_status, :prepare_for_upload, :parse_uploaded_file, @uploaded_call_history_file)
   end
   
   def background_parser_processor(status_action, finish_action, parser_starter, call_history_file)  
