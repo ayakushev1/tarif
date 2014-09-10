@@ -23,6 +23,7 @@ class Customer::HistoryParserController < ApplicationController
 
   def upload
     uploaded_call_history_file = params[:call_history]
+    sleep parsing_params[:sleep_after_file_uploading]
 #    raise(StandardError, params)
     background_parser_processor(:calculation_status, :prepare_for_upload, :parse_uploaded_file, uploaded_call_history_file)
   end
@@ -78,7 +79,7 @@ class Customer::HistoryParserController < ApplicationController
         parser.parse
         message = {:file_is_good => false, 'message' => "Обработано #{parser.processed_percent}%"}
         call_history_to_save = {
-          'processed' => parser.processed,
+          'processed' => (parsing_params['save_processes_result_to_stat'] ? parser.processed : nil),
           'unprocessed' => parser.unprocessed,
           'ignorred' => parser.ignorred,
           'message' => {:file_is_good => false, 'message' => "Обработано #{parser.processed_percent}%"},
@@ -158,6 +159,7 @@ class Customer::HistoryParserController < ApplicationController
       :background_process_informer => background_process_informer,
 
       :calculate_on_background => (parsing_params_filtr.session_filtr_params['calculate_on_background'] == 'true' ? true : false),
+      :save_processes_result_to_stat => (parsing_params_filtr.session_filtr_params['save_processes_result_to_stat'] == 'true' ? true : false),
       :file_upload_remote_mode => (parsing_params_filtr.session_filtr_params['file_upload_remote_mode'] == 'true' ? true : false),
       :file_upload_turbolink_mode => (parsing_params_filtr.session_filtr_params['file_upload_turbolink_mode'] == 'true' ? true : false),
       :file_upload_max_size => parsing_params_filtr.session_filtr_params['file_upload_max_size'].to_f,
@@ -165,6 +167,7 @@ class Customer::HistoryParserController < ApplicationController
       :allowed_call_history_file_types => parsing_params_filtr.session_filtr_params['allowed_call_history_file_types'],
       :background_update_frequency => parsing_params_filtr.session_filtr_params['background_update_frequency'].to_i,
       :file_upload_form_method => parsing_params_filtr.session_filtr_params['file_upload_form_method'],
+      :sleep_after_file_uploading => parsing_params_filtr.session_filtr_params['sleep_after_file_uploading'].to_f,
     }
   end
   
@@ -183,13 +186,15 @@ class Customer::HistoryParserController < ApplicationController
       session[:filtr] ||= {}; session[:filtr]['parsing_params_filtr'] ||= {}
       session[:filtr]['parsing_params_filtr']  = {
         'calculate_on_background' => 'true',
+        'save_processes_result_to_stat' => 'true',
         'file_upload_remote_mode' => 'false',
         'file_upload_turbolink_mode' => 'true',
-        'file_upload_form_method' => 'get',
+        'file_upload_form_method' => 'post',
         'file_upload_max_size' => 2,
         'call_history_max_line_to_process' => 2000,
         'allowed_call_history_file_types' => ['html'],
         'background_update_frequency' => 10,
+        'sleep_after_file_uploading' => 5,
       } 
     end
   end

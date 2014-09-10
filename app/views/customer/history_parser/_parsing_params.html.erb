@@ -9,6 +9,8 @@ form_item.init do |f|
      label(filtr_name, "calculate_on_background", "calculate_on_background"),
  	 select(filtr_name, "calculate_on_background", [["background calculation", true], ["direct calculation", false]], {:selected => s["calculate_on_background"]}, html_options ),
 
+     label(filtr_name, "save_processes_result_to_stat", "Save processes result to stat&"),
+ 	 select(filtr_name, "save_processes_result_to_stat", [["True", true], ["False", false]], {:selected => s["save_processes_result_to_stat"]}, html_options ),
   	],
 
   	[
@@ -34,6 +36,13 @@ form_item.init do |f|
      label(filtr_name, "file_upload_turbolink_mode", "File upload turbolink mode"),
  	 select(filtr_name, "file_upload_turbolink_mode", [["True", true], ["False", false]], {:selected => s["file_upload_turbolink_mode"]}, html_options ),
   	],
+
+  	[
+     label(filtr_name, "sleep_after_file_uploading", "Sleep after file uploading, c"),
+     text_field(filtr_name, "sleep_after_file_uploading", html_options.merge({:type => 'text', :value => s["sleep_after_file_uploading"] }) ),
+
+  	],
+
   ]
 	    
   end
