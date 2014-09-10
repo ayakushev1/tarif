@@ -1,0 +1,13 @@
+<%= form_tag({action: :upload}, 
+              method: controller.parsing_params[:file_upload_form_method], 
+              remote: controller.parsing_params[:file_upload_remote_mode], 
+              multipart: true, 
+              turbolinks: controller.parsing_params[:file_upload_turbolink_mode]) do %>
+
+	<p><label for="call_history">Выберите файл</label>
+
+	<%= file_field_tag 'call_history' %>
+
+	<%= submit_tag "Загрузить" %>  
+
+<% end %>

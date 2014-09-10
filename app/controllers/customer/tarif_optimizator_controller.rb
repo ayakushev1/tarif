@@ -222,7 +222,7 @@ class Customer::TarifOptimizatorController < ApplicationController
       saved_tarif_optimization_inputs = tarif_optimization_inputs_saver('user_input').results
       session[:filtr] ||= {}; session[:filtr]['service_choices_filtr'] ||= {}
       session[:filtr]['service_choices_filtr']  = if saved_tarif_optimization_inputs.blank?
-        {'tarifs_id' => [200], 'tarif_options_id' => [], 'common_services_id' => [],}
+        {'tarifs_id' => [200], 'tarif_options_id' => [], 'common_services_id' => [],}        
       else
         saved_tarif_optimization_inputs
       end 

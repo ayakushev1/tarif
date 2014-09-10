@@ -22,11 +22,15 @@ Rails.application.routes.draw do
       get 'calls/set_calls_generation_params' => :set_calls_generation_params
       get 'calls/set_default_calls_generation_params' => :set_default_calls_generation_params
       get 'calls/generate_calls' => :generate_calls
-      get 'calls/prepare_for_upload' => :prepare_for_upload
-      post 'calls/upload_call_history' => :upload_call_history
-      get 'calls/upload_call_history' => :upload_call_history
-      get 'calls/parse_call_history' => :parse_call_history
-      get 'calls/calculation_status' => :calculation_status
+    end
+
+    controller :history_parser do
+      get 'history_parser/' => :index
+      get 'history_parser/prepare_for_upload' => :prepare_for_upload
+      post 'history_parser/upload' => :upload
+      get 'history_parser/upload' => :upload
+      get 'history_parser/parse' => :parse
+      get 'history_parser/calculation_status' => :calculation_status
     end
   end
 

@@ -1,8 +1,8 @@
 require 'test_helper'
 
-describe Calls::CallHistoryParser do
+describe Calls::HistoryParser do
   before do
-   @parser = Calls::CallHistoryParser.new(self, Calls::Generation::Generator.new(self, {}, {"user_id" => 0}), nil)
+   @parser = Calls::HistoryParser.new(self, Calls::Generator.new(self, {}, {"user_id" => 0}), nil)
 #   @parser.parse(4000) if @parser.processed.blank?
     
   end

@@ -25,5 +25,18 @@ class Customer::Call < ActiveRecord::Base
   pg_json_belongs_to :connect_phone_region, :class_name => 'Category', :foreign_key => :connect_phone, :field => :region_id
   pg_json_belongs_to :connect_phone_operator, :class_name => 'Category', :foreign_key => :connect_phone, :field => :operator_id
 
+  def self.batch_save(calls, user_id)
+    where(:user_id => user_id).delete_all
+    fields = calls[0].keys
+    values = calls.map do |call|
+      updated_values = call.values.collect do |value|
+        value.is_a?(Hash) ? "'#{value.stringify_keys}'".gsub(/nil/, 'null').gsub(/=>/, ':') : value
+      end
+      "(#{updated_values.join(', ')})"
+    end
+    sql = "INSERT INTO customer_calls (#{fields.join(', ')}) VALUES #{values.join(', ')}"
+    connection.execute(sql)      
+  end
+
 end
 

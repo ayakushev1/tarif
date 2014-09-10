@@ -1,4 +1,4 @@
-class Calls::CallGenerationParamsPresenter
+class Calls::GenerationParamsPresenter
   attr_reader :g, :ccgp
   
   def initialize(calls_generator, customer_calls_generation_params)

@@ -1,8 +1,0 @@
-<%= form_tag({action: :upload_call_history}, method: 'post', remote: false, multipart: true, turbolinks: false) do %>
-	<p><label for="call_history">Выберите файл</label>
-	<%= file_field_tag 'call_history' %>
-	<%= submit_tag "Загрузить" %>  
-<% end %>
-
-<%= render :partial => 'saved_call_history_accord', :layout => 'application/layouts/accordion', 
-      :locals => {:name => 'saved_call_history_accord', :active => session[:current_accordion_page]['saved_call_history_accord'].to_i} %>

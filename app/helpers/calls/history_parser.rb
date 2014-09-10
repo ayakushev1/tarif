@@ -1,30 +1,23 @@
 Dir[Rails.root.join("db/seeds/definitions/*.rb")].sort.each { |f| require f }
 require 'nokogiri'
 require 'open-uri'
-class Calls::CallHistoryParser
-  attr_reader :controller, :call_history_file, :background_process_informer_parsing
+class Calls::HistoryParser
+  attr_reader :call_history_file, :background_process_informer
   attr_reader :doc, :table_heads, :row_column_index
   attr_reader :unprocessed, :processed, :ignorred, :original_row_number
   attr_reader :operators, :countries, :regions, :operators_by_country
-  attr_reader :user_params, :max_number_of_rows_to_process
+  attr_reader :user_params, :parsing_params
   
-  def initialize(controller, user_params, call_history_file, parse_saved_file = false, background_process_informer_parsing = nil)
-    @controller = controller
+  def initialize(call_history_file, user_params, parsing_params = {})
     @user_params = user_params
-    local_file = 'tmp/call_details_vgy_08092014.html___' #'tmp/mts-details-27012014-25072014.html'
-    @call_history_file = parse_saved_file ? File.open(local_file) : call_history_file
-    @background_process_informer_parsing = background_process_informer_parsing || ServiceHelper::BackgroundProcessInformer.new('parsing_uploaded_file', controller.current_user.id)
+    @parsing_params = parsing_params
+    @call_history_file = call_history_file
+    @background_process_informer = parsing_params[:background_process_informer] || ServiceHelper::BackgroundProcessInformer.new('parsing_uploaded_file', user_params[:user_id])
     @doc = Nokogiri::HTML(@call_history_file) do |config|
       config.nonet
     end    
-
     @unprocessed = []; @processed = []; @ignorred = []
     load_db_data
-    set_constant
-  end
-  
-  def set_constant
-    @max_number_of_rows_to_process = 2000
   end
   
   def load_db_data
@@ -37,22 +30,25 @@ class Calls::CallHistoryParser
     @operators_by_country = Relation.operators_by_country.pluck(:owner_id, :children)
   end
   
-  def parse(max_row_number = max_number_of_rows_to_process)
+  def processed_percent    
+    @processed_percent ||= processed.size.to_f * 100.0 / (parsing_params[:call_history_max_line_to_process] || 1.0).to_f    
+  end
+  
+  def parse
+    max_row_number = parsing_params[:call_history_max_line_to_process]
     return[{}] unless call_history_file
     return [{}] unless check_if_table_correct
     result = []
-#    table_rows_to_process = table_rows(max_row_number)
-    background_process_informer_parsing.init(0.0, [max_number_of_rows_to_process, max_number_of_rows_to_process].min) if background_process_informer_parsing# and table_rows_to_process
-    update_step = 10
+    background_process_informer.init(0.0, max_row_number) if background_process_informer
+    update_step = [parsing_params[:background_update_frequency], 1].max
     i = 1
     doc.css('table table tbody tr')[0, max_row_number].each do |row_1|
       row = row_1.css('td').to_a.map{|column| column.text}      
       result << parse_row(row) 
-      background_process_informer_parsing.increase_current_value(update_step) if background_process_informer_parsing and i.divmod(update_step)[1] == 0
+      background_process_informer.increase_current_value(update_step) if background_process_informer and i.divmod(update_step)[1] == 0
       i += 1
     end
     result.compact!
-    @original_row_number = result.size
     @processed = result
   end
   
@@ -67,8 +63,8 @@ class Calls::CallHistoryParser
     return nil if !partner
     {
       :base_service_id => service[:base_service], 
-      :base_subservice_id => service[:subservice] || number[:subservice], 
-      :user_id => controller.current_user.id,
+      :base_subservice_id => (service[:subservice] || number[:subservice]), 
+      :user_id => user_params[:own_phone_number],
       :own_phone => {
         :number => user_params[:own_phone_number], 
         :operator_id => user_params[:operator_id],
@@ -103,7 +99,7 @@ class Calls::CallHistoryParser
     result = true
 #    raise(StandardError, [row[row_column_index[:partner]], !row[row_column_index[:partner]].blank?, ])
     if row[row_column_index[:partner]].blank?
-      {:operator_id => user_params[:operator_id], :region_id => user_params[:region_id], :country_id => user_params[:country_id]}
+      {:operator_id => user_params[:operator_id], :operator_type_id => _mobile, :region_id => user_params[:region_id], :country_id => user_params[:country_id]}
     else
       partner_items = take_out_special_symbols(row[row_column_index[:partner]]) 
       operator_id, operator_index = find_operator(partner_items)
