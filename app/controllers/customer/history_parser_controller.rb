@@ -23,10 +23,11 @@ class Customer::HistoryParserController < ApplicationController
 
   def upload
     uploaded_call_history_file = params[:call_history]
+#    raise(StandardError, params)
     background_parser_processor(:calculation_status, :prepare_for_upload, :parse_uploaded_file, uploaded_call_history_file)
   end
   
-  def background_parser_processor(status_action, finish_action, parser_starter, call_history_file)    
+  def background_parser_processor(status_action, finish_action, parser_starter, call_history_file)        
     if parsing_params[:calculate_on_background]
       @background_process_informer.clear_completed_process_info_model
       @background_process_informer.init(0, 100)
@@ -77,6 +78,7 @@ class Customer::HistoryParserController < ApplicationController
         parser.parse
         message = {:file_is_good => false, 'message' => "Обработано #{parser.processed_percent}%"}
         call_history_to_save = {
+          'processed' => parser.processed,
           'unprocessed' => parser.unprocessed,
           'ignorred' => parser.ignorred,
           'message' => {:file_is_good => false, 'message' => "Обработано #{parser.processed_percent}%"},

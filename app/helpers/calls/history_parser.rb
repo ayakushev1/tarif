@@ -35,6 +35,7 @@ class Calls::HistoryParser
   end
   
   def parse
+#    load_db_data if regions.blank?
     max_row_number = parsing_params[:call_history_max_line_to_process]
     return[{}] unless call_history_file
     return [{}] unless check_if_table_correct
