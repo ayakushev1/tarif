@@ -22,8 +22,15 @@ class Customer::HistoryParserController < ApplicationController
   end
 
   def upload
+    max_time = parsing_params[:sleep_after_file_uploading]
+    i = 0
+    begin
+      sleep 1
+      i +=1
+    end while !params[:call_history] and i < max_time
     @uploaded_call_history_file = params[:call_history]
-    sleep parsing_params[:sleep_after_file_uploading]
+#    raise(StandardError, [@uploaded_call_history_file.inspect, @uploaded_call_history_file.methods])
+#    sleep parsing_params[:sleep_after_file_uploading]
 #    raise(StandardError, params)
     background_parser_processor(:calculation_status, :prepare_for_upload, :parse_uploaded_file, @uploaded_call_history_file)
   end
