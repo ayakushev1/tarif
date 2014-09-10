@@ -284,7 +284,7 @@ class ServiceHelper::OptimizationResultPresenter
 
   def tarif_results_details_array(service_set_id, tarif_class_id_1)
     details = []
-    if @service_set_based_on_tarif_sets_or_tarif_results
+    if @service_set_based_on_tarif_sets_or_tarif_results == 'final_tarif_sets'
       final_tarif_sets[service_set_id]['tarif_sets_by_part'].each do |tarif_set_by_part|
         part = tarif_set_by_part[0]; tarif_set_by_part_id = tarif_set_by_part[1]
         tarif_results_for_service_set_and_part = tarif_results[tarif_set_by_part_id][part] if tarif_results and tarif_results[tarif_set_by_part_id]
@@ -324,6 +324,7 @@ class ServiceHelper::OptimizationResultPresenter
         end if tarif_results_for_service_set_and_part
       end if final_tarif_sets and final_tarif_sets[service_set_id] and final_tarif_sets[service_set_id]['tarif_sets_by_part']
     else
+#        raise(StandardError, [tarif_class_id_1, tarif_results_ord])
       if tarif_class_id_1
         tarif_results_details_by_month(service_set_id, tarif_class_id_1).each {|key, detail_group_by_month| details << detail_group_by_month}
       else
