@@ -28,7 +28,8 @@ class Customer::HistoryParserController < ApplicationController
     background_parser_processor(:calculation_status, :prepare_for_upload, :parse_uploaded_file, uploaded_call_history_file)
   end
   
-  def background_parser_processor(status_action, finish_action, parser_starter, call_history_file)        
+  def background_parser_processor(status_action, finish_action, parser_starter, call_history_file)  
+    call_history_saver.clean_output_results      
     if parsing_params[:calculate_on_background]
       @background_process_informer.clear_completed_process_info_model
       @background_process_informer.init(0, 100)
@@ -70,8 +71,7 @@ class Customer::HistoryParserController < ApplicationController
   end
 
   def parse_uploaded_file(uploaded_call_history_file)
-    if uploaded_call_history_file
-      call_history_saver.clean_output_results
+    if uploaded_call_history_file      
       message = check_uploaded_call_history_file(uploaded_call_history_file)
       call_history_to_save = {'message' => {:file_is_good => false, 'message' => message} }
       if message[:file_is_good]
@@ -84,6 +84,7 @@ class Customer::HistoryParserController < ApplicationController
           'ignorred' => parser.ignorred,
           'message' => {:file_is_good => false, 'message' => "Обработано #{parser.processed_percent}%"},
         }
+#        raise(StandardError, [parser.processed, current_user.id])
         Customer::Call.batch_save(parser.processed, current_user.id)
       end                  
       call_history_saver.save({:result => call_history_to_save})
@@ -186,8 +187,8 @@ class Customer::HistoryParserController < ApplicationController
       session[:filtr] ||= {}; session[:filtr]['parsing_params_filtr'] ||= {}
       session[:filtr]['parsing_params_filtr']  = {
         'calculate_on_background' => 'true',
-        'save_processes_result_to_stat' => 'true',
-        'file_upload_remote_mode' => 'false',
+        'save_processes_result_to_stat' => 'false',
+        'file_upload_remote_mode' => 'true',
         'file_upload_turbolink_mode' => 'true',
         'file_upload_form_method' => 'post',
         'file_upload_max_size' => 2,

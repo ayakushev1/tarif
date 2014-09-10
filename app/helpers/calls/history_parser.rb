@@ -65,7 +65,7 @@ class Calls::HistoryParser
     {
       :base_service_id => service[:base_service], 
       :base_subservice_id => (service[:subservice] || number[:subservice]), 
-      :user_id => user_params[:own_phone_number],
+      :user_id => user_params[:user_id],
       :own_phone => {
         :number => user_params[:own_phone_number], 
         :operator_id => user_params[:operator_id],
