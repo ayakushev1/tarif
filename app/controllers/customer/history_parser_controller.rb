@@ -22,16 +22,7 @@ class Customer::HistoryParserController < ApplicationController
   end
 
   def upload
-#    max_time = parsing_params[:sleep_after_file_uploading]
-#    i = 0
-#    begin
-#      sleep 1
-#      i +=1
-#    end while !params[:call_history] and i < max_time
     @uploaded_call_history_file = params[:call_history]
-#    raise(StandardError, [@uploaded_call_history_file.inspect, @uploaded_call_history_file.methods])
-#    sleep parsing_params[:sleep_after_file_uploading]
-#    raise(StandardError, params)
     background_parser_processor(:calculation_status, :prepare_for_upload, :parse_uploaded_file, @uploaded_call_history_file)
   end
   
@@ -40,19 +31,10 @@ class Customer::HistoryParserController < ApplicationController
     if parsing_params[:calculate_on_background]
       @background_process_informer.clear_completed_process_info_model
       @background_process_informer.init(0, 100)
-            
+      
       Spawnling.new(:argv => "parsing call history file for #{current_user.id}") do
         begin
           @background_process_informer.init(0, 100)
-
-    max_time = parsing_params[:sleep_after_file_uploading]
-    i = 0
-    begin
-      sleep 1
-      i +=1
-    end while !call_history_file and i < max_time
-      
-
           message = send(parser_starter, call_history_file)
           call_history_saver.save({:result => {'message' => {'message' => message}}})
         rescue => e
@@ -204,14 +186,13 @@ class Customer::HistoryParserController < ApplicationController
       session[:filtr]['parsing_params_filtr']  = {
         'calculate_on_background' => 'true',
         'save_processes_result_to_stat' => 'false',
-        'file_upload_remote_mode' => 'true',
-        'file_upload_turbolink_mode' => 'true',
+        'file_upload_remote_mode' => 'false',
+        'file_upload_turbolink_mode' => 'false',
         'file_upload_form_method' => 'post',
-        'file_upload_max_size' => 2,
-        'call_history_max_line_to_process' => 2000,
+        'file_upload_max_size' => 3,
+        'call_history_max_line_to_process' => 5000,
         'allowed_call_history_file_types' => ['html'],
-        'background_update_frequency' => 10,
-        'sleep_after_file_uploading' => 5,
+        'background_update_frequency' => 100,
       } 
     end
   end

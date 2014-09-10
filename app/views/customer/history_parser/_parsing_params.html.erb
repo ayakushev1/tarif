@@ -37,12 +37,6 @@ form_item.init do |f|
  	 select(filtr_name, "file_upload_turbolink_mode", [["True", true], ["False", false]], {:selected => s["file_upload_turbolink_mode"]}, html_options ),
   	],
 
-  	[
-     label(filtr_name, "sleep_after_file_uploading", "Sleep after file uploading, c"),
-     text_field(filtr_name, "sleep_after_file_uploading", html_options.merge({:type => 'text', :value => s["sleep_after_file_uploading"] }) ),
-
-  	],
-
   ]
 	    
   end
