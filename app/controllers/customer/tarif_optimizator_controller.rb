@@ -190,7 +190,7 @@ class Customer::TarifOptimizatorController < ApplicationController
    :analyze_memory_used => optimization_params.session_filtr_params['analyze_memory_used'], 
    :analyze_query_constructor_performance => optimization_params.session_filtr_params['analyze_query_constructor_performance'], 
    :service_ids_batch_size => optimization_params.session_filtr_params['service_ids_batch_size'], 
-   :accounting_period => optimization_params.session_filtr_params['accounting_period'],
+   :accounting_period => service_choices.session_filtr_params['accounting_period'],
    :services_by_operator => {
       :operators => [operator], :tarifs => {operator => tarifs}, :tarif_options => {operator => tarif_options}, 
       :common_services => {operator => common_services}, 
@@ -218,19 +218,18 @@ class Customer::TarifOptimizatorController < ApplicationController
     service_choices.session_filtr_params['common_services_id']  || []
   end
   
-  def check_if_optimization_options_are_in_session
+  def check_if_optimization_options_are_in_session    
     if !session[:filtr] or session[:filtr]['service_choices_filtr'].blank?
       saved_tarif_optimization_inputs = tarif_optimization_inputs_saver('user_input').results
       session[:filtr] ||= {}; session[:filtr]['service_choices_filtr'] ||= {}
       session[:filtr]['service_choices_filtr']  = if saved_tarif_optimization_inputs.blank?
-        {'tarifs_id' => [200], 'tarif_options_id' => [], 'common_services_id' => [],}        
+        accounting_period = Customer::Call.where(:user_id => current_user.id).select("description->>'accounting_period' as accounting_period").uniq
+        accounting_period = accounting_period.blank? ? -1 : accounting_period[0]['accounting_period']
+        {'tarifs_id' => [200], 'tarif_options_id' => [], 'common_services_id' => [], 'accounting_period' => accounting_period,}        
       else
         saved_tarif_optimization_inputs
       end 
     end
-    
-    accounting_period = Customer::Call.where(:user_id => current_user.id).select("description->>'accounting_period' as accounting_period").uniq
-    accounting_period = accounting_period.blank? ? -1 : accounting_period[0]['accounting_period']
     
     if !session[:filtr] or session[:filtr]['optimization_params_filtr'].blank?
       session[:filtr] ||= {}; session[:filtr]['optimization_params_filtr'] ||= {}
@@ -251,8 +250,7 @@ class Customer::TarifOptimizatorController < ApplicationController
         'eliminate_identical_tarif_sets' => 'true',
         'use_price_comparison_in_current_tarif_set_calculation' => 'true',
         'save_current_tarif_set_calculation_history' => 'true',
-        'part_sort_criteria_in_price_optimization' => 'auto',
-        'accounting_period' => accounting_period,
+        'part_sort_criteria_in_price_optimization' => 'auto',        
       } 
 #      raise(StandardError, session[:filtr]['optimization_params_filtr'])
     end
