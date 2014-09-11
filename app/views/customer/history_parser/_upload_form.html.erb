@@ -1,4 +1,6 @@
 <%= form_tag({:action => :upload}, 
+              :id => "call_history_file_upload_form", 
+              :action_name => customer_history_parser_upload_path,
               :method => controller.parsing_params[:file_upload_form_method], 
               :remote => controller.parsing_params[:file_upload_remote_mode], 
               :'data-type' => :html, :multipart => true, 

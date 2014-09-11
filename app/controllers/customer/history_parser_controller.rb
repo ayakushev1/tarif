@@ -22,6 +22,13 @@ class Customer::HistoryParserController < ApplicationController
   end
 
   def upload
+    max_step = 20
+    i = 0
+    begin
+      sleep 1
+      i += 1
+    end while (i < max_step) and !remotipart_submitted? and !params[:call_history]
+    
     @uploaded_call_history_file = params[:call_history]
     background_parser_processor(:calculation_status, :prepare_for_upload, :parse_uploaded_file, @uploaded_call_history_file)
   end
@@ -31,11 +38,19 @@ class Customer::HistoryParserController < ApplicationController
     if parsing_params[:calculate_on_background]
       @background_process_informer.clear_completed_process_info_model
       @background_process_informer.init(0, 100)
+
+    @notice = if remotipart_submitted?
+      'submitted via remotipart'
+    else
+      'submitted via native jquery-ujs'
+    end
+
       
       Spawnling.new(:argv => "parsing call history file for #{current_user.id}") do
         begin
           @background_process_informer.init(0, 100)
           message = send(parser_starter, call_history_file)
+          message['message'] = message['message'] + '    ' + @notice
           call_history_saver.save({:result => {'message' => {'message' => message}}})
         rescue => e
           call_history_saver.save({:result => {'message' => {'message' => e}}})
@@ -47,7 +62,7 @@ class Customer::HistoryParserController < ApplicationController
       redirect_to :action => status_action
     else
       message = send(parser_starter, call_history_file)
-      redirect_to({:action => finish_action}, :alert => (message || {})['message'])
+      redirect_to({:action => finish_action}, :alert => @notice)#(message || {})['message'])
     end
   end
   
