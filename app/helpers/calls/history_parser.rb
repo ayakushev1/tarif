@@ -91,7 +91,10 @@ class Calls::HistoryParser
         :year => date.to_date.year, 
         :duration => duration(row),
         :volume => volume(row), 
-        :cost => cost(row)
+        :cost => cost(row),
+        :date => date.to_date.to_s,
+        :date_number => (date.to_date.to_datetime.to_i / 86400.0).round(0),
+        :accounting_period => "#{date.to_date.month}_#{date.to_date.year}"
         },
     }
   end

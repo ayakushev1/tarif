@@ -43,6 +43,7 @@ class Calls::Generator
               :operator_id => initial_inputs[rouming]["connection_operator"], :region_id => initial_inputs[rouming]["connection_region"], :country_id => initial_inputs[rouming]["connection_country"] },
             :description => {
               :time => set_date_time(day, i).to_s, :day => day, :month => set_month, :year => set_year, 
+              :date => set_date_time(day, i).to_date.to_s, :date_number => day, :accounting_period => "#{set_month}_#{set_year}",
               :duration => duration_by_base_service(rouming, base_service_id),
               :volume => volume_by_base_service(rouming, base_service_id) },
           }
@@ -290,7 +291,7 @@ class Calls::Generator
     own_reg = p[:general]["share_of_time_in_own_region"].to_f
     home_reg = own_reg + p[:general]["share_of_time_in_home_region"].to_f
     country_reg = home_reg + p[:general]["share_of_time_in_own_country"].to_f
-    abroad = country_reg + p[:general]["share_of_time_in_own_country"].to_f
+    abroad = country_reg + p[:general]["share_of_time_abroad"].to_f
     
     case rand * abroad
     when 0..own_reg
@@ -301,6 +302,7 @@ class Calls::Generator
       p[:own_country]["phone_usage_type_id"].to_i == _own_country_no_activity ? :own_region : :own_country        
     else
       p[:abroad]["phone_usage_type_id"].to_i == _abroad_no_activity ? :own_region : :abroad                
+#      raise(StandardError)
     end
   end
   

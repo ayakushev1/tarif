@@ -83,6 +83,7 @@ ActiveRecord::Schema.define(version: 20140801040614) do
     t.datetime "updated_at"
     t.integer  "operator_id"
     t.integer  "tarif_id"
+    t.string   "accounting_period"
     t.string   "result_type"
     t.string   "result_name"
     t.json     "result_key"

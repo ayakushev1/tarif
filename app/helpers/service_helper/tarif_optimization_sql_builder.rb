@@ -262,7 +262,7 @@ class ServiceHelper::TarifOptimizationSqlBuilder
       part, prev_group_call_ids, prev_stat_values_string)
     execute_additional_sql_to_check_performance(sql, 'service_category_cost_sql', 9)
     show_bad_performing_sql(sql, 'service_category_cost_sql', 110.01)
-#    raise(StandardError, sql) if service_category_group_id == 80
+#    raise(StandardError, sql) if service_id == 203 and part == 'periodic'
     sql
   end
 

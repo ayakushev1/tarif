@@ -287,7 +287,7 @@ class ServiceHelper::StatFunctionCollector
         chosen_params = optimization_param_keys & price_formula_keys
     
         raise(StandardError, [1, price_formulas[price_formula_id], 
-          chosen_params, optimization_param_keys, price_formula_keys] ) if price_formula_id == 60150 and key == :internet
+          chosen_params, optimization_param_keys, price_formula_keys] ) if price_formula_id == 60150 and key == :internet_
     
         unless chosen_params.blank?
           result = chosen_params[0]

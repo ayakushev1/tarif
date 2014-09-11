@@ -61,6 +61,11 @@ stf << { :id => _stf_price_by_1_item_if_used, :price_unit_id => _rur, :volume_id
 
 
 
+#stf << { :id => _stf_price_by_sum_duration_minute_group_by_day, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute, :name => 'price * sum_duration in minutes', 
+#         :description => '',  :formula => {:params => nil, :stat_params => {:sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"}, :method => 'price_formulas.price * sum_duration_minute'} } 
+
+
+
 Price::StandardFormula.transaction do
   Price::StandardFormula.create(stf)
 end
