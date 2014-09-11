@@ -14,7 +14,7 @@ class ServiceHelper::TarifOptimizator
   attr_reader  :save_tarif_results, :simplify_tarif_results, :save_tarif_results_ord, :analyze_memory_used, :output_call_ids_to_tarif_results, :output_call_count_to_tarif_results, 
                :analyze_query_constructor_performance
 #local
-  attr_reader :calls_count_by_parts, :user_id
+  attr_reader :calls_count_by_parts, :user_id, :accounting_period
   
   def initialize(options = {})
     self.extend Helper
@@ -28,6 +28,7 @@ class ServiceHelper::TarifOptimizator
     @options = options
     @fq_tarif_region_id = (options[:user_region_id] and options[:user_region_id] != 0 ? options[:user_region_id] : 1238)
     @user_id = options[:user_id] || 0
+    @accounting_period = options[:accounting_period] || 1
   end
   
   def init_output_params(options)

@@ -1,8 +1,8 @@
-<%= form_tag({action: :upload}, 
-              method: controller.parsing_params[:file_upload_form_method], 
-              remote: controller.parsing_params[:file_upload_remote_mode], 
-              multipart: true, 
-              turbolinks: controller.parsing_params[:file_upload_turbolink_mode]) do %>
+<%= form_tag({:action => :upload}, 
+              :method => controller.parsing_params[:file_upload_form_method], 
+              :remote => controller.parsing_params[:file_upload_remote_mode], 
+              :'data-type' => :html, :multipart => true, 
+              :turbolinks => controller.parsing_params[:file_upload_turbolink_mode]) do %>
 
 	<p><label for="call_history">Выберите файл</label>
 

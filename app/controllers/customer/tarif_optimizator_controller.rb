@@ -201,6 +201,7 @@ class Customer::TarifOptimizatorController < ApplicationController
       :max_tarif_set_count_per_tarif => optimization_params.session_filtr_params['max_tarif_set_count_per_tarif'],
       :save_current_tarif_set_calculation_history => optimization_params.session_filtr_params['save_current_tarif_set_calculation_history'],
       :part_sort_criteria_in_price_optimization => optimization_params.session_filtr_params['part_sort_criteria_in_price_optimization'],
+      :accounting_period => optimization_params.session_filtr_params['accounting_period'],
       } 
    }
   end
@@ -227,7 +228,10 @@ class Customer::TarifOptimizatorController < ApplicationController
         saved_tarif_optimization_inputs
       end 
     end
-
+    
+    accounting_period = Customer::Call.where(:user_id => current_user.id).select("description->>'accounting_period' as accounting_period").uniq
+    accounting_period = accounting_period.blank? ? -1 : accounting_period[0]['accounting_period']
+    
     if !session[:filtr] or session[:filtr]['optimization_params_filtr'].blank?
       session[:filtr] ||= {}; session[:filtr]['optimization_params_filtr'] ||= {}
       session[:filtr]['optimization_params_filtr']  = {
@@ -248,7 +252,9 @@ class Customer::TarifOptimizatorController < ApplicationController
         'use_price_comparison_in_current_tarif_set_calculation' => 'true',
         'save_current_tarif_set_calculation_history' => 'true',
         'part_sort_criteria_in_price_optimization' => 'auto',
+        'accounting_period' => accounting_period,
       } 
+#      raise(StandardError, session[:filtr]['optimization_params_filtr'])
     end
 #    service_choices.session_filtr_params
   end

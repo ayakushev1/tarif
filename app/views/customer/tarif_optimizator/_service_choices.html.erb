@@ -21,7 +21,7 @@ form_item.init do |f|
         
   	 label(filtr_name, "accounting_period", "Оператор"),
   	 collection_select(filtr_name, "accounting_period", 
-  	   Customer::Call.select("description->>'accounting_period' as id, description->>'accounting_period' as name").uniq, 
+  	   Customer::Call.where(:user_id => controller.current_user.id).select("description->>'accounting_period' as id, description->>'accounting_period' as name").uniq, 
   	   :id, :name, {:selected => s["accounting_period"]}, html_options ),
   	],
   ]
