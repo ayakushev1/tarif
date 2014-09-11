@@ -1,10 +1,11 @@
 class ServiceHelper::TarifOptimizationSqlBuilder
-  attr_reader :tarif_optimizator, :performance_checker, :options, :user_id
+  attr_reader :tarif_optimizator, :performance_checker, :options, :user_id, :accounting_period
 
   def initialize(tarif_optimizator, options = {})
     self.extend Helper
     @options = options
     @user_id = options[:user_id] || 0
+    @accounting_period = options[:accounting_period]
     @tarif_optimizator = tarif_optimizator
 #    raise(StandardError)
   end
@@ -126,7 +127,8 @@ class ServiceHelper::TarifOptimizationSqlBuilder
     stat_function_collector.service_group_ids[part][price_formula_order][service_id].each do |service_category_group_id|        
       stat_details = stat_function_collector.service_group_stat[part][price_formula_order][service_category_group_id]      
       
-      if price_formula_order < (max_formula_order_collector.max_order_by_price_list_and_part[part][stat_details[:price_lists_id]] + 1)      
+      if price_formula_order < (max_formula_order_collector.max_order_by_price_list_and_part[part][stat_details[:price_lists_id]] + 1)  
+#TODO проверить нужно ли применять  service_category_tarif_class_ids_after_condition_if_formula_tarif_condition_is_true
         service_category_tarif_class_ids = calculate_service_category_ids_for_category_group_and_set_id(service_category_group_id, set_id, price_formula_order, part)
         service_category_tarif_class_ids = service_category_tarif_class_ids_after_condition_if_tarif_option_included(service_category_tarif_class_ids, set_id)
       
@@ -144,22 +146,45 @@ class ServiceHelper::TarifOptimizationSqlBuilder
   def service_categories_cost_sql_from_service_categories(service_id, set_id = nil, price_formula_order, part)
     result = [] 
     stat_function_collector.service_stat[part][price_formula_order][service_id].each do |stat_details_key, stat_details|
-      if price_formula_order < (max_formula_order_collector.max_order_by_price_list_and_part[part][stat_details[:price_lists_id]] + 1)             
+
+     raise(StandardError, stat_details[:service_category_tarif_class_ids]) if service_id == 294 and part == 'periodic_'
+
+      if price_formula_order < (max_formula_order_collector.max_order_by_price_list_and_part[part][stat_details[:price_lists_id]] + 1)
         service_category_tarif_class_ids = service_category_tarif_class_ids_after_condition_if_tarif_option_included(stat_details[:service_category_tarif_class_ids], set_id)
+        service_category_tarif_class_id = service_category_tarif_class_ids[0]
         next if service_category_tarif_class_ids.blank?
+
+        service_category_tarif_class_ids_for_base_stat_sql = service_category_tarif_class_ids_after_condition_if_formula_tarif_condition_is_true(
+          service_category_tarif_class_ids, stat_details, service_id, part)
+#        service_category_tarif_class_ids_for_base_stat_sql = service_category_tarif_class_ids_after_condition_if_tarif_option_included(
+#          service_category_tarif_class_ids_for_base_stat_sql, set_id)
+          
 #        raise(StandardError, [stat_details[:service_category_tarif_class_ids]]) if service_category_tarif_class_ids.blank?
         
 #TODO проверить правильно ли работает исключение предыдущих ids
         prev_group_call_ids = current_tarif_optimization_results.find_prev_group_call_ids(set_id, part, -1)
         prev_stat_values_string = current_tarif_optimization_results.prev_stat_function_values(stat_details[:price_formula_id], set_id, part, -1)
 
-        result << service_category_cost_sql(calculate_base_stat_sql(service_category_tarif_class_ids), 
-          service_category_tarif_class_ids[0], -1, stat_details[:price_formula_id], service_id, set_id,
+#    raise(StandardError, service_category_tarif_class_ids_for_base_stat_sql) if service_id == 294 and part == 'periodic'
+
+        result << service_category_cost_sql(calculate_base_stat_sql(service_category_tarif_class_ids_for_base_stat_sql), 
+          service_category_tarif_class_id, -1, stat_details[:price_formula_id], service_id, set_id,
           part, prev_group_call_ids, prev_stat_values_string)
       end
     end if stat_function_collector.service_stat[part] and stat_function_collector.service_stat[part][price_formula_order] and stat_function_collector.service_stat[part][price_formula_order][service_id]
     result
   end  
+  
+  def service_category_tarif_class_ids_after_condition_if_formula_tarif_condition_is_true(service_category_tarif_class_ids, stat_details, service_id, part)
+    price_formula_id = stat_details[:price_formula_id]
+    price_formula_details = stat_function_collector.price_formula(price_formula_id) if price_formula_id
+    formula_tarif_condition = price_formula_details["tarif_condition"] if price_formula_details
+    if formula_tarif_condition.blank? #and !['periodic', 'onetime'].include?(part)
+      service_category_tarif_class_ids
+    else
+      query_constructor.tarif_class_categories_by_tarif_class[service_id]
+    end 
+  end 
 
   def calculate_service_category_ids_for_category_group_and_set_id(service_category_group_id, set_id = nil, price_formula_order, part)
     service_category_tarif_class_ids = []
@@ -191,7 +216,9 @@ class ServiceHelper::TarifOptimizationSqlBuilder
   end
   
   def calculate_base_stat_sql(service_category_tarif_class_ids)
-    result = Customer::Call.where(:user_id => user_id).where(query_constructor.joined_tarif_classes_category_where_hash(service_category_tarif_class_ids))
+    result = Customer::Call.where(:user_id => user_id).where("description->>'accounting_period' = '#{accounting_period}'").
+      where(query_constructor.joined_tarif_classes_category_where_hash(service_category_tarif_class_ids))
+#    raise(StandardError, [accounting_period, result.to_sql])   
     execute_additional_sql_to_check_performance(result.to_sql, 'calculate_base_stat_sql', 9)
     result
   end
@@ -262,7 +289,7 @@ class ServiceHelper::TarifOptimizationSqlBuilder
       part, prev_group_call_ids, prev_stat_values_string)
     execute_additional_sql_to_check_performance(sql, 'service_category_cost_sql', 9)
     show_bad_performing_sql(sql, 'service_category_cost_sql', 110.01)
-#    raise(StandardError, sql) if service_id == 203 and part == 'periodic'
+#    raise(StandardError, stat_function_collector.price_formula_string(price_formula_id)) if service_id == 294 and part == 'periodic'
     sql
   end
 
@@ -339,7 +366,7 @@ class ServiceHelper::TarifOptimizationSqlBuilder
     else
       sql.group("month").to_sql
     end  
-
+#    raise(StandardError) #if price_formula['standard_formula_id'] == 18
     check_sql(sql, price_formula_id)
     execute_additional_sql_to_check_performance(sql, 'first_stat_sql', 12)
     show_bad_performing_sql(sql, 'first_stat_sql', 0.01)

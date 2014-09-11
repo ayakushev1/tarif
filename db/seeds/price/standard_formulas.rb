@@ -11,7 +11,7 @@ stf << { :id => _stf_zero_sum_duration_second, :price_unit_id => _rur, :volume_i
         :description => '',  :formula => {:params => nil, :stat_params => {:sum_duration => "sum((description->>'duration')::float)"}, :method => '0.0 * sum_duration'} } #
 
 stf << { :id => _stf_zero_count_volume_item, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _item, :name => '0 * count_volume in items', 
-         :description => '',  :formula => {:params => nil, :stat_params => {:count_volume => "count((description->>'volume')::integer)"}, :method => '0.0 * count_volume'} } #
+         :description => '',  :formula => {:params => nil, :stat_params => {:count_volume => "count(description->>'volume')"}, :method => '0.0 * count_volume'} } #
 
 stf << { :id => _stf_zero_sum_volume_m_byte, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => '0 * sum_volume in Mbytes', 
          :description => '',  :formula => {:params => nil, :stat_params => {:sum_volume => "sum((description->>'volume')::float)"}, :method => '0.0 * sum_volume'} }

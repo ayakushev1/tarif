@@ -19,7 +19,7 @@ form_item.init do |f|
      label(filtr_name, "common_services_id", "Общие сервисы"),
      text_area(filtr_name, "common_services_id", html_options.merge({:type => 'textarea', :value => s["common_services_id"], :rows => 1  }) ),     		
         
-  	 label(filtr_name, "accounting_period", "Оператор"),
+  	 label(filtr_name, "accounting_period", "Период за который проводить расчет тарифов"),
   	 collection_select(filtr_name, "accounting_period", 
   	   Customer::Call.where(:user_id => controller.current_user.id).select("description->>'accounting_period' as id, description->>'accounting_period' as name").uniq, 
   	   :id, :name, {:selected => s["accounting_period"]}, html_options ),

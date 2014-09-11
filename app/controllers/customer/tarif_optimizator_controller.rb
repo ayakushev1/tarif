@@ -190,6 +190,7 @@ class Customer::TarifOptimizatorController < ApplicationController
    :analyze_memory_used => optimization_params.session_filtr_params['analyze_memory_used'], 
    :analyze_query_constructor_performance => optimization_params.session_filtr_params['analyze_query_constructor_performance'], 
    :service_ids_batch_size => optimization_params.session_filtr_params['service_ids_batch_size'], 
+   :accounting_period => optimization_params.session_filtr_params['accounting_period'],
    :services_by_operator => {
       :operators => [operator], :tarifs => {operator => tarifs}, :tarif_options => {operator => tarif_options}, 
       :common_services => {operator => common_services}, 
@@ -201,9 +202,8 @@ class Customer::TarifOptimizatorController < ApplicationController
       :max_tarif_set_count_per_tarif => optimization_params.session_filtr_params['max_tarif_set_count_per_tarif'],
       :save_current_tarif_set_calculation_history => optimization_params.session_filtr_params['save_current_tarif_set_calculation_history'],
       :part_sort_criteria_in_price_optimization => optimization_params.session_filtr_params['part_sort_criteria_in_price_optimization'],
-      :accounting_period => optimization_params.session_filtr_params['accounting_period'],
       } 
-   }
+   }   
   end
 
   def tarifs

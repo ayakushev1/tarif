@@ -476,7 +476,7 @@ class ServiceHelper::TarifListGenerator
       operator = service_description[tarif][:operator_id].to_i
       tarif_options_slices[operator] ||= []
       service_pack.each do |part, tarif_option_sets|
-        next if ['onetime', 'periodic'].include?(part)
+#        next if ['onetime', 'periodic'].include?(part)
         tarif_option_sets.each do |tarif_set_id, tarif_options|
           slice = 0
           tarif_options.reverse.each do |tarif_option|
@@ -510,7 +510,7 @@ class ServiceHelper::TarifListGenerator
       operator = service_description[tarif][:operator_id].to_i
       tarifs_slices[operator] ||= []
       service_pack.each do |part, tarif_sets|
-        next if ['onetime', 'periodic'].include?(part)
+#        next if ['onetime', 'periodic'].include?(part)
         tarif_sets.each do |tarif_set_id, services|
           slice = 0; tarif_option_slice = 0
           services.reverse.each do |service|

@@ -1,9 +1,10 @@
 Dir[Rails.root.join("db/seeds/definitions/01_service_categories.rb")].sort.each { |f| require f }
 class ServiceHelper::CallsStatCalculator
-  attr_reader :user_id
+  attr_reader :user_id, :accounting_period
   
   def initialize(options = {})
     @user_id = options[:user_id] || 0
+    @accounting_period = options[:accounting_period]
   end
   
   def calculate_calls_stat(query_constructor)
@@ -27,6 +28,7 @@ class ServiceHelper::CallsStatCalculator
         "#{calls_stat_functions_string(calls_stat_category_criteria[:stat_functions])}",
       ]
       calls_stat_category_sql << Customer::Call.where(:user_id => user_id).
+        where("description->>'accounting_period' = '#{accounting_period}'").
         select(fields.join(', ')).where(where_condition.join(' and ')).to_sql
     end
     calls_stat_category_sql.join(' union ')
@@ -73,7 +75,8 @@ class ServiceHelper::CallsStatCalculator
     {
       :count => "count(*)",
       :sum_duration => "sum((description->>'duration')::float)/60.0",
-      :count_volume => "count((description->>'volume')::integer)",
+      :count_volume => "count(description->>'volume')",
+#      :count_volume => "count((description->>'volume')::integer)",
       :sum_volume => "sum((description->>'volume')::float)",
      }
   end

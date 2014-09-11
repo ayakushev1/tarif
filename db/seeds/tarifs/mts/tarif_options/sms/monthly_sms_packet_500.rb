@@ -18,7 +18,7 @@ category = {:name => '_sctcg_own_home_regions_sms_to_own_home_regions', :service
     {:calculation_order => 0, :price => 260.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _item, :description => '', 
      :formula => {
        :window_condition => "(500 >= count_volume)", :window_over => 'month',
-       :stat_params => {:count_volume => "count((description->>'volume')::integer)"},
+       :stat_params => {:count_volume => "count(description->>'volume')"},
        :method => "case when count_volume > 0.0 then price_formulas.price else 0.0 end"}
      } )
 

@@ -28,7 +28,8 @@ class ServiceHelper::TarifOptimizator
     @options = options
     @fq_tarif_region_id = (options[:user_region_id] and options[:user_region_id] != 0 ? options[:user_region_id] : 1238)
     @user_id = options[:user_id] || 0
-    @accounting_period = options[:accounting_period] || 1
+    
+    @accounting_period = options[:accounting_period] || '1_2014'
   end
   
   def init_output_params(options)
@@ -46,8 +47,8 @@ class ServiceHelper::TarifOptimizator
     performance_checker.run_check_point('init_additional_general_classes', 1) do
       @optimization_result_saver = ServiceHelper::OptimizationResultSaver.new('optimization_results', nil, user_id)
       @final_tarif_sets_saver = ServiceHelper::OptimizationResultSaver.new('optimization_results', 'final_tarif_sets', user_id)
-      @calls_stat_calculator = ServiceHelper::CallsStatCalculator.new({:user_id => user_id})
-      @tarif_optimization_sql_builder = ServiceHelper::TarifOptimizationSqlBuilder.new(self, {:user_id => user_id})
+      @calls_stat_calculator = ServiceHelper::CallsStatCalculator.new({:user_id => user_id, :accounting_period => accounting_period})
+      @tarif_optimization_sql_builder = ServiceHelper::TarifOptimizationSqlBuilder.new(self, {:user_id => user_id, :accounting_period => accounting_period})
       @minor_result_saver = ServiceHelper::OptimizationResultSaver.new('optimization_results', 'minor_results', user_id)
       @tarif_list_generator = ServiceHelper::TarifListGenerator.new(options[:services_by_operator] || {})
       @final_tarif_set_generator = ServiceHelper::FinalTarifSetGenerator.new(options[:services_by_operator] || {})
@@ -136,6 +137,7 @@ class ServiceHelper::TarifOptimizator
           :tarif_class_ids => tarif_list_generator.all_services_by_operator[operator], 
           :performance_checker => (analyze_query_constructor_performance ? performance_checker : nil),
           :user_id => user_id,
+          :accounting_period => accounting_period,
           } )
       end
       performance_checker.run_check_point('@max_formula_order_collector', 4) do

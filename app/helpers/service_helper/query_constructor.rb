@@ -14,6 +14,7 @@ class ServiceHelper::QueryConstructor
     @criterium_ids = options[:criterium_ids]
     @performance_checker = options[:performance_checker]
     @user_id = options[:user_id] || 0
+    @accounting_period = options[:accounting_period]
     if performance_checker
       performance_checker.run_check_point('load_comparison_operators', 15) {load_comparison_operators}
       performance_checker.run_check_point('load_category_ids', 15) {load_category_ids}
@@ -50,7 +51,9 @@ class ServiceHelper::QueryConstructor
     @call_ids_by_tarif_class_id = []
     accumulated_call_ids = []
     service_priorities.compact.each do |sp|
-      call_ids_by_tarif_class_id[sp.main_tarif_class_id] = Customer::Call.where(:user_id => user_id).where.where(tarif_class_where_hash(sp.main_tarif_class_id) ).
+      call_ids_by_tarif_class_id[sp.main_tarif_class_id] = Customer::Call.where(:user_id => user_id).
+        where("description->>'accounting_period' = '#{accounting_period}'").
+        where(tarif_class_where_hash(sp.main_tarif_class_id) ).
         where.not(:id => accumulated_call_ids ).pluck(:id)
       accumulated_call_ids += call_ids_by_tarif_class_id[sp.main_tarif_class_id]
     end

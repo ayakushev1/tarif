@@ -19,12 +19,12 @@ _sctcg_mts_europe_rouming_sms_outcoming = {:name => '_sctcg_mts_europe_rouming_s
     {:calculation_order => 0, :price => 250.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _item, :description => '', 
      :formula => {
        :window_condition => "(50 >= count_volume)", :window_over => 'month',
-       :stat_params => {:count_volume => "count((description->>'volume')::integer)"},
+       :stat_params => {:count_volume => "count(description->>'volume')"},
        :method => "case when count_volume > 0.0 then price_formulas.price else 0.0 end",
        
        :multiple_use_of_tarif_option => {
          :group_by => 'month',
-         :stat_params => {:tarif_option_count_of_usage => "ceil(count((description->>'volume')::integer) / 50)"},
+         :stat_params => {:tarif_option_count_of_usage => "ceil(count(description->>'volume') / 50)"},
          :method => "price_formulas.price * tarif_option_count_of_usage" } } } )
 
 @tc.add_tarif_class_categories
