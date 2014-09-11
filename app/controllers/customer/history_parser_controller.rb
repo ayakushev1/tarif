@@ -35,17 +35,16 @@ class Customer::HistoryParserController < ApplicationController
   
   def background_parser_processor(status_action, finish_action, parser_starter, call_history_file)  
     call_history_saver.clean_output_results      
-    if parsing_params[:calculate_on_background]
-      @background_process_informer.clear_completed_process_info_model
-      @background_process_informer.init(0, 100)
-
     @notice = if remotipart_submitted?
       'submitted via remotipart'
     else
       'submitted via native jquery-ujs'
     end
 
-      
+    if parsing_params[:calculate_on_background]
+      @background_process_informer.clear_completed_process_info_model
+      @background_process_informer.init(0, 100)
+
       Spawnling.new(:argv => "parsing call history file for #{current_user.id}") do
         begin
           @background_process_informer.init(0, 100)
@@ -62,7 +61,9 @@ class Customer::HistoryParserController < ApplicationController
       redirect_to :action => status_action
     else
       message = send(parser_starter, call_history_file)
-      redirect_to({:action => finish_action}, :alert => @notice)#(message || {})['message'])
+      message ||= {'message' => ""}
+      message['message'] = (message['message'] || "") + '    ' + (@notice || "")
+      redirect_to({:action => finish_action}, :alert => (message || {})['message'])
     end
   end
   
