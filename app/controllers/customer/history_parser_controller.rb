@@ -161,11 +161,14 @@ class Customer::HistoryParserController < ApplicationController
 
   def user_params
     {
+      :user_id => current_user.id,
+
       :own_phone_number => user_params_filtr.session_filtr_params['own_phone_number'],
       :operator_id => user_params_filtr.session_filtr_params['operator_id'],
       :region_id => user_params_filtr.session_filtr_params['region_id'],
       :country_id => user_params_filtr.session_filtr_params['country_id'],
-      :user_id => current_user.id,
+      :accounting_period_month => user_params_filtr.session_filtr_params['accounting_period_month'],
+      :accounting_period_year => user_params_filtr.session_filtr_params['accounting_period_year'],
     }
   end
   
@@ -191,7 +194,13 @@ class Customer::HistoryParserController < ApplicationController
       saved_user_params = parsing_params_saver('user_params').results
       session[:filtr] ||= {}; session[:filtr]['user_params_filtr'] ||= {}
       session[:filtr]['user_params_filtr'] = if saved_user_params.blank?
-        {'own_phone_number' => '100000000', 'operator_id' => 1030, 'region_id' => 1238, 'country_id' => 1100,}
+        {'own_phone_number' => '100000000', 
+         'operator_id' => 1030, 
+         'region_id' => 1238, 
+         'country_id' => 1100,
+         'accounting_period_month' => 1,
+         'accounting_period_year' => 2014,
+         }
       else
         saved_user_params
       end
@@ -202,8 +211,8 @@ class Customer::HistoryParserController < ApplicationController
       session[:filtr]['parsing_params_filtr']  = {
         'calculate_on_background' => 'true',
         'save_processes_result_to_stat' => 'false',
-        'file_upload_remote_mode' => 'false',
-        'file_upload_turbolink_mode' => 'false',
+        'file_upload_remote_mode' => 'true',
+        'file_upload_turbolink_mode' => 'true',
         'file_upload_form_method' => 'post',
         'file_upload_max_size' => 3,
         'call_history_max_line_to_process' => 5000,

@@ -42,19 +42,26 @@ class Calls::HistoryParser
     result = []
     background_process_informer.init(0.0, max_row_number) if background_process_informer
     update_step = [parsing_params[:background_update_frequency], 1].max
-    i = 1
-    doc.css('table table tbody tr')[0, max_row_number].each do |row_1|
-      row = row_1.css('td').to_a.map{|column| column.text}      
-      result << parse_row(row) 
-      background_process_informer.increase_current_value(update_step) if background_process_informer and i.divmod(update_step)[1] == 0
-      i += 1
-    end
+    
+    call_details_doc = doc.css('table table tbody tr')
+    
+    i = 0; doc_i = 0
+    while call_details_doc and call_details_doc[doc_i] and i < max_row_number
+      row = call_details_doc[doc_i].css('td').to_a.map{|column| column.text}
+
+      date = row_date(row)
+      if date.to_date.month.to_i == user_params[:accounting_period_month].to_i and date.to_date.year.to_i == user_params[:accounting_period_year].to_i
+        result << parse_row(row, date) 
+        i += 1
+      end 
+      background_process_informer.increase_current_value(update_step) if background_process_informer and (doc_i + 1).divmod(update_step)[1] == 0
+      doc_i += 1
+    end 
     result.compact!
     @processed = result
   end
   
-  def parse_row(row)
-    date = row_date(row)
+  def parse_row(row, date)
     service = row_service(row)
     return nil if !service
     number = row_number(row)

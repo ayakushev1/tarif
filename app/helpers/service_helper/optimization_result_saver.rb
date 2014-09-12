@@ -12,7 +12,7 @@ class ServiceHelper::OptimizationResultSaver
   end
   
   def save(output)
-    where_hash = {:operator_id => output[:operator], :tarif_id => output[:tarif]} if output
+    where_hash = {:operator_id => output[:operator], :tarif_id => output[:tarif], :accounting_period => output[:accounting_period]} if output
     model_to_save = output_model.where(where_hash).where(:user_id => user_id)
     result = if model_to_save.exists?
 #     raise(StandardError, [results.keys, output.keys])

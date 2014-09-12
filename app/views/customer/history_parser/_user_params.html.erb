@@ -4,6 +4,8 @@ form_item.init do |f|
 #  f.caption = "User params"
   f.action_on_submit = customer_history_parser_prepare_for_upload_path	  	
   s_filtr = f.session_filtr_params
+  months = (1..12).map{|i| [i]}
+  years = (2013..2015).map{|i| [i]}
   f.set_fields do |filtr_name| 
     html_options = {:action_name => customer_history_parser_prepare_for_upload_path}
   [
@@ -19,6 +21,14 @@ form_item.init do |f|
   	 collection_select(filtr_name, "operator_id", Category.russian_operators, :id, :name, {:include_blank => true, :selected => s_filtr["operator_id"] }, html_options ),   
 
   	],  	
+  	[
+     label(filtr_name, "accounting_period_month", "Выберите месяц для загрузки детализации"),
+ 	 select(filtr_name, "accounting_period_month", months, {:selected => s_filtr["accounting_period_month"]}, html_options ),
+
+     label(filtr_name, "accounting_period_year", "Выберите год для загрузки детализации"),
+ 	 select(filtr_name, "accounting_period_year", years, {:selected => s_filtr["accounting_period_year"]}, html_options ),
+  	],
+  	
   ] 
   end
 end
