@@ -135,11 +135,17 @@ class ServiceHelper::FinalTarifSetGenerator
     end
     [current_uniq_service_sets, fobidden_info]
   end
- 
+
+#tarif_results['200'].map{|p| p[1].map{|t| [t[1]['price_value'], t[1]['call_id_count']]}}
+
   def update_tarif_sets_to_calculate_from_with_cons_tarif_results(tarif_sets_to_calculate_from, operator)
     excluded_tarif_sets = []
-    sub_tarif_sets_with_zero_results_0 = calculate_sub_tarif_sets_with_zero_results_0
-    sub_tarif_sets_with_zero_results_1 = calculate_sub_tarif_sets_with_zero_results_1(operator)
+    tarifs = tarif_sets_to_calculate_from.keys.map(&:to_i)
+#TODO проверить еще раз почему нельзя исключать common_services
+    services_to_not_excude = common_services[operator] + tarifs
+
+    sub_tarif_sets_with_zero_results_0 = calculate_sub_tarif_sets_with_zero_results_0(services_to_not_excude)
+    sub_tarif_sets_with_zero_results_1 = calculate_sub_tarif_sets_with_zero_results_1(services_to_not_excude)
     updated_tarif_sets = {}
     tarif_sets_to_calculate_from.each do |tarif, tarif_sets_to_calculate_from_by_tarif|
       updated_tarif_sets[tarif] ||= {}
@@ -149,7 +155,12 @@ class ServiceHelper::FinalTarifSetGenerator
         
         tarif_sets_to_calculate_from_by_tarif_by_part.each do |tarif_set_id, services|
           if (services & sub_tarif_sets_with_zero_results_0).blank?
-            if !sub_tarif_sets_with_zero_results_1.include?(tarif_set_id)
+            if sub_tarif_sets_with_zero_results_1[tarif_set_id]
+# Предполагается что tarif_set_id должен быть в первоначальном tarif_sets_to_calculate_from
+#              new_tarif_set_id = sub_tarif_sets_with_zero_results_1[tarif_set_id][:new_tarif_set_id]
+#              new_services = sub_tarif_sets_with_zero_results_1[tarif_set_id][:new_services]
+#              updated_tarif_sets[tarif][part][new_tarif_set_id] = new_services
+            else
               updated_tarif_sets[tarif][part][tarif_set_id] = services 
             end            
           end
@@ -163,29 +174,31 @@ class ServiceHelper::FinalTarifSetGenerator
       updated_tarif_results.extract!(tarif_set_id)
     end
     
-    updated_tarif_sets, updated_tarif_results = group_identical_tarif_sets_to_calculate_from(updated_tarif_sets, updated_tarif_results) if eliminate_identical_tarif_sets
+#    raise(StandardError, [updated_tarif_results['329'].keys, nil,nil, tarif_results['329'].keys, nil,nil,nil, sub_tarif_sets_with_zero_results_1])
+#    raise(StandardError, [updated_tarif_sets['200'], nil, tarif_sets_to_calculate_from['200'], nil, nil, sub_tarif_sets_with_zero_results_1])
     updated_tarif_sets = reorder_tarif_sets_to_calculate_from(updated_tarif_sets, updated_tarif_results)
+    updated_tarif_sets, updated_tarif_results = group_identical_tarif_sets_to_calculate_from(updated_tarif_sets, updated_tarif_results) if eliminate_identical_tarif_sets
 #    raise(StandardError, [updated_tarif_results['329'].keys, nil,nil, tarif_results['329'].keys, nil,nil,nil, sub_tarif_sets_with_zero_results_1])
     [updated_tarif_sets, updated_tarif_results]
   end
   
-  def calculate_sub_tarif_sets_with_zero_results_0
+  def calculate_sub_tarif_sets_with_zero_results_0(services_to_not_excude)
 #TODO подумать какие еще наборы услуг добавить
     depended_on_services = services_that_depended_on.map{|d| d[1]}.flatten.uniq
     sub_tarif_sets_with_zero_results = []
     cons_tarif_results.each do |tarif_set_id, cons_tarif_result|
       if cons_tarif_result['call_id_count'].to_i == 0 and cons_tarif_result['price_value'].to_f == 0.0
         services = tarif_set_id.split('_').map(&:to_i)
-        sub_tarif_sets_with_zero_results += (services - sub_tarif_sets_with_zero_results) if (services & depended_on_services).blank?
+        sub_tarif_sets_with_zero_results += (services - services_to_not_excude - sub_tarif_sets_with_zero_results) if (services & depended_on_services).blank?
       end
     end if cons_tarif_results  
 #    raise(StandardError, [sub_tarif_sets_with_zero_results])
     sub_tarif_sets_with_zero_results
   end
   
-  def calculate_sub_tarif_sets_with_zero_results_1(operator)
+  def calculate_sub_tarif_sets_with_zero_results_1(services_to_not_excude)
 #TODO разобраться откуда появляются tarif_result_by_part_and_service['price_value'] типа string
-    sub_tarif_sets_with_zero_results = []
+    sub_tarif_sets_with_zero_results = {}
     tarif_results.each do |tarif_set_id, tarif_results_by_part|
       zero_tarif_ids = []
       non_zero_tarif_ids = []     
@@ -195,16 +208,16 @@ class ServiceHelper::FinalTarifSetGenerator
             zero_tarif_ids += ([tarif_result_by_part_and_service['tarif_class_id'].to_i] - zero_tarif_ids)
           else
             non_zero_tarif_ids += ([tarif_result_by_part_and_service['tarif_class_id'].to_i] - non_zero_tarif_ids)
-            raise(StandardError) if tarif_set_id == '200_292_' and non_zero_tarif_ids.include?(292)
+#            raise(StandardError) if tarif_set_id == '200_292_' and non_zero_tarif_ids.include?(292)
           end
         end
       end
-      zero_tarif_ids = zero_tarif_ids - non_zero_tarif_ids - common_services[operator]
-      raise(StandardError) if tarif_set_id == '312_203_'
+      zero_tarif_ids = zero_tarif_ids - non_zero_tarif_ids - services_to_not_excude
+#      raise(StandardError) if tarif_set_id == '281_329'
       if !zero_tarif_ids.blank?
         new_services = tarif_set_id.split('_').map(&:to_i) - zero_tarif_ids
         new_tarif_set_id = tarif_set_id(new_services)
-        sub_tarif_sets_with_zero_results << tarif_set_id if !tarif_results[new_tarif_set_id].blank?
+        sub_tarif_sets_with_zero_results[tarif_set_id] = {:new_tarif_set_id => new_tarif_set_id, :new_services => new_services} if !tarif_results[new_tarif_set_id].blank?
       end
     end 
     sub_tarif_sets_with_zero_results

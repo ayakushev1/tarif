@@ -22,11 +22,11 @@ class Calls::HistoryParser
   
   def load_db_data
     region_set = Category.regions.pluck(:id, :name, :parent_id)
-    @regions = {:ids => region_set.map{|rs| rs[0]}, :names => region_set.map{|rs| rs[1].mb_chars.downcase.to_s}, :country_ids => region_set.map{|rs| rs[2]}}
+    @regions = {:ids => region_set.map{|rs| rs[0].to_i}, :names => region_set.map{|rs| rs[1].mb_chars.downcase.to_s}, :country_ids => region_set.map{|rs| rs[2]}}
     country_set = Category.countries.pluck(:id, :name)
-    @countries = {:ids => country_set.map{|rs| rs[0]}, :names => country_set.map{|rs| rs[1].mb_chars.downcase.to_s}}
+    @countries = {:ids => country_set.map{|rs| rs[0].to_i}, :names => country_set.map{|rs| rs[1].mb_chars.downcase.to_s}}
     operator_set = Category.operators.pluck(:id, :name)
-    @operators = {:ids => operator_set.map{|rs| rs[0]}, :names => operator_set.map{|rs| rs[1].mb_chars.downcase.to_s}}
+    @operators = {:ids => operator_set.map{|rs| rs[0].to_i}, :names => operator_set.map{|rs| rs[1].mb_chars.downcase.to_s}}
     @operators_by_country = Relation.operators_by_country.pluck(:owner_id, :children)
   end
   
