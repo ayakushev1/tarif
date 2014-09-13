@@ -174,11 +174,11 @@ class ServiceHelper::FinalTarifSetGenerator
       updated_tarif_results.extract!(tarif_set_id)
     end
     
-#    raise(StandardError, [updated_tarif_results['329'].keys, nil,nil, tarif_results['329'].keys, nil,nil,nil, sub_tarif_sets_with_zero_results_1])
+#    raise(StandardError, [updated_tarif_results['336'].keys, nil,nil, tarif_results['336'].keys, nil,nil,nil, sub_tarif_sets_with_zero_results_1])
 #    raise(StandardError, [updated_tarif_sets['200'], nil, tarif_sets_to_calculate_from['200'], nil, nil, sub_tarif_sets_with_zero_results_1])
     updated_tarif_sets = reorder_tarif_sets_to_calculate_from(updated_tarif_sets, updated_tarif_results)
     updated_tarif_sets, updated_tarif_results = group_identical_tarif_sets_to_calculate_from(updated_tarif_sets, updated_tarif_results) if eliminate_identical_tarif_sets
-#    raise(StandardError, [updated_tarif_results['329'].keys, nil,nil, tarif_results['329'].keys, nil,nil,nil, sub_tarif_sets_with_zero_results_1])
+#    raise(StandardError, [updated_tarif_results['336'].keys, nil,nil, tarif_results['336'].keys, nil,nil,nil, sub_tarif_sets_with_zero_results_1])
     [updated_tarif_sets, updated_tarif_results]
   end
   

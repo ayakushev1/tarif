@@ -37,6 +37,7 @@ class ServiceHelper::CurrentTarifSet
   end
   
   def calculate_new_cons_tarif_results_by_parts
+#    raise(StandardError, [updated_tarif_results])
     @new_cons_tarif_results_by_parts = {}
     updated_tarif_results.each do |tarif_set_id, updated_tarif_result|
       new_cons_tarif_results_by_parts[tarif_set_id] ||= {}
@@ -48,7 +49,7 @@ class ServiceHelper::CurrentTarifSet
         end
       end
     end
-#    raise(StandardError, new_cons_tarif_results_by_parts)
+#    raise(StandardError, [new_cons_tarif_results_by_parts])
   end
   
   def init_tarif_sets_as_array
@@ -253,7 +254,8 @@ class ServiceHelper::CurrentTarifSet
     end
     
     (tarif_sets_services - counted_depended_on_services).uniq.each do |service|
-      periodic_part_price += new_cons_tarif_results_by_parts[tarif_set_id([service])]['periodic']['price_value'].to_f if new_cons_tarif_results_by_parts[tarif_set_id([service])]
+      periodic_part_price += new_cons_tarif_results_by_parts[tarif_set_id([service])]['periodic']['price_value'].to_f if 
+        new_cons_tarif_results_by_parts[tarif_set_id([service])] and new_cons_tarif_results_by_parts[tarif_set_id([service])]['periodic']
     end
 #    raise(StandardError) if current_part_index == 9
     periodic_part_price
