@@ -32,10 +32,12 @@ class ServiceHelper::OptimizationResultPresenter
   end
   
   def get_optimization_results(name1, name2)
+    @model ||= {}
+    @model[name1] ||= {}    
     local_results ||= {}
-    model = Customer::Stat.where(:result_type => 'optimization_results').where(:result_name => name1, :user_id => user_id).select("result as #{name1}")
+    @model[name1][name2] ||= Customer::Stat.where(:result_type => 'optimization_results').where(:result_name => name1, :user_id => user_id).select("result as #{name1}")
 #    raise(StandardError, model.to_sql)
-    model.each do |result_item|
+    @model[name1][name2].each do |result_item|
       result_item.attributes[name1].each do |result_type, result_value|
         if result_value.is_a?(Hash)
           local_results[result_type] ||= {}

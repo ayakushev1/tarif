@@ -1,4 +1,6 @@
 class Customer::TarifOptimizatorController < ApplicationController
+#  append_view_path("results/")
+#  append_view_path("#{Rails.root}/app/views/customer/tarif_optimizator/results/")
   include Crudable
   crudable_actions :index
   before_action :check_if_optimization_options_are_in_session, only: [:index]
@@ -52,6 +54,10 @@ class Customer::TarifOptimizatorController < ApplicationController
   
   def recalculate
     session[:filtr1] = {}   
+    if options[:accounting_period].blank? 
+      redirect_to(:action => :index, :error => "Выберите период для расчета")
+    end
+    
     if optimization_params.session_filtr_params['calculate_on_background'] == 'true'
       [background_process_informer_operators, background_process_informer_tarifs, background_process_informer_tarif].each do |background_process_informer|
         background_process_informer.clear_completed_process_info_model
@@ -77,7 +83,7 @@ class Customer::TarifOptimizatorController < ApplicationController
       @tarif_optimizator.calculate_all_operator_tarifs #calculate_one_operator_tarifs(operator)
       redirect_to(:action => :index)
     end
-    tarif_optimization_inputs_saver('user_input').save({:result => service_choices.session_filtr_params})
+    tarif_optimization_inputs_saver('user_input').save({:result => service_choices.session_filtr_params.merge({'accounting_period' => nil})})
   end 
   
   def optimization_params
@@ -157,6 +163,7 @@ class Customer::TarifOptimizatorController < ApplicationController
       :max_tarif_set_count_per_tarif => optimization_params.session_filtr_params['max_tarif_set_count_per_tarif'],
       }
     @optimization_result_presenter ||= ServiceHelper::OptimizationResultPresenter.new(operator, options)
+    @optimization_result_presenter
   end
   
   def minor_result_presenter
@@ -218,9 +225,12 @@ class Customer::TarifOptimizatorController < ApplicationController
     service_choices.session_filtr_params['common_services_id']  || []
   end
   
+  def saved_tarif_optimization_inputs
+    @saved_tarif_optimization_inputs ||= tarif_optimization_inputs_saver('user_input').results
+  end
+  
   def check_if_optimization_options_are_in_session    
     if !session[:filtr] or session[:filtr]['service_choices_filtr'].blank?
-      saved_tarif_optimization_inputs = tarif_optimization_inputs_saver('user_input').results
       session[:filtr] ||= {}; session[:filtr]['service_choices_filtr'] ||= {}
       session[:filtr]['service_choices_filtr']  = if saved_tarif_optimization_inputs.blank?
         accounting_period = Customer::Call.where(:user_id => current_user.id).select("description->>'accounting_period' as accounting_period").uniq
@@ -256,7 +266,7 @@ class Customer::TarifOptimizatorController < ApplicationController
     end
 #    service_choices.session_filtr_params
   end
-
+  
   def process_selecting_services
     if params['services_select_filtr']
       set_selected_services('tarifs_id', 'tarifs_1')

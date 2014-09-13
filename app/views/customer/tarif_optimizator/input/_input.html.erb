@@ -7,7 +7,7 @@ content_in :accordion do |user|
      (
 	  link_to('Recalculate', customer_tarif_optimizator_recalculate_path ) + "    ".html_safe +
       link_to('Update final_taif_sets and calls stat', customer_tarif_optimizator_update_minor_results_path ) + "    ".html_safe +
-	  render(:partial => 'service_choices', :layout => 'application/layouts/filtr_form_2_columns', :locals => {:form_item => controller.service_choices} )
+	  render(:partial => 'customer/tarif_optimizator/input/service_choices', :layout => 'application/layouts/filtr_form_2_columns', :locals => {:form_item => controller.service_choices} )
 		
      )          
     ], 
@@ -16,13 +16,14 @@ content_in :accordion do |user|
      (
 	  link_to('Recalculate', customer_tarif_optimizator_recalculate_path ) + "    ".html_safe +
       link_to('Update final_taif_sets and calls stat', customer_tarif_optimizator_update_minor_results_path ) + "    ".html_safe +
-	  render(:partial => 'optimization_params', :layout => 'application/layouts/filtr_form_2_columns', :locals => {:form_item => controller.optimization_params} )
+	  render(:partial => 'customer/tarif_optimizator/input/optimization_params', :layout => 'application/layouts/filtr_form_2_columns', :locals => {:form_item => controller.optimization_params} )
 		
      )          
     ], 
     [
      'Services list',
-     render(:partial => 'services_select', :layout => 'layout_for_services_select', :locals => {:form_item => controller.services_select} )
+     render(:partial => 'customer/tarif_optimizator/input/services_select', :layout => 'customer/tarif_optimizator/input/layout_for_services_select', 
+        :locals => {:form_item => controller.services_select} )
     ], 
   ] 
 end

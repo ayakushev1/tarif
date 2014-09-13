@@ -1,0 +1,23 @@
+<%
+
+content_in :accordion do |user| 
+  [
+    [
+     'Calls statistics',
+     render(:partial => 'customer/tarif_optimizator/additional_info/calls_stat_options', :layout => 'application/layouts/filtr_form', :locals => {:form_item => controller.calls_stat_options, :html => {:class => "form-inline"}} ) +
+     render(:partial => 'customer/tarif_optimizator/additional_info/calls_stat', :layout => 'application/layouts/model_table', :locals => {:table => controller.calls_stat})	
+    ], 
+    [
+     'Performance results',
+     render(:partial => 'customer/tarif_optimizator/additional_info/performance_results', :layout => 'application/layouts/model_table', :locals => {:table => controller.performance_results}) +	
+     render(:partial => 'customer/tarif_optimizator/additional_info/service_packs_by_parts', :layout => 'application/layouts/model_table', :locals => {:table => controller.service_packs_by_parts}) +	
+     render(:partial => 'customer/tarif_optimizator/additional_info/memory_used', :layout => 'application/layouts/model_table', :locals => {:table => controller.memory_used})	
+    ], 
+    [
+     'current_tarif_set_calculation_history',
+     content_tag(:div, "current_tarif_set calculation history cycles is #{controller.current_tarif_set_calculation_history.model_size}") + 
+     render(:partial => 'customer/tarif_optimizator/additional_info/current_tarif_set_calculation_history', :layout => 'application/layouts/model_table', :locals => {:table => controller.current_tarif_set_calculation_history}) 	
+    ], 
+  ] 
+end
+%>

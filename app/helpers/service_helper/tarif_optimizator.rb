@@ -29,7 +29,7 @@ class ServiceHelper::TarifOptimizator
     @fq_tarif_region_id = (options[:user_region_id] and options[:user_region_id] != 0 ? options[:user_region_id] : 1238)
     @user_id = options[:user_id] || 0
     
-    @accounting_period = options[:accounting_period] || '1_2014'
+    @accounting_period = options[:accounting_period] #|| '1_2014'
   end
   
   def init_output_params(options)
