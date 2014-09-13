@@ -230,14 +230,15 @@ class Customer::TarifOptimizatorController < ApplicationController
   end
   
   def check_if_optimization_options_are_in_session    
+    accounting_period = Customer::Call.where(:user_id => current_user.id).select("description->>'accounting_period' as accounting_period").uniq
+    accounting_period = accounting_period.blank? ? -1 : accounting_period[0]['accounting_period']
+
     if !session[:filtr] or session[:filtr]['service_choices_filtr'].blank?
       session[:filtr] ||= {}; session[:filtr]['service_choices_filtr'] ||= {}
       session[:filtr]['service_choices_filtr']  = if saved_tarif_optimization_inputs.blank?
-        accounting_period = Customer::Call.where(:user_id => current_user.id).select("description->>'accounting_period' as accounting_period").uniq
-        accounting_period = accounting_period.blank? ? -1 : accounting_period[0]['accounting_period']
         {'tarifs_id' => [200], 'tarif_options_id' => [], 'common_services_id' => [], 'accounting_period' => accounting_period,}        
       else
-        saved_tarif_optimization_inputs
+        saved_tarif_optimization_inputs.merge({'accounting_period' => accounting_period})
       end 
     end
     
