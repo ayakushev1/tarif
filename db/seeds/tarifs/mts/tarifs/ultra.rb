@@ -1,3 +1,4 @@
+#TODO разобраться с турбо-кнопками
 #Ultra
 @tc = ServiceHelper::TarifCreator.new(_mts)
 @tc.create_tarif_class({
