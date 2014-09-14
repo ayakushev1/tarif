@@ -1,5 +1,5 @@
 class ServiceHelper::OptimizationResultPresenter
-  attr_reader :name, :output_model, :results, :operator, :user_id
+  attr_reader :name, :output_model, :results, :operator, :user_id, :tarif_count
   attr_reader :service_set_based_on_tarif_sets_or_tarif_results, :level_to_show_tarif_result_by_parts, :use_price_comparison_in_current_tarif_set_calculation,
               :max_tarif_set_count_per_tarif
   
@@ -7,6 +7,7 @@ class ServiceHelper::OptimizationResultPresenter
     @operator = operator
     @name = name || 'default_output_results_name'
     @user_id = options[:user_id] || 0
+    @tarif_count = options[:tarif_count].to_i
     @output_model = Customer::Stat.where(:result_type => 'optimization_results').where(:result_name => @name, :user_id => @user_id)
     init_results(input)
     init_output_choices(options)
@@ -178,16 +179,8 @@ class ServiceHelper::OptimizationResultPresenter
     end
     
     result = []
-    max_count_per_tarif = use_price_comparison_in_current_tarif_set_calculation ? max_tarif_set_count_per_tarif : 100000000
-    count_per_tarif = {}
     service_set_price.each do |service_set_id, service_sets_result|
 #      next if fobidden[service_set_id]
-#      if tarifs[service_set_id]
-#        count_per_tarif[tarifs[service_set_id]] ||= 0
-#        count_per_tarif[tarifs[service_set_id]] += 1
-#      raise(StandardError) if count_per_tarif[tarifs[service_set_id]] > max_count_per_tarif
-#        next if count_per_tarif[tarifs[service_set_id]] > max_count_per_tarif
-#      end
       result << {'short_set_id' => service_set_id.split('_').uniq.join('_'), 'service_sets_id' => service_set_id,  
         'service_set_price' => service_sets_result, 'service_set_count' => service_set_count[service_set_id], 
         'identical_services' => identical_services[service_set_id],
@@ -197,6 +190,23 @@ class ServiceHelper::OptimizationResultPresenter
         } 
     end
     result.sort_by!{|item| item['service_set_price']}
+
+    result_1 = []
+    max_count_per_tarif = use_price_comparison_in_current_tarif_set_calculation ? max_tarif_set_count_per_tarif : 100000000
+    count_per_tarif = {}
+    current_tarif_set_count = 0
+    result.each do |item|
+      service_set_id = item['service_sets_id']
+      if tarifs[service_set_id]
+        count_per_tarif[tarifs[service_set_id]] ||= 0
+        count_per_tarif[tarifs[service_set_id]] += 1
+        next if count_per_tarif[tarifs[service_set_id]] > max_count_per_tarif
+        result_1 << item
+        current_tarif_set_count += 1
+        break if current_tarif_set_count == max_count_per_tarif * tarif_count
+      end
+    end
+    result_1
   end
 
   def tarif_results_array(service_set_id)

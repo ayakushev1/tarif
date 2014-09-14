@@ -161,6 +161,7 @@ class Customer::TarifOptimizatorController < ApplicationController
       :show_zero_tarif_result_by_parts => optimization_params.session_filtr_params['show_zero_tarif_result_by_parts'],
       :use_price_comparison_in_current_tarif_set_calculation => optimization_params.session_filtr_params['use_price_comparison_in_current_tarif_set_calculation'],
       :max_tarif_set_count_per_tarif => optimization_params.session_filtr_params['max_tarif_set_count_per_tarif'],
+      :tarif_count => tarifs.size,
       }
     @optimization_result_presenter ||= ServiceHelper::OptimizationResultPresenter.new(operator, options)
     @optimization_result_presenter
