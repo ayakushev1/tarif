@@ -15,7 +15,7 @@ class Calls::OperatorPhoneNumbers
 	return nil if number.last(10) !~ /[0-9]{10}/
 	phone_without_country = number.last(10).to_i
 	return nil if phone_without_country < ranges[0] or phone_without_country > phone_numbers[ranges.last][:end_range]
-    phone_range = ranges.index{|r| phone_without_country < r}
+    phone_range = ranges.index{|r| phone_without_country < phone_numbers[r][:end_range] }
 	if phone_range
 	  result = phone_numbers[ranges[phone_range]].merge({:country_id => _russia})
 	  if result[:operator_id] == _fixed_line_operator
