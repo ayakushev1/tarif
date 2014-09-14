@@ -5,7 +5,7 @@ def access_methods_to_constant_countries
 
 #2 operators
   _russian_operators = 3001; _foreign_operators = 3002
-  _beeline = 1025; _megafon = 1028; _mts = 1030; _mts_ukrain = 1031; _fixed_line_operator = 1034;
+  _beeline = 1025; _megafon = 1028; _mts = 1030; _mts_ukrain = 1031; _fixed_line_operator = 1034; _other_rusian_operator = 1035
   _operators = [_beeline, _megafon, _mts]
 
 _first_country_id = 1600; _first_country_operator_id = 3003;

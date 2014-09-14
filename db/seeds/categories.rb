@@ -208,6 +208,7 @@ Category.create(id: _mts_ukrain, type_id: 2, level_id: nil, parent_id: _foreign_
 Category.create(id: 1032, type_id: 2, level_id: nil, parent_id: _russian_operators, name: "Скайлинк")
 Category.create(id: 1033, type_id: 2, level_id: nil, parent_id: _russian_operators, name: "СМАРТС")
 Category.create(id: _fixed_line_operator, type_id: 2, level_id: nil, parent_id: _russian_operators, name: "Ростелеком")
+Category.create(id: _other_rusian_operator, type_id: 2, level_id: nil, parent_id: _russian_operators, name: "Разный Русский оператор")
 
 
 Category.create(id: 1101, type_id: 0, level_id: 3, parent_id: _russia, name: "Алтайский край")
@@ -289,6 +290,8 @@ Category.create(id: 1176, type_id: 0, level_id: 3, parent_id: _russia, name: "Ч
 Category.create(id: 1177, type_id: 0, level_id: 3, parent_id: _russia, name: "Чукотский автономный округ")
 Category.create(id: 1178, type_id: 0, level_id: 3, parent_id: _russia, name: "Ямало-Ненецкий автономный округ")
 Category.create(id: 1179, type_id: 0, level_id: 3, parent_id: _russia, name: "Ярославская область")
+Category.create(id: 1180, type_id: 0, level_id: 3, parent_id: _russia, name: "Республика Алтай")
+Category.create(id: 1181, type_id: 0, level_id: 3, parent_id: _russia, name: "Забайкальский край")
 
 
 Category.create(id: 1200, type_id: 0, level_id: 3, parent_id: _russia, name: "Абакан")
@@ -336,7 +339,7 @@ Category.create(id: 1241, type_id: 0, level_id: 3, parent_id: _russia, name: "Н
 Category.create(id: 1242, type_id: 0, level_id: 3, parent_id: _russia, name: "Новосибирск")
 Category.create(id: 1243, type_id: 0, level_id: 3, parent_id: _russia, name: "Омск")
 Category.create(id: 1244, type_id: 0, level_id: 3, parent_id: _russia, name: "Оренбург")
-Category.create(id: 1245, type_id: 0, level_id: 3, parent_id: _russia, name: "Орлов")
+Category.create(id: 1245, type_id: 0, level_id: 3, parent_id: _russia, name: "Орел")
 Category.create(id: 1246, type_id: 0, level_id: 3, parent_id: _russia, name: "Пенза")
 Category.create(id: 1247, type_id: 0, level_id: 3, parent_id: _russia, name: "Петрозаводск")
 Category.create(id: 1248, type_id: 0, level_id: 3, parent_id: _russia, name: "Петропавловск-Камчатский")
@@ -345,12 +348,12 @@ Category.create(id: 1250, type_id: 0, level_id: 3, parent_id: _russia, name: "П
 Category.create(id: 1251, type_id: 0, level_id: 3, parent_id: _russia, name: "Ростов")
 Category.create(id: 1252, type_id: 0, level_id: 3, parent_id: _russia, name: "Рязань")
 Category.create(id: 1253, type_id: 0, level_id: 3, parent_id: _russia, name: "Салехард")
-Category.create(id: 1254, type_id: 0, level_id: 3, parent_id: _russia, name: "Самарская область")
+Category.create(id: 1254, type_id: 0, level_id: 3, parent_id: _russia, name: "Самара")
 Category.create(id: 1255, type_id: 0, level_id: 3, parent_id: _russia, name: "Санкт-Петербург")
 Category.create(id: 1256, type_id: 0, level_id: 3, parent_id: _russia, name: "Саранск")
 Category.create(id: 1257, type_id: 0, level_id: 3, parent_id: _russia, name: "Саратов")
 Category.create(id: 1258, type_id: 0, level_id: 3, parent_id: _russia, name: "Смоленск")
-Category.create(id: 1259, type_id: 0, level_id: 3, parent_id: _russia, name: "Ставрополь")
+Category.create(id: 1259, type_id: 0, level_id: 3, parent_id: _russia, name: "Минеральные воды")
 Category.create(id: 1260, type_id: 0, level_id: 3, parent_id: _russia, name: "Сыктывкар")
 Category.create(id: 1261, type_id: 0, level_id: 3, parent_id: _russia, name: "Тамбов")
 Category.create(id: 1262, type_id: 0, level_id: 3, parent_id: _russia, name: "Тверь")
@@ -370,6 +373,9 @@ Category.create(id: 1275, type_id: 0, level_id: 3, parent_id: _russia, name: "Ю
 Category.create(id: 1276, type_id: 0, level_id: 3, parent_id: _russia, name: "Южно-Сахалинск")
 Category.create(id: 1277, type_id: 0, level_id: 3, parent_id: _russia, name: "Якутск")
 Category.create(id: 1278, type_id: 0, level_id: 3, parent_id: _russia, name: "Ярославль")
+Category.create(id: 1279, type_id: 0, level_id: 3, parent_id: _russia, name: "Владикавказ")
+Category.create(id: 1280, type_id: 0, level_id: 3, parent_id: _russia, name: "Горно-Алтайск")
+Category.create(id: 1281, type_id: 0, level_id: 3, parent_id: _russia, name: "Ставрополь")
 
 
 Category.create(id: 1501, type_id: 0, level_id: 3, parent_id: _ukraiun, name: "регион Украины")

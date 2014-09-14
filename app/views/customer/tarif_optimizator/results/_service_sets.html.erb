@@ -4,7 +4,7 @@ table.init do |t|
   t.caption = 'Service_sets'
   t.base_name = 'service_sets'
   t.current_id_name = 'service_sets_id'
-  t.pagination_per_page = 100
+  t.pagination_per_page = 10
   t.id_name = 'service_sets_id'#'service_category_tarif_class_id'
   model_keys = t.model.collect {|row| row.keys }.flatten.uniq.collect{|key| key unless ['short_set_id', 'tarif_sets_by_part', 'fobidden', 'fobidden_services'].include?(key)}.compact  
 #  model_keys = t.model.collect {|row| row.keys }.flatten.uniq.collect{|key| key unless ['stat_results'].include?(key)}.compact  

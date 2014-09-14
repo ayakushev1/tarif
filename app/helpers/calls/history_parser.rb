@@ -5,13 +5,14 @@ class Calls::HistoryParser
   attr_reader :call_history_file, :background_process_informer
   attr_reader :doc, :table_heads, :row_column_index
   attr_reader :unprocessed, :processed, :ignorred, :original_row_number
-  attr_reader :operators, :countries, :regions, :operators_by_country
+  attr_reader :operators, :countries, :regions, :operators_by_country, :operator_phone_numbers
   attr_reader :user_params, :parsing_params
   
   def initialize(call_history_file, user_params, parsing_params = {})
     @user_params = user_params
     @parsing_params = parsing_params
     @call_history_file = call_history_file
+    @operator_phone_numbers = Calls::OperatorPhoneNumbers.new()
     @background_process_informer = parsing_params[:background_process_informer] || ServiceHelper::BackgroundProcessInformer.new('parsing_uploaded_file', user_params[:user_id])
     @doc = Nokogiri::HTML(@call_history_file) do |config|
       config.nonet
@@ -81,10 +82,10 @@ class Calls::HistoryParser
         },
       :partner_phone => {
         :number => number[:number], 
-        :operator_id => partner[:operator_id], 
-        :operator_type_id => partner[:operator_type_id],
-        :region_id => partner[:region_id], 
-        :country_id => partner[:country_id], 
+        :operator_id => number[:operator_id] || partner[:operator_id], 
+        :operator_type_id => number[:operator_type_id] || partner[:operator_type_id],
+        :region_id => number[:region_id] || partner[:region_id], 
+        :country_id => number[:country_id] || partner[:country_id], 
         },
       :connect => {
         :operator_id => roming[:operator_id],
@@ -223,7 +224,13 @@ class Calls::HistoryParser
       {:number => row[row_column_index[:number]], :subservice => _unspecified_direction}
     else
       sub_service_id = (row[row_column_index[:number]] =~ /<--/) ? _inbound : _outbound
-      {:number => row[row_column_index[:number]].sub(/<--/, ''), :subservice => sub_service_id}
+      phone = row[row_column_index[:number]].sub(/<--/, '')
+      phone_range = operator_phone_numbers.find_range(phone)
+      result = {:number => phone, :subservice => sub_service_id}
+      if phone_range
+        result.merge!(phone_range)
+      end
+      result
     end
   end
   
