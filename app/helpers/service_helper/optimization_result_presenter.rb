@@ -182,12 +182,12 @@ class ServiceHelper::OptimizationResultPresenter
     count_per_tarif = {}
     service_set_price.each do |service_set_id, service_sets_result|
 #      next if fobidden[service_set_id]
-      if tarifs[service_set_id]
-        count_per_tarif[tarifs[service_set_id]] ||= 0
-        count_per_tarif[tarifs[service_set_id]] += 1
+#      if tarifs[service_set_id]
+#        count_per_tarif[tarifs[service_set_id]] ||= 0
+#        count_per_tarif[tarifs[service_set_id]] += 1
 #      raise(StandardError) if count_per_tarif[tarifs[service_set_id]] > max_count_per_tarif
-        next if count_per_tarif[tarifs[service_set_id]] > max_count_per_tarif
-      end
+#        next if count_per_tarif[tarifs[service_set_id]] > max_count_per_tarif
+#      end
       result << {'short_set_id' => service_set_id.split('_').uniq.join('_'), 'service_sets_id' => service_set_id,  
         'service_set_price' => service_sets_result, 'service_set_count' => service_set_count[service_set_id], 
         'identical_services' => identical_services[service_set_id],
