@@ -103,9 +103,10 @@ class ServiceHelper::OptimizationResultPresenter
         service_set_price[service_set_id] = 0        
         service_set_count[service_set_id] = 0        
         
+        tarif_result_to_use = updated_tarif_results ? updated_tarif_results : tarif_results
         final_tarif_set['tarif_sets_by_part'].each do |tarif_set_by_part|
           part = tarif_set_by_part[0]; tarif_set_by_part_id = tarif_set_by_part[1]
-          tarif_results_for_service_set_and_part = tarif_results[tarif_set_by_part_id][part] if tarif_results and tarif_results[tarif_set_by_part_id]
+          tarif_results_for_service_set_and_part = tarif_result_to_use[tarif_set_by_part_id][part] if tarif_result_to_use and tarif_result_to_use[tarif_set_by_part_id]
           tarif_results_for_service_set_and_part.each do |tarif_id_from_tarif_results, tarif_result_for_service_set_and_part |
             
 #            stat_results[service_set_id] ||= {}; stat_detail_keys_to_exclude = ['month', 'call_ids']
@@ -202,9 +203,10 @@ class ServiceHelper::OptimizationResultPresenter
     result = []
     case service_set_based_on_tarif_sets_or_tarif_results
     when 'final_tarif_sets'
+      tarif_result_to_use = updated_tarif_results ? updated_tarif_results : tarif_results
       final_tarif_sets[service_set_id]['tarif_sets_by_part'].each do |tarif_set_by_part|
         part = tarif_set_by_part[0]; tarif_set_by_part_id = tarif_set_by_part[1]
-        tarif_results_for_service_set_and_part = tarif_results[tarif_set_by_part_id][part] if tarif_results and tarif_results[tarif_set_by_part_id]
+        tarif_results_for_service_set_and_part = tarif_result_to_use[tarif_set_by_part_id][part] if tarif_result_to_use and tarif_result_to_use[tarif_set_by_part_id]
 
         tarif_results_for_service_set_and_part.each do |tarif_id_from_tarif_results, tarif_result_for_service_set_and_part|
 
@@ -229,8 +231,8 @@ class ServiceHelper::OptimizationResultPresenter
           'price_value' => (tarif_result_for_service_set_and_part['price_value'] || 0.0).to_f,
           'call_id_count' => tarif_result_for_service_set_and_part['call_id_count'],
           'stat_results' => stat_results,
-#            'tarif_results_keys' => tarif_results[tarif_set_by_part_id][part].keys,
-#            'final_tarif_sets' => tarif_results[tarif_set_by_part_id][part][tarif_id_from_tarif_results]['price_values'],
+#            'tarif_results_keys' => tarif_result_to_use[tarif_set_by_part_id][part].keys,
+#            'final_tarif_sets' => tarif_result_to_use[tarif_set_by_part_id][part][tarif_id_from_tarif_results]['price_values'],
 #            'tarif_id_from_tarif_results' => tarif_result_for_service_set_and_part['price_values'],
 #            'tarif_results_for_service_set_and_part' => (tarif_results_for_service_set_and_part['203'] ? tarif_results_for_service_set_and_part['203'].keys : nil) #final_tarif_sets[service_set_id]['tarif_sets_by_part'][service_set_id].map{|s| s if s[0] == "own-country-rouming/calls"},
           }
