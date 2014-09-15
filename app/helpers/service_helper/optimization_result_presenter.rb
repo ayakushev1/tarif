@@ -33,12 +33,12 @@ class ServiceHelper::OptimizationResultPresenter
   end
   
   def get_optimization_results(name1, name2)
-    model ||= {}
-    model[name1] ||= {}    
+    @model ||= {}
+    @model[name1] ||= {}    
     local_results ||= {}
-    model[name1][name2] ||= Customer::Stat.where(:result_type => 'optimization_results').where(:result_name => name1, :user_id => user_id).select("result as #{name1}")
+    @model[name1][name2] ||= Customer::Stat.where(:result_type => 'optimization_results').where(:result_name => name1, :user_id => user_id).select("result as #{name1}")
 #    raise(StandardError, model.to_sql)
-    model[name1][name2].each do |result_item|
+    @model[name1][name2].each do |result_item|
       result_item.attributes[name1].each do |result_type, result_value|
         if result_value.is_a?(Hash)
           local_results[result_type] ||= {}
@@ -189,8 +189,7 @@ class ServiceHelper::OptimizationResultPresenter
 #        'fobidden_services' => (fobidden_services[service_set_id] || []).sort_by{|f| f[0]} 
         } 
     end
-#    result.sort_by!{|item| item['service_set_price']}
-    result
+    result.sort_by!{|item| item['service_set_price']}
 
 =begin
     result_1 = []
@@ -367,13 +366,11 @@ class ServiceHelper::OptimizationResultPresenter
   end
   
   def final_tarif_sets
-    return get_optimization_results('final_tarif_sets', 'final_tarif_sets')
     return @final_tarif_sets if @final_tarif_sets
     @final_tarif_sets = get_optimization_results('final_tarif_sets', 'final_tarif_sets')
   end
 
   def tarif_sets_to_calculate_from_final_tarif_sets
-    return get_optimization_results('final_tarif_sets', 'tarif_sets_to_calculate_from_final_tarif_sets')
     return @tarif_sets_to_calculate_from_final_tarif_sets if @tarif_sets_to_calculate_from_final_tarif_sets
     @tarif_sets_to_calculate_from_final_tarif_sets = get_optimization_results('final_tarif_sets', 'tarif_sets_to_calculate_from_final_tarif_sets')
   end
@@ -384,13 +381,11 @@ class ServiceHelper::OptimizationResultPresenter
   end
 
   def groupped_identical_services
-    return get_optimization_results('final_tarif_sets', 'groupped_identical_services')
     return @groupped_identical_services if @groupped_identical_services
     @groupped_identical_services = get_optimization_results('final_tarif_sets', 'groupped_identical_services')
   end
 
   def current_tarif_set_calculation_history
-    return get_optimization_results('final_tarif_sets', 'current_tarif_set_calculation_history')
     return @current_tarif_set_calculation_history if @current_tarif_set_calculation_history
     @current_tarif_set_calculation_history = get_optimization_results('final_tarif_sets', 'current_tarif_set_calculation_history')
 #    raise(StandardError)
