@@ -190,7 +190,9 @@ class ServiceHelper::OptimizationResultPresenter
         } 
     end
     result.sort_by!{|item| item['service_set_price']}
+    result
 
+=begin
     result_1 = []
     max_count_per_tarif = use_price_comparison_in_current_tarif_set_calculation ? max_tarif_set_count_per_tarif : 100000000
     count_per_tarif = {}
@@ -207,6 +209,7 @@ class ServiceHelper::OptimizationResultPresenter
       end
     end
     result_1
+=end    
   end
 
   def tarif_results_array(service_set_id)
