@@ -162,7 +162,7 @@ class ServiceHelper::TarifOptimizator
       save_tarif_results(operator, tarif, accounting_period)    
 
       performance_checker.run_check_point('calculate_and_save_final_tarif_set_by_tarif', 4) do
-        calculate_and_save_final_tarif_set_by_tarif(operator, tarif, accounting_period)
+#        calculate_and_save_final_tarif_set_by_tarif(operator, tarif, accounting_period)
       end
       
       background_process_informer_tarif.finish
