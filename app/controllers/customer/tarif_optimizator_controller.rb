@@ -30,7 +30,7 @@ class Customer::TarifOptimizatorController < ApplicationController
       redirect_to(:action => :calculation_status)
     else
       updating_minor_results
-      redirect_to(:action => :index)
+      redirect_to(:action => :show_results)
     end
   end
   
@@ -48,7 +48,7 @@ class Customer::TarifOptimizatorController < ApplicationController
   
   def calculation_status
     if !background_process_informer_operators.calculating?      
-      redirect_to(:action => :index)
+      redirect_to(:action => :show_results)
     end
   end
   
@@ -80,8 +80,9 @@ class Customer::TarifOptimizatorController < ApplicationController
       redirect_to(:action => :calculation_status)
     else
       @tarif_optimizator = ServiceHelper::TarifOptimizator.new(options)
-      @tarif_optimizator.calculate_all_operator_tarifs #calculate_one_operator_tarifs(operator)
-      redirect_to(:action => :index)
+      @tarif_optimizator.calculate_all_operator_tarifs
+      updating_minor_results
+      redirect_to(:action => :show_results)
     end
     tarif_optimization_inputs_saver('user_input').save({:result => service_choices.session_filtr_params.merge({'accounting_period' => nil})})
   end 
