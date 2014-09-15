@@ -219,6 +219,7 @@ class ServiceHelper::TarifOptimizator
       :tarif_results => saved_results['tarif_results'],
       :cons_tarif_results => saved_results['cons_tarif_results'],
     })
+    saved_results = nil
     final_tarif_set_generator.calculate_final_tarif_sets(operator, tarif, background_process_informer_tarif)
     final_tarif_sets_info_to_save = {:operator_id => operator.to_i, :tarif_id => tarif.to_i, :accounting_period => accounting_period, :result => {
       :final_tarif_sets => final_tarif_set_generator.final_tarif_sets,
