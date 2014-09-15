@@ -8,7 +8,7 @@ class ServiceHelper::FinalTarifSetGenerator
   attr_reader :use_short_tarif_set_name
          
   attr_reader :calculate_final_tarif_sets_first_without_common_services, :if_update_tarif_sets_to_calculate_from_with_cons_tarif_results,
-              :max_final_tarif_set_number, :eliminate_identical_tarif_sets
+              :max_tarif_set_count_per_tarif, :eliminate_identical_tarif_sets
   
   def initialize(options = {} )
     @options = options
@@ -22,7 +22,7 @@ class ServiceHelper::FinalTarifSetGenerator
     @calculate_final_tarif_sets_first_without_common_services = false      
     @eliminate_identical_tarif_sets = options[:eliminate_identical_tarif_sets] == 'true' ? true : false
     @if_update_tarif_sets_to_calculate_from_with_cons_tarif_results = options[:if_update_tarif_sets_to_calculate_from_with_cons_tarif_results] == 'true' ? true : false
-    @max_final_tarif_set_number = options[:max_final_tarif_set_number].to_i < 1 ? 1000 : options[:max_final_tarif_set_number].to_i
+    @max_tarif_set_count_per_tarif = options[:max_tarif_set_count_per_tarif].to_i > 0 ? options[:max_tarif_set_count_per_tarif].to_i : 100 
   end
   
   def set_input_data(input_data)
@@ -59,9 +59,19 @@ class ServiceHelper::FinalTarifSetGenerator
 
 #TODO # проверить правильно ли исправил вариант (true, вариант считается чуть быстрее) когда in common_services есть новые parts    
     update_final_tarif_sets_with_common_services if calculate_final_tarif_sets_first_without_common_services 
+    reoder_and_limit_final_tarif_set
     @tarif_sets_to_calculate_from_final_tarif_sets = tarif_sets_to_calculate_from
     @updated_tarif_results = updated_tarif_results
 #    raise(StandardError)
+  end
+  
+  def reoder_and_limit_final_tarif_set
+    sorted_final_tarif_set_keys = final_tarif_sets.keys.sort{|final_tarif_set_key| final_tarif_sets[final_tarif_set_key][:price]}
+    new_final_tarif_sets = {}
+    sorted_final_tarif_set_keys[0..[0, (max_tarif_set_count_per_tarif - 1)].max].each do |final_tarif_set_key| 
+      new_final_tarif_sets[final_tarif_set_key] = final_tarif_sets[final_tarif_set_key]
+    end
+    @final_tarif_sets = new_final_tarif_sets
   end
   
   def calculate_final_tarif_sets_by_tarif(tarif_sets_to_calculate_from_by_tarif, operator, tarif, updated_tarif_results, background_process_informer_tarif = nil)
@@ -104,6 +114,7 @@ class ServiceHelper::FinalTarifSetGenerator
         current_uniq_service_sets[current_tarif_set_by_part_name] ||= {}
         current_uniq_service_sets[current_tarif_set_by_part_name][:service_ids] = current_tarif_set_by_part_services
         current_uniq_service_sets[current_tarif_set_by_part_name][:tarif] = tarif
+        current_uniq_service_sets[current_tarif_set_by_part_name][:price] = current_tarif_set.current_set_price
         current_uniq_service_sets[current_tarif_set_by_part_name][:tarif_sets_by_part] ||= []
         
         current_uniq_service_sets[current_tarif_set_by_part_name][:fobidden] = check_if_final_tarif_set_is_fobidden(

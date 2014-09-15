@@ -3,7 +3,7 @@ class ServiceHelper::CurrentTarifSet
   attr_reader :parts, :tarif_sets_names_as_array, :tarif_sets_services_as_array, :tarif_sets_prices, :tarif_sets_counts
   attr_reader :max_part_index, :max_tarif_set_by_part_index, :tarif_price, :min_periodic_price, :services_that_depended_on_service_ids, :services_that_depended_on
   attr_reader :current_price, :best_possible_price
-  attr_reader :current_part_index, :current_part, :current_tarif_set_by_part_index
+  attr_reader :current_part_index, :current_part, :current_tarif_set_by_part_index, :current_set_price
   attr_reader :history
   attr_reader :save_current_tarif_set_calculation_history, :part_sort_criteria_in_price_optimization,
               :use_price_comparison_in_current_tarif_set_calculation, :calculate_final_tarif_sets_first_without_common_services
@@ -155,12 +155,13 @@ class ServiceHelper::CurrentTarifSet
     raise(StandardError) if current_tarif_set_by_part_index and current_tarif_set_by_part_index.size != current_part_index + 1   
     @current_part = parts[current_part_index]
     if current_part_index == max_part_index - 1
-      new_price = calculate_current_price_for_chosen_parts(current_part_index)# + calculate_periodic_part_price(current_part_index)
-      @current_price = new_price if @current_price > new_price 
+      @current_set_price = calculate_current_price_for_chosen_parts(current_part_index)# + calculate_periodic_part_price(current_part_index)
+      @current_price = current_set_price if @current_price > current_set_price 
     end
     calculate_best_possible_price(current_part_index) if current_part_index > -1
     update_history if save_current_tarif_set_calculation_history
 #    raise(StandardError) if current_price < 1209.0 
+    @new_price
   end
   
   def update_history
