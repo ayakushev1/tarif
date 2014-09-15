@@ -258,10 +258,10 @@ class Customer::TarifOptimizatorController < ApplicationController
         'use_short_tarif_set_name' => 'true',
         'show_zero_tarif_result_by_parts' => 'false',
         'if_update_tarif_sets_to_calculate_from_with_cons_tarif_results' => 'true',
-        'max_tarif_set_count_per_tarif' => 3,
+        'max_tarif_set_count_per_tarif' => 1,
         'eliminate_identical_tarif_sets' => 'true',
         'use_price_comparison_in_current_tarif_set_calculation' => 'true',
-        'save_current_tarif_set_calculation_history' => 'true',
+        'save_current_tarif_set_calculation_history' => 'false',
         'part_sort_criteria_in_price_optimization' => 'auto',        
       } 
 #      raise(StandardError, session[:filtr]['optimization_params_filtr'])

@@ -51,7 +51,7 @@ class ServiceHelper::TarifOptimizator
       @tarif_optimization_sql_builder = ServiceHelper::TarifOptimizationSqlBuilder.new(self, {:user_id => user_id, :accounting_period => accounting_period})
       @minor_result_saver = ServiceHelper::OptimizationResultSaver.new('optimization_results', 'minor_results', user_id)
       @tarif_list_generator = ServiceHelper::TarifListGenerator.new(options[:services_by_operator] || {})
-      @final_tarif_set_generator = ServiceHelper::FinalTarifSetGenerator.new(options[:services_by_operator] || {})
+#      @final_tarif_set_generator = ServiceHelper::FinalTarifSetGenerator.new(options[:services_by_operator] || {})
       @background_process_informer_operators = options[:background_process_informer_operators] || ServiceHelper::BackgroundProcessInformer.new('operators_optimization', user_id)
       @background_process_informer_tarifs = options[:background_process_informer_tarifs] || ServiceHelper::BackgroundProcessInformer.new('tarifs_optimization', user_id)
       @background_process_informer_tarif = options[:background_process_informer_tarif] || ServiceHelper::BackgroundProcessInformer.new('tarif_optimization', user_id)
@@ -199,10 +199,13 @@ class ServiceHelper::TarifOptimizator
     performance_checker.run_check_point('memory_usage_analyze_for_output', 4) do      
       minor_result_saver.save({:result => {:used_memory_by_output => calculate_used_memory(output)}})
     end if analyze_memory_used    
+    
   end
   
   def calculate_and_save_final_tarif_set_by_tarif(operator, tarif, accounting_period)
     background_process_informer_tarif.init(0.0, 10.0)
+     @final_tarif_set_generator = ServiceHelper::FinalTarifSetGenerator.new(options[:services_by_operator] || {})
+
     saved_results = optimization_result_saver.results({:operator_id => operator, :tarif_id => tarif, :accounting_period => accounting_period})
     
     final_tarif_set_generator.set_input_data({

@@ -22,7 +22,7 @@ class Customer::HistoryParserController < ApplicationController
   end
 
   def upload
-    max_step = 20
+    max_step = 10
     i = 0
     begin
       sleep 1
