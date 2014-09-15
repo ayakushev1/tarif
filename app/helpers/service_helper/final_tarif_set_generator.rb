@@ -2,7 +2,7 @@ class ServiceHelper::FinalTarifSetGenerator
   attr_reader :options             
   attr_accessor :final_tarif_sets, :tarif_sets_to_calculate_from_final_tarif_sets, :updated_tarif_results, :groupped_identical_services 
   attr_accessor :current_tarif_set_calculation_history 
-  attr_accessor :tarif_sets_without_common_services, :tarif_sets, :services_that_depended_on, :service_description, :common_services, :common_services_by_parts,
+  attr_accessor :tarif_sets_without_common_services, :tarif_sets, :services_that_depended_on, :operator, :common_services, :common_services_by_parts,
                 :cons_tarif_results_by_parts, :tarif_results, :cons_tarif_results
   
   attr_reader :use_short_tarif_set_name
@@ -29,10 +29,9 @@ class ServiceHelper::FinalTarifSetGenerator
     @tarif_sets_without_common_services = input_data[:tarif_sets_without_common_services]
     @tarif_sets = input_data[:tarif_sets]
     @services_that_depended_on = input_data[:services_that_depended_on]
-    @service_description = input_data[:service_description]
+    @operator = input_data[:operator]
     @common_services_by_parts = input_data[:common_services_by_parts]
     @common_services = input_data[:common_services]
-    @service_description = input_data[:service_description]
     @cons_tarif_results_by_parts = input_data[:cons_tarif_results_by_parts]
     @tarif_results = input_data[:tarif_results]
     @cons_tarif_results = input_data[:cons_tarif_results]    
@@ -40,7 +39,7 @@ class ServiceHelper::FinalTarifSetGenerator
   
   def calculate_final_tarif_sets(operator_1 = nil, tarif_1 = nil, background_process_informer_tarif = nil)
     tarif = tarif_1.to_s  
-    operator = service_description[tarif]['operator_id'].to_s
+#    operator = service_description[tarif]['operator_id'].to_s
 
     @final_tarif_sets = {}
 #    raise(StandardError, @tarif_results['312_203']["own-country-rouming/mobile-connection"])
@@ -59,19 +58,9 @@ class ServiceHelper::FinalTarifSetGenerator
 
 #TODO # проверить правильно ли исправил вариант (true, вариант считается чуть быстрее) когда in common_services есть новые parts    
     update_final_tarif_sets_with_common_services if calculate_final_tarif_sets_first_without_common_services 
-    reoder_and_limit_final_tarif_set
     @tarif_sets_to_calculate_from_final_tarif_sets = tarif_sets_to_calculate_from
     @updated_tarif_results = updated_tarif_results
 #    raise(StandardError)
-  end
-  
-  def reoder_and_limit_final_tarif_set
-    sorted_final_tarif_set_keys = final_tarif_sets.keys.sort{|final_tarif_set_key| final_tarif_sets[final_tarif_set_key][:price]}
-    new_final_tarif_sets = {}
-    sorted_final_tarif_set_keys[0..[0, (max_tarif_set_count_per_tarif - 1)].max].each do |final_tarif_set_key| 
-      new_final_tarif_sets[final_tarif_set_key] = final_tarif_sets[final_tarif_set_key]
-    end
-    @final_tarif_sets = new_final_tarif_sets
   end
   
   def calculate_final_tarif_sets_by_tarif(tarif_sets_to_calculate_from_by_tarif, operator, tarif, updated_tarif_results, background_process_informer_tarif = nil)
@@ -98,7 +87,7 @@ class ServiceHelper::FinalTarifSetGenerator
       current_tarif_set_by_part_services = current_tarif_set.current_tarif_set_by_part_services
       current_tarif_set_by_part_name = tarif_set_id(current_tarif_set_by_part_services)
       
-      common_services_to_exclude = (common_services_by_parts[operator][current_part] || [])
+      common_services_to_exclude = (common_services_by_parts[operator.to_s][current_part] || [])
       tarif_sets_by_part_services_list = tarif_sets_to_calculate_from_by_tarif[current_part].
         collect{|tarif_set_by_part_id, services| services - common_services_to_exclude}.collect{|f| tarif_set_id(f).to_sym}
       
@@ -153,7 +142,7 @@ class ServiceHelper::FinalTarifSetGenerator
     excluded_tarif_sets = []
     tarifs = tarif_sets_to_calculate_from.keys.map(&:to_i)
 #TODO проверить еще раз почему нельзя исключать common_services
-    services_to_not_excude = common_services[operator] + tarifs
+    services_to_not_excude = common_services[operator.to_s] + tarifs
 
     sub_tarif_sets_with_zero_results_0 = calculate_sub_tarif_sets_with_zero_results_0(services_to_not_excude)
     sub_tarif_sets_with_zero_results_1 = calculate_sub_tarif_sets_with_zero_results_1(services_to_not_excude)
@@ -486,8 +475,8 @@ class ServiceHelper::FinalTarifSetGenerator
     dup_final_tarif_sets = final_tarif_sets.clone
     @final_tarif_sets = {}
     dup_final_tarif_sets.each do |final_tarif_set_id, final_tarif_set|
-      operator = service_description[final_tarif_set_id.split('_')[0].to_s]['operator_id'].to_s      
-      common_services_to_add = (common_services[operator] || [])
+#      operator = service_description[final_tarif_set_id.split('_')[0].to_s]['operator_id'].to_s      
+      common_services_to_add = (common_services[operator.to_s] || [])
       final_tarif_set_services_with_common_services = common_services_to_add + final_tarif_set[:service_ids] 
       if use_short_tarif_set_name
         final_tarif_set_id_with_common_services = tarif_set_id(final_tarif_set_services_with_common_services.uniq)
@@ -503,13 +492,13 @@ class ServiceHelper::FinalTarifSetGenerator
         final_tarif_sets[final_tarif_set_id_with_common_services][:tarif_sets_by_part] ||= []
         part = tarif_sets_by_part[0]
         if part == 'periodic'
-          (common_services_by_parts[operator][part] || []).each do |common_service|
+          (common_services_by_parts[operator.to_s][part] || []).each do |common_service|
             final_tarif_sets[final_tarif_set_id_with_common_services][:tarif_sets_by_part] <<
               [part, tarif_set_id(common_service)] 
           end
         end
 #        else
-          common_services_by_part_to_add = (common_services_by_parts[operator][part] || [])
+          common_services_by_part_to_add = (common_services_by_parts[operator.to_s][part] || [])
           tarif_sets_by_part_with_common_services = common_services_by_part_to_add + tarif_sets_by_part[1].split('_')
           tarif_sets_by_part_with_common_services_id = tarif_set_id(tarif_sets_by_part_with_common_services)
         
