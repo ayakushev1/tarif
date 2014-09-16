@@ -303,7 +303,7 @@ class ServiceHelper::TarifOptimizator
 
   def reoder_and_limit_final_tarif_sets_by_tarifs(final_tarif_sets, max_tarif_set_count_per_tarif)
     background_process_informer_tarif.increase_current_value(0, "reoder_and_limit_final_tarif_sets_by_tarifs")
-    sorted_final_tarif_set_keys = final_tarif_sets.keys.sort{|final_tarif_set_key| final_tarif_sets[final_tarif_set_key][:price]}
+    sorted_final_tarif_set_keys = final_tarif_sets.keys.sort_by{|final_tarif_set_key| final_tarif_sets[final_tarif_set_key][:price]}
     new_final_tarif_sets = {}
     sorted_final_tarif_set_keys[0..[0, (max_tarif_set_count_per_tarif - 1)].max].each do |final_tarif_set_key| 
       new_final_tarif_sets[final_tarif_set_key] = final_tarif_sets[final_tarif_set_key]
