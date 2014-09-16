@@ -54,16 +54,18 @@ class ServiceHelper::CurrentTarifOptimizationResults
     tarif_results[tarif_set_id][part] ||= {}
     
     processed_stat = {}
+#    raise(StandardError)
     if simplify_tarif_results
       processed_stat = stat.attributes.merge({'price_values' => [], 'call_ids'=>[], 'call_id_count' => stat['call_id_count'].to_i}) 
       (stat['price_values'] || []).each do |price_value_item|
         all_stat_call_count_id = price_value_item['all_stat']['call_id_count'].to_i if price_value_item['all_stat'] and price_value_item['all_stat']['call_id_count']
         all_stat = price_value_item['all_stat'].merge({'call_ids'=>[], 'call_id_count' => all_stat_call_count_id}) if price_value_item['all_stat']
         processed_stat['price_values'] << price_value_item.merge({'call_ids'=>[], 'all_stat' => all_stat, 'call_id_count' => price_value_item['call_id_count'].to_i})
-      end if false
+      end if true #false
     else
       processed_stat = stat
     end
+#        raise(StandardError)
 
 #    current_tarif_results_ord = tarif_results_ord[tarif_set_id][part][tarif_class_id][price_formula_order]   
 #    if price_formula_order == 0          
