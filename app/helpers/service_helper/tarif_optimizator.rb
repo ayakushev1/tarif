@@ -296,7 +296,7 @@ class ServiceHelper::TarifOptimizator
       performance_checker.run_check_point('save_final_tarif_sets_by_tarif', 3) do
         final_tarif_sets_info_to_save[:result][:final_tarif_sets] = sorted_final_tarif_sets      
         background_process_informer_tarif.increase_current_value(0, "save final_tarif_sets")
-        final_tarif_sets_saver.save(final_tarif_sets_info_to_save)
+        final_tarif_sets_saver.override(final_tarif_sets_info_to_save)
       end
     end
   end
