@@ -25,20 +25,21 @@ class ServiceHelper::BackgroundProcessInformer
     end 
   end
   
-  def init(min_value = 0.0, max_value = 100.0)
+  def init(min_value = 0.0, max_value = 100.0, text_value = nil)
     if process_info_model.exists?
       process_info_model.first.update_attributes!({:result_key => {:calculating => true}, :result => {
-        :name => name, :max_value => max_value, :min_value => min_value, :current_value => min_value}})
+        :name => name, :max_value => max_value, :min_value => min_value, :current_value => min_value, :text_value => text_value}})
     else
       process_info_model.create({:result_type => 'background_processes', :result_name => name, :user_id => user_id, :result_key => {:calculating => true}, :result => {
-        :name => name, :max_value => max_value, :min_value => min_value, :current_value => min_value}})
+        :name => name, :max_value => max_value, :min_value => min_value, :current_value => min_value, :text_value => text_value}})
     end       
   end
   
-  def increase_current_value(increment_value)
+  def increase_current_value(increment_value = 0, text_value = nil)
     back_processing_stat = process_info_model.first['result']
     bat_processing_current_value = increment_value + back_processing_stat['current_value']
-    back_processing_update = {:name => name, :max_value => back_processing_stat['max_value'], :min_value => 0.0, :current_value => bat_processing_current_value}
+    back_processing_update = {:name => name, :max_value => back_processing_stat['max_value'], :min_value => 0.0, 
+      :current_value => bat_processing_current_value, :text_value => text_value}
     
     process_info_model.first.update_attributes!({:result_key => {:calculating => true}, :result => back_processing_update})  
   end
@@ -50,6 +51,7 @@ class ServiceHelper::BackgroundProcessInformer
       :max_value => back_processing_stat['max_value'],
       :min_value => back_processing_stat['min_value'],
       :current_value => back_processing_stat['current_value'],
+      :text_value => back_processing_stat['text_value'],
       }})
   end
 end

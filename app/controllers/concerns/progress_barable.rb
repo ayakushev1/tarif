@@ -1,5 +1,6 @@
 class ProgressBarable < Presenter
-  attr_accessor :progress_bar, :progress_bar_name, :caption, :action_on_update_progress, :min_value, :max_value, :current_value, :options
+  attr_accessor :progress_bar, :progress_bar_name, :caption, :action_on_update_progress, 
+    :min_value, :max_value, :current_value, :text_value, :options
   
   def initialize(controller, progress_bar_name, options = {})
     super(controller)

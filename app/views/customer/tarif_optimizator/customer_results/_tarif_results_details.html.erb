@@ -1,0 +1,20 @@
+<%
+table.init do |t|
+  t.caption = 'Tarif detail results'
+  t.base_name = 'tarif_detail_results'
+  t.current_id_name = 'service_category_name'
+  t.pagination_per_page = 100
+  t.id_name = 'service_category_name'#'service_category_tarif_class_id'
+  model_keys = t.model.collect {|row| row.keys }.flatten.uniq.collect{|key| key unless [].include?(key)}.compact  
+  t.heads = model_keys.collect{|model_key| model_key.split('_').join(' ')}
+  t.set_fields do |f| 
+  	model_keys.collect do |key|
+  	  if key == 'price_value'
+  	  	f[key].round(2) if f[key]
+  	  else
+  	  	f[key]
+  	  end 
+    end
+  end
+end
+%>

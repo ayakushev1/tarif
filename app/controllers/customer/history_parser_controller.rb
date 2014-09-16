@@ -138,7 +138,6 @@ class Customer::HistoryParserController < ApplicationController
 
   def call_history_saver
     @call_history_saver ||= ServiceHelper::OptimizationResultSaver.new('call_history', 'call_history', current_user.id)
-    @call_history_saver
   end
   
   def call_history_results
@@ -148,7 +147,6 @@ class Customer::HistoryParserController < ApplicationController
 
   def parsing_params_saver(name)
     @parsing_params_saver ||= ServiceHelper::OptimizationResultSaver.new('parsing_params', name, current_user.id)
-    @parsing_params_saver
   end
 
   def parsing_params_filtr

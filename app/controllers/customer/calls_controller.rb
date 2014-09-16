@@ -113,7 +113,6 @@ class Customer::CallsController < ApplicationController
   
   def call_generation_param_saver(name)
     @call_generation_param_saver ||= ServiceHelper::OptimizationResultSaver.new('call_generation_params', name, current_user.id)
-    @call_generation_param_saver
   end
 
 end

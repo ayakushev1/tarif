@@ -23,12 +23,13 @@ style_table = []
 <br />
 <div><%=session[:tarifs_slices]  if false %></div>
 
+<div><%= progress_bar.text_value %></div>
 <div class="progress">
   <div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="<%=progress_bar.current_value%>" aria-valuemin="<%=progress_bar.min_value%>" 
   	   aria-valuemax="<%=progress_bar.max_value%>" action_name="<%=progress_bar.action_on_update_progress%>" 
   	   id="<%= progress_bar.progress_bar %>" current_progress_value="<%=progress_bar.current_value_percent %>"
   	   style="width: <%=progress_bar.current_value_percent * 100%>%; background-color: rgb(0, 336, 304);">
-    <span class="sr-only-111"><%=progress_bar.current_value%> from <%= progress_bar.max_value %></span>
+    <span class="sr-only-111"><%= "#{progress_bar.current_value} from #{progress_bar.max_value}" %></span>
   </div>
 </div>
 

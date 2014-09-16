@@ -30,7 +30,7 @@ class Customer::TarifOptimizatorController < ApplicationController
       redirect_to(:action => :calculation_status)
     else
       updating_minor_results
-      redirect_to(:action => :show_results)
+      redirect_to(:action => :show_customer_results)
     end
   end
   
@@ -48,7 +48,7 @@ class Customer::TarifOptimizatorController < ApplicationController
   
   def calculation_status
     if !background_process_informer_operators.calculating?      
-      redirect_to(:action => :show_results)
+      redirect_to(:action => :show_customer_results)
     end
   end
   
@@ -82,7 +82,7 @@ class Customer::TarifOptimizatorController < ApplicationController
       @tarif_optimizator = ServiceHelper::TarifOptimizator.new(options)
       @tarif_optimizator.calculate_all_operator_tarifs
       updating_minor_results
-      redirect_to(:action => :show_results)
+      redirect_to(:action => :show_customer_results)
     end
     tarif_optimization_inputs_saver('user_input').save({:result => service_choices.session_filtr_params.merge({'accounting_period' => nil})})
   end 
@@ -97,6 +97,19 @@ class Customer::TarifOptimizatorController < ApplicationController
   
   def services_select
     @services_select ||= Filtrable.new(self, "services_select")
+  end
+  
+  def customer_service_sets
+    @customer_service_sets ||= ArrayOfHashable.new(self, optimization_result_presenter.customer_service_sets_array)
+  end
+  
+  def customer_tarif_results
+    @customer_tarif_results ||= ArrayOfHashable.new(self, optimization_result_presenter.customer_tarif_results_array(session[:current_id]['service_sets_id']))
+  end
+
+  def customer_tarif_detail_results
+    @customer_tarif_detail_results ||= ArrayOfHashable.new(self, optimization_result_presenter.customer_tarif_detail_results_array(
+      session[:current_id]['service_sets_id'], session[:current_id]['service_id']))
   end
   
   def service_sets
@@ -134,7 +147,7 @@ class Customer::TarifOptimizatorController < ApplicationController
   end
   
   def current_tarif_set_calculation_history
-    @current_tarif_set_calculation_history ||= ArrayOfHashable.new(self, optimization_result_presenter.current_tarif_set_calculation_history )   
+    @current_tarif_set_calculation_history ||= ArrayOfHashable.new(self, minor_result_presenter .current_tarif_set_calculation_history )   
   end
   
   def operators_optimization_progress_bar
@@ -165,16 +178,14 @@ class Customer::TarifOptimizatorController < ApplicationController
       :tarif_count => tarifs.size,
       }
     @optimization_result_presenter ||= ServiceHelper::OptimizationResultPresenter.new(operator, options)
-    @optimization_result_presenter
   end
   
   def minor_result_presenter
-    @minor_result_presenter ||= ServiceHelper::OptimizationResultPresenter.new(operator, {:user_id=> (current_user ? current_user.id.to_i : nil)}, nil, 'minor_results')
+    @minor_result_presenter ||= ServiceHelper::AdditionalOptimizationInfoPresenter.new(operator, {:user_id=> (current_user ? current_user.id.to_i : nil)}, nil, 'minor_results')
   end 
   
   def tarif_optimization_inputs_saver(name)
     @tarif_optimization_inputs_saver ||= ServiceHelper::OptimizationResultSaver.new('tarif_optimization_inputs', name, current_user.id)
-    @tarif_optimization_inputs_saver
   end
 
   def operator
