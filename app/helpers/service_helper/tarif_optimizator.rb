@@ -111,6 +111,27 @@ class ServiceHelper::TarifOptimizator
         background_process_informer_tarifs.init(0.0, tarif_list_generator.tarifs[operator].size )
         tarif_list_generator.tarifs[operator].each do |tarif|
           calculate_and_save_final_tarif_sets_by_tarif(operator, tarif, accounting_period)
+          background_process_informer_tarifs.increase_current_value(1)
+        end
+        background_process_informer_tarifs.increase_current_value(0, "finish calculating one operator tarifs")
+        background_process_informer_tarifs.finish
+        background_process_informer_operators.increase_current_value(1)
+      end
+      background_process_informer_operators.increase_current_value(0, "finish calculating operators")
+      background_process_informer_operators.finish
+    end        
+  end
+  
+  def prepare_and_save_final_tarif_sets
+    performance_checker.run_check_point('prepare_and_save_final_tarif_sets', 1) do
+      background_process_informer_operators.init(0.0, tarif_list_generator.operators.size)
+      background_process_informer_operators.increase_current_value(0, "clean_output_results")
+      [prepared_final_tarif_sets_saver].each {|saver| saver.clean_output_results}
+      
+      background_process_informer_operators.increase_current_value(0, "prepare_and_save_final_tarif_sets_by_tarif")
+      tarif_list_generator.operators.each do |operator|
+        background_process_informer_tarifs.init(0.0, tarif_list_generator.tarifs[operator].size )
+        tarif_list_generator.tarifs[operator].each do |tarif|
           prepare_and_save_final_tarif_sets_by_tarif_for_presenatation(operator, tarif, accounting_period)
           background_process_informer_tarifs.increase_current_value(1)
         end
@@ -187,11 +208,11 @@ class ServiceHelper::TarifOptimizator
       save_tarif_results(operator, tarif, accounting_period)    
 
       performance_checker.run_check_point('calculate_and_save_final_tarif_sets_by_tarif', 4) do
-        calculate_and_save_final_tarif_sets_by_tarif(operator, tarif, accounting_period)
+#        calculate_and_save_final_tarif_sets_by_tarif(operator, tarif, accounting_period)
       end
 
       performance_checker.run_check_point('prepare_and_save_final_tarif_sets_by_tarif_for_presenatation', 4) do
-        prepare_and_save_final_tarif_sets_by_tarif_for_presenatation(operator, tarif, accounting_period)
+#        prepare_and_save_final_tarif_sets_by_tarif_for_presenatation(operator, tarif, accounting_period)
       end
       
       background_process_informer_tarif.increase_current_value(0, "finish calculating one tarif")

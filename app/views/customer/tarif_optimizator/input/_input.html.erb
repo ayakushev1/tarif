@@ -5,8 +5,9 @@ content_in :accordion do |user|
     [
      'Choice of services',
      (
-	  link_to('Recalculate', customer_tarif_optimizator_recalculate_path ) + "    ".html_safe +
-      link_to('Update final_taif_sets and calls stat', customer_tarif_optimizator_update_minor_results_path ) + "    ".html_safe +
+	  link_to('Recalculate', customer_tarif_optimizator_recalculate_path ) + "  |  ".html_safe +
+      link_to('Update final_taif_sets and calls stat', customer_tarif_optimizator_update_minor_results_path ) + "  |  ".html_safe +
+      link_to('Prepare final_tarif_sets', customer_tarif_optimizator_prepare_final_tarif_sets_path ) + "    ".html_safe +
 	  render(:partial => 'customer/tarif_optimizator/input/service_choices', :layout => 'application/layouts/filtr_form_2_columns', :locals => {:form_item => controller.service_choices} )
 		
      )          
@@ -14,8 +15,9 @@ content_in :accordion do |user|
     [
      'Optimization params',
      (
-	  link_to('Recalculate', customer_tarif_optimizator_recalculate_path ) + "    ".html_safe +
-      link_to('Update final_taif_sets and calls stat', customer_tarif_optimizator_update_minor_results_path ) + "    ".html_safe +
+	  link_to('Recalculate', customer_tarif_optimizator_recalculate_path ) + "  |  ".html_safe +
+      link_to('Update final_taif_sets and calls stat', customer_tarif_optimizator_update_minor_results_path ) + "  |  ".html_safe +
+      link_to('Prepare final_tarif_sets', customer_tarif_optimizator_prepare_final_tarif_sets_path ) + "    ".html_safe +
 	  render(:partial => 'customer/tarif_optimizator/input/optimization_params', :layout => 'application/layouts/filtr_form_2_columns', :locals => {:form_item => controller.optimization_params} )
 		
      )          

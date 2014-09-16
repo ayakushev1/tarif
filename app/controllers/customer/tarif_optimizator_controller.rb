@@ -5,8 +5,39 @@ class Customer::TarifOptimizatorController < ApplicationController
   crudable_actions :index
   before_action :check_if_optimization_options_are_in_session, only: [:index]
   before_action :validate_tarifs, only: [:index, :recalculate]
-  before_action :init_background_process_informer, only: [:tarif_optimization_progress_bar, :calculation_status, :recalculate, :update_minor_results, :index]
+  before_action :init_background_process_informer, only: [:tarif_optimization_progress_bar, :calculation_status, :recalculate, :update_minor_results, :index, :prepare_final_tarif_sets]
   attr_reader :operator, :background_process_informer_operators, :background_process_informer_tarifs, :background_process_informer_tarif
+
+  def prepare_final_tarif_sets
+    if optimization_params.session_filtr_params['calculate_on_background'] == 'true'
+      [background_process_informer_operators, background_process_informer_tarifs, background_process_informer_tarif].each do |background_process_informer|
+        background_process_informer.clear_completed_process_info_model
+        background_process_informer.init
+      end
+      
+      Spawnling.new(:argv => "preparing_final_tarif_sets for #{current_user.id}") do
+        begin
+          preparing_final_tarif_sets
+        rescue => e
+          ServiceHelper::OptimizationResultSaver.new('optimization_results', 'Error on preparing_final_tarif_sets', current_user.id).({:result => {:error => e}})
+          raise(e)
+        ensure
+          [@background_process_informer_operators, @background_process_informer_tarifs, @background_process_informer_tarif].each do |background_process_informer|
+            background_process_informer.finish
+          end          
+        end            
+      end     
+      redirect_to(:action => :calculation_status)
+    else
+      preparing_final_tarif_sets
+      redirect_to(:action => :show_customer_results)
+    end
+  end
+  
+  def preparing_final_tarif_sets
+    @tarif_optimizator = ServiceHelper::TarifOptimizator.new(options)
+    @tarif_optimizator.prepare_and_save_final_tarif_sets
+  end
 
   def update_minor_results
     if optimization_params.session_filtr_params['calculate_on_background'] == 'true'
@@ -30,7 +61,7 @@ class Customer::TarifOptimizatorController < ApplicationController
       redirect_to(:action => :calculation_status)
     else
       updating_minor_results
-      redirect_to(:action => :show_customer_results)
+      redirect_to(:action => :index)
     end
   end
   
@@ -48,7 +79,7 @@ class Customer::TarifOptimizatorController < ApplicationController
   
   def calculation_status
     if !background_process_informer_operators.calculating?      
-      redirect_to(:action => :show_customer_results)
+      redirect_to(:action => :index)
     end
   end
   
@@ -82,7 +113,7 @@ class Customer::TarifOptimizatorController < ApplicationController
       @tarif_optimizator = ServiceHelper::TarifOptimizator.new(options)
       @tarif_optimizator.calculate_all_operator_tarifs
       updating_minor_results
-      redirect_to(:action => :show_customer_results)
+      redirect_to(:action => :index)
     end
     tarif_optimization_inputs_saver('user_input').save({:result => service_choices.session_filtr_params.merge({'accounting_period' => nil})})
   end 
