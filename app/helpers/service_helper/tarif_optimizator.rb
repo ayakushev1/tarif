@@ -281,7 +281,7 @@ class ServiceHelper::TarifOptimizator
       end
       final_tarif_sets_info_to_save = {:operator_id => operator.to_i, :tarif_id => tarif.to_i, :accounting_period => accounting_period, :result => {
         :final_tarif_sets => final_tarif_set_generator.final_tarif_sets,
-        :tarif_sets_to_calculate_from_final_tarif_sets => final_tarif_set_generator.tarif_sets_to_calculate_from_final_tarif_sets,
+#        :tarif_sets_to_calculate_from_final_tarif_sets => final_tarif_set_generator.tarif_sets_to_calculate_from_final_tarif_sets,
         :updated_tarif_results => final_tarif_set_generator.updated_tarif_results,
         :groupped_identical_services => final_tarif_set_generator.groupped_identical_services,
         :current_tarif_set_calculation_history => final_tarif_set_generator.current_tarif_set_calculation_history,
