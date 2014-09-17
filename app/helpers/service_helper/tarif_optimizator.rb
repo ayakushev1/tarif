@@ -208,11 +208,11 @@ class ServiceHelper::TarifOptimizator
       save_tarif_results(operator, tarif, accounting_period)    
 
       performance_checker.run_check_point('calculate_and_save_final_tarif_sets_by_tarif', 4) do
-#        calculate_and_save_final_tarif_sets_by_tarif(operator, tarif, accounting_period)
+        calculate_and_save_final_tarif_sets_by_tarif(operator, tarif, accounting_period)
       end
 
       performance_checker.run_check_point('prepare_and_save_final_tarif_sets_by_tarif_for_presenatation', 4) do
-#        prepare_and_save_final_tarif_sets_by_tarif_for_presenatation(operator, tarif, accounting_period)
+        prepare_and_save_final_tarif_sets_by_tarif_for_presenatation(operator, tarif, accounting_period)
       end
       
       background_process_informer_tarif.increase_current_value(0, "finish calculating one tarif")
