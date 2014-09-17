@@ -24,8 +24,10 @@ class Customer::TarifOptimizatorController < ApplicationController
         ensure
           [@background_process_informer_operators, @background_process_informer_tarifs, @background_process_informer_tarif].each do |background_process_informer|
             background_process_informer.finish
+            background_process_informer = nil
           end          
         end            
+        @tarif_optimizator = nil
       end     
       redirect_to(:action => :calculation_status)
     else
@@ -55,7 +57,9 @@ class Customer::TarifOptimizatorController < ApplicationController
         ensure
           [@background_process_informer_operators, @background_process_informer_tarifs, @background_process_informer_tarif].each do |background_process_informer|
             background_process_informer.finish
+            background_process_informer = nil
           end          
+          @tarif_optimizator = nil
         end            
       end     
       redirect_to(:action => :calculation_status)
@@ -105,7 +109,9 @@ class Customer::TarifOptimizatorController < ApplicationController
         ensure
           [@background_process_informer_operators, @background_process_informer_tarifs, @background_process_informer_tarif].each do |background_process_informer|
             background_process_informer.finish
+            background_process_informer = nil
           end          
+          @tarif_optimizator = nil
         end            
       end     
       redirect_to(:action => :calculation_status)
