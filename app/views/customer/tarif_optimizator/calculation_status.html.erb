@@ -1,3 +1,7 @@
+<div><%= GC.stat %></div>
+<br />
+<div><%= (GC.stat[:heap_length] * (2 << 13)).to_f / (2 << 19) %></div>
+<br />
 <div>operators calculation progress</div>
 <%= render :partial => 'tarif_optimization_progress_bar', :layout => 'application/layouts/progress_bar', :locals => {:progress_bar => controller.operators_optimization_progress_bar} %>
 
