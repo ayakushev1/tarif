@@ -1,5 +1,5 @@
 source 'http://rubygems.org'
-ruby "2.1.1"
+ruby "2.1.2"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 #TODO обновить до 4.1.0
@@ -58,11 +58,11 @@ gem 'bcrypt-ruby' , '~> 3.1.2'
 
 # To use debugger
 group :development do
-  gem 'debugger'
+#  gem 'debugger'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'annotate'
-  gem 'localtunnel'
+#  gem 'localtunnel'
   gem 'spring'
 end
 
