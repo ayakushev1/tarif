@@ -35,8 +35,13 @@ class ServiceHelper::FinalTarifSetPreparator
         prepared_final_tarif_sets[service_set_id]['stat_results'] ||= {}; stat_detail_keys_to_exclude = ['month', 'call_ids']
         tarif_result_for_service_set_and_part['price_values'].each do |price_value_detail|
           (price_value_detail['all_stat'].keys - stat_detail_keys_to_exclude).each do |stat_key|
-            prepared_final_tarif_sets[service_set_id]['stat_results'][stat_key] ||= 0
-            prepared_final_tarif_sets[service_set_id]['stat_results'][stat_key] += (price_value_detail['all_stat'][stat_key] || 0).round(2)
+            if price_value_detail['all_stat'][stat_key].is_a?(Array)
+              prepared_final_tarif_sets[service_set_id]['stat_results'][stat_key] ||= []
+              prepared_final_tarif_sets[service_set_id]['stat_results'][stat_key] += (price_value_detail['all_stat'][stat_key] || 0).round(2)
+            else
+              prepared_final_tarif_sets[service_set_id]['stat_results'][stat_key] ||= 0
+              prepared_final_tarif_sets[service_set_id]['stat_results'][stat_key] += (price_value_detail['all_stat'][stat_key] || 0).round(2)
+            end
           end if price_value_detail['all_stat']
         end
         

@@ -72,7 +72,7 @@ class ServiceHelper::OptimizationResultPresenter
       if prepared_tarif_result['call_id_count'].to_i > level_to_show_tarif_result_by_parts or prepared_tarif_result['price_value'].to_f > level_to_show_tarif_result_by_parts
         result << {'service_id' => service_id}.merge(prepared_tarif_result)
       end
-    end if prepared_final_tarif_sets and prepared_final_tarif_sets[service_set_id]['tarif_results']
+    end if prepared_final_tarif_sets and prepared_final_tarif_sets[service_set_id] and prepared_final_tarif_sets[service_set_id]['tarif_results']
     result
 #    result.sort_by!{|item| item['service_set_price']}    
   end
@@ -83,7 +83,8 @@ class ServiceHelper::OptimizationResultPresenter
       if prepared_tarif_detail_result['call_id_count'].to_i > level_to_show_tarif_result_by_parts or prepared_tarif_detail_result['price_value'].to_f > level_to_show_tarif_result_by_parts
         result << {'service_category_name' => service_category_name}.merge(prepared_tarif_detail_result)
       end
-    end if prepared_final_tarif_sets and prepared_final_tarif_sets[service_set_id]['tarif_detail_results'] and prepared_final_tarif_sets[service_set_id]['tarif_detail_results'][service_id]
+    end if prepared_final_tarif_sets and prepared_final_tarif_sets[service_set_id] and  
+             prepared_final_tarif_sets[service_set_id]['tarif_detail_results'] and prepared_final_tarif_sets[service_set_id]['tarif_detail_results'][service_id]
     result
 #    result.sort_by!{|item| item['service_set_price']}    
   end

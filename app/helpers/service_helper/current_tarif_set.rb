@@ -33,7 +33,6 @@ class ServiceHelper::CurrentTarifSet
   end
   
   def init_calculation_params
-    @save_current_tarif_set_calculation_history = true
   end
   
   def calculate_new_cons_tarif_results_by_parts
@@ -157,11 +156,13 @@ class ServiceHelper::CurrentTarifSet
     if current_part_index == max_part_index - 1
       @current_set_price = calculate_current_price_for_chosen_parts(current_part_index)# + calculate_periodic_part_price(current_part_index)
       @current_price = current_set_price if @current_price > current_set_price 
+    else
+      @current_set_price = nil
     end
     calculate_best_possible_price(current_part_index) if current_part_index > -1
     update_history if save_current_tarif_set_calculation_history
 #    raise(StandardError) if current_price < 1209.0 
-    @new_price
+#    @new_price
   end
   
   def update_history
