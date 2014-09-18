@@ -48,6 +48,7 @@ class ServiceHelper::AdditionalOptimizationInfoPresenter
   end
 
   def current_tarif_set_calculation_history
+    return [{}]
 #    return @current_tarif_set_calculation_history if @current_tarif_set_calculation_history
 #    @current_tarif_set_calculation_history = 
     get_optimization_results('final_tarif_sets', 'current_tarif_set_calculation_history')
@@ -60,6 +61,7 @@ class ServiceHelper::AdditionalOptimizationInfoPresenter
   end
   
   def calls_stat_array(group_by)
+    return [{}]    
 #    group_by = ['rouming', 'service', nil, nil]
     if group_by.blank?
       (calls_stat || []).collect{|row| row if row['count'] > 0}.compact.sort_by{|row| row['order']} || []
