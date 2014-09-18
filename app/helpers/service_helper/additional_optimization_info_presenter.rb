@@ -92,6 +92,7 @@ class ServiceHelper::AdditionalOptimizationInfoPresenter
   end
   
   def service_packs_by_parts_array
+    return [{}]
     result = []
     service_packs_by_parts.each do |tarif, services_by_tarif|
       temp_result = {:tarif => tarif}
