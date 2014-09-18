@@ -27,19 +27,17 @@ class Customer::TarifOptimizatorController < ApplicationController
             background_process_informer = nil
           end          
         end            
-        @tarif_optimizator = nil
       end     
       redirect_to(:action => :calculation_status)
     else
       preparing_final_tarif_sets
-      @tarif_optimizator = nil
       redirect_to(:action => :show_customer_results)
     end
   end
   
   def preparing_final_tarif_sets
-    @tarif_optimizator = ServiceHelper::TarifOptimizator.new(options)
-    @tarif_optimizator.prepare_and_save_final_tarif_sets
+    tarif_optimizator = ServiceHelper::TarifOptimizator.new(options)
+    tarif_optimizator.prepare_and_save_final_tarif_sets
   end
 
   def update_minor_results
@@ -60,22 +58,20 @@ class Customer::TarifOptimizatorController < ApplicationController
             background_process_informer.finish
             background_process_informer = nil
           end          
-          @tarif_optimizator = nil
         end            
       end     
       redirect_to(:action => :calculation_status)
     else
       updating_minor_results
-      @tarif_optimizator = nil
       redirect_to(:action => :index)
     end
   end
   
   def updating_minor_results
-    @tarif_optimizator = ServiceHelper::TarifOptimizator.new(options)
-    @tarif_optimizator.init_input_for_one_operator_calculation(operator)
-    @tarif_optimizator.update_minor_results
-    @tarif_optimizator.calculate_and_save_final_tarif_sets
+    tarif_optimizator = ServiceHelper::TarifOptimizator.new(options)
+    tarif_optimizator.init_input_for_one_operator_calculation(operator)
+    tarif_optimizator.update_minor_results
+    tarif_optimizator.calculate_and_save_final_tarif_sets
   end
   
   def select_services
@@ -103,8 +99,8 @@ class Customer::TarifOptimizatorController < ApplicationController
       
       Spawnling.new(:argv => 'tarif_optimization') do
         begin
-          @tarif_optimizator = ServiceHelper::TarifOptimizator.new(options)
-          @tarif_optimizator.calculate_all_operator_tarifs
+          tarif_optimizator = ServiceHelper::TarifOptimizator.new(options)
+          tarif_optimizator.calculate_all_operator_tarifs
         rescue => e
           ServiceHelper::OptimizationResultSaver.new('optimization_results', 'Error on optimization', current_user.id).override({:result => {:error => e}})
           raise(e)
@@ -113,14 +109,13 @@ class Customer::TarifOptimizatorController < ApplicationController
             background_process_informer.finish
             background_process_informer = nil
           end          
-          @tarif_optimizator = nil
         end            
       end     
       redirect_to(:action => :calculation_status)
     else
-      @tarif_optimizator = ServiceHelper::TarifOptimizator.new(options)
-      @tarif_optimizator.calculate_all_operator_tarifs
-      @tarif_optimizator = nil
+      tarif_optimizator = ServiceHelper::TarifOptimizator.new(options)
+      tarif_optimizator.calculate_all_operator_tarifs
+      tarif_optimizator = nil
 #      updating_minor_results
       redirect_to(:action => :index)
     end
