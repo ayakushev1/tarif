@@ -1,5 +1,5 @@
 class ServiceHelper::CurrentTarifSet  
-  attr_reader :tarif_sets_to_calculate_from_by_tarif, :cons_tarif_results_by_parts, :new_cons_tarif_results_by_parts, :tarif, :final_tarif_set_generator, :updated_tarif_results
+  attr_reader :tarif_sets_by_tarif, :cons_tarif_results_by_parts, :new_cons_tarif_results_by_parts, :tarif, :services_that_depended_on, :tarif_results
   attr_reader :parts, :tarif_sets_names_as_array, :tarif_sets_services_as_array, :tarif_sets_prices, :tarif_sets_counts
   attr_reader :max_part_index, :max_tarif_set_by_part_index, :tarif_price, :min_periodic_price, :services_that_depended_on_service_ids, :services_that_depended_on
   attr_reader :current_price, :best_possible_price
@@ -21,11 +21,11 @@ class ServiceHelper::CurrentTarifSet
   end
   
   def init_input_data(options)
-    @tarif_sets_to_calculate_from_by_tarif = options[:tarif_sets_to_calculate_from_by_tarif]
+    @tarif_sets_by_tarif = options[:tarif_sets_by_tarif]
     @cons_tarif_results_by_parts = options[:cons_tarif_results_by_parts]
     @tarif = options[:tarif]
-    @final_tarif_set_generator = options[:final_tarif_set_generator]
-    @updated_tarif_results = options[:updated_tarif_results]
+    @services_that_depended_on = options[:services_that_depended_on]
+    @tarif_results = options[:tarif_results]
     @use_price_comparison_in_current_tarif_set_calculation = options[:use_price_comparison_in_current_tarif_set_calculation] == 'true' ? true : false
     @save_current_tarif_set_calculation_history = options[:save_current_tarif_set_calculation_history] == 'true' ? true : false
     @part_sort_criteria_in_price_optimization = options[:part_sort_criteria_in_price_optimization].to_sym
@@ -35,15 +35,15 @@ class ServiceHelper::CurrentTarifSet
   end
   
   def calculate_new_cons_tarif_results_by_parts
-#    raise(StandardError, [updated_tarif_results])
+#    raise(StandardError, [tarif_results])
     @new_cons_tarif_results_by_parts = {}
-    updated_tarif_results.each do |tarif_set_id, updated_tarif_result|
+    tarif_results.each do |tarif_set_id, tarif_result|
       new_cons_tarif_results_by_parts[tarif_set_id] ||= {}
-      updated_tarif_result.each do |part, updated_tarif_result_by_part|
+      tarif_result.each do |part, tarif_result_by_part|
         new_cons_tarif_results_by_parts[tarif_set_id][part] ||= {'price_value' => 0.0, 'call_id_count' => 0}
-        updated_tarif_result_by_part.each do |service_id, updated_tarif_result_by_part_by_service|
-          new_cons_tarif_results_by_parts[tarif_set_id][part]['price_value'] += updated_tarif_result_by_part_by_service['price_value'].to_f
-          new_cons_tarif_results_by_parts[tarif_set_id][part]['call_id_count'] += updated_tarif_result_by_part_by_service['call_id_count'].to_i
+        tarif_result_by_part.each do |service_id, tarif_result_by_part_by_service|
+          new_cons_tarif_results_by_parts[tarif_set_id][part]['price_value'] += tarif_result_by_part_by_service['price_value'].to_f
+          new_cons_tarif_results_by_parts[tarif_set_id][part]['call_id_count'] += tarif_result_by_part_by_service['call_id_count'].to_i
         end
       end
     end
@@ -52,7 +52,7 @@ class ServiceHelper::CurrentTarifSet
   
   def init_tarif_sets_as_array
     @tarif_price = new_cons_tarif_results_by_parts[tarif]['periodic']['price_value'].to_f
-    @parts = tarif_sets_to_calculate_from_by_tarif.keys.sort_by do |part| 
+    @parts = tarif_sets_by_tarif.keys.sort_by do |part| 
       min_value = new_cons_tarif_results_by_parts.collect do |tarif_sets_name, new_cons_tarif_results_by_part| 
         new_cons_tarif_results_by_part[part]['price_value'].to_f if new_cons_tarif_results_by_part[part]
       end.compact.min
@@ -67,7 +67,7 @@ class ServiceHelper::CurrentTarifSet
     @tarif_sets_counts = []
     parts.each_index do |part_index|
       part = parts[part_index]
-      tarif_sets_by_part = tarif_sets_to_calculate_from_by_tarif[part]
+      tarif_sets_by_part = tarif_sets_by_tarif[part]
       tarif_sets_names_as_array << tarif_sets_by_part.keys
       tarif_sets_services_as_array << tarif_sets_by_part.map{|ts| ts[1]}
       tarif_sets_prices_by_part = []
@@ -104,8 +104,8 @@ class ServiceHelper::CurrentTarifSet
   end
   
   def calculate_additional_values
-    @services_that_depended_on_service_ids = final_tarif_set_generator.services_that_depended_on.keys.map(&:to_i)
-    @services_that_depended_on = final_tarif_set_generator.services_that_depended_on
+    @services_that_depended_on_service_ids = services_that_depended_on.keys.map(&:to_i)
+    @services_that_depended_on = services_that_depended_on
 
     @max_part_index = parts.size
     @max_tarif_set_by_part_index = tarif_sets_names_as_array.map{|ts| ts.size}
@@ -120,7 +120,7 @@ class ServiceHelper::CurrentTarifSet
   def set_initial_current_values
     @current_part_index = 0
     @current_part = parts[current_part_index] if parts
-    @current_tarif_set_by_part_index = [0] if current_part and tarif_sets_to_calculate_from_by_tarif[current_part]
+    @current_tarif_set_by_part_index = [0] if current_part and tarif_sets_by_tarif[current_part]
   end
   
   def current_services

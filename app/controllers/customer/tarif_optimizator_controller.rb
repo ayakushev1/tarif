@@ -118,7 +118,7 @@ class Customer::TarifOptimizatorController < ApplicationController
     else
       @tarif_optimizator = ServiceHelper::TarifOptimizator.new(options)
       @tarif_optimizator.calculate_all_operator_tarifs
-      updating_minor_results
+#      updating_minor_results
       redirect_to(:action => :index)
     end
     tarif_optimization_inputs_saver('user_input').save({:result => service_choices.session_filtr_params.merge({'accounting_period' => nil})})
