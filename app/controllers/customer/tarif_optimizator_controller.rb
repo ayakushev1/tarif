@@ -32,6 +32,7 @@ class Customer::TarifOptimizatorController < ApplicationController
       redirect_to(:action => :calculation_status)
     else
       preparing_final_tarif_sets
+      @tarif_optimizator = nil
       redirect_to(:action => :show_customer_results)
     end
   end
@@ -65,6 +66,7 @@ class Customer::TarifOptimizatorController < ApplicationController
       redirect_to(:action => :calculation_status)
     else
       updating_minor_results
+      @tarif_optimizator = nil
       redirect_to(:action => :index)
     end
   end
@@ -118,6 +120,7 @@ class Customer::TarifOptimizatorController < ApplicationController
     else
       @tarif_optimizator = ServiceHelper::TarifOptimizator.new(options)
       @tarif_optimizator.calculate_all_operator_tarifs
+      @tarif_optimizator = nil
 #      updating_minor_results
       redirect_to(:action => :index)
     end
