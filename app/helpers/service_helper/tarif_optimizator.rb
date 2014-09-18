@@ -239,7 +239,7 @@ class ServiceHelper::TarifOptimizator
   def save_tarif_results(operator, tarif = nil, accounting_period = '1_2014', result_to_save = {})
     output = {}
     performance_checker.run_check_point('save_tarif_results', 4) do
-      background_process_informer_tarif.increase_current_value(0, "save_tarif_results")
+      background_process_informer_tarif.increase_current_value(0, "override_tarif_results")
       optimization_result_saver.override({:operator_id => operator.to_i, :tarif_id => tarif.to_i, :accounting_period => accounting_period, :result => {
         :tarif_sets => result_to_save[:tarif_sets],
         :cons_tarif_results => current_tarif_optimization_results.cons_tarif_results,

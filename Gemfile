@@ -80,6 +80,7 @@ end
 
 group :production do
   gem 'rails_12factor'
+  gem 'rack-timeout'
 end
 
 #gem 'spawnling', '~>2.1' #background processing
