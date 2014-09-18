@@ -1,5 +1,5 @@
 class ServiceHelper::OptimizationResultPresenter
-  attr_reader :name, :output_model, :results, :operator, :user_id, :tarif_count
+  attr_reader :name, :output_model, :operator, :user_id, :tarif_count
   attr_reader :service_set_based_on_tarif_sets_or_tarif_results, :level_to_show_tarif_result_by_parts, :use_price_comparison_in_current_tarif_set_calculation,
               :max_tarif_set_count_per_tarif
   
@@ -8,8 +8,7 @@ class ServiceHelper::OptimizationResultPresenter
     @name = name || 'default_output_results_name'
     @user_id = options[:user_id] || 0
     @tarif_count = options[:tarif_count].to_i
-    @output_model = Customer::Stat.where(:result_type => 'optimization_results').where(:result_name => @name, :user_id => @user_id)
-    init_results(input)
+    @output_model = Customer::Stat.where(:result_type => 'optimization_results').where(:result_name => @name, :user_id => @user_id)    
     init_output_choices(options)
   end
   
@@ -30,6 +29,11 @@ class ServiceHelper::OptimizationResultPresenter
         end
       end
     end
+  end
+  
+  def results
+    init_results(input) if !@results
+    @results
   end
   
   def get_optimization_results(name1, name2)
