@@ -1,6 +1,22 @@
+<%
+begin
+	f = File.open("/proc/#{Process.pid}/smaps")
+	f.gets
+	line = f.gets
+	line =~ /(\d+) kB/ 
+	f.close
+	message =$1.to_i  
+	
+rescue => e
+	message = e
+end
+
+%>
 <div><%= GC.stat %></div>
 <br />
-<div><%= (GC.stat[:heap_length] * (2 << 13)).to_f / (2 << 19) %></div>
+<div><%=  message %></div>
+<br />
+<div><%=  line %></div>
 <br />
 
 <%= render :partial => 'customer/tarif_optimizator/input/input', :layout => 'application/layouts/accordion', :locals => {:name => 'customer_tarif_optimization_accord', :active => session[:current_accordion_page]['customer_tarif_optimization_accord'].to_i} %>
