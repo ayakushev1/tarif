@@ -16,7 +16,7 @@ class ServiceHelper::OptimizationResultSaver
     model_to_save = output_model.where(where_hash)
     result = if model_to_save.exists?
       merged_output = results ? {:result => results.merge(output[:result])} : output
-      model_to_save.update_all(merged_output)    
+      model_to_save.first.update_attributes(merged_output)    
     else
       model_to_save.create    
       model_to_save.update_all(output)    

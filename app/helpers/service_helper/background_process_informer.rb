@@ -3,13 +3,11 @@ class ServiceHelper::BackgroundProcessInformer
   def initialize(name, user_id)
     @name = name || 'default_background_process_name'
     @user_id = user_id
-    @process_info_model = Customer::BackgroundStat.where(:result_type => 'background_processes', :user_id => user_id).
-      where(:result_name => @name)#.where("(result_key->>'calculating')::boolean = true")
+    @process_info_model = Customer::BackgroundStat.where(:result_type => 'background_processes', :result_name => name, :user_id => user_id)
   end
   
   def clear_completed_process_info_model
-    Customer::BackgroundStat.where(:result_type => 'background_processes', :user_id => user_id).
-      where(:result_name => name).where("(result_key->>'calculating')::boolean = false").delete_all
+    process_info_model.where("(result_key->>'calculating')::boolean = false").delete_all
   end      
   
   def current_values
@@ -27,26 +25,39 @@ class ServiceHelper::BackgroundProcessInformer
   
   def init(min_value = 0.0, max_value = 100.0, text_value = nil)
     if process_info_model.exists?
-      process_info_model.update_all({:result_key => {:calculating => true}, :result => {
-        :name => name, :max_value => max_value, :min_value => min_value, :current_value => min_value, :text_value => text_value}})
+      process_info_model.first.update_attributes({:result_key => {:calculating => true}, :result => {
+        :name => name, 
+        :max_value => max_value, 
+        :min_value => min_value, 
+        :current_value => min_value, 
+        :text_value => text_value
+        }})
     else
       process_info_model.create({:result_type => 'background_processes', :result_name => name, :user_id => user_id, :result_key => {:calculating => true}, :result => {
-        :name => name, :max_value => max_value, :min_value => min_value, :current_value => min_value, :text_value => text_value}})
+        :name => name, 
+        :max_value => max_value, 
+        :min_value => min_value, 
+        :current_value => min_value, 
+        :text_value => text_value
+      }})
     end       
   end
   
   def increase_current_value(increment_value = 0, text_value = nil)
     back_processing_stat = process_info_model.first['result']
-    bat_processing_current_value = increment_value + back_processing_stat['current_value']
-    back_processing_update = {:name => name, :max_value => back_processing_stat['max_value'], :min_value => 0.0, 
-      :current_value => bat_processing_current_value, :text_value => text_value}
-    
-    process_info_model.update_all({:result_key => {:calculating => true}, :result => back_processing_update})  
+
+    process_info_model.first.update_attributes({:result_key => {:calculating => true}, :result => {
+      :name => name, 
+      :max_value => back_processing_stat['max_value'], 
+      :min_value => 0.0, 
+      :current_value => increment_value + back_processing_stat['current_value'], 
+      :text_value => text_value,
+      }})  
   end
   
   def finish
     back_processing_stat = process_info_model.first['result']
-    process_info_model.update_all({:result_key => {:calculating => false}, :result => {
+    process_info_model.first.update_attributes({:result_key => {:calculating => false}, :result => {
       :name => name, 
       :max_value => back_processing_stat['max_value'],
       :min_value => back_processing_stat['min_value'],
