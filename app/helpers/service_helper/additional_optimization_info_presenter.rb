@@ -1,5 +1,5 @@
 class ServiceHelper::AdditionalOptimizationInfoPresenter
-  attr_reader :name, :output_model, :results, :operator, :user_id, :tarif_count
+  attr_reader :name, :output_model, :operator, :user_id, :tarif_count
   attr_reader :service_set_based_on_tarif_sets_or_tarif_results, :level_to_show_tarif_result_by_parts, :use_price_comparison_in_current_tarif_set_calculation,
               :max_tarif_set_count_per_tarif
   
@@ -9,7 +9,6 @@ class ServiceHelper::AdditionalOptimizationInfoPresenter
     @user_id = options[:user_id] || 0
     @tarif_count = options[:tarif_count].to_i
     @output_model = Customer::Stat.where(:result_type => 'optimization_results').where(:result_name => @name, :user_id => @user_id)
-    init_results(input)
   end
   
   def init_results(input = nil)
@@ -30,14 +29,16 @@ class ServiceHelper::AdditionalOptimizationInfoPresenter
       end
     end
   end
-  
+
+  def results
+    init_results(input) if !@results
+    @results
+  end
+    
   def get_optimization_results(name1, name2)
-    @model ||= {}
-    @model[name1] ||= {}    
-    local_results ||= {}
-    @model[name1][name2] ||= Customer::Stat.where(:result_type => 'optimization_results').where(:result_name => name1, :user_id => user_id).select("result as #{name1}")
-#    raise(StandardError, model.to_sql)
-    @model[name1][name2].each do |result_item|
+    local_results = {}
+    data = Customer::Stat.where(:result_type => 'optimization_results').where(:result_name => name1, :user_id => user_id).select("result as #{name1}")
+    data.each do |result_item|
       result_item.attributes[name1].each do |result_type, result_value|
         if result_value.is_a?(Hash)
           local_results[result_type] ||= {}
@@ -46,18 +47,20 @@ class ServiceHelper::AdditionalOptimizationInfoPresenter
           local_results[result_type] = result_value
         end
       end
-    end
+    end if data
     local_results[name2] if local_results
   end
 
   def current_tarif_set_calculation_history
-    return @current_tarif_set_calculation_history if @current_tarif_set_calculation_history
-    @current_tarif_set_calculation_history = get_optimization_results('final_tarif_sets', 'current_tarif_set_calculation_history')
+#    return @current_tarif_set_calculation_history if @current_tarif_set_calculation_history
+#    @current_tarif_set_calculation_history = 
+    get_optimization_results('final_tarif_sets', 'current_tarif_set_calculation_history')
 #    raise(StandardError)
   end
 
   def performance_results
-    results ? results['performance_results'] || [{}] : [{}]
+#    results ? results['performance_results'] || [{}] : [{}]
+    get_optimization_results(name, 'performance_results') || [{}]
   end
   
   def calls_stat_array(group_by)
@@ -105,23 +108,26 @@ class ServiceHelper::AdditionalOptimizationInfoPresenter
   end
   
   def calls_stat
-    results['calls_stat'] if results
+#    results['calls_stat'] if results
+    get_optimization_results(name, 'calls_stat')
   end
   
   def service_packs_by_parts
-    results['service_packs_by_parts'] if results
+#    results['service_packs_by_parts'] if results
+    get_optimization_results(name, 'service_packs_by_parts')
   end
   
   def used_memory_by_output
-    if results and results['used_memory_by_output']
+    used_memory_by_output = get_optimization_results(name, 'used_memory_by_output')
+    if used_memory_by_output
       total = {'objects' => 0, 'bytes' => 0, 'loops' => 0}
-      results['used_memory_by_output'].each do |name, value|
+      used_memory_by_output.each do |name, value|
         total['objects'] += value['objects'] || 0
         total['bytes'] += value['bytes'] || 0
         total['loops'] += value['loops'] || 0
       end      
       output = []
-      {'total' => total}.merge(results['used_memory_by_output']).each do |name, value|
+      {'total' => total}.merge(used_memory_by_output).each do |name, value|
         output << {'name' => name}.merge(value)
       end
       output
