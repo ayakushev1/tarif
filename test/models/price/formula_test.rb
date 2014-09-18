@@ -1,3 +1,22 @@
+# == Schema Information
+#
+# Table name: price_formulas
+#
+#  id                  :integer          not null, primary key
+#  name                :string(255)
+#  price_list_id       :integer
+#  calculation_order   :integer
+#  standard_formula_id :integer
+#  formula             :json
+#  price               :decimal(, )
+#  price_unit_id       :integer
+#  volume_id           :integer
+#  volume_unit_id      :integer
+#  description         :text
+#  created_at          :datetime
+#  updated_at          :datetime
+#
+
 require 'test_helper'
 
 describe 'Price::Formula' do

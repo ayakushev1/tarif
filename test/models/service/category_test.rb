@@ -1,3 +1,15 @@
+# == Schema Information
+#
+# Table name: service_categories
+#
+#  id        :integer          not null, primary key
+#  name      :string(255)
+#  type_id   :integer
+#  parent_id :integer
+#  level     :integer
+#  path      :integer          default([]), is an Array
+#
+
 require 'test_helper'
 
 describe 'Service::Category' do

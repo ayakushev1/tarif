@@ -9,6 +9,7 @@
 #  criteria       :json
 #  created_at     :datetime
 #  updated_at     :datetime
+#  conditions     :json
 #
 
 class Service::CategoryGroup < ActiveRecord::Base

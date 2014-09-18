@@ -1,3 +1,28 @@
+# == Schema Information
+#
+# Table name: service_category_tarif_classes
+#
+#  id                                 :integer          not null, primary key
+#  tarif_class_id                     :integer
+#  service_category_rouming_id        :integer
+#  service_category_geo_id            :integer
+#  service_category_partner_type_id   :integer
+#  service_category_calls_id          :integer
+#  service_category_one_time_id       :integer
+#  service_category_periodic_id       :integer
+#  as_standard_category_group_id      :integer
+#  as_tarif_class_service_category_id :integer
+#  tarif_class_service_categories     :integer          default([]), is an Array
+#  standard_category_groups           :integer          default([]), is an Array
+#  is_active                          :boolean
+#  created_at                         :datetime
+#  updated_at                         :datetime
+#  name                               :text
+#  conditions                         :json
+#  tarif_option_id                    :integer
+#  tarif_option_order                 :integer
+#
+
 require 'test_helper'
 
 describe 'Service::CategoryTarifClass' do

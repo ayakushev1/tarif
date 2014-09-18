@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140801040614) do
+ActiveRecord::Schema.define(version: 20140917234120) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -39,6 +39,18 @@ ActiveRecord::Schema.define(version: 20140801040614) do
   create_table "category_types", force: true do |t|
     t.string "name"
   end
+
+  create_table "customer_background_stats", force: true do |t|
+    t.integer  "user_id"
+    t.json     "result"
+    t.string   "result_type"
+    t.string   "result_name"
+    t.json     "result_key"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "customer_background_stats", ["user_id"], name: "index_customer_background_stats_on_user_id", using: :btree
 
   create_table "customer_calls", force: true do |t|
     t.integer "base_service_id"

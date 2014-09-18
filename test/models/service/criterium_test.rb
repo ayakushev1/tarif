@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: service_criteria
+#
+#  id                     :integer          not null, primary key
+#  service_category_id    :integer
+#  criteria_param_id      :integer
+#  comparison_operator_id :integer
+#  value_param_id         :integer
+#  value_choose_option_id :integer
+#  value                  :json
+#  eval_string            :text
+#
+
 require 'test_helper'
 
 describe 'Service::Criterium' do

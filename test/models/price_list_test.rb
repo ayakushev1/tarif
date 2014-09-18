@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: price_lists
+#
+#  id                              :integer          not null, primary key
+#  name                            :string(255)
+#  tarif_class_id                  :integer
+#  tarif_list_id                   :integer
+#  service_category_group_id       :integer
+#  service_category_tarif_class_id :integer
+#  is_active                       :boolean
+#  features                        :json
+#  description                     :text
+#  created_at                      :datetime
+#  updated_at                      :datetime
+#
+
 require 'test_helper'
 
 describe 'PriceList' do

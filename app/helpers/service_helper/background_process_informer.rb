@@ -3,12 +3,12 @@ class ServiceHelper::BackgroundProcessInformer
   def initialize(name, user_id)
     @name = name || 'default_background_process_name'
     @user_id = user_id
-    @process_info_model = Customer::Stat.where(:result_type => 'background_processes', :user_id => user_id).
+    @process_info_model = Customer::BackgroundStat.where(:result_type => 'background_processes', :user_id => user_id).
       where(:result_name => @name)#.where("(result_key->>'calculating')::boolean = true")
   end
   
   def clear_completed_process_info_model
-    Customer::Stat.where(:result_type => 'background_processes', :user_id => user_id).
+    Customer::BackgroundStat.where(:result_type => 'background_processes', :user_id => user_id).
       where(:result_name => name).where("(result_key->>'calculating')::boolean = false").delete_all
   end      
   
