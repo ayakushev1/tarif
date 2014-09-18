@@ -16,7 +16,6 @@ class ServiceHelper::OptimizationResultPresenter
     if input
       input[name]       
     else
-
       local_results = {}
       data = Customer::Stat.where(:result_type => 'optimization_results').where(:result_name => name, :user_id => user_id).select("result as #{name1}")
       data.each do |result_item|
@@ -30,7 +29,6 @@ class ServiceHelper::OptimizationResultPresenter
         end
       end if data
       local_results
-
     end
   end
   

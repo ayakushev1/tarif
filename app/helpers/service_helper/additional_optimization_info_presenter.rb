@@ -114,6 +114,7 @@ class ServiceHelper::AdditionalOptimizationInfoPresenter
   end
   
   def used_memory_by_output
+    return [{}]
     used_memory_by_output = get_optimization_results(name, 'used_memory_by_output')
     if used_memory_by_output
       total = {'objects' => 0, 'bytes' => 0, 'loops' => 0}
