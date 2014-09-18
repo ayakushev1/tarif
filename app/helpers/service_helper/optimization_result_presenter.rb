@@ -12,28 +12,26 @@ class ServiceHelper::OptimizationResultPresenter
     init_output_choices(options)
   end
   
-  def init_results(input = nil)
+  def results(input = nil)
     if input
-      @results = input[name]       
+      input[name]       
     else
-      @results ||= {}
-      output_model.select("result as #{name}").each do |result_item|
+
+      local_results = {}
+      data = Customer::Stat.where(:result_type => 'optimization_results').where(:result_name => name, :user_id => user_id).select("result as #{name1}")
+      data.each do |result_item|
         result_item.attributes[name].each do |result_type, result_value|
-#          raise(StandardError, [result_value, result_type, name])
           if result_value.is_a?(Hash)
-            @results[result_type] ||= {}
-            @results[result_type].merge!(result_value)
+            local_results[result_type] ||= {}
+            local_results[result_type].merge!(result_value)
           else
-            @results[result_type] = result_value
+            local_results[result_type] = result_value
           end
         end
-      end
+      end if data
+      local_results
+
     end
-  end
-  
-  def results
-    init_results(input) if !@results
-    @results
   end
   
   def get_optimization_results(name1, name2)
