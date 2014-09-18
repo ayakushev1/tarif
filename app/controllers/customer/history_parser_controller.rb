@@ -29,8 +29,8 @@ class Customer::HistoryParserController < ApplicationController
       i += 1
     end while (i < max_step) and !remotipart_submitted? and !params[:call_history]
     
-    @uploaded_call_history_file = params[:call_history]
-    background_parser_processor(:calculation_status, :prepare_for_upload, :parse_uploaded_file, @uploaded_call_history_file)
+#    @uploaded_call_history_file = params[:call_history]
+    background_parser_processor(:calculation_status, :prepare_for_upload, :parse_uploaded_file, params[:call_history])
   end
   
   def background_parser_processor(status_action, finish_action, parser_starter, call_history_file)  
@@ -125,28 +125,34 @@ class Customer::HistoryParserController < ApplicationController
   end
   
   def call_history
-    @call_history ||= ArrayOfHashable.new(self, call_history_results['processed'])
+#    @call_history ||= 
+    ArrayOfHashable.new(self, call_history_results['processed'])
   end
   
   def call_history_unprocessed
-    @call_history_unprocessed ||= ArrayOfHashable.new(self, call_history_results['unprocessed'])
+#    @call_history_unprocessed ||= 
+    ArrayOfHashable.new(self, call_history_results['unprocessed'])
   end
   
   def call_history_ignorred
-    @call_history_ignorred ||= ArrayOfHashable.new(self, call_history_results['ignorred'])
+#    @call_history_ignorred ||= 
+    ArrayOfHashable.new(self, call_history_results['ignorred'])
   end  
 
   def call_history_saver
-    @call_history_saver ||= ServiceHelper::OptimizationResultSaver.new('call_history', 'call_history', current_user.id)
+#    @call_history_saver ||= 
+    ServiceHelper::OptimizationResultSaver.new('call_history', 'call_history', current_user.id)
   end
   
   def call_history_results
-    @call_history_results ||= (call_history_saver.results || {'processed' => [{}], 'unprocessed' => [{}], 'ignorred' => [{}], 'original_doc' => [{}] } )
-    @call_history_results
+#    @call_history_results ||= 
+    (call_history_saver.results || {'processed' => [{}], 'unprocessed' => [{}], 'ignorred' => [{}], 'original_doc' => [{}] } )
+#    @call_history_results
   end
 
   def parsing_params_saver(name)
-    @parsing_params_saver ||= ServiceHelper::OptimizationResultSaver.new('parsing_params', name, current_user.id)
+#    @parsing_params_saver ||= 
+    ServiceHelper::OptimizationResultSaver.new('parsing_params', name, current_user.id)
   end
 
   def parsing_params_filtr

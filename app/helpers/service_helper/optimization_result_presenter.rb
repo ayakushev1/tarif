@@ -334,31 +334,37 @@ class ServiceHelper::OptimizationResultPresenter
   end
   
   def groupped_identical_services
-    @groupped_identical_services ||= get_optimization_results('final_tarif_sets', 'groupped_identical_services')
+#    @groupped_identical_services ||= 
+    get_optimization_results('final_tarif_sets', 'groupped_identical_services')
   end
 
   def tarif_sets
-    results['tarif_sets'] if results
+#    results['tarif_sets'] if results
+    get_optimization_results(name, 'tarif_sets')
   end
   
   def tarif_results
-    results['tarif_results'] if results    
+#    results['tarif_results'] if results    
+    get_optimization_results(name, 'tarif_results')
   end
   
   def cons_tarif_results
-    results['cons_tarif_results'] if results
+#    results['cons_tarif_results'] if results
+    get_optimization_results(name, 'cons_tarif_results')
   end
 
   def cons_tarif_results_by_parts
-    results['cons_tarif_results_by_parts'] if results
+#    results['cons_tarif_results_by_parts'] if results
+    get_optimization_results(name, 'cons_tarif_results_by_parts')
   end
   
   def tarif_results_ord
-    results['tarif_results_ord'] if results
+#    results['tarif_results_ord'] if results
+    get_optimization_results(name, 'tarif_results_ord')
   end
   
   def max_tarifs_slice
-    stat = results[operator.to_s] if results
+    stat = get_optimization_results(name, operator.to_s) #results[operator.to_s] if results
     stat['max_tarifs_slice'][operator.to_s] if stat and stat['max_tarifs_slice']
   end
 

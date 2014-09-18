@@ -24,11 +24,13 @@ class Customer::CallsController < ApplicationController
   end
   
   def customer_calls
-    @customer_calls ||= Tableable.new(self, Customer::Call.where(:user_id => current_user.id).query_from_filtr(filtr.session_filtr_params))
+#    @customer_calls ||= 
+    Tableable.new(self, Customer::Call.where(:user_id => current_user.id).query_from_filtr(filtr.session_filtr_params))
   end
   
   def calls_gener_params_report
-    @calls_gener_params_report ||= ArrayOfHashable.new(self, 
+#    @calls_gener_params_report ||= 
+    ArrayOfHashable.new(self, 
       Calls::GenerationParamsPresenter.new(Calls::Generator.new(self, customer_calls_generation_params, user_params), customer_calls_generation_params).report )
   end
   
@@ -112,7 +114,8 @@ class Customer::CallsController < ApplicationController
   end
   
   def call_generation_param_saver(name)
-    @call_generation_param_saver ||= ServiceHelper::OptimizationResultSaver.new('call_generation_params', name, current_user.id)
+#    @call_generation_param_saver ||= 
+    ServiceHelper::OptimizationResultSaver.new('call_generation_params', name, current_user.id)
   end
 
 end
