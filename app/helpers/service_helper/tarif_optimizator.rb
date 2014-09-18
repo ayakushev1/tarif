@@ -240,7 +240,6 @@ class ServiceHelper::TarifOptimizator
         :tarif_results => current_tarif_optimization_results.tarif_results, 
         :tarif_results_ord => (save_tarif_results_ord ? current_tarif_optimization_results.tarif_results_ord : {}), 
 
-        :tarif_sets_without_common_services => tarif_list_generator.tarif_sets_without_common_services,
         :services_that_depended_on => tarif_list_generator.services_that_depended_on,      
         :service_description => tarif_list_generator.service_description,   
         :common_services_by_parts => tarif_list_generator.common_services_by_parts,   
@@ -263,7 +262,6 @@ class ServiceHelper::TarifOptimizator
       saved_results = optimization_result_saver.results({:operator_id => operator, :tarif_id => tarif, :accounting_period => accounting_period})
       
       final_tarif_set_generator.set_input_data({
-        :tarif_sets_without_common_services => saved_results['tarif_sets_without_common_services'],
         :tarif_sets => saved_results['tarif_sets'],          
         :services_that_depended_on => saved_results['services_that_depended_on'],
         :operator => operator,      
@@ -280,16 +278,11 @@ class ServiceHelper::TarifOptimizator
         final_tarif_set_generator.calculate_final_tarif_sets(operator, tarif, background_process_informer_tarif)
       end
       
-      sorted_final_tarif_sets = {}
-      performance_checker.run_check_point('reoder_and_limit_final_tarif_sets_by_tarifs', 3) do
-        sorted_final_tarif_sets = reoder_and_limit_final_tarif_sets_by_tarifs(final_tarif_set_generator.final_tarif_sets, options[:services_by_operator][:max_tarif_set_count_per_tarif].to_i )
-      end
-      
       performance_checker.run_check_point('save_final_tarif_sets_by_tarif', 3) do
         background_process_informer_tarif.increase_current_value(0, "save final_tarif_sets")
         final_tarif_sets_saver.override(
           {:operator_id => operator.to_i, :tarif_id => tarif.to_i, :accounting_period => accounting_period, :result => {
-            :final_tarif_sets => sorted_final_tarif_sets,
+            :final_tarif_sets => final_tarif_set_generator.final_tarif_sets,
     #        :tarif_sets_to_calculate_from_final_tarif_sets => final_tarif_set_generator.tarif_sets_to_calculate_from_final_tarif_sets,
             :updated_tarif_results => final_tarif_set_generator.updated_tarif_results,
             :groupped_identical_services => final_tarif_set_generator.groupped_identical_services,
@@ -302,16 +295,6 @@ class ServiceHelper::TarifOptimizator
     end
   end
 
-  def reoder_and_limit_final_tarif_sets_by_tarifs(final_tarif_sets, max_tarif_set_count_per_tarif)
-    background_process_informer_tarif.increase_current_value(0, "reoder_and_limit_final_tarif_sets_by_tarifs")
-    sorted_final_tarif_set_keys = final_tarif_sets.keys.sort_by{|final_tarif_set_key| final_tarif_sets[final_tarif_set_key][:price]}
-    new_final_tarif_sets = {}
-    sorted_final_tarif_set_keys[0..[0, (max_tarif_set_count_per_tarif - 1)].max].each do |final_tarif_set_key| 
-      new_final_tarif_sets[final_tarif_set_key] = final_tarif_sets[final_tarif_set_key]
-    end
-    new_final_tarif_sets
-  end
-  
   def prepare_and_save_final_tarif_sets_by_tarif_for_presenatation(operator, tarif, accounting_period)
     performance_checker.run_check_point('prepare_and_save_final_tarif_sets_by_tarif_for_presenatation', 4) do
       background_process_informer_tarif.increase_current_value(0, "init final_tarif_set_preparator")
