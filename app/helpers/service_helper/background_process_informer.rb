@@ -27,7 +27,7 @@ class ServiceHelper::BackgroundProcessInformer
   
   def init(min_value = 0.0, max_value = 100.0, text_value = nil)
     if process_info_model.exists?
-      process_info_model.first.update_attributes!({:result_key => {:calculating => true}, :result => {
+      process_info_model.update_all({:result_key => {:calculating => true}, :result => {
         :name => name, :max_value => max_value, :min_value => min_value, :current_value => min_value, :text_value => text_value}})
     else
       process_info_model.create({:result_type => 'background_processes', :result_name => name, :user_id => user_id, :result_key => {:calculating => true}, :result => {
@@ -41,12 +41,12 @@ class ServiceHelper::BackgroundProcessInformer
     back_processing_update = {:name => name, :max_value => back_processing_stat['max_value'], :min_value => 0.0, 
       :current_value => bat_processing_current_value, :text_value => text_value}
     
-    process_info_model.first.update_attributes!({:result_key => {:calculating => true}, :result => back_processing_update})  
+    process_info_model.update_all({:result_key => {:calculating => true}, :result => back_processing_update})  
   end
   
   def finish
     back_processing_stat = process_info_model.first['result']
-    process_info_model.first.update_attributes!({:result_key => {:calculating => false}, :result => {
+    process_info_model.update_all({:result_key => {:calculating => false}, :result => {
       :name => name, 
       :max_value => back_processing_stat['max_value'],
       :min_value => back_processing_stat['min_value'],

@@ -104,7 +104,7 @@ class Customer::TarifOptimizatorController < ApplicationController
           @tarif_optimizator = ServiceHelper::TarifOptimizator.new(options)
           @tarif_optimizator.calculate_all_operator_tarifs
         rescue => e
-          ServiceHelper::OptimizationResultSaver.new('optimization_results', 'Error on optimization', current_user.id).save({:result => {:error => e}})
+          ServiceHelper::OptimizationResultSaver.new('optimization_results', 'Error on optimization', current_user.id).override({:result => {:error => e}})
           raise(e)
         ensure
           [@background_process_informer_operators, @background_process_informer_tarifs, @background_process_informer_tarif].each do |background_process_informer|

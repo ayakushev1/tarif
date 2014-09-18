@@ -79,10 +79,6 @@ class ServiceHelper::TarifOptimizator
         background_process_informer_operators.increase_current_value(1)
       end
     end
-    performance_checker.run_check_point('save_performance_results', 2) do
-      background_process_informer_operators.increase_current_value(0, "save_performance_results")
-      minor_result_saver.save({:result => {:performance_results => performance_checker.show_stat_hash}})
-    end
 
     update_minor_results
     
@@ -93,9 +89,20 @@ class ServiceHelper::TarifOptimizator
   def update_minor_results
     performance_checker.run_check_point('update_minor_results', 2) do
       background_process_informer_operators.increase_current_value(0, "update_minor_results")
-      minor_result_saver.save({:result => {:calls_stat => calls_stat_calculator.calculate_calls_stat(query_constructor)}})
       tarif_list_generator.calculate_service_packs; tarif_list_generator.calculate_service_packs_by_parts
-      minor_result_saver.save({:result => {:service_packs_by_parts => tarif_list_generator.service_packs_by_parts}})
+      
+      used_memory_by_output = {}
+      performance_checker.run_check_point('memory_usage_analyze_for_output', 4) do      
+        used_memory_by_output = calculate_used_memory(output)
+      end if analyze_memory_used    
+    
+      
+      minor_result_saver.override({:result => 
+        {:performance_results => performance_checker.show_stat_hash,
+         :calls_stat => calls_stat_calculator.calculate_calls_stat(query_constructor),
+         :service_packs_by_parts => tarif_list_generator.service_packs_by_parts,
+         :used_memory_by_output => used_memory_by_output,
+         }})
     end
   end
   
@@ -212,7 +219,7 @@ class ServiceHelper::TarifOptimizator
       end
 
       performance_checker.run_check_point('prepare_and_save_final_tarif_sets_by_tarif_for_presenatation', 4) do
-        prepare_and_save_final_tarif_sets_by_tarif_for_presenatation(operator, tarif, accounting_period, {:groupped_identical_services => groupped_identical_services})
+        prepare_and_save_final_tarif_sets_by_tarif_for_presenatation(operator, tarif, accounting_period)
       end
       
       background_process_informer_tarif.increase_current_value(0, "finish calculating one tarif")
@@ -233,11 +240,12 @@ class ServiceHelper::TarifOptimizator
     output = {}
     performance_checker.run_check_point('save_tarif_results', 4) do
       background_process_informer_tarif.increase_current_value(0, "save_tarif_results")
-      optimization_result_saver.save({:operator_id => operator.to_i, :tarif_id => tarif.to_i, :accounting_period => accounting_period, :result => {
+      optimization_result_saver.override({:operator_id => operator.to_i, :tarif_id => tarif.to_i, :accounting_period => accounting_period, :result => {
         :tarif_sets => result_to_save[:tarif_sets],
         :cons_tarif_results => current_tarif_optimization_results.cons_tarif_results,
         :cons_tarif_results_by_parts => current_tarif_optimization_results.cons_tarif_results_by_parts,
         :tarif_results => result_to_save[:tarif_results], 
+        :groupped_identical_services => result_to_save[:groupped_identical_services],
         :tarif_results_ord => (save_tarif_results_ord ? current_tarif_optimization_results.tarif_results_ord : {}), 
 
         :services_that_depended_on => tarif_list_generator.services_that_depended_on,      
@@ -247,10 +255,6 @@ class ServiceHelper::TarifOptimizator
         } } )
     end
 
-    performance_checker.run_check_point('memory_usage_analyze_for_output', 4) do      
-      minor_result_saver.save({:result => {:used_memory_by_output => calculate_used_memory(output)}})
-    end if analyze_memory_used    
-    
   end
   
   def simplify_tarif_resuts_by_tarif(operator, tarif, accounting_period)
@@ -291,6 +295,7 @@ class ServiceHelper::TarifOptimizator
         :cons_tarif_results_by_parts => saved_results['cons_tarif_results_by_parts'],
         :tarif_results => saved_results['tarif_results'],
         :cons_tarif_results => saved_results['cons_tarif_results'],
+        :groupped_identical_services => saved_results['groupped_identical_services'],
       })
       saved_results = nil
       
@@ -300,11 +305,12 @@ class ServiceHelper::TarifOptimizator
       end
       
       performance_checker.run_check_point('save_final_tarif_sets_by_tarif', 3) do
-        background_process_informer_tarif.increase_current_value(0, "save final_tarif_sets")
+        background_process_informer_tarif.increase_current_value(0, "override final_tarif_sets")
         final_tarif_sets_saver.override(
           {:operator_id => operator.to_i, :tarif_id => tarif.to_i, :accounting_period => accounting_period, :result => {
             :final_tarif_sets => final_tarif_set_generator.final_tarif_sets,
             :tarif_results => final_tarif_set_generator.tarif_results,
+            :groupped_identical_services => final_tarif_set_generator.groupped_identical_services,
             :current_tarif_set_calculation_history => final_tarif_set_generator.current_tarif_set_calculation_history,
             }}
         )
@@ -324,7 +330,7 @@ class ServiceHelper::TarifOptimizator
       final_tarif_set_preparator.set_input_data({
         :final_tarif_sets => saved_results['final_tarif_sets'],
         :tarif_results => saved_results['tarif_results'],
-        :groupped_identical_services => input_data[:groupped_identical_services],
+        :groupped_identical_services => saved_results['groupped_identical_services'],
       })
       saved_results = nil
       
@@ -339,8 +345,8 @@ class ServiceHelper::TarifOptimizator
       @final_tarif_set_preparator = nil
       
       performance_checker.run_check_point('save_prepared_final_tarif_sets_by_tarif', 3) do
-        background_process_informer_tarif.increase_current_value(0, "save prepared_final_tarif_sets_by_tarif")
-        prepared_final_tarif_sets_saver.save(prepared_final_tarif_sets_to_save)
+        background_process_informer_tarif.increase_current_value(0, "override prepared_final_tarif_sets_by_tarif")
+        prepared_final_tarif_sets_saver.override(prepared_final_tarif_sets_to_save)
       end
     end    
   

@@ -3,7 +3,7 @@ class ServiceHelper::FinalTarifSetGenerator
   attr_accessor :final_tarif_sets 
   attr_accessor :current_tarif_set_calculation_history 
   attr_accessor :tarif_sets, :services_that_depended_on, :operator, :common_services, :common_services_by_parts,
-                :cons_tarif_results_by_parts, :tarif_results, :cons_tarif_results
+                :cons_tarif_results_by_parts, :tarif_results, :cons_tarif_results, :groupped_identical_services
   
   attr_reader :use_short_tarif_set_name
          
@@ -30,6 +30,7 @@ class ServiceHelper::FinalTarifSetGenerator
     @cons_tarif_results_by_parts = input_data[:cons_tarif_results_by_parts]
     @tarif_results = input_data[:tarif_results]
     @cons_tarif_results = input_data[:cons_tarif_results]    
+    @groupped_identical_services = input_data[:groupped_identical_services] #TODO убрать
   end
   
   def calculate_final_tarif_sets(operator_1 = nil, tarif_1 = nil, background_process_informer_tarif = nil)

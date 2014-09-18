@@ -13,30 +13,31 @@ class ServiceHelper::OptimizationResultSaver
   
   def save(output)
     where_hash = {:operator_id => output[:operator], :tarif_id => output[:tarif], :accounting_period => output[:accounting_period]} if output
-    model_to_save = output_model.where(where_hash).where(:user_id => user_id)
+    model_to_save = output_model.where(where_hash)
     result = if model_to_save.exists?
-#     raise(StandardError, [results.keys, output.keys])
       merged_output = results ? {:result => results.merge(output[:result])} : output
-      model_to_save.first.update_attributes!(merged_output)    
+      model_to_save.update_all(merged_output)    
     else
-      model_to_save.create({:result_type => result_type, :result_name => name, :user_id => user_id}.merge(output) )    
+      model_to_save.create    
+      model_to_save.update_all(output)    
     end    
     result
   end
   
   def override(output)
     where_hash = {:operator_id => output[:operator], :tarif_id => output[:tarif], :accounting_period => output[:accounting_period]} if output
-    model_to_save = output_model.where(where_hash).where(:user_id => user_id)
+    model_to_save = output_model.where(where_hash)
     if model_to_save.exists?
-#     raise(StandardError, [results.keys, output.keys])
-#      merged_output = results ? {:result => results.merge(output[:result])} : output
-      model_to_save.delete_all    
-    end
-    model_to_save.create(output.merge({:result_type => result_type, :result_name => name, :user_id => user_id}))    
+      model_to_save.update_all(output)    
+    else
+      model_to_save.create    
+      model_to_save.update_all(output)    
+    end        
   end
   
   def results(where_hash = {})
     result = output_model.where(where_hash).select("result as #{name}").first
     result.attributes[name] if result
   end
+
 end
