@@ -61,7 +61,7 @@ class ServiceHelper::OptimizationResultPresenter
   def customer_service_sets_array
     result = []
     prepared_final_tarif_sets.each do |service_set_id, prepared_final_tarif_set|
-      result << {'service_sets_id' => service_set_id}.merge(prepared_final_tarif_set)
+      result << prepared_final_tarif_set.except(['tarif_results', 'tarif_detail_results']).merge({'service_sets_id' => service_set_id})
     end if prepared_final_tarif_sets
     result.sort_by!{|item| item['service_set_price']}    
   end

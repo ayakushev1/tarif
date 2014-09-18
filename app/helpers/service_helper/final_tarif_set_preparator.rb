@@ -1,30 +1,27 @@
 class ServiceHelper::FinalTarifSetPreparator
-  attr_reader :final_tarif_sets, :tarif_results, :groupped_identical_services
-  attr_reader :prepared_final_tarif_sets
   
-  def initialize()
-  end
-  
-  def set_input_data(input_data)
-    @final_tarif_sets = input_data[:final_tarif_sets]
-    @tarif_results = input_data[:tarif_results]
-    @groupped_identical_services = input_data[:groupped_identical_services]
-  end
-  
-  def prepare_final_tarif_sets_by_tarif(operator, tarif, background_process_informer_tarif)
-    @prepared_final_tarif_sets ||= {}
+  def self.prepare_final_tarif_sets_by_tarif(input_data)
+    final_tarif_sets = input_data[:final_tarif_sets]
+    operator = input_data[:operator]
+    tarif = input_data[:tarif]
+    
+    prepared_final_tarif_sets ||= {}
     final_tarif_sets.each do |service_set_id, final_tarif_set|
       raise(StandardError, "wrong tarif in final_tarif_set #{final_tarif_set['tarif']}. Should be #{tarif}") if tarif.to_s != final_tarif_set['tarif']
       prepared_final_tarif_sets[service_set_id] ||= {'service_set_price' => 0.0, 'service_set_count' => 0, 'tarif' => tarif, 'operator' => operator}
       
-      prepare_service_set_part_of_final_tarif_set(service_set_id, final_tarif_set)
-      prepare_tarif_result_part_of_final_tarif_set(service_set_id, final_tarif_set)
-      prepare_tarif_detail_result_part_of_final_tarif_set(service_set_id, final_tarif_set)
+      prepare_service_set_part_of_final_tarif_set(prepared_final_tarif_sets, service_set_id, final_tarif_set, input_data)
+      prepare_tarif_result_part_of_final_tarif_set(prepared_final_tarif_sets, service_set_id, final_tarif_set, input_data)
+      prepare_tarif_detail_result_part_of_final_tarif_set(prepared_final_tarif_sets, service_set_id, final_tarif_set, input_data)
       
     end if final_tarif_sets    
+    prepared_final_tarif_sets
   end
   
-  def prepare_service_set_part_of_final_tarif_set(service_set_id, final_tarif_set)
+  def self.prepare_service_set_part_of_final_tarif_set(prepared_final_tarif_sets, service_set_id, final_tarif_set, input_data)
+    tarif_results = input_data[:tarif_results]
+    groupped_identical_services = input_data[:groupped_identical_services]
+
     final_tarif_set['tarif_sets_by_part'].each do |tarif_set_by_part|
       part = tarif_set_by_part[0]; tarif_set_by_part_id = tarif_set_by_part[1]
       
@@ -56,9 +53,11 @@ class ServiceHelper::FinalTarifSetPreparator
     end if final_tarif_set['tarif_sets_by_part']        
   end
   
-  def prepare_tarif_result_part_of_final_tarif_set(service_set_id, final_tarif_set)
+  def self.prepare_tarif_result_part_of_final_tarif_set(prepared_final_tarif_sets, service_set_id, final_tarif_set, input_data)
+    tarif_results = input_data[:tarif_results]
+
     prepared_final_tarif_sets[service_set_id]['tarif_results'] ||= {}
-    final_tarif_sets[service_set_id]['tarif_sets_by_part'].each do |tarif_set_by_part|
+    final_tarif_set['tarif_sets_by_part'].each do |tarif_set_by_part|
       part = tarif_set_by_part[0]; tarif_set_by_part_id = tarif_set_by_part[1]
       tarif_results_for_service_set_and_part = tarif_results[tarif_set_by_part_id][part] if tarif_results and tarif_results[tarif_set_by_part_id]
 
@@ -86,12 +85,14 @@ class ServiceHelper::FinalTarifSetPreparator
         prepared_final_tarif_sets[service_set_id]['tarif_results'][tarif_id_from_tarif_results]['call_id_count'] += tarif_result_for_service_set_and_part['call_id_count']
         
         end if tarif_results_for_service_set_and_part
-    end if final_tarif_sets and final_tarif_sets[service_set_id] and final_tarif_sets[service_set_id]['tarif_sets_by_part']
+    end if final_tarif_set and final_tarif_set['tarif_sets_by_part']
   end
   
-  def prepare_tarif_detail_result_part_of_final_tarif_set(service_set_id, final_tarif_set)
+  def self.prepare_tarif_detail_result_part_of_final_tarif_set(prepared_final_tarif_sets, service_set_id, final_tarif_set, input_data)
+    tarif_results = input_data[:tarif_results]
+
     prepared_final_tarif_sets[service_set_id]['tarif_detail_results'] ||= {}
-    final_tarif_sets[service_set_id]['tarif_sets_by_part'].each do |tarif_set_by_part|
+    final_tarif_set['tarif_sets_by_part'].each do |tarif_set_by_part|
       part = tarif_set_by_part[0]; tarif_set_by_part_id = tarif_set_by_part[1]
       tarif_results_for_service_set_and_part = tarif_results[tarif_set_by_part_id][part] if tarif_results and tarif_results[tarif_set_by_part_id]
 
@@ -125,7 +126,7 @@ class ServiceHelper::FinalTarifSetPreparator
           prepared_final_tarif_sets[service_set_id]['tarif_detail_results'][s_id][sc_name]['service_category_group_id'] = price_value_detail['service_category_group_id']
         end if tarif_result_for_service_set_and_part['price_values']
       end if tarif_results_for_service_set_and_part
-    end if final_tarif_sets and final_tarif_sets[service_set_id] and final_tarif_sets[service_set_id]['tarif_sets_by_part']
+    end if final_tarif_set and final_tarif_set['tarif_sets_by_part']
   end
   
 end

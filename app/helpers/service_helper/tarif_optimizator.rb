@@ -5,7 +5,7 @@ class ServiceHelper::TarifOptimizator
   attr_reader :tarif_list_generator, :final_tarif_set_generator, :stat_function_collector, :query_constructor, :optimization_result_saver, :minor_result_saver, 
               :final_tarif_sets_saver, :background_process_informer_operators, :background_process_informer_tarifs, :background_process_informer_tarif, 
               :performance_checker, :current_tarif_optimization_results, :tarif_optimization_sql_builder, :max_formula_order_collector, 
-              :calls_stat_calculator, :final_tarif_set_preparator, :prepared_final_tarif_sets_saver
+              :calls_stat_calculator, :prepared_final_tarif_sets_saver
 #входные данные              
   attr_reader :options, :operator_id, :fq_tarif_region_id  
 # параметры оптимизации 
@@ -322,32 +322,24 @@ class ServiceHelper::TarifOptimizator
 
   def prepare_and_save_final_tarif_sets_by_tarif_for_presenatation(operator, tarif, accounting_period, input_data = {})
     performance_checker.run_check_point('prepare_and_save_final_tarif_sets_by_tarif_for_presenatation', 4) do
-      background_process_informer_tarif.increase_current_value(0, "init final_tarif_set_preparator")
 
-      @final_tarif_set_preparator = ServiceHelper::FinalTarifSetPreparator.new()
+      background_process_informer_tarif.increase_current_value(0, "get saved final_tarif_sets")
       saved_results = final_tarif_sets_saver.results({:operator_id => operator, :tarif_id => tarif, :accounting_period => accounting_period})
-
-      final_tarif_set_preparator.set_input_data({
+      
+      background_process_informer_tarif.increase_current_value(0, "calculate final_tarif_set_preparator")
+      prepared_final_tarif_sets = ServiceHelper::FinalTarifSetPreparator.prepare_final_tarif_sets_by_tarif({
         :final_tarif_sets => saved_results['final_tarif_sets'],
         :tarif_results => saved_results['tarif_results'],
         :groupped_identical_services => saved_results['groupped_identical_services'],
+        :operator => operator, 
+        :tarif => tarif, 
       })
-      saved_results = nil
       
-      performance_checker.run_check_point('prepare_final_tarif_sets_by_tarif', 3) do
-        background_process_informer_tarif.increase_current_value(0, "prepare_final_tarif_sets_by_tarif")
-        final_tarif_set_preparator.prepare_final_tarif_sets_by_tarif(operator, tarif, background_process_informer_tarif)
-      end
-      
-      prepared_final_tarif_sets_to_save = {:operator_id => operator.to_i, :tarif_id => tarif.to_i, :accounting_period => accounting_period, :result => {
-        :prepared_final_tarif_sets => final_tarif_set_preparator.prepared_final_tarif_sets,
-        }}
-      @final_tarif_set_preparator = nil
-      
-      performance_checker.run_check_point('save_prepared_final_tarif_sets_by_tarif', 3) do
-        background_process_informer_tarif.increase_current_value(0, "override prepared_final_tarif_sets_by_tarif")
-        prepared_final_tarif_sets_saver.override(prepared_final_tarif_sets_to_save)
-      end
+      background_process_informer_tarif.increase_current_value(0, "override prepared_final_tarif_sets_by_tarif")
+      prepared_final_tarif_sets_saver.override({:operator_id => operator.to_i, :tarif_id => tarif.to_i, :accounting_period => accounting_period, :result => {
+        :prepared_final_tarif_sets => prepared_final_tarif_sets,
+      }})
+      result = {}
     end    
   
     background_process_informer_tarif.increase_current_value(0, "")
