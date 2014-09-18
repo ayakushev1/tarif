@@ -33,12 +33,9 @@ class ServiceHelper::OptimizationResultPresenter
   end
   
   def get_optimization_results(name1, name2)
-    @model ||= {}
-    @model[name1] ||= {}    
-    local_results ||= {}
-    @model[name1][name2] ||= Customer::Stat.where(:result_type => 'optimization_results').where(:result_name => name1, :user_id => user_id).select("result as #{name1}")
-#    raise(StandardError, model.to_sql)
-    @model[name1][name2].each do |result_item|
+    local_results = {}
+    data = Customer::Stat.where(:result_type => 'optimization_results').where(:result_name => name1, :user_id => user_id).select("result as #{name1}")
+    data.each do |result_item|
       result_item.attributes[name1].each do |result_type, result_value|
         if result_value.is_a?(Hash)
           local_results[result_type] ||= {}
@@ -47,7 +44,7 @@ class ServiceHelper::OptimizationResultPresenter
           local_results[result_type] = result_value
         end
       end
-    end
+    end if data
     local_results[name2] if local_results
   end
 
@@ -321,15 +318,15 @@ class ServiceHelper::OptimizationResultPresenter
   end
   
   def prepared_final_tarif_sets
-    @prepared_final_tarif_sets ||= get_optimization_results('prepared_final_tarif_sets', 'prepared_final_tarif_sets')
+    get_optimization_results('prepared_final_tarif_sets', 'prepared_final_tarif_sets')
   end
 
   def final_tarif_sets
-    @final_tarif_sets ||= get_optimization_results('final_tarif_sets', 'final_tarif_sets')
+    get_optimization_results('final_tarif_sets', 'final_tarif_sets')
   end
 
   def tarif_sets_to_calculate_from_final_tarif_sets
-    @tarif_sets_to_calculate_from_final_tarif_sets ||= get_optimization_results('final_tarif_sets', 'tarif_sets_to_calculate_from_final_tarif_sets')
+    get_optimization_results('final_tarif_sets', 'tarif_sets_to_calculate_from_final_tarif_sets')
   end
   
   def groupped_identical_services
