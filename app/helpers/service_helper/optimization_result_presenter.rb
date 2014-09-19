@@ -175,9 +175,10 @@ class ServiceHelper::OptimizationResultPresenter
         end          
       end if tarif_results and tarif_results[service_set_id]
     end
-    result.collect{|r| r if 
+    result = result.collect{|r| r if 
       r['call_id_count'].to_i > level_to_show_tarif_result_by_parts or 
-      r['price_value'].to_f > level_to_show_tarif_result_by_parts}.compact.sort_by!{|r| r['tarif_class_id']}
+      r['price_value'].to_f > level_to_show_tarif_result_by_parts}.compact
+      false ? result.sort_by!{|r| r['tarif_class_id']} : result
   end
 
   def tarif_results_details_array(service_set_id, tarif_class_id_1)

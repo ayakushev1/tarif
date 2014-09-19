@@ -34,7 +34,9 @@ class ServiceHelper::AdditionalOptimizationInfoPresenter
   def calls_stat_array(group_by)
 #    group_by = ['rouming', 'service', nil, nil]
     if group_by.blank?
-      (calls_stat || []).collect{|row| row if row['count'] > 0}.compact.sort_by{|row| row['order']} || []
+      result = (calls_stat || []).collect{|row| row if row['count'] > 0}.compact
+      result = (false ? result.sort_by{|row| row['order']} : result) || []
+      result
     else
       i = 0
       result_hash = {}

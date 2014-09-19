@@ -5,7 +5,7 @@ class ServiceHelper::TarifOptimizator
   attr_reader :tarif_list_generator, :final_tarif_set_generator, :stat_function_collector, :query_constructor, :optimization_result_saver, :minor_result_saver, 
               :final_tarif_sets_saver, :background_process_informer_operators, :background_process_informer_tarifs, :background_process_informer_tarif, 
               :performance_checker, :current_tarif_optimization_results, :tarif_optimization_sql_builder, :max_formula_order_collector, 
-              :calls_stat_calculator, :prepared_final_tarif_sets_saver
+              :calls_stat_calculator, :prepared_final_tarif_results_saver
 #входные данные              
   attr_reader :options, :operator_id, :fq_tarif_region_id  
 # параметры оптимизации 
@@ -46,7 +46,7 @@ class ServiceHelper::TarifOptimizator
     performance_checker.run_check_point('init_additional_general_classes', 1) do
       @optimization_result_saver = ServiceHelper::OptimizationResultSaver.new('optimization_results', nil, user_id)
       @final_tarif_sets_saver = ServiceHelper::OptimizationResultSaver.new('optimization_results', 'final_tarif_sets', user_id)
-      @prepared_final_tarif_sets_saver = ServiceHelper::OptimizationResultSaver.new('optimization_results', 'prepared_final_tarif_sets', user_id)
+      @prepared_final_tarif_results_saver = ServiceHelper::OptimizationResultSaver.new('optimization_results', 'prepared_final_tarif_results', user_id)
       @calls_stat_calculator = ServiceHelper::CallsStatCalculator.new({:user_id => user_id, :accounting_period => accounting_period})
       @tarif_optimization_sql_builder = ServiceHelper::TarifOptimizationSqlBuilder.new(self, {:user_id => user_id, :accounting_period => accounting_period})
       @minor_result_saver = ServiceHelper::OptimizationResultSaver.new('optimization_results', 'minor_results', user_id)
@@ -71,7 +71,7 @@ class ServiceHelper::TarifOptimizator
       background_process_informer_operators.init(0.0, tarif_list_generator.operators.size)
       
       background_process_informer_operators.increase_current_value(0, "clean_output_results")
-      [optimization_result_saver, final_tarif_sets_saver, prepared_final_tarif_sets_saver, minor_result_saver].each {|saver| saver.clean_output_results} 
+      [optimization_result_saver, final_tarif_sets_saver, prepared_final_tarif_results_saver, minor_result_saver].each {|saver| saver.clean_output_results} 
 
       background_process_informer_operators.increase_current_value(0, "calculating all_operator_tarifs")
       tarif_list_generator.operators.each do |operator| 
@@ -110,7 +110,7 @@ class ServiceHelper::TarifOptimizator
     performance_checker.run_check_point('calculate_and_save_final_tarif_sets', 1) do
       background_process_informer_operators.init(0.0, tarif_list_generator.operators.size)
       background_process_informer_operators.increase_current_value(0, "clean_output_results")
-      [final_tarif_sets_saver, prepared_final_tarif_sets_saver].each {|saver| saver.clean_output_results}
+      [final_tarif_sets_saver, prepared_final_tarif_results_saver].each {|saver| saver.clean_output_results}
       
       background_process_informer_operators.increase_current_value(0, "calculate_and_save_final_tarif_sets_by_tarif")
       tarif_list_generator.operators.each do |operator|
@@ -128,17 +128,17 @@ class ServiceHelper::TarifOptimizator
     end        
   end
   
-  def prepare_and_save_final_tarif_sets
-    performance_checker.run_check_point('prepare_and_save_final_tarif_sets', 1) do
+  def prepare_and_save_final_tarif_results
+    performance_checker.run_check_point('prepare_and_save_final_tarif_results', 1) do
       background_process_informer_operators.init(0.0, tarif_list_generator.operators.size)
       background_process_informer_operators.increase_current_value(0, "clean_output_results")
-      [prepared_final_tarif_sets_saver].each {|saver| saver.clean_output_results}
+      [prepared_final_tarif_results_saver].each {|saver| saver.clean_output_results}
       
-      background_process_informer_operators.increase_current_value(0, "prepare_and_save_final_tarif_sets_by_tarif")
+      background_process_informer_operators.increase_current_value(0, "prepare_and_save_final_tarif_results_by_tarif")
       tarif_list_generator.operators.each do |operator|
         background_process_informer_tarifs.init(0.0, tarif_list_generator.tarifs[operator].size )
         tarif_list_generator.tarifs[operator].each do |tarif|
-          prepare_and_save_final_tarif_sets_by_tarif_for_presenatation(operator, tarif, accounting_period)
+          prepare_and_save_final_tarif_results_by_tarif_for_presenatation(operator, tarif, accounting_period)
           background_process_informer_tarifs.increase_current_value(1)
         end
         background_process_informer_tarifs.increase_current_value(0, "finish calculating one operator tarifs")
@@ -214,12 +214,12 @@ class ServiceHelper::TarifOptimizator
           
       save_tarif_results(operator, tarif, accounting_period, {:tarif_sets => tarif_sets, :tarif_results => tarif_results, :groupped_identical_services => groupped_identical_services})    
 
-      performance_checker.run_check_point('calculate_and_save_final_tarif_sets_by_tarif', 4) do
+      performance_checker.run_check_point('calculate_and_save_final_tarif_results_by_tarif', 4) do
         calculate_and_save_final_tarif_sets_by_tarif(operator, tarif, accounting_period)
       end
 
-      performance_checker.run_check_point('prepare_and_save_final_tarif_sets_by_tarif_for_presenatation', 4) do
-        prepare_and_save_final_tarif_sets_by_tarif_for_presenatation(operator, tarif, accounting_period)
+      performance_checker.run_check_point('prepare_and_save_final_tarif_results_by_tarif_for_presenatation', 4) do
+        prepare_and_save_final_tarif_results_by_tarif_for_presenatation(operator, tarif, accounting_period)
       end
       
       background_process_informer_tarif.increase_current_value(0, "finish calculating one tarif")
@@ -320,14 +320,14 @@ class ServiceHelper::TarifOptimizator
     end
   end
 
-  def prepare_and_save_final_tarif_sets_by_tarif_for_presenatation(operator, tarif, accounting_period, input_data = {})
-    performance_checker.run_check_point('prepare_and_save_final_tarif_sets_by_tarif_for_presenatation', 4) do
+  def prepare_and_save_final_tarif_results_by_tarif_for_presenatation(operator, tarif, accounting_period, input_data = {})
+    performance_checker.run_check_point('prepare_and_save_final_tarif_results_by_tarif_for_presenatation', 4) do
 
       background_process_informer_tarif.increase_current_value(0, "get saved final_tarif_sets")
       saved_results = final_tarif_sets_saver.results({:operator_id => operator, :tarif_id => tarif, :accounting_period => accounting_period})
       
       background_process_informer_tarif.increase_current_value(0, "calculate final_tarif_set_preparator")
-      prepared_final_tarif_sets = ServiceHelper::FinalTarifSetPreparator.prepare_final_tarif_sets_by_tarif({
+      prepared_final_tarif_results = ServiceHelper::FinalTarifResultPreparator.prepare_final_tarif_results_by_tarif({
         :final_tarif_sets => saved_results['final_tarif_sets'],
         :tarif_results => saved_results['tarif_results'],
         :groupped_identical_services => saved_results['groupped_identical_services'],
@@ -335,9 +335,9 @@ class ServiceHelper::TarifOptimizator
         :tarif => tarif, 
       })
       
-      background_process_informer_tarif.increase_current_value(0, "override prepared_final_tarif_sets_by_tarif")
-      prepared_final_tarif_sets_saver.override({:operator_id => operator.to_i, :tarif_id => tarif.to_i, :accounting_period => accounting_period, :result => {
-        :prepared_final_tarif_sets => prepared_final_tarif_sets,
+      background_process_informer_tarif.increase_current_value(0, "override prepared_final_tarif_results_by_tarif")
+      prepared_final_tarif_results_saver.override({:operator_id => operator.to_i, :tarif_id => tarif.to_i, :accounting_period => accounting_period, :result => {
+        :prepared_final_tarif_results => prepared_final_tarif_results,
       }})
       result = {}
     end    
