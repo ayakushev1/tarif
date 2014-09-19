@@ -359,11 +359,8 @@ class ServiceHelper::TarifOptimizator
         :operator => operator, 
         :tarif => tarif, 
       })
-      
       background_process_informer_tarif.increase_current_value(0, "override prepared_final_tarif_results_by_tarif")
-      prepared_final_tarif_results_saver.override({:operator_id => operator.to_i, :tarif_id => tarif.to_i, :accounting_period => accounting_period, :result => {
-        :prepared_final_tarif_results => prepared_final_tarif_results,
-      }})
+      prepared_final_tarif_results_saver.override({:operator_id => operator.to_i, :tarif_id => tarif.to_i, :accounting_period => accounting_period, :result => prepared_final_tarif_results})
       result = {}
     end    
   
