@@ -1,67 +1,37 @@
 class ServiceHelper::AdditionalOptimizationInfoPresenter
-  attr_reader :name, :output_model, :operator, :user_id, :tarif_count
-  attr_reader :service_set_based_on_tarif_sets_or_tarif_results, :level_to_show_tarif_result_by_parts, :use_price_comparison_in_current_tarif_set_calculation,
-              :max_tarif_set_count_per_tarif
+  attr_reader :operator, :user_id, :tarif_count
   
-  def initialize(operator, options = {}, input = nil, name = nil)
-    @operator = operator
-    @name = name || 'default_output_results_name'
+  def initialize(options = {})
+    @operator = options[:operator]
     @user_id = options[:user_id] || 0
     @tarif_count = options[:tarif_count].to_i
-    @output_model = Customer::Stat.where(:result_type => 'optimization_results').where(:result_name => @name, :user_id => @user_id)
   end
   
-  def results(input = nil)
-    if input
-      input[name]       
-    else
-      local_results = {}
-      data = Customer::Stat.where(:result_type => 'optimization_results').where(:result_name => name, :user_id => user_id).select("result as #{name1}")
-      data.each do |result_item|
-        result_item.attributes[name].each do |result_type, result_value|
-          if result_value.is_a?(Hash)
-            local_results[result_type] ||= {}
-            local_results[result_type].merge!(result_value)
-          else
-            local_results[result_type] = result_value
-          end
-        end
-      end if data
-      local_results
-    end
+  def results
+    Customer::Stat.get_results({
+      :result_type => 'optimization_results',
+      :result_name => 'minor_results',
+      :user_id => user_id,
+    })
   end
       
-  def get_optimization_results(name1, name2)
-    local_results = {}
-    data = Customer::Stat.where(:result_type => 'optimization_results').where(:result_name => name1, :user_id => user_id).select("result as #{name1}")
-    data.each do |result_item|
-      result_item.attributes[name1].each do |result_type, result_value|
-        if result_value.is_a?(Hash)
-          local_results[result_type] ||= {}
-          local_results[result_type].merge!(result_value)
-        else
-          local_results[result_type] = result_value
-        end
-      end
-    end if data
-    local_results[name2] if local_results
-  end
-
   def current_tarif_set_calculation_history
-    return [{}]
-#    return @current_tarif_set_calculation_history if @current_tarif_set_calculation_history
-#    @current_tarif_set_calculation_history = 
-    get_optimization_results('final_tarif_sets', 'current_tarif_set_calculation_history')
-#    raise(StandardError)
+    Customer::Stat.get_named_results({
+      :result_type => 'final_tarif_sets',
+      :result_name => 'final_tarif_sets',
+      :user_id => user_id,
+    }, 'current_tarif_set_calculation_history') || [{}]
   end
 
   def performance_results
-#    results ? results['performance_results'] || [{}] : [{}]
-    get_optimization_results(name, 'performance_results') || [{}]
+    Customer::Stat.get_named_results({
+      :result_type => 'optimization_results',
+      :result_name => 'minor_results',
+      :user_id => user_id,
+    }, 'performance_results') || [{}]
   end
   
   def calls_stat_array(group_by)
-    return [{}]    
 #    group_by = ['rouming', 'service', nil, nil]
     if group_by.blank?
       (calls_stat || []).collect{|row| row if row['count'] > 0}.compact.sort_by{|row| row['order']} || []
@@ -89,12 +59,11 @@ class ServiceHelper::AdditionalOptimizationInfoPresenter
       
       result = []
       result_hash.each {|name, value| result << value if value['count'] > 0 }
-      result.sort_by{|r| r['name_string']}
+      false ? result.sort_by!{|item| item['name_string']} : result
     end    
   end
   
   def service_packs_by_parts_array
-    return [{}]
     result = []
     service_packs_by_parts.each do |tarif, services_by_tarif|
       temp_result = {:tarif => tarif}
@@ -107,18 +76,28 @@ class ServiceHelper::AdditionalOptimizationInfoPresenter
   end
   
   def calls_stat
-#    results['calls_stat'] if results
-    get_optimization_results(name, 'calls_stat')
+    Customer::Stat.get_named_results({
+      :result_type => 'optimization_results',
+      :result_name => 'minor_results',
+      :user_id => user_id,
+    }, 'calls_stat') 
   end
-  
+
   def service_packs_by_parts
-#    results['service_packs_by_parts'] if results
-    get_optimization_results(name, 'service_packs_by_parts')
+    Customer::Stat.get_named_results({
+      :result_type => 'optimization_results',
+      :result_name => 'minor_results',
+      :user_id => user_id,
+    }, 'service_packs_by_parts') 
   end
   
   def used_memory_by_output
-    return [{}]
-    used_memory_by_output = get_optimization_results(name, 'used_memory_by_output')
+    used_memory_by_output = Customer::Stat.get_named_results({
+      :result_type => 'optimization_results',
+      :result_name => 'minor_results',
+      :user_id => user_id,
+    }, 'used_memory_by_output') 
+
     if used_memory_by_output
       total = {'objects' => 0, 'bytes' => 0, 'loops' => 0}
       used_memory_by_output.each do |name, value|

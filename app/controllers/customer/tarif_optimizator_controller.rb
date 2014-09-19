@@ -136,17 +136,17 @@ class Customer::TarifOptimizatorController < ApplicationController
   
   def customer_service_sets
 #    @customer_service_sets ||= 
-    ArrayOfHashable.new(self, optimization_result_presenter.customer_service_sets_array)
+    ArrayOfHashable.new(self, final_tarif_results_presenter.customer_service_sets_array)
   end
   
   def customer_tarif_results
 #    @customer_tarif_results ||= 
-    ArrayOfHashable.new(self, optimization_result_presenter.customer_tarif_results_array(session[:current_id]['service_sets_id']))
+    ArrayOfHashable.new(self, final_tarif_results_presenter.customer_tarif_results_array(session[:current_id]['service_sets_id']))
   end
 
   def customer_tarif_detail_results
 #    @customer_tarif_detail_results ||= 
-    ArrayOfHashable.new(self, optimization_result_presenter.customer_tarif_detail_results_array(
+    ArrayOfHashable.new(self, final_tarif_results_presenter.customer_tarif_detail_results_array(
       session[:current_id]['service_sets_id'], session[:current_id]['service_id']))
   end
   
@@ -226,12 +226,21 @@ class Customer::TarifOptimizatorController < ApplicationController
       :tarif_count => tarifs.size,
       }
 #    @optimization_result_presenter ||= 
-    ServiceHelper::OptimizationResultPresenter.new(operator, options)
+    ServiceHelper::OptimizationResultPresenter.new(options)
+  end
+  
+  def final_tarif_results_presenter
+    options = {
+      :user_id=> (current_user ? current_user.id.to_i : nil),
+      :show_zero_tarif_result_by_parts => optimization_params.session_filtr_params['show_zero_tarif_result_by_parts'],
+      }
+#    @optimization_result_presenter ||= 
+    ServiceHelper::FinalTarifResultsPresenter.new(options)
   end
   
   def minor_result_presenter
 #    @minor_result_presenter ||= 
-    ServiceHelper::AdditionalOptimizationInfoPresenter.new(operator, {:user_id=> (current_user ? current_user.id.to_i : nil)}, nil, 'minor_results')
+    ServiceHelper::AdditionalOptimizationInfoPresenter.new({:operator => operator, :user_id=> (current_user ? current_user.id.to_i : nil) })
   end 
   
   def tarif_optimization_inputs_saver(name)
@@ -251,7 +260,8 @@ class Customer::TarifOptimizatorController < ApplicationController
   end
   
   def options
-  {:user_id=> (current_user ? current_user.id.to_i : nil),
+  {:operator => operator,
+   :user_id=> (current_user ? current_user.id.to_i : nil),
    :user_region_id => (session[:current_user] ? session[:current_user]["region_id"].to_i : nil),  
    :background_process_informer_operators => @background_process_informer_operators,        
    :background_process_informer_tarifs => @background_process_informer_tarifs,        
