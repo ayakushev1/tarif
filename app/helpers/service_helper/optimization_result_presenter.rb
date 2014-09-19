@@ -38,22 +38,22 @@ class ServiceHelper::OptimizationResultPresenter
 #      raise(StandardError, cons_tarif_results_by_parts)
       cons_tarif_results_by_parts.each do |service_set_id, service_sets_result|
         service_set_price[service_set_id] ||= 0.0
-        service_set_count[service_set_id] ||= 0
-        service_sets_result.each do |part, part_result|
-          service_set_price[service_set_id] += (part_result['price_value'] || 0.0).to_f.round(2)
-          service_set_count[service_set_id] += (part_result['call_id_count'] || 0).to_i
-        end if service_sets_result
-      end if tarif_results
+#        service_set_count[service_set_id] ||= 0
+#        service_sets_result.each do |part, part_result|
+#          service_set_price[service_set_id] += (part_result['price_value'] || 0.0).to_f.round(2)
+#          service_set_count[service_set_id] += (part_result['call_id_count'] || 0).to_i
+#        end if service_sets_result
+      end if cons_tarif_results_by_parts
     else
       tarif_results.each do |service_set_id, service_sets_result|
         service_set_price[service_set_id] ||= 0.0
-        service_set_count[service_set_id] ||= 0
-        service_sets_result.each do |part, part_result|
-          part_result.each do |tarif_id, tarif_result |
-            service_set_price[service_set_id] += (tarif_result['price_value'] || 0.0).to_f.round(2)
-            service_set_count[service_set_id] += (tarif_result['call_id_count'] || 0).to_i
-          end
-        end if service_sets_result
+#        service_set_count[service_set_id] ||= 0
+#        service_sets_result.each do |part, part_result|
+#          part_result.each do |tarif_id, tarif_result |
+#            service_set_price[service_set_id] += (tarif_result['price_value'] || 0.0).to_f.round(2)
+#            service_set_count[service_set_id] += (tarif_result['call_id_count'] || 0).to_i
+#          end
+#        end if service_sets_result
       end if tarif_results
     end
     
