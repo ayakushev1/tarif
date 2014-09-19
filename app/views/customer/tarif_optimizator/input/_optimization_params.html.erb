@@ -58,6 +58,14 @@ form_item.init do |f|
   	],
   	
   	[
+     label(filtr_name, "save_interim_results_after_calculating_tarif_results", "Save interim results after calculating tarif_results?"),
+ 	 select(filtr_name, "save_interim_results_after_calculating_tarif_results", [["Save", true], ["Do not save", false]], {:selected => s["save_interim_results_after_calculating_tarif_results"]}, html_options ),
+
+     label(filtr_name, "save_interim_results_after_calculating_final_tarif_sets", "Save interim_results after calculating final tarif_sets?"),
+ 	 select(filtr_name, "save_interim_results_after_calculating_final_tarif_sets", [["Save", true], ["Do not save", false]], {:selected => s["save_interim_results_after_calculating_final_tarif_sets"]}, html_options ),
+  	],
+  	
+  	[
      label(filtr_name, "if_update_tarif_sets_to_calculate_from_with_cons_tarif_results", "Take out zero cons_tarif_result?"),
  	 select(filtr_name, "if_update_tarif_sets_to_calculate_from_with_cons_tarif_results", [["Take out", true], ["Keep", false]], {:selected => s["if_update_tarif_sets_to_calculate_from_with_cons_tarif_results"]}, html_options ),
 

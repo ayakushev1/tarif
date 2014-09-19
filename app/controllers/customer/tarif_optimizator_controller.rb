@@ -270,6 +270,9 @@ class Customer::TarifOptimizatorController < ApplicationController
    :save_tarif_results_ord => optimization_params.session_filtr_params['save_tarif_results_ord'], 
    :analyze_memory_used => optimization_params.session_filtr_params['analyze_memory_used'], 
    :analyze_query_constructor_performance => optimization_params.session_filtr_params['analyze_query_constructor_performance'], 
+   :save_interim_results_after_calculating_tarif_results => optimization_params.session_filtr_params['save_interim_results_after_calculating_tarif_results'], 
+   :save_interim_results_after_calculating_final_tarif_sets => optimization_params.session_filtr_params['save_interim_results_after_calculating_final_tarif_sets'], 
+
    :service_ids_batch_size => optimization_params.session_filtr_params['service_ids_batch_size'], 
    :accounting_period => service_choices.session_filtr_params['accounting_period'],
    :services_by_operator => {
@@ -328,6 +331,8 @@ class Customer::TarifOptimizatorController < ApplicationController
         'save_tarif_results_ord' => 'false',
         'analyze_memory_used' => 'false',
         'analyze_query_constructor_performance' => 'false',
+        'save_interim_results_after_calculating_tarif_results' => 'false',
+        'save_interim_results_after_calculating_final_tarif_sets' => 'false',
         'service_ids_batch_size' => 10,
         'use_short_tarif_set_name' => 'true',
         'show_zero_tarif_result_by_parts' => 'false',

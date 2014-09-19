@@ -22,11 +22,11 @@ class ServiceHelper::FinalTarifSetGenerator
   end
   
   def set_input_data(input_data)
-    @tarif_sets = input_data[:tarif_sets]
-    @services_that_depended_on = input_data[:services_that_depended_on]
+    @tarif_sets = input_data[:tarif_sets].stringify_keys
+    @services_that_depended_on = input_data[:services_that_depended_on].stringify_keys
     @operator = input_data[:operator]
-    @common_services_by_parts = input_data[:common_services_by_parts]
-    @common_services = input_data[:common_services]
+    @common_services_by_parts = input_data[:common_services_by_parts].stringify_keys
+    @common_services = input_data[:common_services].stringify_keys
     @cons_tarif_results_by_parts = input_data[:cons_tarif_results_by_parts]
     @tarif_results = input_data[:tarif_results]
     @cons_tarif_results = input_data[:cons_tarif_results]    
@@ -37,6 +37,7 @@ class ServiceHelper::FinalTarifSetGenerator
     tarif = tarif_1.to_s  
 
     @final_tarif_sets = {}
+#    raise(StandardError)
 
     current_uniq_service_sets, fobidden_info, best_current_uniq_service_sets = calculate_final_tarif_sets_by_tarif(
       tarif_sets[tarif], operator, tarif, tarif_results, background_process_informer_tarif)
