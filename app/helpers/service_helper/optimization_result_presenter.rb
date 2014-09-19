@@ -25,41 +25,15 @@ class ServiceHelper::OptimizationResultPresenter
   end
   
   def service_sets_array
-#    raise(StandardError, final_tarif_sets)
-    service_set_price = {}; service_set_count = {}; stat_results = {}; identical_services = {}; tarifs = {} #fobidden = {}; fobidden_services = {}; tarif_sets_by_part = {}
-#    raise(StandardError, @service_set_based_on_tarif_sets_or_tarif_results)
+    service_set_price = {}; service_set_count = {}; stat_results = {}; identical_services = {}; tarifs = {} 
     case service_set_based_on_tarif_sets_or_tarif_results
-    when 'final_tarif_sets'
-      final_tarif_sets.each do |service_set_id, final_tarif_set|
-        service_set_price[service_set_id] = 0        
-        service_set_count[service_set_id] = 0        
-        
-        final_tarif_set['tarif_sets_by_part'].each do |tarif_set_by_part|
-          part = tarif_set_by_part[0]; tarif_set_by_part_id = tarif_set_by_part[1]
-          tarif_results_for_service_set_and_part = tarif_results[tarif_set_by_part_id][part] if tarif_results and tarif_results[tarif_set_by_part_id]
-          tarif_results_for_service_set_and_part.each do |tarif_id_from_tarif_results, tarif_result_for_service_set_and_part |
-            
-#            stat_results[service_set_id] ||= {}; stat_detail_keys_to_exclude = ['month', 'call_ids']
-#            tarif_result_for_service_set_and_part['price_values'].each do |price_value_detail|
-#              (price_value_detail['all_stat'].keys - stat_detail_keys_to_exclude).each do |stat_key|
-#                stat_results[service_set_id][stat_key] ||= 0
-#                stat_results[service_set_id][stat_key] += (price_value_detail['all_stat'][stat_key] || 0).round(2)
-#              end if price_value_detail['all_stat']
-#            end
-            tarifs[service_set_id] = final_tarif_set['tarif']
-            identical_services[service_set_id] ||= []            
-            identical_services[service_set_id] << groupped_identical_services[tarif_set_by_part_id]['identical_services'] if groupped_identical_services and groupped_identical_services[tarif_set_by_part_id]
-            identical_services[service_set_id].uniq!
-            
-            service_set_price[service_set_id] += (tarif_result_for_service_set_and_part['price_value'] || 0.0).to_f
-            service_set_count[service_set_id] += (tarif_result_for_service_set_and_part['call_id_count'] || 0).to_i
-            
-          end if tarif_results_for_service_set_and_part
-        end if final_tarif_set['tarif_sets_by_part']        
-#        fobidden[service_set_id] = final_tarif_set['fobidden']
-#        fobidden_services[service_set_id] = final_tarif_set['fobidden_services']
-#        tarif_sets_by_part[service_set_id] = final_tarif_set['tarif_sets_by_part']
-      end if final_tarif_sets    
+    when 'final_tarif_sets_by_parts'
+      prepared_final_tarif_results['service_set'].each do |service_set_id, prepared_final_tarif_set|
+        service_set_price[service_set_id] = prepared_final_tarif_set['service_set_price']
+        service_set_count[service_set_id] = prepared_final_tarif_set['service_set_count']
+        stat_results[service_set_id] = prepared_final_tarif_set['stat_results']
+        identical_services[service_set_id] = prepared_final_tarif_set['identical_services']
+      end if prepared_final_tarif_results and prepared_final_tarif_results['service_set']
     when 'cons_tarif_results'
 #      raise(StandardError, cons_tarif_results_by_parts)
       cons_tarif_results_by_parts.each do |service_set_id, service_sets_result|
@@ -70,15 +44,6 @@ class ServiceHelper::OptimizationResultPresenter
           service_set_count[service_set_id] += (part_result['call_id_count'] || 0).to_i
         end if service_sets_result
       end if tarif_results
-    when 'source_to_calculate_final_tarif_sets'
-      tarif_sets_to_calculate_from_final_tarif_sets.each do |tarif_id, service_sets_result|
-        service_sets_result.each do |part, part_result|
-          part_result.each do |service_set_id, services |
-            service_set_price[service_set_id] = 0.0 #(tarif_result['price_value'] || 0.0).to_f.round(2)
-            service_set_count[service_set_id] = 0#(tarif_result['call_id_count'] || 0).to_i
-          end
-        end if service_sets_result
-      end if tarif_sets_to_calculate_from_final_tarif_sets
     else
       tarif_results.each do |service_set_id, service_sets_result|
         service_set_price[service_set_id] ||= 0.0
@@ -94,13 +59,13 @@ class ServiceHelper::OptimizationResultPresenter
     
     result = []
     service_set_price.each do |service_set_id, service_sets_result|
-#      next if fobidden[service_set_id]
-      result << {'short_set_id' => service_set_id.split('_').uniq.join('_'), 'service_sets_id' => service_set_id,  
-        'service_set_price' => service_sets_result, 'service_set_count' => service_set_count[service_set_id], 
+      result << {
+        'short_set_id' => service_set_id.split('_').uniq.join('_'), 
+        'service_sets_id' => service_set_id,  
+        'service_set_price' => service_sets_result, 
+        'service_set_count' => service_set_count[service_set_id], 
         'identical_services' => identical_services[service_set_id],
-        #'tarif_sets_by_part' => (tarif_sets_by_part[service_set_id] || []).sort_by{|t| t[0]},
-        'stat_results' => stat_results[service_set_id]#, 'fobidden' => fobidden[service_set_id], 
-#        'fobidden_services' => (fobidden_services[service_set_id] || []).sort_by{|f| f[0]} 
+        'stat_results' => stat_results[service_set_id], 
         } 
     end
     false ? result.sort_by!{|item| item['service_set_price']} : result
@@ -109,133 +74,85 @@ class ServiceHelper::OptimizationResultPresenter
   def tarif_results_array(service_set_id)
     result = []
     case service_set_based_on_tarif_sets_or_tarif_results
-    when 'final_tarif_sets'
-      final_tarif_sets[service_set_id]['tarif_sets_by_part'].each do |tarif_set_by_part|
-        part = tarif_set_by_part[0]; tarif_set_by_part_id = tarif_set_by_part[1]
-        tarif_results_for_service_set_and_part = tarif_results[tarif_set_by_part_id][part] if tarif_results and tarif_results[tarif_set_by_part_id]
-
-        tarif_results_for_service_set_and_part.each do |tarif_id_from_tarif_results, tarif_result_for_service_set_and_part|
-
-        stat_results = {}; stat_detail_keys_to_exclude = ['month', 'call_ids']
-        tarif_result_for_service_set_and_part['price_values'].each do |price_value_detail|            
-          (price_value_detail['all_stat'].keys - stat_detail_keys_to_exclude).each do |stat_key|
-            if price_value_detail['all_stat'][stat_key].is_a?(Array)
-              stat_results[stat_key] ||= []
-              stat_results[stat_key] += price_value_detail['all_stat'][stat_key].round(2)
-            else
-              stat_results[stat_key] ||= 0
-              stat_results[stat_key] += (price_value_detail['all_stat'][stat_key] || 0).round(2)
-            end
-          end if price_value_detail['all_stat']
+    when 'final_tarif_sets_by_parts'
+      prepared_final_tarif_results_1 = prepared_final_tarif_results
+      prepared_final_tarif_results_1['tarif_results_by_part'][service_set_id].each do |service_id, prepared_tarif_result|       
+        if prepared_tarif_result['call_id_count'].to_i > level_to_show_tarif_result_by_parts or prepared_tarif_result['price_value'].to_f > level_to_show_tarif_result_by_parts
+          result << {'service_id' => service_id}.merge(prepared_tarif_result)
         end
-        
-        result << {
-#            'part' => part,
-          'tarif_class_id' => "#{part}_#{service_set_id}__#{tarif_id_from_tarif_results}",
-          'tarif_set_by_part_id' => tarif_set_by_part_id, 
-          'tarif_class_id_0' => tarif_id_from_tarif_results,
-          'price_value' => (tarif_result_for_service_set_and_part['price_value'] || 0.0).to_f,
-          'call_id_count' => tarif_result_for_service_set_and_part['call_id_count'],
-          'stat_results' => stat_results,
-#            'tarif_results_keys' => tarif_results[tarif_set_by_part_id][part].keys,
-#            'final_tarif_sets' => tarif_results[tarif_set_by_part_id][part][tarif_id_from_tarif_results]['price_values'],
-#            'tarif_id_from_tarif_results' => tarif_result_for_service_set_and_part['price_values'],
-#            'tarif_results_for_service_set_and_part' => (tarif_results_for_service_set_and_part['203'] ? tarif_results_for_service_set_and_part['203'].keys : nil) #final_tarif_sets[service_set_id]['tarif_sets_by_part'][service_set_id].map{|s| s if s[0] == "own-country-rouming/calls"},
-          }
-        end if tarif_results_for_service_set_and_part
-      end if final_tarif_sets and final_tarif_sets[service_set_id] and final_tarif_sets[service_set_id]['tarif_sets_by_part']
+      end if prepared_final_tarif_results_1 and prepared_final_tarif_results_1['tarif_results_by_part'] and prepared_final_tarif_results_1['tarif_results_by_part'][service_set_id]
+      result = result.compact
+  #    result.sort_by!{|item| item['service_set_price']}    
     when 'cons_tarif_results'
       cons_tarif_results_by_parts[service_set_id].each do |part, tarif_result_by_part|
-        result << {
-#            'part' => part,
+        temp_result = {
           'tarif_class_id' => "#{part}__#{tarif_result_by_part['tarif_class_id']}",
           'tarif_class_id_0' => tarif_result_by_part['tarif_class_id'],
           'price_value' => (tarif_result_by_part['price_value'] || 0.0).to_f,
           'call_id_count' => tarif_result_by_part['call_id_count'],
-        }
+        } 
+        result << temp_result if 
+          tarif_result_by_part['call_id_count'].to_i > level_to_show_tarif_result_by_parts or 
+          (tarif_result_by_part['price_value'] || 0.0).to_f > level_to_show_tarif_result_by_parts
+        
       end if cons_tarif_results_by_parts and cons_tarif_results_by_parts[service_set_id]
-    when 'source_to_calculate_final_tarif_sets'
-      tarif_sets_to_calculate_from_final_tarif_sets.each do |tarif_id, service_sets_result|
-        service_sets_result.each do |part, part_result|
-          part_result.each do |service_set_id_1, services |
-            result << {'service_set_id' => service_set_id_1, 'part' => part} if service_set_id_1 == service_set_id
-          end
-        end if service_sets_result
-      end if tarif_sets_to_calculate_from_final_tarif_sets
+      result = result.compact
     else
       tarif_results[service_set_id].each do |part, tarif_results_by_part|
         tarif_results_by_part.each do |service_id, tarif_result_by_part|
-          result << {
-#            'part' => part,
+          temp_result = {
             'tarif_class_id' => "#{part}__#{tarif_result_by_part['tarif_class_id']}",
             'tarif_class_id_0' => tarif_result_by_part['tarif_class_id'],
             'price_value' => (tarif_result_by_part['price_value'] || 0.0).to_f,
             'call_id_count' => tarif_result_by_part['call_id_count'],
-          }
+          } 
+          result << temp_result if 
+            tarif_result_by_part['call_id_count'].to_i > level_to_show_tarif_result_by_parts or 
+            (tarif_result_by_part['price_value'] || 0.0).to_f > level_to_show_tarif_result_by_parts
         end          
       end if tarif_results and tarif_results[service_set_id]
+      result = result.compact
     end
-    result = result.collect{|r| r if 
-      r['call_id_count'].to_i > level_to_show_tarif_result_by_parts or 
-      r['price_value'].to_f > level_to_show_tarif_result_by_parts}.compact
       false ? result.sort_by!{|r| r['tarif_class_id']} : result
   end
 
   def tarif_results_details_array(service_set_id, tarif_class_id_1)
-    details = []
-    if @service_set_based_on_tarif_sets_or_tarif_results == 'final_tarif_sets'
-      final_tarif_sets[service_set_id]['tarif_sets_by_part'].each do |tarif_set_by_part|
-        part = tarif_set_by_part[0]; tarif_set_by_part_id = tarif_set_by_part[1]
-        tarif_results_for_service_set_and_part = tarif_results[tarif_set_by_part_id][part] if tarif_results and tarif_results[tarif_set_by_part_id]
-        tarif_results_for_service_set_and_part.each do |tarif_id_from_tarif_results, tarif_result_for_service_set_and_part |
-          tarif_results_for_service_set_and_part[tarif_id_from_tarif_results]['price_values'].each do |price_value_detail|
-            tarif_class_id_1_eqv = "#{part}_#{service_set_id}__#{tarif_id_from_tarif_results}"
-
-            if tarif_class_id_1 == tarif_class_id_1_eqv
-
-              stat_results = {}; stat_detail_keys_to_exclude = ['month', 'call_ids']
-               
-              (price_value_detail['all_stat'].keys - stat_detail_keys_to_exclude).each do |stat_key|  
-                if price_value_detail['all_stat'][stat_key].is_a?(Array)
-                  stat_results[stat_key] ||= []
-                  stat_results[stat_key] += price_value_detail['all_stat'][stat_key].round(2)
-                else
-                  stat_results[stat_key] ||= 0
-                  stat_results[stat_key] += (price_value_detail['all_stat'][stat_key] || 0).round(2)
-                end
-              end if price_value_detail['all_stat']
-
-#              details << price_value_detail
-#=begin
-              details << {
-                'tarif_class_id_0' => price_value_detail['tarif_class_id'].to_s,
-                'service_category_name' => price_value_detail['service_category_name'],
-                'service_category_tarif_class_id' => price_value_detail['service_category_tarif_class_id'],
-                'service_category_group_id' => price_value_detail['service_category_group_id'],
-                'month' => price_value_detail['month'],
-                'call_id_count' => price_value_detail['call_id_count'],
-                'price_value' => (price_value_detail['price_value'] || 0.0).to_f,
-                'stat_results' => stat_results,
-                }
-#=end
-            end
-          end
-        end if tarif_results_for_service_set_and_part
-      end if final_tarif_sets and final_tarif_sets[service_set_id] and final_tarif_sets[service_set_id]['tarif_sets_by_part']
+    result = []
+    if @service_set_based_on_tarif_sets_or_tarif_results == 'final_tarif_sets_by_parts'
+      prepared_final_tarif_results_1 = prepared_final_tarif_results
+      prepared_final_tarif_results_1['tarif_detail_results_by_part'][service_set_id][tarif_class_id_1].each do |service_category_name, prepared_tarif_detail_result|       
+        if prepared_tarif_detail_result['call_id_count'].to_i > level_to_show_tarif_result_by_parts or prepared_tarif_detail_result['price_value'].to_f > level_to_show_tarif_result_by_parts
+          result << {'service_category_name' => service_category_name}.merge(prepared_tarif_detail_result)
+        end
+      end if prepared_final_tarif_results_1 and prepared_final_tarif_results_1['tarif_detail_results_by_part'] and  
+               prepared_final_tarif_results_1['tarif_detail_results_by_part'][service_set_id] and prepared_final_tarif_results_1['tarif_detail_results_by_part'][service_set_id][tarif_class_id_1]
+      result = result.compact
+  #    result.sort_by!{|item| item['service_set_price']}    
     else
-#        raise(StandardError, [tarif_class_id_1, tarif_results_ord])
       if tarif_class_id_1
-        tarif_results_details_by_month(service_set_id, tarif_class_id_1).each {|key, detail_group_by_month| details << detail_group_by_month}
+        tarif_results_details_by_month(service_set_id, tarif_class_id_1).each do |key, detail_group_by_month| 
+          temp_result = detail_group_by_month
+          result << temp_result if 
+            detail_group_by_month['call_id_count'].to_i > level_to_show_tarif_result_by_parts or 
+            (detail_group_by_month['price_value'] || 0.0).to_f > level_to_show_tarif_result_by_parts
+        end
+        result = result.compact
       else
-        [{}]
+        result = [{}]
       end
       
     end
-    details.collect{|r| r if 
-      r['call_id_count'].to_i > level_to_show_tarif_result_by_parts or 
-      r['price_value'].to_f > level_to_show_tarif_result_by_parts}.compact
   end
   
+  def prepared_final_tarif_results
+    result = Customer::Stat.get_named_results({
+      :result_type => 'optimization_results',
+      :result_name => 'prepared_final_tarif_results',
+      :user_id => user_id,
+    }, 'prepared_final_tarif_results')
+#    raise(StandardError)
+  end
+
   def final_tarif_sets
     Customer::Stat.get_named_results({
       :result_type => 'optimization_results',
@@ -244,14 +161,6 @@ class ServiceHelper::OptimizationResultPresenter
     }, 'final_tarif_sets')
   end
 
-  def tarif_sets_to_calculate_from_final_tarif_sets
-    Customer::Stat.get_named_results({
-      :result_type => 'optimization_results',
-      :result_name => 'final_tarif_sets',
-      :user_id => user_id,
-    }, 'tarif_sets_to_calculate_from_final_tarif_sets')
-  end
-  
   def groupped_identical_services
     Customer::Stat.get_named_results({
       :result_type => 'optimization_results',

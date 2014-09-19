@@ -10,7 +10,7 @@ Rails.application.routes.draw do
       get 'tarif_optimizator/calculation_status' => :calculation_status
       get 'tarif_optimizator/select_services' => :select_services
       get 'tarif_optimizator/update_minor_results' => :update_minor_results
-      get 'tarif_optimizator/prepare_final_tarif_sets' => :prepare_final_tarif_sets
+      get 'tarif_optimizator/prepare_final_tarif_results' => :prepare_final_tarif_results
       get 'tarif_optimizator/show_results' => :show_results
       get 'tarif_optimizator/show_customer_results' => :show_customer_results
       get 'tarif_optimizator/show_additional_info' => :show_additional_info

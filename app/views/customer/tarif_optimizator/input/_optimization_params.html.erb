@@ -13,8 +13,7 @@ form_item.init do |f|
 
      label(filtr_name, "service_set_based_on_tarif_sets_or_tarif_results", "What to show"),
  	 select(filtr_name, "service_set_based_on_tarif_sets_or_tarif_results", [
- 	 	["final tarif sets", "final_tarif_sets"], ["all tarif sets", "all_tarif_sets"], ["cons tarif results", "cons_tarif_results"], 
- 	 	["source_to_calculate_final_tarif_sets", "source_to_calculate_final_tarif_sets"]], 
+ 	 	["final tarif sets by parts", "final_tarif_sets_by_parts"], ["all tarif results", "all_tarif_results"], ["cons tarif results", "cons_tarif_results"]], 
  	 	{:selected => s["service_set_based_on_tarif_sets_or_tarif_results"]}, html_options ),
   	],
 
