@@ -23,7 +23,7 @@ class ServiceHelper::FinalTarifResultPreparator
   
   def self.prepare_service_set_part_of_final_tarif_set(prepared_final_tarif_results, service_set_id, final_tarif_set, input_data)
     tarif_results = input_data[:tarif_results].stringify_keys
-    groupped_identical_services = input_data[:groupped_identical_services].stringify_keys
+    groupped_identical_services = input_data[:groupped_identical_services].stringify_keys    
     
     prepared_final_tarif_results['service_set'][service_set_id] ||= {}
     final_tarif_set['tarif_sets_by_part'].each do |tarif_set_by_part|
@@ -45,11 +45,12 @@ class ServiceHelper::FinalTarifResultPreparator
             end
           end if price_value_detail['all_stat']
         end
-        
+
         prepared_final_tarif_results['service_set'][service_set_id]['identical_services'] ||= []            
-        prepared_final_tarif_results['service_set'][service_set_id]['identical_services'] << groupped_identical_services[tarif_set_by_part_id]['identical_services'] if groupped_identical_services and groupped_identical_services[tarif_set_by_part_id]
+        prepared_final_tarif_results['service_set'][service_set_id]['identical_services'] << 
+          groupped_identical_services[tarif_set_by_part_id].stringify_keys['identical_services'] if groupped_identical_services and groupped_identical_services[tarif_set_by_part_id]
         prepared_final_tarif_results['service_set'][service_set_id]['identical_services'].uniq!
-        
+        raise(StandardError) if tarif_id_from_tarif_results == -333
         prepared_final_tarif_results['service_set'][service_set_id]['service_set_price'] ||= 0.0
         prepared_final_tarif_results['service_set'][service_set_id]['service_set_count'] ||= 0
 

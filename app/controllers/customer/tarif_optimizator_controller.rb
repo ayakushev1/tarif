@@ -9,29 +9,34 @@ class Customer::TarifOptimizatorController < ApplicationController
   attr_reader :background_process_informer_operators, :background_process_informer_tarifs, :background_process_informer_tarif
 
   def prepare_final_tarif_results
-    if optimization_params.session_filtr_params['calculate_on_background'] == 'true'
-      [background_process_informer_operators, background_process_informer_tarifs, background_process_informer_tarif].each do |background_process_informer|
-        background_process_informer.clear_completed_process_info_model
-        background_process_informer.init
-      end
-      
-      Spawnling.new(:argv => "preparing_final_tarif_results for #{current_user.id}") do
-        begin
-          preparing_final_tarif_results
-        rescue => e
-          ServiceHelper::OptimizationResultSaver.new('optimization_results', 'Error on preparing_final_tarif_results', current_user.id).({:result => {:error => e}})
-          raise(e)
-        ensure
-          [@background_process_informer_operators, @background_process_informer_tarifs, @background_process_informer_tarif].each do |background_process_informer|
-            background_process_informer.finish
-            background_process_informer = nil
-          end          
-        end            
-      end     
-      redirect_to(:action => :calculation_status)
+    if optimization_params.session_filtr_params['save_interim_results_after_calculating_tarif_results'] == 'false' or 
+      optimization_params.session_filtr_params['save_interim_results_after_calculating_final_tarif_sets'] == 'false'
+      redirect_to({:action => :index}, :alert => "Невозможно обновить данные если save_interim_results_after_calculating_tarif_results or save_interim_results_after_calculating_final_tarif_sets = false")
     else
-      preparing_final_tarif_results
-      redirect_to(:action => :show_customer_results)
+      if optimization_params.session_filtr_params['calculate_on_background'] == 'true'
+        [background_process_informer_operators, background_process_informer_tarifs, background_process_informer_tarif].each do |background_process_informer|
+          background_process_informer.clear_completed_process_info_model
+          background_process_informer.init
+        end
+        
+        Spawnling.new(:argv => "preparing_final_tarif_results for #{current_user.id}") do
+          begin
+            preparing_final_tarif_results
+          rescue => e
+            ServiceHelper::OptimizationResultSaver.new('optimization_results', 'Error on preparing_final_tarif_results', current_user.id).({:result => {:error => e}})
+            raise(e)
+          ensure
+            [@background_process_informer_operators, @background_process_informer_tarifs, @background_process_informer_tarif].each do |background_process_informer|
+              background_process_informer.finish
+              background_process_informer = nil
+            end          
+          end            
+        end     
+        redirect_to(:action => :calculation_status)
+      else
+        preparing_final_tarif_results
+        redirect_to(:action => :show_customer_results)
+      end
     end
   end
   
@@ -41,29 +46,33 @@ class Customer::TarifOptimizatorController < ApplicationController
   end
 
   def update_minor_results
-    if optimization_params.session_filtr_params['calculate_on_background'] == 'true'
-      [background_process_informer_operators, background_process_informer_tarifs, background_process_informer_tarif].each do |background_process_informer|
-        background_process_informer.clear_completed_process_info_model
-        background_process_informer.init
+    if optimization_params.session_filtr_params['save_interim_results_after_calculating_tarif_results'] == 'false'
+      redirect_to({:action => :index}, :alert => "Невозможно обновить данные если save_interim_results_after_calculating_tarif_results = false")
+    else    
+      if optimization_params.session_filtr_params['calculate_on_background'] == 'true'
+        [background_process_informer_operators, background_process_informer_tarifs, background_process_informer_tarif].each do |background_process_informer|
+          background_process_informer.clear_completed_process_info_model
+          background_process_informer.init
+        end
+        
+        Spawnling.new(:argv => "updating_minor_results for #{current_user.id}") do
+          begin
+            updating_minor_results
+          rescue => e
+            ServiceHelper::OptimizationResultSaver.new('optimization_results', 'Error on updating_minor_results', current_user.id).({:result => {:error => e}})
+            raise(e)
+          ensure
+            [@background_process_informer_operators, @background_process_informer_tarifs, @background_process_informer_tarif].each do |background_process_informer|
+              background_process_informer.finish
+              background_process_informer = nil
+            end          
+          end            
+        end     
+        redirect_to(:action => :calculation_status)
+      else
+        updating_minor_results
+        redirect_to(:action => :index)
       end
-      
-      Spawnling.new(:argv => "updating_minor_results for #{current_user.id}") do
-        begin
-          updating_minor_results
-        rescue => e
-          ServiceHelper::OptimizationResultSaver.new('optimization_results', 'Error on updating_minor_results', current_user.id).({:result => {:error => e}})
-          raise(e)
-        ensure
-          [@background_process_informer_operators, @background_process_informer_tarifs, @background_process_informer_tarif].each do |background_process_informer|
-            background_process_informer.finish
-            background_process_informer = nil
-          end          
-        end            
-      end     
-      redirect_to(:action => :calculation_status)
-    else
-      updating_minor_results
-      redirect_to(:action => :index)
     end
   end
   

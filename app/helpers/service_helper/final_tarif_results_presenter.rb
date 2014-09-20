@@ -19,6 +19,7 @@ class ServiceHelper::FinalTarifResultsPresenter
     prepared_service_sets.each do |service_set_id, prepared_service_set|
       result << {'service_sets_id' => service_set_id}.merge(prepared_service_set)
     end if prepared_service_sets
+#    raise(StandardError)
     result.sort_by!{|item| item['service_set_price']}    
   end
   
