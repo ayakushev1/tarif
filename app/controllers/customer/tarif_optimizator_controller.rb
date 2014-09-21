@@ -311,6 +311,10 @@ class Customer::TarifOptimizatorController < ApplicationController
     service_choices.session_filtr_params['common_services_id']  || []
   end
   
+  def what_format_of_results
+    optimization_params.session_filtr_params['what_format_of_results'] || 'results_for_customer'
+  end
+  
   def saved_tarif_optimization_inputs
 #    @saved_tarif_optimization_inputs ||= 
     tarif_optimization_inputs_saver('user_input').results
@@ -350,7 +354,8 @@ class Customer::TarifOptimizatorController < ApplicationController
         'eliminate_identical_tarif_sets' => 'true',
         'use_price_comparison_in_current_tarif_set_calculation' => 'true',
         'save_current_tarif_set_calculation_history' => 'false',
-        'part_sort_criteria_in_price_optimization' => 'auto',        
+        'part_sort_criteria_in_price_optimization' => 'auto',   
+        'what_format_of_results' => 'results_for_customer',     
       } 
 #      raise(StandardError, session[:filtr]['optimization_params_filtr'])
     end

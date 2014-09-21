@@ -5,7 +5,7 @@ class ServiceHelper::TarifOptimizator
   attr_reader :tarif_list_generator, :final_tarif_set_generator, :stat_function_collector, :query_constructor, :optimization_result_saver, :minor_result_saver, 
               :final_tarif_sets_saver, :background_process_informer_operators, :background_process_informer_tarifs, :background_process_informer_tarif, 
               :performance_checker, :current_tarif_optimization_results, :tarif_optimization_sql_builder, :max_formula_order_collector, 
-              :calls_stat_calculator, :prepared_final_tarif_results_saver
+              :calls_stat_calculator, :prepared_final_tarif_results_saver, :operator_description
 #входные данные              
   attr_reader :options, :operator_id, :fq_tarif_region_id  
 # параметры оптимизации 
@@ -57,6 +57,7 @@ class ServiceHelper::TarifOptimizator
       @background_process_informer_operators = options[:background_process_informer_operators] || ServiceHelper::BackgroundProcessInformer.new('operators_optimization', user_id)
       @background_process_informer_tarifs = options[:background_process_informer_tarifs] || ServiceHelper::BackgroundProcessInformer.new('tarifs_optimization', user_id)
       @background_process_informer_tarif = options[:background_process_informer_tarif] || ServiceHelper::BackgroundProcessInformer.new('tarif_optimization', user_id)
+      @operator_description = {}; Category.operators.all.each {|r| @operator_description[r['id'].to_s] = r}
     end
   end
   
@@ -235,7 +236,7 @@ class ServiceHelper::TarifOptimizator
           :common_services => tarif_list_generator.common_services,          
         }.stringify_keys)
       end
-
+#      raise(StandardError)
       if save_interim_results_after_calculating_tarif_results and save_interim_results_after_calculating_final_tarif_sets
         prepare_and_save_final_tarif_results_by_tarif_for_presenatation(operator, tarif, accounting_period)
       else
@@ -243,6 +244,12 @@ class ServiceHelper::TarifOptimizator
           :final_tarif_sets => final_tarif_set_generator.final_tarif_sets,
           :tarif_results => final_tarif_set_generator.tarif_results,
           :groupped_identical_services => final_tarif_set_generator.groupped_identical_services,
+          :service_description => tarif_list_generator.service_description, 
+          :operator_description => operator_description, 
+          :categories => query_constructor.categories_as_hash,
+          :tarif_categories => query_constructor.tarif_class_categories,
+          :tarif_category_groups => query_constructor.category_groups,
+          :tarif_class_categories_by_category_group => query_constructor.tarif_class_categories_by_category_group,
         }.stringify_keys)
       end      
       
@@ -330,11 +337,18 @@ class ServiceHelper::TarifOptimizator
       
       performance_checker.run_check_point('save_final_tarif_sets_by_tarif', 3) do
         background_process_informer_tarif.increase_current_value(0, "override final_tarif_sets")
+#        raise(StandardError)
         final_tarif_sets_saver.override(
           {:operator_id => operator.to_i, :tarif_id => tarif.to_i, :accounting_period => accounting_period, :result => {
             :final_tarif_sets => final_tarif_set_generator.final_tarif_sets,
             :tarif_results => final_tarif_set_generator.tarif_results,
             :groupped_identical_services => final_tarif_set_generator.groupped_identical_services,
+            :service_description => tarif_list_generator.service_description,
+            :operator_description => operator_description,
+            :categories => query_constructor.categories_as_hash,
+            :tarif_categories => query_constructor.tarif_class_categories,
+            :tarif_category_groups => query_constructor.category_groups,
+            :tarif_class_categories_by_category_group => query_constructor.tarif_class_categories_by_category_group,
             :current_tarif_set_calculation_history => final_tarif_set_generator.current_tarif_set_calculation_history,
             }}
         ) if save_interim_results_after_calculating_final_tarif_sets
@@ -348,14 +362,20 @@ class ServiceHelper::TarifOptimizator
   def prepare_and_save_final_tarif_results_by_tarif_for_presenatation(operator, tarif, accounting_period, input_data = {}, saved_results = nil)
     performance_checker.run_check_point('prepare_and_save_final_tarif_results_by_tarif_for_presenatation', 4) do
       background_process_informer_tarif.increase_current_value(0, "get saved final_tarif_sets")
-#        raise(StandardError)
       saved_results ||= final_tarif_sets_saver.results({:operator_id => operator, :tarif_id => tarif, :accounting_period => accounting_period})
+#        raise(StandardError)
       
       background_process_informer_tarif.increase_current_value(0, "calculate final_tarif_set_preparator")
       prepared_final_tarif_results = ServiceHelper::FinalTarifResultPreparator.prepare_final_tarif_results_by_tarif({
-        :final_tarif_sets => saved_results['final_tarif_sets'],
-        :tarif_results => saved_results['tarif_results'],
-        :groupped_identical_services => saved_results['groupped_identical_services'],
+        :final_tarif_sets => saved_results['final_tarif_sets'].stringify_keys,
+        :tarif_results => saved_results['tarif_results'].stringify_keys,
+        :groupped_identical_services => saved_results['groupped_identical_services'].stringify_keys,
+        :service_description => saved_results['service_description'].stringify_keys,
+        :operator_description => saved_results['operator_description'].stringify_keys,
+        :categories => saved_results['categories'].stringify_keys,
+        :tarif_categories => saved_results['tarif_categories'].stringify_keys,
+        :tarif_category_groups => saved_results['tarif_category_groups'].stringify_keys,
+        :tarif_class_categories_by_category_group => saved_results['tarif_class_categories_by_category_group'].stringify_keys,
         :operator => operator, 
         :tarif => tarif, 
       })

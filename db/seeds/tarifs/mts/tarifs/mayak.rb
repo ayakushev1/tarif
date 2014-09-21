@@ -2,13 +2,14 @@
 @tc = ServiceHelper::TarifCreator.new(_mts)
 @tc.create_tarif_class({
   :id => _mts_mayak, :name => 'Маяк', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _tarif,
+  :features => {:http => 'http://www.mts.ru/mob_connect/tariffs/tariffs/mayak/'},
   :dependency => {
     :categories => [_tcgsc_calls, _tcgsc_sms, _tcgsc_mms, _tcgsc_internet],
     :incompatibility => {}, #{group_name => [tarif_class_ids]}
     :general_priority => _gp_tarif_without_limits,
     :other_tarif_priority => {:lower => [], :higher => []},
     :prerequisites => [],
-    :multiple_use => false
+    :multiple_use => false,    
   } } )
 
 

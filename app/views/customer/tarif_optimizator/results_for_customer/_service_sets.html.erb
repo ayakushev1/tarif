@@ -1,0 +1,59 @@
+<%
+#raise(StandadError)
+table.init do |t|
+  t.caption = 'Список лучших тарифов'
+  t.base_name = 'service_sets'
+  t.current_id_name = 'service_sets_id'
+  t.pagination_per_page = 10
+  t.id_name = 'service_sets_id'
+  model_keys = t.model.collect {|row| row.keys }.flatten.uniq.collect{|key| key }.compact  
+  t.heads = ['Оператор', 'Тариф', 'Стоимость в месяц, руб', 'Кол-во обработанных записей', 'Общие услуги и тарифные опции', 
+  	'Взаимозаменяемые опции', 'Кол-во минут', 'Кол-во смс и ммс', 'Объем интернета, Мб']
+  
+  t.set_fields do |f|
+  	tarif_id = f['tarif'].to_s if f['tarif']
+  	operator_name = (f['operator_description']['name'] if f and f['operator_description'])
+  	tarif_name = (f['service_description'][tarif_id]['name'] if f and tarif_id and f['service_description'] and f['service_description'][tarif_id])
+  	tarif_http = (f['service_description'][tarif_id]['http'] if f and tarif_id and f['service_description'] and f['service_description'][tarif_id])
+  	tarif_cost = (f['service_set_price'].to_f.round(0) if f and f['service_set_price'])
+  	service_set_count = (f['service_set_count'].to_i if f and f['service_set_count'])
+
+    services = (f['service_sets_id'].split('_') - [tarif_id]).map do |service_id|
+    	if f and f['service_description'] and f['service_description'][service_id]
+    		service_name = f['service_description'][service_id]['name']
+    		service_http = f['service_description'][service_id]['http']
+    	end      	 
+        link_to_if(service_http, service_name, service_http)     	
+    end.compact.join(', ') if f['service_sets_id']
+
+    identical_services = f['identical_services'].map do |service_id|     	
+    	if f and f['service_description'] and f['service_description'][service_id]
+    		service_name = f['service_description'][service_id]['name']
+    		service_http = f['service_description'][service_id]['http']
+    	end      	 
+        link_to_if(service_http, service_name, service_http)     	
+    end.compact.join(', ') if f['identical_services']
+    
+    if f and f['stat_results']
+    	calls_volume = f['stat_results']['sum_duration_minute'].round(0) if f['stat_results']['sum_duration_minute']
+    	sms_volume = f['stat_results']['count_volume'].round(0) if f['stat_results']['count_volume']
+    	internet_volume = f['stat_results']['sum_volume'].round(0) if f['stat_results']['sum_volume']
+    end
+     
+  	[
+     operator_name,     
+  	 link_to_if(tarif_http, tarif_name, tarif_http),    
+     tarif_cost,      
+     service_set_count,      
+     services,
+     identical_services,
+     calls_volume,
+     sms_volume,
+     internet_volume,
+#     f['stat_results']
+#	 model_keys,    
+  	] 
+  	
+  end
+end
+%>

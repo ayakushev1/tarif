@@ -1,7 +1,19 @@
 class ServiceHelper::FinalTarifResultPreparator
   
+  def self.service_set_services_description(service_ids, service_description)
+    service_set_services_description = {}
+    service_ids.each do |service_id|
+      service_set_services_description[service_id] = {'name' => nil, 'http' => nil}
+      if service_description[service_id]
+        service_set_services_description[service_id]['name'] = service_description[service_id].attributes['name']
+        service_set_services_description[service_id]['http'] = service_description[service_id].attributes['features'].stringify_keys['http'] if service_description[service_id].attributes['features']
+      end
+    end
+    service_set_services_description
+  end
+  
   def self.prepare_final_tarif_results_by_tarif(input_data)
-    final_tarif_sets = input_data[:final_tarif_sets].stringify_keys
+    final_tarif_sets = input_data[:final_tarif_sets]
     operator = input_data[:operator]
     tarif = input_data[:tarif]
     
@@ -22,8 +34,10 @@ class ServiceHelper::FinalTarifResultPreparator
   end
   
   def self.prepare_service_set_part_of_final_tarif_set(prepared_final_tarif_results, service_set_id, final_tarif_set, input_data)
-    tarif_results = input_data[:tarif_results].stringify_keys
-    groupped_identical_services = input_data[:groupped_identical_services].stringify_keys    
+    tarif_results = input_data[:tarif_results]
+    groupped_identical_services = input_data[:groupped_identical_services]    
+    operator_description = input_data[:operator_description][input_data[:operator].to_s].attributes.extract!('name')
+    service_description = input_data[:service_description]
     
     prepared_final_tarif_results['service_set'][service_set_id] ||= {}
     final_tarif_set['tarif_sets_by_part'].each do |tarif_set_by_part|
@@ -57,12 +71,16 @@ class ServiceHelper::FinalTarifResultPreparator
         prepared_final_tarif_results['service_set'][service_set_id]['service_set_price'] += (tarif_result_for_service_set_and_part['price_value'] || 0.0).to_f
         prepared_final_tarif_results['service_set'][service_set_id]['service_set_count'] += (tarif_result_for_service_set_and_part['call_id_count'] || 0).to_i
         
+        prepared_final_tarif_results['service_set'][service_set_id]['service_description'] = service_set_services_description(service_set_id.split('_'), service_description)
+        prepared_final_tarif_results['service_set'][service_set_id]['operator_description'] = operator_description
+#        raise(StandardError)
       end if tarif_results_for_service_set_and_part
     end if final_tarif_set['tarif_sets_by_part']        
   end
   
   def self.prepare_tarif_result_part_of_final_tarif_set(prepared_final_tarif_results, service_set_id, final_tarif_set, input_data)
-    tarif_results = input_data[:tarif_results].stringify_keys
+    tarif_results = input_data[:tarif_results]
+    service_description = input_data[:service_description]
 
     prepared_final_tarif_results['tarif_results'][service_set_id]||= {}
     final_tarif_set['tarif_sets_by_part'].each do |tarif_set_by_part|
@@ -92,12 +110,55 @@ class ServiceHelper::FinalTarifResultPreparator
         prepared_final_tarif_results['tarif_results'][service_set_id][tarif_id_from_tarif_results]['price_value'] += (tarif_result_for_service_set_and_part['price_value'] || 0.0).to_f
         prepared_final_tarif_results['tarif_results'][service_set_id][tarif_id_from_tarif_results]['call_id_count'] += tarif_result_for_service_set_and_part['call_id_count']
         
+        prepared_final_tarif_results['tarif_results'][service_set_id][tarif_id_from_tarif_results]['service_description'] = service_set_services_description([tarif_id_from_tarif_results.to_s], service_description)
+
         end if tarif_results_for_service_set_and_part
     end if final_tarif_set and final_tarif_set['tarif_sets_by_part']
   end
   
+  def self.tarif_detail_results_description(price_value_detail, input_data)
+    categories = input_data[:categories]
+    tarif_categories = input_data[:tarif_categories]
+    tarif_category_groups = input_data[:tarif_category_groups]
+    tarif_class_categories_by_category_group = input_data[:tarif_class_categories_by_category_group]
+    service_category_tarif_class_id = price_value_detail['service_category_tarif_class_id']
+    service_category_group_id = price_value_detail['service_category_group_id']
+
+    service_category_description = { 'service_category_rouming_id' => [], 'service_category_geo_id' => [], 'service_category_partner_type_id' => [],
+       'service_category_calls_id' => [], 'service_category_one_time_id' => [], 'service_category_periodic_id' => [],}
+    
+    tarif_categories_to_go = (service_category_group_id < 0) ? 
+      [service_category_tarif_class_id.to_s] : tarif_class_categories_by_category_group[service_category_group_id.to_s].map(&:to_s)
+
+    tarif_categories_to_go.each do |tcsc_id|
+      tarif_category = tarif_categories[tcsc_id].attributes
+
+#      raise(StandardError) if service_category_group_id    
+
+      service_category_description['service_category_rouming_id'] << categories[tarif_category['service_category_rouming_id'].to_s].attributes['name'] if 
+        tarif_category['service_category_rouming_id'] and categories[tarif_category['service_category_rouming_id'].to_s]
+
+      service_category_description['service_category_geo_id'] << categories[tarif_category['service_category_geo_id'].to_s].attributes['name'] if 
+        tarif_category['service_category_geo_id'] and categories[tarif_category['service_category_geo_id'].to_s]
+
+      service_category_description['service_category_partner_type_id'] << categories[tarif_category['service_category_partner_type_id'].to_s].attributes['name'] if 
+        tarif_category['service_category_partner_type_id'] and categories[tarif_category['service_category_partner_type_id'].to_s]
+
+      service_category_description['service_category_calls_id'] << categories[tarif_category['service_category_calls_id'].to_s].attributes['name'] if 
+        tarif_category['service_category_calls_id'] and categories[tarif_category['service_category_calls_id'].to_s]
+
+      service_category_description['service_category_one_time_id'] << categories[tarif_category['service_category_one_time_id'].to_s].attributes['name'] if 
+        tarif_category['service_category_one_time_id'] and categories[tarif_category['service_category_one_time_id'].to_s]
+
+      service_category_description['service_category_periodic_id'] << categories[tarif_category['service_category_periodic_id'].to_s].attributes['name'] if 
+        tarif_category['service_category_periodic_id'] and categories[tarif_category['service_category_periodic_id'].to_s]
+    end
+    
+    service_category_description
+  end
+  
   def self.prepare_tarif_detail_result_part_of_final_tarif_set(prepared_final_tarif_results, service_set_id, final_tarif_set, input_data)
-    tarif_results = input_data[:tarif_results].stringify_keys
+    tarif_results = input_data[:tarif_results]
 
     prepared_final_tarif_results['tarif_detail_results'][service_set_id] ||= {}
     final_tarif_set['tarif_sets_by_part'].each do |tarif_set_by_part|
@@ -132,13 +193,15 @@ class ServiceHelper::FinalTarifResultPreparator
           prepared_final_tarif_results['tarif_detail_results'][service_set_id][s_id][sc_name]['service_category_name'] = price_value_detail['service_category_name']
           prepared_final_tarif_results['tarif_detail_results'][service_set_id][s_id][sc_name]['service_category_tarif_class_id'] = price_value_detail['service_category_tarif_class_id']
           prepared_final_tarif_results['tarif_detail_results'][service_set_id][s_id][sc_name]['service_category_group_id'] = price_value_detail['service_category_group_id']
+          prepared_final_tarif_results['tarif_detail_results'][service_set_id][s_id][sc_name]['service_category_description'] = tarif_detail_results_description(price_value_detail, input_data)
+
         end if tarif_result_for_service_set_and_part['price_values']
       end if tarif_results_for_service_set_and_part
     end if final_tarif_set and final_tarif_set['tarif_sets_by_part']
   end
  
   def self.prepare_tarif_result_part_of_final_tarif_set_by_part(prepared_final_tarif_results, service_set_id, final_tarif_set, input_data)
-    tarif_results = input_data[:tarif_results].stringify_keys
+    tarif_results = input_data[:tarif_results]
 
     prepared_final_tarif_results['tarif_results_by_part'][service_set_id] ||= {}
     final_tarif_set['tarif_sets_by_part'].each do |tarif_set_by_part|
@@ -179,7 +242,7 @@ class ServiceHelper::FinalTarifResultPreparator
   end
 
   def self.prepare_tarif_detail_result_part_of_final_tarif_set_by_part(prepared_final_tarif_results, service_set_id, final_tarif_set, input_data)
-    tarif_results = input_data[:tarif_results].stringify_keys
+    tarif_results = input_data[:tarif_results]
 
     prepared_final_tarif_results['tarif_detail_results_by_part'][service_set_id] ||= {}
     final_tarif_set['tarif_sets_by_part'].each do |tarif_set_by_part|

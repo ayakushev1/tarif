@@ -2,9 +2,9 @@ class ServiceHelper::QueryConstructor
   include ::ParameterHelper
   attr_reader :context, :parameters, :criteria_where_hash, :criteria_category, :categories_where_hash,
               :tarif_classes_categories_where_hash, :category_groups_where_hash
-  attr_reader :comparison_operators, :categories, :childs_category, :tarif_class_categories, :category_groups, 
+  attr_reader :comparison_operators, :categories, :categories_as_hash, :childs_category, :tarif_class_categories, :category_groups, 
               :options, :tarif_class_ids, :criterium_ids, :user_id, :category_ids, :service_priorities, :call_ids_by_tarif_class_id,
-              :tarif_class_categories_by_tarif_class, :service_category_group_ids_by_tarif_class
+              :tarif_class_categories_by_tarif_class, :tarif_class_categories_by_category_group, :service_category_group_ids_by_tarif_class
   attr_reader :performance_checker
   
   def initialize(context, options = {})
@@ -183,8 +183,11 @@ class ServiceHelper::QueryConstructor
   end
   
   def load_service_categories
-    @categories = []; @childs_category = [];      
-    Service::Category.where(:id => category_ids).order(:level).each { |c| categories[c.id] = c }  
+    @categories = []; @childs_category = []; @categories_as_hash = {}
+    Service::Category.where(:id => category_ids).order(:level).each do |c|
+      categories_as_hash[c.id] = c 
+      categories[c.id] = c 
+    end  
     calculate_childs_category      
   end
   
@@ -215,7 +218,11 @@ class ServiceHelper::QueryConstructor
   end
   
   def load_service_category_tarif_class_ids_by_tarif_class
-    @tarif_class_categories_by_tarif_class = {}
+    @tarif_class_categories_by_tarif_class = {}; @tarif_class_categories_by_category_group = {}
+    Service::CategoryTarifClass.where(:tarif_class_id => tarif_class_ids).active.where.not(:as_standard_category_group_id => nil).#original.
+      group("as_standard_category_group_id").pluck("as_standard_category_group_id, array_agg(id)").
+      each {|ctc| tarif_class_categories_by_category_group[ctc[0]] =  ctc[1]}        
+
     Service::CategoryTarifClass.where(:tarif_class_id => tarif_class_ids).active.where(:as_standard_category_group_id => nil).#original.
       group("tarif_class_id").pluck("tarif_class_id, array_agg(id)").
       each {|ctc| tarif_class_categories_by_tarif_class[ctc[0]] =  ctc[1]}        

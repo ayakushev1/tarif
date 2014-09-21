@@ -18,6 +18,13 @@ form_item.init do |f|
   	],
 
   	[
+     label(filtr_name, "what_format_of_results", "what format of results?"),
+ 	 select(filtr_name, "what_format_of_results", [
+ 	 	["tarif results by parts", "results_by_parts"], ["tarif results by services", "results_by_services"], ["tarif results for customer", "results_for_customer"]], 
+ 	 	{:selected => s["what_format_of_results"]}, html_options ),
+  	],
+
+  	[
   	 label(filtr_name, "operator_id", "Оператор"),
   	 collection_select(filtr_name, "operator_id", Category.where(:id => [1025, 1028, 1030]), :id, :name, {:selected => s["operator_id"]}, html_options ),
 

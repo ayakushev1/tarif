@@ -2,14 +2,15 @@
 #Smart+
 @tc = ServiceHelper::TarifCreator.new(_mts)
 @tc.create_tarif_class({
-  :id => _mts_smart_plus, :name => 'Smart+', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _tarif,
+  :id => _mts_smart_plus, :name => 'Smart+', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _tarif,  
+  :features => {:http => 'http://www.mts.ru/mob_connect/tariffs/tariffs/smart_plus/'},
   :dependency => {
     :categories => [_tcgsc_calls, _tcgsc_sms, _tcgsc_mms, _tcgsc_internet],
     :incompatibility => {}, #{group_name => [tarif_class_ids]}
     :general_priority => _gp_tarif_with_limits,
     :other_tarif_priority => {:lower => [], :higher => []},
     :prerequisites => [],
-    :multiple_use => false
+    :multiple_use => false,
   } } )
 
 #Добавление новых service_category_group
