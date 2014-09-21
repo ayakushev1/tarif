@@ -12,7 +12,7 @@ class ServiceHelper::TarifOptimizator
   attr_reader :optimization_params, :check_sql_before_running, :execute_additional_sql, :service_ids_batch_size
 #настройки вывода результатов
   attr_reader  :simplify_tarif_results, :save_tarif_results_ord, :analyze_memory_used, :output_call_ids_to_tarif_results, :output_call_count_to_tarif_results, 
-               :analyze_query_constructor_performance, :save_interim_results_after_calculating_tarif_results, :save_interim_results_after_calculating_final_tarif_sets
+               :analyze_query_constructor_performance, :save_interim_results_after_calculating_tarif_results#, :save_interim_results_after_calculating_final_tarif_sets
 #local
   attr_reader :calls_count_by_parts, :user_id, :accounting_period
   
@@ -39,7 +39,7 @@ class ServiceHelper::TarifOptimizator
     @analyze_query_constructor_performance = (options[:analyze_query_constructor_performance] == 'true' ? true : false) 
     @output_call_ids_to_tarif_results = false; @output_call_count_to_tarif_results = false
     @save_interim_results_after_calculating_tarif_results = (options[:save_interim_results_after_calculating_tarif_results] == 'true' ? true : false)
-    @save_interim_results_after_calculating_final_tarif_sets = (options[:save_interim_results_after_calculating_final_tarif_sets] == 'true' ? true : false)
+#    @save_interim_results_after_calculating_final_tarif_sets = (options[:save_interim_results_after_calculating_final_tarif_sets] == 'true' ? true : false)
   end
   
   def init_additional_general_classes
@@ -133,7 +133,7 @@ class ServiceHelper::TarifOptimizator
   end
   
   def prepare_and_save_final_tarif_results
-    return nil if !(save_interim_results_after_calculating_tarif_results and save_interim_results_after_calculating_final_tarif_sets)
+    return nil if !(save_interim_results_after_calculating_tarif_results)# and save_interim_results_after_calculating_final_tarif_sets)
     performance_checker.run_check_point('prepare_and_save_final_tarif_results', 1) do
       background_process_informer_operators.init(0.0, tarif_list_generator.operators.size)
       background_process_informer_operators.increase_current_value(0, "clean_output_results")
@@ -237,7 +237,7 @@ class ServiceHelper::TarifOptimizator
         }.stringify_keys)
       end
 #      raise(StandardError)
-      if save_interim_results_after_calculating_tarif_results and save_interim_results_after_calculating_final_tarif_sets
+      if save_interim_results_after_calculating_tarif_results #and save_interim_results_after_calculating_final_tarif_sets
         prepare_and_save_final_tarif_results_by_tarif_for_presenatation(operator, tarif, accounting_period)
       else
         prepare_and_save_final_tarif_results_by_tarif_for_presenatation(operator, tarif, accounting_period, nil,  {
@@ -351,7 +351,7 @@ class ServiceHelper::TarifOptimizator
             :tarif_class_categories_by_category_group => query_constructor.tarif_class_categories_by_category_group,
             :current_tarif_set_calculation_history => final_tarif_set_generator.current_tarif_set_calculation_history,
             }}
-        ) if save_interim_results_after_calculating_final_tarif_sets
+        ) if save_interim_results_after_calculating_tarif_results #save_interim_results_after_calculating_final_tarif_sets
       end 
             
       final_tarif_set_generator = nil if save_interim_results_after_calculating_tarif_results

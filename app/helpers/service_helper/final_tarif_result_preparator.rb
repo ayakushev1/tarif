@@ -5,8 +5,8 @@ class ServiceHelper::FinalTarifResultPreparator
     service_ids.each do |service_id|
       service_set_services_description[service_id] = {'name' => nil, 'http' => nil}
       if service_description[service_id]
-        service_set_services_description[service_id]['name'] = service_description[service_id].attributes['name']
-        service_set_services_description[service_id]['http'] = service_description[service_id].attributes['features'].stringify_keys['http'] if service_description[service_id].attributes['features']
+        service_set_services_description[service_id]['name'] = service_description[service_id]['name']
+        service_set_services_description[service_id]['http'] = service_description[service_id]['features'].stringify_keys['http'] if service_description[service_id]['features']
       end
     end
     service_set_services_description
@@ -36,7 +36,7 @@ class ServiceHelper::FinalTarifResultPreparator
   def self.prepare_service_set_part_of_final_tarif_set(prepared_final_tarif_results, service_set_id, final_tarif_set, input_data)
     tarif_results = input_data[:tarif_results]
     groupped_identical_services = input_data[:groupped_identical_services]    
-    operator_description = input_data[:operator_description][input_data[:operator].to_s].attributes.extract!('name')
+    operator_description = input_data[:operator_description][input_data[:operator].to_s]['name']
     service_description = input_data[:service_description]
     
     prepared_final_tarif_results['service_set'][service_set_id] ||= {}
@@ -110,7 +110,7 @@ class ServiceHelper::FinalTarifResultPreparator
         prepared_final_tarif_results['tarif_results'][service_set_id][tarif_id_from_tarif_results]['call_id_count'] ||= 0
 
         prepared_final_tarif_results['tarif_results'][service_set_id][tarif_id_from_tarif_results]['price_value'] += (tarif_result_for_service_set_and_part['price_value'] || 0.0).to_f
-        prepared_final_tarif_results['tarif_results'][service_set_id][tarif_id_from_tarif_results]['call_id_count'] += tarif_result_for_service_set_and_part['call_id_count']
+        prepared_final_tarif_results['tarif_results'][service_set_id][tarif_id_from_tarif_results]['call_id_count'] += (tarif_result_for_service_set_and_part['call_id_count'] || 0).to_i
         
         prepared_final_tarif_results['tarif_results'][service_set_id][tarif_id_from_tarif_results]['service_description'] = service_set_services_description([tarif_id_from_tarif_results.to_s], service_description)
 
@@ -133,15 +133,15 @@ class ServiceHelper::FinalTarifResultPreparator
       [service_category_tarif_class_id.to_s] : tarif_class_categories_by_category_group[service_category_group_id.to_s].map(&:to_s)
 
     tarif_categories_to_go.each do |tcsc_id|
-      tarif_category = tarif_categories[tcsc_id].attributes
+      tarif_category = tarif_categories[tcsc_id]#.attributes
 
 #      raise(StandardError) if service_category_group_id    
 
-      service_category_description['service_category_rouming_id'] << categories[tarif_category['service_category_rouming_id'].to_s].attributes['name'] if 
+      service_category_description['service_category_rouming_id'] << categories[tarif_category['service_category_rouming_id'].to_s]['name'] if 
         tarif_category['service_category_rouming_id'] and categories[tarif_category['service_category_rouming_id'].to_s]
 
       if tarif_category['service_category_geo_id'] and categories[tarif_category['service_category_geo_id'].to_s]
-        geo_name = categories[tarif_category['service_category_geo_id'].to_s].attributes['name']
+        geo_name = categories[tarif_category['service_category_geo_id'].to_s]['name']
 #        raise(StandardError) if geo_name == 'услуги в Европу МТС'
         eval_strings = Service::Criterium.where(:service_category_id => tarif_category['service_category_geo_id'].to_i).
           where.not(:eval_string => nil).pluck(:eval_string)
@@ -159,16 +159,16 @@ class ServiceHelper::FinalTarifResultPreparator
       end
         
 
-      service_category_description['service_category_partner_type_id'] << categories[tarif_category['service_category_partner_type_id'].to_s].attributes['name'] if 
+      service_category_description['service_category_partner_type_id'] << categories[tarif_category['service_category_partner_type_id'].to_s]['name'] if 
         tarif_category['service_category_partner_type_id'] and categories[tarif_category['service_category_partner_type_id'].to_s]
 
-      service_category_description['service_category_calls_id'] << categories[tarif_category['service_category_calls_id'].to_s].attributes['name'] if 
+      service_category_description['service_category_calls_id'] << categories[tarif_category['service_category_calls_id'].to_s]['name'] if 
         tarif_category['service_category_calls_id'] and categories[tarif_category['service_category_calls_id'].to_s]
 
-      service_category_description['service_category_one_time_id'] << categories[tarif_category['service_category_one_time_id'].to_s].attributes['name'] if 
+      service_category_description['service_category_one_time_id'] << categories[tarif_category['service_category_one_time_id'].to_s]['name'] if 
         tarif_category['service_category_one_time_id'] and categories[tarif_category['service_category_one_time_id'].to_s]
 
-      service_category_description['service_category_periodic_id'] << categories[tarif_category['service_category_periodic_id'].to_s].attributes['name'] if 
+      service_category_description['service_category_periodic_id'] << categories[tarif_category['service_category_periodic_id'].to_s]['name'] if 
         tarif_category['service_category_periodic_id'] and categories[tarif_category['service_category_periodic_id'].to_s]
     end
     
@@ -206,7 +206,7 @@ class ServiceHelper::FinalTarifResultPreparator
           prepared_final_tarif_results['tarif_detail_results'][service_set_id][s_id][sc_name]['call_id_count'] ||= 0
   
           prepared_final_tarif_results['tarif_detail_results'][service_set_id][s_id][sc_name]['price_value'] += (price_value_detail['price_value'] || 0.0).to_f
-          prepared_final_tarif_results['tarif_detail_results'][service_set_id][s_id][sc_name]['call_id_count'] += price_value_detail['call_id_count']
+          prepared_final_tarif_results['tarif_detail_results'][service_set_id][s_id][sc_name]['call_id_count'] += (price_value_detail['call_id_count'] || 0).to_i
           
           prepared_final_tarif_results['tarif_detail_results'][service_set_id][s_id][sc_name]['service_category_name'] = price_value_detail['service_category_name']
           prepared_final_tarif_results['tarif_detail_results'][service_set_id][s_id][sc_name]['service_category_tarif_class_id'] = price_value_detail['service_category_tarif_class_id']
@@ -253,7 +253,7 @@ class ServiceHelper::FinalTarifResultPreparator
         prepared_final_tarif_results['tarif_results_by_part'][service_set_id][tarif_class_id]['call_id_count'] ||= 0
 
         prepared_final_tarif_results['tarif_results_by_part'][service_set_id][tarif_class_id]['price_value'] += (tarif_result_for_service_set_and_part['price_value'] || 0.0).to_f
-        prepared_final_tarif_results['tarif_results_by_part'][service_set_id][tarif_class_id]['call_id_count'] += tarif_result_for_service_set_and_part['call_id_count']
+        prepared_final_tarif_results['tarif_results_by_part'][service_set_id][tarif_class_id]['call_id_count'] += (tarif_result_for_service_set_and_part['call_id_count'] || 0).to_i
         
         end if tarif_results_for_service_set_and_part
     end if final_tarif_set and final_tarif_set['tarif_sets_by_part']
@@ -299,7 +299,7 @@ class ServiceHelper::FinalTarifResultPreparator
           prepared_final_tarif_results['tarif_detail_results_by_part'][service_set_id][tarif_class_id][s_id]['call_id_count'] ||= 0
   
           prepared_final_tarif_results['tarif_detail_results_by_part'][service_set_id][tarif_class_id][s_id]['price_value'] += (tarif_result_for_service_set_and_part['price_value'] || 0.0).to_f
-          prepared_final_tarif_results['tarif_detail_results_by_part'][service_set_id][tarif_class_id][s_id]['call_id_count'] += tarif_result_for_service_set_and_part['call_id_count']
+          prepared_final_tarif_results['tarif_detail_results_by_part'][service_set_id][tarif_class_id][s_id]['call_id_count'] += (tarif_result_for_service_set_and_part['call_id_count'] || 0).to_i
           
         end if tarif_result_for_service_set_and_part['price_values']
         

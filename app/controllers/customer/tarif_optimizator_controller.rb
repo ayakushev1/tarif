@@ -9,8 +9,7 @@ class Customer::TarifOptimizatorController < ApplicationController
   attr_reader :background_process_informer_operators, :background_process_informer_tarifs, :background_process_informer_tarif
 
   def prepare_final_tarif_results
-    if optimization_params.session_filtr_params['save_interim_results_after_calculating_tarif_results'] == 'false' or 
-      optimization_params.session_filtr_params['save_interim_results_after_calculating_final_tarif_sets'] == 'false'
+    if optimization_params.session_filtr_params['save_interim_results_after_calculating_tarif_results'] == 'false' #or optimization_params.session_filtr_params['save_interim_results_after_calculating_final_tarif_sets'] == 'false'
       redirect_to({:action => :index}, :alert => "Невозможно обновить данные если save_interim_results_after_calculating_tarif_results or save_interim_results_after_calculating_final_tarif_sets = false")
     else
       if optimization_params.session_filtr_params['calculate_on_background'] == 'true'
@@ -280,7 +279,7 @@ class Customer::TarifOptimizatorController < ApplicationController
    :analyze_memory_used => optimization_params.session_filtr_params['analyze_memory_used'], 
    :analyze_query_constructor_performance => optimization_params.session_filtr_params['analyze_query_constructor_performance'], 
    :save_interim_results_after_calculating_tarif_results => optimization_params.session_filtr_params['save_interim_results_after_calculating_tarif_results'], 
-   :save_interim_results_after_calculating_final_tarif_sets => optimization_params.session_filtr_params['save_interim_results_after_calculating_final_tarif_sets'], 
+#   :save_interim_results_after_calculating_final_tarif_sets => optimization_params.session_filtr_params['save_interim_results_after_calculating_final_tarif_sets'], 
 
    :service_ids_batch_size => optimization_params.session_filtr_params['service_ids_batch_size'], 
    :accounting_period => service_choices.session_filtr_params['accounting_period'],
@@ -345,7 +344,7 @@ class Customer::TarifOptimizatorController < ApplicationController
         'analyze_memory_used' => 'false',
         'analyze_query_constructor_performance' => 'false',
         'save_interim_results_after_calculating_tarif_results' => 'false',
-        'save_interim_results_after_calculating_final_tarif_sets' => 'false',
+#        'save_interim_results_after_calculating_final_tarif_sets' => 'false',
         'service_ids_batch_size' => 10,
         'use_short_tarif_set_name' => 'true',
         'show_zero_tarif_result_by_parts' => 'false',
