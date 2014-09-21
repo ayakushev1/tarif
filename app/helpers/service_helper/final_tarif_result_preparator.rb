@@ -71,7 +71,9 @@ class ServiceHelper::FinalTarifResultPreparator
         prepared_final_tarif_results['service_set'][service_set_id]['service_set_price'] += (tarif_result_for_service_set_and_part['price_value'] || 0.0).to_f
         prepared_final_tarif_results['service_set'][service_set_id]['service_set_count'] += (tarif_result_for_service_set_and_part['call_id_count'] || 0).to_i
         
-        prepared_final_tarif_results['service_set'][service_set_id]['service_description'] = service_set_services_description(service_set_id.split('_'), service_description)
+        service_set_ids = (service_set_id.split('_') + prepared_final_tarif_results['service_set'][service_set_id]['identical_services'].flatten).uniq
+#        raise(StandardError) if !prepared_final_tarif_results['service_set'][service_set_id]['identical_services'].blank?
+        prepared_final_tarif_results['service_set'][service_set_id]['service_description'] = service_set_services_description(service_set_ids, service_description)
         prepared_final_tarif_results['service_set'][service_set_id]['operator_description'] = operator_description
 #        raise(StandardError)
       end if tarif_results_for_service_set_and_part
