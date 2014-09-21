@@ -8,25 +8,13 @@ table.init do |t|
   model_keys = t.model.collect {|row| row.keys }.flatten.uniq.collect{|key| key unless [].include?(key)}.compact  
   t.heads = ['Услуга', 'Стоимость в месяц, руб', 'Кол-во обработанных записей', 'Кол-во минут', 'Кол-во смс и ммс', 'Объем интернета, Мб']
   t.set_fields do |f| 
-  	service_id = f['service_id'].to_s if f['service_id']
-  	service_name = (f['service_description'][service_id]['name'] if f and service_id and f['service_description'] and f['service_description'][service_id])
-  	service_http = (f['service_description'][service_id]['http'] if f and service_id and f['service_description'] and f['service_description'][service_id])
-  	service_cost = (f['price_value'].to_f.round(0) if f and f['price_value'])
-  	service_count = (f['call_id_count'].to_i if f and f['call_id_count'])
-
-    if f and f['stat_results']
-    	calls_volume = f['stat_results']['sum_duration_minute'].round(0) if f['stat_results']['sum_duration_minute']
-    	sms_volume = f['stat_results']['count_volume'].round(0) if f['stat_results']['count_volume']
-    	internet_volume = f['stat_results']['sum_volume'].round(0) if f['stat_results']['sum_volume']
-    end
-     
   	[
-  	 link_to_if(service_http, service_name, service_http),    
-     service_cost,      
-     service_count,      
-     calls_volume,
-     sms_volume,
-     internet_volume,
+  	 link_to_if(f['service_http'], f['service_name'], f['service_http']),    
+     f['service_cost'],      
+     f['service_count'],      
+     f['calls_volume'],
+     f['sms_volume'],
+     f['internet_volume'],
 #     f['stat_results'],
 #	 model_keys,    
   	] 

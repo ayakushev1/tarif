@@ -19,8 +19,43 @@ class ServiceHelper::FinalTarifResultsPresenter
     prepared_service_sets.each do |service_set_id, prepared_service_set|
       result << {'service_sets_id' => service_set_id}.merge(prepared_service_set)
     end if prepared_service_sets
-#    raise(StandardError)
-    result.sort_by!{|item| item['service_set_price']}    
+    result = result.compact
+    new_result = []
+    result.each do |f|
+      additions = {}
+      
+      tarif_id = f['tarif'].to_s if f['tarif']
+      
+      additions['operator_name'] = (f['operator_description']['name'] if f and f['operator_description'])
+      additions['tarif_name'] = (f['service_description'][tarif_id]['name'] if f and tarif_id and f['service_description'] and f['service_description'][tarif_id])
+      additions['tarif_http'] = (f['service_description'][tarif_id]['http'] if f and tarif_id and f['service_description'] and f['service_description'][tarif_id])
+      additions['tarif_cost'] = (f['service_set_price'].to_f.round(0) if f and f['service_set_price'])
+      additions['service_set_count'] = (f['service_set_count'].to_i if f and f['service_set_count'])
+        
+      additions['services'] = (f['service_sets_id'].split('_') - [tarif_id]).map do |service_id|
+        if f and f['service_description'] and f['service_description'][service_id]
+          {'service_name' => f['service_description'][service_id]['name'], 'service_http' => f['service_description'][service_id]['http']}
+        end        
+      end.compact if f['service_sets_id']
+  
+      additions['identical_services'] = f['identical_services'].map do |identical_service_group|
+        identical_services_for_one_group = identical_service_group.map do |service_id|      
+          if f and f['service_description'] and f['service_description'][service_id] 
+            {'service_name' => f['service_description'][service_id]['name'],  'service_http' => f['service_description'][service_id]['http']}
+          end
+        end.compact if identical_service_group
+        identical_services_for_one_group
+      end.compact if f['identical_services']
+      
+      if f and f['stat_results']
+        additions['calls_volume'] = f['stat_results']['sum_duration_minute'].round(0) if f['stat_results']['sum_duration_minute']
+        additions['sms_volume'] = f['stat_results']['count_volume'].round(0) if f['stat_results']['count_volume']
+        additions['internet_volume'] = f['stat_results']['sum_volume'].round(0) if f['stat_results']['sum_volume']
+      end
+
+      new_result << f.merge(additions)
+    end
+    new_result.sort_by!{|item| item['service_set_price']}    
   end
   
   def customer_tarif_results_array(service_set_id)
@@ -32,7 +67,25 @@ class ServiceHelper::FinalTarifResultsPresenter
       end
     end if prepared_tarif_results_1 and prepared_tarif_results_1[service_set_id]
     result = result.compact
-#    result.sort_by!{|item| item['service_set_price']}    
+    new_result = []
+    result.each do |f|
+      additions = {}
+      
+      service_id = f['service_id'].to_s if f['service_id']  
+      additions['service_name'] = (f['service_description'][service_id]['name'] if f and service_id and f['service_description'] and f['service_description'][service_id])
+      additions['service_http'] = (f['service_description'][service_id]['http'] if f and service_id and f['service_description'] and f['service_description'][service_id])
+      additions['service_cost'] = (f['price_value'].to_f.round(0) if f and f['price_value'])
+      additions['service_count'] = (f['call_id_count'].to_i if f and f['call_id_count'])
+  
+      if f and f['stat_results']
+        additions['calls_volume'] = f['stat_results']['sum_duration_minute'].round(0) if f['stat_results']['sum_duration_minute']
+        additions['sms_volume'] = f['stat_results']['count_volume'].round(0) if f['stat_results']['count_volume']
+        additions['internet_volume'] = f['stat_results']['sum_volume'].round(0) if f['stat_results']['sum_volume']
+      end
+      new_result << f.merge(additions)
+    end
+    new_result
+#    new_result.sort_by!{|item| (item['rouming'] || "") + (item['calls'] || "")}    
   end
     
   def customer_tarif_detail_results_array(service_set_id, service_id)
@@ -44,7 +97,25 @@ class ServiceHelper::FinalTarifResultsPresenter
       end
     end if prepared_tarif_detail_results_1 and prepared_tarif_detail_results_1[service_set_id] and prepared_tarif_detail_results_1[service_set_id][service_id]
     result = result.compact
-#    result.sort_by!{|item| item['service_set_price']}    
+    new_result = []
+    result.each do |f|
+      additions = {}
+      if f and f['stat_results']        
+        additions['calls_volume'] = f['stat_results']['sum_duration_minute'].round(0) if f['stat_results']['sum_duration_minute']
+        additions['sms_volume'] = f['stat_results']['count_volume'].round(0) if f['stat_results']['count_volume']
+        additions['internet_volume'] = f['stat_results']['sum_volume'].round(0) if f['stat_results']['sum_volume']
+      end
+      
+      if f and f['service_category_description']
+        additions['rouming'] = f['service_category_description']['service_category_rouming_id'].uniq.join(', ')    
+        additions['geo'] = f['service_category_description']['service_category_geo_id'].uniq.join(', ')    
+        additions['partner'] = f['service_category_description']['service_category_partner_type_id'].uniq.join(', ')    
+        additions['calls'] = f['service_category_description']['service_category_calls_id'].uniq.join(', ')    
+        additions['fix'] = (f['service_category_description']['service_category_one_time_id'] + f['service_category_description']['service_category_periodic_id']).uniq.join(', ')    
+      end
+      new_result << f.merge(additions)
+    end
+    new_result.sort_by!{|item| (item['rouming'] || "") + (item['calls'] || "")}    
   end
       
   def prepared_service_sets

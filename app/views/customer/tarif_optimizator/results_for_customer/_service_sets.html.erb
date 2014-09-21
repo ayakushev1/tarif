@@ -11,48 +11,31 @@ table.init do |t|
   	'Взаимозаменяемые опции', 'Кол-во минут', 'Кол-во смс и ммс', 'Объем интернета, Мб']
   
   t.set_fields do |f|
-  	tarif_id = f['tarif'].to_s if f['tarif']
-  	operator_name = (f['operator_description']['name'] if f and f['operator_description'])
-  	tarif_name = (f['service_description'][tarif_id]['name'] if f and tarif_id and f['service_description'] and f['service_description'][tarif_id])
-  	tarif_http = (f['service_description'][tarif_id]['http'] if f and tarif_id and f['service_description'] and f['service_description'][tarif_id])
-  	tarif_cost = (f['service_set_price'].to_f.round(0) if f and f['service_set_price'])
-  	service_set_count = (f['service_set_count'].to_i if f and f['service_set_count'])
-
-    services = (f['service_sets_id'].split('_') - [tarif_id]).map do |service_id|
+    services = f['services'].map do |service_id|
     	if f and f['service_description'] and f['service_description'][service_id]
     		service_name = f['service_description'][service_id]['name']
     		service_http = f['service_description'][service_id]['http']
     	end      	 
         link_to_if(service_http, service_name, service_http)	
-    end.compact.join(', ') if f['service_sets_id']
+    end.join(', ') if f['services']
 
     identical_services = f['identical_services'].map do |identical_service_group|
-    	identical_services_for_one_group = identical_service_group.map do |service_id|     	
-	    	if f and f['service_description'] and f['service_description'][service_id] 
-	    		service_name = f['service_description'][service_id]['name']
-	    		service_http = f['service_description'][service_id]['http']
-	    	end
-	    	link_to_if(service_http, service_name, service_http) if !service_name.blank?      	 
+    	identical_services_for_one_group = identical_service_group.map do |item|     	
+	    	link_to_if(item['service_http'], item['service_name'], item['service_http'])      	 
 	    end.compact.join(', ') if identical_service_group
         "(#{identical_services_for_one_group})"
-    end.compact.join(', ') if f['identical_services']
+    end.join(', ') if f['identical_services']
     
-    if f and f['stat_results']
-    	calls_volume = f['stat_results']['sum_duration_minute'].round(0) if f['stat_results']['sum_duration_minute']
-    	sms_volume = f['stat_results']['count_volume'].round(0) if f['stat_results']['count_volume']
-    	internet_volume = f['stat_results']['sum_volume'].round(0) if f['stat_results']['sum_volume']
-    end
-     
   	[
-     operator_name,     
-  	 link_to_if(tarif_http, tarif_name, tarif_http),    
-     tarif_cost,      
-     service_set_count,      
+     f['operator_name'],     
+  	 link_to_if(f['tarif_http'], f['tarif_name'], f['tarif_http']),    
+     f['tarif_cost'],      
+     f['service_set_count'],      
      services,
      identical_services,
-     calls_volume,
-     sms_volume,
-     internet_volume,
+     f['calls_volume'],
+     f['sms_volume'],
+     f['internet_volume'],
 #     f['stat_results']
 #	 model_keys,    
   	] 
