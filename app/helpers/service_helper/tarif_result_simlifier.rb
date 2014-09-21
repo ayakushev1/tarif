@@ -80,7 +80,8 @@ class ServiceHelper::TarifResultSimlifier
 #    raise(StandardError, [updated_tarif_sets['200'], nil, tarif_sets['200'], nil, nil, sub_tarif_sets_with_zero_results_1])
     updated_tarif_sets = reorder_tarif_sets(updated_tarif_sets, updated_tarif_results)
 #    raise(StandardError) if !updated_tarif_results.keys.include?('312_204')
-    updated_tarif_sets, updated_tarif_results = group_identical_tarif_sets(updated_tarif_sets, updated_tarif_results, services_to_not_excude) if eliminate_identical_tarif_sets
+    updated_tarif_sets, updated_tarif_results = group_identical_tarif_sets(updated_tarif_sets, updated_tarif_results, services_to_not_excude, eliminate_identical_tarif_sets)
+#    updated_tarif_sets, updated_tarif_results = group_identical_tarif_sets(updated_tarif_sets, updated_tarif_results, services_to_not_excude) if eliminate_identical_tarif_sets
 #    raise(StandardError) if !updated_tarif_results.keys.include?('312_204')
 #    raise(StandardError, [updated_tarif_results['336'].keys, nil,nil, tarif_results['336'].keys, nil,nil,nil, sub_tarif_sets_with_zero_results_1])
 #    raise(StandardError, [updated_tarif_results.keys, nil,nil, tarif_results.keys, nil,nil,nil, sub_tarif_sets_with_zero_results_1])
@@ -142,7 +143,7 @@ class ServiceHelper::TarifResultSimlifier
     reordered_tarif_sets
   end
   
-  def group_identical_tarif_sets(updated_tarif_sets, updated_tarif_results, services_to_not_excude)
+  def group_identical_tarif_sets(updated_tarif_sets, updated_tarif_results, services_to_not_excude, eliminate_identical_tarif_sets)
     @groupped_identical_services = {}
     updated_tarif_set_list = []
     updated_cons_tarif_results = calculate_updated_cons_tarif_results(updated_tarif_results)
@@ -151,7 +152,7 @@ class ServiceHelper::TarifResultSimlifier
     end
     groupped_tarif_results.each do |key, groupped_tarif_result_ids|
       services_to_leave_in_tarif_set_index = 0
-      if groupped_tarif_result_ids.size > 1
+      if groupped_tarif_result_ids.size > 1 and eliminate_identical_tarif_sets
         identical_tarif_sets = groupped_tarif_result_ids.map{|g| g[0]}
         identical_services = find_identical_services(identical_tarif_sets)
         services_to_leave_in_tarif_set = services_to_not_excude.map(&:to_s) & identical_services         
