@@ -39,7 +39,7 @@ stf << { :id => _stf_fixed_price_if_used_in_1_day_duration, :price_unit_id => _r
          :description => '',  :formula => {
            :tarif_condition => true,
            :group_by => 'day', 
-           :stat_params => {:sum_duration => "sum((description->>'duration')::float)", :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
+           :stat_params => {:sum_duration => "sum((description->>'duration')::float)"},
            :method => "case when sum_duration > 0.0 then price_formulas.price else 0.0 end"} }#
 
 stf << { :id => _stf_fixed_price_if_used_in_1_day_volume, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _day, :name => 'fixed fee if volume is used during day', 
