@@ -30,7 +30,7 @@ _sctcg_litva_and_latvia_rouming_internet = {:name => '_sctcg_litva_and_latvia_ro
        
        :multiple_use_of_tarif_option => {
          :group_by => 'day',
-         :stat_params => {:tarif_option_count_of_usage => "ceil(sum((description->>'volume')::float) / 100.0)"},
+         :stat_params => {:tarif_option_count_of_usage => "ceil(sum((description->>'volume')::float) / 100.0)", :sum_volume => "sum((description->>'volume')::float)"},
          :method => "price_formulas.price * tarif_option_count_of_usage" } } } )
 
 @tc.add_tarif_class_categories

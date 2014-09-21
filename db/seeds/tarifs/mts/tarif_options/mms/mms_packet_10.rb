@@ -26,7 +26,8 @@
        
        :multiple_use_of_tarif_option => {
          :group_by => 'month',
-         :stat_params => {:tarif_option_count_of_usage => "ceil(count(description->>'volume') / 10)"},
+         :stat_params => {:tarif_option_count_of_usage => "ceil(count(description->>'volume') / 10)",
+                          :count_volume => "count(description->>'volume')"},
          :method => "price_formulas.price * tarif_option_count_of_usage" } } } )
  
 #Without region, mms, Outcoming

@@ -35,7 +35,7 @@
 #TODO#Звонки на абонентов тарифного плана "Твоя страна", 1 руб/мин, никак не сделать
 #Own and home regions, calls, incoming
   category = {:name => '_sctcg_own_home_regions_calls_incoming', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_in}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_zero_sum_duration_second, :price => 0.0})
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 0.0})
 
 #Own and home regions, calls, outcoming, to_own_and_home_region, to_own_operator
   category = {:name => '_sctcg_own_home_regions_calls_to_own_home_regions_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_own_operator}
@@ -79,7 +79,8 @@
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 4.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
    :formula => {
      :stat_params => {:sum_duration => "sum(((description->>'duration')::float)/60.0)",
-                      :times_of_14_minutes => "sum(ceil(ceil(((description->>'duration')::float)/60.0)/14))",},
+                      :times_of_14_minutes => "sum(ceil(ceil(((description->>'duration')::float)/60.0)/14))",
+                      :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
      :method => 'price_formulas.price * times_of_14_minutes + (sum_duration - times_of_14_minutes) * 1.0'}, } )
 
 #Own and home regions, Calls, outcoming, to_armenia
@@ -87,7 +88,8 @@
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 8.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
    :formula => {
      :stat_params => {:sum_duration => "sum(((description->>'duration')::float)/60.0)",
-                      :times_of_4_minutes => "sum(ceil(ceil(((description->>'duration')::float)/60.0)/4))",},
+                      :times_of_4_minutes => "sum(ceil(ceil(((description->>'duration')::float)/60.0)/4))",
+                      :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
      :method => 'price_formulas.price * times_of_4_minutes + (sum_duration - times_of_4_minutes) * 0.0'}, } )
 
 #Own and home regions, Calls, outcoming, to_vietnam_south_korea_singapur
@@ -96,7 +98,8 @@
    :formula => {
      :stat_params => {:sum_duration_minute_between_5_and_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) between 5.0 and 10.0 then ceil(((description->>'duration')::float)/60.0) - 5 else 0 end)",
                       :sum_duration_minute_less_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) < 5.0 then ceil(((description->>'duration')::float)/60.0) else 0 end)",
-                      :sum_duration_minute_more_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 10.0 then ceil(((description->>'duration')::float)/60.0) - 10.0 else 0 end)",},
+                      :sum_duration_minute_more_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 10.0 then ceil(((description->>'duration')::float)/60.0) - 10.0 else 0 end)",
+                      :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
      :method => 'price_formulas.price * sum_duration_minute_between_5_and_10 + 4.5 * (sum_duration_minute_less_5 + sum_duration_minute_more_10)'}, } )
 
 #Own and home regions, Calls, outcoming, to_other_sic
@@ -105,7 +108,8 @@
    :formula => {
      :stat_params => {:sum_duration_minute_between_5_and_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) between 5.0 and 10.0 then ceil(((description->>'duration')::float)/60.0) - 5 else 0 end)",
                       :sum_duration_minute_less_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) < 5.0 then ceil(((description->>'duration')::float)/60.0) else 0 end)",
-                      :sum_duration_minute_more_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 10.0 then ceil(((description->>'duration')::float)/60.0) - 10.0 else 0 end)",},
+                      :sum_duration_minute_more_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 10.0 then ceil(((description->>'duration')::float)/60.0) - 10.0 else 0 end)",
+                      :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
      :method => 'price_formulas.price * sum_duration_minute_between_5_and_10 + 4.5 * (sum_duration_minute_less_5 + sum_duration_minute_more_10)'}, } )
 
 #Own and home regions, Calls, outcoming, to_europe
@@ -168,7 +172,8 @@
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 4.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
    :formula => {
      :stat_params => {:sum_duration => "sum(((description->>'duration')::float)/60.0)",
-                      :times_of_14_minutes => "sum(ceil(ceil(((description->>'duration')::float)/60.0)/14))",},
+                      :times_of_14_minutes => "sum(ceil(ceil(((description->>'duration')::float)/60.0)/14))",
+                      :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
      :method => 'price_formulas.price * times_of_14_minutes + (sum_duration - times_of_14_minutes) * 1.0'}, } )
 
 #Own country, Calls, outcoming, to_armenia
@@ -176,7 +181,8 @@
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 8.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
    :formula => {
      :stat_params => {:sum_duration => "sum(((description->>'duration')::float)/60.0)",
-                      :times_of_4_minutes => "sum(ceil(ceil(((description->>'duration')::float)/60.0)/4))",},
+                      :times_of_4_minutes => "sum(ceil(ceil(((description->>'duration')::float)/60.0)/4))",
+                      :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
      :method => 'price_formulas.price * times_of_4_minutes + (sum_duration - times_of_4_minutes) * 0.0'}, } )
 
 #Own country, Calls, outcoming, to_vietnam_south_korea_singapur
@@ -185,7 +191,8 @@
    :formula => {
      :stat_params => {:sum_duration_minute_between_5_and_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) between 5.0 and 10.0 then ceil(((description->>'duration')::float)/60.0) - 5 else 0 end)",
                       :sum_duration_minute_less_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) < 5.0 then ceil(((description->>'duration')::float)/60.0) else 0 end)",
-                      :sum_duration_minute_more_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 10.0 then ceil(((description->>'duration')::float)/60.0) - 10.0 else 0 end)",},
+                      :sum_duration_minute_more_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 10.0 then ceil(((description->>'duration')::float)/60.0) - 10.0 else 0 end)",
+                      :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
      :method => 'price_formulas.price * sum_duration_minute_between_5_and_10 + 4.5 * (sum_duration_minute_less_5 + sum_duration_minute_more_10)'}, } )
 
 #Own country, Calls, outcoming, to_other_sic
@@ -194,7 +201,8 @@
    :formula => {
      :stat_params => {:sum_duration_minute_between_5_and_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) between 5.0 and 10.0 then ceil(((description->>'duration')::float)/60.0) - 5 else 0 end)",
                       :sum_duration_minute_less_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) < 5.0 then ceil(((description->>'duration')::float)/60.0) else 0 end)",
-                      :sum_duration_minute_more_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 10.0 then ceil(((description->>'duration')::float)/60.0) - 10.0 else 0 end)",},
+                      :sum_duration_minute_more_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 10.0 then ceil(((description->>'duration')::float)/60.0) - 10.0 else 0 end)",
+                      :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
      :method => 'price_formulas.price * sum_duration_minute_between_5_and_10 + 4.5 * (sum_duration_minute_less_5 + sum_duration_minute_more_10)'}, } )
 
 #Own country, Calls, outcoming, to_europe

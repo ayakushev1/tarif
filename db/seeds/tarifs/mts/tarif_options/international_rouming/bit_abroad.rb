@@ -28,7 +28,7 @@ _sctcg_bit_abrod_4_rouming_internet = {:name => '_sctcg_bit_abrod_4_rouming_inte
        
        :multiple_use_of_tarif_option => {
          :group_by => 'day',
-         :stat_params => {:tarif_option_count_of_usage => "ceil(sum((description->>'volume')::float) / 5.0)"},
+         :stat_params => {:tarif_option_count_of_usage => "ceil(sum((description->>'volume')::float) / 5.0)", :sum_volume => "sum((description->>'volume')::float)"},
          :method => "price_formulas.price * tarif_option_count_of_usage" } } } )
 
 #bit_abrod_2 rouming, internet
@@ -41,7 +41,7 @@ _sctcg_bit_abrod_4_rouming_internet = {:name => '_sctcg_bit_abrod_4_rouming_inte
        
        :multiple_use_of_tarif_option => {
          :group_by => 'day',
-         :stat_params => {:tarif_option_count_of_usage => "ceil(sum((description->>'volume')::float) / 20.0)"},
+         :stat_params => {:tarif_option_count_of_usage => "ceil(sum((description->>'volume')::float) / 20.0)", :sum_volume => "sum((description->>'volume')::float)"},
          :method => "price_formulas.price * tarif_option_count_of_usage" } } } )
 
 #bit_abrod_3 rouming, internet
@@ -54,7 +54,7 @@ _sctcg_bit_abrod_4_rouming_internet = {:name => '_sctcg_bit_abrod_4_rouming_inte
        
        :multiple_use_of_tarif_option => {
          :group_by => 'day',
-         :stat_params => {:tarif_option_count_of_usage => "ceil(sum((description->>'volume')::float) / 50.0)"},
+         :stat_params => {:tarif_option_count_of_usage => "ceil(sum((description->>'volume')::float) / 50.0)", :sum_volume => "sum((description->>'volume')::float)"},
          :method => "price_formulas.price * tarif_option_count_of_usage" } } } )
 
 #bit_abrod_4 rouming, internet
@@ -67,7 +67,7 @@ _sctcg_bit_abrod_4_rouming_internet = {:name => '_sctcg_bit_abrod_4_rouming_inte
        
        :multiple_use_of_tarif_option => {
          :group_by => 'day',
-         :stat_params => {:tarif_option_count_of_usage => "ceil(sum((description->>'volume')::float) / 10.0)"},
+         :stat_params => {:tarif_option_count_of_usage => "ceil(sum((description->>'volume')::float) / 10.0)", :sum_volume => "sum((description->>'volume')::float)"},
          :method => "price_formulas.price * tarif_option_count_of_usage" } } } )
 
 @tc.add_tarif_class_categories

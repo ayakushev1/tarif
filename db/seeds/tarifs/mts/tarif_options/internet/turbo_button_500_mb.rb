@@ -26,7 +26,7 @@ scg_mts_additional_internet_500_mb_for_smart = @tc.add_service_category_group(
        
        :multiple_use_of_tarif_option => {
          :group_by => 'month',
-         :stat_params => {:tarif_option_count_of_usage => "ceil(sum((description->>'volume')::float) / 500.0)"},
+         :stat_params => {:tarif_option_count_of_usage => "ceil(sum((description->>'volume')::float) / 500.0)", :sum_volume => "sum((description->>'volume')::float)"},
          :method => "price_formulas.price * tarif_option_count_of_usage", 
        }
      }, 

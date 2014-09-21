@@ -90,7 +90,7 @@ _sctcg_all_world_sms_incoming = {:name => '_sctcg_all_world_sms_incoming', :serv
 
 
 #Own and home regions, Calls, Incoming
-  @tc.add_one_service_category_tarif_class(_sctcg_own_home_regions_calls_incoming, {}, {:calculation_order => 0,:standard_formula_id => _stf_zero_sum_duration_second, :price => 0.0})
+  @tc.add_one_service_category_tarif_class(_sctcg_own_home_regions_calls_incoming, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 0.0})
 
 #Own and home regions, Calls, Outcoming, to_own_and_home_region, to_own_operator
   @tc.add_grouped_service_category_tarif_class(_sctcg_own_home_regions_calls_to_own_home_regions_own_operator, scg_mts_ultra_included_in_tarif_calls[:id])

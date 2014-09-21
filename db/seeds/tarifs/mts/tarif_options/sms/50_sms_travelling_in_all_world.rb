@@ -25,7 +25,7 @@ _sctcg_not_russia_rouming_sms_outcoming = {:name => '_sctcg_not_russia_rouming_s
        
        :multiple_use_of_tarif_option => {
          :group_by => 'month',
-         :stat_params => {:tarif_option_count_of_usage => "ceil(count(description->>'volume') / 50)"},
+         :stat_params => {:tarif_option_count_of_usage => "ceil(count(description->>'volume') / 50)", :count_volume => "count(description->>'volume')"},
          :method => "price_formulas.price * tarif_option_count_of_usage" } } } )
 
 @tc.add_tarif_class_categories

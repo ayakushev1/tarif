@@ -8,7 +8,9 @@ stf << { :id => _stf_price_by_1_item, :price_unit_id => _rur, :volume_id => _cal
          :description => '',  :formula => {:stat_params => {:count_time => "(count(description->>'time')::integer)"}, :method => "price_formulas.price"} }#
 
 stf << { :id => _stf_zero_sum_duration_second, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _second, :name => '0 * sum_duration in seconds', 
-        :description => '',  :formula => {:params => nil, :stat_params => {:sum_duration => "sum((description->>'duration')::float)"}, :method => '0.0 * sum_duration'} } #
+        :description => '',  :formula => {:params => nil, :stat_params => {
+          :sum_duration => "sum((description->>'duration')::float)",
+          :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"}, :method => '0.0 * sum_duration'} } #
 
 stf << { :id => _stf_zero_count_volume_item, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _item, :name => '0 * count_volume in items', 
          :description => '',  :formula => {:params => nil, :stat_params => {:count_volume => "count(description->>'volume')"}, :method => '0.0 * count_volume'} } #
@@ -17,7 +19,9 @@ stf << { :id => _stf_zero_sum_volume_m_byte, :price_unit_id => _rur, :volume_id 
          :description => '',  :formula => {:params => nil, :stat_params => {:sum_volume => "sum((description->>'volume')::float)"}, :method => '0.0 * sum_volume'} }
 
 stf << { :id => _stf_price_by_sum_duration_second, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _second, :name => 'price * sum_duration in seconds', 
-         :description => '',  :formula => {:params => nil, :stat_params => {:sum_duration => "sum((description->>'duration')::float)"}, :method => 'price_formulas.price * sum_duration'} } 
+         :description => '',  :formula => {:params => nil, :stat_params => {
+           :sum_duration => "sum((description->>'duration')::float)",
+           :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"}, :method => 'price_formulas.price * sum_duration'} } 
 
 stf << { :id => _stf_price_by_count_volume_item, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _item, :name => 'price * count_volume in items', 
          :description => '',  :formula => {:params => nil, :stat_params => {:count_volume => "count((description->>'volume')::float)"}, :method => 'price_formulas.price * count_volume'} }
@@ -35,7 +39,7 @@ stf << { :id => _stf_fixed_price_if_used_in_1_day_duration, :price_unit_id => _r
          :description => '',  :formula => {
            :tarif_condition => true,
            :group_by => 'day', 
-           :stat_params => {:sum_duration => "sum((description->>'duration')::float)"},
+           :stat_params => {:sum_duration => "sum((description->>'duration')::float)", :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
            :method => "case when sum_duration > 0.0 then price_formulas.price else 0.0 end"} }#
 
 stf << { :id => _stf_fixed_price_if_used_in_1_day_volume, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _day, :name => 'fixed fee if volume is used during day', 

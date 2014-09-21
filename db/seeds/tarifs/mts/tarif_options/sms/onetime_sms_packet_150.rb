@@ -24,7 +24,7 @@ category = {:name => '_sctcg_own_home_regions_sms_to_own_home_regions', :service
        
        :multiple_use_of_tarif_option => {
          :group_by => 'month',
-         :stat_params => {:tarif_option_count_of_usage => "ceil(count(description->>'volume') / 150)"},
+         :stat_params => {:tarif_option_count_of_usage => "ceil(count(description->>'volume') / 150)", :count_volume => "count(description->>'volume')"},
          :method => "price_formulas.price * tarif_option_count_of_usage" } } } )
 
 @tc.add_tarif_class_categories

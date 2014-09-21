@@ -60,7 +60,8 @@ scg_mts_zero_without_limits_calls_first_200_minites = @tc.add_service_category_g
    :formula => {
      :stat_params => {:sum_duration_minute_between_2_and_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) between 2.0 and 5.0 then ceil(((description->>'duration')::float)/60.0) - 1 else 0 end)",
                       :sum_duration_minute_less_2 => "sum(case when ceil(((description->>'duration')::float)/60.0) < 2.0 then 1 else 0 end)",
-                      :sum_duration_minute_more_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 5.0 then ceil(((description->>'duration')::float)/60.0) - 5.0 else 0 end)",},
+                      :sum_duration_minute_more_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 5.0 then ceil(((description->>'duration')::float)/60.0) - 5.0 else 0 end)",
+                      :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
      :method => 'price_formulas.price * sum_duration_minute_between_2_and_5 + 79 * (sum_duration_minute_less_2 + sum_duration_minute_more_5)'}, } )
 
 #SIC_1, calls, incoming
@@ -74,7 +75,8 @@ scg_mts_zero_without_limits_calls_first_200_minites = @tc.add_service_category_g
    :formula => {
      :stat_params => {:sum_duration_minute_between_2_and_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) between 2.0 and 5.0 then ceil(((description->>'duration')::float)/60.0) else 0 end)",
                       :sum_duration_minute_less_2 => "sum(case when ceil(((description->>'duration')::float)/60.0) < 2.0 then 1 else 0 end)",
-                      :sum_duration_minute_more_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 5.0 then ceil(((description->>'duration')::float)/60.0) - 5.0 else 0 end)",},
+                      :sum_duration_minute_more_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 5.0 then ceil(((description->>'duration')::float)/60.0) - 5.0 else 0 end)",
+                      :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
      :method => 'price_formulas.price * sum_duration_minute_between_2_and_5 + 25 * (sum_duration_minute_less_2 + sum_duration_minute_more_5)'}, } )
 
 #SIC_2_1, calls, incoming
@@ -88,7 +90,8 @@ scg_mts_zero_without_limits_calls_first_200_minites = @tc.add_service_category_g
    :formula => {
      :stat_params => {:sum_duration_minute_between_2_and_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) between 2.0 and 5.0 then ceil(((description->>'duration')::float)/60.0) else 0 end)",
                       :sum_duration_minute_less_2 => "sum(case when ceil(((description->>'duration')::float)/60.0) < 2.0 then 1 else 0 end)",
-                      :sum_duration_minute_more_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 5.0 then ceil(((description->>'duration')::float)/60.0) - 5.0 else 0 end)",},
+                      :sum_duration_minute_more_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 5.0 then ceil(((description->>'duration')::float)/60.0) - 5.0 else 0 end)",
+                      :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
      :method => 'price_formulas.price * sum_duration_minute_between_2_and_5 + 59 * (sum_duration_minute_less_2 + sum_duration_minute_more_5)'}, } )
 
 #Other countries, calls, incoming
@@ -102,7 +105,8 @@ scg_mts_zero_without_limits_calls_first_200_minites = @tc.add_service_category_g
    :formula => {
      :stat_params => {:sum_duration_minute_between_2_and_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) between 2.0 and 5.0 then ceil(((description->>'duration')::float)/60.0) else 0 end)",
                       :sum_duration_minute_less_2 => "sum(case when ceil(((description->>'duration')::float)/60.0) < 2.0 then 1 else 0 end)",
-                      :sum_duration_minute_more_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 5.0 then ceil(((description->>'duration')::float)/60.0) - 5.0 else 0 end)",},
+                      :sum_duration_minute_more_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 5.0 then ceil(((description->>'duration')::float)/60.0) - 5.0 else 0 end)",
+                      :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
      :method => 'price_formulas.price * sum_duration_minute_between_2_and_5 + 149 * (sum_duration_minute_less_2 + sum_duration_minute_more_5)'}, } )
      
 @tc.add_tarif_class_categories
