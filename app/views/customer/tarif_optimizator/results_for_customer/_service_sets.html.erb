@@ -33,7 +33,7 @@ table.init do |t|
 	    		service_http = f['service_description'][service_id]['http']
 	    	end
 	    	link_to_if(service_http, service_name, service_http) if !service_name.blank?      	 
-	    end.compact.join(', ') if identical_service_groups
+	    end.compact.join(', ') if identical_service_group
         "(#{identical_services_for_one_group})"
     end.compact.join(', ') if f['identical_services']
     
