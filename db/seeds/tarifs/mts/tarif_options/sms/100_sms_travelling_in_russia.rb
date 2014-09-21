@@ -2,6 +2,7 @@
 @tc = ServiceHelper::TarifCreator.new(_mts)
 @tc.create_tarif_class({
   :id => _mts_100_sms_travelling_in_russia, :name => '100 SMS в поездках по России', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _special_service,
+  :features => {:http => 'http://www.mts.ru/mob_connect/roaming/n_roaming/discounts/sms_paket/'},
   :dependency => {
     :categories => [_tcgsc_sms],
     :incompatibility => {}, 

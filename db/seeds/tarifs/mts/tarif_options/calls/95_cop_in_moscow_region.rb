@@ -2,6 +2,7 @@
 @tc = ServiceHelper::TarifCreator.new(_mts)
 @tc.create_tarif_class({
   :id => _mts_95_cop_in_moscow_region, :name => '95 копеек в Московской области', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _special_service,
+  :features => {:http => 'http://www.mts.ru/mob_connect/tariffs/discounts/discounts_in_region/calls_on_all_numbers/95_kopeek/'},
   :dependency => {
     :categories => [_tcgsc_calls],
     :incompatibility => {:home_region_rouming_calls => [_mts_95_cop_in_moscow_region, _mts_region].sort}, 

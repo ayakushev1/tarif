@@ -2,6 +2,7 @@
 @tc = ServiceHelper::TarifCreator.new(_mts)
 @tc.create_tarif_class({
   :id => _mts_internet_vip, :name => 'Интернет-VIP', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _special_service,
+  :features => {:http => 'http://www.mts.ru/mobil_inet_and_tv/internet_phone/additionally_services/unlim_options/'},
   :dependency => {
     :categories => [_tcgsc_internet],
     :incompatibility => {

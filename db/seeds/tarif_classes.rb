@@ -86,6 +86,7 @@ TarifClass.create(id: _mts_red_energy, operator_id: 1030, privacy_id: 2, standar
 TarifClass.create(id: _mts_smart, operator_id: 1030, privacy_id: 2, standard_service_id: 40, name: 'Smart')
 TarifClass.create(id: _mts_smart_mini, operator_id: 1030, privacy_id: 2, standard_service_id: 40, name: 'Smart mini')
 TarifClass.create(id: _mts_smart_plus, operator_id: 1030, privacy_id: 2, standard_service_id: 40, name: 'Smart+')
+TarifClass.create(id: _mts_smart_top, operator_id: 1030, privacy_id: 2, standard_service_id: 40, name: 'Smart Top')
 TarifClass.create(id: _mts_ultra, operator_id: 1030, privacy_id: 2, standard_service_id: 40, name: 'Ultra')
 TarifClass.create(id: _mts_mts_connect_4, operator_id: 1030, privacy_id: 2, standard_service_id: 40, name: 'МТС Коннект-4')
 TarifClass.create(id: _mts_mayak, operator_id: 1030, privacy_id: 2, standard_service_id: 40, name: 'Маяк')

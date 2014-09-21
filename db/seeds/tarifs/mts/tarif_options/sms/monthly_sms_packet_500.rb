@@ -2,6 +2,7 @@
 @tc = ServiceHelper::TarifCreator.new(_mts)
 @tc.create_tarif_class({
   :id => _mts_monthly_sms_packet_500, :name => 'Пакет 500 SMS', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _special_service,
+  :features => {:http => 'http://www.mts.ru/mob_connect/messaging/sms/discount2/sms/'},
   :dependency => {
     :categories => [_tcgsc_sms],
     :incompatibility => {:monthly_sms_packet => [_mts_monthly_sms_packet_100, _mts_monthly_sms_packet_300, _mts_monthly_sms_packet_500, _mts_monthly_sms_packet_1000]}, 

@@ -138,8 +138,24 @@ class ServiceHelper::FinalTarifResultPreparator
       service_category_description['service_category_rouming_id'] << categories[tarif_category['service_category_rouming_id'].to_s].attributes['name'] if 
         tarif_category['service_category_rouming_id'] and categories[tarif_category['service_category_rouming_id'].to_s]
 
-      service_category_description['service_category_geo_id'] << categories[tarif_category['service_category_geo_id'].to_s].attributes['name'] if 
-        tarif_category['service_category_geo_id'] and categories[tarif_category['service_category_geo_id'].to_s]
+      if tarif_category['service_category_geo_id'] and categories[tarif_category['service_category_geo_id'].to_s]
+        geo_name = categories[tarif_category['service_category_geo_id'].to_s].attributes['name']
+#        raise(StandardError) if geo_name == 'услуги в Европу МТС'
+        eval_strings = Service::Criterium.where(:service_category_id => tarif_category['service_category_geo_id'].to_i).
+          where.not(:eval_string => nil).pluck(:eval_string)
+        if !eval_strings.blank? and !eval_strings[0].blank?
+          detailed_geo_name = if eval_strings[0] =~ /operator_country_groups_by_group_id/
+            country_ids = eval(eval_strings[0])
+            country_names = Category.where(:id => country_ids).pluck(:name)
+             ": (#{country_names.join(', ')})"
+          else
+            ': (не могу показать список, сообщите администратору)'
+          end          
+        end
+        
+        service_category_description['service_category_geo_id'] << geo_name + (detailed_geo_name || '')
+      end
+        
 
       service_category_description['service_category_partner_type_id'] << categories[tarif_category['service_category_partner_type_id'].to_s].attributes['name'] if 
         tarif_category['service_category_partner_type_id'] and categories[tarif_category['service_category_partner_type_id'].to_s]

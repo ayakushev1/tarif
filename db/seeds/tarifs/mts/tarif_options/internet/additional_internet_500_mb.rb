@@ -2,6 +2,7 @@
 @tc = ServiceHelper::TarifCreator.new(_mts)
 @tc.create_tarif_class({
   :id => _mts_additional_internet_500_mb, :name => 'Дополнительный пакет 500 Мб', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _special_service,
+  :features => {:http => 'http://www.mts.ru/mobil_inet_and_tv/internet_phone/additionally_services/add_smart/'},
   :dependency => {
     :categories => [_tcgsc_internet],
     :incompatibility => {
@@ -9,7 +10,7 @@
       :internet_comp => [_mts_mts_planshet, _mts_internet_mini, _mts_internet_maxi, _mts_internet_super, _mts_internet_vip]}, 
     :general_priority => _gp_tarif_option_with_limits,
     :other_tarif_priority => {:lower => [], :higher => []},
-    :prerequisites => [_mts_smart, _mts_smart_mini, _mts_smart_plus],
+    :prerequisites => [_mts_smart, _mts_smart_mini, _mts_smart_plus, _mts_smart_top],
     :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},
     :multiple_use => true
   } } )

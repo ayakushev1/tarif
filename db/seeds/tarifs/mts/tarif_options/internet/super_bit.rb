@@ -2,6 +2,7 @@
 @tc = ServiceHelper::TarifCreator.new(_mts)
 @tc.create_tarif_class({
   :id => _mts_super_bit, :name => 'СуперБИТ', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _special_service,
+  :features => {:http => 'http://www.mts.ru/mobil_inet_and_tv/internet_phone/tarifs/bit/'},
   :dependency => {
     :categories => [_tcgsc_internet],
     :incompatibility => {
@@ -10,7 +11,7 @@
     :general_priority => _gp_tarif_option_with_limits,
     :other_tarif_priority => {:lower => [_mts_mini_bit], :higher => [_mts_unlimited_internet_on_day]},
     :prerequisites => [],
-    :forbidden_tarifs => {:to_switch_on => [_mts_smart, _mts_smart_mini, _mts_smart_plus, _mts_ultra, _mts_mts_connect_4], :to_serve => []},
+    :forbidden_tarifs => {:to_switch_on => [_mts_smart, _mts_smart_mini, _mts_smart_plus, _mts_smart_top, _mts_ultra, _mts_mts_connect_4], :to_serve => []},
     :multiple_use => false
   } } )
 

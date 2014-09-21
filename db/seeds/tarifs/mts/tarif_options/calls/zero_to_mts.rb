@@ -2,6 +2,7 @@
 @tc = ServiceHelper::TarifCreator.new(_mts)
 @tc.create_tarif_class({
   :id => _mts_zero_to_mts, :name => 'Ноль на МТС', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _special_service,
+  :features => {:http => 'http://www.mts.ru/mob_connect/tariffs/discounts/discounts_in_region/calls_on_number_mts/zero_mts/'},
   :dependency => {
     :categories => [_tcgsc_calls],
     :incompatibility => {}, 

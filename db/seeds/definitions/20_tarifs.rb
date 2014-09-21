@@ -6,8 +6,11 @@ _mts_mayak = 206; _mts_your_country = 207; _mts_super_mts = 208; _mts_umnyi_dom 
 _mts_super_mts_star = 209; #тариф не забит (и его по-моему вообще уже нет)
   
   #unprocessed
-  _mts_a_mobile = 211; 
+  _mts_a_mobile = 211;
   
+  #new (after 20.09.2014) 
+_mts_smart_top = 212
+
 #common_services_ids
 _mts_own_country_rouming = 276; _mts_international_rouming = 277; _mts_own_country_rouming_internet = 312
 

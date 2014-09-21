@@ -2,12 +2,13 @@
 @tc = ServiceHelper::TarifCreator.new(_mts)
 @tc.create_tarif_class({
   :id => _mts_everywhere_as_home_smart, :name => 'Везде как дома SMART', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _special_service,
+  :features => {:http => 'http://www.mts.ru/mob_connect/roaming/calls_across_russia/discounts/vkd_smart/'},
   :dependency => {
     :categories => [_tcgsc_calls, _tcgsc_sms, _tcgsc_internet],
     :incompatibility => {}, 
     :general_priority => _gp_tarif_option,
     :other_tarif_priority => {:lower => [], :higher => []},
-    :prerequisites => [_mts_smart_mini,_mts_smart, _mts_smart_plus],
+    :prerequisites => [_mts_smart_mini,_mts_smart, _mts_smart_plus, _mts_smart_top],
     :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},
     :multiple_use => false
   } } )

@@ -2,12 +2,13 @@
 @tc = ServiceHelper::TarifCreator.new(_mts)
 @tc.create_tarif_class({
   :id => _mts_turbo_button_2_gb, :name => 'Турбо-кнопка 2 Гб', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _special_service,
+  :features => {:http => 'http://www.mts.ru/mobil_inet_and_tv/internet_phone/additionally_services/turbo_smart/'},
   :dependency => {
     :categories => [_tcgsc_internet],
     :incompatibility => {}, 
     :general_priority => _gp_tarif_option_with_limits,
     :other_tarif_priority => {:lower => [], :higher => []},
-    :prerequisites => [_mts_smart, _mts_smart_plus, _mts_ultra],
+    :prerequisites => [_mts_smart, _mts_smart_plus, _mts_smart_top, _mts_ultra],
     :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},
     :multiple_use => true
   } } )

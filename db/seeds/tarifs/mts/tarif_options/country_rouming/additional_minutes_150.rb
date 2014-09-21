@@ -2,12 +2,13 @@
 @tc = ServiceHelper::TarifCreator.new(_mts)
 @tc.create_tarif_class({
   :id => _mts_additional_minutes_150, :name => 'Дополнительные пакеты минут 150', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _special_service,
+  :features => {:http => 'http://www.mts.ru/mob_connect/tariffs/discounts/discounts_in_region/calls_on_number_mts/paketu/'},
   :dependency => {
     :categories => [_tcgsc_calls],
     :incompatibility => {}, 
     :general_priority => _gp_tarif_option,
     :other_tarif_priority => {:lower => [], :higher => []},
-    :prerequisites => [_mts_smart, _mts_smart_plus],
+    :prerequisites => [_mts_smart, _mts_smart_plus, _mts_smart_top],
     :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},
     :multiple_use => true
   } } )

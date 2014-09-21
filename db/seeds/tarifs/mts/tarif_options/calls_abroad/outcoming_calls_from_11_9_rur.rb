@@ -2,6 +2,7 @@
 @tc = ServiceHelper::TarifCreator.new(_mts)
 @tc.create_tarif_class({
   :id => _mts_outcoming_calls_from_11_9_rur, :name => 'Исходящие звонки от 11,9 руб.', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _special_service,
+  :features => {:http => 'http://www.mts.ru/mob_connect/roaming/i_roaming/discount_roaming/137/'},
   :dependency => {
     :categories => [_tcgsc_calls],
     :incompatibility => {}, 
