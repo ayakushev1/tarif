@@ -11,18 +11,14 @@ table.init do |t|
   	'Взаимозаменяемые опции', 'Кол-во минут', 'Кол-во смс и ммс', 'Объем интернета, Мб']
   
   t.set_fields do |f|
-    services = f['services'].map do |service_id|
-    	if f and f['service_description'] and f['service_description'][service_id]
-    		service_name = f['service_description'][service_id]['name']
-    		service_http = f['service_description'][service_id]['http']
-    	end      	 
-        link_to_if(service_http, service_name, service_http)	
+    services = f['services'].map do |item|
+        link_to_if(item['service_http'], item['service_name'], item['service_http'])	
     end.join(', ') if f['services']
 
     identical_services = f['identical_services'].map do |identical_service_group|
     	identical_services_for_one_group = identical_service_group.map do |item|     	
 	    	link_to_if(item['service_http'], item['service_name'], item['service_http'])      	 
-	    end.compact.join(', ') if identical_service_group
+	    end.join(', ') if identical_service_group
         "(#{identical_services_for_one_group})"
     end.join(', ') if f['identical_services']
     
