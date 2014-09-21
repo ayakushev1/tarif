@@ -23,15 +23,18 @@ table.init do |t|
     		service_name = f['service_description'][service_id]['name']
     		service_http = f['service_description'][service_id]['http']
     	end      	 
-        link_to_if(service_http, service_name, service_http)     	
+        link_to_if(service_http, service_name, service_http)	
     end.compact.join(', ') if f['service_sets_id']
 
-    identical_services = f['identical_services'].map do |service_id|     	
-    	if f and f['service_description'] and f['service_description'][service_id]
-    		service_name = f['service_description'][service_id]['name']
-    		service_http = f['service_description'][service_id]['http']
-    	end      	 
-        link_to_if(service_http, service_name, service_http)     	
+    identical_services = f['identical_services'].map do |identical_service_group|
+    	identical_services_for_one_group = identical_service_group.map do |service_id|     	
+	    	if f and f['service_description'] and f['service_description'][service_id] 
+	    		service_name = f['service_description'][service_id]['name']
+	    		service_http = f['service_description'][service_id]['http']
+	    	end
+	    	link_to_if(service_http, service_name, service_http) if !service_name.blank?      	 
+	    end.compact.join(', ') if identical_service_groups
+        "(#{identical_services_for_one_group})"
     end.compact.join(', ') if f['identical_services']
     
     if f and f['stat_results']
