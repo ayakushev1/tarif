@@ -92,12 +92,12 @@ class ServiceHelper::CurrentTarifSet
     when :min_max_difference
       max_value - min_value
     when :min_max_difference_to_max_value
-      max_value > 0 ? 1.0 - min_value / max_value : 1.0
+      (max_value > 0) ? (1.0 - min_value / max_value) : 1.0
     when :reverse_min_value
-      -min_value
+      (-min_value)
     when :auto
 #      raise(StandardError)
-      tarif_price > 0.0 ? (max_value > 0 ? 1.0 - min_value / max_value : 1.0) : min_value
+      (tarif_price > 0.0) ? ((max_value > 0) ? (1.0 - min_value / max_value) : 1.0) : min_value
     else
       part
     end
@@ -158,6 +158,8 @@ class ServiceHelper::CurrentTarifSet
     else
       @current_set_price = nil
     end
+#    raise(StandardError) if current_price == 930.5 #and (current_part_index == max_part_index - 1) #current_services == [203, 321] #current_tarif_set_by_part_services == [203, 203, 203, 203, 203, 203, 203]
+
     calculate_best_possible_price(current_part_index) if current_part_index > -1
     update_history if save_current_tarif_set_calculation_history
 #    raise(StandardError) if current_price < 1209.0 

@@ -115,6 +115,9 @@ class ServiceHelper::FinalTarifSetGenerator
         end
       end
       
+#      raise(StandardError) if current_tarif_set.current_set_price == 930.5  and 
+#        (current_tarif_set.current_part_index == current_tarif_set.max_part_index - 1) and !current_uniq_service_sets[current_tarif_set_by_part_name][:fobidden]
+
 #      raise(StandardError) if !current_uniq_service_sets[current_tarif_set_by_part_name][:fobidden]
       current_tarif_set.next_tarif_set_by_part(current_uniq_service_sets[current_tarif_set_by_part_name][:fobidden])
         
