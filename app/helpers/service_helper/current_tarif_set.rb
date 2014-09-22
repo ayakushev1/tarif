@@ -141,7 +141,7 @@ class ServiceHelper::CurrentTarifSet
   def next_tarif_set_by_part(if_current_tarif_set_by_part_fobbiden)
     return_prev_best_current_price(if_current_tarif_set_by_part_fobbiden)
     move_forward_based_on_price = if use_price_comparison_in_current_tarif_set_calculation
-      current_price < (best_possible_price * 0.995)
+      current_price < (best_possible_price - [best_possible_price * 0.01, 5].max)
     else
       false
     end
