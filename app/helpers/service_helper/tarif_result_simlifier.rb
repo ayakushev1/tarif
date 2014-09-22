@@ -43,8 +43,8 @@ class ServiceHelper::TarifResultSimlifier
     excluded_tarif_sets = []
     tarifs = tarif_sets.keys.map(&:to_i)
 #TODO проверить еще раз почему нельзя исключать common_services
-    services_to_not_excude = common_services[operator] + tarifs
-
+    services_to_not_excude = common_services[operator] + tarifs + services_that_depended_on.values.flatten
+#    raise(StandardError)
     sub_tarif_sets_with_zero_results_0 = calculate_sub_tarif_sets_with_zero_results_0(services_to_not_excude)
     sub_tarif_sets_with_zero_results_1 = calculate_sub_tarif_sets_with_zero_results_1(services_to_not_excude)
     updated_tarif_sets = {}
@@ -156,6 +156,7 @@ class ServiceHelper::TarifResultSimlifier
         identical_tarif_sets = groupped_tarif_result_ids.map{|g| g[0]}
         identical_services = find_identical_services(identical_tarif_sets)
         services_to_leave_in_tarif_set = services_to_not_excude.map(&:to_s) & identical_services         
+#        raise(StandardError)
         if !services_to_leave_in_tarif_set.blank?
           identical_tarif_sets.each_index do |identical_tarif_set_index|
             identical_tarif_set = identical_tarif_sets[identical_tarif_set_index]
@@ -170,7 +171,6 @@ class ServiceHelper::TarifResultSimlifier
         groupped_identical_services[identical_tarif_sets[services_to_leave_in_tarif_set_index]] = {:identical_services => identical_services, :identical_tarif_sets => identical_tarif_sets}        
       end
       updated_tarif_set_list << groupped_tarif_result_ids[services_to_leave_in_tarif_set_index][0]
-#      raise(StandardError)
     end
     updated_tarif_sets, updated_tarif_results = update_tarif_sets_with_groupped_tarif_results(updated_tarif_sets, updated_tarif_results, updated_tarif_set_list)
 #    raise(StandardError)
@@ -198,7 +198,7 @@ class ServiceHelper::TarifResultSimlifier
     groupped_services_sets = groupped_tarif_result_ids.map{|groupped_tarif_result_id| groupped_tarif_result_id.split('_')}
     common_services = groupped_services_sets.reduce(:&)
     identical_services = groupped_services_sets.collect{|groupped_services_set| tarif_set_id(groupped_services_set - common_services)}
-#    raise(StandardError)
+#    raise(StandardError) if ["294", "283_294"] == groupped_tarif_result_ids
     identical_services
   end
   
