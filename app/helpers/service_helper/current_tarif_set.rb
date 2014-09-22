@@ -61,7 +61,7 @@ class ServiceHelper::CurrentTarifSet
         new_cons_tarif_results_by_part[part]['price_value'].to_f if new_cons_tarif_results_by_part[part]
       end.compact.max
       parts_sort_criteria(part_sort_criteria_in_price_optimization, part, min_value, max_value)
-    end - ['periodic', 'onetime'] << 'onetime'
+    end - ['periodic']
 #    raise(StandardError, @parts)
     @tarif_sets_names_as_array = []
     @tarif_sets_services_as_array = []
