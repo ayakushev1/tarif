@@ -13,7 +13,7 @@ table.init do |t|
   t.set_fields do |f| 
   	model_keys.collect do |key|
   	  if key == 'service_set_price'
-  	  	f[key].round(2) if f[key]
+  	  	f[key].round(4) if f[key]
   	  else
   	  	f[key]
   	  end 
