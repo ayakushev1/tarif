@@ -283,8 +283,10 @@ class Customer::TarifOptimizatorController < ApplicationController
 
    :service_ids_batch_size => optimization_params.session_filtr_params['service_ids_batch_size'], 
    :accounting_period => service_choices.session_filtr_params['accounting_period'],
+   
    :services_by_operator => {
       :operators => [operator], :tarifs => {operator => tarifs}, :tarif_options => {operator => tarif_options}, 
+      :calculate_only_chosen_services => service_choices.session_filtr_params['calculate_only_chosen_services'],
       :common_services => {operator => common_services}, 
       :use_short_tarif_set_name => optimization_params.session_filtr_params['use_short_tarif_set_name'], 
       :calculate_with_multiple_use => optimization_params.session_filtr_params['calculate_with_multiple_use'],
@@ -326,9 +328,15 @@ class Customer::TarifOptimizatorController < ApplicationController
     if !session[:filtr] or session[:filtr]['service_choices_filtr'].blank?
       session[:filtr] ||= {}; session[:filtr]['service_choices_filtr'] ||= {}
       session[:filtr]['service_choices_filtr']  = if saved_tarif_optimization_inputs.blank?
-        {'tarifs_id' => [200], 'tarif_options_id' => [], 'common_services_id' => [], 'accounting_period' => accounting_period,}        
+        {
+          'tarifs_id' => [200], 
+          'tarif_options_id' => [], 
+          'common_services_id' => [], 
+          'accounting_period' => accounting_period,
+          'calculate_only_chosen_services' => 'false'
+          }        
       else
-        saved_tarif_optimization_inputs.merge({'accounting_period' => accounting_period})
+        saved_tarif_optimization_inputs.merge({'accounting_period' => accounting_period, 'calculate_only_chosen_services' => 'false'})
       end 
     end
     

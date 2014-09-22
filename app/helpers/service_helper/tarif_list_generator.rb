@@ -8,7 +8,7 @@ class ServiceHelper::TarifListGenerator
   attr_reader :gp_tarif_option, :gp_tarif_without_limits, :gp_tarif_with_limits, :gp_tarif_option_with_limits, :gp_common_service, :all_parts,
               :parts_used_as_multiple
          
-  attr_reader :calculate_with_multiple_use
+  attr_reader :calculate_with_multiple_use, :calculate_only_chosen_services
              
   
   def initialize(options = {} )
@@ -91,6 +91,7 @@ class ServiceHelper::TarifListGenerator
   
   def set_generation_params(options)
     @calculate_with_multiple_use = options[:calculate_with_multiple_use] == 'true' ? true : false
+    @calculate_only_chosen_services = options[:calculate_only_chosen_services] == 'true' ? true : false
   end
   
   def check_input_from_options
@@ -242,29 +243,46 @@ class ServiceHelper::TarifListGenerator
 
   def calculate_tarif_option_by_compatibility
     @tarif_option_by_compatibility = {}
-    service_packs_by_parts.each do |tarif, service_pack|
-      tarif_option_by_compatibility[tarif] ||= {}
-      service_pack.each do |part, services|
-        tarif_option_by_compatibility[tarif][part] ||= {}
-        if part == 'periodic'
-          periodic_incompatibility_name = 'special_periodic_for_tarif_list_generation'
-          tarif_option_by_compatibility[tarif][part][periodic_incompatibility_name] = services
-        else
+    if calculate_only_chosen_services
+      service_packs_by_parts.each do |tarif, service_pack|
+        tarif_option_by_compatibility[tarif] ||= {}
+        service_pack.each do |part, services|
+          tarif_option_by_compatibility[tarif][part] ||= {}
           services.each do |service|
-            incompatibility_groups = dependencies[service]['incompatibility']
-            incompatibility_groups.each do |incompatibility_name, incompatible_services|
-              tarif_option_by_compatibility[tarif][part][incompatibility_name] ||= []
-              tarif_option_by_compatibility[tarif][part][incompatibility_name] << service
-            end
-            
-            operator = service_description[service][:operator_id].to_i
-            if incompatibility_groups.blank? and !tarifs[operator].include?(service) and !common_services[operator].include?(service)
-              tarif_option_by_compatibility[tarif][part][service] = [service]
-            end
+            incompatibility_name = service.to_s
+            tarif_option_by_compatibility[tarif][part][incompatibility_name] = [service]
+          end
+
+          if tarif_option_by_compatibility[tarif][part].blank?
+            tarif_option_by_compatibility[tarif][part] = {""=>[]}
           end
         end
-        if tarif_option_by_compatibility[tarif][part].blank?
-          tarif_option_by_compatibility[tarif][part] = {""=>[]}
+      end
+    else
+      service_packs_by_parts.each do |tarif, service_pack|
+        tarif_option_by_compatibility[tarif] ||= {}
+        service_pack.each do |part, services|
+          tarif_option_by_compatibility[tarif][part] ||= {}
+          if part == 'periodic'
+            periodic_incompatibility_name = 'special_periodic_for_tarif_list_generation'
+            tarif_option_by_compatibility[tarif][part][periodic_incompatibility_name] = services
+          else
+            services.each do |service|
+              incompatibility_groups = dependencies[service]['incompatibility']
+              incompatibility_groups.each do |incompatibility_name, incompatible_services|
+                tarif_option_by_compatibility[tarif][part][incompatibility_name] ||= []
+                tarif_option_by_compatibility[tarif][part][incompatibility_name] << service
+              end
+              
+              operator = service_description[service][:operator_id].to_i
+              if incompatibility_groups.blank? and !tarifs[operator].include?(service) and !common_services[operator].include?(service)
+                tarif_option_by_compatibility[tarif][part][service] = [service]
+              end
+            end
+          end
+          if tarif_option_by_compatibility[tarif][part].blank?
+            tarif_option_by_compatibility[tarif][part] = {""=>[]}
+          end
         end
       end
     end
@@ -273,44 +291,63 @@ class ServiceHelper::TarifListGenerator
 
   def calculate_tarif_option_combinations
     @tarif_option_combinations = {}
-    tarif_option_by_compatibility.each do |tarif, service_pack|
-      tarif_option_combinations[tarif] ||= {}
-      service_pack.each do |part, incompatibility_groups|
-        tarif_option_combinations[tarif][part] ||= {}
-        if part == 'periodic'
-          incompatibility_groups['special_periodic_for_tarif_list_generation'].each do |service|
-            tarif_set_id = tarif_set_id([service])
-            tarif_option_combinations[tarif][part][tarif_set_id] = [service]
-          end if incompatibility_groups['special_periodic_for_tarif_list_generation']
-        else
-          incompatibility_groups.each do |incompatibility_group_name, incompatibility_group_1|
-            incompatibility_group = incompatibility_group_1 + [nil]
-            if tarif_option_combinations[tarif][part].blank?
-              incompatibility_group.each do |service|
-                tarif_set_id = tarif_set_id([service])
-                tarif_option_combinations[tarif][part][tarif_set_id] = [service]
-              end
-            else
-              current_tarif_option_combinations = tarif_option_combinations[tarif][part].dup
-              current_tarif_option_combinations.each do |current_tarif_set_id, tarif_option_combination|
-                incompatibility_group.each do |service|
-                  new_tarif_set = (tarif_option_combinations[tarif][part][current_tarif_set_id] + [service]).compact.uniq.sort
-                  new_tarif_set_id = tarif_set_id(new_tarif_set)
-                  tarif_option_combinations[tarif][part][new_tarif_set_id] = new_tarif_set
-                end
-              end
-              incompatibility_group.each do |service|
-                tarif_set_id = tarif_set_id([service])
-                tarif_option_combinations[tarif][part][tarif_set_id] = [service]
-              end
-            end
-          end                  
+    if calculate_only_chosen_services
+      tarif_option_by_compatibility.each do |tarif, service_pack|
+        tarif_option_combinations[tarif] ||= {}
+        service_pack.each do |part, incompatibility_groups|
+          next if part == 'periodic'
+          tarif_option_combinations[tarif][part] ||= {}
+          services = incompatibility_groups.values.flatten.uniq
+          tarif_set_id = tarif_set_id(services)
+          tarif_option_combinations[tarif][part][tarif_set_id] = services
+        end
+        
+        uniq_services_in_tarif_option_combinations = tarif_option_combinations[tarif].map{|c| c[1].map{|t| t[1]}}.flatten.compact.uniq
+        uniq_services_in_tarif_option_combinations.each do |service|
+          tarif_option_combinations[tarif]['periodic'] ||= {}
+          tarif_option_combinations[tarif]['periodic'][tarif_set_id([service])] = [service]
         end
       end
-      
-      uniq_services_in_tarif_option_combinations = tarif_option_combinations[tarif].map{|c| c[1].map{|t| t[1]}}.flatten.compact.uniq
-      uniq_services_in_tarif_option_combinations.each do |service|
-        tarif_option_combinations[tarif]['periodic'][tarif_set_id([service])] = [service]
+    else      
+      tarif_option_by_compatibility.each do |tarif, service_pack|
+        tarif_option_combinations[tarif] ||= {}
+        service_pack.each do |part, incompatibility_groups|
+          tarif_option_combinations[tarif][part] ||= {}
+          if part == 'periodic'
+            incompatibility_groups['special_periodic_for_tarif_list_generation'].each do |service|
+              tarif_set_id = tarif_set_id([service])
+              tarif_option_combinations[tarif][part][tarif_set_id] = [service]
+            end if incompatibility_groups['special_periodic_for_tarif_list_generation']
+          else
+            incompatibility_groups.each do |incompatibility_group_name, incompatibility_group_1|
+              incompatibility_group = incompatibility_group_1 + [nil]
+              if tarif_option_combinations[tarif][part].blank?
+                incompatibility_group.each do |service|
+                  tarif_set_id = tarif_set_id([service])
+                  tarif_option_combinations[tarif][part][tarif_set_id] = [service]
+                end
+              else
+                current_tarif_option_combinations = tarif_option_combinations[tarif][part].dup
+                current_tarif_option_combinations.each do |current_tarif_set_id, tarif_option_combination|
+                  incompatibility_group.each do |service|
+                    new_tarif_set = (tarif_option_combinations[tarif][part][current_tarif_set_id] + [service]).compact.uniq.sort
+                    new_tarif_set_id = tarif_set_id(new_tarif_set)
+                    tarif_option_combinations[tarif][part][new_tarif_set_id] = new_tarif_set
+                  end
+                end
+                incompatibility_group.each do |service|
+                  tarif_set_id = tarif_set_id([service])
+                  tarif_option_combinations[tarif][part][tarif_set_id] = [service]
+                end
+              end
+            end                  
+          end
+        end
+        
+        uniq_services_in_tarif_option_combinations = tarif_option_combinations[tarif].map{|c| c[1].map{|t| t[1]}}.flatten.compact.uniq
+        uniq_services_in_tarif_option_combinations.each do |service|
+          tarif_option_combinations[tarif]['periodic'][tarif_set_id([service])] = [service]
+        end
       end
     end
   end
@@ -334,7 +371,10 @@ class ServiceHelper::TarifListGenerator
               tarif_option_general_priority = dependencies[service]['general_priority']
               tarif_option_group << service if tarif_option_general_priority == gp_tarif_option
               tarif_option_with_limit_group << service if tarif_option_general_priority == gp_tarif_option_with_limits
-              raise(StandardError, "tarif_option #{service} has wrong general_priority") if ![gp_tarif_option, gp_tarif_option_with_limits].include?(tarif_option_general_priority)
+              if !calculate_only_chosen_services
+#TODO вернуть когда добавлю вывод ошибок в фоновом режиме вычислений
+                raise(StandardError, "tarif_option #{service} has wrong general_priority") if false #![gp_tarif_option, gp_tarif_option_with_limits].include?(tarif_option_general_priority)
+              end
             end
             new_services = tarif_option_with_limit_group + tarif_option_group
   
@@ -471,6 +511,7 @@ class ServiceHelper::TarifListGenerator
   end
 
   def calculate_tarif_options_slices
+#    raise(StandardError)
     @tarif_options_slices = {}
     tarif_option_combinations.each do |tarif, service_pack|
       operator = service_description[tarif][:operator_id].to_i

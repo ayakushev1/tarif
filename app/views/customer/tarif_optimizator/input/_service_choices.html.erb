@@ -24,6 +24,11 @@ form_item.init do |f|
   	   Customer::Call.where(:user_id => controller.current_user.id).select("description->>'accounting_period' as id, description->>'accounting_period' as name").uniq, 
   	   :id, :name, {:selected => s["accounting_period"]}, html_options ),
   	],
+  	
+  	[
+     label(filtr_name, "calculate_only_chosen_services", "Считать только выбранные тариф и опции?"),
+ 	 select(filtr_name, "calculate_only_chosen_services", [["Да", true], ["Считать все варианты", false]], {:selected => s["calculate_only_chosen_services"]}, html_options ),
+  	],
   ]
 	    
   end
