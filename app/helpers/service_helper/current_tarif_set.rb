@@ -61,7 +61,7 @@ class ServiceHelper::CurrentTarifSet
         new_cons_tarif_results_by_part[part]['price_value'].to_f if new_cons_tarif_results_by_part[part]
       end.compact.max
       parts_sort_criteria(part_sort_criteria_in_price_optimization, part, min_value, max_value)
-    end - ['periodic']
+    end - ['periodic', 'onetime'] << 'onetime'
 #    raise(StandardError, @parts)
     @tarif_sets_names_as_array = []
     @tarif_sets_services_as_array = []
@@ -99,7 +99,7 @@ class ServiceHelper::CurrentTarifSet
       (-min_value)
     when :auto
 #      raise(StandardError)
-      (tarif_price > 0.0) ? ((max_value > 0) ? (1.0 - min_value / max_value) : 1.0) : min_value
+      (tarif_price > 0.0) ? min_value : max_value
     else
       part
     end
