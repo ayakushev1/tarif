@@ -6,7 +6,7 @@
   :dependency => {
     :categories => [_tcgsc_calls],
     :incompatibility => {}, 
-    :general_priority => _gp_tarif_option_with_limits,
+    :general_priority => _gp_tarif_option,
     :other_tarif_priority => {:lower => [], :higher => []},
     :prerequisites => [_mts_smart, _mts_smart_plus, _mts_smart_top],
     :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},
