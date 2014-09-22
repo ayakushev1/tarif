@@ -92,12 +92,12 @@ class ServiceHelper::CurrentTarifSet
     when :min_max_difference
       max_value - min_value
     when :min_max_difference_to_max_value
-      (max_value > 0) ? (1.0 - min_value / max_value) : 1.0
+      (max_value > 0) ? (1.0 - min_value / max_value) : (1.0 - min_value)
     when :reverse_min_value
       (-min_value)
     when :auto
 #      raise(StandardError)
-      (tarif_price > 0.0) ? ((max_value > 0) ? (1.0 - min_value / max_value) : 1.0) : min_value
+      (tarif_price > 0.0) ? ((max_value > 0) ? (1.0 - min_value / max_value) : (1.0 - min_value)) : min_value
     else
       part
     end
