@@ -128,6 +128,8 @@ class ServiceHelper::FinalTarifResultPreparator
 
     service_category_description = { 'service_category_rouming_id' => [], 'service_category_geo_id' => [], 'service_category_partner_type_id' => [],
        'service_category_calls_id' => [], 'service_category_one_time_id' => [], 'service_category_periodic_id' => [],}
+       
+    return service_category_description if !service_category_group_id
     
     tarif_categories_to_go = (service_category_group_id < 0) ? 
       [service_category_tarif_class_id.to_s] : tarif_class_categories_by_category_group[service_category_group_id.to_s].map(&:to_s)
