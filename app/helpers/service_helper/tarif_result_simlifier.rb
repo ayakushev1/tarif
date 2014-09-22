@@ -75,16 +75,17 @@ class ServiceHelper::TarifResultSimlifier
       updated_tarif_results.extract!(tarif_set_id)
     end
     
-#    raise(StandardError) #if !updated_tarif_results.keys.include?('312_204')
-#    raise(StandardError, [updated_tarif_results['336'].keys, nil,nil, tarif_results['336'].keys, nil,nil,nil, sub_tarif_sets_with_zero_results_1])
-#    raise(StandardError, [updated_tarif_sets['200'], nil, tarif_sets['200'], nil, nil, sub_tarif_sets_with_zero_results_1])
+#    raise(StandardError) if !updated_tarif_sets[203]['periodic'].keys.include?('321')
+
     updated_tarif_sets = reorder_tarif_sets(updated_tarif_sets, updated_tarif_results)
-#    raise(StandardError) if !updated_tarif_results.keys.include?('312_204')
+#    raise(StandardError) if !updated_tarif_sets[203]['periodic'].keys.include?('321')
+
     updated_tarif_sets, updated_tarif_results = group_identical_tarif_sets(updated_tarif_sets, updated_tarif_results, services_to_not_excude, eliminate_identical_tarif_sets)
-#    updated_tarif_sets, updated_tarif_results = group_identical_tarif_sets(updated_tarif_sets, updated_tarif_results, services_to_not_excude) if eliminate_identical_tarif_sets
-#    raise(StandardError) if !updated_tarif_results.keys.include?('312_204')
-#    raise(StandardError, [updated_tarif_results['336'].keys, nil,nil, tarif_results['336'].keys, nil,nil,nil, sub_tarif_sets_with_zero_results_1])
-#    raise(StandardError, [updated_tarif_results.keys, nil,nil, tarif_results.keys, nil,nil,nil, sub_tarif_sets_with_zero_results_1])
+#    raise(StandardError) if !updated_tarif_sets[203]['periodic'].keys.include?('321')
+
+    updated_tarif_sets, updated_tarif_results = group_identical_tarif_sets(updated_tarif_sets, updated_tarif_results, services_to_not_excude, eliminate_identical_tarif_sets) if eliminate_identical_tarif_sets
+#    raise(StandardError) if !updated_tarif_sets[203]['periodic'].keys.include?('321')
+
     [updated_tarif_sets, updated_tarif_results]
   end
   
@@ -146,6 +147,7 @@ class ServiceHelper::TarifResultSimlifier
   def group_identical_tarif_sets(updated_tarif_sets, updated_tarif_results, services_to_not_excude, eliminate_identical_tarif_sets)
     @groupped_identical_services = {}
     updated_tarif_set_list = []
+
     updated_cons_tarif_results = calculate_updated_cons_tarif_results(updated_tarif_results)
     groupped_tarif_results = updated_cons_tarif_results.group_by do |updated_cons_tarif_result| 
       updated_cons_tarif_result[1]['group_criteria'].to_s + '__' + updated_cons_tarif_result[1]['parts'].join('_')  
@@ -156,24 +158,24 @@ class ServiceHelper::TarifResultSimlifier
         identical_tarif_sets = groupped_tarif_result_ids.map{|g| g[0]}
         identical_services = find_identical_services(identical_tarif_sets)
         services_to_leave_in_tarif_set = services_to_not_excude.map(&:to_s) & identical_services         
-#        raise(StandardError)
         if !services_to_leave_in_tarif_set.blank?
           identical_tarif_sets.each_index do |identical_tarif_set_index|
             identical_tarif_set = identical_tarif_sets[identical_tarif_set_index]
-#            raise(StandardError) if identical_tarif_set == '312_204'
             if (services_to_leave_in_tarif_set - identical_tarif_set.split('_')).blank?
               services_to_leave_in_tarif_set_index = identical_tarif_set_index
               break
             end
           end
         end
-#        raise(StandardError) if identical_tarif_sets.include?('312_204')
-        groupped_identical_services[identical_tarif_sets[services_to_leave_in_tarif_set_index]] = {:identical_services => identical_services, :identical_tarif_sets => identical_tarif_sets}        
+
+        groupped_identical_services[identical_tarif_sets[services_to_leave_in_tarif_set_index]] = {:identical_services => identical_services, :identical_tarif_sets => identical_tarif_sets}
       end
+#      raise(StandardError) if groupped_tarif_result_ids[0][0] == '203_322'
       updated_tarif_set_list << groupped_tarif_result_ids[services_to_leave_in_tarif_set_index][0]
     end
+
     updated_tarif_sets, updated_tarif_results = update_tarif_sets_with_groupped_tarif_results(updated_tarif_sets, updated_tarif_results, updated_tarif_set_list)
-#    raise(StandardError)
+    raise(StandardError) if !updated_tarif_sets[203]['periodic'].keys.include?('321')
     [updated_tarif_sets, updated_tarif_results]
   end
   
@@ -210,11 +212,17 @@ class ServiceHelper::TarifResultSimlifier
       new_updated_tarif_sets[tarif] ||= {}
       updated_tarif_sets_by_tarif.each do |part, updated_tarif_sets_by_tarif_by_part|
         new_updated_tarif_sets[tarif][part] ||= {}
-        updated_tarif_sets_by_tarif_by_part.each do |tarif_set_id, services|          
-          if updated_tarif_set_list.include?(tarif_set_id)
+        if part == 'periodic'
+          updated_tarif_sets_by_tarif_by_part.each do |tarif_set_id, services| 
             new_updated_tarif_sets[tarif][part][tarif_set_id] = services
-          else
-            excluded_tarif_result_ids << tarif_set_id
+          end
+        else
+          updated_tarif_sets_by_tarif_by_part.each do |tarif_set_id, services| 
+            if updated_tarif_set_list.include?(tarif_set_id)
+              new_updated_tarif_sets[tarif][part][tarif_set_id] = services
+            else
+              excluded_tarif_result_ids << tarif_set_id
+            end
           end
         end
         new_updated_tarif_sets[tarif].extract!(part) if new_updated_tarif_sets[tarif][part].blank?
