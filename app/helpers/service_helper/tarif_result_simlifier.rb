@@ -175,7 +175,7 @@ class ServiceHelper::TarifResultSimlifier
     end
 
     updated_tarif_sets, updated_tarif_results = update_tarif_sets_with_groupped_tarif_results(updated_tarif_sets, updated_tarif_results, updated_tarif_set_list)
-    raise(StandardError) if !updated_tarif_sets[203]['periodic'].keys.include?('321')
+#    raise(StandardError) if !updated_tarif_sets[203]['periodic'].keys.include?('321')
     [updated_tarif_sets, updated_tarif_results]
   end
   
