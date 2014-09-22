@@ -115,7 +115,7 @@ class ServiceHelper::FinalTarifSetGenerator
         end
       end
       
-#      raise(StandardError) if current_tarif_set.current_set_price == 930.5  and 
+#      raise(StandardError) if [203, 203, 203, 203, 203, 203, 203, 321, 203, 203, 203] == current_tarif_set.current_tarif_set_by_part_services #current_tarif_set.current_set_price == 930.5  and 
 #        (current_tarif_set.current_part_index == current_tarif_set.max_part_index - 1) and !current_uniq_service_sets[current_tarif_set_by_part_name][:fobidden]
 
 #      raise(StandardError) if !current_uniq_service_sets[current_tarif_set_by_part_name][:fobidden]

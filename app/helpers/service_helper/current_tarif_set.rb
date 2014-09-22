@@ -52,6 +52,7 @@ class ServiceHelper::CurrentTarifSet
   
   def init_tarif_sets_as_array
     @tarif_price = new_cons_tarif_results_by_parts[tarif]['periodic']['price_value'].to_f
+    
     @parts = tarif_sets_by_tarif.keys.sort_by do |part| 
       min_value = new_cons_tarif_results_by_parts.collect do |tarif_sets_name, new_cons_tarif_results_by_part| 
         new_cons_tarif_results_by_part[part]['price_value'].to_f if new_cons_tarif_results_by_part[part]
@@ -61,6 +62,7 @@ class ServiceHelper::CurrentTarifSet
       end.compact.max
       parts_sort_criteria(part_sort_criteria_in_price_optimization, part, min_value, max_value)
     end - ['periodic']
+#    raise(StandardError, @parts)
     @tarif_sets_names_as_array = []
     @tarif_sets_services_as_array = []
     @tarif_sets_prices = []
@@ -111,6 +113,7 @@ class ServiceHelper::CurrentTarifSet
     @max_tarif_set_by_part_index = tarif_sets_names_as_array.map{|ts| ts.size}
     all_services = tarif_sets_services_as_array.flatten
     @current_price = tarif_sets_prices.collect{|tarif_sets_price_by_parts| tarif_sets_price_by_parts.last}.sum + calculate_periodic_part_price_from_services(all_services)
+    @prev_current_prices = [@current_price]
     @best_possible_price = 0.0
     @min_periodic_price = @tarif_price 
     
@@ -136,6 +139,7 @@ class ServiceHelper::CurrentTarifSet
   end
 
   def next_tarif_set_by_part(if_current_tarif_set_by_part_fobbiden)
+    return_prev_best_current_price(if_current_tarif_set_by_part_fobbiden)
     move_forward_based_on_price = if use_price_comparison_in_current_tarif_set_calculation
       current_price < best_possible_price
     else
@@ -154,16 +158,29 @@ class ServiceHelper::CurrentTarifSet
     @current_part = parts[current_part_index]
     if current_part_index == max_part_index - 1
       @current_set_price = calculate_current_price_for_chosen_parts(current_part_index)# + calculate_periodic_part_price(current_part_index)
-      @current_price = current_set_price if @current_price > current_set_price 
+      if @current_price > current_set_price
+        @prev_current_prices << @current_price
+        @current_price = current_set_price 
+      end
     else
       @current_set_price = nil
     end
-#    raise(StandardError) if current_price == 930.5 #and (current_part_index == max_part_index - 1) #current_services == [203, 321] #current_tarif_set_by_part_services == [203, 203, 203, 203, 203, 203, 203]
+#    raise(StandardError) if current_set_price == 930.5 #and (current_part_index == max_part_index - 1) #current_services == [203, 321] #current_tarif_set_by_part_services == [203, 203, 203, 203, 203, 203, 203]
 
     calculate_best_possible_price(current_part_index) if current_part_index > -1
     update_history if save_current_tarif_set_calculation_history
 #    raise(StandardError) if current_price < 1209.0 
 #    @new_price
+  end
+  
+  def return_prev_best_current_price(if_current_tarif_set_by_part_fobbiden)
+    return if !if_current_tarif_set_by_part_fobbiden
+    return if current_part_index != max_part_index - 1
+    if @prev_current_prices.size > 1
+      @current_price = @prev_current_prices.pop
+    else
+      @current_price = @prev_current_prices[0]
+    end     
   end
   
   def update_history
@@ -216,6 +233,14 @@ class ServiceHelper::CurrentTarifSet
     result += calculate_periodic_part_price(upper_part_index)
     if tarif_sets_services_as_array[0..upper_part_index].flatten.include?(tarif.to_i)
 #      result += tarif_price
+    end
+    result
+  end
+  
+  def dddd(indexxx)
+    result = []
+    indexxx.each_index do |part_index|
+      result << tarif_sets_prices[part_index][indexxx[part_index]]
     end
     result
   end
