@@ -173,7 +173,7 @@ class ServiceHelper::TarifResultSimlifier
       updated_tarif_set_list << groupped_tarif_result_ids[services_to_leave_in_tarif_set_index][0]
     end
     updated_tarif_sets, updated_tarif_results = update_tarif_sets_with_groupped_tarif_results(updated_tarif_sets, updated_tarif_results, updated_tarif_set_list)
-    raise(StandardError)
+#    raise(StandardError)
     [updated_tarif_sets, updated_tarif_results]
   end
   
