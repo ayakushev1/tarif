@@ -34,15 +34,29 @@ class ServiceHelper::FinalTarifResultsPresenter
         
       additions['services'] = (f['service_sets_id'].split('_') - [tarif_id]).map do |service_id|
         if f and f['service_description'] and f['service_description'][service_id]
-          {'service_name' => f['service_description'][service_id]['name'], 'service_http' => f['service_description'][service_id]['http']}
+          {
+            'service_name' => f['service_description'][service_id]['name'], 
+            'service_http' => f['service_description'][service_id]['http'],
+            'service_type' => f['service_description'][service_id]['standard_service_id']
+            }
         end        
       end.compact if f['service_sets_id']
+      
+      additions['common_services'] = additions['services'].map do |service|
+        service if service['service_type'] == 324 #_gp_common_service
+      end.compact
+  
+      additions['tarif_options'] = additions['services'].map do |service|
+        service if service['service_type'] != 324 #_gp_common_service
+      end.compact
   
       additions['identical_services'] = f['identical_services'].map do |identical_service_group|
-        identical_services_for_one_group = identical_service_group.map do |service_id|      
-          if f and f['service_description'] and f['service_description'][service_id] 
-            {'service_name' => f['service_description'][service_id]['name'],  'service_http' => f['service_description'][service_id]['http']}
-          end
+        identical_services_for_one_group = identical_service_group.map do |service_ids|
+          service_ids.split('_').map do |service_id|
+            if f and f['service_description'] and f['service_description'][service_id] 
+              {'service_name' => f['service_description'][service_id]['name'],  'service_http' => f['service_description'][service_id]['http']}
+            end
+          end.compact if service_ids
         end.compact if identical_service_group
         identical_services_for_one_group
       end.compact if f['identical_services']

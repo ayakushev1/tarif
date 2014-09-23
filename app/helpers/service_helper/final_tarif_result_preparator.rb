@@ -7,6 +7,7 @@ class ServiceHelper::FinalTarifResultPreparator
       if service_description[service_id]
         service_set_services_description[service_id]['name'] = service_description[service_id]['name']
         service_set_services_description[service_id]['http'] = service_description[service_id]['features'].stringify_keys['http'] if service_description[service_id]['features']
+        service_set_services_description[service_id]['standard_service_id'] = service_description[service_id]['standard_service_id']
       end
     end
     service_set_services_description
@@ -71,7 +72,11 @@ class ServiceHelper::FinalTarifResultPreparator
         prepared_final_tarif_results['service_set'][service_set_id]['service_set_price'] += (tarif_result_for_service_set_and_part['price_value'] || 0.0).to_f
         prepared_final_tarif_results['service_set'][service_set_id]['service_set_count'] += (tarif_result_for_service_set_and_part['call_id_count'] || 0).to_i
         
-        service_set_ids = (service_set_id.split('_') + prepared_final_tarif_results['service_set'][service_set_id]['identical_services'].flatten).uniq
+        identical_service_ids = prepared_final_tarif_results['service_set'][service_set_id]['identical_services'].flatten.map do |identical_service_name|
+          identical_service_name.split('_')
+        end.flatten.uniq
+        
+        service_set_ids = (service_set_id.split('_') + identical_service_ids).uniq
 #        raise(StandardError) if !prepared_final_tarif_results['service_set'][service_set_id]['identical_services'].blank?
         prepared_final_tarif_results['service_set'][service_set_id]['service_description'] = service_set_services_description(service_set_ids, service_description)
         prepared_final_tarif_results['service_set'][service_set_id]['operator_description'] = operator_description

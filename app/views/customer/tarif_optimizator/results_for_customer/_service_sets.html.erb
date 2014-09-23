@@ -7,7 +7,7 @@ table.init do |t|
   t.pagination_per_page = 12
   t.id_name = 'service_sets_id'
   model_keys = t.model.collect {|row| row.keys }.flatten.uniq.collect{|key| key }.compact  
-  t.heads = ['Оператор', 'Тариф', 'Стоимость в месяц, руб', 'Кол-во обработанных записей', 'Общие услуги и тарифные опции', 
+  t.heads = ['Оператор', 'Тариф', 'Стоимость в месяц, руб', 'Кол-во обработанных записей', 'Общие услуги', 'Тарифные опции', 
   	'Взаимозаменяемые опции', 'Кол-во минут', 'Кол-во смс и ммс', 'Объем интернета, Мб']
   
   t.set_fields do |f|
@@ -15,9 +15,19 @@ table.init do |t|
         link_to_if(item['service_http'], item['service_name'], item['service_http'])	
     end.join(', ') if f['services']
 
+    common_services = f['common_services'].map do |item|
+        link_to_if(item['service_http'], item['service_name'], item['service_http'])	
+    end.join(', ') if f['common_services']
+
+    tarif_options = f['tarif_options'].map do |item|
+        link_to_if(item['service_http'], item['service_name'], item['service_http'])	
+    end.join(', ') if f['tarif_options']
+
     identical_services = f['identical_services'].map do |identical_service_group|
     	identical_services_for_one_group = identical_service_group.map do |item|     	
-	    	link_to_if(item['service_http'], item['service_name'], item['service_http'])      	 
+    		item.split(' ').map do |service_id|
+    			link_to_if(service_id['service_http'], service_id['service_name'], service_id['service_http'])
+    		end.join(' и ') if item	    	      	 
 	    end.join(', ') if identical_service_group
         "(#{identical_services_for_one_group})"
     end.join(', ') if f['identical_services']
@@ -26,8 +36,9 @@ table.init do |t|
      f['operator_name'],     
   	 link_to_if(f['tarif_http'], f['tarif_name'], f['tarif_http']),    
      f['tarif_cost'],      
-     f['service_set_count'],      
-     services,
+     f['service_set_count'],   
+     common_services,   
+     tarif_options,
      identical_services,
      f['calls_volume'],
      f['sms_volume'],
