@@ -25,7 +25,7 @@ table.init do |t|
 
     identical_services = f['identical_services'].map do |identical_service_group|
     	identical_services_for_one_group = identical_service_group.map do |item|     	
-    		item.split(' ').map do |service_id|
+    		item.map do |service_id|
     			link_to_if(service_id['service_http'], service_id['service_name'], service_id['service_http'])
     		end.join(' и ') if item	    	      	 
 	    end.join(', ') if identical_service_group
