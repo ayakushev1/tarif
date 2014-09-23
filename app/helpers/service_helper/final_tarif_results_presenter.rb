@@ -43,11 +43,11 @@ class ServiceHelper::FinalTarifResultsPresenter
       end.compact if f['service_sets_id']
       
       additions['common_services'] = additions['services'].map do |service|
-        service if service['service_type'] == 324 #_gp_common_service
+        service if service[1]['service_type'] == 324 #_gp_common_service
       end.compact
   
       additions['tarif_options'] = additions['services'].map do |service|
-        service if service['service_type'] != 324 #_gp_common_service
+        service if service[1]['service_type'] != 324 #_gp_common_service
       end.compact
   
       additions['identical_services'] = f['identical_services'].map do |identical_service_group|
