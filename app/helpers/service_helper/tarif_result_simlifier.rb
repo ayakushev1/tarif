@@ -186,8 +186,8 @@ class ServiceHelper::TarifResultSimlifier
           updated_cons_tarif_results[tarif_set_id]['price_value'] += updated_tarif_result_by_part_by_service['price_value'].to_f
           updated_cons_tarif_results[tarif_set_id]['call_id_count'] += updated_tarif_result_by_part_by_service['call_id_count'].to_i
           updated_cons_tarif_results[tarif_set_id]['parts'] << part
-          updated_cons_tarif_results[tarif_set_id]['group_criteria'] += updated_tarif_result_by_part_by_service['price_value'].to_f.round(0).to_i #+
-#          updated_cons_tarif_results[tarif_set_id]['group_criteria'] += (updated_tarif_result_by_part_by_service['price_value'].to_f / 10.0).round(0).to_i #+
+#          updated_cons_tarif_results[tarif_set_id]['group_criteria'] += updated_tarif_result_by_part_by_service['price_value'].to_f.round(0).to_i #+
+          updated_cons_tarif_results[tarif_set_id]['group_criteria'] += (updated_tarif_result_by_part_by_service['price_value'].to_f / 5.0).round(0).to_i #+
 #            updated_tarif_result_by_part_by_service['call_id_count'].to_i
         end
       end
