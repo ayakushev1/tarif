@@ -314,7 +314,7 @@ class ServiceHelper::TarifListGenerator
           tarif_option_combinations[tarif]['periodic'][tarif_set_id([service])] = [service]
         end
         (uniq_services_in_tarif_option_combinations & onetime_services).each do |service|
-           tarif_option_combinations[tarif]['periodic'] ||= {}
+           tarif_option_combinations[tarif]['onetime'] ||= {}
          tarif_option_combinations[tarif]['onetime'][tarif_set_id([service])] = [service]
         end
       end
