@@ -61,7 +61,7 @@ class ServiceHelper::CurrentTarifSet
         new_cons_tarif_results_by_part[part]['price_value'].to_f if new_cons_tarif_results_by_part[part]
       end.compact.max
       parts_sort_criteria(part_sort_criteria_in_price_optimization, part, min_value, max_value)
-    end - ['periodic']
+    end - ['periodic', 'onetime'] << 'onetime'
 #    raise(StandardError, @parts)
     @tarif_sets_names_as_array = []
     @tarif_sets_services_as_array = []
@@ -141,17 +141,21 @@ class ServiceHelper::CurrentTarifSet
   def next_tarif_set_by_part(if_current_tarif_set_by_part_fobbiden)
     return_prev_best_current_price(if_current_tarif_set_by_part_fobbiden)
     move_forward_based_on_price = if use_price_comparison_in_current_tarif_set_calculation
-      current_price < (best_possible_price - [best_possible_price * 0.01, 5].max)
+      current_price < best_possible_price 
+#      current_price < (best_possible_price - [best_possible_price * 0.01, 5].max)
     else
       false
     end
     if if_current_tarif_set_by_part_fobbiden or current_part_index == (max_part_index - 1) or move_forward_based_on_price
       if current_tarif_set_by_part_index[current_part_index] < (max_tarif_set_by_part_index[current_part_index] - 1)
+#    raise(StandardError) if [0, 0, 0, 0, 0, 0, 0, 0, 1, 1] == current_tarif_set_by_part_index
         move_down
       else
+#    raise(StandardError) if [0, 0, 0, 0, 0, 0, 0, 0, 1, 1] == current_tarif_set_by_part_index
         move_back_and_down
       end
     else
+#    raise(StandardError) if [0, 0, 0, 0, 0, 0, 0, 0, 1, 1] == current_tarif_set_by_part_index
       move_forward
     end
     raise(StandardError) if current_tarif_set_by_part_index and current_tarif_set_by_part_index.size != current_part_index + 1   

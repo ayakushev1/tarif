@@ -31,9 +31,11 @@ class ServiceHelper::TarifResultSimlifier
   end
   
   def simplify_tarif_results_and_tarif_sets
+#    raise(StandardError)
     if if_update_tarif_sets_to_calculate_from_with_cons_tarif_results
       tarif_sets, tarif_results = update_tarif_sets_with_cons_tarif_results
     end
+#    raise(StandardError, [tarif_sets[201]['onetime']['201_280'], tarif_results['201_280_281']['onetime'].map{|i| [i[0], i[1]['price_value']]} ])
     [tarif_sets, tarif_results, groupped_identical_services]
   end
   
@@ -44,27 +46,27 @@ class ServiceHelper::TarifResultSimlifier
     tarifs = tarif_sets.keys.map(&:to_i)
 #TODO проверить еще раз почему нельзя исключать common_services
     services_to_not_excude = common_services[operator] + tarifs + services_that_depended_on.values.flatten
-#    raise(StandardError)
     sub_tarif_sets_with_zero_results_0 = calculate_sub_tarif_sets_with_zero_results_0(services_to_not_excude)
     sub_tarif_sets_with_zero_results_1 = calculate_sub_tarif_sets_with_zero_results_1(services_to_not_excude)
+    
     updated_tarif_sets = {}
     tarif_sets.each do |tarif, tarif_sets_by_tarif|
       updated_tarif_sets[tarif] ||= {}
       tarif_sets_by_tarif.each do |part, tarif_sets_by_tarif_by_part|
 #        next if part == 'periodic'
         updated_tarif_sets[tarif][part] ||= {}
-        
         tarif_sets_by_tarif_by_part.each do |tarif_set_id, services|
           if (services & sub_tarif_sets_with_zero_results_0).blank?
             if sub_tarif_sets_with_zero_results_1[tarif_set_id]
 # Предполагается что tarif_set_id должен быть в первоначальном tarif_sets
-#              new_tarif_set_id = sub_tarif_sets_with_zero_results_1[tarif_set_id][:new_tarif_set_id]
-#              new_services = sub_tarif_sets_with_zero_results_1[tarif_set_id][:new_services]
-#              updated_tarif_sets[tarif][part][new_tarif_set_id] = new_services
+              new_tarif_set_id = sub_tarif_sets_with_zero_results_1[tarif_set_id][:new_tarif_set_id]
+              new_services = sub_tarif_sets_with_zero_results_1[tarif_set_id][:new_services]
+              updated_tarif_sets[tarif][part][new_tarif_set_id] = new_services
             else
               updated_tarif_sets[tarif][part][tarif_set_id] = services 
             end            
           end
+#        raise(StandardError) if part == 'onetime' and tarif_set_id == '201_280'
         end
         updated_tarif_sets[tarif].extract!(part) if updated_tarif_sets[tarif][part].blank?
       end
@@ -75,16 +77,11 @@ class ServiceHelper::TarifResultSimlifier
       updated_tarif_results.extract!(tarif_set_id)
     end
     
-#    raise(StandardError) if !updated_tarif_sets[203]['periodic'].keys.include?('321')
-
     updated_tarif_sets = reorder_tarif_sets(updated_tarif_sets, updated_tarif_results)
-#    raise(StandardError) if !updated_tarif_sets[203]['periodic'].keys.include?('321')
 
     updated_tarif_sets, updated_tarif_results = group_identical_tarif_sets(updated_tarif_sets, updated_tarif_results, services_to_not_excude, eliminate_identical_tarif_sets)
-#    raise(StandardError) if !updated_tarif_sets[203]['periodic'].keys.include?('321')
 
     updated_tarif_sets, updated_tarif_results = group_identical_tarif_sets(updated_tarif_sets, updated_tarif_results, services_to_not_excude, eliminate_identical_tarif_sets) if eliminate_identical_tarif_sets
-#    raise(StandardError) if !updated_tarif_sets[203]['periodic'].keys.include?('321')
 
     [updated_tarif_sets, updated_tarif_results]
   end
@@ -99,7 +96,6 @@ class ServiceHelper::TarifResultSimlifier
         sub_tarif_sets_with_zero_results += (services - services_to_not_excude - sub_tarif_sets_with_zero_results) if (services & depended_on_services).blank?
       end
     end if cons_tarif_results  
-#    raise(StandardError, [sub_tarif_sets_with_zero_results])
     sub_tarif_sets_with_zero_results
   end
   
@@ -115,10 +111,10 @@ class ServiceHelper::TarifResultSimlifier
             zero_tarif_ids += ([tarif_result_by_part_and_service['tarif_class_id'].to_i] - zero_tarif_ids)
           else
             non_zero_tarif_ids += ([tarif_result_by_part_and_service['tarif_class_id'].to_i] - non_zero_tarif_ids)
-#            raise(StandardError) if tarif_set_id == '200_292_' and non_zero_tarif_ids.include?(292)
           end
         end
       end
+
       zero_tarif_ids = zero_tarif_ids - non_zero_tarif_ids - services_to_not_excude
 #      raise(StandardError) if tarif_set_id == '281_329'
       if !zero_tarif_ids.blank?
@@ -127,6 +123,7 @@ class ServiceHelper::TarifResultSimlifier
         sub_tarif_sets_with_zero_results[tarif_set_id] = {:new_tarif_set_id => new_tarif_set_id, :new_services => new_services} if !tarif_results[new_tarif_set_id].blank?
       end
     end 
+    
     sub_tarif_sets_with_zero_results
   end
   
@@ -173,7 +170,8 @@ class ServiceHelper::TarifResultSimlifier
 #      raise(StandardError) if groupped_tarif_result_ids[0][0] == '203_322'
       updated_tarif_set_list << groupped_tarif_result_ids[services_to_leave_in_tarif_set_index][0]
     end
-
+    
+#    raise(StandardError)
     updated_tarif_sets, updated_tarif_results = update_tarif_sets_with_groupped_tarif_results(updated_tarif_sets, updated_tarif_results, updated_tarif_set_list)
 #    raise(StandardError) if !updated_tarif_sets[203]['periodic'].keys.include?('321')
     [updated_tarif_sets, updated_tarif_results]
@@ -188,7 +186,8 @@ class ServiceHelper::TarifResultSimlifier
           updated_cons_tarif_results[tarif_set_id]['price_value'] += updated_tarif_result_by_part_by_service['price_value'].to_f
           updated_cons_tarif_results[tarif_set_id]['call_id_count'] += updated_tarif_result_by_part_by_service['call_id_count'].to_i
           updated_cons_tarif_results[tarif_set_id]['parts'] << part
-          updated_cons_tarif_results[tarif_set_id]['group_criteria'] += (updated_tarif_result_by_part_by_service['price_value'].to_f / 10.0).round(0).to_i #+
+          updated_cons_tarif_results[tarif_set_id]['group_criteria'] += updated_tarif_result_by_part_by_service['price_value'].to_f.round(0).to_i #+
+#          updated_cons_tarif_results[tarif_set_id]['group_criteria'] += (updated_tarif_result_by_part_by_service['price_value'].to_f / 10.0).round(0).to_i #+
 #            updated_tarif_result_by_part_by_service['call_id_count'].to_i
         end
       end
