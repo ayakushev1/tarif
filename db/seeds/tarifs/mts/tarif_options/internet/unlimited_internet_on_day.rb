@@ -32,7 +32,7 @@
            :count_of_usage_of_option => "ceil(sum((description->>'volume')::float) / 500.0)",
            :count_of_usage_of_500 => "ceil((sum((description->>'volume')::float) - 500.0) / 500.0)",
            :count_of_usage_of_2000 => "ceil((sum((description->>'volume')::float) - 500.0) / 2000.0)"},
-       :method => "price_formulas.price * count_of_usage_of_option + case when count_of_usage_of_500 > 2.66667 then count_of_usage_of_2000 * 200.0 when count_of_usage_of_500 > 0 then count_of_usage_of_500 * 75.0 else 0 end",
+       :method => "price_formulas.price * count_of_usage_of_option + case when count_of_usage_of_500 > 2.66667 then count_of_usage_of_2000 * 200.0 when count_of_usage_of_500 > 0.0 then count_of_usage_of_500 * 75.0 else 0.0 end",
        } } } )    
 
 #Own country, Internet
@@ -51,7 +51,7 @@
            :count_of_usage_of_option => "ceil(sum((description->>'volume')::float) / 500.0)",
            :count_of_usage_of_500 => "ceil((sum((description->>'volume')::float) - 500.0) / 500.0)",
            :count_of_usage_of_2000 => "ceil((sum((description->>'volume')::float) - 500.0) / 2000.0)"},
-       :method => "price_formulas.price * count_of_usage_of_option + case when count_of_usage_of_500 > 2.66667 then count_of_usage_of_2000 * 200.0 when count_of_usage_of_500 > 0 then count_of_usage_of_500 * 75.0 else 0 end",
+       :method => "price_formulas.price * count_of_usage_of_option + case when count_of_usage_of_500 > 2.66667 then count_of_usage_of_2000 * 200.0 when count_of_usage_of_500 > 0.0 then count_of_usage_of_500 * 75.0 else 0.0 end",
        } } } )    
 
 @tc.add_tarif_class_categories

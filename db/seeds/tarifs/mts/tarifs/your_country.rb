@@ -79,7 +79,7 @@
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 4.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
    :formula => {
      :stat_params => {:sum_duration => "sum(((description->>'duration')::float)/60.0)",
-                      :times_of_14_minutes => "sum(ceil(ceil(((description->>'duration')::float)/60.0)/14))",
+                      :times_of_14_minutes => "sum(ceil(ceil(((description->>'duration')::float)/60.0)/14.0))",
                       :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
      :method => 'price_formulas.price * times_of_14_minutes + (sum_duration - times_of_14_minutes) * 1.0'}, } )
 
@@ -88,7 +88,7 @@
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 8.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
    :formula => {
      :stat_params => {:sum_duration => "sum(((description->>'duration')::float)/60.0)",
-                      :times_of_4_minutes => "sum(ceil(ceil(((description->>'duration')::float)/60.0)/4))",
+                      :times_of_4_minutes => "sum(ceil(ceil(((description->>'duration')::float)/60.0)/4.0))",
                       :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
      :method => 'price_formulas.price * times_of_4_minutes + (sum_duration - times_of_4_minutes) * 0.0'}, } )
 
@@ -96,9 +96,9 @@
   category = {:name => '_sctcg_own_home_regions_calls_to_vietnam_south_korea_singapur', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_your_country_7}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 1.5, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
    :formula => {
-     :stat_params => {:sum_duration_minute_between_5_and_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) between 5.0 and 10.0 then ceil(((description->>'duration')::float)/60.0) - 5 else 0 end)",
-                      :sum_duration_minute_less_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) < 5.0 then ceil(((description->>'duration')::float)/60.0) else 0 end)",
-                      :sum_duration_minute_more_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 10.0 then ceil(((description->>'duration')::float)/60.0) - 10.0 else 0 end)",
+     :stat_params => {:sum_duration_minute_between_5_and_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) between 5.0 and 10.0 then ceil(((description->>'duration')::float)/60.0) - 5.0 else 0.0 end)",
+                      :sum_duration_minute_less_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) < 5.0 then ceil(((description->>'duration')::float)/60.0) else 0.0 end)",
+                      :sum_duration_minute_more_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 10.0 then ceil(((description->>'duration')::float)/60.0) - 10.0 else 0.0 end)",
                       :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
      :method => 'price_formulas.price * sum_duration_minute_between_5_and_10 + 4.5 * (sum_duration_minute_less_5 + sum_duration_minute_more_10)'}, } )
 
@@ -106,9 +106,9 @@
   category = {:name => '_sctcg_own_home_regions_calls_to_other_sic', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_your_country_8}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 1.5, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
    :formula => {
-     :stat_params => {:sum_duration_minute_between_5_and_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) between 5.0 and 10.0 then ceil(((description->>'duration')::float)/60.0) - 5 else 0 end)",
-                      :sum_duration_minute_less_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) < 5.0 then ceil(((description->>'duration')::float)/60.0) else 0 end)",
-                      :sum_duration_minute_more_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 10.0 then ceil(((description->>'duration')::float)/60.0) - 10.0 else 0 end)",
+     :stat_params => {:sum_duration_minute_between_5_and_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) between 5.0 and 10.0 then ceil(((description->>'duration')::float)/60.0) - 5.0 else 0.0 end)",
+                      :sum_duration_minute_less_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) < 5.0 then ceil(((description->>'duration')::float)/60.0) else 0.0 end)",
+                      :sum_duration_minute_more_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 10.0 then ceil(((description->>'duration')::float)/60.0) - 10.0 else 0.0 end)",
                       :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
      :method => 'price_formulas.price * sum_duration_minute_between_5_and_10 + 4.5 * (sum_duration_minute_less_5 + sum_duration_minute_more_10)'}, } )
 
@@ -172,7 +172,7 @@
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 4.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
    :formula => {
      :stat_params => {:sum_duration => "sum(((description->>'duration')::float)/60.0)",
-                      :times_of_14_minutes => "sum(ceil(ceil(((description->>'duration')::float)/60.0)/14))",
+                      :times_of_14_minutes => "sum(ceil(ceil(((description->>'duration')::float)/60.0)/14.0))",
                       :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
      :method => 'price_formulas.price * times_of_14_minutes + (sum_duration - times_of_14_minutes) * 1.0'}, } )
 
@@ -181,7 +181,7 @@
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 8.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
    :formula => {
      :stat_params => {:sum_duration => "sum(((description->>'duration')::float)/60.0)",
-                      :times_of_4_minutes => "sum(ceil(ceil(((description->>'duration')::float)/60.0)/4))",
+                      :times_of_4_minutes => "sum(ceil(ceil(((description->>'duration')::float)/60.0)/4.0))",
                       :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
      :method => 'price_formulas.price * times_of_4_minutes + (sum_duration - times_of_4_minutes) * 0.0'}, } )
 
@@ -189,9 +189,9 @@
   category = {:name => '_sctcg_own_country_calls_to_vietnam_south_korea_singapur', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_your_country_7}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 1.5, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
    :formula => {
-     :stat_params => {:sum_duration_minute_between_5_and_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) between 5.0 and 10.0 then ceil(((description->>'duration')::float)/60.0) - 5 else 0 end)",
-                      :sum_duration_minute_less_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) < 5.0 then ceil(((description->>'duration')::float)/60.0) else 0 end)",
-                      :sum_duration_minute_more_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 10.0 then ceil(((description->>'duration')::float)/60.0) - 10.0 else 0 end)",
+     :stat_params => {:sum_duration_minute_between_5_and_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) between 5.0 and 10.0 then ceil(((description->>'duration')::float)/60.0) - 5.0 else 0.0 end)",
+                      :sum_duration_minute_less_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) < 5.0 then ceil(((description->>'duration')::float)/60.0) else 0.0 end)",
+                      :sum_duration_minute_more_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 10.0 then ceil(((description->>'duration')::float)/60.0) - 10.0 else 0.0 end)",
                       :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
      :method => 'price_formulas.price * sum_duration_minute_between_5_and_10 + 4.5 * (sum_duration_minute_less_5 + sum_duration_minute_more_10)'}, } )
 
@@ -199,9 +199,9 @@
   category = {:name => '_sctcg_own_country_calls_to_other_sic', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_your_country_8}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 1.5, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
    :formula => {
-     :stat_params => {:sum_duration_minute_between_5_and_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) between 5.0 and 10.0 then ceil(((description->>'duration')::float)/60.0) - 5 else 0 end)",
-                      :sum_duration_minute_less_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) < 5.0 then ceil(((description->>'duration')::float)/60.0) else 0 end)",
-                      :sum_duration_minute_more_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 10.0 then ceil(((description->>'duration')::float)/60.0) - 10.0 else 0 end)",
+     :stat_params => {:sum_duration_minute_between_5_and_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) between 5.0 and 10.0 then ceil(((description->>'duration')::float)/60.0) - 5.0 else 0.0 end)",
+                      :sum_duration_minute_less_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) < 5.0 then ceil(((description->>'duration')::float)/60.0) else 0.0 end)",
+                      :sum_duration_minute_more_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 10.0 then ceil(((description->>'duration')::float)/60.0) - 10.0 else 0.0 end)",
                       :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
      :method => 'price_formulas.price * sum_duration_minute_between_5_and_10 + 4.5 * (sum_duration_minute_less_5 + sum_duration_minute_more_10)'}, } )
 

@@ -18,7 +18,7 @@ category = {:name => '_sctcg_own_home_regions_sms_to_own_home_regions', :service
   @tc.add_one_service_category_tarif_class(category, {}, 
     {:calculation_order => 0, :price => 120.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _item, :description => '', 
      :formula => {
-       :window_condition => "(100 >= count_volume)", :window_over => 'month',
+       :window_condition => "(100.0 >= count_volume)", :window_over => 'month',
        :stat_params => {:count_volume => "count(description->>'volume')"},
        :method => "case when count_volume > 0.0 then price_formulas.price else 0.0 end"}
      } )

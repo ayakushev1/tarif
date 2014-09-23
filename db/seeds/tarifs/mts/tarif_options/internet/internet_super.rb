@@ -41,7 +41,7 @@ _sctcg_all_russia_rouming_internet = {:name => '_sctcg_all_russia_rouming_intern
            :sum_volume => "sum((description->>'volume')::float)",
            :count_of_usage_of_500 => "ceil((sum((description->>'volume')::float) - 20000.0) / 500.0)",
            :count_of_usage_of_2000 => "ceil((sum((description->>'volume')::float) - 20000.0) / 2000.0)"},
-       :method => "price_formulas.price + case when count_of_usage_of_500 > 2.66667 then count_of_usage_of_2000 * 200.0 when count_of_usage_of_500 > 0 then count_of_usage_of_500 * 75.0 else 0 end",
+       :method => "price_formulas.price + case when count_of_usage_of_500 > 2.66667 then count_of_usage_of_2000 * 200.0 when count_of_usage_of_500 > 0.0 then count_of_usage_of_500 * 75.0 else 0.0 end",
        }
      }, 
     } )
