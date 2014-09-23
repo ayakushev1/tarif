@@ -35,7 +35,6 @@ class ServiceHelper::CurrentTarifSet
   end
   
   def calculate_new_cons_tarif_results_by_parts
-#    raise(StandardError, [tarif_results])
     @new_cons_tarif_results_by_parts = {}
     tarif_results.each do |tarif_set_id, tarif_result|
       new_cons_tarif_results_by_parts[tarif_set_id] ||= {}
@@ -47,22 +46,24 @@ class ServiceHelper::CurrentTarifSet
         end
       end
     end
-#    raise(StandardError, [new_cons_tarif_results_by_parts])
   end
   
   def init_tarif_sets_as_array
-    @tarif_price = new_cons_tarif_results_by_parts[tarif]['periodic']['price_value'].to_f
+    @tarif_price = new_cons_tarif_results_by_parts[tarif]['periodic']['price_value'].to_f + new_cons_tarif_results_by_parts[tarif]['onetime']['price_value'].to_f
     
-    @parts = tarif_sets_by_tarif.keys.sort_by do |part| 
-      min_value = new_cons_tarif_results_by_parts.collect do |tarif_sets_name, new_cons_tarif_results_by_part| 
-        new_cons_tarif_results_by_part[part]['price_value'].to_f if new_cons_tarif_results_by_part[part]
-      end.compact.min
-      max_value = new_cons_tarif_results_by_parts.collect do |tarif_sets_name, new_cons_tarif_results_by_part| 
-        new_cons_tarif_results_by_part[part]['price_value'].to_f if new_cons_tarif_results_by_part[part]
-      end.compact.max
+    @parts = (tarif_sets_by_tarif.keys - ['periodic', 'onetime']).sort_by do |part| 
+      price_values = new_cons_tarif_results_by_parts.collect do |tarif_sets_name, new_cons_tarif_results_by_part| 
+        result = 0.0
+        result = new_cons_tarif_results_by_part[part]['price_value'].to_f if new_cons_tarif_results_by_part[part]
+        result
+      end.compact
+
+      min_value = price_values.min
+      max_value = price_values.max
+
       parts_sort_criteria(part_sort_criteria_in_price_optimization, part, min_value, max_value)
-    end - ['periodic', 'onetime'] << 'onetime'
-#    raise(StandardError, @parts)
+    end 
+
     @tarif_sets_names_as_array = []
     @tarif_sets_services_as_array = []
     @tarif_sets_prices = []
@@ -82,7 +83,9 @@ class ServiceHelper::CurrentTarifSet
       @tarif_sets_prices << tarif_sets_prices_by_part
       @tarif_sets_counts << tarif_sets_counts_by_part
     end
-#    raise(StandardError, [new_cons_tarif_results_by_parts.keys - @tarif_sets_names_as_array.flatten])
+    @tarif_sets_prices.each do |tarif_sets_prices_by_part|
+
+    end     
   end
   
   def parts_sort_criteria(sort_type, part, min_value, max_value)
@@ -98,8 +101,7 @@ class ServiceHelper::CurrentTarifSet
     when :reverse_min_value
       (-min_value)
     when :auto
-#      raise(StandardError)
-      (tarif_price > 0.0) ? max_value : max_value
+      (tarif_price > 0.0) ? min_value : min_value
     else
       part
     end
@@ -148,20 +150,17 @@ class ServiceHelper::CurrentTarifSet
     end
     if if_current_tarif_set_by_part_fobbiden or current_part_index == (max_part_index - 1) or move_forward_based_on_price
       if current_tarif_set_by_part_index[current_part_index] < (max_tarif_set_by_part_index[current_part_index] - 1)
-#    raise(StandardError) if [0, 0, 0, 0, 0, 0, 0, 0, 1, 1] == current_tarif_set_by_part_index
         move_down
       else
-#    raise(StandardError) if [0, 0, 0, 0, 0, 0, 0, 0, 1, 1] == current_tarif_set_by_part_index
         move_back_and_down
       end
     else
-#    raise(StandardError) if [0, 0, 0, 0, 0, 0, 0, 0, 1, 1] == current_tarif_set_by_part_index
       move_forward
     end
     raise(StandardError) if current_tarif_set_by_part_index and current_tarif_set_by_part_index.size != current_part_index + 1   
     @current_part = parts[current_part_index]
     if current_part_index == max_part_index - 1
-      @current_set_price = calculate_current_price_for_chosen_parts(current_part_index)# + calculate_periodic_part_price(current_part_index)
+      @current_set_price = calculate_current_price_for_chosen_parts(current_part_index)
       if @current_price > current_set_price
         @prev_current_prices << @current_price
         @current_price = current_set_price 
@@ -169,12 +168,9 @@ class ServiceHelper::CurrentTarifSet
     else
       @current_set_price = nil
     end
-#    raise(StandardError) if current_set_price == 930.5 #and (current_part_index == max_part_index - 1) #current_services == [203, 321] #current_tarif_set_by_part_services == [203, 203, 203, 203, 203, 203, 203]
 
     calculate_best_possible_price(current_part_index) if current_part_index > -1
     update_history if save_current_tarif_set_calculation_history
-#    raise(StandardError) if current_price < 1209.0 
-#    @new_price
   end
   
   def return_prev_best_current_price(if_current_tarif_set_by_part_fobbiden)
@@ -235,17 +231,6 @@ class ServiceHelper::CurrentTarifSet
       result += tarif_sets_prices[part_index][current_tarif_set_by_part_index[part_index]]
     end
     result += calculate_periodic_part_price(upper_part_index)
-    if tarif_sets_services_as_array[0..upper_part_index].flatten.include?(tarif.to_i)
-#      result += tarif_price
-    end
-    result
-  end
-  
-  def dddd(indexxx)
-    result = []
-    indexxx.each_index do |part_index|
-      result << tarif_sets_prices[part_index][indexxx[part_index]]
-    end
     result
   end
   
@@ -254,7 +239,7 @@ class ServiceHelper::CurrentTarifSet
     (start_part_index..(max_part_index - 1)).each do |part_index|
       result += tarif_sets_prices[part_index][0]
     end
-#      raise(StandardError)
+
     if !tarif_sets_services_as_array[0..(start_part_index - 1)].flatten.include?(tarif.to_i)
       result += tarif_price
     end
@@ -281,6 +266,7 @@ class ServiceHelper::CurrentTarifSet
         new_tarif_set_id = tarif_set_id(new_periodic_services)
         
         periodic_part_price += new_cons_tarif_results_by_parts[new_tarif_set_id]['periodic']['price_value'].to_f
+        periodic_part_price += new_cons_tarif_results_by_parts[new_tarif_set_id]['onetime']['price_value'].to_f
         counted_depended_on_services += new_periodic_services
       end
     end
@@ -288,8 +274,9 @@ class ServiceHelper::CurrentTarifSet
     (tarif_sets_services - counted_depended_on_services).uniq.each do |service|
       periodic_part_price += new_cons_tarif_results_by_parts[tarif_set_id([service])]['periodic']['price_value'].to_f if 
         new_cons_tarif_results_by_parts[tarif_set_id([service])] and new_cons_tarif_results_by_parts[tarif_set_id([service])]['periodic']
+      periodic_part_price += new_cons_tarif_results_by_parts[tarif_set_id([service])]['onetime']['price_value'].to_f if 
+        new_cons_tarif_results_by_parts[tarif_set_id([service])] and new_cons_tarif_results_by_parts[tarif_set_id([service])]['onetime']
     end
-#    raise(StandardError) if current_part_index == 9
     periodic_part_price
   end
 

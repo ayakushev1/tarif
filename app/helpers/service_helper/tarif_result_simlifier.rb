@@ -31,11 +31,10 @@ class ServiceHelper::TarifResultSimlifier
   end
   
   def simplify_tarif_results_and_tarif_sets
-#    raise(StandardError)
     if if_update_tarif_sets_to_calculate_from_with_cons_tarif_results
       tarif_sets, tarif_results = update_tarif_sets_with_cons_tarif_results
     end
-#    raise(StandardError, [tarif_sets[201]['onetime']['201_280'], tarif_results['201_280_281']['onetime'].map{|i| [i[0], i[1]['price_value']]} ])
+
     [tarif_sets, tarif_results, groupped_identical_services]
   end
   
@@ -66,7 +65,6 @@ class ServiceHelper::TarifResultSimlifier
               updated_tarif_sets[tarif][part][tarif_set_id] = services 
             end            
           end
-#        raise(StandardError) if part == 'onetime' and tarif_set_id == '201_280'
         end
         updated_tarif_sets[tarif].extract!(part) if updated_tarif_sets[tarif][part].blank?
       end
@@ -116,7 +114,7 @@ class ServiceHelper::TarifResultSimlifier
       end
 
       zero_tarif_ids = zero_tarif_ids - non_zero_tarif_ids - services_to_not_excude
-#      raise(StandardError) if tarif_set_id == '281_329'
+
       if !zero_tarif_ids.blank?
         new_services = tarif_set_id.split('_').map(&:to_i) - zero_tarif_ids
         new_tarif_set_id = tarif_set_id(new_services)
@@ -167,13 +165,13 @@ class ServiceHelper::TarifResultSimlifier
 
         groupped_identical_services[identical_tarif_sets[services_to_leave_in_tarif_set_index]] = {:identical_services => identical_services, :identical_tarif_sets => identical_tarif_sets}
       end
-#      raise(StandardError) if groupped_tarif_result_ids[0][0] == '203_322'
+
       updated_tarif_set_list << groupped_tarif_result_ids[services_to_leave_in_tarif_set_index][0]
     end
     
 #    raise(StandardError)
     updated_tarif_sets, updated_tarif_results = update_tarif_sets_with_groupped_tarif_results(updated_tarif_sets, updated_tarif_results, updated_tarif_set_list)
-#    raise(StandardError) if !updated_tarif_sets[203]['periodic'].keys.include?('321')
+
     [updated_tarif_sets, updated_tarif_results]
   end
   
@@ -199,7 +197,6 @@ class ServiceHelper::TarifResultSimlifier
     groupped_services_sets = groupped_tarif_result_ids.map{|groupped_tarif_result_id| groupped_tarif_result_id.split('_')}
     common_services = groupped_services_sets.reduce(:&)
     identical_services = groupped_services_sets.collect{|groupped_services_set| tarif_set_id(groupped_services_set - common_services)}
-#    raise(StandardError) if ["294", "283_294"] == groupped_tarif_result_ids
     identical_services
   end
   
@@ -211,7 +208,7 @@ class ServiceHelper::TarifResultSimlifier
       new_updated_tarif_sets[tarif] ||= {}
       updated_tarif_sets_by_tarif.each do |part, updated_tarif_sets_by_tarif_by_part|
         new_updated_tarif_sets[tarif][part] ||= {}
-        if part == 'periodic'
+        if ['periodic', 'onetime'].include?(part)
           updated_tarif_sets_by_tarif_by_part.each do |tarif_set_id, services| 
             new_updated_tarif_sets[tarif][part][tarif_set_id] = services
           end
@@ -236,7 +233,7 @@ class ServiceHelper::TarifResultSimlifier
     [new_updated_tarif_sets, new_updated_tarif_results]
   end
 
-  def update_current_uniq_sets_with_periodic_part(current_uniq_service_sets, tarif_sets_by_tarif, best_current_uniq_service_sets)
+  def update_current_uniq_sets_with_periodic_part_______1(current_uniq_service_sets, tarif_sets_by_tarif, best_current_uniq_service_sets)
     services_that_depended_on_service_ids = services_that_depended_on.keys.map(&:to_i)    
     current_uniq_service_sets.each do |uniq_service_set_id, uniq_service_set|
       if !uniq_service_set[:fobidden] and best_current_uniq_service_sets[:set_ids].include?(uniq_service_set_id)
@@ -246,13 +243,14 @@ class ServiceHelper::TarifResultSimlifier
             new_periodic_services = [main_depended_service] + services_that_depended_on[main_depended_service]
             new_tarif_set_id = tarif_set_id(new_periodic_services)
             current_uniq_service_sets[uniq_service_set_id][:tarif_sets_by_part] << (['periodic', new_tarif_set_id] - current_uniq_service_sets[uniq_service_set_id][:tarif_sets_by_part])
+            current_uniq_service_sets[uniq_service_set_id][:tarif_sets_by_part] << (['onetime', new_tarif_set_id] - current_uniq_service_sets[uniq_service_set_id][:tarif_sets_by_part])
             counted_depended_on_services += new_periodic_services
           end
         end
         
-        #raise(StandardError, [(uniq_service_set[:service_ids] - counted_depended_on_services)])
         (uniq_service_set[:service_ids] - counted_depended_on_services).uniq.each do |service|
           current_uniq_service_sets[uniq_service_set_id][:tarif_sets_by_part] << (['periodic', tarif_set_id([service])] - current_uniq_service_sets[uniq_service_set_id][:tarif_sets_by_part])
+          current_uniq_service_sets[uniq_service_set_id][:tarif_sets_by_part] << (['onetime', tarif_set_id([service])] - current_uniq_service_sets[uniq_service_set_id][:tarif_sets_by_part])
         end
       else
         current_uniq_service_sets[uniq_service_set_id][:fobidden] = true

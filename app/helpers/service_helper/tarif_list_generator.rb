@@ -2,9 +2,11 @@
 class ServiceHelper::TarifListGenerator  
   attr_reader :options, :operators, :tarifs, :common_services, :tarif_options             
   attr_accessor :all_services, :all_services_by_operator, :dependencies, :service_description, :uniq_parts_by_operator, :uniq_parts_criteria_by_operator, 
-                :all_services_by_parts, :common_services_by_parts, :service_packs, :service_packs_by_parts, :services_that_depended_on, :periodic_services,
+                :all_services_by_parts, :common_services_by_parts, :service_packs, :service_packs_by_parts, :services_that_depended_on, :periodic_services, :onetime_services,
                 :service_packs_by_general_priority, :tarif_option_by_compatibility, :tarif_option_combinations, :tarif_sets_without_common_services, :tarif_sets                
+  
   attr_accessor :tarif_options_slices, :tarif_options_count, :max_tarif_options_slice, :tarifs_slices, :tarifs_count, :max_tarifs_slice, :all_tarif_parts_count
+  
   attr_reader :gp_tarif_option, :gp_tarif_without_limits, :gp_tarif_with_limits, :gp_tarif_option_with_limits, :gp_common_service, :all_parts,
               :parts_used_as_multiple
          
@@ -137,10 +139,14 @@ class ServiceHelper::TarifListGenerator
   end
   
   def load_periodic_services
-    @periodic_services = []
+    @periodic_services = [], @onetime_services = []
     Service::CategoryTarifClass.where(:tarif_class_id => all_services).where.not(:service_category_periodic_id => nil).select(:tarif_class_id).uniq.each do |r|
         tarif_class_id = r['tarif_class_id'].to_i
         @periodic_services << tarif_class_id
+    end    
+    Service::CategoryTarifClass.where(:tarif_class_id => all_services).where.not(:service_category_one_time_id => nil).select(:tarif_class_id).uniq.each do |r|
+        tarif_class_id = r['tarif_class_id'].to_i
+        @onetime_services << tarif_class_id
     end    
   end
   
@@ -263,7 +269,7 @@ class ServiceHelper::TarifListGenerator
         tarif_option_by_compatibility[tarif] ||= {}
         service_pack.each do |part, services|
           tarif_option_by_compatibility[tarif][part] ||= {}
-          if part == 'periodic'
+          if ['periodic', 'onetime'].include?(part)
             periodic_incompatibility_name = 'special_periodic_for_tarif_list_generation'
             tarif_option_by_compatibility[tarif][part][periodic_incompatibility_name] = services
           else
@@ -295,7 +301,7 @@ class ServiceHelper::TarifListGenerator
       tarif_option_by_compatibility.each do |tarif, service_pack|
         tarif_option_combinations[tarif] ||= {}
         service_pack.each do |part, incompatibility_groups|
-          next if part == 'periodic'
+          next if ['periodic', 'onetime'].include?(part)
           tarif_option_combinations[tarif][part] ||= {}
           services = incompatibility_groups.values.flatten.uniq
           tarif_set_id = tarif_set_id(services)
@@ -303,9 +309,13 @@ class ServiceHelper::TarifListGenerator
         end
         
         uniq_services_in_tarif_option_combinations = tarif_option_combinations[tarif].map{|c| c[1].map{|t| t[1]}}.flatten.compact.uniq
-        uniq_services_in_tarif_option_combinations.each do |service|
+        (uniq_services_in_tarif_option_combinations & periodic_services).each do |service|
           tarif_option_combinations[tarif]['periodic'] ||= {}
           tarif_option_combinations[tarif]['periodic'][tarif_set_id([service])] = [service]
+        end
+        (uniq_services_in_tarif_option_combinations & onetime_services).each do |service|
+           tarif_option_combinations[tarif]['periodic'] ||= {}
+         tarif_option_combinations[tarif]['onetime'][tarif_set_id([service])] = [service]
         end
       end
     else      
@@ -313,7 +323,7 @@ class ServiceHelper::TarifListGenerator
         tarif_option_combinations[tarif] ||= {}
         service_pack.each do |part, incompatibility_groups|
           tarif_option_combinations[tarif][part] ||= {}
-          if part == 'periodic'
+          if ['periodic', 'onetime'].include?(part)
             incompatibility_groups['special_periodic_for_tarif_list_generation'].each do |service|
               tarif_set_id = tarif_set_id([service])
               tarif_option_combinations[tarif][part][tarif_set_id] = [service]
@@ -345,8 +355,11 @@ class ServiceHelper::TarifListGenerator
         end
         
         uniq_services_in_tarif_option_combinations = tarif_option_combinations[tarif].map{|c| c[1].map{|t| t[1]}}.flatten.compact.uniq
-        uniq_services_in_tarif_option_combinations.each do |service|
+        (uniq_services_in_tarif_option_combinations & periodic_services).each do |service|
           tarif_option_combinations[tarif]['periodic'][tarif_set_id([service])] = [service]
+        end
+        (uniq_services_in_tarif_option_combinations & onetime_services).each do |service|
+          tarif_option_combinations[tarif]['onetime'][tarif_set_id([service])] = [service]
         end
       end
     end
@@ -363,7 +376,7 @@ class ServiceHelper::TarifListGenerator
         tarif_sets.each do |tarif_set_id, services|
           tarif_option_group = []
           tarif_option_with_limit_group = []
-          if part == 'periodic'
+          if ['periodic', 'onetime'].include?(part)
             tarif_option_combinations[tarif][part][tarif_set_id] = services
           else
             services.each do |service|
@@ -425,7 +438,7 @@ class ServiceHelper::TarifListGenerator
         operator = service_description[tarif][:operator_id].to_i
         tarif_sets_without_common_services[tarif] ||= {}
         all_parts.each do |part|
-          next if part == 'periodic'
+          next if ['periodic', 'onetime'].include?(part)
           tarif_option_sets = tarif_option_combinations[tarif][part]
           tarif_sets_without_common_services[tarif][part] ||= {}
           tarif_general_priority = dependencies[tarif]['general_priority']
@@ -462,23 +475,31 @@ class ServiceHelper::TarifListGenerator
         
         services_that_depended_on_service_ids = services_that_depended_on.keys.map(&:to_i) 
         tarif_sets_without_common_services[tarif]['periodic'] ||= {}
+        tarif_sets_without_common_services[tarif]['onetime'] ||= {}
+        
         tarif_sets_without_common_services[tarif].each do |part, tarif_sets_without_common_services_by_part|    
-          next if part == 'periodic'      
+          next if ['periodic', 'onetime'].include?(part)      
           tarif_sets_without_common_services_by_part.each do |tarif_set_id, services|
+#            (services_that_depended_on_service_ids & services & periodic_services).each do |main_depended_service|
             (services_that_depended_on_service_ids & services).each do |main_depended_service|
               new_periodic_services = [main_depended_service] + services_that_depended_on[main_depended_service]
               new_tarif_set_id = tarif_set_id(new_periodic_services)
-#              begin
               tarif_sets_without_common_services[tarif]['periodic'][new_tarif_set_id] = new_periodic_services
-#              rescue => e
-#                raise(e, [operator, tarif, new_periodic_services, services_that_depended_on, tarif_sets_without_common_services[tarif]['periodic'].keys])#.join("\n"))
-#              end              
+            end
+#            (services_that_depended_on_service_ids & services & onetime_services).each do |main_depended_service|
+            (services_that_depended_on_service_ids & services).each do |main_depended_service|
+              new_periodic_services = [main_depended_service] + services_that_depended_on[main_depended_service]
+              new_tarif_set_id = tarif_set_id(new_periodic_services)
+              tarif_sets_without_common_services[tarif]['onetime'][new_tarif_set_id] = new_periodic_services
             end
           end
         end
         
-        ((tarif_option_combinations[tarif]['periodic'].map{|o| o[1]}.flatten + [tarif]) & periodic_services).each do |service|
+        ((tarif_option_combinations[tarif]['periodic'].map{|o| o[1]}.flatten + [tarif])).each do |service|
           tarif_sets_without_common_services[tarif]['periodic'][tarif_set_id([service])] = [service]
+        end
+        ((tarif_option_combinations[tarif]['onetime'].map{|o| o[1]}.flatten + [tarif])).each do |service|
+          tarif_sets_without_common_services[tarif]['onetime'][tarif_set_id([service])] = [service]
         end
       end
     end
@@ -491,7 +512,7 @@ class ServiceHelper::TarifListGenerator
       tarif_sets[tarif] ||= {}
       tarif_sets_without_common_services_by_tarif.each do |part, tarif_sets_without_common_services_by_tarif_by_parts|
         tarif_sets[tarif][part] ||= {}
-        if part == 'periodic'
+        if ['periodic', 'onetime'].include?(part)
           tarif_sets_without_common_services_by_tarif_by_parts.each do |tarif_set_id, services|
             tarif_sets[tarif][part][tarif_set_id] = services            
           end

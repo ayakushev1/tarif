@@ -151,6 +151,7 @@ class ServiceHelper::FinalTarifSetGenerator
             new_periodic_services = [main_depended_service] + services_that_depended_on[main_depended_service.to_s]
             new_tarif_set_id = tarif_set_id(new_periodic_services)
             current_uniq_service_sets[uniq_service_set_id][:tarif_sets_by_part] << (['periodic', new_tarif_set_id] - current_uniq_service_sets[uniq_service_set_id][:tarif_sets_by_part])
+            current_uniq_service_sets[uniq_service_set_id][:tarif_sets_by_part] << (['onetime', new_tarif_set_id] - current_uniq_service_sets[uniq_service_set_id][:tarif_sets_by_part])
             counted_depended_on_services += new_periodic_services
           end
         end
@@ -158,6 +159,7 @@ class ServiceHelper::FinalTarifSetGenerator
         #raise(StandardError, [(uniq_service_set[:service_ids] - counted_depended_on_services)])
         (uniq_service_set[:service_ids] - counted_depended_on_services).uniq.each do |service|
           current_uniq_service_sets[uniq_service_set_id][:tarif_sets_by_part] << (['periodic', tarif_set_id([service])] - current_uniq_service_sets[uniq_service_set_id][:tarif_sets_by_part])
+          current_uniq_service_sets[uniq_service_set_id][:tarif_sets_by_part] << (['onetime', tarif_set_id([service])] - current_uniq_service_sets[uniq_service_set_id][:tarif_sets_by_part])
         end
       else
         current_uniq_service_sets[uniq_service_set_id][:fobidden] = true
