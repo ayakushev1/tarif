@@ -78,6 +78,7 @@ class ServiceHelper::CallsStatCalculator
       :count_volume => "count(description->>'volume')",
 #      :count_volume => "count((description->>'volume')::integer)",
       :sum_volume => "sum((description->>'volume')::float)",
+      :cost => "sum((description->>'cost')::float)",
      }
   end
   

@@ -1,7 +1,7 @@
 #Own country rouming
 @tc = ServiceHelper::TarifCreator.new(_mts)
 @tc.create_tarif_class({
-  :id => _mts_own_country_rouming, :name => 'Own country rouming', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _common_service,
+  :id => _mts_own_country_rouming, :name => 'Роуминг по стране', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _common_service,
   :features => {:http => 'http://www.mts.ru/mob_connect/roaming/n_roaming/tariffs/'},
   :dependency => {
     :categories => [_tcgsc_calls, _tcgsc_sms],

@@ -1,9 +1,6 @@
 def access_methods_to_constant_general_categories
 #category constant definition
 #1 locations - regions
-  _moscow = 1238; _moscow_region = 1127; _piter = 1255; _piter_region = 1124; _ekaterin = 1217; _ekaterin_region = 1162;
-  _regions = [_moscow, _moscow_region, _piter, _piter_region, _ekaterin, _ekaterin_region]
-  
 #3 
   _legal = 1, _person = 2
 #4 standard services
@@ -37,7 +34,7 @@ _outbound = 70; _inbound = 71; _unspecified_direction = 72;
 #20 user_service_status  
 _subscribed = 175; _unsubscribed = 176; _expired = 177
 #21 relation types
-_operator_home_regions = 190; _operator_country_groups = 191; _main_operator_by_country = 192;
+_operator_home_regions = 190; _operator_country_groups = 191; _main_operator_by_country = 192; _operator_region_groups = 193
 #22 phone usage patterns
 _own_region_active_caller = 201; _own_region_active_sms = 202; _own_region_active_internet = 203; _own_region_no_activity = 204;
 _home_region_active_caller = 211; _home_region_active_sms = 212; _home_region_active_internet = 213; _home_region_no_activity = 214;

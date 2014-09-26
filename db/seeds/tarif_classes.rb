@@ -46,41 +46,95 @@ TarifClass.create(id: 93 , operator_id: 1025, privacy_id: 2, standard_service_id
 TarifClass.create(id: 94 , operator_id: 1025, privacy_id: 2, standard_service_id: 42, name: 'Домашний регион')  #путешествие по стране
 
 #Мегафон, частные, тарифы
-TarifClass.create(id: 100, operator_id: 1028, privacy_id: 2, standard_service_id: 40, name: 'Вокруг света')
-TarifClass.create(id: 101, operator_id: 1028, privacy_id: 2, standard_service_id: 40, name: 'Все просто')
-TarifClass.create(id: 102, operator_id: 1028, privacy_id: 2, standard_service_id: 40, name: 'Мегафон все включено L')
-TarifClass.create(id: 103, operator_id: 1028, privacy_id: 2, standard_service_id: 40, name: 'Мегафон все включено L СИТИ')
-TarifClass.create(id: 104, operator_id: 1028, privacy_id: 2, standard_service_id: 40, name: 'Мегафон все включено M')
-TarifClass.create(id: 105, operator_id: 1028, privacy_id: 2, standard_service_id: 40, name: 'Мегафон все включено S')
-TarifClass.create(id: 106, operator_id: 1028, privacy_id: 2, standard_service_id: 40, name: 'Мегафон все включено VIP')
-TarifClass.create(id: 107, operator_id: 1028, privacy_id: 2, standard_service_id: 40, name: 'Мегафон онлайн')
-TarifClass.create(id: 108, operator_id: 1028, privacy_id: 2, standard_service_id: 40, name: 'Международный')
-TarifClass.create(id: 109, operator_id: 1028, privacy_id: 2, standard_service_id: 40, name: 'Переходи на ноль')
-TarifClass.create(id: 110, operator_id: 1028, privacy_id: 2, standard_service_id: 40, name: 'Подмосковный')
+TarifClass.create(id: _mgf_around_world, operator_id: 1028, privacy_id: 2, standard_service_id: 40, name: 'Вокруг света')#
+TarifClass.create(id: _mgf_all_simple, operator_id: 1028, privacy_id: 2, standard_service_id: 40, name: 'Все просто')#
+TarifClass.create(id: _mgf_all_included_xs, operator_id: 1028, privacy_id: 2, standard_service_id: 40, name: 'Мегафон все включено XS')#
+TarifClass.create(id: _mgf_all_included_s, operator_id: 1028, privacy_id: 2, standard_service_id: 40, name: 'Мегафон все включено S')#
+TarifClass.create(id: _mgf_all_included_m, operator_id: 1028, privacy_id: 2, standard_service_id: 40, name: 'Мегафон все включено M')#
+TarifClass.create(id: _mgf_all_included_l, operator_id: 1028, privacy_id: 2, standard_service_id: 40, name: 'Мегафон все включено L')#
+TarifClass.create(id: _mgf_all_included_vip, operator_id: 1028, privacy_id: 2, standard_service_id: 40, name: 'Мегафон все включено VIP')#
+TarifClass.create(id: _mgf_megafon_online, operator_id: 1028, privacy_id: 2, standard_service_id: 40, name: 'Мегафон онлайн')
+TarifClass.create(id: _mgf_international, operator_id: 1028, privacy_id: 2, standard_service_id: 40, name: 'Международный')#
+TarifClass.create(id: _mgf_go_to_zero, operator_id: 1028, privacy_id: 2, standard_service_id: 40, name: 'Переходи на ноль')#
+TarifClass.create(id: _mgf_sub_moscow, operator_id: 1028, privacy_id: 2, standard_service_id: 40, name: 'Подмосковный')#
 TarifClass.create(id: 111, operator_id: 1028, privacy_id: 2, standard_service_id: 40, name: 'Подмосковный*')
-TarifClass.create(id: 112, operator_id: 1028, privacy_id: 2, standard_service_id: 40, name: 'Связь городов')
-TarifClass.create(id: 113, operator_id: 1028, privacy_id: 2, standard_service_id: 40, name: 'Теплый прием')
+TarifClass.create(id: _mgf_city_connection, operator_id: 1028, privacy_id: 2, standard_service_id: 40, name: 'Связь городов')#
+TarifClass.create(id: _mgf_warm_welcome, operator_id: 1028, privacy_id: 2, standard_service_id: 40, name: 'Теплый прием')#
 #Мегафон, корпоративные, тарифы
-TarifClass.create(id: 150, operator_id: 1028, privacy_id: 1, standard_service_id: 40, name: 'Командировочный')
-TarifClass.create(id: 151, operator_id: 1028, privacy_id: 1, standard_service_id: 40, name: 'Корпоративный безлимит М1000')
-TarifClass.create(id: 152, operator_id: 1028, privacy_id: 1, standard_service_id: 40, name: 'Корпоративный безлимит М3000')
-TarifClass.create(id: 153, operator_id: 1028, privacy_id: 1, standard_service_id: 40, name: 'Корпоративный безлимит М500')
-TarifClass.create(id: 154, operator_id: 1028, privacy_id: 1, standard_service_id: 40, name: 'Корпоративный безлимит S1000')
-TarifClass.create(id: 155, operator_id: 1028, privacy_id: 1, standard_service_id: 40, name: 'Корпоративный безлимит S3000')
-TarifClass.create(id: 156, operator_id: 1028, privacy_id: 1, standard_service_id: 40, name: 'Корпоративный безлимит S500')
-TarifClass.create(id: 157, operator_id: 1028, privacy_id: 1, standard_service_id: 40, name: 'Корпоративный стандарт')
-TarifClass.create(id: 158, operator_id: 1028, privacy_id: 1, standard_service_id: 40, name: 'Федеральный генеральный')
-TarifClass.create(id: 159, operator_id: 1028, privacy_id: 1, standard_service_id: 40, name: 'Федеральный особый')
-TarifClass.create(id: 160, operator_id: 1028, privacy_id: 1, standard_service_id: 40, name: 'Федеральны универсальный')
+
 #Мегафон, роуминг
 TarifClass.create(id: 171 , operator_id: 1028, privacy_id: 1, standard_service_id: 41, name: 'Внутрисетевой роуминг для бизнеса')
 TarifClass.create(id: 172 , operator_id: 1028, privacy_id: 1, standard_service_id: 41, name: 'Национальный роуминг для бизнеса')
 TarifClass.create(id: 173 , operator_id: 1028, privacy_id: 1, standard_service_id: 41, name: 'Международный роуминг для бизнеса')
 
 TarifClass.create(id: 175 , operator_id: 1028, privacy_id: 2, standard_service_id: 41, name: 'Внутрисетевой роуминг')
-TarifClass.create(id: 176 , operator_id: 1028, privacy_id: 2, standard_service_id: 41, name: 'Путешествие по России')
-TarifClass.create(id: 177 , operator_id: 1028, privacy_id: 2, standard_service_id: 41, name: 'Путешествие по миру')
+TarifClass.create(id: _mgf_own_country_rouming , operator_id: 1028, privacy_id: 2, standard_service_id: 41, name: 'Путешествие по России')
+TarifClass.create(id: _mgf_international_rouming , operator_id: 1028, privacy_id: 2, standard_service_id: 41, name: 'Путешествие по миру')
+TarifClass.create(id: _mgf_intra_countries_services, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Международные вызовы')
+TarifClass.create(id: _mgf_mobile_internet, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Мобильный интернет')
+
 #Мегафон, услуги
+TarifClass.create(id: _mgf_all_world, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Весь мир')
+TarifClass.create(id: _mgf_30_minutes_all_world, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: '30 минут ― Весь мир')
+TarifClass.create(id: _mgf_100_minutes_europe, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: '100 минут - Европа')
+TarifClass.create(id: _mgf_far_countries, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Дальние страны')
+TarifClass.create(id: _mgf_option_around_world, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'опция Вокруг света')
+TarifClass.create(id: _mgf_50_sms_all_world, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: '50 SMS Весь мир')
+TarifClass.create(id: _mgf_100_sms_all_world, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: '100 SMS Весь мир')
+TarifClass.create(id: _mgf_50_sms_europe, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: '50 SMS Европа')
+TarifClass.create(id: _mgf_100_sms_europe, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: '100 SMS Европа')
+TarifClass.create(id: _mgf_25_discount_on_calls_to_russia_and_all_incoming, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Скидка 25% на исходящие вызовы в Россию и все входящие')
+TarifClass.create(id: _mgf_50_discount_on_calls_to_russia, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Скидка 50% на исходящие вызовы в Россию')
+TarifClass.create(id: _mgf_50_discount_on_all_incoming_calls, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Скидка 50% на все входящие вызовы')
+TarifClass.create(id: _mgf_internet_abroad_10, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Интернет за границей, 10 Мб')
+TarifClass.create(id: _mgf_internet_abroad_30, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Интернет за границей, 30 Мб')
+TarifClass.create(id: _mgf_vacation_online, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Отпуск онлайн')
+
+TarifClass.create(id: _mgf_all_russia, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Вся Россия')
+TarifClass.create(id: _mgf_travel_without_worry, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Путешествуй без забот')
+TarifClass.create(id: _mgf_everywhere_moscow_in_central_region, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Везде Москва — в Центральном регионе')
+TarifClass.create(id: _mgf_internet_in_russia, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Интернет по России')
+TarifClass.create(id: _mgf_internet_in_russia_for_specific_options, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Интернет по России для определенных опций')
+TarifClass.create(id: _mgf_gigabite_to_road, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Гигабайт в дорогу')
+
+TarifClass.create(id: _mgf_unlimited_communication, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Безлимитное общение')
+TarifClass.create(id: _mgf_call_to_russia, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Звони по России')
+TarifClass.create(id: _mgf_call_to_all_country, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Звони во все страны')
+TarifClass.create(id: _mgf_option_for_sms_s, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Опция для SMS S')
+TarifClass.create(id: _mgf_option_for_sms_l, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Опция для SMS L')
+TarifClass.create(id: _mgf_option_for_sms_m, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Опция для SMS M')
+TarifClass.create(id: _mgf_option_for_sms_xl, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Опция для SMS XL')
+TarifClass.create(id: _mgf_sms_stihia, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'SMS-стихия')
+TarifClass.create(id: _mgf_paket_sms_100, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Пакет SMS-100')
+TarifClass.create(id: _mgf_paket_sms_150, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Пакет SMS-150')
+TarifClass.create(id: _mgf_paket_sms_200, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Пакет SMS-200')
+TarifClass.create(id: _mgf_paket_sms_350, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Пакет SMS-350')
+TarifClass.create(id: _mgf_paket_sms_500, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Пакет SMS-500')
+TarifClass.create(id: _mgf_paket_sms_1000, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Пакет SMS-1000')
+TarifClass.create(id: _mgf_100_sms, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: '100 SMS')
+TarifClass.create(id: _mgf_mms_24, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'MMS 24')
+TarifClass.create(id: _mgf_paket_mms_10, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Пакет MMS-10')
+TarifClass.create(id: _mgf_paket_mms_50, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Пакет MMS-50')
+TarifClass.create(id: _mgf_option_city_connection, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'опция Связь городов')#
+
+TarifClass.create(id: _mgf_internet_extra_1_gb, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Интернет-экстра 1 ГБ')
+TarifClass.create(id: _mgf_internet_xs, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Интернет XS')
+TarifClass.create(id: _mgf_internet_s, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Интернет S')
+TarifClass.create(id: _mgf_internet_m, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Интернет M')
+TarifClass.create(id: _mgf_internet_l, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Интернет L')
+TarifClass.create(id: _mgf_internet_xl, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Интернет XL')
+TarifClass.create(id: _mgf_internet_24, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Интернет 24')
+TarifClass.create(id: _mgf_internet_24_pro, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Интернет 24 PRO')
+TarifClass.create(id: _mgf_bit_pro, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'БИТ PRO')
+TarifClass.create(id: _mgf_bit_mega_pro_150, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'БИТ MegaPRO 150')
+TarifClass.create(id: _mgf_bit_mega_pro_250, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'БИТ MegaPRO 250')
+TarifClass.create(id: _mgf_bit_mega_pro_500, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'БИТ MegaPRO 500')
+
+#TarifClass.create(id: _mgf_prodli_skorost, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Продли скорость')
+#TarifClass.create(id: _mgf_prodli_skorost_lite, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Продли скорость Лайт')
+#TarifClass.create(id: _mgf_prodli_skorost_mega, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Продли скорость Мега')
+
+
 #МТС, частные, тарифы
 TarifClass.create(id: _mts_red_energy, operator_id: 1030, privacy_id: 2, standard_service_id: 40, name: 'RED Energy')
 TarifClass.create(id: _mts_smart, operator_id: 1030, privacy_id: 2, standard_service_id: 40, name: 'Smart')
@@ -112,8 +166,8 @@ TarifClass.create(id: 272 , operator_id: 1030, privacy_id: 1, standard_service_i
 TarifClass.create(id: 273 , operator_id: 1030, privacy_id: 1, standard_service_id: 41, name: 'Международный роуминг для бизнеса')
 
 TarifClass.create(id: 275 , operator_id: 1030, privacy_id: 2, standard_service_id: 41, name: 'Внутрисетевой роуминг')
-TarifClass.create(id: _mts_own_country_rouming , operator_id: 1030, privacy_id: 2, standard_service_id: 41, name: 'Own country rouming')
-TarifClass.create(id: _mts_international_rouming , operator_id: 1030, privacy_id: 2, standard_service_id: 41, name: 'International rouming')
+TarifClass.create(id: _mts_own_country_rouming , operator_id: 1030, privacy_id: 2, standard_service_id: 41, name: 'Роуминг по стране')
+TarifClass.create(id: _mts_international_rouming , operator_id: 1030, privacy_id: 2, standard_service_id: 41, name: 'Международный роуминг')
 TarifClass.create(id: 278 , operator_id: 1030, privacy_id: 2, standard_service_id: 41, name: 'Международный и национальный роуминг')
 TarifClass.create(id: 279 , operator_id: 1030, privacy_id: 2, standard_service_id: 41, name: 'Легкий роуминг и международный доступ')
 TarifClass.create(id: _mts_own_country_rouming_internet , operator_id: 1030, privacy_id: 2, standard_service_id: 41, name: 'Интернет во внутресетевом роуминге')

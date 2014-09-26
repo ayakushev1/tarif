@@ -86,6 +86,8 @@ _world_countries = _europe_countries + _asia_countries + _noth_america_countries
 
 _world_countries_without_russia = _europe_countries_without_russia + _asia_countries + _noth_america_countries + _south_america_countries + _africa_countries
 
+
+
 _all_country_list_in_array_with_russian_names = [
 [_australia,  'Австралия',           14.9,  '*111*101*61#'],
 [_austria,  'Австрия',             6.9,   '*111*101*43#'],
@@ -282,7 +284,7 @@ _all_country_list_in_array_with_russian_names = [
 [_french_gviana, 'Французская Гвиана',  29.9,  '*111*101*594#'],
 [_french_polinesia, 'Французская Полинезия', 29.9,  '*111*101*689#'],
 [_croatia, 'Хорватия',            8.9,   '*111*101*385#'],
-[_center_africa_republic, 'Центрально-Афри-канская Республика',  49.9,  '*111*101*236#'],
+[_center_africa_republic, 'Центрально-Африканская Республика',  49.9,  '*111*101*236#'],
 [_chad, 'Чад',                 14.9,  '*111*101*235#'],
 [_montenegro, 'Черногория',          12.9,  '*111*101*382#'],
 [_czech_republic, 'Чехия',               8.9,   '*111*101*420#'],

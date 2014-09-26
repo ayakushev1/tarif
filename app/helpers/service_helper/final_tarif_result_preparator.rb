@@ -131,8 +131,8 @@ class ServiceHelper::FinalTarifResultPreparator
     service_category_tarif_class_id = price_value_detail['service_category_tarif_class_id']
     service_category_group_id = price_value_detail['service_category_group_id']
 
-    service_category_description = { 'service_category_rouming_id' => [], 'service_category_geo_id' => [], 'service_category_partner_type_id' => [],
-       'service_category_calls_id' => [], 'service_category_one_time_id' => [], 'service_category_periodic_id' => [],}
+    service_category_description = { 'service_category_rouming_id' => [], 'service_category_geo_id' => [], 'service_category_geo_id_details' => [],
+      'service_category_partner_type_id' => [], 'service_category_calls_id' => [], 'service_category_one_time_id' => [], 'service_category_periodic_id' => [],}
        
     return service_category_description if !service_category_group_id
     
@@ -156,13 +156,14 @@ class ServiceHelper::FinalTarifResultPreparator
           detailed_geo_name = if eval_strings[0] =~ /operator_country_groups_by_group_id/
             country_ids = eval(eval_strings[0])
             country_names = Category.where(:id => country_ids).pluck(:name)
-             ": (#{country_names.join(', ')})"
+             "#{country_names.join(', ')}"
           else
-            ': (не могу показать список, сообщите администратору)'
+            'не могу показать список, сообщите администратору'
           end          
         end
         
-        service_category_description['service_category_geo_id'] << geo_name + (detailed_geo_name || '')
+        service_category_description['service_category_geo_id'] << geo_name
+        service_category_description['service_category_geo_id_details'] << (detailed_geo_name || '')
       end
         
 

@@ -15,7 +15,7 @@
 
 _sctcg_not_russia_rouming_sms_outcoming = {:name => '_sctcg_not_russia_rouming_sms_outcoming', :service_category_rouming_id => _all_world_rouming, :service_category_calls_id => _sms_out}
 
-#Own country, sms, Outcoming
+#Not Own country, sms, Outcoming
   @tc.add_one_service_category_tarif_class(_sctcg_not_russia_rouming_sms_outcoming, {}, 
     {:calculation_order => 0, :price => 700.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _item, :description => '', 
      :formula => {

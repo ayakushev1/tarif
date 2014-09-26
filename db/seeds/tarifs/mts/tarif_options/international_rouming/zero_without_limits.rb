@@ -46,7 +46,7 @@ scg_mts_zero_without_limits_calls_first_200_minites = @tc.add_service_category_g
                       :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
      :method => 'price_formulas.price * sum_duration_minute_after_10_min'}, }  )
 
-#Ежемесячная плата
+#Ежедневная плата
   @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => _stf_fixed_price_if_used_in_1_day_duration, :price => 33.0})
 
 #Europe, calls, incoming
@@ -60,9 +60,10 @@ scg_mts_zero_without_limits_calls_first_200_minites = @tc.add_service_category_g
    :formula => {
      :stat_params => {:sum_duration_minute_between_2_and_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) between 2.0 and 5.0 then ceil(((description->>'duration')::float)/60.0) - 1.0 else 0.0 end)",
                       :sum_duration_minute_less_2 => "sum(case when ceil(((description->>'duration')::float)/60.0) < 2.0 then 1.0 else 0.0 end)",
+                      :count_duration_minute_more_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 5.0 then 1.0 else 0.0 end)",
                       :sum_duration_minute_more_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 5.0 then ceil(((description->>'duration')::float)/60.0) - 5.0 else 0.0 end)",
                       :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
-     :method => 'price_formulas.price * sum_duration_minute_between_2_and_5 + 79.0 * (sum_duration_minute_less_2 + sum_duration_minute_more_5)'}, } )
+     :method => 'price_formulas.price * (sum_duration_minute_between_2_and_5 + count_duration_minute_more_5 * 5.0) + 79.0 * (sum_duration_minute_less_2 + sum_duration_minute_more_5)'}, } )
 
 #SIC_1, calls, incoming
   @tc.add_grouped_service_category_tarif_class(_sctcg_mts_sic_1_calls_incoming, scg_mts_zero_without_limits_calls_first_200_minites[:id])
@@ -75,9 +76,10 @@ scg_mts_zero_without_limits_calls_first_200_minites = @tc.add_service_category_g
    :formula => {
      :stat_params => {:sum_duration_minute_between_2_and_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) between 2.0 and 5.0 then ceil(((description->>'duration')::float)/60.0) else 0.0 end)",
                       :sum_duration_minute_less_2 => "sum(case when ceil(((description->>'duration')::float)/60.0) < 2.0 then 1.0 else 0.0 end)",
+                      :count_duration_minute_more_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 5.0 then 1.0 else 0.0 end)",
                       :sum_duration_minute_more_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 5.0 then ceil(((description->>'duration')::float)/60.0) - 5.0 else 0.0 end)",
                       :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
-     :method => 'price_formulas.price * sum_duration_minute_between_2_and_5 + 25.0 * (sum_duration_minute_less_2 + sum_duration_minute_more_5)'}, } )
+     :method => 'price_formulas.price * (sum_duration_minute_between_2_and_5 + count_duration_minute_more_5 * 5.0) + 25.0 * (sum_duration_minute_less_2 + sum_duration_minute_more_5)'}, } )
 
 #SIC_2_1, calls, incoming
   @tc.add_grouped_service_category_tarif_class(_sctcg_mts_sic_2_1_calls_incoming, scg_mts_zero_without_limits_calls_first_200_minites[:id])
@@ -90,9 +92,10 @@ scg_mts_zero_without_limits_calls_first_200_minites = @tc.add_service_category_g
    :formula => {
      :stat_params => {:sum_duration_minute_between_2_and_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) between 2.0 and 5.0 then ceil(((description->>'duration')::float)/60.0) else 0.0 end)",
                       :sum_duration_minute_less_2 => "sum(case when ceil(((description->>'duration')::float)/60.0) < 2.0 then 1.0 else 0.0 end)",
+                      :count_duration_minute_more_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 5.0 then 1.0 else 0.0 end)",
                       :sum_duration_minute_more_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 5.0 then ceil(((description->>'duration')::float)/60.0) - 5.0 else 0.0 end)",
                       :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
-     :method => 'price_formulas.price * sum_duration_minute_between_2_and_5 + 59.0 * (sum_duration_minute_less_2 + sum_duration_minute_more_5)'}, } )
+     :method => 'price_formulas.price * (sum_duration_minute_between_2_and_5 + count_duration_minute_more_5 * 5.0) + 59.0 * (sum_duration_minute_less_2 + sum_duration_minute_more_5)'}, } )
 
 #Other countries, calls, incoming
   @tc.add_grouped_service_category_tarif_class(_sctcg_mts_other_countries_calls_incoming, scg_mts_zero_without_limits_calls_first_200_minites[:id])
@@ -105,9 +108,10 @@ scg_mts_zero_without_limits_calls_first_200_minites = @tc.add_service_category_g
    :formula => {
      :stat_params => {:sum_duration_minute_between_2_and_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) between 2.0 and 5.0 then ceil(((description->>'duration')::float)/60.0) else 0.0 end)",
                       :sum_duration_minute_less_2 => "sum(case when ceil(((description->>'duration')::float)/60.0) < 2.0 then 1.0 else 0.0 end)",
+                      :count_duration_minute_more_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 5.0 then 1.0 else 0.0 end)",
                       :sum_duration_minute_more_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 5.0 then ceil(((description->>'duration')::float)/60.0) - 5.0 else 0.0 end)",
                       :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
-     :method => 'price_formulas.price * sum_duration_minute_between_2_and_5 + 149.0 * (sum_duration_minute_less_2 + sum_duration_minute_more_5)'}, } )
+     :method => 'price_formulas.price * (sum_duration_minute_between_2_and_5 + count_duration_minute_more_5 * 5.0) + 149.0 * (sum_duration_minute_less_2 + sum_duration_minute_more_5)'}, } )
      
 @tc.add_tarif_class_categories
 

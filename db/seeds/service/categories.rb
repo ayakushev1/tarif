@@ -32,6 +32,13 @@ cat << {:id => _own_country_rouming, :name => 'своя страна', :type_id 
   crit << {:id => _own_country_rouming * 10 + 2, :criteria_param_id => _call_connect_region_id, :comparison_operator_id => _not_in_array, :value_choose_option_id => _field, 
            :value_param_id => _fq_tarif_home_region_ids, :value => nil, :service_category_id => _own_country_rouming}
 
+cat << {:id => _sc_mgf_cenral_regions_not_own_and_home_region, :name => 'Мегафон, Центральный регион, кроме домашнего', :type_id => _common, :parent_id => _intra_net_rouming, :level => 2, :path => [_category_rouming, _intra_net_rouming]}
+  crit << {:id => _sc_mgf_cenral_regions_not_own_and_home_region * 10 , :criteria_param_id => _call_connect_region_id, :comparison_operator_id => _not_in_array, :value_choose_option_id => _field, 
+           :value_param_id => _fq_tarif_own_and_home_region_ids, :value => nil, :service_category_id => _sc_mgf_cenral_regions_not_own_and_home_region}
+  crit << {:id => _sc_mgf_cenral_regions_not_own_and_home_region * 10 +1 , :criteria_param_id => _call_connect_region_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_region_groups_by_group_id(#{_relation_mgf_central_region})", :service_category_id => _sc_mgf_cenral_regions_not_own_and_home_region}
+  
+
 cat << {:id => 5, :name => 'группы стран', :type_id => _common, :parent_id => _intra_net_rouming, :level => 2, :path => [_category_rouming, _intra_net_rouming]}
 cat << {:id => 6, :name => 'весь мир', :type_id => _common, :parent_id => 5, :level => 3, :path => [0, 1, 5]}
   crit << {:id => 61 , :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
@@ -109,6 +116,86 @@ cat << {:id => _sc_mts_rouming_in_bit_abrod_option_countries_4, :name => 'Стр
   crit << {:id => _sc_mts_rouming_in_bit_abrod_option_countries_4 * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
            :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mts_internet_bit_abrod_4})", :service_category_id => _sc_mts_rouming_in_bit_abrod_option_countries_4}
 
+
+cat << {:id => _sc_mgf_rouming_in_option_around_world_1, :name => 'Страны Мегафон 1-я группа опции вокруг мира', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_mgf_rouming_in_option_around_world_1 * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mgf_rouming_in_option_around_world_1})", :service_category_id => _sc_mgf_rouming_in_option_around_world_1}
+
+cat << {:id => _sc_mgf_rouming_in_option_around_world_2, :name => 'Страны Мегафон 2-я группа опции вокруг мира', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_mgf_rouming_in_option_around_world_2 * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mgf_rouming_in_option_around_world_2})", :service_category_id => _sc_mgf_rouming_in_option_around_world_2}
+
+cat << {:id => _sc_mgf_rouming_in_option_around_world_3, :name => 'Страны Мегафон 3-я группа опции вокруг мира', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_mgf_rouming_in_option_around_world_3 * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mgf_rouming_in_option_around_world_3})", :service_category_id => _sc_mgf_rouming_in_option_around_world_3}
+
+cat << {:id => _sc_mgf_rouming_in_50_sms_europe, :name => 'Страны Мегафон опции 50 смс Европа', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_mgf_rouming_in_50_sms_europe * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mgf_rouming_in_50_sms_europe})", :service_category_id => _sc_mgf_rouming_in_50_sms_europe}
+
+cat << {:id => _sc_mgf_rouming_not_russia_not_in_50_sms_europe, :name => 'Страны Мегафон кроме России и опции 50 смс Европа', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_mgf_rouming_not_russia_not_in_50_sms_europe * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mgf_rouming_not_russia_not_in_50_sms_europe})", :service_category_id => _sc_mgf_rouming_not_russia_not_in_50_sms_europe}
+
+
+cat << {:id => _sc_mgf_europe_international_rouming, :name => 'Страны Европы Мегафона', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_mgf_europe_international_rouming * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mgf_europe_international_rouming})", :service_category_id => _sc_mgf_europe_international_rouming}
+
+cat << {:id => _sc_mgf_sic_international_rouming, :name => 'Страны СНГ Мегафона', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_mgf_sic_international_rouming * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mgf_sic_international_rouming})", :service_category_id => _sc_mgf_sic_international_rouming}
+
+cat << {:id => _sc_mgf_other_countries_international_rouming, :name => 'Остальные страны Мегафона для международного роуминга', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_mgf_other_countries_international_rouming * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mgf_other_countries_international_rouming})", :service_category_id => _sc_mgf_other_countries_international_rouming}
+
+cat << {:id => _sc_mgf_extended_countries_international_rouming, :name => 'Cтраны Мегафона для расширенного международного роуминга', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_mgf_extended_countries_international_rouming * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mgf_extended_countries_international_rouming})", :service_category_id => _sc_mgf_extended_countries_international_rouming}
+
+cat << {:id => _sc_mgf_ukraine_internet_abroad, :name => 'Страны Европы Мегафона', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_mgf_ukraine_internet_abroad * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mgf_ukraine_internet_abroad})", :service_category_id => _sc_mgf_ukraine_internet_abroad}
+
+cat << {:id => _sc_mgf_europe_internet_abroad, :name => 'Страны Европы Мегафона', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_mgf_europe_internet_abroad * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mgf_europe_internet_abroad})", :service_category_id => _sc_mgf_europe_internet_abroad}
+
+cat << {:id => _sc_mgf_popular_countries_internet_abroad, :name => 'Страны Европы Мегафона', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_mgf_popular_countries_internet_abroad * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mgf_popular_countries_internet_abroad})", :service_category_id => _sc_mgf_popular_countries_internet_abroad}
+
+cat << {:id => _sc_mgf_other_countries_internet_abroad, :name => 'Страны Европы Мегафона', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_mgf_other_countries_internet_abroad * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mgf_other_countries_internet_abroad})", :service_category_id => _sc_mgf_other_countries_internet_abroad}
+
+cat << {:id => _sc_mgf_countries_vacation_online, :name => 'Страны Мегафона для опции Отпуск онлайн', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_mgf_countries_vacation_online * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mgf_countries_vacation_online})", :service_category_id => _sc_mgf_countries_vacation_online}
+
+cat << {:id => _sc_mgf_around_world_countries_1, :name => 'Страны Мегафона для Вокруг света 1', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_mgf_around_world_countries_1 * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mgf_around_world_countries_1})", :service_category_id => _sc_mgf_around_world_countries_1}
+
+cat << {:id => _sc_mgf_around_world_countries_2, :name => 'Страны Мегафона для Вокруг света 2', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_mgf_around_world_countries_2 * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mgf_around_world_countries_2})", :service_category_id => _sc_mgf_around_world_countries_2}
+
+cat << {:id => _sc_mgf_around_world_countries_3, :name => 'Страны Мегафона для Вокруг света 3', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_mgf_around_world_countries_3 * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mgf_around_world_countries_3})", :service_category_id => _sc_mgf_around_world_countries_3}
+
+cat << {:id => _sc_mgf_around_world_countries_4, :name => 'Страны Мегафона для Вокруг света 4', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_mgf_around_world_countries_4 * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mgf_around_world_countries_4})", :service_category_id => _sc_mgf_around_world_countries_4}
+
+cat << {:id => _sc_mgf_around_world_countries_5, :name => 'Страны Мегафона для Вокруг света 5', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_mgf_around_world_countries_5 * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mgf_around_world_countries_5})", :service_category_id => _sc_mgf_around_world_countries_5}
+
+
+
 #география услуг
 cat << {:id => _geography_services, :name => 'география услуг', :type_id => _common, :parent_id => nil, :level => 0, :path => []}
 cat << {:id => _service_to_own_region, :name => 'услуги в свой регион', :type_id => _common, :parent_id => _geography_services, :level => 1, :path => [_geography_services]}
@@ -130,6 +217,13 @@ cat << {:id => _service_to_all_own_country_regions, :name => 'услуги во 
 cat << {:id => _service_to_rouming_region, :name => 'услуги в регион нахождения (роуминга)', :type_id => _common, :parent_id => _geography_services, :level => 1, :path => [_geography_services]}
   crit << {:id => _service_to_rouming_region * 10, :criteria_param_id => _call_partner_phone_region_id, :comparison_operator_id => _equal, :value_choose_option_id => _value_param_is_criterium_param, 
            :value_param_id => _call_connect_region_id, :value => nil, :service_category_id => _service_to_rouming_region}
+
+cat << {:id => _service_to_not_own_and_home_region, :name => 'услуги не в свой и  домашний регион', :type_id => _common, :parent_id => _geography_services, :level => 1, :path => [_geography_services]}
+  crit << {:id => _service_to_not_own_and_home_region * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _equal, :value_choose_option_id => _field, 
+           :value_param_id => _fq_tarif_country_id, :value => nil, :service_category_id => _service_to_not_own_and_home_region}
+  crit << {:id => _service_to_not_own_and_home_region * 10 + 1 , :criteria_param_id => _call_partner_phone_region_id, :comparison_operator_id => _not_in_array, :value_choose_option_id => _field, 
+           :value_param_id => _fq_tarif_own_and_home_region_ids, :value => nil, :service_category_id => _service_to_not_own_and_home_region}
+
 
 #TODO исправить плохой критерий 1030
 cat << {:id => _service_to_own_country, :name => 'услуги в свою страну', :type_id => _common, :parent_id => _geography_services, :level => 1, :path => [_geography_services]}
@@ -161,7 +255,9 @@ cat << {:id => _sc_service_to_russia, :name => 'услуги в Россию', :
            :value => _russia, :service_category_id => _sc_service_to_russia}
 
 cat << {:id => _sc_service_to_rouming_country, :name => 'услуги в страну нахождения (роуминга)', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
-  crit << {:id => _sc_service_to_rouming_country * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _equal, :value_choose_option_id => _value_param_is_criterium_param, 
+  crit << {:id => _sc_service_to_rouming_country * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _not_equal, :value_choose_option_id => _field, 
+           :value => _russia, :service_category_id => _sc_service_to_rouming_country}
+  crit << {:id => _sc_service_to_rouming_country * 10 + 1 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _equal, :value_choose_option_id => _value_param_is_criterium_param, 
            :value_param_id => _call_connect_country_id, :value => nil, :service_category_id => _sc_service_to_rouming_country}
 
 cat << {:id => _sc_service_to_not_rouming_not_russia, :name => 'услуги за пределы России и страны нахождения (роуминга)', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
@@ -273,6 +369,170 @@ cat << {:id => _sc_service_to_mts_your_country_8, :name => 'услуги в тв
 cat << {:id => _sc_service_to_mts_your_country_9, :name => 'услуги в твою 9-ю группу стран МТС', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
   crit << {:id => _sc_service_to_mts_your_country_9 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
            :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mts_your_country_9})", :service_category_id => _sc_service_to_mts_your_country_9}
+
+
+cat << {:id => _sc_service_to_mgf_sms_sic_plus, :name => 'Мегафон, услуги в СНГ, Абхазию, Грузию и Южную Осетию', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_mgf_sms_sic_plus * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_mgf_sms_sic_plus})", :service_category_id => _sc_service_to_mgf_sms_sic_plus}
+
+cat << {:id => _sc_service_to_mgf_sms_other_countries, :name => 'Мегафон, услуги в страны кроме СНГ, Абхазии, Грузии и Южной Осетии', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_mgf_sms_other_countries * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_mgf_sms_other_countries})", :service_category_id => _sc_service_to_mgf_sms_other_countries}
+
+cat << {:id => _sc_service_to_mgf_country_group_1, :name => 'Мегафон, услуги в СНГ, Абхазию, Грузию и Южную Осетию', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_mgf_country_group_1 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_mgf_country_group_1})", :service_category_id => _sc_service_to_mgf_country_group_1}
+
+cat << {:id => _sc_service_to_mgf_country_group_2, :name => 'Мегафон, услуги в Европу (вкл. Турцию, Израиль), США, Канада', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_mgf_country_group_2 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_mgf_country_group_2})", :service_category_id => _sc_service_to_mgf_country_group_2}
+
+cat << {:id => _sc_service_to_mgf_country_group_3, :name => 'Мегафон, услуги в Австралию и Океанию', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_mgf_country_group_3 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_mgf_country_group_3})", :service_category_id => _sc_service_to_mgf_country_group_3}
+
+cat << {:id => _sc_service_to_mgf_country_group_4, :name => 'Мегафон, услуги в Азию', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_mgf_country_group_4 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_mgf_country_group_4})", :service_category_id => _sc_service_to_mgf_country_group_4}
+
+cat << {:id => _sc_service_to_mgf_country_group_5, :name => 'Мегафон, услуги в остальные  страны', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_mgf_country_group_5 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_mgf_country_group_5})", :service_category_id => _sc_service_to_mgf_country_group_5}
+
+
+cat << {:id => _sc_service_to_mgf_warm_welcome_plus_1, :name => 'Мегафон, услуги в Таджикистан', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_mgf_warm_welcome_plus_1 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_mgf_warm_welcome_plus_1})", :service_category_id => _sc_service_to_mgf_warm_welcome_plus_1}
+
+cat << {:id => _sc_service_to_mgf_warm_welcome_plus_2, :name => 'Мегафон, услуги в Украину', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_mgf_warm_welcome_plus_2 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_mgf_warm_welcome_plus_2})", :service_category_id => _sc_service_to_mgf_warm_welcome_plus_2}
+
+cat << {:id => _sc_service_to_mgf_warm_welcome_plus_3, :name => 'Мегафон, услуги на номера Абхазии, Грузии, Казахстана, Кыргызстана,Туркменистана, Узбекистана, Южной Осетии', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_mgf_warm_welcome_plus_3 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_mgf_warm_welcome_plus_3})", :service_category_id => _sc_service_to_mgf_warm_welcome_plus_3}
+
+cat << {:id => _sc_service_to_mgf_warm_welcome_plus_4, :name => 'Мегафон, услуги в Армению', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_mgf_warm_welcome_plus_4 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_mgf_warm_welcome_plus_4})", :service_category_id => _sc_service_to_mgf_warm_welcome_plus_4}
+
+cat << {:id => _sc_service_to_mgf_warm_welcome_plus_5, :name => 'Мегафон, услуги на номера Азербайджана, Беларуси', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_mgf_warm_welcome_plus_5 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_mgf_warm_welcome_plus_5})", :service_category_id => _sc_service_to_mgf_warm_welcome_plus_5}
+
+cat << {:id => _sc_service_to_mgf_warm_welcome_plus_6, :name => 'Мегафон, услуги в Молдову', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_mgf_warm_welcome_plus_6 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_mgf_warm_welcome_plus_6})", :service_category_id => _sc_service_to_mgf_warm_welcome_plus_6}
+
+
+cat << {:id => _sc_service_to_mgf_international_1, :name => 'Мегафон, услуги СНГ, Абхазия, Грузия и Южная Осетия', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_mgf_international_1 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_mgf_international_1})", :service_category_id => _sc_service_to_mgf_international_1}
+
+cat << {:id => _sc_service_to_mgf_international_2, :name => 'Мегафон, услуги Азия, Европа', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_mgf_international_2 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_mgf_international_2})", :service_category_id => _sc_service_to_mgf_international_2}
+
+cat << {:id => _sc_service_to_mgf_international_3, :name => 'Мегафон, услуги США, Канада', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_mgf_international_3 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_mgf_international_3})", :service_category_id => _sc_service_to_mgf_international_3}
+
+cat << {:id => _sc_service_to_mgf_international_4, :name => 'Мегафон, услуги Другие страны - 1', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_mgf_international_4 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_mgf_international_4})", :service_category_id => _sc_service_to_mgf_international_4}
+
+cat << {:id => _sc_service_to_mgf_international_5, :name => 'Мегафон, услуги Другие страны - 2', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_mgf_international_5 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_mgf_international_5})", :service_category_id => _sc_service_to_mgf_international_5}
+
+
+cat << {:id => _sc_service_to_mgf_call_to_all_country_1, :name => 'Мегафон, опция Звони во все страны - 1 руб', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_mgf_call_to_all_country_1 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_mgf_call_to_all_country_1})", :service_category_id => _sc_service_to_mgf_call_to_all_country_1}
+
+cat << {:id => _sc_service_to_mgf_call_to_all_country_3_5, :name => 'Мегафон, опция Звони во все страны - 3.5 руб', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_mgf_call_to_all_country_3_5 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_mgf_call_to_all_country_3_5})", :service_category_id => _sc_service_to_mgf_call_to_all_country_3_5}
+
+cat << {:id => _sc_service_to_mgf_call_to_all_country_4, :name => 'Мегафон, опция Звони во все страны - 4 руб', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_mgf_call_to_all_country_4 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_mgf_call_to_all_country_4})", :service_category_id => _sc_service_to_mgf_call_to_all_country_4}
+
+cat << {:id => _sc_service_to_mgf_call_to_all_country_4_5, :name => 'Мегафон, опция Звони во все страны - 4.5 руб', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_mgf_call_to_all_country_4_5 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_mgf_call_to_all_country_4_5})", :service_category_id => _sc_service_to_mgf_call_to_all_country_4_5}
+
+cat << {:id => _sc_service_to_mgf_call_to_all_country_5, :name => 'Мегафон, опция Звони во все страны - 5 руб', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_mgf_call_to_all_country_5 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_mgf_call_to_all_country_5})", :service_category_id => _sc_service_to_mgf_call_to_all_country_5}
+
+cat << {:id => _sc_service_to_mgf_call_to_all_country_6, :name => 'Мегафон, опция Звони во все страны - 6 руб', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_mgf_call_to_all_country_6 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_mgf_call_to_all_country_6})", :service_category_id => _sc_service_to_mgf_call_to_all_country_6}
+
+cat << {:id => _sc_service_to_mgf_call_to_all_country_7, :name => 'Мегафон, опция Звони во все страны - 7 руб', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_mgf_call_to_all_country_7 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_mgf_call_to_all_country_7})", :service_category_id => _sc_service_to_mgf_call_to_all_country_7}
+
+cat << {:id => _sc_service_to_mgf_call_to_all_country_8, :name => 'Мегафон, опция Звони во все страны - 8 руб', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_mgf_call_to_all_country_8 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_mgf_call_to_all_country_8})", :service_category_id => _sc_service_to_mgf_call_to_all_country_8}
+
+cat << {:id => _sc_service_to_mgf_call_to_all_country_9, :name => 'Мегафон, опция Звони во все страны - 9 руб', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_mgf_call_to_all_country_9 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_mgf_call_to_all_country_9})", :service_category_id => _sc_service_to_mgf_call_to_all_country_9}
+
+cat << {:id => _sc_service_to_mgf_call_to_all_country_10, :name => 'Мегафон, опция Звони во все страны - 10 руб', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_mgf_call_to_all_country_10 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_mgf_call_to_all_country_10})", :service_category_id => _sc_service_to_mgf_call_to_all_country_10}
+
+cat << {:id => _sc_service_to_mgf_call_to_all_country_11, :name => 'Мегафон, опция Звони во все страны - 1 руб', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_mgf_call_to_all_country_11 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_mgf_call_to_all_country_11})", :service_category_id => _sc_service_to_mgf_call_to_all_country_11}
+
+cat << {:id => _sc_service_to_mgf_call_to_all_country_12, :name => 'Мегафон, опция Звони во все страны - 12 руб', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_mgf_call_to_all_country_12 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_mgf_call_to_all_country_12})", :service_category_id => _sc_service_to_mgf_call_to_all_country_12}
+
+cat << {:id => _sc_service_to_mgf_call_to_all_country_13, :name => 'Мегафон, опция Звони во все страны - 13 руб', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_mgf_call_to_all_country_13 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_mgf_call_to_all_country_13})", :service_category_id => _sc_service_to_mgf_call_to_all_country_13}
+
+cat << {:id => _sc_service_to_mgf_call_to_all_country_14, :name => 'Мегафон, опция Звони во все страны - 14 руб', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_mgf_call_to_all_country_14 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_mgf_call_to_all_country_14})", :service_category_id => _sc_service_to_mgf_call_to_all_country_14}
+
+cat << {:id => _sc_service_to_mgf_call_to_all_country_15, :name => 'Мегафон, опция Звони во все страны - 15 руб', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_mgf_call_to_all_country_15 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_mgf_call_to_all_country_15})", :service_category_id => _sc_service_to_mgf_call_to_all_country_15}
+
+cat << {:id => _sc_service_to_mgf_call_to_all_country_16, :name => 'Мегафон, опция Звони во все страны - 16 руб', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_mgf_call_to_all_country_16 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_mgf_call_to_all_country_16})", :service_category_id => _sc_service_to_mgf_call_to_all_country_16}
+
+cat << {:id => _sc_service_to_mgf_call_to_all_country_17, :name => 'Мегафон, опция Звони во все страны - 17 руб', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_mgf_call_to_all_country_17 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_mgf_call_to_all_country_17})", :service_category_id => _sc_service_to_mgf_call_to_all_country_17}
+
+cat << {:id => _sc_service_to_mgf_call_to_all_country_18, :name => 'Мегафон, опция Звони во все страны - 18 руб', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_mgf_call_to_all_country_18 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_mgf_call_to_all_country_18})", :service_category_id => _sc_service_to_mgf_call_to_all_country_18}
+
+cat << {:id => _sc_service_to_mgf_call_to_all_country_19, :name => 'Мегафон, опция Звони во все страны - 19 руб', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_mgf_call_to_all_country_19 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_mgf_call_to_all_country_19})", :service_category_id => _sc_service_to_mgf_call_to_all_country_19}
+
+cat << {:id => _sc_service_to_mgf_call_to_all_country_20, :name => 'Мегафон, опция Звони во все страны - 20 руб', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_mgf_call_to_all_country_20 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_mgf_call_to_all_country_20})", :service_category_id => _sc_service_to_mgf_call_to_all_country_20}
+
+cat << {:id => _sc_service_to_mgf_call_to_all_country_23, :name => 'Мегафон, опция Звони во все страны - 23 руб', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_mgf_call_to_all_country_23 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_mgf_call_to_all_country_23})", :service_category_id => _sc_service_to_mgf_call_to_all_country_23}
+
+cat << {:id => _sc_service_to_mgf_call_to_all_country_30, :name => 'Мегафон, опция Звони во все страны - 30 руб', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_mgf_call_to_all_country_30 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_mgf_call_to_all_country_30})", :service_category_id => _sc_service_to_mgf_call_to_all_country_30}
 
 
 #оператор второй стороны

@@ -6,7 +6,7 @@
   :features => {:http => 'http://www.mts.ru/mob_connect/tariffs/tariffs/smart_plus/'},
   :dependency => {
     :categories => [_tcgsc_calls, _tcgsc_sms, _tcgsc_mms, _tcgsc_internet],
-    :incompatibility => {}, #{group_name => [tarif_class_ids]}
+    :incompatibility => {}, 
     :general_priority => _gp_tarif_with_limits,
     :other_tarif_priority => {:lower => [], :higher => []},
     :prerequisites => [],
@@ -127,11 +127,11 @@ _sctcg_all_world_sms_incoming = {:name => '_sctcg_all_world_sms_incoming', :serv
 #Own and home regions, sms, Outcoming, to_own_home_regions
   @tc.add_grouped_service_category_tarif_class(_sctcg_own_home_regions_sms_to_own_home_regions, scg_mts_smart_plus_included_in_tarif_sms[:id])
   @tc.add_one_service_category_tarif_class(_sctcg_own_home_regions_sms_to_own_home_regions, {}, 
-    {:calculation_order => 1,:standard_formula_id => _stf_price_by_count_volume_item, :price => 0.5000000000})
+    {:calculation_order => 1,:standard_formula_id => _stf_price_by_count_volume_item, :price => 0.5})
 
 #Own and home regions, sms, Outcoming, to_own_country
   @tc.add_one_service_category_tarif_class(_sctcg_own_home_regions_sms_to_own_country, {}, 
-    {:calculation_order => 0,:standard_formula_id => _stf_price_by_count_volume_item, :price => 3.8000000000})
+    {:calculation_order => 0,:standard_formula_id => _stf_price_by_count_volume_item, :price => 3.8})
 
 #Own and home regions, sms, Outcoming, to_not_own_country
   @tc.add_one_service_category_tarif_class(_sctcg_own_home_regions_sms_to_not_own_country, {}, 

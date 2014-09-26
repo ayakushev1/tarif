@@ -1,4 +1,5 @@
 def access_methods_to_constant_tarifs
+#MTS
 #tarid_ids
   #processed
 _mts_red_energy = 200; _mts_smart = 201; _mts_smart_mini = 202; _mts_smart_plus = 203; _mts_ultra = 204; _mts_mts_connect_4 = 205; 
@@ -58,6 +59,51 @@ _mts_monthly_sms_packet_100 = 336; _mts_monthly_sms_packet_300 = 337; _mts_month
   _correct_tarif_class_ids = []; _correct_tarif_list_ids = []  
 #_all_loaded_tarifs = []
   
+
+
+#Megafon
+#tarifs
+_mgf_around_world = 100; _mgf_all_simple = 101; 
+_mgf_all_included_xs = 102; _mgf_all_included_s = 103; _mgf_all_included_m = 104; _mgf_all_included_l = 105; _mgf_all_included_vip = 106; _mgf_megafon_online = 107;
+_mgf_international = 108; _mgf_go_to_zero = 109; _mgf_sub_moscow = 110; _mgf_city_connection = 112; _mgf_warm_welcome = 113;
+
+#common_services
+_mgf_own_country_rouming = 174; _mgf_international_rouming = 177; _mgf_intra_countries_services = 178; _mgf_mobile_internet = 179;
+
+#tarif_options
+#international rouming, calls
+_mgf_all_world = 400; _mgf_30_minutes_all_world = 401; _mgf_far_countries = 402; _mgf_option_around_world = 403; _mgf_100_minutes_europe = 404;
+_mgf_25_discount_on_calls_to_russia_and_all_incoming = 405; _mgf_50_discount_on_calls_to_russia = 406; _mgf_50_discount_on_all_incoming_calls = 407;
+
+#international rouming, sms
+_mgf_50_sms_all_world = 410; _mgf_100_sms_all_world = 411; _mgf_50_sms_europe = 412; _mgf_100_sms_europe = 413
+
+#international rouming, internet
+_mgf_internet_abroad_10 = 430; _mgf_internet_abroad_30 = 431; _mgf_vacation_online = 432;
+
+#own_country rouming, calls
+_mgf_all_russia = 440; _mgf_travel_without_worry = 441; _mgf_everywhere_moscow_in_central_region = 442; 
+_mgf_internet_in_russia = 443; _mgf_internet_in_russia_for_specific_options = 444; _mgf_gigabite_to_road = 445;
+
+#mms
+_mgf_mms_24 = 450; _mgf_paket_mms_10 = 451; _mgf_paket_mms_50 = 452;
+
+#sms
+_mgf_option_for_sms_s = 455; _mgf_option_for_sms_l = 456; _mgf_option_for_sms_m = 457; _mgf_option_for_sms_xl = 458; 
+_mgf_sms_stihia = 459;
+_mgf_paket_sms_100 = 460; _mgf_paket_sms_150 = 461; _mgf_paket_sms_200 = 462; _mgf_paket_sms_350 = 463; _mgf_paket_sms_500 = 464; _mgf_paket_sms_1000 = 465;
+_mgf_100_sms  = 466;
+
+#calls
+_mgf_unlimited_communication = 470; _mgf_call_to_russia = 471; _mgf_call_to_all_country = 472; _mgf_option_city_connection = 473;
+
+#internet
+_mgf_internet_extra_1_gb = 475;
+_mgf_internet_xs = 476; _mgf_internet_s = 477; _mgf_internet_m = 478; _mgf_internet_l = 479; _mgf_internet_xl = 480;
+_mgf_internet_24 = 481; _mgf_internet_24_pro = 482; _mgf_prodli_skorost = 483; 
+_mgf_bit_pro = 484; _mgf_bit_mega_pro_150 = 485; _mgf_bit_mega_pro_250 = 486; _mgf_bit_mega_pro_500 = 487;  
+ 
+
 
   local_variables.each do |symbol|
     send(:define_method, symbol) do

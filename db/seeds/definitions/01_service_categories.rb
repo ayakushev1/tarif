@@ -13,12 +13,25 @@ def access_methods_to_constant_service_categories
   _sc_mts_rouming_in_bit_abrod_option_countries_3 = 27; _sc_mts_rouming_in_bit_abrod_option_countries_4 = 28;
   _all_russia_rouming = 29;
   
+  _sc_mgf_rouming_in_option_around_world_1 = 30; _sc_mgf_rouming_in_option_around_world_2 = 31; _sc_mgf_rouming_in_option_around_world_3 = 32;
+  _sc_mgf_rouming_in_50_sms_europe = 33; _sc_mgf_rouming_not_russia_not_in_50_sms_europe = 34;
+  _sc_mgf_europe_international_rouming = 35; _sc_mgf_sic_international_rouming = 36; 
+  _sc_mgf_other_countries_international_rouming = 37; _sc_mgf_extended_countries_international_rouming = 38;
+  
+  _sc_mgf_ukraine_internet_abroad = 39; _sc_mgf_europe_internet_abroad = 40; 
+  _sc_mgf_popular_countries_internet_abroad = 41; _sc_mgf_other_countries_internet_abroad = 42;
+  
+  _sc_mgf_countries_vacation_online = 43;
+  
+  _sc_mgf_cenral_regions_not_own_and_home_region = 44; 
+  
   #география услуг
   _geography_services = 100;
   _service_to_own_region = 101; _service_to_home_region = 102; _service_to_own_country = 103; _service_to_group_of_countries = 104;
   _service_to_not_own_country = 105; 
   _service_to_mts_europe = 106; _service_to_mts_sic = 107; _service_to_mts_other_countries = 108;
   _service_to_own_and_home_regions = 185; _service_to_all_own_country_regions = 186; _service_to_rouming_region = 187;
+  _service_to_not_own_and_home_region = 189;
   
   _sc_service_to_russia = 109; _sc_service_to_rouming_country = 110;  _sc_service_to_not_rouming_not_russia = 111;
   _sc_service_not_rouming_not_russia_to_sic = 112;  _sc_service_to_not_rouming_not_russia_not_sic = 113;
@@ -31,7 +44,29 @@ def access_methods_to_constant_service_categories
   _sc_service_to_mts_your_country_1 = 128; _sc_service_to_mts_your_country_2 = 129; _sc_service_to_mts_your_country_3 = 130; _sc_service_to_mts_your_country_4 = 131;
   _sc_service_to_mts_your_country_5 = 132; _sc_service_to_mts_your_country_6 = 133; _sc_service_to_mts_your_country_7 = 134; _sc_service_to_mts_your_country_8 = 135;
   _sc_service_to_mts_your_country_9 = 136;
+  
+  _sc_service_to_mgf_sms_sic_plus = 140; _sc_service_to_mgf_sms_other_countries = 141
+  _sc_service_to_mgf_country_group_1 = 142; _sc_service_to_mgf_country_group_2 = 143; _sc_service_to_mgf_country_group_3 = 144;
+  _sc_service_to_mgf_country_group_4 = 145; _sc_service_to_mgf_country_group_5 = 146;
 
+  _sc_service_to_mgf_warm_welcome_plus_1 = 147; _sc_service_to_mgf_warm_welcome_plus_2 = 148; _sc_service_to_mgf_warm_welcome_plus_3 = 149;
+  _sc_service_to_mgf_warm_welcome_plus_4 = 150; _sc_service_to_mgf_warm_welcome_plus_5 = 151; _sc_service_to_mgf_warm_welcome_plus_6 = 152;
+  
+  _sc_mgf_around_world_countries_1 = 153; _sc_mgf_around_world_countries_2 = 154; _sc_mgf_around_world_countries_3 = 155;
+  _sc_mgf_around_world_countries_4 = 156; _sc_mgf_around_world_countries_5 = 157;
+  
+  _sc_service_to_mgf_call_to_all_country_1 = 158; _sc_service_to_mgf_call_to_all_country_3_5 = 159; _sc_service_to_mgf_call_to_all_country_4 = 160;
+  _sc_service_to_mgf_call_to_all_country_4_5 = 161; _sc_service_to_mgf_call_to_all_country_5 = 162; _sc_service_to_mgf_call_to_all_country_6 = 163;
+  _sc_service_to_mgf_call_to_all_country_7 = 164; _sc_service_to_mgf_call_to_all_country_8 = 165; _sc_service_to_mgf_call_to_all_country_9 = 166;
+  _sc_service_to_mgf_call_to_all_country_10 = 167; _sc_service_to_mgf_call_to_all_country_11 = 168; _sc_service_to_mgf_call_to_all_country_12 = 169;
+  _sc_service_to_mgf_call_to_all_country_13 = 170; _sc_service_to_mgf_call_to_all_country_14 = 171; _sc_service_to_mgf_call_to_all_country_15 = 172;
+  _sc_service_to_mgf_call_to_all_country_16 = 173; _sc_service_to_mgf_call_to_all_country_17 = 174; _sc_service_to_mgf_call_to_all_country_18 = 175;
+  _sc_service_to_mgf_call_to_all_country_19 = 176; _sc_service_to_mgf_call_to_all_country_20 = 177; _sc_service_to_mgf_call_to_all_country_23 = 178;
+  _sc_service_to_mgf_call_to_all_country_30 = 179;
+  
+  _sc_service_to_mgf_international_1 = 400; _sc_service_to_mgf_international_2 = 401; _sc_service_to_mgf_international_3 = 402;
+  _sc_service_to_mgf_international_4 = 403; _sc_service_to_mgf_international_5 = 404;
+  
   #partner type
   _partner_operator_services = 190;
   _service_to_own_operator = 191; _service_to_not_own_operator = 192; _service_to_other_operator = 193; _service_to_fixed_line = 194;

@@ -85,6 +85,82 @@ rln << {:id => _relation_mts_your_country_7, :type_id => _operator_country_group
 rln << {:id => _relation_mts_your_country_8, :type_id => _operator_country_groups, :owner_id => _mts, :parent_id => nil, :children => _mts_your_country_8,:name => 'MTS, countries from _mts_your_country_8 tarif option'}
 rln << {:id => _relation_mts_your_country_9, :type_id => _operator_country_groups, :owner_id => _mts, :parent_id => nil, :children => _mts_your_country_9,:name => 'MTS, countries from _mts_your_country_9 tarif option'}
 
+rln << {:id => _relation_mgf_rouming_in_option_around_world_1, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_option_around_world_1,:name => 'Megafone, countries from _mgf_option_around_world_1 tarif option'}
+rln << {:id => _relation_mgf_rouming_in_option_around_world_2, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_option_around_world_2,:name => 'Megafone, countries from _mgf_option_around_world_2 tarif option'}
+rln << {:id => _relation_mgf_rouming_in_option_around_world_3, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_option_around_world_3,:name => 'Megafone, countries from _mgf_option_around_world_3 tarif option'}
+rln << {:id => _relation_mgf_rouming_in_50_sms_europe, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_50_sms_europe_group,:name => 'Megafone, countries from _mgf_50_sms_europe_group_group tarif option'}
+rln << {:id => _relation_mgf_rouming_not_russia_not_in_50_sms_europe, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_not_russia_not_in_50_sms_europe,:name => 'Megafone, countries from _mgf_not_russia_not_in_50_sms_europe tarif option'}
+
+rln << {:id => _relation_mgf_europe_international_rouming, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_europe_international_rouming,:name => 'Megafone, countries from _mgf_europe_international_rouming'}
+rln << {:id => _relation_mgf_sic_international_rouming, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_sic_international_rouming,:name => 'Megafone, countries from _mgf_sic_international_rouming'}
+rln << {:id => _relation_mgf_other_countries_international_rouming, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_other_countries_international_rouming,:name => 'Megafone, countries from _mgf_other_countries_international_rouming'}
+rln << {:id => _relation_mgf_extended_countries_international_rouming, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_extended_countries_international_rouming,:name => 'Megafone, countries from _mgf_extended_countries_international_rouming'}
+
+rln << {:id => _relation_mgf_ukraine_internet_abroad, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_ukraine_internet_abroad,:name => 'Megafone, countries from _mgf_ukraine_internet_abroad'}
+rln << {:id => _relation_mgf_europe_internet_abroad, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_europe_internet_abroad,:name => 'Megafone, countries from _mgf_europe_internet_abroad'}
+rln << {:id => _relation_mgf_popular_countries_internet_abroad, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_popular_countries_internet_abroad,:name => 'Megafone, countries from _mgf_popular_countries_internet_abroad'}
+rln << {:id => _relation_mgf_other_countries_internet_abroad, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_other_countries_internet_abroad,:name => 'Megafone, countries from _mgf_other_countries_internet_abroad'}
+
+rln << {:id => _relation_mgf_countries_vacation_online, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_countries_vacation_online,:name => 'Megafone, countries from _mgf_countries_vacation_online'}
+
+rln << {:id => _relation_service_to_mgf_sms_sic_plus, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_sms_sic_plus,:name => 'Megafone, countries from _mgf_sms_sic_plus'}
+rln << {:id => _relation_service_to_mgf_sms_other_countries, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_sms_other_countries,:name => 'Megafone, countries from _mgf_sms_other_countries'}
+
+rln << {:id => _relation_service_to_mgf_country_group_1, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_country_group_1,:name => 'Megafone, countries from mgf_country_group_1'}
+rln << {:id => _relation_service_to_mgf_country_group_2, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_country_group_2,:name => 'Megafone, countries from mgf_country_group_2'}
+rln << {:id => _relation_service_to_mgf_country_group_3, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_country_group_3,:name => 'Megafone, countries from mgf_country_group_3'}
+rln << {:id => _relation_service_to_mgf_country_group_4, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_country_group_4,:name => 'Megafone, countries from mgf_country_group_4'}
+rln << {:id => _relation_service_to_mgf_country_group_5, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_country_group_5,:name => 'Megafone, countries from mgf_country_group_5'}
+
+rln << {:id => _sc_service_to_mgf_warm_welcome_plus_1, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_warm_welcome_plus_1,:name => 'Megafone, countries from mgf_warm_welcome_plus_1'}
+rln << {:id => _sc_service_to_mgf_warm_welcome_plus_2, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_warm_welcome_plus_2,:name => 'Megafone, countries from mgf_warm_welcome_plus_2'}
+rln << {:id => _sc_service_to_mgf_warm_welcome_plus_3, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_warm_welcome_plus_3,:name => 'Megafone, countries from mgf_warm_welcome_plus_3'}
+rln << {:id => _sc_service_to_mgf_warm_welcome_plus_4, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_warm_welcome_plus_4,:name => 'Megafone, countries from mgf_warm_welcome_plus_4'}
+rln << {:id => _sc_service_to_mgf_warm_welcome_plus_5, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_warm_welcome_plus_5,:name => 'Megafone, countries from mgf_warm_welcome_plus_5'}
+rln << {:id => _sc_service_to_mgf_warm_welcome_plus_6, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_warm_welcome_plus_6,:name => 'Megafone, countries from mgf_warm_welcome_plus_6'}
+
+rln << {:id => _sc_service_to_mgf_international_1, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_international_1,:name => 'Megafone, countries from mgf_international_1'}
+rln << {:id => _sc_service_to_mgf_international_2, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_international_2,:name => 'Megafone, countries from mgf_international_2'}
+rln << {:id => _sc_service_to_mgf_international_3, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_international_3,:name => 'Megafone, countries from mgf_international_3'}
+rln << {:id => _sc_service_to_mgf_international_4, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_international_4,:name => 'Megafone, countries from mgf_international_4'}
+rln << {:id => _sc_service_to_mgf_international_5, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_international_5,:name => 'Megafone, countries from mgf_international_5'}
+
+rln << {:id => _relation_mgf_around_world_countries_1, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_around_world_countries_1,:name => 'Megafone, countries from _mgf_around_world_countries_1'}
+rln << {:id => _relation_mgf_around_world_countries_2, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_around_world_countries_2,:name => 'Megafone, countries from _mgf_around_world_countries_2'}
+rln << {:id => _relation_mgf_around_world_countries_3, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_around_world_countries_3,:name => 'Megafone, countries from _mgf_around_world_countries_3'}
+rln << {:id => _relation_mgf_around_world_countries_4, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_around_world_countries_4,:name => 'Megafone, countries from _mgf_around_world_countries_4'}
+rln << {:id => _relation_mgf_around_world_countries_5, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_around_world_countries_5,:name => 'Megafone, countries from _mgf_around_world_countries_5'}
+
+rln << {:id => _relation_service_to_mgf_call_to_all_country_1, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_call_to_all_country_1,:name => 'Megafone, countries from _mgf_call_to_all_country_1'}
+rln << {:id => _relation_service_to_mgf_call_to_all_country_3_5, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_call_to_all_country_3_5,:name => 'Megafone, countries from _to_mgf_call_to_all_country_3_5'}
+rln << {:id => _relation_service_to_mgf_call_to_all_country_4, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_call_to_all_country_4,:name => 'Megafone, countries from _to_mgf_call_to_all_country_4'}
+rln << {:id => _relation_service_to_mgf_call_to_all_country_4_5, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_call_to_all_country_4_5,:name => 'Megafone, countries from _to_mgf_call_to_all_country_4_5'}
+rln << {:id => _relation_service_to_mgf_call_to_all_country_5, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_call_to_all_country_5,:name => 'Megafone, countries from _to_mgf_call_to_all_country_5'}
+rln << {:id => _relation_service_to_mgf_call_to_all_country_6, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_call_to_all_country_6,:name => 'Megafone, countries from _to_mgf_call_to_all_country_6'}
+
+rln << {:id => _relation_service_to_mgf_call_to_all_country_7, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_call_to_all_country_7,:name => 'Megafone, countries from _to_mgf_call_to_all_country_7'}
+rln << {:id => _relation_service_to_mgf_call_to_all_country_8, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_call_to_all_country_8,:name => 'Megafone, countries from _to_mgf_call_to_all_country_8'}
+rln << {:id => _relation_service_to_mgf_call_to_all_country_9, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_call_to_all_country_9,:name => 'Megafone, countries from _to_mgf_call_to_all_country_9'}
+rln << {:id => _relation_service_to_mgf_call_to_all_country_10, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_call_to_all_country_10,:name => 'Megafone, countries from _to_mgf_call_to_all_country_10'}
+rln << {:id => _relation_service_to_mgf_call_to_all_country_11, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_call_to_all_country_11,:name => 'Megafone, countries from _to_mgf_call_to_all_country_11'}
+rln << {:id => _relation_service_to_mgf_call_to_all_country_12, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_call_to_all_country_12,:name => 'Megafone, countries from _to_mgf_call_to_all_country_12'}
+rln << {:id => _relation_service_to_mgf_call_to_all_country_13, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_call_to_all_country_13,:name => 'Megafone, countries from _to_mgf_call_to_all_country_13'}
+rln << {:id => _relation_service_to_mgf_call_to_all_country_14, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_call_to_all_country_14,:name => 'Megafone, countries from _to_mgf_call_to_all_country_14'}
+rln << {:id => _relation_service_to_mgf_call_to_all_country_15, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_call_to_all_country_15,:name => 'Megafone, countries from _to_mgf_call_to_all_country_15'}
+rln << {:id => _relation_service_to_mgf_call_to_all_country_16, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_call_to_all_country_16,:name => 'Megafone, countries from _to_mgf_call_to_all_country_16'}
+rln << {:id => _relation_service_to_mgf_call_to_all_country_17, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_call_to_all_country_17,:name => 'Megafone, countries from _to_mgf_call_to_all_country_17'}
+rln << {:id => _relation_service_to_mgf_call_to_all_country_18, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_call_to_all_country_18,:name => 'Megafone, countries from _to_mgf_call_to_all_country_18'}
+rln << {:id => _relation_service_to_mgf_call_to_all_country_19, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_call_to_all_country_19,:name => 'Megafone, countries from _to_mgf_call_to_all_country_19'}
+rln << {:id => _relation_service_to_mgf_call_to_all_country_20, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_call_to_all_country_20,:name => 'Megafone, countries from _to_mgf_call_to_all_country_20'}
+rln << {:id => _relation_service_to_mgf_call_to_all_country_23, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_call_to_all_country_23,:name => 'Megafone, countries from _to_mgf_call_to_all_country_23'}
+rln << {:id => _relation_service_to_mgf_call_to_all_country_30, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_call_to_all_country_30,:name => 'Megafone, countries from _to_mgf_call_to_all_country_30'}
+
+
+
+
+rln << {:id => _relation_mgf_central_region, :type_id => _operator_region_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_central_region,:name => 'Megafone, cental region of Russia'}
+
+
 
 rln << {:id => 20000, :type_id => _main_operator_by_country, :owner_id => _ukraiun, :parent_id => nil, :children => [_mts_ukrain],:name => ''}
 rln << {:id => 20001, :type_id => _main_operator_by_country, :owner_id => _russia, :parent_id => nil, :children => [_mts, _beeline, _megafon],:name => ''}
@@ -96,7 +172,15 @@ _all_country_list_in_string.each do |country_name|
 end
 
 Relation.transaction do
-  Relation.create(rln)
+  rln.each do |rrr|
+    begin
+      Relation.create(rrr)
+    rescue
+      raise(StandardError, [rrr, _mgf_50_sms_europe])
+    end
+     
+  end
+  #Relation.create(rln)
 end
 
 #  id        :integer          not null, primary key

@@ -124,6 +124,7 @@ class ServiceHelper::FinalTarifResultsPresenter
       if f and f['service_category_description']
         additions['rouming'] = f['service_category_description']['service_category_rouming_id'].uniq.join(', ')    
         additions['geo'] = f['service_category_description']['service_category_geo_id'].uniq.join(', ')    
+        additions['geo_details'] = f['service_category_description']['service_category_geo_id_details'].uniq.join(', ')    
         additions['partner'] = f['service_category_description']['service_category_partner_type_id'].uniq.join(', ')    
         additions['calls'] = f['service_category_description']['service_category_calls_id'].uniq.join(', ')    
         additions['fix'] = (f['service_category_description']['service_category_one_time_id'] + f['service_category_description']['service_category_periodic_id']).uniq.join(', ')    
