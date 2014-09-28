@@ -24,7 +24,8 @@ content_in :accordion do |user|
     ], 
     [
      'Services list',
-     render(:partial => 'customer/tarif_optimizator/input/services_select', :layout => 'customer/tarif_optimizator/input/layout_for_services_select', 
+	  link_to('Recalculate', customer_tarif_optimizator_recalculate_path ) + "  |  ".html_safe +
+      render(:partial => 'customer/tarif_optimizator/input/services_select', :layout => 'application/layouts/filtr_form_2_columns', 
         :locals => {:form_item => controller.services_select} )
     ], 
   ] 

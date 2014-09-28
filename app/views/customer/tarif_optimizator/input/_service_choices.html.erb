@@ -8,26 +8,45 @@ form_item.init do |f|
 	
   [
   	[
-     label(filtr_name, "tarifs_id", "Тарифы для оптимизации"),
-     text_area(filtr_name, "tarifs_id", html_options.merge({:type => 'textarea', :value => s["tarifs_id"], :rows => 1 }) ),
+     '',
+     label(filtr_name, "", "Мегафон"),
 
-     label(filtr_name, "tarif_options_id", "Тарифные опции для оптимизации"),
-     text_area(filtr_name, "tarif_options_id", html_options.merge({:type => 'textarea', :value => s["tarif_options_id"], :rows => 2  }) ),   
+     '',
+     label(filtr_name, "", "МТС"),
   	],
   	
   	[
-     label(filtr_name, "common_services_id", "Общие сервисы"),
-     text_area(filtr_name, "common_services_id", html_options.merge({:type => 'textarea', :value => s["common_services_id"], :rows => 1  }) ),     		
-        
-  	 label(filtr_name, "accounting_period", "Период за который проводить расчет тарифов"),
-  	 collection_select(filtr_name, "accounting_period", 
-  	   Customer::Call.where(:user_id => controller.current_user.id).select("description->>'accounting_period' as id, description->>'accounting_period' as name").uniq, 
-  	   :id, :name, {:selected => s["accounting_period"]}, html_options ),
+     label(filtr_name, "tarifs_mgf", "Тарифы для оптимизации"),
+     text_area(filtr_name, "tarifs_mgf", html_options.merge({:type => 'textarea', :value => s["tarifs_mgf"], :rows => 1 }) ),
+
+     '',
+     text_area(filtr_name, "tarifs_mts", html_options.merge({:type => 'textarea', :value => s["tarifs_mts"], :rows => 1  }) ),   
+  	],
+  	
+  	[
+     label(filtr_name, "common_services_mgf", "Общие сервисы"),
+     text_area(filtr_name, "common_services_mgf", html_options.merge({:type => 'textarea', :value => s["common_services_mgf"], :rows => 1  }) ),     		
+
+     '',
+     text_area(filtr_name, "common_services_mts", html_options.merge({:type => 'textarea', :value => s["common_services_mts"], :rows => 1  }) ),     		        
+  	],
+  	
+  	[
+     label(filtr_name, "tarif_options_mgf", "Тарифные опции"),
+     text_area(filtr_name, "tarif_options_mgf", html_options.merge({:type => 'textarea', :value => s["tarif_options_mgf"], :rows => 2  }) ),     		
+
+     '',
+     text_area(filtr_name, "tarif_options_mts", html_options.merge({:type => 'textarea', :value => s["tarif_options_mts"], :rows => 2  }) ),     		        
   	],
   	
   	[
      label(filtr_name, "calculate_only_chosen_services", "Считать только выбранные тариф и опции?"),
  	 select(filtr_name, "calculate_only_chosen_services", [["Да", true], ["Считать все варианты", false]], {:selected => s["calculate_only_chosen_services"]}, html_options ),
+
+  	 label(filtr_name, "accounting_period", "Период за который проводить расчет тарифов"),
+  	 collection_select(filtr_name, "accounting_period", 
+  	   controller.accounting_periods, 
+  	   :accounting_period, :accounting_period, {:include_blank => "выберите период расчета", :selected => s["accounting_period"]}, html_options ),
   	],
   ]
 	    

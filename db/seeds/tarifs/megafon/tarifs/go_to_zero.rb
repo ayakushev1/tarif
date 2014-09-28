@@ -47,7 +47,7 @@ category = {:name => '_sctcg_own_home_regions_calls_to_own_country_own_operator'
                                                                 when ceil(((description->>'duration')::float)/60.0) > 10.0 then ceil(((description->>'duration')::float)/60.0) - 10.0 \
                                                                 else 0.0 end)",
                       :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
-     :method => 'price_formulas.price * sum_duration_minute_between_2_and_10)'}, } )
+     :method => 'price_formulas.price * sum_duration_minute_between_2_and_10'}, } )
 
 #Own and home regions, Calls, Outcoming, to_own_country, to_not_own_operator
 category = {:name => '_sctcg_own_home_regions_calls_to_own_country_not_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country, :service_category_partner_type_id => _service_to_not_own_operator}
@@ -127,7 +127,7 @@ category = {:name => '_sctcg_cenral_regions_not_own_and_home_region_calls_to_own
                                                                 when ceil(((description->>'duration')::float)/60.0) > 10.0 then ceil(((description->>'duration')::float)/60.0) - 10.0 \
                                                                 else 0.0 end)",
                       :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
-     :method => 'price_formulas.price * sum_duration_minute_between_2_and_10)'}, },
+     :method => 'price_formulas.price * sum_duration_minute_between_2_and_10'}, },
     :tarif_set_must_include_tarif_options => [_mgf_everywhere_moscow_in_central_region] )  
 
 #Central regions RF except for Own and home regions, Calls, Outcoming, to_own_country, to_not_own_operator

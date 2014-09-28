@@ -96,6 +96,7 @@ class ServiceHelper::FinalTarifResultsPresenter
         additions['calls_volume'] = f['stat_results']['sum_duration_minute'].round(0) if f['stat_results']['sum_duration_minute']
         additions['sms_volume'] = f['stat_results']['count_volume'].round(0) if f['stat_results']['count_volume']
         additions['internet_volume'] = f['stat_results']['sum_volume'].round(0) if f['stat_results']['sum_volume']
+        additions['call_ids'] = f['stat_results']['call_ids']
       end
       new_result << f.merge(additions)
     end
@@ -119,6 +120,7 @@ class ServiceHelper::FinalTarifResultsPresenter
         additions['calls_volume'] = f['stat_results']['sum_duration_minute'].round(0) if f['stat_results']['sum_duration_minute']
         additions['sms_volume'] = f['stat_results']['count_volume'].round(0) if f['stat_results']['count_volume']
         additions['internet_volume'] = f['stat_results']['sum_volume'].round(0) if f['stat_results']['sum_volume']
+        additions['call_ids'] = f['stat_results']['call_ids']
       end
       
       if f and f['service_category_description']

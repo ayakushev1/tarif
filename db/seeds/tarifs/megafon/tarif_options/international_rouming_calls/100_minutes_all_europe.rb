@@ -22,7 +22,7 @@ scg_100_minutes_europe = @tc.add_service_category_group(
 
      :multiple_use_of_tarif_option => {
        :group_by => 'month',
-       :stat_params => {:tarif_option_count_of_usage => "ceil(ceil(((description->>'duration')::float)/60.0)) / 100.0)", :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
+       :stat_params => {:tarif_option_count_of_usage => "ceil(sum(ceil(((description->>'duration')::float)/60.0) / 100.0))", :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
        :method => "price_formulas.price * tarif_option_count_of_usage" } } } )
 
 

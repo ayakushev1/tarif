@@ -37,7 +37,7 @@
   @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_count_volume_item, :price => 0.0})  
 
 #Own country, mms, outcoming, to all own country regions, to all operators
-  category = {:name => '_sctcg_own_country_mms_to_all_own_country_regions', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_all_own_country_regions}
+  category = {:name => '_sctcg_own_country_mms_to_all_own_country_regions', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _mms_out, :service_category_geo_id => _service_to_all_own_country_regions}
   @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_count_volume_item, :price => 10.0})  
 
 #Own country, mms, outcoming, to sic

@@ -59,7 +59,7 @@ category = {:name => '_sctcg_own_home_regions_calls_to_mgf_warm_welcome_plus_4_c
      :stat_params => {:sum_duration_minute_less_6 => "sum(case when ceil((((description->>'duration')::float) / 60.0)) < 6.0 then ceil((((description->>'duration')::float) / 60.0)) else 0.0 end)",
                       :sum_duration_minutes_more_20 => "sum(case when ceil((((description->>'duration')::float) / 60.0)) > 20.0 then ceil((((description->>'duration')::float) / 60.0)) - 20.0 else 0.0 end)",
                       :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
-     :method => 'price_formulas.price * (sum_duration_minute_less_6 + sum_duration_total_minutes_more_20) + 3.5 * (sum_duration_minute - sum_duration_minute_less_6 - sum_duration_total_minutes_more_20)'}, } )
+     :method => 'price_formulas.price * (sum_duration_minute_less_6 + sum_duration_minutes_more_20) + 3.5 * (sum_duration_minute - sum_duration_minute_less_6 - sum_duration_minutes_more_20)'}, } )
 
 #Own and home regions, Calls, Outcoming, to mgf_warm_welcome_plus_5_countries
 category = {:name => '_sctcg_own_home_regions_calls_to_mgf_warm_welcome_plus_5_countries', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mgf_warm_welcome_plus_5}
@@ -156,9 +156,9 @@ category = {:name => '_sctcg_cenral_regions_not_own_and_home_region_calls_to_mgf
   {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 5.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
    :formula => {
      :stat_params => {:sum_duration_minute_less_6 => "sum(case when ceil((((description->>'duration')::float) / 60.0)) < 6.0 then ceil((((description->>'duration')::float) / 60.0)) else 0.0 end)",
-                      :sum_duration_total_minutes_more_20 => "sum(case when ceil((((description->>'duration')::float) / 60.0)) > 20.0 then ceil((((description->>'duration')::float) / 60.0)) - 20.0 else 0.0 end)",
+                      :sum_duration_minutes_more_20 => "sum(case when ceil((((description->>'duration')::float) / 60.0)) > 20.0 then ceil((((description->>'duration')::float) / 60.0)) - 20.0 else 0.0 end)",
                       :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
-     :method => 'price_formulas.price * (sum_duration_minute_less_6 + sum_duration_total_minutes_more_20) + 3.5 * (sum_duration_minute - sum_duration_minute_less_6 - sum_duration_total_minutes_more_20)'}, } )
+     :method => 'price_formulas.price * (sum_duration_minute_less_6 + sum_duration_minutes_more_20) + 3.5 * (sum_duration_minute - sum_duration_minute_less_6 - sum_duration_minutes_more_20)'}, } )
 
 #Central regions RF except for Own and home regions, Calls, Outcoming, to mgf_warm_welcome_plus_5_countries
 category = {:name => '_sctcg_cenral_regions_not_own_and_home_region_calls_to_mgf_warm_welcome_plus_5_countries', :service_category_rouming_id => _sc_mgf_cenral_regions_not_own_and_home_region, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mgf_warm_welcome_plus_5}

@@ -5,7 +5,7 @@ class Customer::TarifOptimizatorController < ApplicationController
   crudable_actions :index
   before_action :check_if_optimization_options_are_in_session, only: [:index]
   before_action :validate_tarifs, only: [:index, :recalculate]
-  before_action :init_background_process_informer, only: [:tarif_optimization_progress_bar, :calculation_status, :recalculate, :update_minor_results, :index, :prepare_final_tarif_results]
+  before_action :init_background_process_informer, only: [:tarif_optimization_progress_bar, :calculation_status, :recalculate, :update_minor_results, :prepare_final_tarif_results]
   attr_reader :background_process_informer_operators, :background_process_informer_tarifs, :background_process_informer_tarif
 
   def prepare_final_tarif_results
@@ -127,7 +127,8 @@ class Customer::TarifOptimizatorController < ApplicationController
 #      updating_minor_results
       redirect_to(:action => :index)
     end
-    tarif_optimization_inputs_saver('user_input').save({:result => service_choices.session_filtr_params.merge({'accounting_period' => nil})})
+    user_input_to_save = service_choices.session_filtr_params.merge(services_select.session_filtr_params).merge(optimization_params.session_filtr_params)
+    tarif_optimization_inputs_saver('user_input').save({:result => user_input_to_save})
   end 
   
   def optimization_params
@@ -233,8 +234,7 @@ class Customer::TarifOptimizatorController < ApplicationController
       :max_tarif_set_count_per_tarif => optimization_params.session_filtr_params['max_tarif_set_count_per_tarif'],
       :tarif_count => tarifs.size,
       }
-#    @optimization_result_presenter ||= 
-    ServiceHelper::OptimizationResultPresenter.new(options)
+    @optimization_result_presenter ||= ServiceHelper::OptimizationResultPresenter.new(options)
   end
   
   def final_tarif_results_presenter
@@ -242,31 +242,17 @@ class Customer::TarifOptimizatorController < ApplicationController
       :user_id=> (current_user ? current_user.id.to_i : nil),
       :show_zero_tarif_result_by_parts => optimization_params.session_filtr_params['show_zero_tarif_result_by_parts'],
       }
-#    @optimization_result_presenter ||= 
-    ServiceHelper::FinalTarifResultsPresenter.new(options)
+    @optimization_result_presenter ||= ServiceHelper::FinalTarifResultsPresenter.new(options)
   end
   
   def minor_result_presenter
-#    @minor_result_presenter ||= 
-    ServiceHelper::AdditionalOptimizationInfoPresenter.new({:operator => operator, :user_id=> (current_user ? current_user.id.to_i : nil) })
+    @minor_result_presenter ||= ServiceHelper::AdditionalOptimizationInfoPresenter.new({:operator => operator, :user_id=> (current_user ? current_user.id.to_i : nil) })
   end 
   
   def tarif_optimization_inputs_saver(name)
-#    @tarif_optimization_inputs_saver ||= 
-    ServiceHelper::OptimizationResultSaver.new('tarif_optimization_inputs', name, current_user.id)
+    @tarif_optimization_inputs_saver ||= ServiceHelper::OptimizationResultSaver.new('tarif_optimization_inputs', name, current_user.id)
   end
 
-  def operator
-    optimization_params.session_filtr_params['operator_id'].blank? ? 1030 : optimization_params.session_filtr_params['operator_id'].to_i
-  end
-  
-  def validate_tarifs
-    all_operator_services = TarifClass.services_by_operator(operator).with_not_null_dependency    
-    session[:filtr]['service_choices_filtr']['tarifs_id'] = (service_choices.session_filtr_params['tarifs_id'].to_s.scan(/\d+/).map(&:to_i) & all_operator_services.tarifs.pluck(:id)) 
-    session[:filtr]['service_choices_filtr']['tarif_options_id'] = (service_choices.session_filtr_params['tarif_options_id'].to_s.scan(/\d+/).map(&:to_i) & all_operator_services.special_services.pluck(:id)) 
-    session[:filtr]['service_choices_filtr']['common_services_id'] = (service_choices.session_filtr_params['common_services_id'].to_s.scan(/\d+/).map(&:to_i) & all_operator_services.common_services.pluck(:id)) 
-  end
-  
   def options
   {:operator => operator,
    :user_id=> (current_user ? current_user.id.to_i : nil),
@@ -285,9 +271,9 @@ class Customer::TarifOptimizatorController < ApplicationController
    :accounting_period => service_choices.session_filtr_params['accounting_period'],
    
    :services_by_operator => {
-      :operators => [operator], :tarifs => {operator => tarifs}, :tarif_options => {operator => tarif_options}, 
+      :operators => operators, :tarifs => tarifs, :tarif_options => tarif_options, 
+      :common_services => common_services, 
       :calculate_only_chosen_services => service_choices.session_filtr_params['calculate_only_chosen_services'],
-      :common_services => {operator => common_services}, 
       :use_short_tarif_set_name => optimization_params.session_filtr_params['use_short_tarif_set_name'], 
       :calculate_with_multiple_use => optimization_params.session_filtr_params['calculate_with_multiple_use'],
       :if_update_tarif_sets_to_calculate_from_with_cons_tarif_results => optimization_params.session_filtr_params['if_update_tarif_sets_to_calculate_from_with_cons_tarif_results'],
@@ -300,20 +286,51 @@ class Customer::TarifOptimizatorController < ApplicationController
    }   
   end
 
+  def operator
+    optimization_params.session_filtr_params['operator_id'].blank? ? 1030 : optimization_params.session_filtr_params['operator_id'].to_i
+  end
+  
+  def operators
+    mgf = services_select.session_filtr_params['operator_mgf'] == 'true'? 1028 : nil
+    mts = services_select.session_filtr_params['operator_mts'] == 'true'? 1030 : nil
+    [mgf, mts].compact    
+  end
+  
+  def validate_tarifs
+    operator = 1028
+    session[:filtr]['service_choices_filtr']['tarifs_mgf'] = service_choices.session_filtr_params['tarifs_mgf'].to_s.scan(/\d+/).map(&:to_i) & ServiceHelper::Services.tarifs[operator] 
+    session[:filtr]['service_choices_filtr']['tarif_options_mgf'] = service_choices.session_filtr_params['tarif_options_mgf'].to_s.scan(/\d+/).map(&:to_i) & ServiceHelper::Services.tarif_options[operator] 
+    session[:filtr]['service_choices_filtr']['common_services_mgf'] = service_choices.session_filtr_params['common_services_mgf'].to_s.scan(/\d+/).map(&:to_i) & ServiceHelper::Services.common_services[operator] 
+
+    operator = 1030
+    session[:filtr]['service_choices_filtr']['tarifs_mts'] = service_choices.session_filtr_params['tarifs_mts'].to_s.scan(/\d+/).map(&:to_i) & ServiceHelper::Services.tarifs[operator] 
+    session[:filtr]['service_choices_filtr']['tarif_options_mts'] = service_choices.session_filtr_params['tarif_options_mts'].to_s.scan(/\d+/).map(&:to_i) & ServiceHelper::Services.tarif_options[operator] 
+    session[:filtr]['service_choices_filtr']['common_services_mts'] = service_choices.session_filtr_params['common_services_mts'].to_s.scan(/\d+/).map(&:to_i) & ServiceHelper::Services.common_services[operator] 
+  end
+  
   def tarifs
-    service_choices.session_filtr_params['tarifs_id'] || [] 
+    {
+      1028 => (service_choices.session_filtr_params['tarifs_mgf'] || []), 
+      1030 => (service_choices.session_filtr_params['tarifs_mts'] || []), 
+    }     
   end
   
   def tarif_options
-    service_choices.session_filtr_params['tarif_options_id'] || [] 
+    {
+      1028 => (service_choices.session_filtr_params['tarif_options_mgf'] || []), 
+      1030 => (service_choices.session_filtr_params['tarif_options_mts'] || []), 
+    }     
   end
   
   def common_services
-    service_choices.session_filtr_params['common_services_id']  || []
+    {
+      1028 => (service_choices.session_filtr_params['common_services_mgf'] || []), 
+      1030 => (service_choices.session_filtr_params['common_services_mts'] || []), 
+    }     
   end
   
   def what_format_of_results
-    optimization_params.session_filtr_params['what_format_of_results'] || 'results_for_customer'
+    optimization_params.session_filtr_params['what_format_of_results'] || 'results_by_services'
   end
   
   def saved_tarif_optimization_inputs
@@ -321,17 +338,19 @@ class Customer::TarifOptimizatorController < ApplicationController
     tarif_optimization_inputs_saver('user_input').results
   end
   
-  def check_if_optimization_options_are_in_session    
-    accounting_period = Customer::Call.where(:user_id => current_user.id).select("description->>'accounting_period' as accounting_period").uniq
-    accounting_period = accounting_period.blank? ? -1 : accounting_period[0]['accounting_period']
-
+  def accounting_periods
+    @accounting_periods ||= Customer::Call.where(:user_id => current_user.id).select("description->>'accounting_period' as accounting_period").uniq
+  end
+  
+  def check_if_optimization_options_are_in_session  
+    accounting_period = accounting_periods.blank? ? -1 : accounting_periods[0]['accounting_period']  
     if !session[:filtr] or session[:filtr]['service_choices_filtr'].blank?
       session[:filtr] ||= {}; session[:filtr]['service_choices_filtr'] ||= {}
       session[:filtr]['service_choices_filtr']  = if saved_tarif_optimization_inputs.blank?
         {
-          'tarifs_id' => [200], 
-          'tarif_options_id' => [], 
-          'common_services_id' => [], 
+          'tarifs_mgf' => [], 'tarifs_mts' => [],
+          'tarif_options_mgf' => [], 'tarif_options_mts' => [], 
+          'common_services_mgf' => [], 'common_services_mts' => [], 
           'accounting_period' => accounting_period,
           'calculate_only_chosen_services' => 'false'
           }        
@@ -340,96 +359,88 @@ class Customer::TarifOptimizatorController < ApplicationController
       end 
     end
     
+    if !session[:filtr] or session[:filtr]['services_select_filtr'].blank?
+      session[:filtr] ||= {}; session[:filtr]['services_select_filtr'] ||= {}
+      session[:filtr]['services_select_filtr']  = if saved_tarif_optimization_inputs.blank?
+        {
+          'operator_mgf' => 'true', 'operator_mts' => 'true',
+          'tarifs' => 'true', 'common_services' => 'false', 
+          'all_tarif_options' => 'false'
+          }        
+      else
+        saved_tarif_optimization_inputs
+      end 
+    end
+    
     if !session[:filtr] or session[:filtr]['optimization_params_filtr'].blank?
       session[:filtr] ||= {}; session[:filtr]['optimization_params_filtr'] ||= {}
-      session[:filtr]['optimization_params_filtr']  = {
-        'calculate_on_background' => 'true',
-        'service_set_based_on_tarif_sets_or_tarif_results' => 'final_tarif_sets_by_parts',
-        'operator_id' => 1030,
-        'calculate_with_multiple_use' => 'true',
-        'simplify_tarif_results' => 'true',
-        'save_tarif_results_ord' => 'false',
-        'analyze_memory_used' => 'false',
-        'analyze_query_constructor_performance' => 'false',
-        'save_interim_results_after_calculating_tarif_results' => 'false',
-#        'save_interim_results_after_calculating_final_tarif_sets' => 'false',
-        'service_ids_batch_size' => 10,
-        'use_short_tarif_set_name' => 'true',
-        'show_zero_tarif_result_by_parts' => 'false',
-        'if_update_tarif_sets_to_calculate_from_with_cons_tarif_results' => 'true',
-        'max_tarif_set_count_per_tarif' => 1,
-        'eliminate_identical_tarif_sets' => 'true',
-        'use_price_comparison_in_current_tarif_set_calculation' => 'true',
-        'save_current_tarif_set_calculation_history' => 'false',
-        'part_sort_criteria_in_price_optimization' => 'auto',   
-        'what_format_of_results' => 'results_for_customer',     
-      } 
-#      raise(StandardError, session[:filtr]['optimization_params_filtr'])
+      session[:filtr]['optimization_params_filtr']  = if saved_tarif_optimization_inputs.blank?
+        {
+          'calculate_on_background' => 'true',
+          'service_set_based_on_tarif_sets_or_tarif_results' => 'final_tarif_sets_by_parts',
+          'operator_id' => 1030,
+          'calculate_with_multiple_use' => 'true',
+          'simplify_tarif_results' => 'true',
+          'save_tarif_results_ord' => 'false',
+          'analyze_memory_used' => 'false',
+          'analyze_query_constructor_performance' => 'false',
+          'save_interim_results_after_calculating_tarif_results' => 'false',
+  #        'save_interim_results_after_calculating_final_tarif_sets' => 'false',
+          'service_ids_batch_size' => 10,
+          'use_short_tarif_set_name' => 'true',
+          'show_zero_tarif_result_by_parts' => 'false',
+          'if_update_tarif_sets_to_calculate_from_with_cons_tarif_results' => 'true',
+          'max_tarif_set_count_per_tarif' => 1,
+          'eliminate_identical_tarif_sets' => 'true',
+          'use_price_comparison_in_current_tarif_set_calculation' => 'true',
+          'save_current_tarif_set_calculation_history' => 'false',
+          'part_sort_criteria_in_price_optimization' => 'auto',   
+          'what_format_of_results' => 'results_for_customer',     
+        } 
+      else
+        saved_tarif_optimization_inputs
+      end
     end
-#    service_choices.session_filtr_params
   end
   
   def process_selecting_services
     if params['services_select_filtr']
-      set_selected_services('tarifs_id', 'tarifs_1')
-      set_selected_services('tarifs_id', 'tarifs_2')
-      set_selected_services('common_services_id', 'common_services')
-      set_selected_services('tarif_options_id', 'all_tarif_options')
-      set_selected_services('tarif_options_id', 'tarif_options_calls')
-      set_selected_services('tarif_options_id', 'tarif_options_calls_abroad')
-      set_selected_services('tarif_options_id', 'tarif_options_country_rouming_1')
-      set_selected_services('tarif_options_id', 'tarif_options_country_rouming_2')
-      set_selected_services('tarif_options_id', 'tarif_options_international_rouming')
-      set_selected_services('tarif_options_id', 'tarif_options_internet_1')
-      set_selected_services('tarif_options_id', 'tarif_options_internet_2')
-      set_selected_services('tarif_options_id', 'tarif_options_internet_3')
-      set_selected_services('tarif_options_id', 'tarif_options_internet_4')
-      set_selected_services('tarif_options_id', 'tarif_options_internet_5')
-      set_selected_services('tarif_options_id', 'tarif_options_internet_6')
-      set_selected_services('tarif_options_id', 'tarif_options_mms')
-      set_selected_services('tarif_options_id', 'tarif_options_service_to_country')
-      set_selected_services('tarif_options_id', 'tarif_options_sms_1')
-      set_selected_services('tarif_options_id', 'tarif_options_sms_2')
-      set_selected_services('tarif_options_id', 'tarif_options_sms_3')
-      set_selected_services('tarif_options_id', 'tarif_options_sms_4')
+      if params['services_select_filtr']['operator_mgf'] == 'true'
+        input = selected_services(1028)
+        session[:filtr]['service_choices_filtr']['tarifs_mgf'] = input['tarifs']
+        session[:filtr]['service_choices_filtr']['common_services_mgf'] = input['common_services']
+        session[:filtr]['service_choices_filtr']['tarif_options_mgf'] = input['tarif_options']
+      end
+      if params['services_select_filtr']['operator_mts'] == 'true'
+        input = selected_services(1030)
+        session[:filtr]['service_choices_filtr']['tarifs_mts'] = input['tarifs']
+        session[:filtr]['service_choices_filtr']['common_services_mts'] = input['common_services']
+        session[:filtr]['service_choices_filtr']['tarif_options_mts'] = input['tarif_options']
+      end
     end
+#    raise(StandardError, [params['services_select_filtr']['operator_mgf'], session[:filtr]['service_choices_filtr']['tarif_options_mgf']])
     services_select.session_filtr_params
   end
   
-  def set_selected_services(services_to_set, which_services)
-    if params['services_select_filtr'][which_services] != session[:filtr]['services_select_filtr'][which_services]
-      session[:filtr]['service_choices_filtr'][services_to_set] = (params['services_select_filtr'][which_services] == 'true') ? 
-        (service_choices.session_filtr_params[services_to_set].map(&:to_i) + which_services_values(which_services)).uniq.sort : 
-        (service_choices.session_filtr_params[services_to_set].map(&:to_i) - which_services_values(which_services))
+  def selected_services(operator)
+    result = {}
+    result['tarifs'] = (params['services_select_filtr']['tarifs'] == 'true') ? ServiceHelper::Services.tarifs[operator] : []
+    result['common_services'] = (params['services_select_filtr']['common_services'] == 'true') ? ServiceHelper::Services.common_services[operator] : []
+#    raise(StandardError, [params['services_select_filtr']['all_tarif_options']])
+    if params['services_select_filtr']['all_tarif_options'] == 'true'
+      result['tarif_options'] = ServiceHelper::Services.tarif_options[operator]
+    else
+      result['tarif_options'] = []
+      existing_tarif_options = ServiceHelper::Services.tarif_options_by_type[operator]
+      result['tarif_options'] += (params['services_select_filtr']['international_rouming'] == 'true') ? existing_tarif_options[:international_rouming] : []
+      result['tarif_options'] += (params['services_select_filtr']['country_rouming'] == 'true') ? existing_tarif_options[:country_rouming] : []
+      result['tarif_options'] += (params['services_select_filtr']['calls'] == 'true') ? existing_tarif_options[:calls] : []
+      result['tarif_options'] += (params['services_select_filtr']['internet'] == 'true') ? existing_tarif_options[:internet] : []
+      result['tarif_options'] += (params['services_select_filtr']['sms'] == 'true') ? existing_tarif_options[:sms] : []
+      result['tarif_options'] += (params['services_select_filtr']['mms'] == 'true') ? existing_tarif_options[:mms] : []      
+      result['tarif_options'].uniq!
     end
+    result
   end
-_mgf_around_world = 100; _mgf_all_simple = 101; 
-_mgf_all_included_xs = 102; _mgf_all_included_s = 103; _mgf_all_included_m = 104; _mgf_all_included_l = 105; _mgf_all_included_vip = 106; _mgf_megafon_online = 107;
-_mgf_international = 108; _mgf_go_to_zero = 109; _mgf_sub_moscow = 110; _mgf_city_connection = 112; _mgf_warm_welcome = 113;
   
-  def which_services_values(which_services)
-    case which_services
-    when 'tarifs_1'; [200, 201, 202, 203, 204, 205, 206, 207, 208, 210, 212]
-    when 'tarifs_2'; [100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 112, 113]
-    when 'common_services'; [276, 277, 312]
-    when 'all_tarif_options'; [280, 281, 282, 283, 288, 289, 290, 291, 292, 293, 294, 295, 296, 297, 302, 303, 304, 305, 306, 307, 308, 309, 310, 311, 313, 314, 315, 316, 317, 318, 321, 322, 323, 324, 325, 326, 328, 329, 330, 331, 332, 333, 334, 335, 336, 337, 338, 339, 340, 341, 342]
-    when 'tarif_options_calls'; [328, 329, 330, 331, 332]
-    when 'tarif_options_calls_abroad'; [281, 309, 293] 
-    when 'tarif_options_country_rouming_1'; [294, 282, 283, 297, 321, 322]
-    when 'tarif_options_country_rouming_2'; []
-    when 'tarif_options_international_rouming'; [288, 289, 290, 291, 292]   
-    when 'tarif_options_internet_1'; [302, 303, 304, 310, 311, 313, 314, 315, 316, 317, 318, 340, 341, 342]
-    when 'tarif_options_internet_2'; []        
-    when 'tarif_options_internet_3'; []     
-    when 'tarif_options_internet_4'; []       
-    when 'tarif_options_internet_5'; []     
-    when 'tarif_options_internet_6'; [] 
-    when 'tarif_options_mms'; [323, 324, 325, 326]    
-    when 'tarif_options_service_to_country'; [280] 
-    when 'tarif_options_sms_1'; [295, 296, 305, 306, 307, 308, 333, 334, 335, 336, 337, 338, 339]    
-    when 'tarif_options_sms_2'; []    
-    when 'tarif_options_sms_3'; []   
-    when 'tarif_options_sms_4'; []
-    end
-  end
 end

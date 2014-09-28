@@ -216,6 +216,7 @@ class ServiceHelper::FinalTarifResultPreparator
           prepared_final_tarif_results['tarif_detail_results'][service_set_id][s_id][sc_name]['price_value'] += (price_value_detail['price_value'] || 0.0).to_f
           prepared_final_tarif_results['tarif_detail_results'][service_set_id][s_id][sc_name]['call_id_count'] += (price_value_detail['call_id_count'] || 0).to_i
           
+          prepared_final_tarif_results['tarif_detail_results'][service_set_id][s_id][sc_name]['call_ids'] = price_value_detail['call_ids']
           prepared_final_tarif_results['tarif_detail_results'][service_set_id][s_id][sc_name]['service_category_name'] = price_value_detail['service_category_name']
           prepared_final_tarif_results['tarif_detail_results'][service_set_id][s_id][sc_name]['service_category_tarif_class_id'] = price_value_detail['service_category_tarif_class_id']
           prepared_final_tarif_results['tarif_detail_results'][service_set_id][s_id][sc_name]['service_category_group_id'] = price_value_detail['service_category_group_id']
@@ -281,7 +282,7 @@ class ServiceHelper::FinalTarifResultPreparator
         prepared_final_tarif_results['tarif_detail_results_by_part'][service_set_id][tarif_class_id] ||= {}
         
         tarif_result_for_service_set_and_part['price_values'].each do |price_value_detail|            
-          s_id = price_value_detail['tarif_class_id'].to_s
+          s_id = price_value_detail['service_category_name'].to_s
           stat_detail_keys_to_exclude = ['month', 'call_ids']
           
           prepared_final_tarif_results['tarif_detail_results_by_part'][service_set_id][tarif_class_id][s_id] ||= {}
@@ -299,9 +300,11 @@ class ServiceHelper::FinalTarifResultPreparator
 
           prepared_final_tarif_results['tarif_detail_results_by_part'][service_set_id][tarif_class_id][s_id]['tarif_class_id_0'] ||= tarif_id_from_tarif_results
           prepared_final_tarif_results['tarif_detail_results_by_part'][service_set_id][tarif_class_id][s_id]['service_category_name'] ||= price_value_detail['service_category_name']
+#          raise(StandardError) if prepared_final_tarif_results['tarif_detail_results_by_part'][service_set_id][tarif_class_id][s_id]['service_category_name'] != price_value_detail['service_category_name']
           prepared_final_tarif_results['tarif_detail_results_by_part'][service_set_id][tarif_class_id][s_id]['service_category_tarif_class_id'] ||= price_value_detail['service_category_tarif_class_id']
           prepared_final_tarif_results['tarif_detail_results_by_part'][service_set_id][tarif_class_id][s_id]['service_category_group_id'] ||= price_value_detail['service_category_group_id']
           prepared_final_tarif_results['tarif_detail_results_by_part'][service_set_id][tarif_class_id][s_id]['month'] ||= price_value_detail['month']
+          prepared_final_tarif_results['tarif_detail_results_by_part'][service_set_id][tarif_class_id][s_id]['call_ids'] ||= price_value_detail['call_ids']
   
           prepared_final_tarif_results['tarif_detail_results_by_part'][service_set_id][tarif_class_id][s_id]['price_value'] ||= 0.0
           prepared_final_tarif_results['tarif_detail_results_by_part'][service_set_id][tarif_class_id][s_id]['call_id_count'] ||= 0

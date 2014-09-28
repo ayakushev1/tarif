@@ -9,8 +9,8 @@ cat << {:id => _all_russia_rouming, :name => 'роуминг Вся Россия
 
 
 cat << {:id => _intra_net_rouming, :name => 'внутрисетевой роуминг', :type_id => _common, :parent_id => _category_rouming, :level => 1, :path => [_category_rouming]}
-  crit << {:id => _intra_net_rouming * 10 , :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _equal, :value_choose_option_id => _field, 
-           :value_param_id => _fq_tarif_country_id, :value => nil, :service_category_id => _intra_net_rouming}
+  crit << {:id => _intra_net_rouming * 10 , :criteria_param_id => _call_connect_operator_id, :comparison_operator_id => _equal, :value_choose_option_id => _field, 
+           :value_param_id => _fq_tarif_operator_id, :value => nil, :service_category_id => _intra_net_rouming}
 
 cat << {:id => _own_region_rouming, :name => 'свой регион', :type_id => _common, :parent_id => _intra_net_rouming, :level => 2, :path => [_category_rouming, _intra_net_rouming]}
   crit << {:id => _own_region_rouming * 10 , :criteria_param_id => _call_connect_region_id, :comparison_operator_id => _equal, :value_choose_option_id => _field, 

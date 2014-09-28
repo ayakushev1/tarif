@@ -100,7 +100,7 @@ _mgf_unlimited_communication = 470; _mgf_call_to_russia = 471; _mgf_call_to_all_
 #internet
 _mgf_internet_extra_1_gb = 475;
 _mgf_internet_xs = 476; _mgf_internet_s = 477; _mgf_internet_m = 478; _mgf_internet_l = 479; _mgf_internet_xl = 480;
-_mgf_internet_24 = 481; _mgf_internet_24_pro = 482; _mgf_prodli_skorost = 483; 
+_mgf_internet_24 = 481; _mgf_internet_24_pro = 482; 
 _mgf_bit_pro = 484; _mgf_bit_mega_pro_150 = 485; _mgf_bit_mega_pro_250 = 486; _mgf_bit_mega_pro_500 = 487;  
  
 

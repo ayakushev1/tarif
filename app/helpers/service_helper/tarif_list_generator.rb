@@ -15,38 +15,8 @@ class ServiceHelper::TarifListGenerator
   
   def initialize(options = {} )
     @options = options
-    @operators = (!options[:operators].blank? ? options[:operators] : [1025, 1028, 1030])
-    @tarifs = (options and options[:tarifs] and !options[:tarifs][1030].blank?) ? options[:tarifs] : {1025 => [], 1028 => [], 1030 => [
-        200, #203#202, #203, 204, 205,#_mts_red_energy, _mts_smart, _mts_smart_mini, _mts_smart_plus, _mts_ultra, _mts_mts_connect_4
-        #200, 201, 202, 203, 204, 205,#_mts_red_energy, _mts_smart, _mts_smart_mini, _mts_smart_plus, _mts_ultra, _mts_mts_connect_4
-        #206, 207, 208, 210,# 209, #_mts_mayak, _mts_your_country, _mts_super_mts, _mts_umnyi_dom, _mts_super_mts_star
-        ]} 
-#    raise(StandardError, [@tarifs, !options[:tarifs].blank?, options] )
-    @common_services = (options and options[:common_services] and !options[:common_services][1030].blank?) ? options[:common_services] : {1025 => [], 1028 => [], 1030 => [
-        #312,
-        #276, 277, 312, # _mts_own_country_rouming, _mts_international_rouming, _mts_own_country_rouming_internet
-        ]} 
-    @tarif_options = (options and options[:tarif_options] and !options[:tarif_options][1030].blank?) ? options[:tarif_options] : {1025 => [], 1028 => [], 1030 => [
-        #281, 294,
-        #283,
-        #328, 329, 330, 331, 332,#_mts_region, _mts_95_cop_in_moscow_region, _mts_unlimited_calls, _mts_call_free_to_mts_russia_100, _mts_zero_to_mts, #calls
-        #281, 309, 293, #_mts_love_country, _mts_love_country_all_world, _mts_outcoming_calls_from_11_9_rur, #calls_abroad
-        #294, 282, 283, 297, #_mts_everywhere_as_home, _mts_everywhere_as_home_Ultra, _mts_everywhere_as_home_smart, _mts_incoming_travelling_in_russia, #country_rouming
-        #321, 322, #_mts_additional_minutes_150, _mts_additional_minutes_300, #country_rouming
-        #288, 289, 290, 291, 292, #_mts_zero_without_limits, _mts_bit_abroad, _mts_maxi_bit_abroad, _mts_super_bit_abroad, _mts_100mb_in_latvia_and_litva, #international_rouming
-        #302, 303, 304, #_mts_bit, _mts_super_bit, _mts_mini_bit, #internet
-        #310, 311, #_mts_additional_internet_500_mb, _mts_additional_internet_1_gb, #internet
-        #313, 314, #_mts_turbo_button_500_mb, _mts_turbo_button_2_gb, #internet
-        #315, 316, 317, 318, #_mts_internet_mini, _mts_internet_maxi, _mts_internet_super, _mts_internet_vip,#internet
-        #340, 341, #_mts_mts_planshet, _mts_mts_planshet_online,#internet
-        #342, #_mts_unlimited_internet_on_day,#internet
-        #323, 324, 325, 326, #_mts_mms_packet_10, _mts_mms_packet_20, _mts_mms_packet_50, _mts_mms_discount_50_percent, #mms
-        #280, #_mts_rodnye_goroda, #service_to_country
-        #295, 296, #_mts_50_sms_travelling_in_russia, _mts_100_sms_travelling_in_russia,#sms
-        #305, 306, 307, 308, #_mts_50_sms_in_europe, _mts_100_sms_in_europe, _mts_50_sms_travelling_in_all_world, _mts_100_sms_travelling_in_all_world,#sms
-        #333, 334, 335, #_mts_onetime_sms_packet_50, _mts_onetime_sms_packet_150, _mts_onetime_sms_packet_300,#sms
-        #336, 337, 338, 339, #_mts_monthly_sms_packet_100, _mts_monthly_sms_packet_300, _mts_monthly_sms_packet_500, _mts_monthly_sms_packet_1000,#sms        
-      ]} 
+    set_operators_and_services(options)
+#    raise(StandardError)
     set_constant
     set_generation_params(options)
     check_input_from_options
@@ -57,6 +27,25 @@ class ServiceHelper::TarifListGenerator
     calculate_uniq_parts_by_operator
     calculate_all_services_by_parts
     calculate_common_services_by_parts
+  end
+  
+  def set_operators_and_services(options)
+    @operators = (!options[:operators].blank? ? options[:operators] : [1025, 1028, 1030])
+    @tarifs = {1025 => [], 1028 => [], 1030 => []}
+    @common_services = {1025 => [], 1028 => [], 1030 => []}
+    @tarif_options = {1025 => [], 1028 => [], 1030 => []}
+    operators.each do |operator|
+      tarifs[operator] = options[:tarifs][operator] if options and options[:tarifs] and options[:tarifs][operator]  
+      common_services[operator] = options[:common_services][operator] if options and options[:common_services] and options[:common_services][operator]  
+      tarif_options[operator] = options[:tarif_options][operator] if options and options[:tarif_options] and options[:tarif_options][operator]  
+    end if operators
+    all_tarifs_count = tarifs.map{|operator, tarif_by_operator| tarif_by_operator.size }.sum
+    if all_tarifs_count == 0
+      default_tarifs = {1025 => [], 1028 => [100], 1030 => [200]}
+      operators.each do |operator|
+        tarifs[operator] = default_tarifs[operator]
+      end
+    end
   end
   
   def calculate_tarif_sets_and_slices(operator = nil, tarif =nil)
@@ -96,7 +85,7 @@ class ServiceHelper::TarifListGenerator
     @calculate_only_chosen_services = options[:calculate_only_chosen_services] == 'true' ? true : false
   end
   
-  def check_input_from_options
+  def check_input_from_options    
     @operators = [] if !operators or !operators.is_a?(Array)
     @tarifs = {} if !tarifs or !tarifs.is_a?(Hash)
     @common_services = {} if !common_services or !common_services.is_a?(Hash)
@@ -517,7 +506,7 @@ class ServiceHelper::TarifListGenerator
             tarif_sets[tarif][part][tarif_set_id] = services            
           end
           (common_services_by_parts[operator][part] || []).each do |common_service|
-            common_services_id = tarif_set_id(common_service)
+            common_services_id = tarif_set_id([common_service])
             tarif_sets[tarif][part][common_services_id] = [common_service]
           end
         else

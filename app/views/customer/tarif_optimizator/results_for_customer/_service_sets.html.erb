@@ -13,15 +13,15 @@ table.init do |t|
   t.set_fields do |f|
     services = f['services'].map do |item|
         link_to_if(item['service_http'], item['service_name'], item['service_http'])	
-    end.join(', ') if f['services']
+    end.join(', ').html_safe if f['services']
 
     common_services = f['common_services'].map do |item|
         link_to_if(item['service_http'], item['service_name'], item['service_http'])	
-    end.join(', ') if f['common_services']
+    end.join(', ').html_safe if f['common_services']
 
     tarif_options = f['tarif_options'].map do |item|
         link_to_if(item['service_http'], item['service_name'], item['service_http'])	
-    end.join(', ') if f['tarif_options']
+    end.join(', ').html_safe if f['tarif_options']
 
     identical_services = f['identical_services'].map do |identical_service_group|
     	identical_services_for_one_group = identical_service_group.map do |item|     	
@@ -30,7 +30,7 @@ table.init do |t|
     		end.join(' + ') if item	    	      	 
 	    end.join(' или ') if identical_service_group
         "[ #{identical_services_for_one_group} ]"
-    end.join(', ') if f['identical_services']
+    end.join(', ').html_safe if f['identical_services']
     
   	[
      f['operator_name'],     
