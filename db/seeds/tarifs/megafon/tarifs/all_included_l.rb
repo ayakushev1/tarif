@@ -19,10 +19,18 @@
     {:calculation_order => 0, :standard_formula_id => _stf_price_by_sum_duration_minute, 
       :formula => {:window_condition => "(1800.0 >= sum_duration_minute)", :window_over => 'month'}, :price => 0.0, :description => '' }
     )
-  #sms/mms included in tarif
-  scg_mgf_all_included_l_sms_mms = @tc.add_service_category_group(
-    {:name => 'scg_mgf_all_included_l_sms_mms' }, 
-    {:name => "price for scg_mgf_all_included_l_sms_mms"}, 
+  #sms included in tarif
+  scg_mgf_all_included_l_sms = @tc.add_service_category_group(
+    {:name => 'scg_mgf_all_included_l_sms' }, 
+    {:name => "price for scg_mgf_all_included_l_sms"}, 
+    {:calculation_order => 0, :standard_formula_id => _stf_zero_count_volume_item, 
+      :formula => {:window_condition => "(1800 >= count_volume)", :window_over => 'month'}, :price => 0.0, :description => '' }
+    )
+
+  #mms included in tarif
+  scg_mgf_all_included_l_mms = @tc.add_service_category_group(
+    {:name => 'scg_mgf_all_included_l_mms' }, 
+    {:name => "price for scg_mgf_all_included_l_mms"}, 
     {:calculation_order => 0, :standard_formula_id => _stf_zero_count_volume_item, 
       :formula => {:window_condition => "(1800 >= count_volume)", :window_over => 'month'}, :price => 0.0, :description => '' }
     )
@@ -71,7 +79,7 @@ category = {:name => '_sctcg_own_home_regions_sms_incoming', :service_category_r
 
 #Own and home regions, sms, Outcoming, to_own_home_regions
 category = {:name => '_sctcg_own_home_regions_sms_to_own_home_regions', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_own_and_home_regions}
-  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_all_included_l_sms_mms[:id])
+  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_all_included_l_sms[:id])
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_count_volume_item, :price => 2.9})
 
 #Own and home regions, sms, Outcoming, to_own country
@@ -85,7 +93,7 @@ category = {:name => '_sctcg_own_home_regions_mms_incoming', :service_category_r
 
 #Own and home regions, mms, Outcoming, to_own_home_regions
 category = {:name => '_sctcg_own_home_regions_mms_to_own_home_regions', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _mms_out, :service_category_geo_id => _service_to_own_and_home_regions}
-  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_all_included_l_sms_mms[:id])
+  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_all_included_l_mms[:id])
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_count_volume_item, :price => 2.9})
 
 #Own and home regions, mms, Outcoming, to_own country
@@ -114,12 +122,12 @@ category = {:name => '_sctcg_own_country_calls_to_own_home_regions_not_own_opera
 
 #Own country, sms, Outcoming, to_own_home_regions
 category = {:name => '_sctcg_own_country_sms_to_own_home_regions', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_own_and_home_regions}
-  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_all_included_l_sms_mms[:id])
+  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_all_included_l_sms[:id])
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_count_volume_item, :price => 2.9})
 
 #Own country, mms, Outcoming, to_own_home_regions
 category = {:name => '_sctcg_own_country_mms_to_own_home_regions', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _mms_out, :service_category_geo_id => _service_to_own_and_home_regions}
-  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_all_included_l_sms_mms[:id])
+  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_all_included_l_mms[:id])
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_count_volume_item, :price => 2.9})
 
 #Own country, Internet
