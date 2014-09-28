@@ -49,8 +49,25 @@ class ServiceHelper::CurrentTarifSet
   end
   
   def init_tarif_sets_as_array
-    @tarif_price = new_cons_tarif_results_by_parts[tarif]['periodic']['price_value'].to_f + new_cons_tarif_results_by_parts[tarif]['onetime']['price_value'].to_f
-    
+    @tarif_price = 0.0
+    if new_cons_tarif_results_by_parts.keys.include?(tarif)
+      @tarif_price = new_cons_tarif_results_by_parts[tarif]['periodic']['price_value'].to_f + new_cons_tarif_results_by_parts[tarif]['onetime']['price_value'].to_f
+    else
+      periodic_fix_part = tarif_results.keys.map do |key| 
+        if key.split('_').include?(tarif) and tarif_results[key].keys.include?('periodic') and tarif_results[key]['periodic'].keys.include?(tarif.to_i)
+          @tarif_price += tarif_results[key]['periodic'][tarif.to_i]['price_value'].to_f
+          break
+        end
+       end.compact[0]
+      
+      onetime_fix_part = tarif_results.keys.map do |key| 
+        if key.split('_').include?(tarif) and tarif_results[key].keys.include?('onetime') and tarif_results[key]['onetime'].keys.include?(tarif.to_i)
+          @tarif_price += tarif_results[key]['onetime'][tarif.to_i]['price_value'].to_f
+          break
+        end
+       end.compact[0]       
+    end
+
     @parts = (tarif_sets_by_tarif.keys - ['periodic', 'onetime']).sort_by do |part| 
       price_values = new_cons_tarif_results_by_parts.collect do |tarif_sets_name, new_cons_tarif_results_by_part| 
         result = 0.0
