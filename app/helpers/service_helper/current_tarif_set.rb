@@ -58,14 +58,14 @@ class ServiceHelper::CurrentTarifSet
           @tarif_price += tarif_results[key]['periodic'][tarif.to_i]['price_value'].to_f
           break
         end
-       end.compact[0]
+       end
       
       onetime_fix_part = tarif_results.keys.map do |key| 
         if key.split('_').include?(tarif) and tarif_results[key].keys.include?('onetime') and tarif_results[key]['onetime'].keys.include?(tarif.to_i)
           @tarif_price += tarif_results[key]['onetime'][tarif.to_i]['price_value'].to_f
           break
         end
-       end.compact[0]       
+       end       
     end
 
     @parts = (tarif_sets_by_tarif.keys - ['periodic', 'onetime']).sort_by do |part| 
@@ -131,6 +131,7 @@ class ServiceHelper::CurrentTarifSet
     @max_part_index = parts.size
     @max_tarif_set_by_part_index = tarif_sets_names_as_array.map{|ts| ts.size}
     all_services = tarif_sets_services_as_array.flatten
+    all_services.uniq! if all_services
     @current_price = tarif_sets_prices.collect{|tarif_sets_price_by_parts| tarif_sets_price_by_parts.last}.sum + calculate_periodic_part_price_from_services(all_services)
     @prev_current_prices = [@current_price]
     @best_possible_price = 0.0
@@ -269,6 +270,7 @@ class ServiceHelper::CurrentTarifSet
       tarif_sets_services += tarif_sets_services_as_array[part_index][current_tarif_set_by_part_index[part_index]]
     end if current_tarif_set_by_part_index
     tarif_sets_services.flatten!
+    tarif_sets_services.uniq! if tarif_sets_services
     
     calculate_periodic_part_price_from_services(tarif_sets_services)
   end
@@ -282,8 +284,10 @@ class ServiceHelper::CurrentTarifSet
         new_periodic_services = [main_depended_service] + services_that_depended_on[main_depended_service.to_s]
         new_tarif_set_id = tarif_set_id(new_periodic_services)
         
-        periodic_part_price += new_cons_tarif_results_by_parts[new_tarif_set_id]['periodic']['price_value'].to_f
-        periodic_part_price += new_cons_tarif_results_by_parts[new_tarif_set_id]['onetime']['price_value'].to_f
+        periodic_part_price += new_cons_tarif_results_by_parts[new_tarif_set_id]['periodic']['price_value'].to_f if new_cons_tarif_results_by_parts[new_tarif_set_id] and 
+          new_cons_tarif_results_by_parts[new_tarif_set_id]['periodic']
+        periodic_part_price += new_cons_tarif_results_by_parts[new_tarif_set_id]['onetime']['price_value'].to_f if new_cons_tarif_results_by_parts[new_tarif_set_id] and 
+          new_cons_tarif_results_by_parts[new_tarif_set_id]['onetime']
         counted_depended_on_services += new_periodic_services
       end
     end
