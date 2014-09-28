@@ -37,7 +37,9 @@ class ServiceHelper::FinalTarifResultPreparator
   def self.prepare_service_set_part_of_final_tarif_set(prepared_final_tarif_results, service_set_id, final_tarif_set, input_data)
     tarif_results = input_data[:tarif_results]
     groupped_identical_services = input_data[:groupped_identical_services]    
-    operator_description = input_data[:operator_description][input_data[:operator].to_s]['name']
+    operator_description = input_data[:operator_description][input_data[:operator].to_s]
+    operator_description = {'name' => operator_description['name']}
+#    raise(StandardError, input_data[:operator_description])
     service_description = input_data[:service_description]
     
     prepared_final_tarif_results['service_set'][service_set_id] ||= {}
