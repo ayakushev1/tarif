@@ -101,7 +101,7 @@ category = {:name => '_sctcg_own_home_regions_mms_to_own_country', :service_cate
 #Own country, Calls, Incoming
 category = {:name => '_sctcg_own_country_calls_incoming', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_in}
   @tc.add_grouped_service_category_tarif_class(category, scg_mgf_all_included_vip_calls[:id])
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 2.9})
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 2.9})
 
 #Own country, Calls, Outcoming, to_own_and_home_region, to_own_operator
 category = {:name => '_sctcg_own_country_calls_to_own_home_regions_own_operator', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_own_operator}
@@ -111,7 +111,7 @@ category = {:name => '_sctcg_own_country_calls_to_own_home_regions_own_operator'
 #Own country, Calls, Outcoming, to_own_and_home_region, to_not_own_operator
 category = {:name => '_sctcg_own_country_calls_to_own_home_regions_not_own_operator', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_not_own_operator}
   @tc.add_grouped_service_category_tarif_class(category, scg_mgf_all_included_vip_calls[:id])
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 2.0})
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 2.0})
 
 #Own country, Calls, Outcoming, to_own_country, to_own_operator
 category = {:name => '_sctcg_own_country_calls_to_own_country_own_operator', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country, :service_category_partner_type_id => _service_to_own_operator}
