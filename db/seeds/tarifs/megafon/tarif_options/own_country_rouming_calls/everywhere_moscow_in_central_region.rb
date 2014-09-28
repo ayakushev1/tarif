@@ -8,7 +8,7 @@
     :other_tarif_priority => {:lower => [], :higher => []},
     :prerequisites => [],
     :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},
-    :multiple_use => true
+    :multiple_use => false
   } } )
 
 #Параметры опции задаются в описании самого тарифа
