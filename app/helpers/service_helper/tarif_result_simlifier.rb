@@ -141,6 +141,7 @@ class ServiceHelper::TarifResultSimlifier
   
   def group_identical_tarif_sets(updated_tarif_sets, updated_tarif_results, services_to_not_excude, eliminate_identical_tarif_sets)
     @groupped_identical_services = {}
+    depended_service_list = services_that_depended_on.values.flatten.map(&:to_s)
     updated_tarif_set_list = []
 
     updated_cons_tarif_results = calculate_updated_cons_tarif_results(updated_tarif_results)
@@ -153,31 +154,24 @@ class ServiceHelper::TarifResultSimlifier
         identical_tarif_sets = groupped_tarif_result_ids.map{|g| g[0]}
         identical_services = find_identical_services(identical_tarif_sets)
         services_to_leave_in_tarif_set = services_to_not_excude.map(&:to_s) & identical_services         
-        if services_to_leave_in_tarif_set.size > 1
-#          raise(StandardError)
-#    raise(StandardError) if key == "1456__own-country-rouming/sms_own-country-rouming/calls_own-country-rouming/mobile-connection_mms_periodic_onetime"
-          groupped_tarif_result_ids.each do |groupped_tarif_result_id|
-            updated_tarif_set_list << groupped_tarif_result_id[0]
-          end
-        else          
-          if !services_to_leave_in_tarif_set.blank?
-            identical_tarif_sets.each_index do |identical_tarif_set_index|
-              identical_tarif_set = identical_tarif_sets[identical_tarif_set_index]
-              if (services_to_leave_in_tarif_set - identical_tarif_set.split('_')).blank?
-                services_to_leave_in_tarif_set_index = identical_tarif_set_index
-                break
-              end
+        if !services_to_leave_in_tarif_set.blank?
+          identical_tarif_sets.each_index do |identical_tarif_set_index|
+            identical_tarif_set = identical_tarif_sets[identical_tarif_set_index]
+            if (services_to_leave_in_tarif_set - identical_tarif_set.split('_')).blank?
+              services_to_leave_in_tarif_set_index = identical_tarif_set_index
+              break
             end
           end
-  
-          groupped_identical_services[identical_tarif_sets[services_to_leave_in_tarif_set_index]] = {:identical_services => identical_services, :identical_tarif_sets => identical_tarif_sets}
-          updated_tarif_set_list << groupped_tarif_result_ids[services_to_leave_in_tarif_set_index][0]
         end
-      else
-        updated_tarif_set_list << groupped_tarif_result_ids[services_to_leave_in_tarif_set_index][0]
+        identical_services_without_depended = identical_services - depended_service_list - [""]
+        if identical_services_without_depended.size > 0
+          groupped_identical_services[identical_tarif_sets[services_to_leave_in_tarif_set_index]] = {
+            :identical_services => identical_services, :identical_tarif_sets => identical_tarif_sets}
+        end        
+#    raise(StandardError) if key == "1456__own-country-rouming/sms_own-country-rouming/calls_own-country-rouming/mobile-connection_mms_periodic_onetime"
       end
 
-      
+      updated_tarif_set_list << groupped_tarif_result_ids[services_to_leave_in_tarif_set_index][0]
     end
     
     updated_tarif_sets, updated_tarif_results = update_tarif_sets_with_groupped_tarif_results(updated_tarif_sets, updated_tarif_results, updated_tarif_set_list)
@@ -243,31 +237,6 @@ class ServiceHelper::TarifResultSimlifier
     [new_updated_tarif_sets, new_updated_tarif_results]
   end
 
-  def update_current_uniq_sets_with_periodic_part_______1(current_uniq_service_sets, tarif_sets_by_tarif, best_current_uniq_service_sets)
-    services_that_depended_on_service_ids = services_that_depended_on.keys.map(&:to_i)    
-    current_uniq_service_sets.each do |uniq_service_set_id, uniq_service_set|
-      if !uniq_service_set[:fobidden] and best_current_uniq_service_sets[:set_ids].include?(uniq_service_set_id)
-        counted_depended_on_services = []
-        (uniq_service_set[:service_ids] & services_that_depended_on_service_ids).each do |main_depended_service|
-          if !(uniq_service_set[:service_ids] & services_that_depended_on[main_depended_service]).blank?
-            new_periodic_services = [main_depended_service] + services_that_depended_on[main_depended_service]
-            new_tarif_set_id = tarif_set_id(new_periodic_services)
-            current_uniq_service_sets[uniq_service_set_id][:tarif_sets_by_part] << (['periodic', new_tarif_set_id] - current_uniq_service_sets[uniq_service_set_id][:tarif_sets_by_part])
-            current_uniq_service_sets[uniq_service_set_id][:tarif_sets_by_part] << (['onetime', new_tarif_set_id] - current_uniq_service_sets[uniq_service_set_id][:tarif_sets_by_part])
-            counted_depended_on_services += new_periodic_services
-          end
-        end
-        
-        (uniq_service_set[:service_ids] - counted_depended_on_services).uniq.each do |service|
-          current_uniq_service_sets[uniq_service_set_id][:tarif_sets_by_part] << (['periodic', tarif_set_id([service])] - current_uniq_service_sets[uniq_service_set_id][:tarif_sets_by_part])
-          current_uniq_service_sets[uniq_service_set_id][:tarif_sets_by_part] << (['onetime', tarif_set_id([service])] - current_uniq_service_sets[uniq_service_set_id][:tarif_sets_by_part])
-        end
-      else
-        current_uniq_service_sets[uniq_service_set_id][:fobidden] = true
-      end
-    end
-  end
-  
   def tarif_set_id(tarif_ids)
     tarif_ids.collect {|tarif_id| tarif_id if tarif_id}.compact.join('_')
   end
