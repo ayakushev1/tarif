@@ -1,3 +1,4 @@
+#TODO убрать несовместимость между _mgf_50_discount_on_all_incoming_calls и _mgf_50_discount_on_calls_to_russia
 @tc = ServiceHelper::TarifCreator.new(_megafon)
 @tc.create_tarif_class({
   :id => _mgf_50_discount_on_calls_to_russia, :name => 'Скидка 50% на исходящие вызовы в Россию', :operator_id => _megafon, :privacy_id => _person, :standard_service_id => _special_service,

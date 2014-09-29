@@ -153,23 +153,33 @@ class ServiceHelper::TarifResultSimlifier
         identical_tarif_sets = groupped_tarif_result_ids.map{|g| g[0]}
         identical_services = find_identical_services(identical_tarif_sets)
         services_to_leave_in_tarif_set = services_to_not_excude.map(&:to_s) & identical_services         
-        if !services_to_leave_in_tarif_set.blank?
-          identical_tarif_sets.each_index do |identical_tarif_set_index|
-            identical_tarif_set = identical_tarif_sets[identical_tarif_set_index]
-            if (services_to_leave_in_tarif_set - identical_tarif_set.split('_')).blank?
-              services_to_leave_in_tarif_set_index = identical_tarif_set_index
-              break
+        if services_to_leave_in_tarif_set.size > 1
+#          raise(StandardError)
+#    raise(StandardError) if key == "1456__own-country-rouming/sms_own-country-rouming/calls_own-country-rouming/mobile-connection_mms_periodic_onetime"
+          groupped_tarif_result_ids.each do |groupped_tarif_result_id|
+            updated_tarif_set_list << groupped_tarif_result_id[0]
+          end
+        else          
+          if !services_to_leave_in_tarif_set.blank?
+            identical_tarif_sets.each_index do |identical_tarif_set_index|
+              identical_tarif_set = identical_tarif_sets[identical_tarif_set_index]
+              if (services_to_leave_in_tarif_set - identical_tarif_set.split('_')).blank?
+                services_to_leave_in_tarif_set_index = identical_tarif_set_index
+                break
+              end
             end
           end
+  
+          groupped_identical_services[identical_tarif_sets[services_to_leave_in_tarif_set_index]] = {:identical_services => identical_services, :identical_tarif_sets => identical_tarif_sets}
+          updated_tarif_set_list << groupped_tarif_result_ids[services_to_leave_in_tarif_set_index][0]
         end
-
-        groupped_identical_services[identical_tarif_sets[services_to_leave_in_tarif_set_index]] = {:identical_services => identical_services, :identical_tarif_sets => identical_tarif_sets}
+      else
+        updated_tarif_set_list << groupped_tarif_result_ids[services_to_leave_in_tarif_set_index][0]
       end
 
-      updated_tarif_set_list << groupped_tarif_result_ids[services_to_leave_in_tarif_set_index][0]
+      
     end
     
-#    raise(StandardError)
     updated_tarif_sets, updated_tarif_results = update_tarif_sets_with_groupped_tarif_results(updated_tarif_sets, updated_tarif_results, updated_tarif_set_list)
 
     [updated_tarif_sets, updated_tarif_results]
