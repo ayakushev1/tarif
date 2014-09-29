@@ -283,7 +283,7 @@ class ServiceHelper::TarifListGenerator
         end
       end
     end
-    raise(StandardError, [tarif_option_by_compatibility ])
+#    raise(StandardError, [tarif_option_by_compatibility ])
   end
 
   def calculate_tarif_option_combinations
