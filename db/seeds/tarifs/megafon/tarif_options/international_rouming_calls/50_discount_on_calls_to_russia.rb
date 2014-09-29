@@ -13,13 +13,13 @@
 
 #Параметры опции задаются в описании самого тарифа
 
-#sic, calls, outcoming, to Russia
-#category = {:name => '_sctcg_mgf_sic_calls_to_russia', :service_category_rouming_id => _sc_mgf_sic_international_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_russia}
-#  @tc.add_only_service_category_tarif_class(category)  
+#_all_world_rouming, incoming
+category = {:name => '_sctcg_mgf_all_world_rouming_calls_incoming', :service_category_rouming_id => _all_world_rouming, :service_category_calls_id => _calls_in}
+  @tc.add_only_service_category_tarif_class(category)  
 
-#other_countries, calls, outcoming, to Russia
-#category = {:name => '_sctcg_mgf_other_countries_calls_to_russia', :service_category_rouming_id => _sc_mgf_other_countries_international_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_russia}
-#  @tc.add_only_service_category_tarif_class(category)  
+#_all_world_rouming, calls, outcoming, to Russia
+category = {:name => '_sctcg_mgf_all_world_rouming_calls_to_russia', :service_category_rouming_id => _all_world_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_russia}
+  @tc.add_only_service_category_tarif_class(category)  
 
 
 @tc.add_tarif_class_categories

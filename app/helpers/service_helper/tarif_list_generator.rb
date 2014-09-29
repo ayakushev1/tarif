@@ -209,6 +209,7 @@ class ServiceHelper::TarifListGenerator
   end
   
   def calculate_service_packs_by_parts
+#    raise(StandardError)
     @service_packs_by_parts = {}
     service_packs.each do |tarif, service_pack|
       @service_packs_by_parts[tarif] ||= {}
