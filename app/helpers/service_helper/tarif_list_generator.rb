@@ -274,6 +274,7 @@ class ServiceHelper::TarifListGenerator
               if incompatibility_groups.blank? and !tarifs[operator].include?(service) and !common_services[operator].include?(service)
                 tarif_option_by_compatibility[tarif][part][service] = [service]
               end
+#    raise(StandardError) if part == 'all-world-rouming/calls' and service == 405
             end
           end
           if tarif_option_by_compatibility[tarif][part].blank?
@@ -282,7 +283,7 @@ class ServiceHelper::TarifListGenerator
         end
       end
     end
-#    raise(StandardError, [tarif_option_by_compatibility ])
+    raise(StandardError, [tarif_option_by_compatibility ])
   end
 
   def calculate_tarif_option_combinations
