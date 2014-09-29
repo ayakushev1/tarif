@@ -136,8 +136,14 @@ end
   _mgf_call_to_all_country_23 = [_tunis]
   _mgf_call_to_all_country_30 = [_greenland, _slovenia, _cuba]
    
-   
+   _mgf_discount_on_calls_to_russia_and_all_incoming = _world_countries_without_russia - [
+    _austria,  _albania, _andorra, _armenia, _belarus, _belgium, _bulgaria, _bosnia_and_herzegovina, _great_britain, _hungary, _germany, 
+    _greenland, _denmark, _greece, _ireland, _iceland, _spain, _italy, _cyprus, _latvia,
+    _liechtenstein, _lithuania, _luxembourg, _macedonia, _malta, _moldova, _monaco, _netherlands, _norway, _poland, _portugal,
+    _romania, _san_marino, _serbia, _slovakia, _turkey, _ukraiun, _finland, _france, _croatia,
+    _montenegro, _czech_republic, _switzerland, _sweden, _estonia, _south_ossetia]
      
+
   local_variables.each do |symbol|
     send(:define_method, symbol) do
       eval(symbol.to_s)

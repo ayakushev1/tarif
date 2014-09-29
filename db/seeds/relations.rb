@@ -155,6 +155,7 @@ rln << {:id => _relation_service_to_mgf_call_to_all_country_20, :type_id => _ope
 rln << {:id => _relation_service_to_mgf_call_to_all_country_23, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_call_to_all_country_23,:name => 'Megafone, countries from _to_mgf_call_to_all_country_23'}
 rln << {:id => _relation_service_to_mgf_call_to_all_country_30, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_call_to_all_country_30,:name => 'Megafone, countries from _to_mgf_call_to_all_country_30'}
 
+rln << {:id => _relation_mgf_discount_on_calls_to_russia_and_all_incoming, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_discount_on_calls_to_russia_and_all_incoming,:name => 'Megafone, countries from _mgf_discount_on_calls_to_russia_and_all_incoming'}
 
 
 

@@ -194,6 +194,10 @@ cat << {:id => _sc_mgf_around_world_countries_5, :name => 'Страны Мега
   crit << {:id => _sc_mgf_around_world_countries_5 * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
            :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mgf_around_world_countries_5})", :service_category_id => _sc_mgf_around_world_countries_5}
 
+cat << {:id => _sc_mgf_discount_on_calls_to_russia_and_all_incoming, :name => 'Страны Мегафона для Вокруг света 5', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_mgf_discount_on_calls_to_russia_and_all_incoming * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mgf_discount_on_calls_to_russia_and_all_incoming})", :service_category_id => _sc_mgf_discount_on_calls_to_russia_and_all_incoming}
+
 
 
 #география услуг

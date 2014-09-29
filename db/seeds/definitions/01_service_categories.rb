@@ -25,6 +25,8 @@ def access_methods_to_constant_service_categories
   
   _sc_mgf_cenral_regions_not_own_and_home_region = 44; 
   
+  _sc_mgf_discount_on_calls_to_russia_and_all_incoming = 45;
+  
   #география услуг
   _geography_services = 100;
   _service_to_own_region = 101; _service_to_home_region = 102; _service_to_own_country = 103; _service_to_group_of_countries = 104;

@@ -52,6 +52,8 @@ _relation_service_to_mgf_call_to_all_country_16 = 10291; _relation_service_to_mg
 _relation_service_to_mgf_call_to_all_country_19 = 10294; _relation_service_to_mgf_call_to_all_country_20 = 10295; _relation_service_to_mgf_call_to_all_country_23 = 10296;
 _relation_service_to_mgf_call_to_all_country_30 = 10297;
 
+_relation_mgf_discount_on_calls_to_russia_and_all_incoming = 10300;
+
 #operator_region_groups
 _relation_mgf_central_region = 11000;
 
