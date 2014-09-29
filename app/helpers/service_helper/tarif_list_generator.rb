@@ -238,6 +238,7 @@ class ServiceHelper::TarifListGenerator
   end
 
   def calculate_tarif_option_by_compatibility
+#TODO Разобраться что делать когда одна опция несовместима с двумя другими, которые между собой совместимы    
     @tarif_option_by_compatibility = {}
     if calculate_only_chosen_services
       service_packs_by_parts.each do |tarif, service_pack|
@@ -272,9 +273,9 @@ class ServiceHelper::TarifListGenerator
               
               operator = service_description[service][:operator_id].to_i
               if incompatibility_groups.blank? and !tarifs[operator].include?(service) and !common_services[operator].include?(service)
+#    raise(StandardError) if part == 'all-world-rouming/calls' and service == 405
                 tarif_option_by_compatibility[tarif][part][service] = [service]
               end
-#    raise(StandardError) if part == 'all-world-rouming/calls' and service == 405
             end
           end
           if tarif_option_by_compatibility[tarif][part].blank?
