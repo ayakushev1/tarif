@@ -7,13 +7,15 @@ form_item.init do |f|
 	
   [
   	[
+     label(filtr_name, "operator_bln", "Билайн"),
+ 	 check_box(filtr_name, "operator_bln", (s["operator_bln"] == 'true' ? {:checked => 'checked'} : {} ).merge(html_options), true, false ),
+
      label(filtr_name, "operator_mgf", "Мегафон"),
  	 check_box(filtr_name, "operator_mgf", (s["operator_mgf"] == 'true' ? {:checked => 'checked'} : {} ).merge(html_options), true, false ),
 
      label(filtr_name, "operator_mts", "МТС"),
  	 check_box(filtr_name, "operator_mts", (s["operator_mts"] == 'true' ? {:checked => 'checked'} : {} ).merge(html_options), true, false ),
   	],
-  	
   	[],
 
   	[
@@ -22,32 +24,31 @@ form_item.init do |f|
 
      label(filtr_name, "common_services", "Общие услуги (роуминг)"),
  	 check_box(filtr_name, "common_services", (s["common_services"] == 'true' ? {:checked => 'checked'} : {} ).merge(html_options), true, false ),
-  	],
-  	[
+
      label(filtr_name, "all_tarif_options", "Все тарифные опции"),
  	 check_box(filtr_name, "all_tarif_options", (s["all_tarif_options"] == 'true' ? {:checked => 'checked'} : {} ).merge(html_options), true, false ),
-
   	],
+
   	[
      label(filtr_name, "international_rouming", "Опция для международного роуминга"),
  	 check_box(filtr_name, "international_rouming", (s["international_rouming"] == 'true' ? {:checked => 'checked'} : {} ).merge(html_options), true, false ),
 
      label(filtr_name, "country_rouming", "Опции для путешествий по России"),
  	 check_box(filtr_name, "country_rouming", (s["country_rouming"] == 'true' ? {:checked => 'checked'} : {} ).merge(html_options), true, false ),
-  	],
-  	[
+
      label(filtr_name, "calls", "Опции для звонков"),
  	 check_box(filtr_name, "calls", (s["calls"] == 'true' ? {:checked => 'checked'} : {} ).merge(html_options), true, false ),
-
-     label(filtr_name, "internet", "Опции для интернета"),
- 	 check_box(filtr_name, "internet", (s["internet"] == 'true' ? {:checked => 'checked'} : {} ).merge(html_options), true, false ),
   	],
+
   	[
      label(filtr_name, "sms", "Опции для смс"),
  	 check_box(filtr_name, "sms", (s["sms"] == 'true' ? {:checked => 'checked'} : {} ).merge(html_options), true, false ),
 
      label(filtr_name, "mms", "Опции для ммс"),
  	 check_box(filtr_name, "mms", (s["mms"] == 'true' ? {:checked => 'checked'} : {} ).merge(html_options), true, false ),
+
+     label(filtr_name, "internet", "Опции для интернета"),
+ 	 check_box(filtr_name, "internet", (s["internet"] == 'true' ? {:checked => 'checked'} : {} ).merge(html_options), true, false ),
   	],
   ]
 	    

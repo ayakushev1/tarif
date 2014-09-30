@@ -1,33 +1,30 @@
 TarifClass.delete_all
 #Билайн, частные, тарифы
-TarifClass.create(id: 0  , operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Go!')
-TarifClass.create(id: 1  , operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Всё за 1200')
-TarifClass.create(id: 2  , operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Всё за 1450')
-TarifClass.create(id: 3  , operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Всё за 2050')
-TarifClass.create(id: 4  , operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Всё за 2070')
-TarifClass.create(id: 5  , operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Всё за 300')
-TarifClass.create(id: 6  , operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Всё за 3550')
-TarifClass.create(id: 7  , operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Всё за 600')
-TarifClass.create(id: 8  , operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Добро пожаловать')
-TarifClass.create(id: 9  , operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Мобильный пенсионер')
-TarifClass.create(id: 10 , operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Ноль сомнений')
-TarifClass.create(id: 11 , operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Первый детский')
-TarifClass.create(id: 12 , operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Со-общение')
+TarifClass.create(id: _bln_all_for_150, operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Всё за 150')
+TarifClass.create(id: _bln_all_for_390, operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Всё за 390')
+TarifClass.create(id: _bln_all_for_600, operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Всё за 600')
+TarifClass.create(id: _bln_all_for_900, operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Всё за 900')
+TarifClass.create(id: _bln_all_for_1200, operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Всё за 1200')
+TarifClass.create(id: _bln_all_for_2700, operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Всё за 2700')
+TarifClass.create(id: _bln_all_for_600_post, operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Всё за 600 (постоплатный)')
+TarifClass.create(id: _bln_all_for_900_post, operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Всё за 900 (постоплатный)')
+TarifClass.create(id: _bln_all_for_1200_post, operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Всё за 1200 (постоплатный)')
+TarifClass.create(id: _bln_all_for_2700_post, operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Всё за 2700 (постоплатный)')
+TarifClass.create(id: _bln_total_all_post, operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Совсем Всё (постоплатный)')
+TarifClass.create(id: _bln_go, operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Go!')
+TarifClass.create(id: _bln_welcome, operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Добро пожаловать')
+TarifClass.create(id: _bln_mobile_pencioner, operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Мобильный пенсионер')
+TarifClass.create(id: _bln_zero_doubts, operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Ноль сомнений')
+TarifClass.create(id: _bln_first_child, operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Первый детский*')
+TarifClass.create(id: _bln_co_communication, operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Со-общение')
 #Билайн, корпоративные, тарифы
-TarifClass.create(id: 50 , operator_id: 1025, privacy_id: 1, standard_service_id: 40, name: 'Бизнес-партнеры')
-TarifClass.create(id: 51 , operator_id: 1025, privacy_id: 1, standard_service_id: 40, name: 'Идеальный баланс')
-TarifClass.create(id: 52 , operator_id: 1025, privacy_id: 1, standard_service_id: 40, name: 'Коллеги')
-TarifClass.create(id: 53 , operator_id: 1025, privacy_id: 1, standard_service_id: 40, name: 'Общее дело')
-TarifClass.create(id: 54 , operator_id: 1025, privacy_id: 1, standard_service_id: 40, name: 'Рабочая область')
-TarifClass.create(id: 55 , operator_id: 1025, privacy_id: 1, standard_service_id: 40, name: 'Формула свободы')
-#Билайн, роуминг
-TarifClass.create(id: 71 , operator_id: 1025, privacy_id: 1, standard_service_id: 41, name: 'Внутрисетевой роуминг для бизнеса')
-TarifClass.create(id: 72 , operator_id: 1025, privacy_id: 1, standard_service_id: 41, name: 'Национальный роуминг для бизнеса')
-TarifClass.create(id: 73 , operator_id: 1025, privacy_id: 1, standard_service_id: 41, name: 'Международный роуминг для бизнеса')
 
-TarifClass.create(id: 75 , operator_id: 1025, privacy_id: 2, standard_service_id: 41, name: 'Внутрисетевой роуминг')
-TarifClass.create(id: 76 , operator_id: 1025, privacy_id: 2, standard_service_id: 41, name: 'Национальный роуминг')
-TarifClass.create(id: 77 , operator_id: 1025, privacy_id: 2, standard_service_id: 41, name: 'Международный роуминг')
+#Билайн, роуминг
+TarifClass.create(id: _bln_own_country_rouming , operator_id: 1028, privacy_id: 2, standard_service_id: 41, name: 'Путешествие по России')
+TarifClass.create(id: _bln_international_rouming , operator_id: 1028, privacy_id: 2, standard_service_id: 41, name: 'Путешествие по миру')
+TarifClass.create(id: _bln_intra_countries_services, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Международные вызовы')
+TarifClass.create(id: _bln_mobile_internet, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Мобильный интернет')
+
 #Билайн, услуги
 TarifClass.create(id: 80 , operator_id: 1025, privacy_id: 2, standard_service_id: 42, name: 'Мой межгород')#Междугородная связь
 TarifClass.create(id: 81 , operator_id: 1025, privacy_id: 2, standard_service_id: 42, name: 'Мой Билайн')#Междугородная связь

@@ -1,0 +1,55 @@
+<%
+style_table = [
+	[/label/, {:class => "control-label"}],
+	[/(input|select|textarea).*?action/, {:filtr_name => form_item.filtr_name, :class => "updatable control"}],
+#	[/(input|select).*?action/, {:class => "updatable "}],
+	[/a.*?href.*?\/a/, {:class => "btn ", :'data-remote' => true, :turbolinks => true}],
+	[/input.*?type.*?submit/, {:class => "btn "}],
+]
+
+form_html_options = {:id =>form_item.filtr_name, :class => "row-fluid", :turbolinks => true}
+form_html_options = form_html_options.merge(html) if defined?(html)
+
+form_options = {:method => 'get', :remote => false, :authenticity_token => true}
+
+form_options = form_options.merge(options) if defined?(options)
+form_options = form_options.merge(form_html_options)
+
+%>
+<%= session[:filtr] if false %>
+
+<%= form_tag(form_item.action_on_submit, form_options) do %>
+  <% if form_item.caption %> 
+	<legend><%= form_item.caption %></legend>
+  <% end %>
+	<p id="notice" class="text-info text-alert"><%= notice %></p>
+	<div class="alert-error"><%= flash[:alert]%></div>
+
+ 	<div class="span4">
+	    <% form_item.fields(form_item.filtr_name) do |label_1, field_1, label_2, field_2, label_3, field_3| %>
+		  <div class="control-group row-fluid">
+		    <div class="span6 text-right"><strong><%= add_css(label_1, style_table ) %></strong></div>
+		    <div class="span5 text-left"><%= add_css(field_1, style_table) %></div>
+	      </div>
+		<% end %>
+  	</div>
+	<div class="span4">
+    	<% form_item.fields(form_item.filtr_name) do |label_1, field_1, label_2, field_2, label_3, field_3| %>
+	      <div class="control-group row-fluid">
+	        <div class="span5 text-right"><strong><%= add_css(label_2, style_table ) %></strong></div>
+	        <div class="span6 text-left"><%= add_css(field_2, style_table) %></div>
+	      </div>
+		<% end %>
+  	</div>
+	<div class="span3 ">
+    	<% form_item.fields(form_item.filtr_name) do |label_1, field_1, label_2, field_2, label_3, field_3| %>
+	      <div class="control-group row-fluid">
+	        <div class="span5 text-right"><strong><%= add_css(label_3, style_table ) %></strong></div>
+	        <div class="span7 text-left"><%= add_css(field_3, style_table) %></div>
+	      </div>
+		<% end %>
+  	</div>
+
+<% end %>
+
+

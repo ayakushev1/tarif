@@ -25,7 +25,7 @@ category = {:name => '_sctcg_own_home_regions_calls_incoming', :service_category
 #Own and home regions, Calls, Outcoming, to_own_region
 category = {:name => '_sctcg_own_home_regions_calls_to_own_region', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_region}
   @tc.add_one_service_category_tarif_class(category, {}, 
-  {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 2.6, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
+  {:calculation_order => 0, :price => 2.6, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
    :formula => {
      :stat_params => {:sum_duration_minute_less_1 => "sum(case when ((description->>'duration')::float) <= 60.0 then 1.0 else 0.0 end)",
                       :count_duration_minute_more_1 => "sum(case when ((description->>'duration')::float) > 60.0 then 1.0 else 0.0 end)",                      
@@ -35,7 +35,7 @@ category = {:name => '_sctcg_own_home_regions_calls_to_own_region', :service_cat
 #Own and home regions, Calls, Outcoming, to_home_region
 category = {:name => '_sctcg_own_home_regions_calls_to_home_region', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_home_region}
   @tc.add_one_service_category_tarif_class(category, {}, 
-  {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 1.6, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
+  {:calculation_order => 0, :price => 1.6, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
    :formula => {
      :stat_params => {:sum_duration_minute_less_1 => "sum(case when ((description->>'duration')::float) <= 60.0 then 1.0 else 0.0 end)",                      
                       :count_duration_minute_more_1 => "sum(case when ((description->>'duration')::float) > 60.0 then 1.0 else 0.0 end)",                      
@@ -57,7 +57,7 @@ category = {:name => '_sctcg_own_home_regions_sms_incoming', :service_category_r
 #Own and home regions, sms, Outcoming, to_all_country_regions
 category = {:name => '_sctcg_own_home_regions_sms_to_all_country_regions', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_all_own_country_regions}
   @tc.add_one_service_category_tarif_class(category, {}, 
-  {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 1.6, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
+  {:calculation_order => 0, :price => 1.6, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
    :formula => {
      :group_by => 'day',
      :stat_params => {:count_volume_less_11 => "count(case when ((description->>'volume')::integer) < 11 then 1.0 else 0.0 end)",
@@ -101,7 +101,7 @@ category = {:name => 'sctcg_cenral_regions_not_own_and_home_region_calls_incomin
 #Own and home regions, Calls, Outcoming, to_own_region
 category = {:name => 'sctcg_cenral_regions_not_own_and_home_region_calls_to_own_region', :service_category_rouming_id => _sc_mgf_cenral_regions_not_own_and_home_region, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_region}
   @tc.add_one_service_category_tarif_class(category, {}, 
-  {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 2.6, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
+  {:calculation_order => 0, :price => 2.6, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
    :formula => {
      :stat_params => {:sum_duration_minute_less_1 => "sum(case when ((description->>'duration')::float) <= 60.0 then 1.0 else 0.0 end)",                      
                       :count_duration_minute_more_1 => "sum(case when ((description->>'duration')::float) > 60.0 then 1.0 else 0.0 end)",                      
@@ -112,7 +112,7 @@ category = {:name => 'sctcg_cenral_regions_not_own_and_home_region_calls_to_own_
 #Own and home regions, Calls, Outcoming, to_home_region
 category = {:name => 'sctcg_cenral_regions_not_own_and_home_region_calls_to_home_region', :service_category_rouming_id => _sc_mgf_cenral_regions_not_own_and_home_region, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_home_region}
   @tc.add_one_service_category_tarif_class(category, {}, 
-  {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 1.6, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
+  {:calculation_order => 0, :price => 1.6, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
    :formula => {
      :stat_params => {:sum_duration_minute_less_1 => "sum(case when ((description->>'duration')::float) <= 60.0 then 1.0 else 1.0 end)",                      
                       :count_duration_minute_more_1 => "sum(case when ((description->>'duration')::float) > 60.0 then 1.0 else 0.0 end)",                      
@@ -140,7 +140,7 @@ category = {:name => 'sctcg_cenral_regions_not_own_and_home_region_sms_incoming'
 #Central regions RF except for Own and home regions, sms, Outcoming, to_all_country_regions
 category = {:name => 'sctcg_cenral_regions_not_own_and_home_region_sms_to_all_country_regions', :service_category_rouming_id => _sc_mgf_cenral_regions_not_own_and_home_region, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_all_own_country_regions}
   @tc.add_one_service_category_tarif_class(category, {}, 
-  {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 1.6, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
+  {:calculation_order => 0, :price => 1.6, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
    :formula => {
      :group_by => 'day',
      :stat_params => {:count_volume_less_11 => "count(case when ((description->>'volume')::integer) < 11 then 1.0 else 0.0 end)",

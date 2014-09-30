@@ -144,6 +144,31 @@ end
     _montenegro, _czech_republic, _switzerland, _sweden, _estonia, _south_ossetia]
      
 
+  _bln_international_1 = _mts_sic_countries + [_georgia]
+  _bln_international_2 = _mts_sic_countries + [_abkhazia, _georgia, _south_ossetia]
+  _bln_international_3 = _mts_europe_countries + [_turkey] + [ _usa, _canada] 
+  _bln_international_4 = _noth_america_countries - [ _usa, _canada]
+  _bln_international_5 = []#_asia_countries
+  _bln_international_6 = _world_countries_without_russia - _bln_international_2 - _bln_international_3 - _bln_international_4 - _bln_international_5
+  _bln_international_7 = _mts_sic_countries + [_abkhazia, _georgia, _south_ossetia] - [_azerbaijan, _belarus, _moldova]
+  _bln_international_8 = _mts_sic_countries + [_abkhazia, _georgia, _south_ossetia] - [_azerbaijan, _belarus]
+  _bln_international_9 = [_azerbaijan, _belarus]
+  _bln_international_10 = _noth_america_countries - [ _usa, _canada, _cuba, _barbados, _bagam_islands]
+  _bln_international_12 = [_maldiv_islands, _magadaskar, _burundy, _north_korea, _papua_new_gvinea, _seishel_island, _tunis]
+  _bln_international_11 = _world_countries_without_russia - _bln_international_2 - _bln_international_3 - _bln_international_10 - _bln_international_12
+
+  bln_welcome_1 = [_tajikistan]
+  bln_welcome_2 = [_armenia]
+  bln_welcome_3 = [_ukraiun]
+  bln_welcome_4 = [_georgia, _kazakhstan, _kyrgyzstan, _uzbekistan]
+  bln_welcome_5 = [_turkmenistan, _abkhazia, _south_ossetia]
+  bln_welcome_6 = [_moldova]
+  bln_welcome_7 = [_belarus, _azerbaijan]
+  bln_welcome_8 = [_vietnam]
+  bln_welcome_9 = [_china]
+  bln_welcome_10 = [_india, _south_korea]
+  bln_welcome_11 = [_turkey]
+
   local_variables.each do |symbol|
     send(:define_method, symbol) do
       eval(symbol.to_s)

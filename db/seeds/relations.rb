@@ -157,10 +157,35 @@ rln << {:id => _relation_service_to_mgf_call_to_all_country_30, :type_id => _ope
 
 rln << {:id => _relation_mgf_discount_on_calls_to_russia_and_all_incoming, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_discount_on_calls_to_russia_and_all_incoming,:name => 'Megafone, countries from _mgf_discount_on_calls_to_russia_and_all_incoming'}
 
+rln << {:id => _relation_service_to_bln_international_1, :type_id => _operator_country_groups, :owner_id => _beeline, :parent_id => nil, :children => _bln_international_1,:name => 'Beeline, countries from _bln_international_1'}
+rln << {:id => _relation_service_to_bln_international_2, :type_id => _operator_country_groups, :owner_id => _beeline, :parent_id => nil, :children => _bln_international_2,:name => 'Beeline, countries from _bln_international_2'}
+rln << {:id => _relation_service_to_bln_international_3, :type_id => _operator_country_groups, :owner_id => _beeline, :parent_id => nil, :children => _bln_international_3,:name => 'Beeline, countries from _bln_international_3'}
+rln << {:id => _relation_service_to_bln_international_4, :type_id => _operator_country_groups, :owner_id => _beeline, :parent_id => nil, :children => _bln_international_4,:name => 'Beeline, countries from _bln_international_4'}
+rln << {:id => _relation_service_to_bln_international_5, :type_id => _operator_country_groups, :owner_id => _beeline, :parent_id => nil, :children => _bln_international_5,:name => 'Beeline, countries from _bln_international_5'}
+rln << {:id => _relation_service_to_bln_international_6, :type_id => _operator_country_groups, :owner_id => _beeline, :parent_id => nil, :children => _bln_international_6,:name => 'Beeline, countries from _bln_international_6'}
+rln << {:id => _relation_service_to_bln_international_7, :type_id => _operator_country_groups, :owner_id => _beeline, :parent_id => nil, :children => _bln_international_7,:name => 'Beeline, countries from _bln_international_7'}
+rln << {:id => _relation_service_to_bln_international_8, :type_id => _operator_country_groups, :owner_id => _beeline, :parent_id => nil, :children => _bln_international_8,:name => 'Beeline, countries from _bln_international_8'}
+rln << {:id => _relation_service_to_bln_international_9, :type_id => _operator_country_groups, :owner_id => _beeline, :parent_id => nil, :children => _bln_international_9,:name => 'Beeline, countries from _bln_international_9'}
+rln << {:id => _relation_service_to_bln_international_10, :type_id => _operator_country_groups, :owner_id => _beeline, :parent_id => nil, :children => _bln_international_10,:name => 'Beeline, countries from _bln_international_10'}
+rln << {:id => _relation_service_to_bln_international_11, :type_id => _operator_country_groups, :owner_id => _beeline, :parent_id => nil, :children => _bln_international_11,:name => 'Beeline, countries from _bln_international_11'}
+rln << {:id => _relation_service_to_bln_international_12, :type_id => _operator_country_groups, :owner_id => _beeline, :parent_id => nil, :children => _bln_international_12,:name => 'Beeline, countries from _bln_international_12'}
+
+rln << {:id => _relation_service_to_bln_welcome_1, :type_id => _operator_country_groups, :owner_id => _beeline, :parent_id => nil, :children => bln_welcome_1,:name => 'Beeline, countries from bln_welcome_1'}
+rln << {:id => _relation_service_to_bln_welcome_2, :type_id => _operator_country_groups, :owner_id => _beeline, :parent_id => nil, :children => bln_welcome_2,:name => 'Beeline, countries from bln_welcome_2'}
+rln << {:id => _relation_service_to_bln_welcome_3, :type_id => _operator_country_groups, :owner_id => _beeline, :parent_id => nil, :children => bln_welcome_3,:name => 'Beeline, countries from bln_welcome_3'}
+rln << {:id => _relation_service_to_bln_welcome_4, :type_id => _operator_country_groups, :owner_id => _beeline, :parent_id => nil, :children => bln_welcome_4,:name => 'Beeline, countries from bln_welcome_4'}
+rln << {:id => _relation_service_to_bln_welcome_5, :type_id => _operator_country_groups, :owner_id => _beeline, :parent_id => nil, :children => bln_welcome_5,:name => 'Beeline, countries from bln_welcome_5'}
+rln << {:id => _relation_service_to_bln_welcome_6, :type_id => _operator_country_groups, :owner_id => _beeline, :parent_id => nil, :children => bln_welcome_6,:name => 'Beeline, countries from bln_welcome_6'}
+rln << {:id => _relation_service_to_bln_welcome_7, :type_id => _operator_country_groups, :owner_id => _beeline, :parent_id => nil, :children => bln_welcome_7,:name => 'Beeline, countries from bln_welcome_7'}
+rln << {:id => _relation_service_to_bln_welcome_8, :type_id => _operator_country_groups, :owner_id => _beeline, :parent_id => nil, :children => bln_welcome_8,:name => 'Beeline, countries from bln_welcome_8'}
+rln << {:id => _relation_service_to_bln_welcome_9, :type_id => _operator_country_groups, :owner_id => _beeline, :parent_id => nil, :children => bln_welcome_9,:name => 'Beeline, countries from bln_welcome_9'}
+rln << {:id => _relation_service_to_bln_welcome_10, :type_id => _operator_country_groups, :owner_id => _beeline, :parent_id => nil, :children => bln_welcome_10,:name => 'Beeline, countries from bln_welcome_10'}
+rln << {:id => _relation_service_to_bln_welcome_11, :type_id => _operator_country_groups, :owner_id => _beeline, :parent_id => nil, :children => bln_welcome_11,:name => 'Beeline, countries from bln_welcome_11'}
 
 
 rln << {:id => _relation_mgf_central_region, :type_id => _operator_region_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_central_region,:name => 'Megafone, cental region of Russia'}
 
+rln << {:id => _relation_service_to_bln_partner_operators, :type_id => _operator_partner_groups, :owner_id => _beeline, :parent_id => nil, :children => _bln_partner_operators,:name => 'Beeline, operators from _bln_partner_operators'}
 
 
 rln << {:id => 20000, :type_id => _main_operator_by_country, :owner_id => _ukraiun, :parent_id => nil, :children => [_mts_ukrain],:name => ''}

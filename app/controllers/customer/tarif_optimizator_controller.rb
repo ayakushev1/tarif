@@ -291,12 +291,18 @@ class Customer::TarifOptimizatorController < ApplicationController
   end
   
   def operators
+    bln = services_select.session_filtr_params['operator_bln'] == 'true'? 1025 : nil
     mgf = services_select.session_filtr_params['operator_mgf'] == 'true'? 1028 : nil
     mts = services_select.session_filtr_params['operator_mts'] == 'true'? 1030 : nil
-    [mgf, mts].compact    
+    [bln, mgf, mts].compact    
   end
   
   def validate_tarifs
+    operator = 1025
+    session[:filtr]['service_choices_filtr']['tarifs_bln'] = service_choices.session_filtr_params['tarifs_bln'].to_s.scan(/\d+/).map(&:to_i) & ServiceHelper::Services.tarifs[operator] 
+    session[:filtr]['service_choices_filtr']['tarif_options_bln'] = service_choices.session_filtr_params['tarif_options_bln'].to_s.scan(/\d+/).map(&:to_i) & ServiceHelper::Services.tarif_options[operator] 
+    session[:filtr]['service_choices_filtr']['common_services_bln'] = service_choices.session_filtr_params['common_services_bln'].to_s.scan(/\d+/).map(&:to_i) & ServiceHelper::Services.common_services[operator] 
+
     operator = 1028
     session[:filtr]['service_choices_filtr']['tarifs_mgf'] = service_choices.session_filtr_params['tarifs_mgf'].to_s.scan(/\d+/).map(&:to_i) & ServiceHelper::Services.tarifs[operator] 
     session[:filtr]['service_choices_filtr']['tarif_options_mgf'] = service_choices.session_filtr_params['tarif_options_mgf'].to_s.scan(/\d+/).map(&:to_i) & ServiceHelper::Services.tarif_options[operator] 
@@ -310,6 +316,7 @@ class Customer::TarifOptimizatorController < ApplicationController
   
   def tarifs
     {
+      1025 => (service_choices.session_filtr_params['tarifs_bln'] || []), 
       1028 => (service_choices.session_filtr_params['tarifs_mgf'] || []), 
       1030 => (service_choices.session_filtr_params['tarifs_mts'] || []), 
     }     
@@ -317,6 +324,7 @@ class Customer::TarifOptimizatorController < ApplicationController
   
   def tarif_options
     {
+      1025 => (service_choices.session_filtr_params['tarif_options_bln'] || []), 
       1028 => (service_choices.session_filtr_params['tarif_options_mgf'] || []), 
       1030 => (service_choices.session_filtr_params['tarif_options_mts'] || []), 
     }     
@@ -324,6 +332,7 @@ class Customer::TarifOptimizatorController < ApplicationController
   
   def common_services
     {
+      1025 => (service_choices.session_filtr_params['common_services_bln'] || []), 
       1028 => (service_choices.session_filtr_params['common_services_mgf'] || []), 
       1030 => (service_choices.session_filtr_params['common_services_mts'] || []), 
     }     
@@ -348,9 +357,9 @@ class Customer::TarifOptimizatorController < ApplicationController
       session[:filtr] ||= {}; session[:filtr]['service_choices_filtr'] ||= {}
       session[:filtr]['service_choices_filtr']  = if saved_tarif_optimization_inputs.blank?
         {
-          'tarifs_mgf' => [], 'tarifs_mts' => [],
-          'tarif_options_mgf' => [], 'tarif_options_mts' => [], 
-          'common_services_mgf' => [], 'common_services_mts' => [], 
+          'tarifs_bln' => [], 'tarifs_mgf' => [], 'tarifs_mts' => [],
+          'tarif_options_bln' => [], 'tarif_options_mgf' => [], 'tarif_options_mts' => [], 
+          'common_services_bln' => [], 'common_services_mgf' => [], 'common_services_mts' => [], 
           'accounting_period' => accounting_period,
           'calculate_only_chosen_services' => 'false'
           }        
@@ -363,7 +372,7 @@ class Customer::TarifOptimizatorController < ApplicationController
       session[:filtr] ||= {}; session[:filtr]['services_select_filtr'] ||= {}
       session[:filtr]['services_select_filtr']  = if saved_tarif_optimization_inputs.blank?
         {
-          'operator_mgf' => 'true', 'operator_mts' => 'true',
+          'operator_bln' => 'true', 'operator_mgf' => 'true', 'operator_mts' => 'true',
           'tarifs' => 'true', 'common_services' => 'false', 
           'all_tarif_options' => 'false'
           }        
@@ -405,6 +414,12 @@ class Customer::TarifOptimizatorController < ApplicationController
   
   def process_selecting_services
     if params['services_select_filtr']
+      if params['services_select_filtr']['operator_bln'] == 'true'
+        input = selected_services(1025)
+        session[:filtr]['service_choices_filtr']['tarifs_bln'] = input['tarifs']
+        session[:filtr]['service_choices_filtr']['common_services_bln'] = input['common_services']
+        session[:filtr]['service_choices_filtr']['tarif_options_bln'] = input['tarif_options']
+      end
       if params['services_select_filtr']['operator_mgf'] == 'true'
         input = selected_services(1028)
         session[:filtr]['service_choices_filtr']['tarifs_mgf'] = input['tarifs']

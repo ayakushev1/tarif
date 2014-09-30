@@ -69,9 +69,21 @@ def access_methods_to_constant_service_categories
   _sc_service_to_mgf_international_1 = 400; _sc_service_to_mgf_international_2 = 401; _sc_service_to_mgf_international_3 = 402;
   _sc_service_to_mgf_international_4 = 403; _sc_service_to_mgf_international_5 = 404;
   
+  _sc_service_to_bln_international_1 = 410; _sc_service_to_bln_international_2 = 411; _sc_service_to_bln_international_3 = 412;
+  _sc_service_to_bln_international_4 = 413; _sc_service_to_bln_international_5 = 414; _sc_service_to_bln_international_6 = 416;
+  _sc_service_to_bln_international_7 = 417; _sc_service_to_bln_international_8 = 418; _sc_service_to_bln_international_9 = 419;
+  _sc_service_to_bln_international_10 = 420; _sc_service_to_bln_international_11 = 421; _sc_service_to_bln_international_12 = 422;
+  
+  _sc_service_to_bln_welcome_1 = 430; _sc_service_to_bln_welcome_2 = 431; _sc_service_to_bln_welcome_3 = 432;
+  _sc_service_to_bln_welcome_4 = 433; _sc_service_to_bln_welcome_5 = 434; _sc_service_to_bln_welcome_6 = 435;
+  _sc_service_to_bln_welcome_7 = 436; _sc_service_to_bln_welcome_8 = 437; _sc_service_to_bln_welcome_9 = 438;
+  _sc_service_to_bln_welcome_10 = 439; _sc_service_to_bln_welcome_11 = 440; 
+  
   #partner type
   _partner_operator_services = 190;
   _service_to_own_operator = 191; _service_to_not_own_operator = 192; _service_to_other_operator = 193; _service_to_fixed_line = 194;
+  
+  _service_to_bln_partner_operator = 195; _service_to_not_bln_partner_operator = 196;
     
   # standard service types
   _sc_tarif_service = 200;

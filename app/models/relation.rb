@@ -53,5 +53,10 @@ class Relation < ActiveRecord::Base
     result ? result.children : []
   end
 
+  def self.operator_partner_groups_by_group_id(group_id)
+    result = where(:id => group_id).first
+    result ? result.children : []
+  end
+
 end
 

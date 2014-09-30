@@ -3,7 +3,7 @@
   :id => _mgf_call_to_russia, :name => 'Звони по России', :operator_id => _megafon, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://moscow.megafon.ru/tariffs/options/far_calls/call_on_russia.html#29093'},
   :dependency => {
-    :incompatibility => {:_mgf_call_to_russia => [_mgf_option_city_connection]}, 
+    :incompatibility => {:_mgf_call_to_russia => [_mgf_call_to_russia, _mgf_option_city_connection]}, 
     :general_priority => _gp_tarif_option,
     :other_tarif_priority => {:lower => [], :higher => []},
     :prerequisites => [],

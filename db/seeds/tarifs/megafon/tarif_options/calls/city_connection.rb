@@ -5,7 +5,7 @@
     :http => 'http://moscow.megafon.ru/tariffs/options/archive/svyaz_gorodov.html#21238',
     :closed_to_switch_on => true}, 
   :dependency => {
-    :incompatibility => {}, 
+    :incompatibility => {:_mgf_call_to_russia => [_mgf_call_to_russia, _mgf_option_city_connection]}, 
     :general_priority => _gp_tarif_option,
     :other_tarif_priority => {:lower => [], :higher => []},
     :prerequisites => [_mgf_all_included_xs, _mgf_all_included_s, _mgf_all_included_l, _mgf_all_included_m, _mgf_all_included_vip, _mgf_megafon_online,

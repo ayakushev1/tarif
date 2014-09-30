@@ -221,7 +221,7 @@ class ServiceHelper::StatFunctionCollector
   end
   
   def price_formula(price_formula_id)
-    raise(StandardError, [1, price_formulas[price_formula_id], price_formulas[price_formula_id].formula] ) if price_formula_id == 60150
+#    raise(StandardError, [1, price_formulas[price_formula_id], price_formulas[price_formula_id].formula] ) if price_formula_id == 60150
     price_formulas[price_formula_id].formula
   end
   
