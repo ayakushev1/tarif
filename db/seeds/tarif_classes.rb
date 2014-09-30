@@ -20,10 +20,10 @@ TarifClass.create(id: _bln_co_communication, operator_id: 1025, privacy_id: 2, s
 #Билайн, корпоративные, тарифы
 
 #Билайн, роуминг
-TarifClass.create(id: _bln_own_country_rouming , operator_id: 1028, privacy_id: 2, standard_service_id: 41, name: 'Путешествие по России')
-TarifClass.create(id: _bln_international_rouming , operator_id: 1028, privacy_id: 2, standard_service_id: 41, name: 'Путешествие по миру')
-TarifClass.create(id: _bln_intra_countries_services, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Международные вызовы')
-TarifClass.create(id: _bln_mobile_internet, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Мобильный интернет')
+TarifClass.create(id: _bln_own_country_rouming , operator_id: 1025, privacy_id: 2, standard_service_id: 41, name: 'Путешествие по России')
+TarifClass.create(id: _bln_international_rouming , operator_id: 1025, privacy_id: 2, standard_service_id: 41, name: 'Путешествие по миру')
+TarifClass.create(id: _bln_intra_countries_services, operator_id: 1025, privacy_id: 2, standard_service_id: 42, name: 'Международные вызовы')
+TarifClass.create(id: _bln_mobile_internet, operator_id: 1025, privacy_id: 2, standard_service_id: 42, name: 'Мобильный интернет')
 
 #Билайн, услуги
 TarifClass.create(id: 80 , operator_id: 1025, privacy_id: 2, standard_service_id: 42, name: 'Мой межгород')#Междугородная связь

@@ -10,7 +10,7 @@ class ServiceHelper::TarifCreator
   def create_tarif_class(tarif_class_values)
     i = 0
     begin
-      tarif_class = TarifClass.find_or_create_by(:name => tarif_class_values[:name])
+      tarif_class = TarifClass.find_or_create_by(:name => tarif_class_values[:name], :operator_id => operator_id)
     rescue ActiveRecord::RecordNotUnique
       retry if i < 5
       i += 1 
