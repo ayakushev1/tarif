@@ -131,7 +131,9 @@ class ServiceHelper::TarifResultSimlifier
       reordered_tarif_sets[tarif] ||= {}
       updated_tarif_sets_by_tarif.each do |part, updated_tarif_sets_by_part|
         reordered_tarif_sets[tarif][part] ||= {}
-        updated_tarif_sets_by_part.keys.sort_by!{|u| cons_tarif_results_by_parts[u][part]['price_value'].to_f }.each do |ordered_tarif_set_by_part_key|
+        updated_tarif_sets_by_part.keys.sort_by! do |u| 
+          (cons_tarif_results_by_parts[u] and cons_tarif_results_by_parts[u][part]) ? cons_tarif_results_by_parts[u][part]['price_value'].to_f : 10000000.0
+        end.each do |ordered_tarif_set_by_part_key|
           reordered_tarif_sets[tarif][part][ordered_tarif_set_by_part_key] = updated_tarif_sets[tarif][part][ordered_tarif_set_by_part_key] 
         end
       end
