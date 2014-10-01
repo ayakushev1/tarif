@@ -58,6 +58,7 @@ _relation_service_to_bln_international_1 = 10310; _relation_service_to_bln_inter
 _relation_service_to_bln_international_4 = 10313; _relation_service_to_bln_international_5 = 10314; _relation_service_to_bln_international_6 = 10315;
 _relation_service_to_bln_international_7 = 10316; _relation_service_to_bln_international_8 = 10317; _relation_service_to_bln_international_9 = 10318;
 _relation_service_to_bln_international_10 = 10319; _relation_service_to_bln_international_11 = 10320; _relation_service_to_bln_international_12 = 10321;
+_relation_service_to_bln_international_13 = 10322;
 
 _relation_service_to_bln_welcome_1 = 10331; _relation_service_to_bln_welcome_2 = 10332; _relation_service_to_bln_welcome_3 = 10333;
 _relation_service_to_bln_welcome_4 = 10334; _relation_service_to_bln_welcome_5 = 10335; _relation_service_to_bln_welcome_6 = 10336;
@@ -65,7 +66,14 @@ _relation_service_to_bln_welcome_7 = 10337; _relation_service_to_bln_welcome_8 =
 _relation_service_to_bln_welcome_10 = 10440; _relation_service_to_bln_welcome_11 = 10441;
 
 _relation_service_to_bln_partner_operators = 10350;
+_relation_service_to_russian_operators_group = 10360; _relation_service_to_sic_operators_group = 10361; _relation_service_to_other_operators_group = 10362
 
+_relation_bln_sic = 10370; _relation_bln_other_world = 10371;
+
+_relation_sc_bln_my_planet_groups_1 = 10381; _relation_sc_bln_my_planet_groups_2 = 10382;
+
+_relation_sc_bln_calls_to_other_countries_1 = 10385; _relation_sc_bln_calls_to_other_countries_2 = 10386; _relation_sc_bln_calls_to_other_countries_3 = 10387;
+_relation_sc_bln_the_best_internet_in_rouming_groups_1 = 10390; _relation_sc_bln_the_best_internet_in_rouming_groups_2 = 10391;
 
 #operator_region_groups
 _relation_mgf_central_region = 11000;

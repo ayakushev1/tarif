@@ -198,7 +198,7 @@ Category.create(id: _foreign_operators, type_id: 2, level_id: nil, parent_id: ni
 Category.create(id: 1020, type_id: 2, level_id: nil, parent_id: _russian_operators, name: "Djuice")
 Category.create(id: 1021, type_id: 2, level_id: nil, parent_id: _russian_operators, name: "life:)")
 Category.create(id: 1022, type_id: 2, level_id: nil, parent_id: _russian_operators, name: "PEOPLEnet")
-Category.create(id: 1023, type_id: 2, level_id: nil, parent_id: _russian_operators, name: "TELE2")
+Category.create(id: _tele_2, type_id: 2, level_id: nil, parent_id: _russian_operators, name: "TELE2")
 Category.create(id: 1024, type_id: 2, level_id: nil, parent_id: _russian_operators, name: "Utel")
 Category.create(id: _beeline, type_id: 2, level_id: nil, parent_id: _russian_operators, name: "Билайн")
 Category.create(id: 1026, type_id: 2, level_id: nil, parent_id: _russian_operators, name: "Енисейтелеком")

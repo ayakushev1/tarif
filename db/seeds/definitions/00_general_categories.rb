@@ -48,7 +48,7 @@ _general_priority = 300; _individual_priority = 301; _dependent_is_required_for_
 #24 priority relation
 _higher_priority = 310; _lower_priority = 311;
 #25 general_priority
-_gp_tarif_option = 320; _gp_tarif_without_limits = 321; _gp_tarif_with_limits = 322; _gp_tarif_option_with_limits =323; _gp_common_service = 324;
+_gp_tarif_option = 320; _gp_tarif_without_limits = 321; _gp_tarif_with_limits = 322; _gp_tarif_option_with_limits =323; _gp_common_service = 324; _gp_tarif_option_without_limits = 320;
 #26 tarif_class_general_service_categories
 _tcgsc_calls = 330; _tcgsc_sms = 331; _tcgsc_mms = 332; _tcgsc_internet = 333; 
 

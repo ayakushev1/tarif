@@ -6,7 +6,7 @@
   :dependency => {
     :categories => [_tcgsc_sms],
     :incompatibility => {}, 
-    :general_priority => _gp_tarif_option_with_limits,
+    :general_priority => _gp_tarif_option_without_limits,#_gp_tarif_option_with_limits,
     :other_tarif_priority => {:lower => [_mts_50_sms_travelling_in_all_world, _mts_100_sms_travelling_in_all_world], :higher => []},
     :prerequisites => [],
     :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},

@@ -199,6 +199,43 @@ cat << {:id => _sc_mgf_discount_on_calls_to_russia_and_all_incoming, :name => '�
            :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mgf_discount_on_calls_to_russia_and_all_incoming})", :service_category_id => _sc_mgf_discount_on_calls_to_russia_and_all_incoming}
 
 
+cat << {:id => _sc_bln_sic, :name => 'Страны СНГ Билайна', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_bln_sic * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_bln_sic})", :service_category_id => _sc_bln_sic}
+
+cat << {:id => _sc_bln_other_world, :name => 'Страны мира Билайна (кроме СНГ и России)', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_bln_other_world * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_bln_other_world})", :service_category_id => _sc_bln_other_world}
+
+cat << {:id => _sc_bln_my_planet_groups_1, :name => 'Страны Билайна для "Моя Планета", Европа, СНГ и популярные страны', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_bln_my_planet_groups_1 * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_sc_bln_my_planet_groups_1})", :service_category_id => _sc_bln_my_planet_groups_1}
+
+cat << {:id => _sc_bln_my_planet_groups_2, :name => 'Страны Билайна для "Моя Планета", остальные страны ', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_bln_my_planet_groups_2 * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_sc_bln_my_planet_groups_2})", :service_category_id => _sc_bln_my_planet_groups_2}
+
+cat << {:id => _sc_bln_calls_to_other_countries_1, :name => 'Страны Билайна для "Мои звонки в другие страны", СНГ (Абхазия, Армения, Грузия, Южная Осетия, Казахстан, Киргизия, Таджикистан, Туркменистан, Узбекистан, Украина)', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_bln_calls_to_other_countries_1 * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_sc_bln_calls_to_other_countries_1})", :service_category_id => _sc_bln_calls_to_other_countries_1}
+
+cat << {:id => _sc_bln_calls_to_other_countries_2, :name => 'Страны Билайна для "Мои звонки в другие страны", Европа, США, Канада, Белоруссия, Азербайджан, Молдова, Турция, Китай', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_bln_calls_to_other_countries_2 * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_sc_bln_calls_to_other_countries_2})", :service_category_id => _sc_bln_calls_to_other_countries_2}
+
+cat << {:id => _sc_bln_calls_to_other_countries_3, :name => 'Страны Билайна для "Мои звонки в другие страны", остальные страны', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_bln_calls_to_other_countries_3 * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_sc_bln_calls_to_other_countries_3})", :service_category_id => _sc_bln_calls_to_other_countries_3}
+
+cat << {:id => _sc_bln_the_best_internet_in_rouming_groups_1, :name => 'Страны Билайна для "Самый выгодный интернет в роуминге", Европа, СНГ и популярные страны', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_bln_the_best_internet_in_rouming_groups_1 * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_sc_bln_the_best_internet_in_rouming_groups_1})", :service_category_id => _sc_bln_the_best_internet_in_rouming_groups_1}
+
+cat << {:id => _sc_bln_the_best_internet_in_rouming_groups_2, :name => 'Страны Билайна для "Самый выгодный интернет в роуминге", остальные страны', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_bln_the_best_internet_in_rouming_groups_2 * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_sc_bln_the_best_internet_in_rouming_groups_2})", :service_category_id => _sc_bln_the_best_internet_in_rouming_groups_2}
+
+
 
 #география услуг
 cat << {:id => _geography_services, :name => 'география услуг', :type_id => _common, :parent_id => nil, :level => 0, :path => []}
@@ -246,9 +283,11 @@ cat << {:id => _service_to_not_own_country, :name => 'услуги за пред
 cat << {:id => _service_to_mts_europe, :name => 'услуги в Европу МТС', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
   crit << {:id => _service_to_mts_europe * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
            :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mts_europe_countries})", :service_category_id => _service_to_mts_europe}
+
 cat << {:id => _service_to_mts_sic, :name => 'услуги в СНГ МТС', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
   crit << {:id => _service_to_mts_sic * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
            :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mts_sic_countries})", :service_category_id => _service_to_mts_sic}
+
 cat << {:id => _service_to_mts_other_countries, :name => 'услуги в прочие страны МТС', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
   crit << {:id => _service_to_mts_other_countries * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
            :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mts_other_countries})", :service_category_id => _service_to_mts_other_countries}
@@ -587,6 +626,12 @@ cat << {:id => _sc_service_to_bln_international_12, :name => 'Билайн, ус
   crit << {:id => _sc_service_to_bln_international_12 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
            :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_bln_international_12})", :service_category_id => _sc_service_to_bln_international_12}
 
+cat << {:id => _sc_service_to_bln_international_13, :name => 'Билайн, услуги в страны кроме России и СНГ', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_bln_international_13 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_bln_international_13})", :service_category_id => _sc_service_to_bln_international_13}
+
+
+
 cat << {:id => _sc_service_to_bln_welcome_1, :name => 'Билайн, услуги по тарифу Добро пожаловать, Таджикистан', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
   crit << {:id => _sc_service_to_bln_welcome_1 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
            :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_bln_welcome_1})", :service_category_id => _sc_service_to_bln_welcome_1}
@@ -663,6 +708,21 @@ cat << {:id => _service_to_bln_partner_operator, :name => 'партнер опе
 cat << {:id => _service_to_not_bln_partner_operator, :name => 'партнер оператора', :type_id => _common, :parent_id => _partner_operator_services, :level => 1, :path => [_partner_operator_services]}
   crit << {:id => _service_to_not_bln_partner_operator * 10 , :criteria_param_id => _call_partner_phone_operator_id, :comparison_operator_id => _not_in_array, :value_choose_option_id => _field, 
            :eval_string => "Relation.operator_partner_groups_by_group_id(#{_relation_service_to_bln_partner_operators})", :service_category_id => _service_to_not_bln_partner_operator}
+
+#TODO Пока не использовать
+cat << {:id => _service_to_russian_operators, :name => 'Операторы России', :type_id => _common, :parent_id => _partner_operator_services, :level => 1, :path => [_partner_operator_services]}
+  crit << {:id => _service_to_russian_operators * 10 , :criteria_param_id => _call_partner_phone_operator_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_partner_groups_by_group_id(#{_relation_service_to_russian_operators_group})", :service_category_id => _service_to_russian_operators}
+
+#TODO Пока не использовать
+cat << {:id => _service_to_sic_operators, :name => 'Операторы СНГ', :type_id => _common, :parent_id => _partner_operator_services, :level => 1, :path => [_partner_operator_services]}
+  crit << {:id => _service_to_sic_operators * 10 , :criteria_param_id => _call_partner_phone_operator_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_partner_groups_by_group_id(#{_relation_service_to_sic_operators_group})", :service_category_id => _service_to_sic_operators}
+
+#TODO Пока не использовать
+cat << {:id => _service_to_other_operators, :name => 'Операторы других стран', :type_id => _common, :parent_id => _partner_operator_services, :level => 1, :path => [_partner_operator_services]}
+  crit << {:id => _service_to_other_operators * 10 , :criteria_param_id => _call_partner_phone_operator_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_partner_groups_by_group_id(#{_relation_service_to_other_operators_group})", :service_category_id => _service_to_other_operators}
 
 
 #виды услуг

@@ -6,7 +6,7 @@
   :dependency => {
     :categories => [_tcgsc_sms],
     :incompatibility => {:monthly_sms_packet => [_mts_monthly_sms_packet_100, _mts_monthly_sms_packet_300, _mts_monthly_sms_packet_500, _mts_monthly_sms_packet_1000]}, 
-    :general_priority => _gp_tarif_option_with_limits,
+    :general_priority => _gp_tarif_option_without_limits,#_gp_tarif_option_with_limits,
     :other_tarif_priority => {:lower => [], :higher => []},
     :prerequisites => [],
     :forbidden_tarifs => {:to_switch_on => [_mts_ultra], :to_serve => []},

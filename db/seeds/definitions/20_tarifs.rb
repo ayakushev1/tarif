@@ -108,12 +108,38 @@ _mgf_bit_pro = 484; _mgf_bit_mega_pro_150 = 485; _mgf_bit_mega_pro_250 = 486; _m
 #tarifs
 _bln_all_for_150 = 600; _bln_all_for_390 = 601; _bln_all_for_600 = 602; _bln_all_for_900 = 603; _bln_all_for_1200 = 604; _bln_all_for_2700 = 605;
 _bln_all_for_600_post = 610; _bln_all_for_900_post = 611; _bln_all_for_1200_post = 612; _bln_all_for_2700_post = 613;  
-_bln_total_all_post = 620; _bln_go = 621; _bln_welcome = 622; _bln_mobile_pencioner = 623; _bln_zero_doubts = 624; _bln_first_child = 625; _bln_co_communication = 626; 
+_bln_total_all_post = 620; _bln_go = 621; _bln_welcome = 622; _bln_mobile_pencioner = 623; _bln_zero_doubts = 624; #_bln_first_child = 625; 
+_bln_co_communication = 626; 
+
+#    :prerequisites => [_bln_all_for_150, _bln_all_for_390, _bln_all_for_600, _bln_all_for_900, _bln_all_for_1200, _bln_all_for_2700,
+#                       _bln_all_for_600_post, _bln_all_for_900_post, _bln_all_for_1200_post, _bln_all_for_2700_post, _bln_total_all_post,
+#                       _bln_go, _bln_welcome, _bln_mobile_pencioner, _bln_zero_doubts, _bln_first_child, _bln_co_communication
+#                       ],
 
 #common_services
 _bln_own_country_rouming = 650; _bln_international_rouming = 651; _bln_intra_countries_services = 652; _bln_mobile_internet = 653;
 
 #tarif_options
+#international rouming
+_bln_planeta_zero = 660; ; _bln_my_planet = 661; _bln_the_best_internet_in_rouming = 662; _bln_planet_of_internet_post = 663; #_bln_week_of_internet_rouming = 664;
+
+#country rouming
+_bln_my_country = 670; 
+
+#calls
+_bln_my_intracity = 680; _bln_my_beeline = 681; _bln_my_beeline_post = 682; _bln_my_calls_to_other_countries = 683; #_bln_my_ukraine = 687; 
+
+#sms
+_bln_my_sms = 700; _bln_my_sms_post = 701; _bln_sms_without_borders = 702;
+
+#mms
+_bln_mms = 720;
+
+#internet 
+_bln_highway_1 = 730; _bln_highway_3 = 731; _bln_highway_7 = 732; _bln_highway_15 = 733; _bln_highway_30 = 734;
+_bln_internet_on_day_100_mb = 735; _bln_internet_on_day_500_mb = 736;
+
+
 
   local_variables.each do |symbol|
     send(:define_method, symbol) do

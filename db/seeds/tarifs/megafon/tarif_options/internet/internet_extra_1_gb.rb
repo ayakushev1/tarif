@@ -4,7 +4,7 @@
   :features => {:http => 'http://moscow.megafon.ru/internet/options/internet-ekstra_1_gb.html'},
   :dependency => {
     :incompatibility => {}, 
-    :general_priority => _gp_tarif_option_with_limits,
+    :general_priority => _gp_tarif_option_without_limits,#_gp_tarif_option_with_limits,
     :other_tarif_priority => {:lower => [], :higher => []},
     :prerequisites => [_mgf_all_included_xs, _mgf_all_included_s, _mgf_all_included_l, _mgf_all_included_m, _mgf_all_included_vip],
     :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},

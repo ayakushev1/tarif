@@ -4,7 +4,7 @@
   :features => {:http => 'http://moscow.megafon.ru/tariffs/options/sms_mms/sms_options.html#29729'},
   :dependency => {
     :incompatibility => {}, 
-    :general_priority => _gp_tarif_option_with_limits,
+    :general_priority => _gp_tarif_option_without_limits,#_gp_tarif_option_with_limits,
     :other_tarif_priority => {:lower => [], :higher => []},
     :prerequisites => [],
     :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},

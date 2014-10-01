@@ -27,6 +27,11 @@ def access_methods_to_constant_service_categories
   
   _sc_mgf_discount_on_calls_to_russia_and_all_incoming = 45;
   
+  _sc_bln_sic = 50; _sc_bln_other_world = 51;
+  
+  _sc_bln_my_planet_groups_1 = 52; _sc_bln_my_planet_groups_2 = 53;
+  _sc_bln_the_best_internet_in_rouming_groups_1 = 54; _sc_bln_the_best_internet_in_rouming_groups_2 = 55;
+  
   #география услуг
   _geography_services = 100;
   _service_to_own_region = 101; _service_to_home_region = 102; _service_to_own_country = 103; _service_to_group_of_countries = 104;
@@ -73,17 +78,23 @@ def access_methods_to_constant_service_categories
   _sc_service_to_bln_international_4 = 413; _sc_service_to_bln_international_5 = 414; _sc_service_to_bln_international_6 = 416;
   _sc_service_to_bln_international_7 = 417; _sc_service_to_bln_international_8 = 418; _sc_service_to_bln_international_9 = 419;
   _sc_service_to_bln_international_10 = 420; _sc_service_to_bln_international_11 = 421; _sc_service_to_bln_international_12 = 422;
+  _sc_service_to_bln_international_13 = 423;
   
   _sc_service_to_bln_welcome_1 = 430; _sc_service_to_bln_welcome_2 = 431; _sc_service_to_bln_welcome_3 = 432;
   _sc_service_to_bln_welcome_4 = 433; _sc_service_to_bln_welcome_5 = 434; _sc_service_to_bln_welcome_6 = 435;
   _sc_service_to_bln_welcome_7 = 436; _sc_service_to_bln_welcome_8 = 437; _sc_service_to_bln_welcome_9 = 438;
-  _sc_service_to_bln_welcome_10 = 439; _sc_service_to_bln_welcome_11 = 440; 
+  _sc_service_to_bln_welcome_10 = 439; _sc_service_to_bln_welcome_11 = 440;
+  
+  _sc_bln_calls_to_other_countries_1 = 441; _sc_bln_calls_to_other_countries_2 = 442; _sc_bln_calls_to_other_countries_3 = 443; 
   
   #partner type
   _partner_operator_services = 190;
   _service_to_own_operator = 191; _service_to_not_own_operator = 192; _service_to_other_operator = 193; _service_to_fixed_line = 194;
+  _service_to_russian_operators = 195; _service_to_sic_operators = 196; _service_to_other_operators = 197;
   
-  _service_to_bln_partner_operator = 195; _service_to_not_bln_partner_operator = 196;
+  _service_to_bln_partner_operator = 198; _service_to_not_bln_partner_operator = 199;
+  
+  
     
   # standard service types
   _sc_tarif_service = 200;

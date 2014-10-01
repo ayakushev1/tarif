@@ -6,7 +6,7 @@
   :dependency => {
     :categories => [_tcgsc_internet],
     :incompatibility => {:bit_abroad => [_mts_bit_abroad, _mts_maxi_bit_abroad, _mts_super_bit_abroad]}, 
-    :general_priority => _gp_tarif_option_with_limits,
+    :general_priority => _gp_tarif_option_without_limits,#_gp_tarif_option_with_limits,
     :other_tarif_priority => {:lower => [], :higher => []},
     :prerequisites => [],
     :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},

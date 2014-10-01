@@ -8,7 +8,7 @@
     :incompatibility => {
       :internet_comp => [_mts_mts_planshet, _mts_bit, _mts_super_bit, _mts_internet_mini, _mts_internet_maxi, _mts_internet_super, _mts_internet_vip]}, 
       :internet_smart => [_mts_mts_planshet, _mts_additional_internet_500_mb, _mts_additional_internet_1_gb, _mts_super_bit],
-    :general_priority => _gp_tarif_option_with_limits,
+    :general_priority => _gp_tarif_option_without_limits,#_gp_tarif_option_with_limits,
     :other_tarif_priority => {:lower => [_mts_mini_bit], :higher => [_mts_unlimited_internet_on_day]},
     :prerequisites => [],
     :forbidden_tarifs => {:to_switch_on => [_mts_smart, _mts_smart_mini, _mts_smart_plus, _mts_smart_top, _mts_ultra, _mts_mts_connect_4], :to_serve => []},

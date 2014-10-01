@@ -143,7 +143,9 @@ end
     _romania, _san_marino, _serbia, _slovakia, _turkey, _ukraiun, _finland, _france, _croatia,
     _montenegro, _czech_republic, _switzerland, _sweden, _estonia, _south_ossetia]
      
-
+  _bln_sic = _mts_sic_countries
+  _bln_other_world = _world_countries_without_russia - _bln_sic
+  
   _bln_international_1 = _mts_sic_countries + [_georgia]
   _bln_international_2 = _mts_sic_countries + [_abkhazia, _georgia, _south_ossetia]
   _bln_international_3 = _mts_europe_countries + [_turkey] + [ _usa, _canada] 
@@ -156,19 +158,33 @@ end
   _bln_international_10 = _noth_america_countries - [ _usa, _canada, _cuba, _barbados, _bagam_islands]
   _bln_international_12 = [_maldiv_islands, _magadaskar, _burundy, _north_korea, _papua_new_gvinea, _seishel_island, _tunis]
   _bln_international_11 = _world_countries_without_russia - _bln_international_2 - _bln_international_3 - _bln_international_10 - _bln_international_12
+  _bln_international_13 = _world_countries_without_russia - _bln_international_2
 
-  bln_welcome_1 = [_tajikistan]
-  bln_welcome_2 = [_armenia]
-  bln_welcome_3 = [_ukraiun]
-  bln_welcome_4 = [_georgia, _kazakhstan, _kyrgyzstan, _uzbekistan]
-  bln_welcome_5 = [_turkmenistan, _abkhazia, _south_ossetia]
-  bln_welcome_6 = [_moldova]
-  bln_welcome_7 = [_belarus, _azerbaijan]
-  bln_welcome_8 = [_vietnam]
-  bln_welcome_9 = [_china]
-  bln_welcome_10 = [_india, _south_korea]
-  bln_welcome_11 = [_turkey]
-
+  _bln_welcome_1 = [_tajikistan]
+  _bln_welcome_2 = [_armenia]
+  _bln_welcome_3 = [_ukraiun]
+  _bln_welcome_4 = [_georgia, _kazakhstan, _kyrgyzstan, _uzbekistan]
+  _bln_welcome_5 = [_turkmenistan, _abkhazia, _south_ossetia]
+  _bln_welcome_6 = [_moldova]
+  _bln_welcome_7 = [_belarus, _azerbaijan]
+  _bln_welcome_8 = [_vietnam]
+  _bln_welcome_9 = [_china]
+  _bln_welcome_10 = [_india, _south_korea]
+  _bln_welcome_11 = [_turkey]
+  
+  _bln_my_planet_groups_popular_countries_1 = [_egypt, _china, _usa, _tailand, _turkey]
+  _bln_my_planet_groups_1 = _mts_sic_countries + _mts_europe_countries + _bln_my_planet_groups_popular_countries_1
+  _bln_my_planet_groups_2 = _world_countries_without_russia - _bln_my_planet_groups_1
+  
+  _bln_calls_to_other_countries_1 = _mts_sic_countries - [_belarus, _azerbaijan, _moldova]
+  _bln_calls_to_other_countries_2 = _mts_europe_countries + [_turkey + _china] + [ _usa, _canada] + [_belarus, _azerbaijan, _moldova]
+  _bln_calls_to_other_countries_3 = _world_countries_without_russia - _bln_calls_to_other_countries_1 - _bln_calls_to_other_countries_2
+  
+  _bln_my_planet_groups_popular_countries_2 = [_egypt,  _india, _israel,  _canada, _china, _kambodga, _katar, _kuveit, _malazia, _singapur, _usa, 
+    _tailand, _turkey, _south_ossetia, _uae, _japan]
+  _bln_the_best_internet_in_rouming_groups_1 = _mts_sic_countries + _mts_europe_countries + _bln_my_planet_groups_popular_countries_2
+  _bln_the_best_internet_in_rouming_groups_2 = _world_countries_without_russia - _bln_the_best_internet_in_rouming_groups_1 - [_abkhazia, _andorra, _cuba]
+  
   local_variables.each do |symbol|
     send(:define_method, symbol) do
       eval(symbol.to_s)

@@ -27,12 +27,12 @@ class ServiceHelper::Services
   def self.tarif_options_by_type
     {
       1025 => {
-        :international_rouming => [],
-        :country_rouming => [],  
-        :mms => [],  
-        :sms => [],  
-        :calls => [],  
-        :internet => [],  
+        :international_rouming => [660, 661, 662, 663],
+        :country_rouming => [670],  
+        :mms => [720],  
+        :sms => [700, 701, 702],  
+        :calls => [680, 681, 682, 683],  
+        :internet => [730, 731, 732, 733, 734, 735, 736],  
       },
       1028 => {
         :international_rouming => [
@@ -58,4 +58,5 @@ class ServiceHelper::Services
   end  
 
 end
+
 
