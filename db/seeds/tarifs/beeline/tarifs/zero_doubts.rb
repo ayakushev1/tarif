@@ -56,7 +56,7 @@ category = {:name => '_sctcg_own_home_regions_sms_to_own_home_regions', :service
      :group_by => 'day',
      :stat_params => {:count_volume_more_0 => "count(case when ((description->>'volume')::integer) > 0 then 1.0 else 0.0 end)",
                       :count_volume => "count((description->>'volume')::integer)"},
-     :method => 'price_formulas.price * count_volume_more_0 + 2.0 * (count_volume - 100.0)'}, } )
+     :method => 'price_formulas.price * count_volume_more_0 + 2.0 * GREATEST(count_volume - 100.0, 0.0)'}, } )
 
 #Own and home regions, sms, Outcoming, to_own_country
 category = {:name => '_sctcg_own_home_regions_sms_to_own_country', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_own_country}

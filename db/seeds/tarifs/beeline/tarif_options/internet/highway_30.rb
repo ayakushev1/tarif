@@ -32,7 +32,7 @@ scg_bln_highway_30 = @tc.add_service_category_group(
          :stat_params => {
            :sum_volume => "sum((description->>'volume')::float)",
            :count_of_usage_of_200 => "ceil((sum((description->>'volume')::float) - 30000.0) / 200.0)"},
-       :method => "price_formulas.price + count_of_usage_of_200 * 20.0",
+       :method => "price_formulas.price + 20.0 * GREATEST(count_of_usage_of_200, 0.0)",
        }
      }, 
     } )
