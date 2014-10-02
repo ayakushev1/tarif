@@ -4,7 +4,8 @@
   :id => _mgf_50_discount_on_all_incoming_calls, :name => 'Скидка 50% на все входящие вызовы', :operator_id => _megafon, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://moscow.megafon.ru/roaming/world/50discount.html'},
   :dependency => {
-    :incompatibility => {:discount_on_all_incoming_calls => [_mgf_50_discount_on_all_incoming_calls, _mgf_25_discount_on_calls_to_russia_and_all_incoming]}, 
+      :incompatibility => {:discount_on_all_incoming_calls => [_mgf_50_discount_on_all_incoming_calls, _mgf_25_discount_on_calls_to_russia_and_all_incoming],
+      :international_calls_options_with_50_discount_in => [_mgf_50_discount_on_all_incoming_calls, _mgf_all_world, _mgf_30_minutes_all_world, _mgf_far_countries, _mgf_option_around_world, _mgf_100_minutes_europe]}, 
     :general_priority => _gp_tarif_option,
     :other_tarif_priority => {:lower => [], :higher => []},
     :prerequisites => [],

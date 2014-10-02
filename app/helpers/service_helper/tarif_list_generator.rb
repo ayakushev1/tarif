@@ -345,7 +345,6 @@ class ServiceHelper::TarifListGenerator
                 current_tarif_option_combinations = tarif_option_combinations[tarif][part].dup
                 current_tarif_option_combinations.each do |current_tarif_set_id, tarif_option_combination|
                   incompatibility_group.each do |service|
-                    raise(StandardError) if current_tarif_set_id == '' and service == 4060
                     if !fobidden_combinations_by_set_id[tarif][part][current_tarif_set_id].include?(service)                      
                       new_tarif_set = (tarif_option_combinations[tarif][part][current_tarif_set_id] + [service]).compact.uniq.sort
                       new_tarif_set_id = tarif_set_id(new_tarif_set)

@@ -3,7 +3,7 @@
   :id => _mgf_all_world, :name => 'Весь мир', :operator_id => _megafon, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://moscow.megafon.ru/roaming/world/allworld.html'},
   :dependency => {
-    :incompatibility => {}, 
+    :incompatibility => {:international_calls_options => [_mgf_all_world, _mgf_30_minutes_all_world, _mgf_far_countries, _mgf_option_around_world, _mgf_100_minutes_europe]}, 
     :general_priority => _gp_tarif_option,
     :other_tarif_priority => {:lower => [], :higher => []},
     :prerequisites => [],

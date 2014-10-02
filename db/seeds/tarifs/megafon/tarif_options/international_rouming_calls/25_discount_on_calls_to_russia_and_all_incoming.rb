@@ -5,7 +5,8 @@
   :dependency => {
     :incompatibility => {
       :discount_on_all_incoming_calls => [_mgf_50_discount_on_all_incoming_calls, _mgf_25_discount_on_calls_to_russia_and_all_incoming],
-      :discount_on_calls_to_russia => [_mgf_50_discount_on_calls_to_russia, _mgf_25_discount_on_calls_to_russia_and_all_incoming]}, 
+      :discount_on_calls_to_russia => [_mgf_50_discount_on_calls_to_russia, _mgf_25_discount_on_calls_to_russia_and_all_incoming],
+      :international_calls_options_with_25_discount => [_mgf_25_discount_on_calls_to_russia_and_all_incoming, _mgf_all_world, _mgf_30_minutes_all_world, _mgf_far_countries, _mgf_option_around_world, _mgf_100_minutes_europe]}, 
     :general_priority => _gp_tarif_option,
     :other_tarif_priority => {:lower => [], :higher => []},
     :prerequisites => [],
