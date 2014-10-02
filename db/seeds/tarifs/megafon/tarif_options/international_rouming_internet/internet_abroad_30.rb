@@ -3,7 +3,7 @@
   :id => _mgf_internet_abroad_30, :name => 'Интернет за границей, 30 Мб', :operator_id => _megafon, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://moscow.megafon.ru/roaming/world/internet_abroad.html'},
   :dependency => {
-    :incompatibility => {:internet_abroa_pakets => [_mgf_internet_abroad_10, _mgf_internet_abroad_30, _mgf_vacation_online]}, 
+    :incompatibility => {:internet_abroad_pakets => [_mgf_internet_abroad_10, _mgf_internet_abroad_30, _mgf_vacation_online]}, 
     :general_priority => _gp_tarif_option,
     :other_tarif_priority => {:lower => [], :higher => []},
     :prerequisites => [],
@@ -15,7 +15,7 @@
 #Ukraine, internet
 category = {:name => '_sctcg_mgf_europe_calls_incoming', :service_category_rouming_id => _sc_mgf_ukraine_internet_abroad, :service_category_calls_id => _internet}
   @tc.add_one_service_category_tarif_class(category, {}, 
-    {:calculation_order => 1, :price => 129.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_mgf_internet_abroad_10', :description => '', 
+    {:calculation_order => 0, :price => 129.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_mgf_internet_abroad_10', :description => '', 
      :formula => {
        :window_condition => "(30.0 >= sum_volume)", :window_over => 'day', 
        :stat_params => {:sum_volume => "sum((description->>'volume')::float)"}, 
@@ -32,7 +32,7 @@ category = {:name => '_sctcg_mgf_europe_calls_incoming', :service_category_roumi
 #Europe, internet
 category = {:name => '_sctcg_mgf_europe_calls_incoming', :service_category_rouming_id => _sc_mgf_europe_internet_abroad, :service_category_calls_id => _internet}
   @tc.add_one_service_category_tarif_class(category, {}, 
-    {:calculation_order => 1, :price => 329.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_mgf_internet_abroad_10', :description => '', 
+    {:calculation_order => 0, :price => 329.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_mgf_internet_abroad_10', :description => '', 
      :formula => {
        :window_condition => "(30.0 >= sum_volume)", :window_over => 'day', 
        :stat_params => {:sum_volume => "sum((description->>'volume')::float)"}, 
@@ -49,7 +49,7 @@ category = {:name => '_sctcg_mgf_europe_calls_incoming', :service_category_roumi
 #Popular countries plus SIC, internet
 category = {:name => '_sctcg_mgf_europe_calls_incoming', :service_category_rouming_id => _sc_mgf_popular_countries_internet_abroad, :service_category_calls_id => _internet}
   @tc.add_one_service_category_tarif_class(category, {}, 
-    {:calculation_order => 1, :price => 829.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_mgf_internet_abroad_10', :description => '', 
+    {:calculation_order => 0, :price => 829.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_mgf_internet_abroad_10', :description => '', 
      :formula => {
        :window_condition => "(30.0 >= sum_volume)", :window_over => 'day', 
        :stat_params => {:sum_volume => "sum((description->>'volume')::float)"}, 
@@ -66,7 +66,7 @@ category = {:name => '_sctcg_mgf_europe_calls_incoming', :service_category_roumi
 #Other countries, internet
 category = {:name => '_sctcg_mgf_europe_calls_incoming', :service_category_rouming_id => _sc_mgf_other_countries_internet_abroad, :service_category_calls_id => _internet}
   @tc.add_one_service_category_tarif_class(category, {}, 
-    {:calculation_order => 1, :price => 4990.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_mgf_internet_abroad_10', :description => '', 
+    {:calculation_order => 0, :price => 4990.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_mgf_internet_abroad_10', :description => '', 
      :formula => {
        :window_condition => "(30.0 >= sum_volume)", :window_over => 'day', 
        :stat_params => {:sum_volume => "sum((description->>'volume')::float)"}, 

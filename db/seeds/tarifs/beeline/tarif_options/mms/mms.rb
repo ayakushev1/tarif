@@ -24,7 +24,7 @@ category = {:name => '_sctcg_own_country_mms_to_own_home_regions', :service_cate
 
 #All_world_rouming, mms, outcoming
 category = {:name => '_sctcg_bln_all_world_rouming_mms_to_sic', :service_category_rouming_id => _all_world_rouming, :service_category_calls_id => _mms_out}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1, :standard_formula_id => _stf_price_by_count_volume_item, :price => 6.6})  
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => _stf_price_by_count_volume_item, :price => 6.6})  
 
 
 @tc.add_tarif_class_categories
