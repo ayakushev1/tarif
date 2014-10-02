@@ -175,6 +175,14 @@ category = {:name => '_sctcg_all_world_rouming_calls_incoming', :service_categor
   {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 0.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
    :formula => {:window_condition => "(10.0 >= sum_duration_minute)", :window_over => 'day'} } )
 
+#SIC, Internet
+category = {:name => '_sctcg_bln_sic_internet', :service_category_rouming_id => _sc_bln_sic, :service_category_calls_id => _internet}
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => _stf_price_by_sum_volume_m_byte, :price => 750.0})
+
+#Other countries, Internet
+category = {:name => '_sctcg_bln_other_countries_internet', :service_category_rouming_id => _sc_bln_other_world, :service_category_calls_id => _internet}
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => _stf_price_by_sum_volume_m_byte, :price => 750.0})
+
 
 
 @tc.add_tarif_class_categories
