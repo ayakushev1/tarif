@@ -215,8 +215,8 @@ category = {:name => '_sctcg_mgf_extended_countries_internet', :service_category
 #Tarif option 'Скидка 25% на исходящие вызовы в Россию и все входящие'
 #Другие категории опции должны иметь мешьший приоритет, или не пересекаться с опцией
 #Подключение услуги
-  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item, :price => 30.0},
-    :tarif_set_must_include_tarif_options => [_mgf_25_discount_on_calls_to_russia_and_all_incoming] )  
+#  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item, :price => 30.0},
+#    :tarif_set_must_include_tarif_options => [_mgf_25_discount_on_calls_to_russia_and_all_incoming] )  
 
 #Ежедневная плата
   @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => _stf_fixed_price_if_used_in_1_day_duration, :price => 15.0},
@@ -257,8 +257,8 @@ category = {:name => '_sctcg_mgf_extended_countries_calls_to_russia_25_disc', :s
 #Tarif option 'Скидка 50% на исходящие вызовы в Россию'
 #Другие категории опции должны иметь мешьший приоритет, или не пересекаться с опцией
 #Подключение услуги
-  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item, :price => 30.0},
-    :tarif_set_must_include_tarif_options => [_mgf_50_discount_on_calls_to_russia] )  
+#  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item, :price => 30.0},
+#    :tarif_set_must_include_tarif_options => [_mgf_50_discount_on_calls_to_russia] )  
 
 #Ежедневная плата
   @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => _stf_fixed_price_if_used_in_1_day_duration, :price => 25.0},
@@ -283,8 +283,8 @@ category = {:name => '_sctcg_mgf_extended_countries_calls_to_russia_50_disc_out'
 #Tarif option 'Скидка 50% на все входящие вызовы'
 #Другие категории опции должны иметь мешьший приоритет, или не пересекаться с опцией
 #Подключение услуги
-  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item, :price => 30.0},
-    :tarif_set_must_include_tarif_options => [_mgf_50_discount_on_all_incoming_calls] )  
+#  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item, :price => 30.0},
+#    :tarif_set_must_include_tarif_options => [_mgf_50_discount_on_all_incoming_calls] )  
 
 #Ежедневная плата
   @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => _stf_fixed_price_if_used_in_1_day_duration, :price => 15.0},

@@ -39,8 +39,8 @@ scg_mgf_internet_xs = @tc.add_service_category_group(
 #Tarif option 'Интернет по России для определенных опций'
 #Другие категории опции должны иметь мешьший приоритет, или не пересекаться с опцией
 #Подключение услуги
-  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item, :price => 30.0},
-    :tarif_set_must_include_tarif_options => [_mgf_internet_in_russia_for_specific_options] )
+#  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item, :price => 30.0},
+#    :tarif_set_must_include_tarif_options => [_mgf_internet_in_russia_for_specific_options] )
 
 #Ежедневная плата
   @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => _stf_fixed_price_if_used_in_1_day_duration, :price => 5.0},

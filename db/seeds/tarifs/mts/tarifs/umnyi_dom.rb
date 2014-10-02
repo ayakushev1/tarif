@@ -149,8 +149,8 @@
 #Tarif option MMS+ (discount 50%)
 #Другие mms категории должны иметь мешьший приоритет, или не пересекаться с опцией
 #Переход на тариф
-  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item, :price => 34.0},
-    :tarif_set_must_include_tarif_options => [_mts_mms_discount_50_percent] )
+#  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item, :price => 34.0},
+#    :tarif_set_must_include_tarif_options => [_mts_mms_discount_50_percent] )
 
 #Ежемесячная плата
   @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => _stf_price_by_1_month, :price => 34.0},

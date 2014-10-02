@@ -18,7 +18,7 @@ _sctcg_own_country_calls_from_rouming_region_own_operator = {:name => '_sctcg_ow
   :service_category_partner_type_id => _service_to_own_operator}
 
 #Подключение опции
-  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item, :price => 0.0})  
+#  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item, :price => 0.0})  
 
 #Ежемесячная плата
   @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => _stf_price_by_1_month, :price => 0.0})

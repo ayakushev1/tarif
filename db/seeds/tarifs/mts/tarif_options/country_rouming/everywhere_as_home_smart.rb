@@ -41,7 +41,7 @@
 
 #В этой опции задаются только категории, без формул расчета цены 
 #Переход на тариф
-  @tc.add_only_service_category_tarif_class(_sctcg_one_time_tarif_switch_on)  
+#  @tc.add_only_service_category_tarif_class(_sctcg_one_time_tarif_switch_on)  
 
 #Ежемесячная плата
   @tc.add_only_service_category_tarif_class(_sctcg_periodic_monthly_fee)  
