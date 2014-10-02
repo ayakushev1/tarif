@@ -489,10 +489,11 @@ class ServiceHelper::TarifListGenerator
         
         ((tarif_option_combinations[tarif]['periodic'].map{|o| o[1]}.flatten + [tarif])).each do |service|
           tarif_sets_without_common_services[tarif]['periodic'][tarif_set_id([service])] = [service]
-        end
+        end if tarif_option_combinations[tarif]['periodic']
+        
         ((tarif_option_combinations[tarif]['onetime'].map{|o| o[1]}.flatten + [tarif])).each do |service|
           tarif_sets_without_common_services[tarif]['onetime'][tarif_set_id([service])] = [service]
-        end
+        end if tarif_option_combinations[tarif]['onetime']
       end
     end
   end

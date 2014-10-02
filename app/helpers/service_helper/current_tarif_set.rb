@@ -51,7 +51,8 @@ class ServiceHelper::CurrentTarifSet
   def init_tarif_sets_as_array
     @tarif_price = 0.0
     if new_cons_tarif_results_by_parts.keys.include?(tarif)
-      @tarif_price = new_cons_tarif_results_by_parts[tarif]['periodic']['price_value'].to_f + new_cons_tarif_results_by_parts[tarif]['onetime']['price_value'].to_f
+      @tarif_price += new_cons_tarif_results_by_parts[tarif]['periodic']['price_value'].to_f if new_cons_tarif_results_by_parts[tarif] and new_cons_tarif_results_by_parts[tarif]['periodic']
+      @tarif_price += new_cons_tarif_results_by_parts[tarif]['onetime']['price_value'].to_f if new_cons_tarif_results_by_parts[tarif] and new_cons_tarif_results_by_parts[tarif]['onetime']
     else
       periodic_fix_part = tarif_results.keys.map do |key| 
         if key.split('_').include?(tarif) and tarif_results[key].keys.include?('periodic') and tarif_results[key]['periodic'].keys.include?(tarif.to_i)

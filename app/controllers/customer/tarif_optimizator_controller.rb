@@ -97,6 +97,7 @@ class Customer::TarifOptimizatorController < ApplicationController
     session[:filtr1] = {}   
     if options[:accounting_period].blank? 
       redirect_to(:action => :index, :error => "Выберите период для расчета")
+      return
     end
     
     if optimization_params.session_filtr_params['calculate_on_background'] == 'true'
