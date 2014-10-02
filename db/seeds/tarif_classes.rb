@@ -22,6 +22,8 @@ TarifClass.create(id: _bln_co_communication, operator_id: 1025, privacy_id: 2, s
 #Билайн, роуминг
 TarifClass.create(id: _bln_own_country_rouming , operator_id: 1025, privacy_id: 2, standard_service_id: 41, name: 'Путешествие по России')
 TarifClass.create(id: _bln_international_rouming , operator_id: 1025, privacy_id: 2, standard_service_id: 41, name: 'Путешествие по миру')
+TarifClass.create(id: _bln_international_rouming_internet , operator_id: 1025, privacy_id: 2, standard_service_id: 41, name: 'Путешествие по миру, интернет')
+TarifClass.create(id: _bln_international_rouming_internet_post , operator_id: 1025, privacy_id: 2, standard_service_id: 41, name: 'Путешествие по миру, интернет (постоплатный)')
 TarifClass.create(id: _bln_intra_countries_services, operator_id: 1025, privacy_id: 2, standard_service_id: 42, name: 'Международные вызовы')
 TarifClass.create(id: _bln_mobile_internet, operator_id: 1025, privacy_id: 2, standard_service_id: 42, name: 'Мобильный интернет')
 

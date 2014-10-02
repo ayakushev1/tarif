@@ -143,14 +143,5 @@ category = {:name => '_sctcg_own_country_mms_to_own_country', :service_category_
   @tc.add_grouped_service_category_tarif_class(category, scg_bln_all_for_600_post_internet[:id])
 
 
-#SIC, Internet
-category = {:name => '_sctcg_bln_sic_internet', :service_category_rouming_id => _sc_bln_sic, :service_category_calls_id => _internet}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => _stf_price_by_sum_volume_m_byte, :price => 750.0})
-
-#Other countries, Internet
-category = {:name => '_sctcg_bln_other_countries_internet', :service_category_rouming_id => _sc_bln_other_world, :service_category_calls_id => _internet}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => _stf_price_by_sum_volume_m_byte, :price => 750.0})
-
-
 @tc.add_tarif_class_categories
 

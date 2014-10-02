@@ -76,9 +76,7 @@ class ServiceHelper::TarifResultSimlifier
     end
     
     updated_tarif_sets = reorder_tarif_sets(updated_tarif_sets, updated_tarif_results)
-
-    updated_tarif_sets, updated_tarif_results = group_identical_tarif_sets(updated_tarif_sets, updated_tarif_results, services_to_not_excude, eliminate_identical_tarif_sets)
-
+    
     updated_tarif_sets, updated_tarif_results = group_identical_tarif_sets(updated_tarif_sets, updated_tarif_results, services_to_not_excude, eliminate_identical_tarif_sets) if eliminate_identical_tarif_sets
 
     [updated_tarif_sets, updated_tarif_results]
@@ -178,14 +176,15 @@ class ServiceHelper::TarifResultSimlifier
     
     updated_tarif_sets, updated_tarif_results = update_tarif_sets_with_groupped_tarif_results(updated_tarif_sets, updated_tarif_results, updated_tarif_set_list)
 
+#    raise(StandardError)
     [updated_tarif_sets, updated_tarif_results]
   end
   
   def calculate_updated_cons_tarif_results(updated_tarif_results)
     updated_cons_tarif_results = {}
     updated_tarif_results.each do |tarif_set_id, updated_tarif_result|
-      updated_cons_tarif_results[tarif_set_id] ||= {'price_value' => 0.0, 'call_id_count' => 0, 'group_criteria' => 0, 'parts' => []}
       updated_tarif_result.each do |part, updated_tarif_result_by_part|
+        updated_cons_tarif_results[tarif_set_id] ||= {'price_value' => 0.0, 'call_id_count' => 0, 'group_criteria' => 0, 'parts' => [part]}
         updated_tarif_result_by_part.each do |service_id, updated_tarif_result_by_part_by_service|
           updated_cons_tarif_results[tarif_set_id]['price_value'] += updated_tarif_result_by_part_by_service['price_value'].to_f
           updated_cons_tarif_results[tarif_set_id]['call_id_count'] += updated_tarif_result_by_part_by_service['call_id_count'].to_i

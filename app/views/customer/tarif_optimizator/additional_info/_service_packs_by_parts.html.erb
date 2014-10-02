@@ -7,6 +7,7 @@ table.init do |t|
   t.id_name = 'tarif'
   model_keys = t.model.collect {|row| row.keys }.flatten.uniq.collect{|key| key unless ['id'].include?(key)}.compact  
   t.heads = ['tarif', 'onetime', 'periodic'] + (model_keys - [:'tarif', 'onetime', 'periodic']).collect{|model_key| model_key.to_s.split('/').join(', ')}.sort
+  t.heads = t.heads - ['onetime'] if !model_keys.include?('onetime')
   t.set_fields do |f| 
   	model_keys.collect do |key|
       f[key]

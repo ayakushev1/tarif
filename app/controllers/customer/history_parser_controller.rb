@@ -99,7 +99,7 @@ class Customer::HistoryParserController < ApplicationController
           'message' => {:file_is_good => false, 'message' => "Обработано #{parser.processed_percent}%"},
         }
 #        raise(StandardError, [parser.processed, current_user.id])
-        Customer::Call.batch_save(parser.processed, current_user.id)
+        Customer::Call.batch_save(parser.processed, {:user_id => current_user.id})
       end                  
       call_history_saver.save({:result => call_history_to_save})
     else

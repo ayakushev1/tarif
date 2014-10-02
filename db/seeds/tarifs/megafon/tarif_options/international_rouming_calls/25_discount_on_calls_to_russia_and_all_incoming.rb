@@ -3,8 +3,9 @@
   :id => _mgf_25_discount_on_calls_to_russia_and_all_incoming, :name => 'Скидка 25% на исходящие вызовы в Россию и все входящие', :operator_id => _megafon, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://moscow.megafon.ru/roaming/world/25disc.html'},
   :dependency => {
-    :incompatibility => {:discount_on_calls_to_russia_and_all_incoming => 
-      [_mgf_50_discount_on_calls_to_russia, _mgf_50_discount_on_all_incoming_calls, _mgf_25_discount_on_calls_to_russia_and_all_incoming]}, 
+    :incompatibility => {
+      :discount_on_all_incoming_calls => [_mgf_50_discount_on_all_incoming_calls, _mgf_25_discount_on_calls_to_russia_and_all_incoming],
+      :discount_on_calls_to_russia => [_mgf_50_discount_on_calls_to_russia, _mgf_25_discount_on_calls_to_russia_and_all_incoming]}, 
     :general_priority => _gp_tarif_option,
     :other_tarif_priority => {:lower => [], :higher => []},
     :prerequisites => [],

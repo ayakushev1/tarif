@@ -12,6 +12,8 @@
 
 class Service::Category < ActiveRecord::Base
   include WhereHelper, PgArrayHelper
+  extend BatchInsert
+
   belongs_to :type, :class_name =>'Category', :foreign_key => :type_id
   belongs_to :parent, :class_name =>'Service::Category', :foreign_key => :parent_id
   has_many :children, :class_name =>'Service::Category', :foreign_key => :parent_id

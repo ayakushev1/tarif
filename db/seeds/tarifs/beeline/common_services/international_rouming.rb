@@ -36,13 +36,6 @@ category = {:name => '_sctcg_bln_sic_sms_incoming', :service_category_rouming_id
 category = {:name => '_sctcg_bln_sic_sms_outcoming', :service_category_rouming_id => _sc_bln_sic, :service_category_calls_id => _sms_out}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1, :standard_formula_id => _stf_price_by_count_volume_item, :price => 19.0})  
 
-#SIC, Internet
-category = {:name => '_sctcg_bln_sic_internet', :service_category_rouming_id => _sc_bln_sic, :service_category_calls_id => _internet}
-  @tc.add_one_service_category_tarif_class(category, {}, 
-  {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_volume_m_byte, :price => 150.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte,
-   :formula => {:window_condition => "(30.0 >= sum_volume)", :window_over => 'day'} } )
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1, :standard_formula_id => _stf_price_by_sum_volume_m_byte, :price => 5.0})  
-
 
 #Other countries, calls, incoming
 category = {:name => '_sctcg_bln_other_countries_calls_incoming', :service_category_rouming_id => _sc_bln_other_world, :service_category_calls_id => _calls_in}
@@ -71,14 +64,6 @@ category = {:name => '_sctcg_bln_other_countries_sms_outcoming', :service_catego
 #other_countries, mms, incoming
 category = {:name => '_sctcg_bln_other_countries_mms_incoming', :service_category_rouming_id => _sc_bln_other_world, :service_category_calls_id => _mms_in}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1, :standard_formula_id => _stf_price_by_count_volume_item, :price => 100.0})  
-
-
-#Other countries, Internet
-category = {:name => '_sctcg_bln_other_countries_internet', :service_category_rouming_id => _sc_bln_other_world, :service_category_calls_id => _internet}
-  @tc.add_one_service_category_tarif_class(category, {}, 
-  {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_volume_m_byte, :price => 150.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte,
-   :formula => {:window_condition => "(30.0 >= sum_volume)", :window_over => 'day'} } )
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1, :standard_formula_id => _stf_price_by_sum_volume_m_byte, :price => 5.0})  
 
 
 @tc.add_tarif_class_categories

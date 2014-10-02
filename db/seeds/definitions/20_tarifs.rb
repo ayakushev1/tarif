@@ -113,11 +113,12 @@ _bln_co_communication = 626;
 
 #    :prerequisites => [_bln_all_for_150, _bln_all_for_390, _bln_all_for_600, _bln_all_for_900, _bln_all_for_1200, _bln_all_for_2700,
 #                       _bln_all_for_600_post, _bln_all_for_900_post, _bln_all_for_1200_post, _bln_all_for_2700_post, _bln_total_all_post,
-#                       _bln_go, _bln_welcome, _bln_mobile_pencioner, _bln_zero_doubts, _bln_first_child, _bln_co_communication
+#                       _bln_go, _bln_welcome, _bln_mobile_pencioner, _bln_zero_doubts, _bln_co_communication, #_bln_first_child, 
 #                       ],
 
 #common_services
-_bln_own_country_rouming = 650; _bln_international_rouming = 651; _bln_intra_countries_services = 652; _bln_mobile_internet = 653;
+_bln_own_country_rouming = 650; _bln_international_rouming = 651; _bln_international_rouming_internet = 652; _bln_international_rouming_internet_post = 653; 
+_bln_intra_countries_services = 654; _bln_mobile_internet = 655;
 
 #tarif_options
 #international rouming

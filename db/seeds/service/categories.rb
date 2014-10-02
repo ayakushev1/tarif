@@ -1,4 +1,3 @@
-Service::Category.delete_all; Service::Criterium.delete_all;
 cat = []; crit = [];
 #роуминг
 cat << {:id => _category_rouming, :name => 'роуминг', :type_id => _common, :parent_id => nil, :level => 0, :path => []}
@@ -812,8 +811,12 @@ cat << {:id => _gprs, :name => 'gprs', :type_id => _common, :parent_id => _sc_mo
 
 
 
+Service::Category.delete_all; Service::Criterium.delete_all;
 
 ActiveRecord::Base.transaction do
   Service::Category.create(cat)
   Service::Criterium.create(crit)
+
+#  Service::Category.batch_save(cat, {}) #create(cat)
+#  Service::Criterium.batch_save(crit, {}) #create(crit)
 end

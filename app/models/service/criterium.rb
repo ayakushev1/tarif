@@ -14,6 +14,8 @@
 
 class Service::Criterium < ActiveRecord::Base
   include WhereHelper, PgJsonHelper, ParameterHelper
+#  extend BatchInsert
+
   belongs_to :service_category, :class_name =>'Service::Category', :foreign_key => :service_category_id
   belongs_to :criteria_param, :class_name =>'Parameter', :foreign_key => :criteria_param_id
   belongs_to :comparison_operator, :class_name =>'::Category', :foreign_key => :comparison_operator_id

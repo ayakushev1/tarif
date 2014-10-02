@@ -65,7 +65,7 @@ class Calls::Generator
       end
     end
     
-    Customer::Call.batch_save(calls, user_params["user_id"])
+    Customer::Call.batch_save(calls, {:user_id => user_params["user_id"]})
 
   end
 
