@@ -3,7 +3,7 @@
   :id => _mgf_option_for_sms_s, :name => 'Опция для SMS S', :operator_id => _megafon, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://moscow.megafon.ru/tariffs/options/sms_mms/sms_options.html#29729'},
   :dependency => {
-    :incompatibility => {}, 
+    :incompatibility => {:options_for_sms => [_mgf_option_for_sms_s, _mgf_option_for_sms_l, _mgf_option_for_sms_m, _mgf_option_for_sms_xl]}, 
     :general_priority => _gp_tarif_option_without_limits,#_gp_tarif_option_with_limits,
     :other_tarif_priority => {:lower => [], :higher => []},
     :prerequisites => [],

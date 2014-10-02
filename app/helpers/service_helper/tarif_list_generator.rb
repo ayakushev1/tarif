@@ -546,6 +546,7 @@ class ServiceHelper::TarifListGenerator
         end
       end
     end
+#    raise(StandardError)
   end
 
   def check_allowed_common_services(common_services_to_check, tarif)
