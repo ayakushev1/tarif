@@ -374,6 +374,7 @@ class ServiceHelper::TarifListGenerator
         end
       end
     end
+#    raise(StandardError)
   end
 
   def reorder_tarif_option_combinations
