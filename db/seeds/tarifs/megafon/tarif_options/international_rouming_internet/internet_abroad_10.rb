@@ -3,7 +3,7 @@
   :id => _mgf_internet_abroad_10, :name => 'Интернет за границей, 10 Мб', :operator_id => _megafon, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://moscow.megafon.ru/roaming/world/internet_abroad.html'},
   :dependency => {
-    :incompatibility => {:internet_abroa_pakets => [ _mgf_internet_abroad_30, _mgf_vacation_online]}, 
+    :incompatibility => {:internet_abroa_pakets => [_mgf_internet_abroad_10, _mgf_internet_abroad_30, _mgf_vacation_online]}, 
     :general_priority => _gp_tarif_option,
     :other_tarif_priority => {:lower => [], :higher => []},
     :prerequisites => [],

@@ -3,7 +3,7 @@
   :id => _mgf_50_sms_europe, :name => '50 SMS Европа', :operator_id => _megafon, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://moscow.megafon.ru/roaming/world/50smseu.html'},
   :dependency => {
-    :incompatibility => {}, 
+    :incompatibility => {:international_sms_pakets => [_mgf_50_sms_all_world, _mgf_100_sms_all_world, _mgf_50_sms_europe, _mgf_100_sms_europe]}, 
     :general_priority => _gp_tarif_option,
     :other_tarif_priority => {:lower => [], :higher => []},
     :prerequisites => [],

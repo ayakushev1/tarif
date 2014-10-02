@@ -3,7 +3,7 @@
   :id => _mgf_mms_24, :name => 'MMS 24', :operator_id => _megafon, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://moscow.megafon.ru/tariffs/options/sms_mms/mms-marafon.html'},
   :dependency => {
-    :incompatibility => {}, 
+    :incompatibility => {:mms_pakets => [_mgf_paket_mms_10, _mgf_paket_mms_50, _mgf_mms_24]}, 
     :general_priority => _gp_tarif_option_without_limits, #_gp_tarif_option_with_limits,
     :other_tarif_priority => {:lower => [], :higher => []},
     :prerequisites => [_mgf_all_included_xs, _mgf_all_included_s, _mgf_all_included_l, _mgf_all_included_m, _mgf_all_included_vip, 

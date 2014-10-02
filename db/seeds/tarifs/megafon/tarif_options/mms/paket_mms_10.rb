@@ -3,7 +3,7 @@
   :id => _mgf_paket_mms_10, :name => 'Пакет MMS-10', :operator_id => _megafon, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://moscow.megafon.ru/tariffs/options/sms_mms/mms_packs.html#21265'},
   :dependency => {
-    :incompatibility => {:mms_pakets => [_mgf_paket_mms_10, _mgf_paket_mms_50]}, 
+    :incompatibility => {:mms_pakets => [_mgf_paket_mms_10, _mgf_paket_mms_50, _mgf_mms_24]}, 
     :general_priority => _gp_tarif_option_without_limits,#_gp_tarif_option_with_limits,
     :other_tarif_priority => {:lower => [], :higher => []},
     :prerequisites => [_mgf_all_included_xs, _mgf_all_included_s, _mgf_all_included_l, _mgf_all_included_m, _mgf_all_included_vip, _mgf_megafon_online,
