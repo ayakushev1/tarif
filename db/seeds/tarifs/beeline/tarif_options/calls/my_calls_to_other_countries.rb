@@ -3,7 +3,7 @@
   :id => _bln_my_calls_to_other_countries, :name => 'Мои звонки в другие страны', :operator_id => _beeline, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://moskva.beeline.ru/customers/products/mobile/services/details/moi-zvonki-v-drugie-strany/'},
   :dependency => {
-    :incompatibility => {:sms_options => []}, 
+    :incompatibility => {}, 
     :general_priority => _gp_tarif_option_without_limits,
     :other_tarif_priority => {:lower => [], :higher => []},
     :prerequisites => [],

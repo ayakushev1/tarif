@@ -3,7 +3,12 @@
   :id => _mgf_internet_in_russia_for_specific_options, :name => 'Интернет по России для определенных опций', :operator_id => _megafon, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://moscow.megafon.ru/roaming/national/inet.html'},
   :dependency => {
-    :incompatibility => {:mgf_internet_in_russia_for_specific_options => []}, 
+    :incompatibility => {
+      :mgf_internet_in_russia_for_specific_options => [_mgf_internet_in_russia_for_specific_options, 
+        _mgf_internet_24, _mgf_internet_xs, _mgf_internet_s, _mgf_internet_m, _mgf_internet_l, 
+        _mgf_internet_24_pro, _mgf_bit_pro, _mgf_bit_mega_pro_150, _mgf_bit_mega_pro_250, _mgf_bit_mega_pro_500],
+      :mgf_internet_in_russia => [_mgf_internet_in_russia_for_specific_options, _mgf_internet_in_russia, _mgf_gigabite_to_road],
+        }, 
     :general_priority => _gp_tarif_option,
     :other_tarif_priority => {:lower => [], :higher => []},
     :prerequisites => [],

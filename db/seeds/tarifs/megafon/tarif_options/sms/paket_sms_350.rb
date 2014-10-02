@@ -3,7 +3,10 @@
   :id => _mgf_paket_sms_350, :name => 'Пакет SMS-350', :operator_id => _megafon, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://moscow.megafon.ru/tariffs/options/sms_mms/sms_packs.html'},
   :dependency => {
-    :incompatibility => {:sms_pakets => [_mgf_100_sms, _mgf_paket_sms_100, _mgf_paket_sms_150, _mgf_paket_sms_200, _mgf_paket_sms_350, _mgf_paket_sms_500, _mgf_paket_sms_1000]}, 
+    :incompatibility => {
+      :sms_pakets_and_options_for_sms => [
+        _mgf_sms_stihia, _mgf_100_sms, _mgf_paket_sms_100, _mgf_paket_sms_150, _mgf_paket_sms_200, _mgf_paket_sms_350, _mgf_paket_sms_500, _mgf_paket_sms_1000,
+        _mgf_sms_stihia, _mgf_option_for_sms_s, _mgf_option_for_sms_l, _mgf_option_for_sms_m, _mgf_option_for_sms_xl]}, 
     :general_priority => _gp_tarif_option_without_limits,#_gp_tarif_option_with_limits,
     :other_tarif_priority => {:lower => [], :higher => []},
     :prerequisites => [_mgf_all_included_xs, _mgf_all_included_s, _mgf_all_included_l, _mgf_all_included_m, _mgf_all_included_vip, 
