@@ -29,7 +29,7 @@
          :method => "price_formulas.price * tarif_option_count_of_usage" } } } )
 
 #Переход на тариф
-#  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item, :price => 20.0})  
+  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item, :price => 20.0})  
 
 #Own and home regions, mms, Outcoming
 category = {:name => '_sctcg_own_home_regions_mmsoutcoming', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _mms_out}

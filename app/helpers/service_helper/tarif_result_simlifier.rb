@@ -76,7 +76,9 @@ class ServiceHelper::TarifResultSimlifier
     end
     
     updated_tarif_sets = reorder_tarif_sets(updated_tarif_sets, updated_tarif_results)
-    
+#    raise(StandardError, eliminate_identical_tarif_sets)
+    updated_tarif_sets, updated_tarif_results = group_identical_tarif_sets(updated_tarif_sets, updated_tarif_results, services_to_not_excude, eliminate_identical_tarif_sets) if eliminate_identical_tarif_sets
+
     updated_tarif_sets, updated_tarif_results = group_identical_tarif_sets(updated_tarif_sets, updated_tarif_results, services_to_not_excude, eliminate_identical_tarif_sets) if eliminate_identical_tarif_sets
 
     [updated_tarif_sets, updated_tarif_results]
