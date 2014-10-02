@@ -14,7 +14,7 @@
 scg_mgf_all_world = @tc.add_service_category_group(
   {:name => 'scg_mgf_all_world' }, 
   {:name => "price for scg_mgf_all_world"}, 
-  {:calculation_order => 0, :price => 0.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute, :name => '_stf_mgf_all_world', :description => '', 
+  {:calculation_order => 0, :price => 25.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute, :name => '_stf_mgf_all_world', :description => '', 
    :formula => {
      :window_condition => "(30.0 >= sum_duration_minute)", :window_over => 'day',
      :stat_params => {:sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
@@ -22,10 +22,6 @@ scg_mgf_all_world = @tc.add_service_category_group(
 
 #Подключение услуги
 #  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item, :price => 30.0})  
-
-#Ежедневная плата
-  @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => _stf_fixed_price_if_used_in_1_day_duration, :price => 25.0})
-
 
 #All world, calls, incoming
 category = {:name => '_sctcg_mgf_europe_calls_incoming', :service_category_rouming_id => _all_world_rouming, :service_category_calls_id => _calls_in}
