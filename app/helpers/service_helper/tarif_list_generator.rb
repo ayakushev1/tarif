@@ -419,6 +419,7 @@ class ServiceHelper::TarifListGenerator
         end
       end
     end
+#    raise(StandardError)
   end
 
   def calculate_tarif_option_combinations_with_multiple_use
@@ -436,7 +437,7 @@ class ServiceHelper::TarifListGenerator
             multiple_use = dependencies[service]['multiple_use']
             new_services << service
 #TODO разобраться когда можно использовать multiple_use (для каких parts), и связать с параметрами оптимизации 
-            break if calculate_with_multiple_use and multiple_use and parts_used_as_multiple.include?(part)
+            break if false #calculate_with_multiple_use and multiple_use and parts_used_as_multiple.include?(part)
           end
           new_tarif_set_id = tarif_set_id(new_services)
           tarif_option_combinations[tarif][part][new_tarif_set_id] = new_services

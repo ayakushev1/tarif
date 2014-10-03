@@ -94,6 +94,11 @@ _mgf_sms_stihia = 459;
 _mgf_paket_sms_100 = 460; _mgf_paket_sms_150 = 461; _mgf_paket_sms_200 = 462; _mgf_paket_sms_350 = 463; _mgf_paket_sms_500 = 464; _mgf_paket_sms_1000 = 465;
 _mgf_100_sms  = 466;
 
+#["440", "441", "442", "", "442_455", "442_456", "442_457", "442_458", "442_459", "442_460", "442_461", "442_462", "442_463", "442_464", "442_465", "442_466", 
+#  "455", "456", "457", "458", "459", "460", "461", "462", "463", "464", "465", "466"]
+
+
+
 #calls
 _mgf_unlimited_communication = 470; _mgf_call_to_russia = 471; _mgf_call_to_all_country = 472; _mgf_option_city_connection = 473;
 
