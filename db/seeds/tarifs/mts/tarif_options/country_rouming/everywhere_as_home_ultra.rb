@@ -31,7 +31,7 @@ _sctcg_own_country_calls_to_own_home_regions_not_own_operator = {:name => '_sctc
 #  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item_if_used, :price => 0.0})  
 
 #Ежемесячная плата
-  @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => _stf_price_by_1_month, :price => 400.0})
+  @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => _stf_price_by_1_month_if_used, :price => 400.0})
  
 #Own country, Calls, incoming
   @tc.add_one_service_category_tarif_class(_sctcg_own_country_calls_incoming, {}, 

@@ -20,7 +20,7 @@ _sctcg_home_region_internet = {:name => '_sctcg_home_region_internet', :service_
 _sctcg_all_russia_rouming_internet = {:name => '_sctcg_all_russia_rouming_internet', :service_category_rouming_id => _all_russia_rouming, :service_category_calls_id => _internet}
 
 #Ежемесячная плата
-  @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => _stf_price_by_1_month, :price => 1500.0})
+  @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => _stf_price_by_1_month_if_used, :price => 1500.0})
 
 #Home region, internet
   @tc.add_one_service_category_tarif_class(_sctcg_home_region_internet, {}, 
