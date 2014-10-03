@@ -195,11 +195,17 @@ class ServiceHelper::TarifListGenerator
         tarif_options[operator].each do |tarif_option|
           next if dependencies[tarif_option]['is_archived'] == true
 
-          next if dependencies[tarif_option]['prerequisites'].blank?  or !dependencies[tarif_option]['prerequisites'].include?(tarif)
+          if !dependencies[tarif_option]['prerequisites'].blank? and dependencies[tarif_option]['prerequisites'].include?(tarif)
+            service_packs[tarif] << tarif_option
+          end
           
-          next if dependencies[tarif_option]['forbidden_tarifs']['to_switch_on'].blank? or dependencies[tarif_option]['forbidden_tarifs']['to_switch_on'].include?(tarif)
-
-          service_packs[tarif] << tarif_option
+          if !dependencies[tarif_option]['forbidden_tarifs']['to_switch_on'].blank? and !dependencies[tarif_option]['forbidden_tarifs']['to_switch_on'].include?(tarif)
+            service_packs[tarif] << tarif_option
+          end
+          
+          if dependencies[tarif_option]['prerequisites'].blank? and dependencies[tarif_option]['forbidden_tarifs']['to_switch_on'].blank?
+            service_packs[tarif] << tarif_option
+          end
         end
       end
     end
