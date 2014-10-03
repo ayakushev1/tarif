@@ -21,7 +21,7 @@ _sctcg_home_region_calls_to_own_home_regions = {:name => '_sctcg_home_region_cal
  
  
 #Переход на тариф
-  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item, :price => 35.0})  
+  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item_if_used, :price => 35.0})  
 
 #Плата за использование
   @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => _stf_fixed_price_if_used_in_1_day_duration, :price => 3.5})

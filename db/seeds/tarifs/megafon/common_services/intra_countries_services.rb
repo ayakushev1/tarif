@@ -55,7 +55,7 @@ category = {:name => '_sctcg_own_home_regions_mms_to_sms_other_countries', :serv
 #Tarif option 'Везде Москва — в Центральном регионе'
 #Другие категории опции должны иметь мешьший приоритет, или не пересекаться с опцией
 #Подключение услуги
-  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item, :price => 30.0},
+  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item_if_used, :price => 30.0},
     :tarif_set_must_include_tarif_options => [_mgf_everywhere_moscow_in_central_region] )  
 
 #Ежедневная плата

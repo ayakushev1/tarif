@@ -65,7 +65,7 @@ _sctcg_own_country_sms_incoming = {:name => 'own_country_sms_incoming', :service
 _sctcg_all_world_sms_incoming = {:name => '_sctcg_all_world_sms_incoming', :service_category_rouming_id => _all_world_rouming, :service_category_calls_id => _sms_in}
  
 #Переход на тариф
-#  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item, :price => 0.0})  
+#  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item_if_used, :price => 0.0})  
 
 #Ежемесячная плата
   @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => _stf_price_by_1_month, :price => 1400.0})
@@ -175,7 +175,7 @@ _sctcg_own_home_regions_mms_to_own_country_own_operator = { :name => '_sctcg_own
 _sctcg_intranet_rouming_mms_to_own_country_own_operator = { :name => '_sctcg_own_home_regions_mms_to_own_country_own_operator', :service_category_rouming_id => _intra_net_rouming, :service_category_calls_id => _mms_out, :service_category_geo_id => _service_to_all_own_country_regions, :service_category_partner_type_id => _service_to_own_operator}
 
 #Переход на тариф
-  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item, :price => 34.0},
+  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item_if_used, :price => 34.0},
     :tarif_set_must_include_tarif_options => [_mts_mms_discount_50_percent] )
 
 #Ежемесячная плата
@@ -200,7 +200,7 @@ _sctcg_own_country_internet = {:name => '_sctcg_own_country_internet', :service_
  
 #Переход на тариф
 #  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on.merge({:tarif_option_id => _mts_everywhere_as_home_smart, :tarif_option_order => 0}), {}, 
-#    {:standard_formula_id => _stf_price_by_1_item, :price => 0.0},
+#    {:standard_formula_id => _stf_price_by_1_item_if_used, :price => 0.0},
 #    :tarif_set_must_include_tarif_options => [_mts_everywhere_as_home_smart] )
 
 #Ежемесячная плата

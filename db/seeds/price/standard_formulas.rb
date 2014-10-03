@@ -59,7 +59,7 @@ stf << { :id => _stf_price_by_1_month_if_used, :price_unit_id => _rur, :volume_i
 stf << { :id => _stf_price_by_1_item_if_used, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _item, :name => 'onetime fee', 
          :description => '',  :formula => {
            :tarif_condition => true,
-           :group_by => 'century', 
+           :group_by => 'month', 
            :stat_params => {:count_time => "(count(description->>'time')::integer)"},
            :method => "case when count_time > 0.0 then price_formulas.price else 0.0 end"} }#
 

@@ -21,7 +21,7 @@ scg_mgf_all_world = @tc.add_service_category_group(
      :method => 'price_formulas.price'}, }  )
 
 #Подключение услуги
-  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item, :price => 30.0})  
+  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item_if_used, :price => 30.0})  
 
 #All world, calls, incoming
 category = {:name => '_sctcg_mgf_europe_calls_incoming', :service_category_rouming_id => _all_world_rouming, :service_category_calls_id => _calls_in}
