@@ -105,7 +105,8 @@ class ServiceHelper::TarifOptimizator
       minor_result_saver.override({:result => 
         {:performance_results => performance_checker.show_stat_hash,
          :calls_stat => calls_stat_calculator.calculate_calls_stat(query_constructor),
-         :service_packs_by_parts => tarif_list_generator.service_packs_by_parts,
+         :service_packs_by_parts => tarif_list_generator.tarif_sets,
+#         :service_packs_by_parts => tarif_list_generator.service_packs_by_parts,
          :used_memory_by_output => used_memory_by_output,
          }})
     end

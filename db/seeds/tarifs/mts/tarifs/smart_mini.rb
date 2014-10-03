@@ -51,7 +51,7 @@ _sctcg_all_world_sms_incoming = {:name => '_sctcg_all_world_sms_incoming', :serv
  
  
 #Переход на тариф
-#  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item, :price => 0.0})  
+  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item, :price => 0.0})  
 
 #Ежемесячная плата
   @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => _stf_price_by_1_month, :price => 250.0})
@@ -161,9 +161,9 @@ _sctcg_own_country_calls_to_own_country_own_operator = {:name => '_sctcg_own_cou
 _sctcg_own_country_internet = {:name => '_sctcg_own_country_internet', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _internet}
  
 #Переход на тариф
-#  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on.merge({:tarif_option_id => _mts_everywhere_as_home_smart, :tarif_option_order => 0}), {}, 
-#  {:standard_formula_id => _stf_price_by_1_item, :price => 0.0},
-#    :tarif_set_must_include_tarif_options => [_mts_everywhere_as_home_smart] )
+  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on.merge({:tarif_option_id => _mts_everywhere_as_home_smart, :tarif_option_order => 0}), {}, 
+  {:standard_formula_id => _stf_price_by_1_item, :price => 0.0},
+    :tarif_set_must_include_tarif_options => [_mts_everywhere_as_home_smart] )
 
 #Ежемесячная плата
   @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee.merge({:tarif_option_id => _mts_everywhere_as_home_smart, :tarif_option_order => 0}), {}, 

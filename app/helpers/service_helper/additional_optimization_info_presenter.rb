@@ -65,7 +65,19 @@ class ServiceHelper::AdditionalOptimizationInfoPresenter
     end    
   end
   
-  def service_packs_by_parts_array
+  def service_packs_by_parts_array #(new, for tarif_set)
+    result = []
+    service_packs_by_parts.each do |tarif, services_by_tarif|
+      temp_result = {:tarif => tarif}
+      services_by_tarif.each do |part, services|
+        temp_result.merge!({part => services.keys.size})
+      end
+      result << temp_result
+    end if service_packs_by_parts
+    result
+  end
+  
+  def service_packs_by_parts_array_1 #(old, for service_pack)
     result = []
     service_packs_by_parts.each do |tarif, services_by_tarif|
       temp_result = {:tarif => tarif}

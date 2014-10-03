@@ -22,12 +22,12 @@ class Customer::HistoryParserController < ApplicationController
   end
 
   def upload
-    max_step = 10
-    i = 0
-    begin
-      sleep 1
-      i += 1
-    end while (i < max_step) and !remotipart_submitted? and !params[:call_history]
+#    max_step = 1
+#    i = 0
+#    begin
+#      sleep 1
+#      i += 1
+#    end while (i < max_step) and !remotipart_submitted? and !params[:call_history]
     
 #    @uploaded_call_history_file = params[:call_history]
     background_parser_processor(:calculation_status, :prepare_for_upload, :parse_uploaded_file, params[:call_history])
@@ -215,8 +215,8 @@ class Customer::HistoryParserController < ApplicationController
       session[:filtr]['parsing_params_filtr']  = {
         'calculate_on_background' => 'true',
         'save_processes_result_to_stat' => 'false',
-        'file_upload_remote_mode' => 'true',
-        'file_upload_turbolink_mode' => 'true',
+        'file_upload_remote_mode' => 'false',
+        'file_upload_turbolink_mode' => 'false',
         'file_upload_form_method' => 'post',
         'file_upload_max_size' => 3,
         'call_history_max_line_to_process' => 5000,
