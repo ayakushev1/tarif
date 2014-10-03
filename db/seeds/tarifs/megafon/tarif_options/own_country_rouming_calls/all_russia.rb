@@ -3,7 +3,7 @@
   :id => _mgf_all_russia, :name => 'Вся Россия', :operator_id => _megafon, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://moscow.megafon.ru/roaming/national/allrus.html'},
   :dependency => {
-    :incompatibility => {}, 
+    :incompatibility => {:intra_country_rouming => [_mgf_all_russia, _mgf_travel_without_worry, _mgf_everywhere_moscow_in_central_region]}, 
     :general_priority => _gp_tarif_option,
     :other_tarif_priority => {:lower => [], :higher => []},
     :prerequisites => [],

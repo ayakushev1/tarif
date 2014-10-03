@@ -3,8 +3,7 @@
 @tc.create_tarif_class({
   :id => _mts_100mb_in_latvia_and_litva, :name => '100 Мб в Литве и Латвии', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {
-    :http => 'http://www.mts.ru/mob_connect/roaming/i_roaming/archive/100_mb/',
-    :closed_to_switch_on => true},  
+    :http => 'http://www.mts.ru/mob_connect/roaming/i_roaming/archive/100_mb/',},  
   :dependency => {
     :categories => [_tcgsc_internet],
     :incompatibility => {}, 
@@ -12,6 +11,7 @@
     :other_tarif_priority => {:lower => [_mts_bit_abroad, _mts_maxi_bit_abroad, _mts_super_bit_abroad], :higher => []},
     :prerequisites => [],
     :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},
+    :is_archived => true,
     :multiple_use => true,
   } } )
 

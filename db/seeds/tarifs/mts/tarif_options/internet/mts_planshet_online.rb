@@ -3,8 +3,7 @@
 @tc.create_tarif_class({
   :id => _mts_mts_planshet_online, :name => 'МТС Планшет Онлайн', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {
-    :http => 'http://www.mts.ru/mobil_inet_and_tv/tablet/archive/tablet_online/',
-    :closed_to_switch_on => true},  
+    :http => 'http://www.mts.ru/mobil_inet_and_tv/tablet/archive/tablet_online/',},  
   :dependency => {
     :categories => [_tcgsc_internet],
     :incompatibility => {}, 
@@ -12,6 +11,7 @@
     :other_tarif_priority => {:lower => [], :higher => []},
     :prerequisites => [],
     :forbidden_tarifs => {:to_switch_on => [_mts_ultra], :to_serve => []},
+    :is_archived => true,
     :multiple_use => false
   } } )
 

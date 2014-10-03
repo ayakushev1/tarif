@@ -13,7 +13,7 @@ table_html_options = table_html_options.collect { |key, value| "#{key.to_s}=\"#{
 
 <% show_debug = false %>
 
-<%= table.model.to_sql if show_debug %>
+<%= table.model if false %>
 <%= params if show_debug %>
 <%= session[:filtr] if show_debug %>
 <%= session[:current_id] if false %>

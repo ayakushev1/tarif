@@ -44,8 +44,9 @@ class ServiceHelper::TarifResultSimlifier
     excluded_tarif_sets = []
     tarifs = tarif_sets.keys.map(&:to_i)
 #TODO проверить еще раз почему нельзя исключать common_services
-    services_to_not_excude = common_services[operator] + tarifs + services_that_depended_on.values.flatten
-    sub_tarif_sets_with_zero_results_0 = calculate_sub_tarif_sets_with_zero_results_0(services_to_not_excude)
+    array_of_services_that_depended_on = services_that_depended_on.values.flatten
+    services_to_not_excude = common_services[operator] + tarifs + array_of_services_that_depended_on
+    sub_tarif_sets_with_zero_results_0 = calculate_sub_tarif_sets_with_zero_results_0(services_to_not_excude, array_of_services_that_depended_on)
     sub_tarif_sets_with_zero_results_1 = calculate_sub_tarif_sets_with_zero_results_1(services_to_not_excude)
     
     updated_tarif_sets = {}
@@ -84,7 +85,7 @@ class ServiceHelper::TarifResultSimlifier
     [updated_tarif_sets, updated_tarif_results]
   end
   
-  def calculate_sub_tarif_sets_with_zero_results_0(services_to_not_excude)
+  def calculate_sub_tarif_sets_with_zero_results_0(services_to_not_excude, array_of_services_that_depended_on)
 #TODO подумать какие еще наборы услуг добавить
     depended_on_services = services_that_depended_on.map{|d| d[1]}.flatten.uniq
     sub_tarif_sets_with_zero_results = []

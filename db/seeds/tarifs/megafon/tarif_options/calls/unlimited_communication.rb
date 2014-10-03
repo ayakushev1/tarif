@@ -2,14 +2,14 @@
 @tc.create_tarif_class({
   :id => _mgf_unlimited_communication, :name => 'Безлимитное общение', :operator_id => _megafon, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {
-    :http => 'http://moscow.megafon.ru/tariffs/options/megafon_calls/bezlimitnoe_obschenie.html#price',
-    :closed_to_switch_on => true}, 
+    :http => 'http://moscow.megafon.ru/tariffs/options/megafon_calls/bezlimitnoe_obschenie.html#price',}, 
   :dependency => {
     :incompatibility => {}, 
     :general_priority => _gp_tarif_option,
     :other_tarif_priority => {:lower => [], :higher => []},
     :prerequisites => [],
     :forbidden_tarifs => {:to_switch_on => [_mgf_all_included_xs, _mgf_all_included_s, _mgf_all_included_l, _mgf_all_included_m, _mgf_all_included_vip,], :to_serve => []},
+    :is_archived => true,
     :multiple_use => false
   } } )
 

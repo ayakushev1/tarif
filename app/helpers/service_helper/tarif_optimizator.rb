@@ -101,7 +101,7 @@ class ServiceHelper::TarifOptimizator
         used_memory_by_output = calculate_used_memory(output)
       end if analyze_memory_used    
     
-      
+#raise(StandardError)
       minor_result_saver.override({:result => 
         {:performance_results => performance_checker.show_stat_hash,
          :calls_stat => calls_stat_calculator.calculate_calls_stat(query_constructor),
