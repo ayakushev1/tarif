@@ -13,8 +13,10 @@ class ServiceHelper::TarifOptimizator
 #настройки вывода результатов
   attr_reader  :simplify_tarif_results, :save_tarif_results_ord, :analyze_memory_used, :output_call_ids_to_tarif_results, :output_call_count_to_tarif_results, 
                :analyze_query_constructor_performance, :save_interim_results_after_calculating_tarif_results#, :save_interim_results_after_calculating_final_tarif_sets
+#user input
+  attr_reader :user_id, :accounting_period, :selected_service_categories, :calculate_with_limited_scope
 #local
-  attr_reader :calls_count_by_parts, :user_id, :accounting_period
+  attr_reader :calls_count_by_parts
   
   def initialize(options = {})
     self.extend Helper
@@ -28,7 +30,8 @@ class ServiceHelper::TarifOptimizator
     @options = options
     @fq_tarif_region_id = (options[:user_region_id] and options[:user_region_id] != 0 ? options[:user_region_id] : 1238)
     @user_id = options[:user_id] || 0
-    
+    @calculate_with_limited_scope = (options[:calculate_with_limited_scope] == 'true' ? true : false)
+    @selected_service_categories = options[:selected_service_categories]
     @accounting_period = options[:accounting_period] #|| '1_2014'
   end
   
@@ -105,7 +108,7 @@ class ServiceHelper::TarifOptimizator
       minor_result_saver.override({:result => 
         {:performance_results => performance_checker.show_stat_hash,
          :calls_stat => calls_stat_calculator.calculate_calls_stat(query_constructor),
-         :service_packs_by_parts => tarif_list_generator.tarif_sets,
+         :service_packs_by_parts => tarif_list_generator.tarif_sets, #,будет показывать только последний посчитанный тариф
 #         :service_packs_by_parts => tarif_list_generator.service_packs_by_parts,
          :used_memory_by_output => used_memory_by_output,
          }})
@@ -166,6 +169,7 @@ class ServiceHelper::TarifOptimizator
                   
       background_process_informer_tarifs.increase_current_value(0, "calculate_calls_count_by_parts")
       performance_checker.run_check_point('calculate_calls_count_by_parts', 3) do
+        calls_stat_calculator.calculate_calculation_scope(query_constructor, selected_service_categories) if calculate_with_limited_scope
         @calls_count_by_parts = calls_stat_calculator.calculate_calls_count_by_parts(query_constructor, 
           tarif_list_generator.uniq_parts_by_operator[operator], tarif_list_generator.uniq_parts_criteria_by_operator[operator])
       end      
@@ -263,6 +267,7 @@ class ServiceHelper::TarifOptimizator
   def init_input_for_one_tarif_calculation(operator, tarif = nil)
     performance_checker.run_check_point('init_input_for_one_tarif_calculation', 4) do
       performance_checker.run_check_point('@tarif_list_generator', 5) do
+        tarif_list_generator.set_parts(calls_stat_calculator.calculation_scope[:parts]) if calculate_with_limited_scope
         tarif_list_generator.calculate_tarif_sets_and_slices(operator, tarif)
       end
       @current_tarif_optimization_results = ServiceHelper::CurrentTarifOptimizationResults.new(self)

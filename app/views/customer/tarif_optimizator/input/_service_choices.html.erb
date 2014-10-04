@@ -55,6 +55,9 @@ form_item.init do |f|
      label(filtr_name, "calculate_only_chosen_services", "Считать только выбранные тариф и опции?"),
  	 select(filtr_name, "calculate_only_chosen_services", [["Да", true], ["Считать все варианты", false]], {:selected => s["calculate_only_chosen_services"]}, html_options ),
 
+     label(filtr_name, "calculate_with_limited_scope", "Считать только выбранные направления связи?"),
+ 	 select(filtr_name, "calculate_with_limited_scope", [["Да", true], ["Считать все направления связи", false]], {:selected => s["calculate_with_limited_scope"]}, html_options ),
+
   	 label(filtr_name, "accounting_period", "Период за который проводить расчет тарифов"),
   	 collection_select(filtr_name, "accounting_period", 
   	   controller.accounting_periods, 

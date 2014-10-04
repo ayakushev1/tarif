@@ -15,6 +15,7 @@ class ServiceHelper::TarifOptimizationSqlBuilder
   
   def prev_service_call_ids_by_parts; current_tarif_optimization_results.prev_service_call_ids_by_parts; end
   def calls_count_by_parts; tarif_optimizator.calls_count_by_parts; end
+  def calculation_scope ; tarif_optimizator.calls_stat_calculator.calculation_scope; end
   
 # optimization params from ServiceHelper::TarifOptimizator
   def check_sql_before_running; tarif_optimizator.check_sql_before_running; end
@@ -56,7 +57,7 @@ class ServiceHelper::TarifOptimizationSqlBuilder
       set_id = service_list_item[:set_ids]
       next if !max_formula_order_collector.max_order_by_service_and_part[part] or !max_formula_order_collector.max_order_by_service_and_part[part][service_id]
       next if price_formula_order > max_formula_order_collector.max_order_by_service_and_part[part][service_id]
-      next if !tarif_list_generator.dependencies[service_id]['parts'].include?(part)
+      next if !tarif_list_generator.parts_by_service[service_id].include?(part)
       prev_call_ids_count = 0 
       tarif_results[set_id][part].each do |service_id_1, tarif_results_value |  
         prev_call_ids_count += tarif_results_value['call_id_count'] 
@@ -135,9 +136,9 @@ class ServiceHelper::TarifOptimizationSqlBuilder
         prev_group_call_ids = current_tarif_optimization_results.find_prev_group_call_ids(set_id, part, service_category_group_id)
         prev_stat_values_string = current_tarif_optimization_results.prev_stat_function_values(stat_details[:price_formula_id], set_id, part, service_category_group_id)
 
-        result << service_category_cost_sql(calculate_base_stat_sql(service_category_tarif_class_ids), 
-          service_category_tarif_class_ids[0], service_category_group_id, stat_details[:price_formula_id], service_id, set_id,
-          part, prev_group_call_ids, prev_stat_values_string)
+        result << service_category_cost_sql(
+          calculate_base_stat_sql(service_category_tarif_class_ids, part), service_category_tarif_class_ids[0], service_category_group_id, 
+          stat_details[:price_formula_id], service_id, set_id, part, prev_group_call_ids, prev_stat_values_string)
       end
     end if stat_function_collector.service_group_ids[part] and stat_function_collector.service_group_ids[part][price_formula_order] and stat_function_collector.service_group_ids[part][price_formula_order][service_id]
     result
@@ -167,7 +168,7 @@ class ServiceHelper::TarifOptimizationSqlBuilder
 
 #    raise(StandardError, service_category_tarif_class_ids_for_base_stat_sql) if service_id == 294 and part == 'periodic'
 
-        result << service_category_cost_sql(calculate_base_stat_sql(service_category_tarif_class_ids_for_base_stat_sql), 
+        result << service_category_cost_sql(calculate_base_stat_sql(service_category_tarif_class_ids_for_base_stat_sql, part), 
           service_category_tarif_class_id, -1, stat_details[:price_formula_id], service_id, set_id,
           part, prev_group_call_ids, prev_stat_values_string)
       end
@@ -215,14 +216,19 @@ class ServiceHelper::TarifOptimizationSqlBuilder
     result
   end
   
-  def calculate_base_stat_sql(service_category_tarif_class_ids)
-    result = Customer::Call.where(:user_id => user_id).where("description->>'accounting_period' = '#{accounting_period}'").
+  def calculate_base_stat_sql(service_category_tarif_class_ids, part)
+    result = Customer::Call.where(calculation_scope_where_hash(part)).
+      where(:user_id => user_id).where("description->>'accounting_period' = '#{accounting_period}'").
       where(query_constructor.joined_tarif_classes_category_where_hash(service_category_tarif_class_ids))
 #    raise(StandardError, [accounting_period, result.to_sql])   
     execute_additional_sql_to_check_performance(result.to_sql, 'calculate_base_stat_sql', 9)
     result
   end
-
+  
+  def calculation_scope_where_hash(part)
+    calculation_scope[:where_hash][part.to_s] || false
+  end
+  
   def service_category_cost_sql(base_stat_sql, service_category_tarif_class_id, service_category_group_id, price_formula_id, service_id, set_id,
       part, prev_group_call_ids, prev_stat_values_string)#, excluded_group_call_ids_by_part = [])
         

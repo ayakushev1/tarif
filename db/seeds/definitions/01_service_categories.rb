@@ -94,6 +94,7 @@ def access_methods_to_constant_service_categories
   
   _service_to_bln_partner_operator = 198; _service_to_not_bln_partner_operator = 199;
   
+  _service_to_beeline = 230; _service_to_megafon = 231; _service_to_mts = 232;
   
     
   # standard service types

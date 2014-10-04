@@ -723,6 +723,18 @@ cat << {:id => _service_to_other_operators, :name => 'Операторы дру�
   crit << {:id => _service_to_other_operators * 10 , :criteria_param_id => _call_partner_phone_operator_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
            :eval_string => "Relation.operator_partner_groups_by_group_id(#{_relation_service_to_other_operators_group})", :service_category_id => _service_to_other_operators}
 
+cat << {:id => _service_to_beeline, :name => 'Билайн', :type_id => _common, :parent_id => _partner_operator_services, :level => 1, :path => [_partner_operator_services]}
+  crit << {:id => _service_to_beeline * 10, :criteria_param_id => _call_partner_phone_operator_id, :comparison_operator_id => _equal, :value_choose_option_id => _single_value, 
+           :value_param_id => _fq_tarif_operator_id, :value => {:integer => _beeline}, :service_category_id => _service_to_beeline}
+
+cat << {:id => _service_to_megafon, :name => 'Мегафон', :type_id => _common, :parent_id => _partner_operator_services, :level => 1, :path => [_partner_operator_services]}
+  crit << {:id => _service_to_megafon * 10, :criteria_param_id => _call_partner_phone_operator_id, :comparison_operator_id => _equal, :value_choose_option_id => _single_value, 
+           :value_param_id => _fq_tarif_operator_id, :value => {:integer => _megafon}, :service_category_id => _service_to_megafon}
+
+cat << {:id => _service_to_mts, :name => 'МТС', :type_id => _common, :parent_id => _partner_operator_services, :level => 1, :path => [_partner_operator_services]}
+  crit << {:id => _service_to_mts * 10, :criteria_param_id => _call_partner_phone_operator_id, :comparison_operator_id => _equal, :value_choose_option_id => _single_value, 
+           :value_param_id => _fq_tarif_operator_id, :value => {:integer => _mts}, :service_category_id => _service_to_mts}
+
 
 #виды услуг
 cat << {:id => _sc_tarif_service, :name => 'виды услуг', :type_id => _common, :parent_id => nil, :level => 0, :path => []}

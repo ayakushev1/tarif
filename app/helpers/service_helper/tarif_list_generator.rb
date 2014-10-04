@@ -3,7 +3,7 @@ class ServiceHelper::TarifListGenerator
   attr_reader :options, :operators, :tarifs, :common_services, :tarif_options             
   attr_accessor :all_services, :all_services_by_operator, :dependencies, :service_description, :uniq_parts_by_operator, :uniq_parts_criteria_by_operator, 
                 :all_services_by_parts, :common_services_by_parts, :service_packs, :service_packs_by_parts, :services_that_depended_on, :periodic_services, :onetime_services,
-                :service_packs_by_general_priority, :tarif_option_by_compatibility, :fobidden_combinations_by_service, 
+                :service_packs_by_general_priority, :tarif_option_by_compatibility, :fobidden_combinations_by_service, :parts_by_service,
                 :tarif_option_combinations, :tarif_sets_without_common_services, :tarif_sets                
   
   attr_accessor :tarif_options_slices, :tarif_options_count, :max_tarif_options_slice, :tarifs_slices, :tarifs_count, :max_tarifs_slice, :all_tarif_parts_count
@@ -19,6 +19,7 @@ class ServiceHelper::TarifListGenerator
     set_operators_and_services(options)
 #    raise(StandardError)
     set_constant
+    set_parts
     set_generation_params(options)
     check_input_from_options
     calculate_all_services
@@ -26,6 +27,7 @@ class ServiceHelper::TarifListGenerator
     load_services_that_depended_on
     load_periodic_services
     calculate_uniq_parts_by_operator
+    calculate_parts_by_service
     calculate_all_services_by_parts
     calculate_common_services_by_parts
   end
@@ -72,13 +74,20 @@ class ServiceHelper::TarifListGenerator
   
   def set_constant
     @gp_tarif_option = 320; @gp_tarif_without_limits = 321; @gp_tarif_with_limits = 322; @gp_tarif_option_with_limits =323; @gp_common_service = 324;    
-    @all_parts = [
-      'all-world-rouming/sms', 'all-world-rouming/mms', 'all-world-rouming/calls', 'all-world-rouming/mobile-connection',
-      'own-country-rouming/sms', 'own-country-rouming/mms', 'own-country-rouming/calls', 'own-country-rouming/mobile-connection', 
-      'mms', 'onetime', 'periodic'
-      ]
+  end
+  
+  def set_parts(parts = nil)
+    if parts
+      @all_parts = parts
+    else
+      @all_parts = [
+        'all-world-rouming/sms', 'all-world-rouming/mms', 'all-world-rouming/calls', 'all-world-rouming/mobile-connection',
+        'own-country-rouming/sms', 'own-country-rouming/mms', 'own-country-rouming/calls', 'own-country-rouming/mobile-connection', 
+        'mms', 'onetime', 'periodic'
+        ]
+    end
     @parts_used_as_multiple = ['all-world-rouming/sms', 'own-country-rouming/sms', 'all-world-rouming/mms', 'mms', 'own-country-rouming/mms', 
-      'all-world-rouming/mobile-connection', 'own-country-rouming/mobile-connection' ]
+      'all-world-rouming/mobile-connection', 'own-country-rouming/mobile-connection' ] & @all_parts
   end
   
   def set_generation_params(options)
@@ -145,12 +154,22 @@ class ServiceHelper::TarifListGenerator
     all_services_by_operator.each do |operator, services|
       @uniq_parts_by_operator[operator] ||= []; @uniq_parts_criteria_by_operator[operator] ||= []
       services.each do |service|
-#        raise(StandardError, dependencies[service] ) if service == 206 #!dependencies[service]['parts_criteria'] and dependencies[service]['parts']
-        @uniq_parts_by_operator[operator] += dependencies[service]['parts'] - @uniq_parts_by_operator[operator]; 
+#TODO убрать дублирование по parts_criteria в calls_stat_calculator
+        @uniq_parts_by_operator[operator] += (dependencies[service]['parts'] & all_parts) - @uniq_parts_by_operator[operator]; 
         @uniq_parts_criteria_by_operator[operator] += dependencies[service]['parts_criteria'] - @uniq_parts_criteria_by_operator[operator]
-#        @uniq_parts_by_operator[operator].uniq!; 
-#        @uniq_parts_criteria_by_operator[operator].uniq!
       end
+    end
+  end
+  
+  def calculate_parts_by_service
+    @parts_by_service = {}
+    all_services_by_operator.each do |operator, services|
+      services.each do |service|
+        parts_by_service[service] = []
+        (dependencies[service]['parts'] & all_parts).each do |part|
+          parts_by_service[service] << part 
+        end
+      end      
     end
   end
   
@@ -163,7 +182,7 @@ class ServiceHelper::TarifListGenerator
       end
       
       services.each do |service|
-        dependencies[service]['parts'].each do |part|
+        (dependencies[service]['parts'] & all_parts).each do |part|
           all_services_by_parts[operator][part] << service
         end
       end      
@@ -179,7 +198,7 @@ class ServiceHelper::TarifListGenerator
       end if uniq_parts_by_operator and uniq_parts_by_operator[operator] 
       
       services.each do |service|
-        dependencies[service]['parts'].each do |part|
+        (dependencies[service]['parts'] & all_parts).each do |part|
           common_services_by_parts[operator][part] << service
         end
       end      
@@ -217,7 +236,7 @@ class ServiceHelper::TarifListGenerator
     service_packs.each do |tarif, service_pack|
       @service_packs_by_parts[tarif] ||= {}
       service_pack.each do |service|
-        dependencies[service]['parts'].each do |part|
+        (dependencies[service]['parts'] & all_parts).each do |part|
           @service_packs_by_parts[tarif][part] ||= []
           @service_packs_by_parts[tarif][part] << service
         end

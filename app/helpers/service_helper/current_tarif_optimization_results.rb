@@ -255,7 +255,7 @@ class ServiceHelper::CurrentTarifOptimizationResults
       tarif_results.keys.sort{|t| t.split('_').size}.each do |tarif_set_id|
         tarif_result = tarif_results[tarif_set_id]
         service_id = tarif_set_id.split('_')[0].to_i
-        missed_parts = tarif_optimizator.tarif_list_generator.dependencies[service_id]['parts'] - tarif_results[tarif_set_id].keys
+        missed_parts = tarif_optimizator.tarif_list_generator.parts_by_service[service_id] - tarif_results[tarif_set_id].keys
         current_tarif_set_size = tarif_set_id.split('_').count
         current_tarif_set = tarif_optimizator.tarif_list_generator.tarif_set_id(tarif_set_id.split('_')[0..(current_tarif_set_size - 1)])
         while current_tarif_set_size > 0 and !missed_parts.blank?
@@ -280,7 +280,7 @@ class ServiceHelper::CurrentTarifOptimizationResults
             end
           end if tarif_results_ord[current_tarif_set] and save_tarif_results_ord
 
-          missed_parts = (tarif_optimizator.tarif_list_generator.dependencies[service_id]['parts'] - tarif_results[current_tarif_set].keys) if tarif_results[current_tarif_set]
+          missed_parts = (tarif_optimizator.tarif_list_generator.parts_by_service[service_id] - tarif_results[current_tarif_set].keys) if tarif_results[current_tarif_set]
           current_tarif_set_size -= 1
           
         end

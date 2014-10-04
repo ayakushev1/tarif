@@ -24,9 +24,15 @@ content_in :accordion do |user|
     ], 
     [
      'Services list',
-	  link_to('Recalculate', customer_tarif_optimizator_recalculate_path ) + "  |  ".html_safe +
+	  link_to('Recalculate', customer_tarif_optimizator_recalculate_path ) +
       render(:partial => 'customer/tarif_optimizator/input/services_select', :layout => 'application/layouts/filtr_form_3_columns', 
         :locals => {:form_item => controller.services_select} )
+    ], 
+    [
+     'Service categories list',
+	  link_to('Recalculate', customer_tarif_optimizator_recalculate_path ) +
+      render(:partial => 'customer/tarif_optimizator/input/service_categories_select', :layout => 'application/layouts/filtr_form_3_columns', 
+        :locals => {:form_item => controller.service_categories_select} )
     ], 
   ] 
 end

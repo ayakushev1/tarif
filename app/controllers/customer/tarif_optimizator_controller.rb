@@ -128,7 +128,12 @@ class Customer::TarifOptimizatorController < ApplicationController
 #      updating_minor_results
       redirect_to(:action => :index)
     end
-    user_input_to_save = service_choices.session_filtr_params.merge(services_select.session_filtr_params).merge(optimization_params.session_filtr_params)
+    user_input_to_save = {
+      :service_choices => service_choices.session_filtr_params,
+      :services_select => services_select.session_filtr_params,
+      :service_categories_select => service_categories_select.session_filtr_params,
+      :optimization_params => optimization_params.session_filtr_params,
+    }
     tarif_optimization_inputs_saver('user_input').save({:result => user_input_to_save})
   end 
   
@@ -142,6 +147,15 @@ class Customer::TarifOptimizatorController < ApplicationController
   
   def services_select
     @services_select ||= Filtrable.new(self, "services_select")
+  end
+  
+  def index
+#    raise(StandardError, params)
+  end
+
+  def service_categories_select
+    @service_categories_select ||= Filtrable.new(self, "service_categories_select")
+#    raise(StandardError, [@service_categories_select.session_filtr_params, @service_categories_select.session_filtr_params["own_and_home_regions_rouming"]["calls_out"]['is_chosen']])
   end
   
   def customer_service_sets
@@ -270,6 +284,8 @@ class Customer::TarifOptimizatorController < ApplicationController
 
    :service_ids_batch_size => optimization_params.session_filtr_params['service_ids_batch_size'], 
    :accounting_period => service_choices.session_filtr_params['accounting_period'],
+   :calculate_with_limited_scope => service_choices.session_filtr_params['calculate_with_limited_scope'],
+   :selected_service_categories => selected_service_categories,
    
    :services_by_operator => {
       :operators => operators, :tarifs => tarifs, :tarif_options => tarif_options, 
@@ -345,7 +361,7 @@ class Customer::TarifOptimizatorController < ApplicationController
   
   def saved_tarif_optimization_inputs
 #    @saved_tarif_optimization_inputs ||= 
-    tarif_optimization_inputs_saver('user_input').results
+    tarif_optimization_inputs_saver('user_input').results || {}
   end
   
   def accounting_periods
@@ -356,35 +372,46 @@ class Customer::TarifOptimizatorController < ApplicationController
     accounting_period = accounting_periods.blank? ? -1 : accounting_periods[0]['accounting_period']  
     if !session[:filtr] or session[:filtr]['service_choices_filtr'].blank?
       session[:filtr] ||= {}; session[:filtr]['service_choices_filtr'] ||= {}
-      session[:filtr]['service_choices_filtr']  = if saved_tarif_optimization_inputs.blank?
+      session[:filtr]['service_choices_filtr']  = if saved_tarif_optimization_inputs.blank? or saved_tarif_optimization_inputs['service_choices'].blank?
         {
           'tarifs_bln' => [], 'tarifs_mgf' => [], 'tarifs_mts' => [],
           'tarif_options_bln' => [], 'tarif_options_mgf' => [], 'tarif_options_mts' => [], 
           'common_services_bln' => [], 'common_services_mgf' => [], 'common_services_mts' => [], 
           'accounting_period' => accounting_period,
-          'calculate_only_chosen_services' => 'false'
+          'calculate_only_chosen_services' => 'false',
+          'calculate_with_limited_scope' => 'false'
           }        
       else
-        saved_tarif_optimization_inputs.merge({'accounting_period' => accounting_period, 'calculate_only_chosen_services' => 'false'})
+        (saved_tarif_optimization_inputs['service_choices'] || {}).merge({'accounting_period' => accounting_period, 'calculate_only_chosen_services' => 'false'})
       end 
     end
-    
+
     if !session[:filtr] or session[:filtr]['services_select_filtr'].blank?
       session[:filtr] ||= {}; session[:filtr]['services_select_filtr'] ||= {}
-      session[:filtr]['services_select_filtr']  = if saved_tarif_optimization_inputs.blank?
+      session[:filtr]['services_select_filtr']  = if saved_tarif_optimization_inputs.blank? or saved_tarif_optimization_inputs['services_select'].blank?
         {
           'operator_bln' => 'true', 'operator_mgf' => 'true', 'operator_mts' => 'true',
           'tarifs' => 'true', 'common_services' => 'false', 
           'all_tarif_options' => 'false'
           }        
       else
-        saved_tarif_optimization_inputs
+        saved_tarif_optimization_inputs['services_select'] || {}
       end 
     end
     
+    if !session[:filtr] or session[:filtr]['service_categories_select_filtr'].blank?
+      session[:filtr] ||= {}; session[:filtr]['service_categories_select_filtr'] ||= {}
+      session[:filtr]['service_categories_select_filtr']  = if saved_tarif_optimization_inputs.blank? or saved_tarif_optimization_inputs['service_categories_select'].blank?
+        ServiceHelper::SelectedCategoriesBuilder.selected_services_to_session_format
+      else
+        saved_tarif_optimization_inputs['service_categories_select'] || {}
+      end 
+    end
+#    raise(StandardError)
+    
     if !session[:filtr] or session[:filtr]['optimization_params_filtr'].blank?
       session[:filtr] ||= {}; session[:filtr]['optimization_params_filtr'] ||= {}
-      session[:filtr]['optimization_params_filtr']  = if saved_tarif_optimization_inputs.blank?
+      session[:filtr]['optimization_params_filtr']  = if saved_tarif_optimization_inputs.blank? or saved_tarif_optimization_inputs['optimization_params'].blank?
         {
           'calculate_on_background' => 'true',
           'service_set_based_on_tarif_sets_or_tarif_results' => 'final_tarif_sets_by_parts',
@@ -408,7 +435,7 @@ class Customer::TarifOptimizatorController < ApplicationController
           'what_format_of_results' => 'results_for_customer',     
         } 
       else
-        saved_tarif_optimization_inputs
+        saved_tarif_optimization_inputs['optimization_params'] || {}
       end
     end
   end
@@ -457,6 +484,11 @@ class Customer::TarifOptimizatorController < ApplicationController
       result['tarif_options'].uniq!
     end
     result
+  end
+  
+  def selected_service_categories    
+    selected_services = ServiceHelper::SelectedCategoriesBuilder.selected_services_from_session_format(service_categories_select.session_filtr_params)
+    ServiceHelper::SelectedCategoriesBuilder.service_categories_from_selected_services(selected_services)
   end
   
 end

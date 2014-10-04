@@ -1,10 +1,36 @@
 Dir[Rails.root.join("db/seeds/definitions/01_service_categories.rb")].sort.each { |f| require f }
 class ServiceHelper::CallsStatCalculator
-  attr_reader :user_id, :accounting_period
+  attr_reader :user_id, :accounting_period, :calculation_scope, :calculation_scope_where_hash
   
   def initialize(options = {})
     @user_id = options[:user_id] || 0
     @accounting_period = options[:accounting_period]
+    @calculation_scope = {:where_hash => {}}
+    @calculation_scope_where_hash = 'true'
+  end
+  
+  def calculate_calculation_scope(query_constructor, selected_service_categories)
+    @calculation_scope = {:where_hash => {}}
+    selected_service_categories.each do |part, selected_service_categories_by_part|
+      service_categories_where_condition = ['false']
+      selected_service_categories_by_part.each do |service_category_name, service_category_criteria|
+        service_category_where_condition = ['true']
+        service_category_criteria.each do |criteria_type, criteria_value|
+          service_category_where_condition << query_constructor.categories_where_hash[criteria_value] if criteria_value
+        end if service_category_criteria
+        service_categories_where_condition << "(#{service_category_where_condition.join(' and ')})"
+      end if selected_service_categories_by_part
+      calculation_scope[:where_hash][part] = "(#{service_categories_where_condition.join(' or ')})"
+    end if selected_service_categories
+    calculation_scope[:parts] = calculation_scope[:where_hash].keys + ['onetime', 'periodic']
+    @calculation_scope_where_hash = calculate_calculation_scope_where_hash
+#    raise(StandardError, @calculation_scope_where_hash)
+  end
+
+  def calculate_calculation_scope_where_hash
+    where_hash = ['false'] 
+    where_hash << calculation_scope[:where_hash].collect { |part, where_hash_by_part| where_hash_by_part } if calculation_scope[:where_hash]
+    where_hash.join(' or ')
   end
   
   def calculate_calls_stat(query_constructor)
@@ -27,7 +53,7 @@ class ServiceHelper::CallsStatCalculator
         "'[#{call_types}]' as call_types",
         "#{calls_stat_functions_string(calls_stat_category_criteria[:stat_functions])}",
       ]
-      calls_stat_category_sql << Customer::Call.where(:user_id => user_id).
+      calls_stat_category_sql << Customer::Call.where(:user_id => user_id).where(calculation_scope_where_hash).
         where("description->>'accounting_period' = '#{accounting_period}'").
         select(fields.join(', ')).where(where_condition.join(' and ')).to_sql
     end
@@ -53,7 +79,7 @@ class ServiceHelper::CallsStatCalculator
       part = uniq_parts_by_operator[i]
       where_condition = where_part.join(' and ') if !where_part.blank?
 
-      calls_count_by_parts[part] = Customer::Call.where( where_condition ).count(:id)
+      calls_count_by_parts[part] = Customer::Call.where( where_condition ).where(calculation_scope_where_hash).count(:id)
       i += 1
     end
     calls_count_by_parts
