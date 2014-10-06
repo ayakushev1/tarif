@@ -104,8 +104,13 @@ Rails.application.routes.draw do
 #    get 'categories/' => 'categories#index'    
   end
   
+
   resources :users, :tarif_classes
-  
+  controller :users do
+#    post 'users/:id/' => 'users#update'
+  end  
+
+
   resources :parameters, only: :index
   resources :categories, only: :index
   
@@ -120,7 +125,7 @@ Rails.application.routes.draw do
 
 #for testing
   get "formable_concerns/", :controller => 'formable_concerns', :action => :new, :as => "formable_concerns/new"     
-  get "users/new_1", :controller => 'users', :action => :new, :as => "new/users" #for testing     
+#  get "users/new_1", :controller => 'users', :action => :new, :as => "new/users" #for testing     
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

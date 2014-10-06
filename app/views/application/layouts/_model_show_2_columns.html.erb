@@ -13,8 +13,6 @@ form_html_options_1 = form_html_options.collect { |key, value| "#{key}='#{value}
 	  <legend><%= form_item.caption %></legend>
 	<% end %>
 
-	<p id="notice" class="text-info text-alert"><%= notice %></p>
-	
 	<% form_item.fields(form_item.model) do |label_1, field_1, label_2, field_2| %>
 	  <div class="row span12">
 	      <p class="span2 text-right"><strong><%= add_css(label_1, style_table ) %></strong></p>

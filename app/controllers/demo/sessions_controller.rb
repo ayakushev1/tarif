@@ -10,9 +10,9 @@ class Demo::SessionsController < ApplicationController
       user =User.find_by_name(@login["login"])
       if user and user.authenticate(@login["password"])
         session[:current_user]["user_id"]=user.id
-        redirect_to root_path 
+        redirect_to root_path, notice: "Вы вошли как #{user.name}"
       else
-        redirect_to demo_login_path, alert: "Неправильный логин или пароль"  
+        redirect_to demo_login_path, alert: "Неправильный логин или пароль"
       end
     else
       redirect_to demo_login_path, alert: "there is no :login in params"

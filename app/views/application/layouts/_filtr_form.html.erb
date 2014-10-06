@@ -24,7 +24,6 @@ form_options = form_options.merge(form_html_options)
 <% if form_item.caption %> 
   <legend><%= form_item.caption %></legend>
 <% end %>
-<div class="alert-error"><%= flash[:alert] %></div>
 
 <%= form_tag(form_item.action_on_submit, form_options) do %>
 	<%if form_options[:class] =~ /form-inline/ %>

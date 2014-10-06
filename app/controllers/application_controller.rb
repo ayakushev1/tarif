@@ -50,6 +50,7 @@ class ApplicationController < ActionController::Base
   end
 
   def render_js(id_of_page_to_substitute, template = action_name)
+#    raise(StandardError)
     view_context.tap do |v|
       js_string = v.content_tag(:div, render_to_string(template), {:id => v.view_id_name})
       js_string = "$('##{id_of_page_to_substitute}').html(\" #{v.escape_javascript js_string} \");"          

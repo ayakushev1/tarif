@@ -22,8 +22,6 @@ form_options = form_options.merge(form_html_options)
   <% if form_item.caption %> 
 	<legend><%= form_item.caption %></legend>
   <% end %>
-	<p id="notice" class="text-info text-alert"><%= notice %></p>
-	<div class="alert-error"><%= flash[:alert]%></div>
 
  	<div class="span5">
 	    <% form_item.fields(form_item.filtr_name) do |label_1, field_1, label_2, field_2| %>
