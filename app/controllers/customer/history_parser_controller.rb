@@ -22,23 +22,15 @@ class Customer::HistoryParserController < ApplicationController
   end
 
   def upload
-#    max_step = 1
-#    i = 0
-#    begin
-#      sleep 1
-#      i += 1
-#    end while (i < max_step) and !remotipart_submitted? and !params[:call_history]
-    
-#    @uploaded_call_history_file = params[:call_history]
     background_parser_processor(:calculation_status, :prepare_for_upload, :parse_uploaded_file, params[:call_history])
   end
   
   def background_parser_processor(status_action, finish_action, parser_starter, call_history_file)  
     call_history_saver.clean_output_results      
     @notice = if remotipart_submitted?
-      'submitted via remotipart'
+      ""#'submitted via remotipart'
     else
-      'submitted via native jquery-ujs'
+      ""#'submitted via native jquery-ujs'
     end
 
     if parsing_params[:calculate_on_background]
@@ -88,17 +80,17 @@ class Customer::HistoryParserController < ApplicationController
     if uploaded_call_history_file      
       message = check_uploaded_call_history_file(uploaded_call_history_file)
       call_history_to_save = {'message' => {:file_is_good => false, 'message' => message} }
+#raise(StandardError, [message[:file_is_good], parsing_params[:save_processes_result_to_stat] ])
       if message[:file_is_good]
         parser = Calls::HistoryParser.new(uploaded_call_history_file, user_params, parsing_params)
         parser.parse
         message = {:file_is_good => false, 'message' => "Обработано #{parser.processed_percent}%"}
         call_history_to_save = {
-          'processed' => (parsing_params['save_processes_result_to_stat'] ? parser.processed : nil),
+          'processed' => (parsing_params[:save_processes_result_to_stat] ? parser.processed : nil),
           'unprocessed' => parser.unprocessed,
           'ignorred' => parser.ignorred,
           'message' => {:file_is_good => false, 'message' => "Обработано #{parser.processed_percent}%"},
         }
-#        raise(StandardError, [parser.processed, current_user.id])
         Customer::Call.batch_save(parser.processed, {:user_id => current_user.id})
       end                  
       call_history_saver.save({:result => call_history_to_save})
@@ -197,7 +189,7 @@ class Customer::HistoryParserController < ApplicationController
     if !session[:filtr] or session[:filtr]['user_params_filtr'].blank?
       saved_user_params = parsing_params_saver('user_params').results
       session[:filtr] ||= {}; session[:filtr]['user_params_filtr'] ||= {}
-      session[:filtr]['user_params_filtr'] = if saved_user_params.blank?
+      session[:filtr]['user_params_filtr'] = if saved_user_params['history_parser_user_params'].blank?
         {'own_phone_number' => '100000000', 
          'operator_id' => 1030, 
          'region_id' => 1238, 

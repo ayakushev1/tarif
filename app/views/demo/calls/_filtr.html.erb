@@ -1,0 +1,57 @@
+<%
+form_item.init do |f|
+#  f.caption = "Filtr fields"	
+  f.set_fields do |filtr_name|
+    s = session[:filtr][filtr_name]
+    action_name = demo_calls_path
+    query = Customer::Call.where(:user_id => controller.current_user.id).query_hash_from_filtr_with_all_keys_excluded(session[:filtr][filtr_name])
+  [
+  	["", collection_select(filtr_name, "base_service_id", Category.where(:id => Customer::Call.query_from_filtr(s, "base_service_id").pluck(:base_service_id).uniq ), :id, :name, 
+  	   {:include_blank => "Услуга", :selected => s["base_service_id"] }, {:action_name => action_name} )
+  	],
+  	["", collection_select(filtr_name, "base_subservice_id", Category.where(:id => Customer::Call.query_from_filtr(s, "base_subservice_id").pluck(:base_subservice_id).uniq ), :id, :name, 
+  	   {:include_blank => "Направление услуги", :selected => s["base_subservice_id"] }, {:action_name => action_name} )
+  	],
+#  	["", collection_select(filtr_name, "user_id", User.where(:id => Customer::Call.query_from_filtr(s, "user_id").pluck(:user_id).uniq ), :id, :name, 
+#  	   {:include_blank => "Пользователь", :selected => s["user_id"] }, {:action_name => action_name} )
+#  	],
+#  	["", select(filtr_name, "own_phone[number]", Customer::Call.query_from_filtr(s, "own_phone[number]").collect { |q| q.own_phone['number'] }.uniq , 
+#  	   {:include_blank => "Телефон пользователя", :selected => (s["own_phone"]["number"] if s["own_phone"] )}, {:action_name => action_name} )
+#  	],
+#  	["", collection_select(filtr_name, "own_phone[operator_id]", Category.where(:id => Customer::Call.query_from_filtr(s, "own_phone[operator_id]").collect { |q| q.own_phone['operator_id'] }.uniq ) , :id, :name, 
+#  	   {:include_blank => "Оператор пользователя", :selected => (s["own_phone"]["operator_id"] if s["own_phone"] )}, {:action_name => action_name} )
+#  	],
+#  	["", collection_select(filtr_name, "own_phone[region_id]", Category.where(:id => Customer::Call.query_from_filtr(s, "own_phone[region_id]").collect { |q| q.own_phone['region_id'] }.uniq ) , :id, :name, 
+#  	   {:include_blank => "Регион пользователя", :selected => (s["own_phone"]["region_id"] if s["own_phone"] )}, {:action_name => action_name} )
+#  	],
+#  	["", collection_select(filtr_name, "own_phone[country_id]", Category.where(:id => Customer::Call.query_from_filtr(s, "own_phone[country_id]").collect { |q| q.own_phone['country_id'] }.uniq ) , :id, :name, 
+#  	   {:include_blank => "Страна пользователя", :selected => (s["own_phone"]["country_id"] if s["own_phone"] )}, {:action_name => action_name} )
+#  	],
+  	["", select(filtr_name, "partner_phone[number]", Customer::Call.query_from_filtr(s, "partner_phone[number]").collect { |q| q.partner_phone['number'] }.uniq , 
+  	   {:include_blank => "Телефон 2-й стороны", :selected => (s["partner_phone"]["number"] if s["partner_phone"] )}, {:action_name => action_name} )
+  	],
+  	["", collection_select(filtr_name, "partner_phone[operator_id]", Category.where(:id => Customer::Call.query_from_filtr(s, "partner_phone[operator_id]").collect { |q| q.partner_phone['operator_id'] }.uniq ) , :id, :name, 
+  	   {:include_blank => "Оператор 2-й стороны", :selected => (s["partner_phone"]["operator_id"] if s["partner_phone"] )}, {:action_name => action_name} )
+  	],
+  	["", collection_select(filtr_name, "partner_phone[operator_type_id]", Category.where(:id => Customer::Call.query_from_filtr(s, "partner_phone[operator_type_id]").collect { |q| q.partner_phone['operator_type_id'] }.uniq ) , :id, :name, 
+  	   {:include_blank => "Тип оператора 2-й стороны", :selected => (s["partner_phone"]["operator_type_id"] if s["partner_phone"] )}, {:action_name => action_name} )
+  	],
+  	["", collection_select(filtr_name, "partner_phone[region_id]", Category.where(:id => Customer::Call.query_from_filtr(s, "partner_phone[region_id]").collect { |q| q.partner_phone['region_id'] }.uniq ) , :id, :name, 
+  	   {:include_blank => "Регион 2-й стороны", :selected => (s["partner_phone"]["region_id"] if s["partner_phone"] )}, {:action_name => action_name} )
+  	],   
+  	["", collection_select(filtr_name, "partner_phone[country_id]", Category.where(:id => Customer::Call.query_from_filtr(s, "partner_phone[country_id]").collect { |q| q.partner_phone['country_id'] }.uniq ) , :id, :name, 
+  	   {:include_blank => "Страна 2-й стороны", :selected => (s["partner_phone"]["country_id"] if s["partner_phone"] )}, {:action_name => action_name} )
+  	],   
+  	["", collection_select(filtr_name, "connect[operator_id]", Category.where(:id => Customer::Call.query_from_filtr(s, "connect[operator_id]").collect { |q| q.connect['operator_id'] }.uniq ) , :id, :name, 
+  	   {:include_blank => "Оператор подключения", :selected => (s["connect"]["operator_id"] if s["connect"] )}, {:action_name => action_name} )
+  	],
+  	["", collection_select(filtr_name, "connect[region_id]", Category.where(:id => Customer::Call.query_from_filtr(s, "connect[region_id]").collect { |q| q.connect['region_id'] }.uniq ) , :id, :name, 
+  	   {:include_blank => "Регион подключения", :selected => (s["connect"]["region_id"] if s["connect"] )}, {:action_name => action_name} )
+  	],   
+  	["", collection_select(filtr_name, "connect[country_id]", Category.where(:id => Customer::Call.query_from_filtr(s, "connect[country_id]").collect { |q| q.connect['country_id'] }.uniq ) , :id, :name, 
+  	   {:include_blank => "Страна подключения", :selected => (s["connect"]["country_id"] if s["connect"] )}, {:action_name => action_name} )
+  	],   
+  ] 
+  end
+end
+%>

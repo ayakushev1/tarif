@@ -1,10 +1,8 @@
 class ServiceHelper::AdditionalOptimizationInfoPresenter
-  attr_reader :operator, :user_id, :tarif_count
+  attr_reader :user_id
   
   def initialize(options = {})
-    @operator = options[:operator]
     @user_id = options[:user_id] || 0
-    @tarif_count = options[:tarif_count].to_i
   end
   
   def results

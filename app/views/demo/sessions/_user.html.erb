@@ -1,0 +1,22 @@
+<%
+form_item.init do |f|
+  f.caption = 'Пожалуйста введите логин и пароль'	
+  f.action_on_submit = submit_login_path	
+  f.set_fields do |filtr_name| 
+  [
+  	[label(filtr_name, "login", "Логин"),
+  	 text_field(filtr_name, "login", :value => session[:current_user]["user_name"] )
+  	],
+  	[label(filtr_name, "password", "Пароль"),
+  	 text_field(filtr_name, "password", :value => nil )
+  	],
+  	[label(filtr_name, ""),
+  	 submit_tag("Войти")
+  	],
+  	[label(filtr_name, ""),
+  	 link_to( 'Зарегистрироваться', new_user_path)
+  	],
+  ] 
+  end
+end
+%>

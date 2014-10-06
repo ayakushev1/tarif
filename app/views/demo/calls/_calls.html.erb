@@ -1,0 +1,24 @@
+<%
+table.init do |t|
+#  t.caption = 'Customer calls'
+  t.base_name = 'customer_calls'
+  t.heads = 
+  ['Услуга', 'Направление', 'Пользователь', 'Параметры пользователя', 'Параметры 2-й стороны', 'Параметры подключения', 'Описание']
+  t.set_fields do |call| 
+  [
+#  	call.id,
+  	(call.base_service.name if call.base_service),
+  	(call.base_subservice.name if call.base_subservice),
+  	(call.user.name if call.user),
+  	 call.own_phone,
+#  	(call.own_phone["number"] if call.own_phone["number"]) +
+#  	(call.own_phone_region.name if call.own_phone_region) +
+#  	(call.own_phone_operator.name if call.own_phone_operator),
+  	call.partner_phone,
+  	call.connect,
+  	call.description,
+    ] 
+  end
+end
+%>
+

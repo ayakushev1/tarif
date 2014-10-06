@@ -5,9 +5,9 @@ form_item.init do |fi|
   	action_path = f.object.id ? edit_user_path(f.object) : new_user_path
     action = {:action_name => action_path }
  	  [
-	   [f.label( :name), f.text_field( :name, action)],
-	   [f.label( :password), f.password_field( :password, action)], 
-	   [f.label( :password_confirmation), f.password_field( :password_confirmation, action)],
+	   [f.label( :name, "Логин"), f.text_field( :name, action)],
+	   [f.label( :password, "Пароль"), f.password_field( :password, action)], 
+	   [f.label( :password_confirmation, "Подтверждение пароля"), f.password_field( :password_confirmation, action)],
 	   [f.label( " "), f.submit()],
 	  ]
   end

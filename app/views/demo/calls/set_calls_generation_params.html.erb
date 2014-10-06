@@ -1,0 +1,7 @@
+<%= link_to('На главную страницу', root_path, {:class => "btn btn-large", :type =>"button"}) %>
+<%= link_to('Вернуться назад', demo_optimization_steps_choose_load_calls_options_path, {:class => "btn btn-large", :type =>"button"}) %>
+<%= link_to('Сгенерировать историю звонков', demo_calls_generate_calls_path, {:class => "btn btn-large", :type =>"button"}) %>
+<%= link_to('Посмотреть историю звонков', demo_calls_path, {:class => "btn btn-large", :type =>"button"}) %>
+<br />
+<br />
+<%= render :partial => 'calls_gener_params_accord', :layout => 'application/layouts/accordion', :locals => {:name => 'calls_gener_params_accord', :active => session[:current_accordion_page]['calls_gener_params_accord'].to_i} %>

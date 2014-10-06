@@ -1,0 +1,43 @@
+<%
+form_item.init do |f|
+#  f.caption = "Choice of service"	
+  f.set_fields do |filtr_name|
+    html_options = {:action_name => customer_optimization_results_show_additional_info_path }
+    s = f.session_filtr_params
+    #raise(StandardError, select(filtr_name, "rouming", [["show", true], ["not show", false]], {:selected => s["rouming"]}, html_options ))
+	
+  [
+  	[
+ 	 check_box(filtr_name, "rouming", (s["rouming"] == 'true' ? {:checked => 'checked'} : {} ).merge(html_options), true, false ),
+     label(filtr_name, "rouming", "rouming	."),
+# 	 select(filtr_name, "rouming", [["show", true], ["not show", false]], {:selected => s["rouming"]}, html_options ),
+  	],
+
+  	[
+ 	 check_box(filtr_name, "service", (s["service"] == 'true' ? {:checked => 'checked'} : {} ).merge(html_options), true, false ),
+     label(filtr_name, "service", "	service		."),
+# 	 select(filtr_name, "service", [["show", true], ["not show", false]], {:selected => s["service"]}, html_options ),
+  	],
+
+  	[
+ 	 check_box(filtr_name, "direction", (s["direction"] == 'true' ? {:checked => 'checked'} : {} ).merge(html_options), true, false ),
+     label(filtr_name, "direction", "	service direction	."),
+# 	 select(filtr_name, "direction", [["show", true], ["not show", false]], {:selected => s["direction"]}, html_options ),
+  	],
+
+  	[
+ 	 check_box(filtr_name, "geo", (s["geo"] == 'true' ? {:checked => 'checked'} : {} ).merge(html_options), true, false ),
+     label(filtr_name, "geo", "	geo	."),
+# 	 select(filtr_name, "geo", [["show", true], ["not show", false]], {:selected => s["geo"]}, html_options ),
+  	],
+
+  	[
+ 	 check_box(filtr_name, "operator", (s["operator"] == 'true' ? {:checked => 'checked'} : {} ).merge(html_options), true, false ),
+     label(filtr_name, "operator", "	operator"),
+# 	 select(filtr_name, "operator", [["show", true], ["not show", false]], {:selected => s["operator"]}, html_options ),
+  	],	
+  ]
+	    
+  end
+end
+%>

@@ -1,0 +1,20 @@
+<%
+table.init do |t|
+#  t.caption = 'Ignorred call history'
+  t.base_name = 'unprocessed_call_history'
+  t.current_id_name = 'ignorred_column'
+  t.pagination_per_page = 100
+  t.id_name = 'ignorred_column'
+  model_keys = t.model.collect {|row| row.keys }.flatten.uniq.collect{|key| key unless [].include?(key)}.compact  
+  t.heads = model_keys.collect{|model_key| model_key.to_s.split('_').join(' ')}
+  t.set_fields do |f| 
+  	model_keys.collect do |key|
+  	  if key == 'price_value'
+  	  	f[key].round(2) if f[key]
+  	  else
+  	  	f[key]
+  	  end 
+    end
+  end
+end
+%>

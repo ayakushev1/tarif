@@ -1,6 +1,58 @@
 Rails.application.routes.draw do
-  root 'home#index'
-  
+#  root 'home#index'
+  root 'demo/home#index'
+
+  namespace :demo do
+    controller :home do
+      get 'home/demo_results' => :demo_results
+    end
+
+    controller :sessions do
+      get 'login' => :new
+      get 'submit_login' => :create
+      get 'logout' => :destroy
+    end
+    
+    controller :optimization_steps do      
+      get 'optimization_steps/choose_load_calls_options' => :choose_load_calls_options
+      get 'optimization_steps/check_loaded_calls' => :check_loaded_calls
+      get 'optimization_steps/choose_optimization_options' => :choose_optimization_options
+      get 'optimization_steps/optimize_tarifs' => :optimize_tarifs
+      get 'optimization_steps/show_optimized_tarifs' => :show_optimized_tarifs
+    end
+    
+    controller :calls do
+      get 'calls/' => :index
+      get 'calls/set_calls_generation_params' => :set_calls_generation_params
+      get 'calls/set_default_calls_generation_params' => :set_default_calls_generation_params
+      get 'calls/generate_calls' => :generate_calls
+    end
+
+    controller :history_parser do
+      get 'history_parser/prepare_for_upload' => :prepare_for_upload
+      post 'history_parser/upload' => :upload
+      get 'history_parser/upload' => :upload
+      get 'history_parser/calculation_status' => :calculation_status
+    end
+
+    controller :tarif_optimizator do      
+      get 'tarif_optimizator/index' => :index
+      get 'tarif_optimizator/recalculate' => :recalculate
+      get 'tarif_optimizator/calculation_status' => :calculation_status
+      get 'tarif_optimizator/select_services' => :select_services
+    end
+
+    controller :optimization_results do
+      get 'optimization_results/show_customer_results' => :show_customer_results
+    end
+    
+  end  
+=begin  
+    controller :project_support do
+      get 'project_support/donate' => :donate
+    end
+  end
+=end  
   resources :tarif_lists, :price_lists
   
   namespace :customer do
@@ -11,11 +63,14 @@ Rails.application.routes.draw do
       get 'tarif_optimizator/select_services' => :select_services
       get 'tarif_optimizator/update_minor_results' => :update_minor_results
       get 'tarif_optimizator/prepare_final_tarif_results' => :prepare_final_tarif_results
-      get 'tarif_optimizator/show_results' => :show_results
-      get 'tarif_optimizator/show_customer_results' => :show_customer_results
-      get 'tarif_optimizator/show_additional_info' => :show_additional_info
     end   
 
+    controller :optimization_results do
+      get 'optimization_results/show_results' => :show_results
+      get 'optimization_results/show_customer_results' => :show_customer_results
+      get 'optimization_results/show_additional_info' => :show_additional_info
+    end
+    
     resources :services, only: [:index] do
       get 'calculate_statistic', on: :collection
     end   
@@ -28,7 +83,6 @@ Rails.application.routes.draw do
     end
 
     controller :history_parser do
-      get 'history_parser/' => :index
       get 'history_parser/prepare_for_upload' => :prepare_for_upload
       post 'history_parser/upload' => :upload
       get 'history_parser/upload' => :upload

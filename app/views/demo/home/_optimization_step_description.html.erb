@@ -1,0 +1,13 @@
+<div>
+	<h5>Описание шагов по подбору тарифа</h5>
+	<p>Для подбора тарифа необходимо загрузить вашу историю звонков или ее смоделировать. 
+	   После этого вы можете выбрать набор услуг оператора (роуминг, звонки, смс, интернет и т.д.), для которых вы хотите
+	   подобрать тариф. Это можно использовать для подбора тарифов для телефонов с двумя сим-картами. 
+	   Ниже приведено более детальное описание. 
+	</p>
+	<%= link_to('Приступить к подбору тарифа', demo_optimization_steps_choose_load_calls_options_path, {:class => "btn btn-large", :type =>"button"}) %> 
+</div>
+<br />
+<%= render :partial => 'demo/home/steps', :layout => 'application/layouts/accordion', :locals => {:name => 'demo_home_steps_accord', :active => session[:current_accordion_page]['demo_home_steps_accord'].to_i} %>
+
+

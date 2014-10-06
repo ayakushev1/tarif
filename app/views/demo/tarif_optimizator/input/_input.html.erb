@@ -1,0 +1,19 @@
+<%
+
+content_in :accordion do |user| 
+  [
+    [
+     'Выбор параметров расчета',
+     (
+	  render(:partial => 'demo/tarif_optimizator/input/service_choices', :layout => 'application/layouts/filtr_form_3_columns', :locals => {:form_item => controller.service_choices} )
+		
+     )          
+    ], 
+    [
+     'Выбор услуг оператора',
+      render(:partial => 'demo/tarif_optimizator/input/service_categories_select', :layout => 'application/layouts/filtr_form_3_columns', 
+        :locals => {:form_item => controller.service_categories_select} )
+    ], 
+  ] 
+end
+%>

@@ -1,0 +1,19 @@
+<%
+
+content_in :accordion do |user| 
+  [
+    [
+     'Подбор оптимального тарифа по детализации звонков',
+     render(:partial => 'demo/home/opportunities/call_history')
+    ], 
+    [
+     'Подбор оптимального тарифа по выбранной модели использования',
+     render(:partial => 'demo/home/opportunities/call_model')
+    ], 
+    [
+     'Подбор оптимального тарифа с учетом выбранного набора услуг оператора',
+     render(:partial => 'demo/home/opportunities/limited_scope')
+    ], 
+  ] 
+end
+%>

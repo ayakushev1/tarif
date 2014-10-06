@@ -1,0 +1,11 @@
+<%= link_to('На главную страницу', root_path, {:class => "btn btn-large", :type =>"button"}) %>
+<%= link_to('Вернуться к выбору вариантов загрузки звонков', demo_optimization_steps_choose_load_calls_options_path, {:class => "btn btn-large", :type =>"button"}) %>
+<%= link_to('Вернуться назад', demo_calls_set_calls_generation_params_path, {:class => "btn btn-large", :type =>"button"}) %>
+<%= link_to('Перейти к подбору тарифа', demo_tarif_optimizator_index_path, {:class => "btn btn-large", :type =>"button"}) %>
+<br />
+<br />
+<%= render :partial => 'filtr', :layout => 'application/layouts/filtr_form', 
+  :locals => {:form_item => controller.filtr, :html => {:class => "form-inline"} }%>
+<br />
+<%= render :partial => 'calls', :layout => 'application/layouts/model_table', :locals => {:table => controller.customer_calls}%>
+

@@ -1,5 +1,5 @@
 class ServiceHelper::OptimizationResultPresenter
-  attr_reader :user_id, :tarif_count
+  attr_reader :user_id
   attr_reader :service_set_based_on_tarif_sets_or_tarif_results, :level_to_show_tarif_result_by_parts, :use_price_comparison_in_current_tarif_set_calculation,
               :max_tarif_set_count_per_tarif
   
@@ -17,7 +17,7 @@ class ServiceHelper::OptimizationResultPresenter
   end
   
   def init_output_choices(options = {})
-    @tarif_count = options[:tarif_count].to_i
+#    @tarif_count = options[:tarif_count].to_i
     @service_set_based_on_tarif_sets_or_tarif_results = options[:service_set_based_on_tarif_sets_or_tarif_results]
     @level_to_show_tarif_result_by_parts = options[:show_zero_tarif_result_by_parts] == 'true' ? -1.0 : 0.0
     @use_price_comparison_in_current_tarif_set_calculation = options[:use_price_comparison_in_current_tarif_set_calculation] == 'true' ? true : false

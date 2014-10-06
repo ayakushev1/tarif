@@ -1,0 +1,31 @@
+<%
+
+content_in :accordion do |user| 
+  [
+    [
+     'Общие параметры', 
+     render( :partial => 'calls_gener_params_general', :layout => 'application/layouts/filtr_form_2_columns', :locals => {:form_item => controller.customer_calls_generation_params_filtr[:general]} )    
+    ], 
+    [
+     'В своем регионе', 
+     render( :partial => 'calls_gener_params_own_region', :layout => 'application/layouts/filtr_form_2_columns', :locals => {:form_item => controller.customer_calls_generation_params_filtr[:own_region]} )    
+    ], 
+    [
+     'В своем домашнем регионе', 
+     render( :partial => 'calls_gener_params_home_region', :layout => 'application/layouts/filtr_form_2_columns', :locals => {:form_item => controller.customer_calls_generation_params_filtr[:home_region]} )    
+    ], 
+    [
+     'Путешествую по стране', 
+     render( :partial => 'calls_gener_params_own_country', :layout => 'application/layouts/filtr_form_2_columns', :locals => {:form_item => controller.customer_calls_generation_params_filtr[:own_country]} )    
+    ], 
+    [
+     'За границей', 
+     render( :partial => 'calls_gener_params_abroad', :layout => 'application/layouts/filtr_form_2_columns', :locals => {:form_item => controller.customer_calls_generation_params_filtr[:abroad]} )    
+    ], 
+    [
+     'Свод параметров', 
+     render( :partial => 'calls_gener_params_report', :layout => 'application/layouts/model_table', :locals => {:table => controller.calls_gener_params_report} )    
+    ], 
+  ] 
+end
+%>

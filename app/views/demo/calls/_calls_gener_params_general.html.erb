@@ -1,0 +1,58 @@
+<%
+
+form_item.init do |f|
+#  f.caption = "Calls generation params for own region"
+#  f.filtr_name = 'customer_calls_generation_params'
+  f.action_on_submit = demo_calls_generate_calls_path	
+  s_filtr = controller.customer_calls_generation_params_filtr[:general].session_filtr_params	
+  f.set_fields do |filtr_name| 
+    html_options = {:action_name => demo_calls_set_calls_generation_params_path}
+  [
+  	['Выберите вариант использования телефона',
+  	 collection_select(filtr_name, "phone_usage_type_id", Category.phone_usage_types_general, :id, :name,  {:include_blank => false, :selected => s_filtr["phone_usage_type_id"] }, html_options ),  	 
+
+#  	 label(filtr_name, " "),
+#  	 submit_tag("Generate calls")
+  	],
+  	
+  	[],
+  	
+  	[label(filtr_name, "country_id", "Ваша страна"),
+  	 collection_select(filtr_name, "country_id", Category.where(:id=>1100), :id, :name,  {:include_blank => false, :selected => s_filtr["country_id"] }, html_options ),
+  	 
+  	 label(filtr_name, "[region_id]", "Ваш регион"),
+  	 collection_select(filtr_name, "region_id", Category.regions.where(:parent_id => s_filtr["country_id"]), :id, :name, 
+  	   {:include_blank => true, :selected => s_filtr["region_id"] }, html_options )
+  	],   
+  	
+  	[label(filtr_name, "operator_id", "Ваш оператор"),
+  	 collection_select(filtr_name, "operator_id", Category.russian_operators, :id, :name, {:include_blank => true, :selected => s_filtr["operator_id"] }, html_options ),   
+  	
+  	 label(filtr_name, "privacy_id", "Физическое или юридическое лицо"),
+  	 collection_select(filtr_name, "privacy_id", Category.privacy, :id, :name, 
+  	   {:include_blank => true, :selected => s_filtr["privacy_id"] }, html_options )
+  	],
+  	
+  	[label(filtr_name, "share_of_time_in_own_region", "Доля прибывания в регионе подключения тарифа, %"),
+     text_field(filtr_name, "share_of_time_in_own_region", html_options.merge({:type => 'range', :min => 0, :max => 1.0, :step => 0.01, :value => s_filtr["share_of_time_in_own_region"] }) )+
+  	 content_tag(:div, {:class => "input-append"}) { content_tag(:span, number_to_percentage(s_filtr["share_of_time_in_own_region"].to_f*100.0, :precision => 0), {:class => "add-on"}) },   
+  	 
+  	 label(filtr_name, "share_of_time_in_home_region", "Доля прибывание в домашнем регионе тарифа, %"),
+     text_field(filtr_name, "share_of_time_in_home_region", html_options.merge({:type => 'range', :min => 0, :max => 1.0, :step => 0.01, :value => s_filtr["share_of_time_in_home_region"] }) )+
+  	 content_tag(:div, {:class => "input-append"}) { content_tag(:span, number_to_percentage(s_filtr["share_of_time_in_home_region"].to_f*100.0, :precision => 0), {:class => "add-on"}) }
+  	],   
+  	
+  	[label(filtr_name, "share_of_time_in_own_country", "Доля путешествий по стране, %"),
+     text_field(filtr_name, "share_of_time_in_own_country", html_options.merge({:type => 'range', :min => 0, :max => 1.0, :step => 0.01, :value => s_filtr["share_of_time_in_own_country"] }) )+
+  	 content_tag(:div, {:class => "input-append"}) { content_tag(:span, number_to_percentage(s_filtr["share_of_time_in_own_country"].to_f*100.0, :precision => 0), {:class => "add-on"}) },   
+  	 
+  	 label(filtr_name, "share_of_time_abroad", "Доля путешествий заграницу, %"),
+     text_field(filtr_name, "share_of_time_abroad", html_options.merge({:type => 'range', :min => 0, :max => 1.0, :step => 0.01, :value => s_filtr["share_of_time_abroad"] }) )+
+  	 content_tag(:div, {:class => "input-append"}) { content_tag(:span, number_to_percentage(s_filtr["share_of_time_abroad"].to_f*100.0, :precision => 0), {:class => "add-on"}) }
+  	],   
+  	
+  ] 
+  end
+end
+%>
+

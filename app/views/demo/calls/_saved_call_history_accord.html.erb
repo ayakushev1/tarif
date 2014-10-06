@@ -1,0 +1,19 @@
+<%
+
+content_in :accordion do |user| 
+  [
+    [
+     'Обработанная история звонков', 
+     render(:partial => 'call_history', :layout => 'application/layouts/model_table', :locals => {:table => controller.saved_call_history})    
+    ], 
+    [
+     'Необработанная история звонков', 
+     render(:partial => 'call_history_unprocessed', :layout => 'application/layouts/model_table', :locals => {:table => controller.saved_call_history_unprocessed})    
+    ], 
+    [
+     'Пропущенная история звонков', 
+     render(:partial => 'call_history_ignorred', :layout => 'application/layouts/model_table', :locals => {:table => controller.saved_call_history_ignorred})    
+    ], 
+  ] 
+end
+%>

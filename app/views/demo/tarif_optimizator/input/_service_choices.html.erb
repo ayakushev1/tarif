@@ -1,0 +1,23 @@
+<%
+form_item.init do |f|
+#  f.caption = "Choice of service"	
+  f.set_fields do |filtr_name|
+    html_options = {:action_name => demo_tarif_optimizator_index_path }
+    s = f.session_filtr_params
+#	s = session[:filtr][filtr_name]
+	
+  [
+  	[
+     label(filtr_name, "calculate_with_limited_scope", "Считать только выбранные направления связи?"),
+ 	 select(filtr_name, "calculate_with_limited_scope", [["Да", true], ["Считать все направления связи", false]], {:selected => s["calculate_with_limited_scope"]}, html_options ),
+
+  	 label(filtr_name, "accounting_period", "Период за который проводить расчет тарифов"),
+  	 collection_select(filtr_name, "accounting_period", 
+  	   controller.accounting_periods, 
+  	   :accounting_period, :accounting_period, {:include_blank => "выберите период расчета", :selected => s["accounting_period"]}, html_options ),
+  	],
+  ]
+	    
+  end
+end
+%>
