@@ -3,7 +3,7 @@ class Demo::HistoryParserController < Customer::HistoryParserController
 
   def check_if_parsing_params_in_session
     if !session[:filtr] or session[:filtr]['user_params_filtr'].blank?
-      saved_user_params = parsing_params_saver('user_params').results
+      saved_user_params = parsing_params_saver('user_params').results || {}
       session[:filtr] ||= {}; session[:filtr]['user_params_filtr'] ||= {}
       session[:filtr]['user_params_filtr'] = if saved_user_params['history_parser_user_params'].blank?
         {'own_phone_number' => '100000000', 
