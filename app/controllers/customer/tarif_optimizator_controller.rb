@@ -10,7 +10,7 @@ class Customer::TarifOptimizatorController < ApplicationController
 
   def prepare_final_tarif_results
     if optimization_params.session_filtr_params['save_interim_results_after_calculating_tarif_results'] == 'false' #or optimization_params.session_filtr_params['save_interim_results_after_calculating_final_tarif_sets'] == 'false'
-      redirect_to({:action => :index}, :alert => "Невозможно обновить данные если save_interim_results_after_calculating_tarif_results or save_interim_results_after_calculating_final_tarif_sets = false")
+      redirect_to({:action => :index}, {:alert => "Невозможно обновить данные если save_interim_results_after_calculating_tarif_results or save_interim_results_after_calculating_final_tarif_sets = false"})
     else
       if optimization_params.session_filtr_params['calculate_on_background'] == 'true'
         [background_process_informer_operators, background_process_informer_tarifs, background_process_informer_tarif].each do |background_process_informer|
@@ -46,7 +46,7 @@ class Customer::TarifOptimizatorController < ApplicationController
 
   def update_minor_results
     if optimization_params.session_filtr_params['save_interim_results_after_calculating_tarif_results'] == 'false'
-      redirect_to({:action => :index}, :alert => "Невозможно обновить данные если save_interim_results_after_calculating_tarif_results = false")
+      redirect_to({:action => :index}, {:alert => "Невозможно обновить данные если save_interim_results_after_calculating_tarif_results = false"})
     else    
       if optimization_params.session_filtr_params['calculate_on_background'] == 'true'
         [background_process_informer_operators, background_process_informer_tarifs, background_process_informer_tarif].each do |background_process_informer|
@@ -96,7 +96,8 @@ class Customer::TarifOptimizatorController < ApplicationController
   def recalculate
     session[:filtr1] = {}   
     if options[:accounting_period].blank? 
-      redirect_to(:action => :index, :error => "Выберите период для расчета")
+#      raise(StandardError)
+      redirect_to({:action => :index}, {:alert => "Выберите период для расчета"})
       return
     end
     

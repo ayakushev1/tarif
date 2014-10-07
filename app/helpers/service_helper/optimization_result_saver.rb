@@ -39,9 +39,9 @@ class ServiceHelper::OptimizationResultSaver
   def where_hash_from_output(output)
     where_hash = {}
     if output
-      where_hash.merge!({:operator_id => output[:operator]}) if output[:operator]
-      where_hash.merge!({:tarif_id => output[:tarif]}) if output[:tarif]
-      where_hash.merge!({:accounting_period => output[:accounting_period]}) if output[:accounting_period]
+      where_hash.merge!({:operator_id => output[:operator]}) #if output[:operator]
+      where_hash.merge!({:tarif_id => output[:tarif]}) #if output[:tarif]
+      where_hash.merge!({:accounting_period => output[:accounting_period]}) #if output[:accounting_period]
     end
     where_hash
   end
