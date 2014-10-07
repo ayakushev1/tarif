@@ -6,21 +6,26 @@ class Customer::HistoryParserController < ApplicationController
   before_action :init_background_process_informer, only: [:upload, :calculation_status, :parse]
 
   def calculation_status
-    if !@background_process_informer.calculating?      
-      redirect_to({:action => :prepare_for_upload})
+    if !@background_process_informer.calculating?     
+      message = call_history_saver.results['message'] 
+      redirect_to({:action => :prepare_for_upload}, {:alert => message})
+#      raise(StandardError, message)
     end
-  end
-  
-  def prepare_for_upload
   end
   
   def parse
     local_call_history_file = File.open('tmp/call_details_vgy_08092014.html')
-    background_parser_processor(:calculation_status, :prepare_for_upload, :parse_local_call_history, local_call_history_file)
+    background_parser_processor(:calculation_status, :prepare_for_upload, :parse_file, local_call_history_file)
   end
 
   def upload
-    background_parser_processor(:calculation_status, :prepare_for_upload, :parse_uploaded_file, params[:call_history])
+    message = upload_file(params[:call_history])
+    if message[:file_is_good] == true
+      background_parser_processor(:calculation_status, :prepare_for_upload, :parse_uploaded_file, params[:call_history])
+    else
+#      raise(StandardError, message)
+      redirect_to( {:action => :prepare_for_upload}, {:alert => message})  
+    end    
   end
   
   def background_parser_processor(status_action, finish_action, parser_starter, call_history_file)  
@@ -41,8 +46,8 @@ class Customer::HistoryParserController < ApplicationController
       end     
       redirect_to :action => status_action
     else
-      send(parser_starter, call_history_file)
-      redirect_to({:action => finish_action})
+      message = send(parser_starter, call_history_file)
+      redirect_to({:action => finish_action}, {:notice => message})
     end
   end
   
@@ -50,40 +55,28 @@ class Customer::HistoryParserController < ApplicationController
     @background_process_informer ||= ServiceHelper::BackgroundProcessInformer.new('parsing_uploaded_file', current_user.id)
   end
   
-  def parse_local_call_history(local_call_history_file)
-    parser = Calls::HistoryParser.new(local_call_history_file, user_params, parsing_params)
+  def parse_uploaded_file(uploaded_call_history_file)
+    call_history_to_save = parse_file(uploaded_call_history_file)
+    Customer::Call.batch_save(call_history_to_save['processed'], {:user_id => current_user.id})
+    call_history_to_save['message']
+  end
+  
+  def parse_file(file)
+    parser = Calls::HistoryParser.new(file, user_params, parsing_params)
     parser.parse
+    message = {:file_is_good => true, 'message' => "Обработано #{parser.processed_percent}%"}
     call_history_to_save = {
       'processed' => parser.processed,
       'unprocessed' => parser.unprocessed,
       'ignorred' => parser.ignorred,
-      'message' => {:file_is_good => true, 'message' => "Обработано #{parser.processed_percent}%"},
+      'message' => message,
     }
     call_history_saver.save({:result => call_history_to_save})
-    message = {:file_is_good => true, 'message' => "Обработано #{parser.processed_percent}%"}
+    call_history_to_save
   end
-
-  def parse_uploaded_file(uploaded_call_history_file)
-    if uploaded_call_history_file      
-      message = check_uploaded_call_history_file(uploaded_call_history_file)
-      call_history_to_save = {'message' => {:file_is_good => false, 'message' => message} }
-      if message[:file_is_good]
-        parser = Calls::HistoryParser.new(uploaded_call_history_file, user_params, parsing_params)
-        parser.parse
-        message = {:file_is_good => false, 'message' => "Обработано #{parser.processed_percent}%"}
-        call_history_to_save = {
-          'processed' => (parsing_params[:save_processes_result_to_stat] ? parser.processed : nil),
-          'unprocessed' => parser.unprocessed,
-          'ignorred' => parser.ignorred,
-          'message' => {:file_is_good => false, 'message' => "Обработано #{parser.processed_percent}%"},
-        }
-        Customer::Call.batch_save(parser.processed, {:user_id => current_user.id})
-      end                  
-      call_history_saver.save({:result => call_history_to_save})
-    else
-      message = {:file_is_good => false, 'message' => "Вы не выбрали файл для загрузки"}
-    end
-    message
+  
+  def upload_file(uploaded_call_history_file)
+    uploaded_call_history_file ? check_uploaded_call_history_file(uploaded_call_history_file) : {:file_is_good => false, 'message' => "Вы не выбрали файл для загрузки"}
   end
   
   def check_uploaded_call_history_file(call_history_file)
