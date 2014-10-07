@@ -70,8 +70,8 @@ module Crudable
     def create
       respond_to do |format|
         if @model.save
-          format.html { render @model, notice: "#{self.controller_name.singularize.capitalize} was successfully created." }
-          format.js { render @model, notice: "#{self.controller_name.singularize.capitalize} was successfully created." }
+          format.html { render action: 'show', notice: "#{self.controller_name.singularize.capitalize} was successfully created." }
+          format.js { render action: 'show', notice: "#{self.controller_name.singularize.capitalize} was successfully created." }
         else
           format.html { render action: 'new', error: @model.errors}
           format.js { render action: 'new',  error: @model.errors }
@@ -85,12 +85,12 @@ module Crudable
     def update
       respond_to do |format|
         if @model.save#update(model_params)
-          format.html { render @model, notice: "#{self.controller_name.singularize.capitalize} was successfully updated."}
-          format.js { render @model, notice: "#{self.controller_name.singularize.capitalize} was successfully updated." }
+          format.html { render action: 'show', notice: "#{self.controller_name.singularize.capitalize} was successfully updated."}
+          format.js { render action: 'show', notice: "#{self.controller_name.singularize.capitalize} was successfully updated." }
           format.json { render action: 'show', status: :created, location: @model }
         else
           format.html { render action: 'edit', error: @model.errors }
-#          format.js { render action: 'edit',  error: @model.errors }
+          format.js { render action: 'edit',  error: @model.errors }
           format.json { render json: @model.errors, status: :unprocessable_entity }
         end
       end
