@@ -51,7 +51,7 @@ class Calls::HistoryParser
       row = call_details_doc[doc_i].css('td').to_a.map{|column| column.text}
 
       date = row_date(row)
-      if date.to_date.month.to_i == user_params[:accounting_period_month].to_i and date.to_date.year.to_i == user_params[:accounting_period_year].to_i
+      if date.to_date.month.to_i >= user_params[:accounting_period_month].to_i and date.to_date.year.to_i == user_params[:accounting_period_year].to_i
         result << parse_row(row, date) 
         i += 1
       end 

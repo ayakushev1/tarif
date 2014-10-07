@@ -7,9 +7,7 @@ class Customer::HistoryParserController < ApplicationController
 
   def calculation_status
     if !@background_process_informer.calculating?      
-      message = call_history_results['message']['message'] if call_history_results and call_history_results['message']
-      call_history_saver.save({:result => {'message' => nil}})
-      redirect_to({:action => :prepare_for_upload}, :alert => message)
+      redirect_to({:action => :prepare_for_upload})
     end
   end
   
@@ -27,12 +25,6 @@ class Customer::HistoryParserController < ApplicationController
   
   def background_parser_processor(status_action, finish_action, parser_starter, call_history_file)  
     call_history_saver.clean_output_results      
-    @notice = if remotipart_submitted?
-      ""#'submitted via remotipart'
-    else
-      ""#'submitted via native jquery-ujs'
-    end
-
     if parsing_params[:calculate_on_background]
       @background_process_informer.clear_completed_process_info_model
       @background_process_informer.init(0, 100)
@@ -40,11 +32,8 @@ class Customer::HistoryParserController < ApplicationController
       Spawnling.new(:argv => "parsing call history file for #{current_user.id}") do
         begin
           @background_process_informer.init(0, 100)
-          message = send(parser_starter, call_history_file)
-          message['message'] = message['message'] + '    ' + @notice
-          call_history_saver.save({:result => {'message' => {'message' => message}}})
+          send(parser_starter, call_history_file)
         rescue => e
-          call_history_saver.save({:result => {'message' => {'message' => e}}})
           raise(e)
         ensure
           @background_process_informer.finish
@@ -52,10 +41,8 @@ class Customer::HistoryParserController < ApplicationController
       end     
       redirect_to :action => status_action
     else
-      message = send(parser_starter, call_history_file)
-      message ||= {'message' => ""}
-      message['message'] = (message['message'] || "") + '    ' + (@notice || "")
-      redirect_to({:action => finish_action}, :alert => (message || {})['message'])
+      send(parser_starter, call_history_file)
+      redirect_to({:action => finish_action})
     end
   end
   
@@ -80,7 +67,6 @@ class Customer::HistoryParserController < ApplicationController
     if uploaded_call_history_file      
       message = check_uploaded_call_history_file(uploaded_call_history_file)
       call_history_to_save = {'message' => {:file_is_good => false, 'message' => message} }
-#raise(StandardError, [message[:file_is_good], parsing_params[:save_processes_result_to_stat] ])
       if message[:file_is_good]
         parser = Calls::HistoryParser.new(uploaded_call_history_file, user_params, parsing_params)
         parser.parse
@@ -132,8 +118,7 @@ class Customer::HistoryParserController < ApplicationController
   end  
 
   def call_history_saver
-#    @call_history_saver ||= 
-    ServiceHelper::OptimizationResultSaver.new('call_history', 'call_history', current_user.id)
+    @call_history_saver ||= ServiceHelper::OptimizationResultSaver.new('call_history', 'call_history', current_user.id)
   end
   
   def call_history_results
