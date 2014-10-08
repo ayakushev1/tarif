@@ -28,7 +28,8 @@ class ServiceHelper::TarifOptimizator
   
   def init_input_data(options)
     @options = options
-    @fq_tarif_region_id = (options[:user_region_id] and options[:user_region_id] != 0 ? options[:user_region_id] : 1238)
+    @fq_tarif_region_id = ((options[:user_region_id] and options[:user_region_id] != 0) ? options[:user_region_id] : 1238)
+#raise(StandardError, [@fq_tarif_region_id, options[:user_region_id]])    
     @user_id = options[:user_id] || 0
     @calculate_with_limited_scope = (options[:calculate_with_limited_scope] == 'true' ? true : false)
     @selected_service_categories = options[:selected_service_categories]

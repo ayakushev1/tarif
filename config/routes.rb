@@ -1,4 +1,25 @@
 Rails.application.routes.draw do
+  devise_for :users
+
+  devise_scope :user do
+    get "users/new" => "devise/registrations#new"
+    post "users/create" => "devise/registrations#create"
+    get "users/edit" => "devise/registrations#edit"
+    patch "users" => "devise/registrations#update"
+    put "users" => "devise/registrations#update"
+    delete "users" => "devise/registrations#destroy"
+    
+    get "login" => "devise/sessions#new"
+    post "submit_login" => "devise/sessions#create"
+    get "logout" => "devise/sessions#destroy"
+
+    get "demo/login" => "devise/sessions#new"
+    post "demo/submit_login" => "devise/sessions#create"
+    get "demo/logout" => "devise/sessions#destroy"
+  end
+
+#  devise_for :users, :path => '', :path_names => {:sign_in => 'login', :sign_out => 'logout'}
+#  devise_for :users, path: "auth", path_names: { sign_in: 'login', sign_out: 'logout', password: 'secret', confirmation: 'verification', unlock: 'unblock', registration: 'register', sign_up: 'cmon_let_me_in' }
 #  root 'home#index'
   root 'demo/home#index'
 
@@ -9,7 +30,7 @@ Rails.application.routes.draw do
 
     controller :sessions do
       get 'login' => :new
-      get 'submit_login' => :create
+      post 'submit_login' => :create
       get 'logout' => :destroy
     end
     
@@ -117,7 +138,7 @@ Rails.application.routes.draw do
 
   controller :sessions do
     get 'login' => :new
-    get 'submit_login' => :create
+    post 'submit_login' => :create
     get 'logout' => :destroy
     get 'new_location' => :new_location
     get 'set_new_location' => :choose_location

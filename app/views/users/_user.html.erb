@@ -3,7 +3,8 @@ form_item.init do |fi|
   fi.caption =  'Профиль'
   fi.set_fields do  |user| 
     [
-      ['Логин', user.name], 
+      ['Имя', user.name], 
+      ['Электронная почта', user.email], 
     ] 
   end  
 end

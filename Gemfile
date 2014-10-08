@@ -87,6 +87,13 @@ end
 gem 'spawnling', :git => 'git://github.com/tra/spawnling'
 
 gem 'puma'
+
+gem 'devise'
+
+group :development, :test do
+ gem 'foreman'
+end 
+
 #gem 'ruby-prof'
 
 

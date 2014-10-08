@@ -1,5 +1,4 @@
 class Demo::HistoryParserController < Customer::HistoryParserController
-  layout 'demo_application'
 
   def check_if_parsing_params_in_session
     if !session[:filtr] or session[:filtr]['user_params_filtr'].blank?

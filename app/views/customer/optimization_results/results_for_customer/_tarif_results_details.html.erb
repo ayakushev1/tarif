@@ -6,13 +6,13 @@ table.init do |t|
   t.pagination_per_page = 100
   t.id_name = 'service_category_name'#'service_category_tarif_class_id'
   model_keys = t.model.collect {|row| row.keys }.flatten.uniq.collect{|key| key unless [].include?(key)}.compact  
-  t.heads = ['Тип роуминга', 'Услуга', 'География услуги', 'u' , 'Тип принимающего оператор','Стоимость в месяц, руб', 'Кол-во обработанных записей', 'Кол-во минут', 'Кол-во смс и ммс', 'Объем интернета, Мб']
+  t.heads = ['Тип роуминга', 'Услуга', 'География услуги', 'Тип принимающего оператор','Стоимость в месяц, руб', 'Кол-во обработанных записей', 'Кол-во минут', 'Кол-во смс и ммс', 'Объем интернета, Мб']
   t.set_fields do |f| 
+  	geo = !f['geo_details'].blank? ? content_tag(:a, f['geo'] , {:href => '#', :'data-toggle' =>'tooltip', :title => f['geo_details']}).html_safe : f['geo'] 
   	[
   	 f['rouming'],
   	 ((f['calls'] || '') + (f['fix'] || '')),
-  	 f['geo'],
-  	 f['geo_details'],
+  	 geo,
   	 f['partner'],
   	 (f['price_value'].round(0) if f['price_value']),    
   	 (f['call_id_count'].round(0) if f['call_id_count']),    
@@ -21,6 +21,7 @@ table.init do |t|
      f['internet_volume'],
 #     f['service_category_description'],
 #	 model_keys,    
+#f['geo_details'].to_s
   	] 
   end
 end

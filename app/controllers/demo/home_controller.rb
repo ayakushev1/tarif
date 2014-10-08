@@ -1,5 +1,5 @@
 class Demo::HomeController < ApplicationController
-  layout 'demo_application'
+  skip_before_filter :authenticate_user!, :only => [:index] 
   
 #  def index; end
 

@@ -1,10 +1,9 @@
 class Demo::SessionsController < ApplicationController
-  layout 'demo_application'
 
-  def new
+  def new_1
   end
   
-  def create
+  def create_1
     @login = params["login_filtr"]
     if @login 
       user =User.find_by_name(@login["login"])
@@ -19,13 +18,13 @@ class Demo::SessionsController < ApplicationController
     end
   end
   
-  def destroy
+  def destroy_1
     clean_session
     session[:current_user] = nil
     redirect_to root_path
   end
   
-  def user
+  def user_1
     Filtrable.new(self, "login")
   end
 

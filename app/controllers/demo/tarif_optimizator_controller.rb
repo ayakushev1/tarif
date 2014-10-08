@@ -1,5 +1,4 @@
 class Demo::TarifOptimizatorController < Customer::TarifOptimizatorController
-  layout 'demo_application'
 
   def check_if_optimization_options_are_in_session  
     accounting_period = accounting_periods.blank? ? -1 : accounting_periods[0]['accounting_period']  
