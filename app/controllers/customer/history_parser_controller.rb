@@ -7,9 +7,8 @@ class Customer::HistoryParserController < ApplicationController
 
   def calculation_status
     if !@background_process_informer.calculating?     
-      message = call_history_saver.results['message'] 
-      redirect_to({:action => :prepare_for_upload}, {:alert => message})
-#      raise(StandardError, message)
+#      message = call_history_saver.results['message'] 
+      redirect_to({:action => :prepare_for_upload})#, {:alert => message})
     end
   end
   

@@ -181,11 +181,11 @@ class Customer::TarifOptimizatorController < ApplicationController
   def tarif_optimization_inputs_saver(name)
     @tarif_optimization_inputs_saver ||= ServiceHelper::OptimizationResultSaver.new('tarif_optimization_inputs', name, current_user.id)
   end
-
+  
   def options
   {:operator => operator,
    :user_id=> (current_user ? current_user.id.to_i : nil),
-   :user_region_id => (session[:current_user] ? session[:current_user]["region_id"].to_i : nil),  
+   :user_region_id => (user_session[:region_id] ? user_session[:region_id].to_i : nil),  
    :background_process_informer_operators => @background_process_informer_operators,        
    :background_process_informer_tarifs => @background_process_informer_tarifs,        
    :background_process_informer_tarif => @background_process_informer_tarif,        

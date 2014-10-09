@@ -12,7 +12,7 @@ class ApplicationController < ActionController::Base
   before_action :authenticate_user!, except: -> {controller_name == 'users' }
   before_action :configure_permitted_parameters, if: :devise_controller?
 
-  helper_method :current_or_guest_user 
+  helper_method :current_or_guest_user, :current_user_admin?
 
 #  attr_reader :current_user
 
@@ -78,12 +78,13 @@ class ApplicationController < ActionController::Base
   end
   
   def main_layout
-    current_or_guest_user.name == 'admin@admin' ? 'application' : 'demo_application'
+    current_user_admin? ? 'application' : 'demo_application'
   end
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:sign_in) { |u| u.permit(:name, :email, :password, :password_confirmation) }
-    devise_parameter_sanitizer.for(:account_update) { |u| u.permit(:name, :password, :password_confirmation, :current_password) }
+    devise_parameter_sanitizer.for(:sign_in) << :name #{ |u| u.permit(:name, :email, :password, :password_confirmation) }
+    devise_parameter_sanitizer.for(:sign_in)  << :name #{ |u| u.permit(:name, :email, :password, :password_confirmation) }
+    devise_parameter_sanitizer.for(:account_update)  << :name #{ |u| u.permit(:name, :password, :password_confirmation, :current_password) }
   end  
 
   def after_sign_in_path_for(resource)
@@ -98,5 +99,9 @@ class ApplicationController < ActionController::Base
       u.save!(:validate => false)
       session[:guest_user_id] = u.id
       u
+    end
+    
+    def current_user_admin?
+      (current_user and current_user.email == ENV["TARIF_ADMIN_USERNAME"])
     end
 end

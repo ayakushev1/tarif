@@ -1,7 +1,7 @@
-<% if controller.current_user.id == 0 %>
-  <%= render :partial => 'demo/home/introduction' %>
-<% else %>  
+<% if current_user %>
   <%= render :partial => 'demo/home/optimization_step_description' %>
+<% else %>  
+  <%= render :partial => 'demo/home/introduction' %>
 <% end %>  
 
 

@@ -1,15 +1,6 @@
 # Additional translations at https://github.com/plataformatec/devise/wiki/I18n
 
 ru:
-  activerecord:
-    attributes:
-      user:
-        name: Имя
-        email: Электронный адрес
-        password: Пароль
-        password_confirmation: Подтверждение пароля
-        current_password: Текущий пароль
-        remember_me: Запомнить меня
   devise: 
     confirmations: 
       confirmed: Ваш адрес эл. почты успешно подтвержден. 

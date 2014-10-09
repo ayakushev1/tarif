@@ -1,15 +1,13 @@
 <div class="dropdown pull-right">
 	<div class="">
 		<a class="text-info" data-toggle="dropdown">
-			Пользователь: <strong><%= controller.current_or_guest_user.name %></strong>  <span class="caret"></span>
+			Пользователь: <strong><%= controller.current_user ? controller.current_user.name : 'Гость' %></strong>  <span class="caret"></span>
 		</a>
 		<ul class="dropdown-menu">
-			<% if controller.current_or_guest_user.id == 0 %>
+			<% if !controller.current_user %>
 				<li><%= link_to 'Войти', demo_login_path %></li>
 			<% else %>
-				<% if controller.current_or_guest_user.id == 1 %>
-					<li><%= link_to 'Зайти под другим пользователем', demo_login_path %></li>
-				<% end %>
+				<li><%= link_to 'Профиль', user_path(controller.current_user) %></li>
 				<li><%= link_to 'Выйти', demo_logout_path %></li>
 			<% end %>
 		</ul>

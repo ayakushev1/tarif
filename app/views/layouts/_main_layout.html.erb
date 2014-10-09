@@ -18,7 +18,7 @@
 		<div id="third_row_left_column" class="span3">
 				<%= render('/application/menus/user_menu') %>				
 				<br />			
-				<%= render('/application/menus/admin_menu') if controller.current_or_guest_user.name == 'admin'%>	
+				<%= render('/application/menus/admin_menu') if current_user_admin? %>	
 		</div>
 		<div id="third_row_main_block" class="span12">
 			<div id="main_block_top_row_1" class="row-fluid">

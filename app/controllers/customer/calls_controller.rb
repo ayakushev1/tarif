@@ -105,11 +105,11 @@ class Customer::CallsController < ApplicationController
   
   def update_location_data(params)
     if params['customer_calls_generation_params_general_filtr']
-      session[:current_user]["country_id"] = params['customer_calls_generation_params_general_filtr']['country_id']
-      session[:current_user]["country_name"] = session[:current_user]["country_id"] ? Category.find(session[:current_user]["country_id"]).name : nil
+      user_session["country_id"] = params['customer_calls_generation_params_general_filtr']['country_id']
+      user_session["country_name"] = user_session["country_id"] ? Category.find(user_session["country_id"] ).name : nil
        
-      session[:current_user]["region_id"] = params['customer_calls_generation_params_general_filtr']['region_id']
-      session[:current_user]["region_name"] = session[:current_user]["region_id"] ? Category.find(session[:current_user]["region_id"]).name : nil
+      user_session["region_id"] = params['customer_calls_generation_params_general_filtr']['region_id']
+      user_session["region_name"] = user_session["region_id"] ? Category.find(user_session["region_id"] ).name : nil
     end
   end
   

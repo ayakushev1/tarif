@@ -1,0 +1,26 @@
+# Additional translations at https://github.com/plataformatec/devise/wiki/I18n
+
+ru:
+  activerecord:
+    attributes:
+      user:
+        name: Имя
+        email: Электронный адрес
+        password: Пароль
+        password_confirmation: Подтверждение пароля
+        current_password: Текущий пароль
+        remember_me: Запомнить меня
+        confirmation_token: Ключ подтверждения
+    errors:
+      models:
+        user:
+          attributes:
+            email:
+              taken: Такой электронный адрес уже существует
+            password:
+              blank: Пароль не может быть пустым
+              too_short: Пароль слишком короткий
+            password_confirmation:
+              confirmation: Не совпадают пароли        
+            confirmation_token:
+              invalid: Ссылка для подтверждения электронной почты устаревшая      
