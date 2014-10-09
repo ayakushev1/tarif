@@ -81,6 +81,8 @@ end
 group :production do
   gem 'rails_12factor'
   gem 'rack-timeout'
+
+  gem 'newrelic_rpm'
 end
 
 #gem 'spawnling', '~>2.1' #background processing
