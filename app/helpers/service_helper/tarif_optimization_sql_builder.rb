@@ -266,6 +266,7 @@ class ServiceHelper::TarifOptimizationSqlBuilder
       "service_category_choice_sql as ( #{service_category_choice_sql} ),",
       "stat_sql as ( select #{stat_sql_fields.join(', ')} from fixed_input left outer join service_category_choice_sql on true )",
 #TODO проверить как правильно использовать distinct (здесь он используется для удаления дублирующих записей возникающих при расчета service_category_groups)
+#TODO можно использовать exists instead of distinct (select * from a where exist (select 'any' from a where conditions))
       "select distinct on (#{distinct_fields}) #{fields}",
 #      "select distinct #{fields}",
       "from stat_sql, price_formulas",

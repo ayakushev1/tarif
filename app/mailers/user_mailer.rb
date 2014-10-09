@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default from: "team.tarif@gmail.com"
+  default from: "mytarifs@yandex.ru"
 
   def receive(email)
     page = Page.find_by(address: email.to.first)
