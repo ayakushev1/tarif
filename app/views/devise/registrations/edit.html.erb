@@ -5,20 +5,23 @@
 
   <%= devise_error_messages! %>
 
+  <div><%= f.label :name %><br />
+  <%= f.text_field :name, autofocus: true %></div>
+
   <div><%= f.label :email %><br />
-  <%= f.email_field :email, autofocus: true %></div>
+  <%= f.email_field :email, :disabled => true %></div>
 
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-    <div>Currently waiting confirmation for: <%= resource.unconfirmed_email %></div>
+    <div>Сейчас ожидаем подтверждение от: <%= resource.unconfirmed_email %></div>
   <% end %>
 
-  <div><%= f.label :password %> <i>(leave blank if you don't want to change it)</i><br />
+  <div><%= f.label :password %> <i>(оставьте пустым если не хотите менять)</i><br />
     <%= f.password_field :password, autocomplete: "off" %></div>
 
   <div><%= f.label :password_confirmation %><br />
     <%= f.password_field :password_confirmation, autocomplete: "off" %></div>
 
-  <div><%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
+  <div><%= f.label :current_password %> <i>(нам нужен ваш пароль для подтверждения изменений)</i><br />
     <%= f.password_field :current_password, autocomplete: "off" %></div>
 
   <div><%= f.submit "Изменить" %></div>
