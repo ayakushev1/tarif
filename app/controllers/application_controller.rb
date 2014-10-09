@@ -5,8 +5,8 @@ class ApplicationController < ActionController::Base
 #  before_action :clean_session
 #  layout 'application'
   protect_from_forgery with: :exception
-  skip_before_filter :verify_authenticity_token, if: -> { controller_name == 'sessions'}
-  skip_before_filter :verify_authenticity_token, if: -> { controller_name == 'registrations'}
+#  skip_before_filter :verify_authenticity_token, if: -> { controller_name == 'sessions'}
+#  skip_before_filter :verify_authenticity_token, if: -> { controller_name == 'registrations'}
   layout :main_layout
   before_action :set_current_session#, :authorize
   before_action :authenticate_user!, except: -> {controller_name == 'users' }
@@ -92,7 +92,7 @@ class ApplicationController < ActionController::Base
     
   private
     def create_guest_user
-      u = User.create(:id => 0, :name => "Гость", :email => "guest_#{Time.now.to_i}#{rand(100)}@example.com")
+      u = User.find_or_create_by(:id => 0, :name => "Гость", :email => "guest@example.com")
       u.skip_confirmation_notification!
       u.save!(:validate => false)
       session[:guest_user_id] = u.id
