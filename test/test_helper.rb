@@ -8,6 +8,7 @@ Rails.application.routes.eval_block( Proc.new { resources :tests } )
 Dir[Rails.root.join("db/seeds/definitions/*.rb")].sort.each { |f| require f }
 
 class ActiveSupport::TestCase
+  include Devise::TestHelpers
 #  fixtures :all
   
   def self.prepare

@@ -5,7 +5,7 @@ require 'capybara/rails'
 require 'capybara'
 require 'capybara/dsl'
 
-Dir[Rails.root.join("test/**/*.rb")].each { |f| require f }
+Dir[Rails.root.join("test/controllers/demo/**/*.rb")].each { |f| require f } #limit here the scope of tests
 Dir[Rails.root.join("lib/pages/**/*.rb")].each { |f| require f }
 Dir[Rails.root.join("test/test_helper.rb")].each { |f| require f }
 
