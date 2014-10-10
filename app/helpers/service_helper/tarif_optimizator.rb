@@ -26,6 +26,10 @@ class ServiceHelper::TarifOptimizator
     init_optimization_params
   end
   
+  def aaa
+    UserMailer.welcome_email(User.find(33)).deliver
+  end
+  
   def init_input_data(options)
     @options = options
     @fq_tarif_region_id = ((options[:user_region_id] and options[:user_region_id] != 0) ? options[:user_region_id] : 1238)
@@ -58,7 +62,7 @@ class ServiceHelper::TarifOptimizator
       @minor_result_saver = ServiceHelper::OptimizationResultSaver.new('optimization_results', 'minor_results', user_id)
       @tarif_list_generator = ServiceHelper::TarifListGenerator.new(options[:services_by_operator] || {})
 #              raise(StandardError)
-#      @final_tarif_set_generator = ServiceHelper::FinalTarifSetGenerator.new(options[:services_by_operator] || {})
+##      @final_tarif_set_generator = ServiceHelper::FinalTarifSetGenerator.new(options[:services_by_operator] || {})
       @background_process_informer_operators = options[:background_process_informer_operators] || ServiceHelper::BackgroundProcessInformer.new('operators_optimization', user_id)
       @background_process_informer_tarifs = options[:background_process_informer_tarifs] || ServiceHelper::BackgroundProcessInformer.new('tarifs_optimization', user_id)
       @background_process_informer_tarif = options[:background_process_informer_tarif] || ServiceHelper::BackgroundProcessInformer.new('tarif_optimization', user_id)

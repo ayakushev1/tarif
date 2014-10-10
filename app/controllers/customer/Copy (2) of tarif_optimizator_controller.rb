@@ -18,25 +18,32 @@ class Customer::TarifOptimizatorController < ApplicationController
           background_process_informer.init
         end
         
-        begin
-          ServiceHelper::TarifOptimizationStarter.new().delay.start_prepare_final_tarif_results(options)
-        rescue => e
-          ServiceHelper::OptimizationResultSaver.new('optimization_results', 'Error on preparing_final_tarif_results', current_user.id).({:result => {:error => e}})
-          raise(e)
-        ensure
-          [@background_process_informer_operators, @background_process_informer_tarifs, @background_process_informer_tarif].each do |background_process_informer|
-            background_process_informer.finish
-            background_process_informer = nil
-          end          
-        end            
+        Spawnling.new(:argv => "preparing_final_tarif_results for #{current_user.id}") do
+          begin
+            preparing_final_tarif_results
+          rescue => e
+            ServiceHelper::OptimizationResultSaver.new('optimization_results', 'Error on preparing_final_tarif_results', current_user.id).({:result => {:error => e}})
+            raise(e)
+          ensure
+            [@background_process_informer_operators, @background_process_informer_tarifs, @background_process_informer_tarif].each do |background_process_informer|
+              background_process_informer.finish
+              background_process_informer = nil
+            end          
+          end            
+        end     
         redirect_to(:action => :calculation_status)
       else
-        ServiceHelper::TarifOptimizationStarter.new().start_prepare_final_tarif_results(options)
+        preparing_final_tarif_results
         redirect_to(:action => :show_customer_results)
       end
     end
   end
   
+  def preparing_final_tarif_results
+    tarif_optimizator = ServiceHelper::TarifOptimizator.new(options)
+    tarif_optimizator.prepare_and_save_final_tarif_results
+  end
+
   def update_minor_results
     if optimization_params.session_filtr_params['save_interim_results_after_calculating_tarif_results'] == 'false'
       redirect_to({:action => :index}, {:alert => "Невозможно обновить данные если save_interim_results_after_calculating_tarif_results = false"})
@@ -47,23 +54,32 @@ class Customer::TarifOptimizatorController < ApplicationController
           background_process_informer.init
         end
         
-        begin
-          ServiceHelper::TarifOptimizationStarter.new().delay.start_update_minor_results(options)
-        rescue => e
-          ServiceHelper::OptimizationResultSaver.new('optimization_results', 'Error on updating_minor_results', current_user.id).({:result => {:error => e}})
-          raise(e)
-        ensure
-          [@background_process_informer_operators, @background_process_informer_tarifs, @background_process_informer_tarif].each do |background_process_informer|
-            background_process_informer.finish
-            background_process_informer = nil
-          end          
-        end            
+        Spawnling.new(:argv => "updating_minor_results for #{current_user.id}") do
+          begin
+            updating_minor_results
+          rescue => e
+            ServiceHelper::OptimizationResultSaver.new('optimization_results', 'Error on updating_minor_results', current_user.id).({:result => {:error => e}})
+            raise(e)
+          ensure
+            [@background_process_informer_operators, @background_process_informer_tarifs, @background_process_informer_tarif].each do |background_process_informer|
+              background_process_informer.finish
+              background_process_informer = nil
+            end          
+          end            
+        end     
         redirect_to(:action => :calculation_status)
       else
-        ServiceHelper::TarifOptimizationStarter.new().start_update_minor_results(options)
+        updating_minor_results
         redirect_to(:action => :index)
       end
     end
+  end
+  
+  def updating_minor_results
+    tarif_optimizator = ServiceHelper::TarifOptimizator.new(options)
+    tarif_optimizator.init_input_for_one_operator_calculation(operator)
+    tarif_optimizator.update_minor_results
+    tarif_optimizator.calculate_and_save_final_tarif_sets
   end
   
   def select_services
@@ -78,34 +94,54 @@ class Customer::TarifOptimizatorController < ApplicationController
   end
   
   def recalculate
+#    @a = ServiceHelper::TarifOptimizator.new(options)#.aaa
+#    @a.delay.calculate_all_operator_tarifs
+#    @a = ServiceHelper::TarifOptimizationStarter.new()
+#    @a.delay.start(options)
+#    UserMailer.delay.welcome_email(User.find(33))#.deliver
+#    redirect_to(:action => :index)
+#    return 
+    
     session[:filtr1] = {}   
     if options[:accounting_period].blank? 
+#      raise(StandardError)
       redirect_to({:action => :index}, {:alert => "Выберите период для расчета"})
       return
     end
     
     if optimization_params.session_filtr_params['calculate_on_background'] == 'true'
+=begin      
       [background_process_informer_operators, background_process_informer_tarifs, background_process_informer_tarif].each do |background_process_informer|
         background_process_informer.clear_completed_process_info_model
         background_process_informer.init
       end
       
-      begin
-        @a = ServiceHelper::TarifOptimizationStarter.new()
-        @a.delay.start_calculate_all_operator_tarifs(options)
-        sleep 0.2
-      rescue => e
-        ServiceHelper::OptimizationResultSaver.new('optimization_results', 'Error on optimization', current_user.id).override({:result => {:error => e}})
-        raise(e)
-      ensure
-        [@background_process_informer_operators, @background_process_informer_tarifs, @background_process_informer_tarif].each do |background_process_informer|
-          background_process_informer.finish
-          background_process_informer = nil
-        end          
-      end            
+      Spawnling.new(:argv => 'tarif_optimization') do
+        begin
+          tarif_optimizator = ServiceHelper::TarifOptimizator.new(options)
+          #raise(StandardError, options)
+          tarif_optimizator.calculate_all_operator_tarifs
+        rescue => e
+          ServiceHelper::OptimizationResultSaver.new('optimization_results', 'Error on optimization', current_user.id).override({:result => {:error => e}})
+          raise(e)
+        ensure
+          [@background_process_informer_operators, @background_process_informer_tarifs, @background_process_informer_tarif].each do |background_process_informer|
+            background_process_informer.finish
+            background_process_informer = nil
+          end          
+        end            
+      end     
       redirect_to(:action => :calculation_status)
+=end
+    @a = ServiceHelper::TarifOptimizationStarter.new()
+    @a.delay.start_calculate_all_operator_tarifs(options)
+    sleep 1
+    redirect_to(:action => :calculation_status)
     else
-      ServiceHelper::TarifOptimizationStarter.new().start_calculate_all_operator_tarifs(options)
+      tarif_optimizator = ServiceHelper::TarifOptimizator.new(options)
+      tarif_optimizator.calculate_all_operator_tarifs
+      tarif_optimizator = nil
+#      updating_minor_results
       redirect_to(:action => :index)
     end
     user_input_to_save = {
@@ -135,6 +171,7 @@ class Customer::TarifOptimizatorController < ApplicationController
 
   def service_categories_select
     @service_categories_select ||= Filtrable.new(self, "service_categories_select")
+#    raise(StandardError, [@service_categories_select.session_filtr_params, @service_categories_select.session_filtr_params["own_and_home_regions_rouming"]["calls_out"]['is_chosen']])
   end
   
   def operators_optimization_progress_bar

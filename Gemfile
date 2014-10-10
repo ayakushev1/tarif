@@ -92,6 +92,10 @@ gem 'puma'
 
 gem 'devise'
 
+#gem 'sidekiq'
+gem 'delayed_job_active_record'
+gem "daemons" 
+ 
 group :development, :test do
  gem 'foreman'
 end 
