@@ -7,7 +7,7 @@ describe Demo::HomeController do
 
   describe 'index action' do
     it 'must work for html request' do
-      get :index
+      get :index, format: :js
       assert_response :success
       assert_select('div[id=?]', 'demo_home_index')
     end
@@ -18,6 +18,12 @@ describe Demo::HomeController do
       @response.body.html_safe.must_be :=~, /div id=\\\"demo_home_index\\\"/
     end
 
+    it 'must work for get request with js' do
+      get :index, format: :js
+      assert_response :success
+      assert_select('div[id=?]', 'demo_home_index')
+    end
+    
   end
       
 end

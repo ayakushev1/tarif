@@ -99,7 +99,7 @@ group :development, :test do
  gem 'foreman'
 end 
 
-#gem 'newrelic_rpm'
+gem 'newrelic_rpm'
 
 #gem 'ruby-prof'
 
