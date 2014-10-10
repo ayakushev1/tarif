@@ -12,20 +12,8 @@ describe Demo::HomeController do
       assert_select('div[id=?]', 'demo_home_index')
     end
     
-    it 'must work for html request' do
-      get '/'
-      assert_response :success
-      assert_select('div[id=?]', 'demo_home_index')
-    end
-    
     it 'must work for ajax request' do
       xhr :get, :index, format: :js
-      assert_response :success
-      @response.body.html_safe.must_be :=~, /div id=\\\"demo_home_index\\\"/
-    end
-
-    it 'must work for ajax request' do
-      xhr :get, '/', format: :js
       assert_response :success
       @response.body.html_safe.must_be :=~, /div id=\\\"demo_home_index\\\"/
     end
