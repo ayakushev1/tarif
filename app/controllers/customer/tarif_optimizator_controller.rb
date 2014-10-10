@@ -89,20 +89,15 @@ class Customer::TarifOptimizatorController < ApplicationController
         background_process_informer.clear_completed_process_info_model
         background_process_informer.init
       end
-      
-      begin
-        @a = ServiceHelper::TarifOptimizationStarter.new()
+      @a = ServiceHelper::TarifOptimizationStarter.new()
+      if true
+        Spawnling.new(:argv => "optimize for #{current_user.id}") do
+          @a.start_calculate_all_operator_tarifs(options)          
+        end
+      else
         @a.delay.start_calculate_all_operator_tarifs(options)
-        sleep 0.2
-      rescue => e
-        ServiceHelper::OptimizationResultSaver.new('optimization_results', 'Error on optimization', current_user.id).override({:result => {:error => e}})
-        raise(e)
-      ensure
-        [@background_process_informer_operators, @background_process_informer_tarifs, @background_process_informer_tarif].each do |background_process_informer|
-          background_process_informer.finish
-          background_process_informer = nil
-        end          
-      end            
+      end              
+      sleep 0.2
       redirect_to(:action => :calculation_status)
     else
       ServiceHelper::TarifOptimizationStarter.new().start_calculate_all_operator_tarifs(options)

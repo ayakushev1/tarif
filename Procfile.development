@@ -1,1 +1,1 @@
-web: bundle exec rails s
+web: TRUSTED_IP=10.0.2.2 rails s

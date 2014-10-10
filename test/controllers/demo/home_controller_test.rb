@@ -7,7 +7,7 @@ describe Demo::HomeController do
 
   describe 'index action' do
     it 'must work for html request' do
-      get :index, format: :js
+      get :index
       assert_response :success
       assert_select('div[id=?]', 'demo_home_index')
     end

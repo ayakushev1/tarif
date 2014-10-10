@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
 #  before_action :clean_session
 #  layout 'application'
   protect_from_forgery with: :exception
+  skip_before_filter :verify_authenticity_token, if: -> { allowed_request_origin }
 #  skip_before_filter :verify_authenticity_token, if: -> { controller_name == 'sessions'}
 #  skip_before_filter :verify_authenticity_token, if: -> { controller_name == 'registrations'}
   layout :main_layout
@@ -18,6 +19,7 @@ class ApplicationController < ActionController::Base
 
 
   def default_render(options = nil)
+#    raise(StandardError)
     respond_to do |format|
       format.js {render_js(view_context.default_view_id_name)}
       format.html 
@@ -93,6 +95,11 @@ class ApplicationController < ActionController::Base
   end
     
   private
+    def allowed_request_origin
+#      raise(StandardError)
+      (controller_name == 'home' and action_name == 'index') ? true : false
+    end
+    
     def create_guest_user
       u = User.find_or_create_by(:id => 0, :name => "Гость", :email => "guest@example.com")
       u.skip_confirmation_notification!
