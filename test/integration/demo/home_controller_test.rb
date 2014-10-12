@@ -1,10 +1,8 @@
 require 'test_helper'
 
-describe Demo::HomeController do
-  before do
-    @user = User.find_or_create_by(:id => 0, :name => "Гость", :email => "guest@example.com", :confirmed_at => Time.zone.now)
-    @user.save!(:validate => false)
-    sign_in @user
+describe Demo::HomeController < TestWithCapibara do
+  before :each do
+#    get :sign_in, {:user}
   end
 
   describe 'index action' do
@@ -25,6 +23,7 @@ describe Demo::HomeController do
       assert_response :success
       @response.body.html_safe.must_be :=~, /div id=\\\"demo_home_index\\\"/
     end
+    
   end
-          
+      
 end

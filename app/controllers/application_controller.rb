@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
 #  skip_before_filter :verify_authenticity_token, if: -> { controller_name == 'registrations'}
   layout :main_layout
   before_action :set_current_session#, :authorize
-  before_action :authenticate_user!, except: -> {controller_name == 'users' }
+  before_action :authenticate_user!, except: -> {['users'].include?(controller_name) }
   before_action :configure_permitted_parameters, if: :devise_controller?
 
   helper_method :current_or_guest_user, :current_user_admin?
@@ -19,15 +19,14 @@ class ApplicationController < ActionController::Base
 
 
   def default_render(options = nil)
-#    raise(StandardError)
     respond_to do |format|
       format.js {render_js(view_context.default_view_id_name)}
-      format.html 
+      format.html
+      format.json
     end
   end
 
   def render_js(id_of_page_to_substitute, template = action_name)
-#    raise(StandardError)
     view_context.tap do |v|
       js_string = v.content_tag(:div, render_to_string(template), {:id => v.view_id_name})
       js_string = "$('##{id_of_page_to_substitute}').html(\" #{v.escape_javascript js_string} \");"          
@@ -96,8 +95,8 @@ class ApplicationController < ActionController::Base
     
   private
     def allowed_request_origin
-#      raise(StandardError)
-      (controller_name == 'home' and action_name == 'index') ? true : false
+      allowed_user_agents.include?(request.headers["HTTP_USER_AGENT"])
+#      (controller_name == 'home' and action_name == 'index') ? true : false
     end
     
     def create_guest_user
@@ -110,5 +109,13 @@ class ApplicationController < ActionController::Base
     
     def current_user_admin?
       (current_user and current_user.email == ENV["TARIF_ADMIN_USERNAME"])
+    end
+    
+    def allowed_user_agents
+      [
+        "Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)",
+        "Mozilla/5.0 (compatible; YandexWebmaster/2.0; +http://yandex.com/bots)",
+        "Mozilla/5.0 (compatible; YandexMetrika/2.0; +http://yandex.com/bots)",      
+      ]      
     end
 end

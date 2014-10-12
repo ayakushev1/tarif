@@ -21,6 +21,7 @@ CategoryType.create(id: 23, name: "priority_type")
 CategoryType.create(id: 24, name: "priority_relation")
 CategoryType.create(id: 25, name: "general_priority")
 CategoryType.create(id: 26, name: "tarif_class_general_service_categories")
+CategoryType.create(id: 27, name: "customer_info_type")
 
 CategoryLevel.delete_all
 CategoryLevel.create(id: 0,type_id: 0, level: 0, name: "world")
@@ -29,6 +30,21 @@ CategoryLevel.create(id: 2,type_id: 0, level: 2, name: "country")
 CategoryLevel.create(id: 3,type_id: 0, level: 3, name: "region")
 CategoryLevel.create(id: 20,type_id: 9, level: 0, name: "unit type")
 CategoryLevel.create(id: 21,type_id: 9, level: 1, name: "unit")
+
+Customer::Category.delete_all
+Customer::Category.create(id: 1, type_id: 27, name: "general_info")
+Customer::Category.create(id: 2, type_id: 27, name: "cash_info")
+Customer::Category.create(id: 3, type_id: 27, name: "service_used_info")
+Customer::Category.create(id: 4, type_id: 27, name: "calls_generation_params")
+Customer::Category.create(id: 5, type_id: 27, name: "calls_details_params")
+Customer::Category.create(id: 6, type_id: 27, name: "calls_parsing_params")
+Customer::Category.create(id: 7, type_id: 27, name: "tarif_optimization_params")
+Customer::Category.create(id: 8, type_id: 27, name: "service_choices")
+Customer::Category.create(id: 9, type_id: 27, name: "services_select")
+Customer::Category.create(id: 10, type_id: 27, name: "service_categories_select")
+Customer::Category.create(id: 11, type_id: 27, name: "tarif_optimization_final_results")
+Customer::Category.create(id: 12, type_id: 27, name: "tarif_optimization_minor_results")
+Customer::Category.create(id: 13, type_id: 27, name: "tarif_optimization_process_status")
 
 Category.delete_all
 Category.create(id: 1, type_id: 3, level_id: nil, parent_id: nil, name: "Legal")

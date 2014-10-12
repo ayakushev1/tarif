@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141009132217) do
+ActiveRecord::Schema.define(version: 20141010232844) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -66,6 +66,27 @@ ActiveRecord::Schema.define(version: 20141009132217) do
   add_index "customer_calls", ["base_subservice_id"], name: "index_customer_calls_on_base_subservice_id", using: :btree
   add_index "customer_calls", ["user_id"], name: "index_customer_calls_on_user_id", using: :btree
 
+  create_table "customer_categories", force: true do |t|
+    t.string  "name"
+    t.integer "level_id"
+    t.integer "type_id"
+    t.integer "parent_id"
+  end
+
+  add_index "customer_categories", ["level_id"], name: "index_customer_categories_on_level_id", using: :btree
+  add_index "customer_categories", ["parent_id"], name: "index_customer_categories_on_parent_id", using: :btree
+  add_index "customer_categories", ["type_id"], name: "index_customer_categories_on_type_id", using: :btree
+
+  create_table "customer_infos", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "info_type_id"
+    t.json     "info"
+    t.datetime "last_update"
+  end
+
+  add_index "customer_infos", ["info_type_id"], name: "index_customer_infos_on_info_type_id", using: :btree
+  add_index "customer_infos", ["user_id"], name: "index_customer_infos_on_user_id", using: :btree
+
   create_table "customer_services", force: true do |t|
     t.integer  "user_id"
     t.string   "phone_number"
@@ -102,6 +123,17 @@ ActiveRecord::Schema.define(version: 20141009132217) do
   end
 
   add_index "customer_stats", ["user_id"], name: "index_customer_stats_on_user_id", using: :btree
+
+  create_table "customer_transactions", force: true do |t|
+    t.integer  "user_id"
+    t.integer  "info_type_id"
+    t.json     "status"
+    t.json     "description"
+    t.datetime "made_at"
+  end
+
+  add_index "customer_transactions", ["info_type_id"], name: "index_customer_transactions_on_info_type_id", using: :btree
+  add_index "customer_transactions", ["user_id"], name: "index_customer_transactions_on_user_id", using: :btree
 
   create_table "delayed_jobs", force: true do |t|
     t.integer  "priority",   default: 0, null: false

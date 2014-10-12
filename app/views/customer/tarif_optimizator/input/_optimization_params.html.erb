@@ -94,6 +94,8 @@ form_item.init do |f|
      label(filtr_name, "max_tarif_set_count_per_tarif", "Max final_tarif_set number per tarif"),
      text_field(filtr_name, "max_tarif_set_count_per_tarif", html_options.merge({:type => 'text', :value => s["max_tarif_set_count_per_tarif"] }) ),
 
+     label(filtr_name, "calculate_background_with_spawnling", "Calculate background with spawnling?"),
+ 	 select(filtr_name, "calculate_background_with_spawnling", [["Yes", true], ["With delayed_jobs", false]], {:selected => s["calculate_background_with_spawnling"]}, html_options ),
   	],
   	
   ]

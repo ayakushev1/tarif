@@ -67,6 +67,12 @@ Rails.application.routes.draw do
       get 'optimization_results/show_customer_results' => :show_customer_results
     end
     
+    controller :payments do
+      get 'payments/fill_payment_form' => :fill_payment_form
+      post 'payments/pay' => :pay
+      get 'payments/wait_for_payment_being_processed' => :wait_for_payment_being_processed
+      post 'payments/process_payment' => :process_payment
+    end
   end  
 =begin  
     controller :project_support do
@@ -109,6 +115,13 @@ Rails.application.routes.draw do
       get 'history_parser/upload' => :upload
       get 'history_parser/parse' => :parse
       get 'history_parser/calculation_status' => :calculation_status
+    end
+
+    controller :payments do
+      get 'payments/fill_payment_form' => :fill_payment_form
+      post 'payments/pay' => :pay
+      get 'payments/wait_for_payment_being_processed' => :wait_for_payment_being_processed
+      post 'payments/process_payment' => :process_payment
     end
   end
 

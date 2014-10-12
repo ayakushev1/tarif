@@ -71,6 +71,7 @@ class Demo::TarifOptimizatorController < Customer::TarifOptimizatorController
           'save_current_tarif_set_calculation_history' => 'false',
           'part_sort_criteria_in_price_optimization' => 'auto',   
           'what_format_of_results' => 'results_for_customer',     
+          'calculate_background_with_spawnling' => 'true',
         } 
       else
         saved_tarif_optimization_inputs['optimization_params'] || {}

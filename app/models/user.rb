@@ -34,6 +34,9 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable, :confirmable, :lockable
   include PgJsonHelper, WhereHelper
+
+  belongs_to :customer_info, :class_name =>'Customer::Info', :foreign_key => :user_id
+  belongs_to :customer_transaction, :class_name =>'Customer::Transaction', :foreign_key => :user_id
   
 #  validates :name, presence: true, uniqueness: true, :length => {:within => 3..40}
 #  validates :password, presence: true, :confirmation => true, :length => {:within => 3..40}

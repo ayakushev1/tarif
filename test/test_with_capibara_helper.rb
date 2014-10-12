@@ -5,12 +5,13 @@ require 'capybara/rails'
 require 'capybara'
 require 'capybara/dsl'
 
-Dir[Rails.root.join("test/controllers/demo/**/*.rb")].each { |f| require f } #limit here the scope of tests
+#Dir[Rails.root.join("test/controllers/demo/**/*.rb")].each { |f| require f } #limit here the scope of tests
 Dir[Rails.root.join("lib/pages/**/*.rb")].each { |f| require f }
 Dir[Rails.root.join("test/test_helper.rb")].each { |f| require f }
 
-class ActiveSupport::TestCase
+class TestWithCapibara < ActiveSupport::TestCase
   include Capybara::DSL
+  include Rails.application.routes.url_helpers
   
   def setup
   end
@@ -29,3 +30,4 @@ Capybara.tap do |config|
   config.javascript_driver = :webkit
   config.default_wait_time = 2
 end
+

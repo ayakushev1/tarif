@@ -90,7 +90,8 @@ class Customer::TarifOptimizatorController < ApplicationController
         background_process_informer.init
       end
       @a = ServiceHelper::TarifOptimizationStarter.new()
-      if true
+        raise(StandardError, (optimization_params.session_filtr_params['calculate_background_with_spawnling'] == 'true'))
+      if !(optimization_params.session_filtr_params['calculate_background_with_spawnling'] == 'false')
         Spawnling.new(:argv => "optimize for #{current_user.id}") do
           @a.start_calculate_all_operator_tarifs(options)          
         end
@@ -316,6 +317,7 @@ class Customer::TarifOptimizatorController < ApplicationController
           'save_current_tarif_set_calculation_history' => 'false',
           'part_sort_criteria_in_price_optimization' => 'auto',   
           'what_format_of_results' => 'results_for_customer',     
+          'calculate_background_with_spawnling' => 'true',
         } 
       else
         saved_tarif_optimization_inputs['optimization_params'] || {}

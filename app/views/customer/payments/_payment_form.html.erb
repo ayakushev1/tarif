@@ -1,0 +1,38 @@
+<%
+form_item.init do |f|
+#  f.caption = "Payment form"	
+  s = f.session_filtr_params
+  f.set_fields do |filtr_name|
+    html_options = {:action_name => s["action"] }
+  [
+
+  	[
+     label(filtr_name, "background_update_frequency", "Background update frequency"),
+     text_field(filtr_name, "background_update_frequency", html_options.merge({:type => 'text', :value => s["background_update_frequency"] }) ),
+
+     label(filtr_name, "file_upload_form_method", "File upload form method"),
+ 	 select(filtr_name, "file_upload_form_method", [["Post", 'post'], ["Get", 'get']], {:selected => s["file_upload_form_method"]}, html_options ),
+  	],
+
+  ]
+	    
+  end
+end
+%>
+<form method="POST" action="https://money.yandex.ru/quickpay/confirm.xml">
+<input type="hidden" name="receiver" value="410011358898478">
+<input type="hidden" name="formcomment" value="Проект www.mytrifs.ru, перевод средств">
+<input type="hidden" name="short-dest" value=" Проект www.mytrifs.ru, перевод средств">
+<input type="hidden" name="label" value="$order_id">
+<input type="hidden" name="quickpay-form" value="donate">
+<input type="hidden" name="targets" value="транзакция {order_id}">
+<input type="hidden" name="sum" value="4568.25" data-type="number" >
+<input type="hidden" name="comment" value="Хотелось бы параллельной флюкабельности." >
+<input type="hidden" name="need-fio" value="true">
+<input type="hidden" name="need-email" value="true" >
+<input type="hidden" name="need-phone" value="false">
+<input type="hidden" name="need-address" value="false">
+<input type="radio" name="paymentType" value="PC">Яндекс.Деньгами</input>
+<input type="radio" name="paymentType" value="AC">Банковской картой</input>
+<input type="submit" name="submit-button" value="Перевести">
+</form>

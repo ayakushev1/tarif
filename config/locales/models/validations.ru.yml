@@ -1,0 +1,6 @@
+ru:
+  errors:
+    messages:
+      greater_than_or_equal_to: "Число должно быть больше или равно %{count}" 
+      not_a_number: "Поле должно содержать число"
+      inclusion: Недействительное значение

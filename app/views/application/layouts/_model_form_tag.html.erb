@@ -20,7 +20,7 @@ form_options = form_options.merge(:html => form_html_options)
   <legend><%= form_item.caption %></legend>
 <% end %>
 
-<%= form_options %>
+<%= form_options if false %>
 <%= form_tag(options[:url], form_options) do %>
     <% if form_item.model.errors.any? %>
 	  <div id="error_explanation" class="alert-error">

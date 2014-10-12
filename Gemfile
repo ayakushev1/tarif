@@ -97,6 +97,7 @@ gem "daemons"
  
 group :development, :test do
  gem 'foreman'
+# gem 'dotenv-rails'
 end 
 
 gem 'newrelic_rpm'
