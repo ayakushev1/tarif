@@ -10,7 +10,7 @@
 	   провести один подбор тарифа. Если вы захотите дальше пользоваться нашими услугами, то вам будет необходимо 
 	   перевести сто рублей за один подбор тарифа и три загрузки детализации.
 	</p>
-	<% if true or (current_user and current_user.customer_info and current_user.customer_info.required_to_pay?) %>
+	<% if false and (current_user and current_user.customer_info and current_user.customer_info.required_to_pay?) %>
 		<%= link_to('Вы использовали вашу попытку. Нажмите кнопку, если хотите внести деньги', demo_payments_fill_payment_form_path, {:class => "btn btn-large", :type =>"button"}) %>
 	<% else%>
 		<%= link_to('Приступить к подбору тарифа', demo_optimization_steps_choose_load_calls_options_path, {:class => "btn btn-large", :type =>"button"}) %> 
