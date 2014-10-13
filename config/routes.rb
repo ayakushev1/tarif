@@ -8,6 +8,8 @@ Rails.application.routes.draw do
     patch "users/:id" => "devise/registrations#update"
     put "users/:id" => "devise/registrations#update"
     delete "users/:id" => "devise/registrations#destroy"
+
+#    get "users/sign_out" => "devise/sessions#destroy"
     
     get "login" => "devise/sessions#new"
     post "submit_login" => "devise/sessions#create"

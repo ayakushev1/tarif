@@ -55,6 +55,32 @@ describe HomeController do
      
 end
 
+describe Devise::SessionsController do
+  before do
+    @user = User.find_or_create_by(:id => 0, :name => "Гость", :email => "guest@example.com", :confirmed_at => Time.zone.now)
+    @user.skip_confirmation!
+    @user.save!(:validate => false)
+  end
+  
+  after do
+    @user.delete
+  end
+
+  it 'unsigned user must be able to login' do
+    @request.env["devise.mapping"] = Devise.mappings[:user]
+    get :new#, :id => 0  
+    assert_response :success    #( :success, [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params])
+  end
+
+  it 'signed user must be able to logout' do
+    sign_in @user
+    @request.env["devise.mapping"] = Devise.mappings[:user]
+    get :destroy#, :id => 0  
+    assert_redirected_to root_path    #( :success, [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params])
+    @controller.current_user.must_be_nil
+  end
+end
+     
 describe UsersController do
   before do
     @user = User.find_or_create_by(:id => 0, :name => "Гость", :email => "guest@example.com", :confirmed_at => Time.zone.now)

@@ -62,9 +62,14 @@ class ApplicationController < ActionController::Base
       if controller_name == 'users'
         redirect_to(root_path, alert: 'Вы пытаетесь получить доступ к чужому счету') if !user_access_to_his_account  
       else
-        if !current_user_admin?
-          redirect_to(root_path) if !controller_has_public_url?
-        end         
+#        raise(StandardError, [controller_name, action_name])
+        if controller_name == 'sessions' #and action_name == 'destroy'
+#          user_session = nil
+        else
+          if !current_user_admin?
+            redirect_to(root_path) if !controller_has_public_url?
+          end         
+        end
       end
     end
     
