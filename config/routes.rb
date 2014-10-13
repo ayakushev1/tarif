@@ -28,6 +28,7 @@ Rails.application.routes.draw do
   namespace :demo do
     controller :home do
       get 'home/demo_results' => :demo_results
+      get 'home/full_demo_results' => :full_demo_results
     end
 
     controller :sessions do
@@ -143,8 +144,8 @@ Rails.application.routes.draw do
 
   resources :users, :tarif_classes
 
-  controller :home do
-    get 'home/index1' => :index
+  controller :home1 do
+    get 'home1/index' => :index
   end  
 
 

@@ -1,7 +1,11 @@
 class Demo::HomeController < ApplicationController
-  skip_before_filter :authenticate_user!, :only => [:index] 
+#  skip_before_filter :authenticate_user!, :only => [:index] 
   
 #  def index; end
+
+  def full_demo_results
+    render nothing: true
+  end
 
   def customer_service_sets
     ArrayOfHashable.new(self, final_tarif_results_presenter.customer_service_sets_array)

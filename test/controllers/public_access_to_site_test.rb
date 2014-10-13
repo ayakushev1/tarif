@@ -15,19 +15,19 @@ describe Demo::HomeController do
   end
      
   it 'unsigned user should be redirected to root' do
-    get :demo_results  
+    get :full_demo_results  
     assert_redirected_to new_user_session_path    
   end
      
   it 'signed user must be granted access' do
     sign_in @user
-    get :demo_results  
+    get :full_demo_results  
     assert_response :success    
   end
      
 end
 
-describe HomeController do
+describe Home1Controller do
   before do
     @user = User.find_or_create_by(:id => 0, :name => "Гость", :email => "guest@example.com", :confirmed_at => Time.zone.now)
     @user.save!(:validate => false)
@@ -98,7 +98,7 @@ describe UsersController do
   it 'unsigned user must have access to new and create actions' do
     get :new  
 #    raise(StandardError, @controller.send(:allow_skip_authenticate_user))
-    assert_redirected_to new_user_session_path
+    assert_response( :success, [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params])
   end
      
   it 'unsigned user should not have access to edit and update actions' do

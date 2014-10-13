@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
   layout :main_layout
   before_action :set_current_session#, :authorize
-  before_action :authenticate_user!, except: -> {allow_skip_authenticate_user}
+  before_action :my_authenticate_user
   before_action :authorize
   skip_before_filter :verify_authenticity_token, if: -> { allowed_request_origin }
   before_action :configure_permitted_parameters, if: :devise_controller?
@@ -25,6 +25,12 @@ class ApplicationController < ActionController::Base
     end
   end
   
+  def my_authenticate_user
+    if !allow_skip_authenticate_user
+      authenticate_user!
+    end
+  end
+    
   protected
 
   def set_current_session
@@ -61,7 +67,7 @@ class ApplicationController < ActionController::Base
     def authorize
 #      raise(StandardError, [controller_name, action_name])
       if controller_name == 'users' or controller_name == 'registrations'
-        redirect_to(root_path, alert: 'Вы пытаетесь получить доступ к чужому счету') if !user_access_to_his_account  
+        redirect_to(root_path, alert: 'Вы пытаетесь получить доступ к чужому счету') if !user_access_to_his_account and !user_is_registering
       else
 #        raise(StandardError, [controller_name, action_name])
         if controller_name == 'sessions' #and action_name == 'destroy'
@@ -74,20 +80,18 @@ class ApplicationController < ActionController::Base
       end
     end
     
-    def allow_skip_authenticate_user
-      (user_is_registering or root_page? or allowed_request_origin)
-    end
-    
     def root_page?
-      (controller_name == 'demo/home' and ['index'].include?(action_name))
+#      raise(StandardError, [controller_name, action_name])
+      ((controller_name == 'demo/home' or controller_name == 'home') and ['index'].include?(action_name))
     end
     
     def user_is_registering
-      (controller_name == 'users' and ['new', 'create'].include?(action_name))
+      #raise(StandardError, [controller_name, action_name])
+      ((controller_name == 'users' or controller_name == 'registrations') and ['new', 'create'].include?(action_name))
     end
     
     def user_access_to_his_account
-      #raise(StandardError)
+      #raise(StandardError, [controller_name, action_name])
       ((controller_name == 'users' or controller_name == 'registrations') and ['show', 'edit', 'update'].include?(action_name) and params[:id] and
       current_user and current_user.id.to_i == params[:id].to_i)
     end
@@ -96,6 +100,11 @@ class ApplicationController < ActionController::Base
       (current_user and current_user.email == ENV["TARIF_ADMIN_USERNAME"])
     end
     
+    def allow_skip_authenticate_user
+#      raise(StandardError, [controller_name, action_name])
+      (user_is_registering or root_page? or allowed_request_origin or controller_has_free_public_url?)
+    end
+
     def allowed_request_origin
       (allowed_user_agents.include?(request.headers["HTTP_USER_AGENT"]) and controller_has_public_url?)
     end
@@ -110,5 +119,10 @@ class ApplicationController < ActionController::Base
     
     def controller_has_public_url?
       (self.class.name =~ /Demo/) ? true : false
+    end
+
+    def controller_has_free_public_url?
+#      raise(StandardError, [controller_name, action_name])
+      ((controller_name == 'demo/home' or controller_name == 'home') and ['demo_results'].include?(action_name))
     end
 end
