@@ -10,7 +10,7 @@ Dir[Rails.root.join("lib/pages/**/*.rb")].each { |f| require f }
 Dir[Rails.root.join("test/test_helper.rb")].each { |f| require f }
 
 class TestWithCapibara < ActiveSupport::TestCase
-  include Devise::TestHelpers
+#  include Devise::TestHelpers
   include Capybara::DSL
   include Rails.application.routes.url_helpers
   

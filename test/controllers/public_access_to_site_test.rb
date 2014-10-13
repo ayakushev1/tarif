@@ -105,7 +105,7 @@ describe UsersController do
     get :show, :id => 0  
     assert_redirected_to new_user_session_path    
     get :edit, :id => 0  
-    assert_redirected_to new_user_session_path    
+    assert_redirected_to new_user_session_path
     post :update, :id => 0  
     assert_redirected_to new_user_session_path    
     delete :destroy, :id => 0  

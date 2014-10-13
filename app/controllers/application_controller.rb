@@ -59,7 +59,8 @@ class ApplicationController < ActionController::Base
     
   private
     def authorize
-      if controller_name == 'users'
+#      raise(StandardError, [controller_name, action_name])
+      if controller_name == 'users' or controller_name == 'registrations'
         redirect_to(root_path, alert: 'Вы пытаетесь получить доступ к чужому счету') if !user_access_to_his_account  
       else
 #        raise(StandardError, [controller_name, action_name])
@@ -86,7 +87,8 @@ class ApplicationController < ActionController::Base
     end
     
     def user_access_to_his_account
-      (controller_name == 'users' and ['show', 'edit', 'update'].include?(action_name) and params[:id] and
+      #raise(StandardError)
+      ((controller_name == 'users' or controller_name == 'registrations') and ['show', 'edit', 'update'].include?(action_name) and params[:id] and
       current_user and current_user.id.to_i == params[:id].to_i)
     end
     
