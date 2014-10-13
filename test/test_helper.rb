@@ -7,6 +7,10 @@ Dir[Rails.root.join("lib/pages/**/*.rb")].each { |f| require f }
 #Rails.application.routes.eval_block( Proc.new { resources :tests } )  
 Dir[Rails.root.join("db/seeds/definitions/*.rb")].sort.each { |f| require f }
 
+class ActionController::TestCase
+  include Devise::TestHelpers
+end
+
 class ActiveSupport::TestCase
   File.open(".env", "r").each_line do |line|
     begin

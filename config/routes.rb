@@ -140,8 +140,9 @@ Rails.application.routes.draw do
   
 
   resources :users, :tarif_classes
-  controller :users do
-#    post 'users/:id/' => 'users#update'
+
+  controller :home do
+    get 'home/index1' => :index
   end  
 
 

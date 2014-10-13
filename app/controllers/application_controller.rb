@@ -1,22 +1,13 @@
 class ApplicationController < ActionController::Base
-  # Prevent CSRF attacks by raising an exception.
-  # For APIs, you may want to use :null_session instead.
-#  include Tableable_helper
-#  before_action :clean_session
-#  layout 'application'
   protect_from_forgery with: :exception
-  skip_before_filter :verify_authenticity_token, if: -> { allowed_request_origin }
-#  skip_before_filter :verify_authenticity_token, if: -> { controller_name == 'sessions'}
-#  skip_before_filter :verify_authenticity_token, if: -> { controller_name == 'registrations'}
   layout :main_layout
   before_action :set_current_session#, :authorize
-  before_action :authenticate_user!, except: -> {['users'].include?(controller_name) }
+  before_action :authenticate_user!, except: -> {allow_skip_authenticate_user}
+  before_action :authorize
+  skip_before_filter :verify_authenticity_token, if: -> { allowed_request_origin }
   before_action :configure_permitted_parameters, if: :devise_controller?
 
-  helper_method :current_or_guest_user, :current_user_admin?
-
-#  attr_reader :current_user
-
+  helper_method :current_user_admin?
 
   def default_render(options = nil)
     respond_to do |format|
@@ -33,34 +24,7 @@ class ApplicationController < ActionController::Base
       render :inline => js_string#, :layout => 'application'
     end
   end
-
-  def current_or_guest_user
-    if current_user
-      if session[:guest_user_id]
-#        logging_in
-        guest_user.destroy
-        session[:guest_user_id] = nil
-      end
-      current_user
-    else
-      guest_user
-    end
-  end
   
-  def guest_user
-    @cached_guest_user ||= User.find(session[:guest_user_id] ||= create_guest_user.id)
-
-  rescue ActiveRecord::RecordNotFound # if session[:guest_user_id] invalid
-    session[:guest_user_id] = nil
-    guest_user
-  end
-
-#  def become
-#    return unless current_user.id == 1 
-#    sign_in(:user, User.find(params[:id]))
-#    redirect_to root_url # or user_root_url
-#  end
-
   protected
 
   def set_current_session
@@ -94,21 +58,39 @@ class ApplicationController < ActionController::Base
   end
     
   private
-    def allowed_request_origin
-      allowed_user_agents.include?(request.headers["HTTP_USER_AGENT"])
-#      (controller_name == 'home' and action_name == 'index') ? true : false
+    def authorize
+      if controller_name == 'users'
+        redirect_to(root_path, alert: 'Вы пытаетесь получить доступ к чужому счету') if !user_access_to_his_account  
+      else
+        if !current_user_admin?
+          redirect_to(root_path) if !controller_has_public_url?
+        end         
+      end
     end
     
-    def create_guest_user
-      u = User.find_or_create_by(:id => 0, :name => "Гость", :email => "guest@example.com")
-      u.skip_confirmation_notification!
-      u.save!(:validate => false)
-      session[:guest_user_id] = u.id
-      u
+    def allow_skip_authenticate_user
+      (user_is_registering or root_page? or allowed_request_origin)
+    end
+    
+    def root_page?
+      (controller_name == 'demo/home' and ['index'].include?(action_name))
+    end
+    
+    def user_is_registering
+      (controller_name == 'users' and ['new', 'create'].include?(action_name))
+    end
+    
+    def user_access_to_his_account
+      (controller_name == 'users' and ['show', 'edit', 'update'].include?(action_name) and params[:id] and
+      current_user and current_user.id.to_i == params[:id].to_i)
     end
     
     def current_user_admin?
       (current_user and current_user.email == ENV["TARIF_ADMIN_USERNAME"])
+    end
+    
+    def allowed_request_origin
+      (allowed_user_agents.include?(request.headers["HTTP_USER_AGENT"]) and controller_has_public_url?)
     end
     
     def allowed_user_agents
@@ -117,5 +99,9 @@ class ApplicationController < ActionController::Base
         "Mozilla/5.0 (compatible; YandexWebmaster/2.0; +http://yandex.com/bots)",
         "Mozilla/5.0 (compatible; YandexMetrika/2.0; +http://yandex.com/bots)",      
       ]      
+    end
+    
+    def controller_has_public_url?
+      (self.class.name =~ /Demo/) ? true : false
     end
 end
