@@ -106,7 +106,8 @@ class ApplicationController < ActionController::Base
     end
 
     def allowed_request_origin
-      (allowed_user_agents.include?(request.headers["HTTP_USER_AGENT"]) and controller_has_public_url?)
+      #raise(StandardError, [controller_name, action_name, allowed_user_agents.include?(request.headers["HTTP_USER_AGENT"]), controller_has_free_public_url?])
+      (allowed_user_agents.include?(request.headers["HTTP_USER_AGENT"]) and controller_has_free_public_url?)
     end
     
     def allowed_user_agents
@@ -123,6 +124,6 @@ class ApplicationController < ActionController::Base
 
     def controller_has_free_public_url?
 #      raise(StandardError, [controller_name, action_name])
-      ((controller_name == 'demo/home' or controller_name == 'home') and ['demo_results'].include?(action_name))
+      ((controller_name == 'demo/home' or controller_name == 'home') and ['demo_results', 'index'].include?(action_name))
     end
 end

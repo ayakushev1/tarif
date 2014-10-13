@@ -5,6 +5,7 @@ require 'test_helper'
 
 describe Demo::HomeController do
   before do
+    @request.env["devise.mapping"] = Devise.mappings[:user]
     @user = User.find_or_create_by(:id => 0, :name => "Гость", :email => "guest@example.com", :confirmed_at => Time.zone.now)
     @user.save!(:validate => false)
   end
@@ -29,6 +30,7 @@ end
 
 describe Home1Controller do
   before do
+    @request.env["devise.mapping"] = Devise.mappings[:user]
     @user = User.find_or_create_by(:id => 0, :name => "Гость", :email => "guest@example.com", :confirmed_at => Time.zone.now)
     @user.save!(:validate => false)
 #    sign_in @user
@@ -57,6 +59,7 @@ end
 
 describe Devise::SessionsController do
   before do
+    @request.env["devise.mapping"] = Devise.mappings[:user]
     @user = User.find_or_create_by(:id => 0, :name => "Гость", :email => "guest@example.com", :confirmed_at => Time.zone.now)
     @user.skip_confirmation!
     @user.save!(:validate => false)
@@ -83,6 +86,7 @@ end
      
 describe UsersController do
   before do
+    @request.env["devise.mapping"] = Devise.mappings[:user]
     @user = User.find_or_create_by(:id => 0, :name => "Гость", :email => "guest@example.com", :confirmed_at => Time.zone.now)
     @user.skip_confirmation!
     @user.save!(:validate => false)
