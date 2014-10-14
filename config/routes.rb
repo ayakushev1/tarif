@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  devise_for :users
+  devise_for :users, controllers: { sessions: "users/sessions" }
 
   devise_scope :user do
     get "users/new" => "devise/registrations#new"
@@ -11,13 +11,13 @@ Rails.application.routes.draw do
 
 #    get "users/sign_out" => "devise/sessions#destroy"
     
-    get "login" => "devise/sessions#new"
-    post "submit_login" => "devise/sessions#create"
-    get "logout" => "devise/sessions#destroy"
+    get "login" => "users/sessions#new"
+    post "submit_login" => "users/sessions#create"
+    get "logout" => "users/sessions#destroy"
 
-    get "demo/login" => "devise/sessions#new"
-    post "demo/submit_login" => "devise/sessions#create"
-    get "demo/logout" => "devise/sessions#destroy"
+    get "demo/login" => "users/sessions#new"
+    post "demo/submit_login" => "users/sessions#create"
+    get "demo/logout" => "users/sessions#destroy"
   end
 
 #  devise_for :users, :path => '', :path_names => {:sign_in => 'login', :sign_out => 'logout'}

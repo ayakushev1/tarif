@@ -1,7 +1,4 @@
 class Demo::HomeController < ApplicationController
-#  skip_before_filter :authenticate_user!, :only => [:index] 
-  
-#  def index; end
 
   def full_demo_results
     render nothing: true
@@ -28,5 +25,7 @@ class Demo::HomeController < ApplicationController
     @optimization_result_presenter ||= ServiceHelper::FinalTarifResultsPresenter.new(options)
   end
   
-
+  def customer_has_free_trials?
+    true #(current_user and current_user.customer_infos_services_used and current_user.customer_infos_services_used.customer_has_free_trials?)
+  end
 end

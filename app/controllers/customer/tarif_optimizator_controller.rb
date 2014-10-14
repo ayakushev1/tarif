@@ -204,19 +204,19 @@ class Customer::TarifOptimizatorController < ApplicationController
   
   def validate_tarifs
     operator = 1025
-    session[:filtr]['service_choices_filtr']['tarifs_bln'] = service_choices.session_filtr_params['tarifs_bln'].to_s.scan(/\d+/).map(&:to_i) & ServiceHelper::Services.tarifs[operator] 
-    session[:filtr]['service_choices_filtr']['tarif_options_bln'] = service_choices.session_filtr_params['tarif_options_bln'].to_s.scan(/\d+/).map(&:to_i) & ServiceHelper::Services.tarif_options[operator] 
-    session[:filtr]['service_choices_filtr']['common_services_bln'] = service_choices.session_filtr_params['common_services_bln'].to_s.scan(/\d+/).map(&:to_i) & ServiceHelper::Services.common_services[operator] 
+    session[:filtr]['service_choices_filtr']['tarifs_bln'] = service_choices.session_filtr_params['tarifs_bln'].to_s.scan(/\d+/).map(&:to_i) & Init::General::Services.tarifs[operator] 
+    session[:filtr]['service_choices_filtr']['tarif_options_bln'] = service_choices.session_filtr_params['tarif_options_bln'].to_s.scan(/\d+/).map(&:to_i) & Init::General::Services.tarif_options[operator] 
+    session[:filtr]['service_choices_filtr']['common_services_bln'] = service_choices.session_filtr_params['common_services_bln'].to_s.scan(/\d+/).map(&:to_i) & Init::General::Services.common_services[operator] 
 
     operator = 1028
-    session[:filtr]['service_choices_filtr']['tarifs_mgf'] = service_choices.session_filtr_params['tarifs_mgf'].to_s.scan(/\d+/).map(&:to_i) & ServiceHelper::Services.tarifs[operator] 
-    session[:filtr]['service_choices_filtr']['tarif_options_mgf'] = service_choices.session_filtr_params['tarif_options_mgf'].to_s.scan(/\d+/).map(&:to_i) & ServiceHelper::Services.tarif_options[operator] 
-    session[:filtr]['service_choices_filtr']['common_services_mgf'] = service_choices.session_filtr_params['common_services_mgf'].to_s.scan(/\d+/).map(&:to_i) & ServiceHelper::Services.common_services[operator] 
+    session[:filtr]['service_choices_filtr']['tarifs_mgf'] = service_choices.session_filtr_params['tarifs_mgf'].to_s.scan(/\d+/).map(&:to_i) & Init::General::Services.tarifs[operator] 
+    session[:filtr]['service_choices_filtr']['tarif_options_mgf'] = service_choices.session_filtr_params['tarif_options_mgf'].to_s.scan(/\d+/).map(&:to_i) & Init::General::Services.tarif_options[operator] 
+    session[:filtr]['service_choices_filtr']['common_services_mgf'] = service_choices.session_filtr_params['common_services_mgf'].to_s.scan(/\d+/).map(&:to_i) & Init::General::Services.common_services[operator] 
 
     operator = 1030
-    session[:filtr]['service_choices_filtr']['tarifs_mts'] = service_choices.session_filtr_params['tarifs_mts'].to_s.scan(/\d+/).map(&:to_i) & ServiceHelper::Services.tarifs[operator] 
-    session[:filtr]['service_choices_filtr']['tarif_options_mts'] = service_choices.session_filtr_params['tarif_options_mts'].to_s.scan(/\d+/).map(&:to_i) & ServiceHelper::Services.tarif_options[operator] 
-    session[:filtr]['service_choices_filtr']['common_services_mts'] = service_choices.session_filtr_params['common_services_mts'].to_s.scan(/\d+/).map(&:to_i) & ServiceHelper::Services.common_services[operator] 
+    session[:filtr]['service_choices_filtr']['tarifs_mts'] = service_choices.session_filtr_params['tarifs_mts'].to_s.scan(/\d+/).map(&:to_i) & Init::General::Services.tarifs[operator] 
+    session[:filtr]['service_choices_filtr']['tarif_options_mts'] = service_choices.session_filtr_params['tarif_options_mts'].to_s.scan(/\d+/).map(&:to_i) & Init::General::Services.tarif_options[operator] 
+    session[:filtr]['service_choices_filtr']['common_services_mts'] = service_choices.session_filtr_params['common_services_mts'].to_s.scan(/\d+/).map(&:to_i) & Init::General::Services.common_services[operator] 
   end
   
   def tarifs
@@ -352,14 +352,14 @@ class Customer::TarifOptimizatorController < ApplicationController
   
   def selected_services(operator)
     result = {}
-    result['tarifs'] = (params['services_select_filtr']['tarifs'] == 'true') ? ServiceHelper::Services.tarifs[operator] : []
-    result['common_services'] = (params['services_select_filtr']['common_services'] == 'true') ? ServiceHelper::Services.common_services[operator] : []
+    result['tarifs'] = (params['services_select_filtr']['tarifs'] == 'true') ? Init::General::Services.tarifs[operator] : []
+    result['common_services'] = (params['services_select_filtr']['common_services'] == 'true') ? Init::General::Services.common_services[operator] : []
 #    raise(StandardError, [params['services_select_filtr']['all_tarif_options']])
     if params['services_select_filtr']['all_tarif_options'] == 'true'
-      result['tarif_options'] = ServiceHelper::Services.tarif_options[operator]
+      result['tarif_options'] = Init::General::Services.tarif_options[operator]
     else
       result['tarif_options'] = []
-      existing_tarif_options = ServiceHelper::Services.tarif_options_by_type[operator]
+      existing_tarif_options = Init::General::Services.tarif_options_by_type[operator]
       result['tarif_options'] += (params['services_select_filtr']['international_rouming'] == 'true') ? existing_tarif_options[:international_rouming] : []
       result['tarif_options'] += (params['services_select_filtr']['country_rouming'] == 'true') ? existing_tarif_options[:country_rouming] : []
       result['tarif_options'] += (params['services_select_filtr']['calls'] == 'true') ? existing_tarif_options[:calls] : []

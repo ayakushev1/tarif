@@ -1,7 +1,30 @@
 require 'test_helper'
 # три параметра: public or private part of site, signed or unsigned user, is user admin
 # также unsigned user имеет доступ User (new, create) и  к своим User (edit, update)
+#http://localhost:3000/users/confirmation?confirmation_token=6w-YpegQmxvXDDjzuSWD
 
+describe Devise::ConfirmationsController do
+  before do
+    @request.env["devise.mapping"] = Devise.mappings[:user]
+    @user = User.find_or_create_by(:id => 0, :name => "Гость", :email => "guest@example.com")
+    @user.save!(:validate => false)
+  end
+
+  it 'new action must be allowed for unsigned user' do
+    get :new
+    assert_response :success, [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params]
+  end
+
+  it 'create action must be allowed for unsigned user' do
+    post :create
+    assert_response :success, [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params]
+  end
+
+  it 'show action must be allowed for unsigned user' do
+    get :show, :id => 0
+    assert_response :success, [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params]
+  end
+end
 
 describe Demo::HomeController do
   before do
@@ -57,7 +80,7 @@ describe Home1Controller do
      
 end
 
-describe Devise::SessionsController do
+describe Users::SessionsController do
   before do
     @request.env["devise.mapping"] = Devise.mappings[:user]
     @user = User.find_or_create_by(:id => 0, :name => "Гость", :email => "guest@example.com", :confirmed_at => Time.zone.now)
@@ -138,3 +161,4 @@ describe UsersController do
     assert_redirected_to root_path    
   end
 end
+

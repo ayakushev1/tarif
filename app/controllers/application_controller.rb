@@ -70,8 +70,8 @@ class ApplicationController < ActionController::Base
         redirect_to(root_path, alert: 'Вы пытаетесь получить доступ к чужому счету') if !user_access_to_his_account and !user_is_registering
       else
 #        raise(StandardError, [controller_name, action_name])
-        if controller_name == 'sessions' #and action_name == 'destroy'
-#          user_session = nil
+        if ['sessions', 'confirmations'].include?(controller_name)
+
         else
           if !current_user_admin?
             redirect_to(root_path) if !controller_has_public_url?
@@ -94,6 +94,10 @@ class ApplicationController < ActionController::Base
       #raise(StandardError, [controller_name, action_name])
       ((controller_name == 'users' or controller_name == 'registrations') and ['show', 'edit', 'update'].include?(action_name) and params[:id] and
       current_user and current_user.id.to_i == params[:id].to_i)
+    end
+    
+    def user_confirm_his_email
+      (controller_name == 'confirmations' and ['new', 'show', 'create'].include?(action_name) )
     end
     
     def current_user_admin?

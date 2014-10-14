@@ -1,4 +1,4 @@
-class ServiceHelper::Services
+class Init::General::Services
   
   def self.tarifs
     {

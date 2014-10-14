@@ -12,12 +12,12 @@
 
 class Customer::Transaction < ActiveRecord::Base
   include PgJsonHelper, WhereHelper, PgCreateHelper
-  has_many :users, :class_name =>'User', :foreign_key => :user_id
+  belongs_to :user, :class_name =>'User', :foreign_key => :user_id
   belongs_to :info_type, :class_name =>'Customer::Category', :foreign_key => :info_type_id
 
-  scope :general_info, -> {where(:info_type_id => 1)}
-  scope :cash_info, -> {where(:info_type_id => 2)}
-  scope :service_used_info, -> {where(:info_type_id => 3)}
+  scope :general, -> {where(:info_type_id => 1)}
+  scope :cash, -> {where(:info_type_id => 2)}
+  scope :services_used, -> {where(:info_type_id => 3)}
   scope :calls_generation_params, -> {where(:info_type_id => 4)}
   scope :calls_details_params, -> {where(:info_type_id => 5)}
   scope :calls_parsing_params, -> {where(:info_type_id => 6)}

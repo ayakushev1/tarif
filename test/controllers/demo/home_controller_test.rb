@@ -25,6 +25,10 @@ describe Demo::HomeController do
       assert_response :success
       @response.body.html_safe.must_be :=~, /div id=\\\"demo_home_index\\\"/
     end
+    
+    describe 'customer_has_free_trials?' do
+      
+    end
   end
           
 end

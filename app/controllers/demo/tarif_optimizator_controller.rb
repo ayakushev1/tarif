@@ -6,15 +6,15 @@ class Demo::TarifOptimizatorController < Customer::TarifOptimizatorController
       session[:filtr] ||= {}; session[:filtr]['service_choices_filtr'] ||= {}
       session[:filtr]['service_choices_filtr']  = if saved_tarif_optimization_inputs.blank? or saved_tarif_optimization_inputs['service_choices'].blank?
         {
-          'tarifs_bln' => ServiceHelper::Services.tarifs[1025], 
-          'tarifs_mgf' => ServiceHelper::Services.tarifs[1028], 
-          'tarifs_mts' => ServiceHelper::Services.tarifs[1030],
-          'tarif_options_bln' => ServiceHelper::Services.tarif_options_by_type[1025][:calls],
-          'tarif_options_mgf' => ServiceHelper::Services.tarif_options_by_type[1028][:calls], 
-          'tarif_options_mts' => ServiceHelper::Services.tarif_options_by_type[1030][:calls], 
-          'common_services_bln' => ServiceHelper::Services.common_services[1025], 
-          'common_services_mgf' => ServiceHelper::Services.common_services[1028], 
-          'common_services_mts' => ServiceHelper::Services.common_services[1030], 
+          'tarifs_bln' => Init::General::Services.tarifs[1025], 
+          'tarifs_mgf' => Init::General::Services.tarifs[1028], 
+          'tarifs_mts' => Init::General::Services.tarifs[1030],
+          'tarif_options_bln' => Init::General::Services.tarif_options_by_type[1025][:calls],
+          'tarif_options_mgf' => Init::General::Services.tarif_options_by_type[1028][:calls], 
+          'tarif_options_mts' => Init::General::Services.tarif_options_by_type[1030][:calls], 
+          'common_services_bln' => Init::General::Services.common_services[1025], 
+          'common_services_mgf' => Init::General::Services.common_services[1028], 
+          'common_services_mts' => Init::General::Services.common_services[1030], 
           'accounting_period' => accounting_period,
           'calculate_only_chosen_services' => 'false',
           'calculate_with_limited_scope' => 'false'
