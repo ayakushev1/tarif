@@ -70,7 +70,7 @@ class ApplicationController < ActionController::Base
         redirect_to(root_path, alert: 'Вы пытаетесь получить доступ к чужому счету') if !user_access_to_his_account and !user_is_registering
       else
 #        raise(StandardError, [controller_name, action_name])
-        if ['sessions', 'confirmations'].include?(controller_name)
+        if ['sessions', 'confirmations', 'passwords', 'unlocks'].include?(controller_name)
 
         else
           if !current_user_admin?
