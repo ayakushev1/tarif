@@ -70,7 +70,7 @@ class ApplicationController < ActionController::Base
         redirect_to(root_path, alert: 'Вы пытаетесь получить доступ к чужому счету') if !user_access_to_his_account and !user_is_registering
       else
 #        raise(StandardError, [controller_name, action_name])
-        if ['sessions', 'confirmations', 'passwords', 'unlocks'].include?(controller_name)
+        if user_make_some_allowed_actions_with_devise_controllers
 
         else
           if !current_user_admin?
@@ -96,8 +96,25 @@ class ApplicationController < ActionController::Base
       current_user and current_user.id.to_i == params[:id].to_i)
     end
     
+    def user_make_some_allowed_actions_with_devise_controllers
+      user_login or user_confirm_his_email or user_unlock_his_email or user_change_passwords_his_email
+    end
+    
+    def user_login
+      (controller_name == 'sessions')
+    end
+    
     def user_confirm_his_email
       (controller_name == 'confirmations' and ['new', 'show', 'create'].include?(action_name) )
+    end
+    
+    def user_unlock_his_email
+      (controller_name == 'unlocks' and ['new', 'show', 'create'].include?(action_name) )
+    end
+    
+    def user_change_passwords_his_email
+      (controller_name == 'passwords' and (['new', 'create'].include?(action_name) or 
+      (['edit', 'update'].include?(action_name) and params[:id] and current_user and current_user.id.to_i == params[:id].to_i) ) )
     end
     
     def current_user_admin?

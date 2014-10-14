@@ -26,6 +26,7 @@ describe Devise::ConfirmationsController do
   end
 end
 
+
 describe Demo::HomeController do
   before do
     @request.env["devise.mapping"] = Devise.mappings[:user]

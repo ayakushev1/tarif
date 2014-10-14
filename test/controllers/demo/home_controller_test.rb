@@ -2,11 +2,11 @@ require 'test_helper'
 
 describe Demo::HomeController do
   before do
-    @user = User.find_or_create_by(:id => 0, :name => "Гость", :email => "guest@example.com", :confirmed_at => Time.zone.now)
-    @user.save!(:validate => false)
-    sign_in @user
+    @user = User.new(:id => 0, :name => "Гость", :email => "guest@example.com", :password => '111111', :password_confirmation => '111111', :confirmed_at => Time.zone.now)
+    @user.skip_confirmation_notification!
+    @user.save!(validate: false)
   end
-
+  
   describe 'index action' do
     it 'must work for html request' do
       get :index
@@ -25,10 +25,14 @@ describe Demo::HomeController do
       assert_response :success
       @response.body.html_safe.must_be :=~, /div id=\\\"demo_home_index\\\"/
     end
-    
-    describe 'customer_has_free_trials?' do
-      
-    end
   end
-          
+              
+  describe 'customer_has_free_trials?' do      
+    it 'method_name' do
+      post :create, :user => {:email => @user.email, :password => @user.password}#, :confirmation_token => @user.confirmation_token
+      assert_response :found, [@response.redirect_url, @response.message, @controller.alert, @controller.params, User.find(0)]
+    end
+  
+  end
+  
 end
