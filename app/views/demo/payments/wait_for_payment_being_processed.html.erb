@@ -1,13 +1,2 @@
 <%= link_to('Проверить поступил ли платеж', demo_payments_wait_for_payment_being_processed_path, {:class => "btn btn-large", :type =>"button"}) %>
 
-<br />
-<br />
-
-<%= form_tag('process_payment', :method => 'post', :format => :html) do %>
-	<%= submit_tag("Process payment - wrong") %>
-<% end %>
-
-<%= form_tag('process_payment', {:method => 'post', :format => :yandex_payment_notification}) do %>
-	<%= submit_tag("Process payment - correct") %>
-<% end %>
-<br />

@@ -6,3 +6,14 @@
 
 
 
+<br />
+<br />
+
+<%= form_tag('demo/payments/process_payment', :method => 'post', :format => :html) do %>
+	<%= submit_tag("Process payment - wrong") %>
+<% end %>
+
+<%= form_tag('demo/payments/process_payment', {:method => 'post', :format => :yandex_payment_notification, :authenticity_token => false}) do %>
+	<%= submit_tag("Process payment - correct") %>
+<% end %>
+<br />

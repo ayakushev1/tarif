@@ -94,7 +94,7 @@ module ApplicationHelper::AuthenticityAndAuthorization
     
     def allowed_request_origin
       #raise(StandardError, [controller_name, action_name, allowed_user_agents.include?(request.headers["HTTP_USER_AGENT"]), controller_has_free_public_url?])
-      (allowed_user_agents.include?(request.headers["HTTP_USER_AGENT"]) and controller_has_free_public_url?)
+      (allowed_user_agents.include?(request.headers["HTTP_USER_AGENT"]) and controller_has_free_public_url?) or external_api_processing
     end
     
     def allowed_user_agents
