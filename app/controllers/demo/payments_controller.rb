@@ -29,18 +29,16 @@ class Demo::PaymentsController < ApplicationController
     
     UserMailer.send_mail_to_admin_that_something_wrong_with_confirmation(payment_confirmation) if !payment_confirmation.valid?
 
+    transaction_id = payment_confirmation.label
+    user_id = Customer::Transaction.where(:id => transaction_id).first.user_id if Customer::Transaction.where(:id => transaction_id).exists?
+    User.transaction do
+      Customer::Info.update_free_trials_by_cash_amount(user_id, payment_confirmation.amount)
+      Customer::Transaction.services_used.where(:user_id => user_id).create(:status => {}, :description => payment_confirmation.to_json, :made_at => Time.zone.now)
+    end
+
     respond_to do |format|
-      format.yandex_payment_notification do#  
-#        raise(StandardError)
-        transaction_id = payment_confirmation.label
-        user_id = Customer::Transaction.where(:id => transaction_id).first.user_id if Customer::Transaction.where(:id => transaction_id).exists?
-        User.transaction do
-          Customer::Info.update_free_trials_by_cash_amount(user_id, payment_confirmation.amount)
-          Customer::Transaction.services_used.where(:user_id => user_id).create(:status => {}, :description => payment_confirmation.to_json, :made_at => Time.zone.now)
-        end
-        render nothing: true, status: 200
-      end
-      format.html {render nothing: true, status: 201}
+      format.yandex_payment_notification {render nothing: true, status: 200}
+      format.html {render nothing: true, status: 200}
     end
   end
   
