@@ -41,7 +41,7 @@ class Customer::Info < ActiveRecord::Base
     customer_info = where(:user_id => user_id).services_used   
     update_amount = (cash / 95).to_i
     if customer_info.exists?
-      customer_info.update(:info => {'calls_modelling_count' => update_amount * 2, 'calls_parsing_count' => update_amount * 2, 'tarif_optimization_count' => update_amount}, :last_update => Time.zone.now)
+      customer_info.first.update(:info => {'calls_modelling_count' => update_amount * 2, 'calls_parsing_count' => update_amount * 2, 'tarif_optimization_count' => update_amount}, :last_update => Time.zone.now)
     else
       customer_info.create(:info => {'calls_modelling_count' => update_amount * 2, 'calls_parsing_count' => update_amount * 2, 'tarif_optimization_count' => update_amount}, :last_update => Time.zone.now)
     end
