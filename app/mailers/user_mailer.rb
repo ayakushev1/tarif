@@ -1,5 +1,5 @@
 class UserMailer < ActionMailer::Base
-  default from: "team.tarif@gmail.com"
+  default from: "mytarifs@yandex.ru"
 
   def receive(email)
     page = Page.find_by(address: email.to.first)
@@ -24,4 +24,8 @@ class UserMailer < ActionMailer::Base
     mail(to: @user.email, subject: 'Welcome to My Site')
   end
 
+  def send_mail_to_admin_that_something_wrong_with_confirmation(payment_confirmation)
+    @payment_confirmation = payment_confirmation
+    mail(to: 'mytarifs@yandex.ru', subject: "something wrong with payment confirmation from yandex")
+  end
 end

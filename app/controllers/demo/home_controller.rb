@@ -23,9 +23,5 @@ class Demo::HomeController < ApplicationController
       :show_zero_tarif_result_by_parts => 'false',
       }
     @optimization_result_presenter ||= ServiceHelper::FinalTarifResultsPresenter.new(options)
-  end
-  
-  def customer_has_free_trials?
-    true #(current_user and current_user.customer_infos_services_used and current_user.customer_infos_services_used.customer_has_free_trials?)
-  end
+  end  
 end

@@ -5,6 +5,22 @@ form_item.init do |fi|
     [
       ['Имя', user.name], 
       ['Электронная почта', user.email], 
+      [
+      	'Доступное количество попыток:', 
+        ''
+       ], 
+      [
+      	'для моделирования звонков', 
+        (user.customer_infos_services_used['info']['calls_modelling_count'] if user.customer_infos_services_used)
+       ], 
+      [
+      	'для загрузки детализаций звонков', 
+        (user.customer_infos_services_used['info']['calls_parsing_count'] if user.customer_infos_services_used)
+       ], 
+      [
+      	'для подбора тарифа', 
+        (user.customer_infos_services_used['info']['tarif_optimization_count'] if user.customer_infos_services_used)
+       ], 
     ] 
   end  
 end

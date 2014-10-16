@@ -1,0 +1,31 @@
+<%
+form_item.init do |fi|
+  fi.set_fields do |f|
+    [
+  	  [
+  	  	f.label(:sum, "Сумма"), 
+  	  	f.text_field(:sum)
+	  ],
+  	  [
+  	  	f.label(:paymentType, "Яндекс.Деньгами"), 
+  	  	f.radio_button(:paymentType, 'PC')
+	  ],
+  	  [
+  	  	f.label(:paymentType, "Банковской картой"), 
+  	  	f.radio_button(:paymentType, 'AC')
+	  ],
+  	  [
+  	  	'', 
+  	  	f.submit("Перевести")
+  	  ],
+#  	  ['', f.hidden_field(:receiver)],
+#  	  ['', f.hidden_field(:formcomment)],
+#  	  ['', hidden_field_tag("short-dest", f.short_dest)],
+#  	  ['', hidden_field_tag("quickpay-form", f.quickpay_form)],
+#  	  ['', f.hidden_field(:label)],
+#  	  ['', f.hidden_field(:targets)],
+#  	  ['', f.hidden_field(:successURL)],
+  	]
+  end
+end
+%>

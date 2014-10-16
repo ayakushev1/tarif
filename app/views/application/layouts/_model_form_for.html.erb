@@ -16,6 +16,7 @@ form_options = {:authenticity_token => true, :remote => false, :include_id => tr
 
 form_options = form_options.merge(options) if defined?(options)
 form_options = form_options.merge(form_html_options)
+form_options.merge!({:url => url, :as => as}) if defined?(url) and url
 
 %>
 
@@ -25,7 +26,7 @@ form_options = form_options.merge(form_html_options)
 <% end %>
 
    <% if form_item.model.errors.any? %>
-    <ul>
+    <ul class="">
         <div class="alert alert-error alert-block"><button type="button" class="close" data-dismiss="alert">&times;</button>
 	      <% form_item.model.errors.full_messages.each do |msg| %>
             <li><%= msg %></li>

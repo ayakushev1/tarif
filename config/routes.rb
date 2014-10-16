@@ -72,7 +72,7 @@ Rails.application.routes.draw do
     
     controller :payments do
       get 'payments/fill_payment_form' => :fill_payment_form
-      post 'payments/pay' => :pay
+      post 'payments/send_payment_form' => :send_payment_form
       get 'payments/wait_for_payment_being_processed' => :wait_for_payment_being_processed
       post 'payments/process_payment' => :process_payment
     end
@@ -120,12 +120,6 @@ Rails.application.routes.draw do
       get 'history_parser/calculation_status' => :calculation_status
     end
 
-    controller :payments do
-      get 'payments/fill_payment_form' => :fill_payment_form
-      post 'payments/pay' => :pay
-      get 'payments/wait_for_payment_being_processed' => :wait_for_payment_being_processed
-      post 'payments/process_payment' => :process_payment
-    end
   end
 
   namespace :price do
@@ -163,6 +157,7 @@ Rails.application.routes.draw do
 
 #for testing
   get "formable_concerns/", :controller => 'formable_concerns', :action => :new, :as => "formable_concerns/new"     
+
 #  get "users/new_1", :controller => 'users', :action => :new, :as => "new/users" #for testing     
 
   # The priority is based upon order of creation: first created -> highest priority.

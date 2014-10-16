@@ -1,5 +1,5 @@
 class Users::SessionsController < Devise::SessionsController
-  after_action :check_customer_info, only: :create
+  after_action :create_customer_infos_services_used_if_it_not_exists, only: :create
 
   def new
     super
@@ -21,8 +21,8 @@ class Users::SessionsController < Devise::SessionsController
   # def destroy
   #   super
   # end
-  def check_customer_info
-    if !current_user.customer_infos_services_used.exists?
+  def create_customer_infos_services_used_if_it_not_exists
+    if !current_user.customer_infos_services_used#.exists?
       User.transaction do
         current_user.customer_infos_services_used.create(:info => Init::CustomerInfo::ServicesUsed.default_values, :last_update => Time.zone.now)
         current_user.customer_transactions_services_used.create(:status => {}, :description => Init::CustomerInfo::ServicesUsed.default_values, :made_at => Time.zone.now)

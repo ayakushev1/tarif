@@ -1,9 +1,9 @@
 require 'test_helper'
 
-describe Customer::PaymentInstructionToYandex < ActiveSupport::TestCase do
+describe Demo::PaymentInstructionToYandex < ActiveSupport::TestCase do
   describe 'attributes' do
     before  do
-      @instruction = Customer::PaymentInstructionToYandex.new()
+      @instruction = Demo::PaymentInstructionToYandex.new()
       @default_values = {
         :action => "https://money.yandex.ru/quickpay/confirm.xml",
         :receiver => "410011358898478",

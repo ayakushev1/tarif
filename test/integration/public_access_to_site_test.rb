@@ -162,4 +162,19 @@ describe UsersController do
     assert_redirected_to root_path    
   end
 end
+     
+
+describe Demo::PaymentsController do
+  before do
+    @request.env["devise.mapping"] = Devise.mappings[:user]
+  end
+
+  it 'must accept yandex post request' do
+    @request.headers["CONTENT_TYPE"] = "application/x-www-form-urlencoded"
+    post :process_payment
+    assert_response :success, [@request.headers, @response.redirect_url, @response.message, @controller.params]
+  end
+
+
+end
 

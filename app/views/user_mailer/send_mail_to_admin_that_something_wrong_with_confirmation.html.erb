@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>
+      Something wrong with payment confirmation from yandex,
+      <br>
+    </p>
+    <div>
+    	  <%= @payment_confirmation %>
+    </div>
+    <br />
+    <div>
+    	  <%= @payment_confirmation.errors if @payment_confirmation %>
+    </div>
+  </body>
+</html>
