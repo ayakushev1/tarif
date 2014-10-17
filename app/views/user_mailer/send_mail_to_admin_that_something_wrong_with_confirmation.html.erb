@@ -15,5 +15,9 @@
     <div>
     	  <%= @payment_confirmation.errors if @payment_confirmation %>
     </div>
+    <br />
+    <div>
+    	  <p>Проверка ключа:</p><%= @payment_confirmation.check_hash if @payment_confirmation %>
+    </div>
   </body>
 </html>

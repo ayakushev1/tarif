@@ -28,6 +28,7 @@ class Demo::PaymentsController < ApplicationController
     payment_confirmation = Demo::PaymentConfirmationFromYandex.new(params)
     
     UserMailer.send_mail_to_admin_that_something_wrong_with_confirmation(payment_confirmation) if !payment_confirmation.valid?
+    UserMailer.send_mail_to_admin_that_something_wrong_with_confirmation(payment_confirmation) if !payment_confirmation.check_hash
 
     transaction_id = payment_confirmation.label
     user_id = Customer::Transaction.where(:id => transaction_id).first.user_id if Customer::Transaction.where(:id => transaction_id).exists?

@@ -105,7 +105,7 @@ describe Demo::PaymentsController do
       @transaction_user_id = transaction.user_id
       sign_out @user
 
-      @request_params = {
+      @request_params = {  
         'notification_type' => 'card-incoming', #p2p-incoming
         'operation_id' => 111,
         'amount' => 100.0,
@@ -122,7 +122,7 @@ describe Demo::PaymentsController do
     
     it 'must return error if format is not yandex_payment_notification' do
       post :process_payment, {:format => :html}.merge(@request_params)
-      assert_response 201#, [@response.redirect_url, @response.message, @controller.params]
+      assert_response 200#, [@response.redirect_url, @response.message, @controller.params]
     end
     
     it 'must accept yandex post request' do
@@ -130,8 +130,24 @@ describe Demo::PaymentsController do
       assert_difference 'Customer::Transaction.count' do
         post :process_payment, {:format => :yandex_payment_notification}.merge(@request_params)
       end
-      assert_response 200
-     
+      assert_response 200     
+    end
+
+    it 'must validate hash' do
+      yandex_request_params = {
+        "sender" => "41001000040", 
+        "amount" => "742.22", 
+        "operation_id" =>"test-notification", 
+        "sha1_hash" => "d730c965eba42090772ac9e7f82ee5aa189813da", 
+        "notification_type" => "p2p-incoming", 
+        "codepro" => "false", 
+        "label" => "", 
+        "datetime" => "2014-10-16T23:32:48Z", 
+        "currency"=>"643"
+        }
+
+      confirmation = Demo::PaymentConfirmationFromYandex.new(yandex_request_params)
+      confirmation.check_hash.must_be :==, true, [confirmation.hash_string, 'd730c965eba42090772ac9e7f82ee5aa189813da', confirmation]
     end
 
     it 'must increase free trials' do
