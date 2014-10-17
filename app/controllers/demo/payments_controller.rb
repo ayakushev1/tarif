@@ -19,7 +19,7 @@ class Demo::PaymentsController < ApplicationController
   end
   
   def wait_for_payment_being_processed
-    if customer_has_free_trials?
+    if customer_has_free_trials?('optimization_steps')
       redirect_to demo_optimization_steps_choose_load_calls_options_path
     end
   end

@@ -20,12 +20,20 @@ class UserMailer < ActionMailer::Base
 
   def welcome_email(user)
     @user = user
-    @url  = 'http://yakushev-tarif.herokuapp.com/login'
+    @url  = 'http://www.mytarifs.ru'/
+#    raise(StandardError, [@user.email])
     mail(to: @user.email, subject: 'Welcome to My Site')
   end
 
   def send_mail_to_admin_that_something_wrong_with_confirmation(payment_confirmation)
     @payment_confirmation = payment_confirmation
     mail(to: 'mytarifs@yandex.ru', subject: "something wrong with payment confirmation from yandex")
+  end
+
+  def payment_confirmation(user, payment_confirmation)
+    @payment_confirmation = payment_confirmation
+    @url  = 'http://www.mytarifs.ru/'
+    @user = user
+    mail(to: user.email, subject: "Подтверждение перевода денежных средств")
   end
 end

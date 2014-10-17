@@ -6,6 +6,14 @@ class Init::CustomerInfo::ServicesUsed
       :tarif_optimization_count => 1,
     }
   end
+
+  def self.values_for_payment
+    {
+      :calls_modelling_count => 2,
+      :calls_parsing_count => 2,
+      :tarif_optimization_count => 1,
+    }
+  end
 end
 
 

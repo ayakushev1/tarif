@@ -6,6 +6,8 @@ class Customer::TarifOptimizatorController < ApplicationController
   before_action :check_if_optimization_options_are_in_session, only: [:index]
   before_action :validate_tarifs, only: [:index, :recalculate]
   before_action :init_background_process_informer, only: [:tarif_optimization_progress_bar, :calculation_status, :recalculate, :update_minor_results, :prepare_final_tarif_results]
+  after_action -> {decrease_customer_allowed_services_count('tarif_optimization_count')}, only: :recalculate
+
   attr_reader :background_process_informer_operators, :background_process_informer_tarifs, :background_process_informer_tarif
 
   def prepare_final_tarif_results
@@ -90,7 +92,6 @@ class Customer::TarifOptimizatorController < ApplicationController
         background_process_informer.init
       end
       @a = ServiceHelper::TarifOptimizationStarter.new()
-        raise(StandardError, (optimization_params.session_filtr_params['calculate_background_with_spawnling'] == 'true'))
       if !(optimization_params.session_filtr_params['calculate_background_with_spawnling'] == 'false')
         Spawnling.new(:argv => "optimize for #{current_user.id}") do
           @a.start_calculate_all_operator_tarifs(options)          

@@ -3,6 +3,7 @@ class Customer::CallsController < ApplicationController
   crudable_actions :index
   before_action -> {update_usage_pattern(params)}, only: [:set_calls_generation_params]
   before_action :setting_if_nil_default_calls_generation_params, only: [:set_calls_generation_params, :generate_calls]
+  after_action -> {decrease_customer_allowed_services_count('calls_modelling_count')}, only: :generate_calls
 
   def set_default_calls_generation_params
     setting_default_calls_generation_params
