@@ -29,7 +29,7 @@ describe Demo::TarifOptimizatorController do
   
 end
 
-describe Demo::HistoryParserController do
+describe Demo::HistoryParsersController do
   before do
     @user = User.new(:id => 0, :name => "Гость", :email => "guest@example.com", :password => '111111', :password_confirmation => '111111', :confirmed_at => Time.zone.now)
     @user.skip_confirmation_notification!

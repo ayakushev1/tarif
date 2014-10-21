@@ -1,3 +1,3 @@
-class Demo::HistoryParsersController < Customer::HistoryParserController
+class Demo::HistoryParsersController < Customer::HistoryParsersController
 
 end
