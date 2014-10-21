@@ -1,20 +1,11 @@
 class Demo::PaymentsController < ApplicationController
+  before_action :build_payment_instruction, only: [:new, :create]
 
-  before_action :init_payment_instruction, only: :fill_payment_form
-  
-  def send_payment_form
-    @payment_instruction = Demo::PaymentInstructionToYandex.new(payment_params)
+  def create    
     if @payment_instruction.valid?        
-        
-      transaction_id = current_user.customer_transactions_cash.create(:status => {}, :description => {}, :made_at => Time.zone.now)
-      instruction_params = @payment_instruction.to_yandex_params(:label => transaction_id)
-      current_user.customer_transactions_cash.find(transaction_id).update(:description => instruction_params)
-      
-      redirect_to url_to_yandex(instruction_params)
-#      raise(StandardError)
+      redirect_to @payment_instruction.url_to_yandex(current_user)
     else
-      #raise(StandardError)
-      render :fill_payment_form#, :alert => @payment_instruction.errors.full_messages
+      render 'new'
     end
   end
   
@@ -25,39 +16,21 @@ class Demo::PaymentsController < ApplicationController
   end
   
   def process_payment
-    payment_confirmation = Demo::PaymentConfirmationFromYandex.new(params)
-    
-    UserMailer.send_mail_to_admin_that_something_wrong_with_confirmation(payment_confirmation) if !payment_confirmation.valid?
-    UserMailer.send_mail_to_admin_that_something_wrong_with_confirmation(payment_confirmation) if !payment_confirmation.check_hash
-
-    transaction_id = payment_confirmation.label
-    user_id = Customer::Transaction.where(:id => transaction_id).first.user_id if Customer::Transaction.where(:id => transaction_id).exists?
-    User.transaction do
-      Customer::Info.update_free_trials_by_cash_amount(user_id, payment_confirmation.amount)
-      Customer::Transaction.services_used.where(:user_id => user_id).create(:status => {}, :description => payment_confirmation.to_json, :made_at => Time.zone.now)
-    end
-
+    Demo::PaymentConfirmation.new(params).process_payment(current_user)    
     respond_to do |format|
-      format.yandex_payment_notification {render nothing: true, status: 200}
-      format.html {render nothing: true, status: 200}
+      format.all {render nothing: true, status: 200}
     end
   end
   
-  def payment_instruction_form
-    Formable.new(self, @payment_instruction)
-  end
-
   private
-    def url_to_yandex(instruction_params)
-      "https://money.yandex.ru/quickpay/confirm.xml?#{instruction_params.to_param}" #ERB::Util.url_encode() 
-    end
-    
-    def init_payment_instruction
-      @payment_instruction = Demo::PaymentInstructionToYandex.new()
-    end
   
-    def payment_params
-      params.require(:payment_instruction).permit!
+    def build_payment_instruction      
+      if params[:demo_payment]
+        @payment_instruction = Demo::Payment.new(params[:demo_payment].permit!)
+      else
+        @payment_instruction = Demo::Payment.new()
+      end
+      
     end
     
 end

@@ -7,39 +7,39 @@ describe Demo::PaymentsController do
     @user.save!(validate: false)
   end
   
-  describe 'fill_payment_form' do      
-    it 'must show payment_form with filled fields' do
+  describe 'new_form' do      
+    it 'must show new payment form with filled fields' do
       sign_in @user
       @controller.stub :customer_has_free_trials?, false do
-        get :fill_payment_form
-        assert_select('form[id=?]', 'new_payment_instruction')
-        assert_select("[id=payment_instruction_sum][value*='100']")
+        get :new
+        assert_select('form[id=new_demo_payment]')
+        assert_select("[id=demo_payment_sum][value*='100']")
       end
     end
   end
   
-  describe 'send_payment_form' do      
-    it 'must send payment_form if form filled correctly' do
+  describe 'create_payment_form' do      
+    it 'must create payment_form if form filled correctly' do
       sign_in @user
       @controller.stub :customer_has_free_trials?, false do
-        post :send_payment_form, :payment_instruction => {:sum => 100.0, :paymentType => 'AC'}
+        post :create, :demo_payment => {:sum => 100.0, :paymentType => 'AC'}
         @response.header['Location'].must_be :=~, /money.yandex.ru/
       end
     end
   
-    it 'must render fill_payment_form if form filled not correctly' do
+    it 'must render new if form filled not correctly' do
       sign_in @user
       @controller.stub :customer_has_free_trials?, false do
-        post :send_payment_form, :payment_instruction => {:sum => 99.0, :paymentType => 'AC1'}
-        assert_select('form[id=?]', 'new_payment_instruction')
+        post :create, :demo_payment => {:sum => 99.0, :paymentType => 'AC1'}
+        assert_select("form[id='new_demo_payment']")
       end
     end
   
-    it 'fill_payment_form must show alert' do
+    it 'new_form must show alert' do
       sign_in @user
       @controller.stub :customer_has_free_trials?, false do
-        post :send_payment_form, :payment_instruction => {:sum => 99.0, :paymentType => 'AC1'}
-        assert_select("div [class='alert alert-error alert-block']")
+        post :create, :demo_payment => {:sum => 99.0, :paymentType => 'AC1'}
+        assert_select("div[class*=field_with_errors]")
       end
     end
   
@@ -47,7 +47,7 @@ describe Demo::PaymentsController do
       sign_in @user
       @controller.stub :customer_has_free_trials?, false do        
         assert_difference 'Customer::Transaction.count' do
-          post :send_payment_form, :payment_instruction => {:sum => 100.0, :paymentType => 'AC'}
+          post :create, :demo_payment => {:sum => 100.0, :paymentType => 'AC'}
         end
       end
     end
@@ -55,7 +55,7 @@ describe Demo::PaymentsController do
     it 'request to yandex must include transaction_id in label param if form filled correctly' do
       sign_in @user
       @controller.stub :customer_has_free_trials?, false do        
-        post :send_payment_form, :payment_instruction => {:sum => 100.0, :paymentType => 'AC'}
+        post :create, :demo_payment => {:sum => 100.0, :paymentType => 'AC'}
         transaction_id = Customer::Transaction.order(:id).last.id 
         @response.header['Location'].must_be :=~, /label=#{transaction_id}/  
       end
@@ -95,7 +95,7 @@ describe Demo::PaymentsController do
     before  do
       sign_in @user
       @controller.stub :customer_has_free_trials?, false do        
-        post :send_payment_form, :payment_instruction => {:sum => 100.0, :paymentType => 'AC'}
+        post :create, :demo_payment => {:sum => 100.0, :paymentType => 'AC'}
       end
       get :wait_for_payment_being_processed
 #      assert_response :success, [@response.redirect_url, @response.message, @controller.alert, @controller.params, User.find(0)]
@@ -146,7 +146,7 @@ describe Demo::PaymentsController do
         "currency"=>"643"
         }
 
-      confirmation = Demo::PaymentConfirmationFromYandex.new(yandex_request_params)
+      confirmation = Demo::PaymentConfirmation.new(yandex_request_params)
       confirmation.check_hash.must_be :==, true, [confirmation.hash_string, 'd730c965eba42090772ac9e7f82ee5aa189813da', confirmation]
     end
 
@@ -154,7 +154,7 @@ describe Demo::PaymentsController do
       @request.headers["CONTENT_TYPE"] = "application/x-www-form-urlencoded"
       post :process_payment, {:format => :yandex_payment_notification}.merge(@request_params)
       @transaction_user_id.must_be :==, @user.id
-      Customer::Info.services_used.where(:user_id => @transaction_user_id).first.info['tarif_optimization_count'].must_be :==, 1
+      Customer::Info::ServicesUsed.where(:user_id => @transaction_user_id).first.info['tarif_optimization_count'].must_be :==, 2
     end
   
   end  

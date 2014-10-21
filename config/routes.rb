@@ -52,27 +52,29 @@ Rails.application.routes.draw do
       get 'calls/generate_calls' => :generate_calls
     end
 
-    controller :history_parser do
-      get 'history_parser/prepare_for_upload' => :prepare_for_upload
-      post 'history_parser/upload' => :upload
-      get 'history_parser/upload' => :upload
-      get 'history_parser/calculation_status' => :calculation_status
+    controller :history_parsers do
+      get 'history_parsers/prepare_for_upload' => :prepare_for_upload
+      post 'history_parsers/upload' => :upload
+      get 'history_parsers/upload' => :upload
+      get 'history_parsers/calculation_status' => :calculation_status
     end
 
-    controller :tarif_optimizator do      
-      get 'tarif_optimizator/index' => :index
-      get 'tarif_optimizator/recalculate' => :recalculate
-      get 'tarif_optimizator/calculation_status' => :calculation_status
-      get 'tarif_optimizator/select_services' => :select_services
+    controller :tarif_optimizators do      
+      get 'tarif_optimizators/index' => :index
+      get 'tarif_optimizators/recalculate' => :recalculate
+      get 'tarif_optimizators/calculation_status' => :calculation_status
+      get 'tarif_optimizators/select_services' => :select_services
     end
 
     controller :optimization_results do
       get 'optimization_results/show_customer_results' => :show_customer_results
     end
     
+    resource :payments
+    
     controller :payments do
-      get 'payments/fill_payment_form' => :fill_payment_form
-      post 'payments/send_payment_form' => :send_payment_form
+#      get 'payments/' => :new
+#      post 'payments/' => :create
       get 'payments/wait_for_payment_being_processed' => :wait_for_payment_being_processed
       post 'payments/process_payment' => :process_payment
     end
@@ -86,13 +88,11 @@ Rails.application.routes.draw do
   resources :tarif_lists, :price_lists
   
   namespace :customer do
-    controller :tarif_optimizator do
-      get 'tarif_optimizator/index' => :index
-      get 'tarif_optimizator/recalculate' => :recalculate
-      get 'tarif_optimizator/calculation_status' => :calculation_status
-      get 'tarif_optimizator/select_services' => :select_services
-      get 'tarif_optimizator/update_minor_results' => :update_minor_results
-      get 'tarif_optimizator/prepare_final_tarif_results' => :prepare_final_tarif_results
+    controller :tarif_optimizators do
+      get 'tarif_optimizators/index' => :index
+      get 'tarif_optimizators/recalculate' => :recalculate
+      get 'tarif_optimizators/calculation_status' => :calculation_status
+      get 'tarif_optimizators/select_services' => :select_services
     end   
 
     controller :optimization_results do
@@ -112,12 +112,12 @@ Rails.application.routes.draw do
       get 'calls/generate_calls' => :generate_calls
     end
 
-    controller :history_parser do
-      get 'history_parser/prepare_for_upload' => :prepare_for_upload
-      post 'history_parser/upload' => :upload
-      get 'history_parser/upload' => :upload
-      get 'history_parser/parse' => :parse
-      get 'history_parser/calculation_status' => :calculation_status
+    controller :history_parsers do
+      get 'history_parsers/prepare_for_upload' => :prepare_for_upload
+      post 'history_parsers/upload' => :upload
+      get 'history_parsers/upload' => :upload
+      get 'history_parsers/parse' => :parse
+      get 'history_parsers/calculation_status' => :calculation_status
     end
 
   end

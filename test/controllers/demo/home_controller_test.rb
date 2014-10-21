@@ -24,17 +24,16 @@ describe Demo::HomeController do
   describe 'method customer_has_free_trials?' do      
     it 'must show calls_generation_params button if there are free trails' do
       sign_in @user
-      Customer::Info.where(:user_id =>@user.id).services_used.create(:info => Init::CustomerInfo::ServicesUsed.default_values, :last_update => Time.zone.now)
       get :index
-      Customer::Info.where(:user_id =>@user.id).services_used.count.must_be :==, 1, @response.body
-      assert_select('[href*=choose_load_calls_options]') # href="/demo/calls/set_calls_generation_params"
+      Customer::Info::ServicesUsed.where(:user_id =>@user.id).count.must_be :==, 1
+      assert_select('[href*=choose_load_calls_options]') #, @response.body # href="/demo/calls/set_calls_generation_params"
     end
   
     it 'must show payment button if no free trails' do
       sign_in @user
-      Customer::Info.services_used.where(:user_id =>@user.id).first_or_create.update(:info => {:calls_modelling_count => 0})
+      Customer::Info::ServicesUsed.where(:user_id =>@user.id).first_or_create.update(:info => {:calls_modelling_count => 0})
       get :index
-      assert_select('[href*=fill_payment_form]') 
+      assert_select("[href*='demo/payments/new']") 
     end
   
   end

@@ -1,0 +1,18 @@
+
+<h3>Выбор параметров платежа</h3>
+
+ <%= form_for @payment_instruction do |f| %>
+
+ <%= @payment_instruction.errors[:sum] if !@payment_instruction.errors.blank? %>
+ <%= f.label(:sum, "Сумма")%>
+ <%= f.text_field(:sum) %>
+
+ <%= f.label(:paymentType, "Яндекс.Деньгами") %>
+ <%= f.radio_button(:paymentType, 'PC') %>
+
+ <%= f.label(:paymentType, "Банковской картой") %>
+ <%= f.radio_button(:paymentType, 'AC') %>
+
+ <%= f.submit('Перевести') %>
+
+ <% end %>

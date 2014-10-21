@@ -1,0 +1,37 @@
+<%
+
+content_in :accordion do |user| 
+  [
+    [
+     'Choice of services',
+     (
+	  link_to('Recalculate', customer_tarif_optimizators_recalculate_path ) + "  |  ".html_safe +
+	  render(:partial => 'customer/tarif_optimizators/input/service_choices', :layout => 'application/layouts/filtr_form_3_columns', 
+	    :locals => {:form_item => customer_tarif_optimizator.service_choices} )
+		
+     )          
+    ], 
+    [
+     'Optimization params',
+     (
+	  link_to('Recalculate', customer_tarif_optimizators_recalculate_path ) + "  |  ".html_safe +
+	  render(:partial => 'customer/tarif_optimizators/input/optimization_params', :layout => 'application/layouts/filtr_form_2_columns', 
+	    :locals => {:form_item => customer_tarif_optimizator.optimization_params} )
+		
+     )          
+    ], 
+    [
+     'Services list',
+	  link_to('Recalculate', customer_tarif_optimizators_recalculate_path ) +
+      render(:partial => 'customer/tarif_optimizators/input/services_select', :layout => 'application/layouts/filtr_form_3_columns', 
+        :locals => {:form_item => customer_tarif_optimizator.services_select} )
+    ], 
+    [
+     'Service categories list',
+	  link_to('Recalculate', customer_tarif_optimizators_recalculate_path ) +
+      render(:partial => 'customer/tarif_optimizators/input/service_categories_select', :layout => 'application/layouts/filtr_form_3_columns', 
+        :locals => {:form_item => customer_tarif_optimizator.service_categories_select} )
+    ], 
+  ] 
+end
+%>

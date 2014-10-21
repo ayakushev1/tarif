@@ -92,7 +92,6 @@ class ServiceHelper::TarifOptimizator
       end
     end
 
-#raise(StandardError)
     update_minor_results
     
     background_process_informer_operators.increase_current_value(0, "finish calculating operators")
@@ -109,7 +108,6 @@ class ServiceHelper::TarifOptimizator
         used_memory_by_output = calculate_used_memory(output)
       end if analyze_memory_used    
     
-#raise(StandardError)
       minor_result_saver.override({:result => 
         {:performance_results => performance_checker.show_stat_hash,
          :calls_stat => calls_stat_calculator.calculate_calls_stat(query_constructor),
@@ -118,52 +116,6 @@ class ServiceHelper::TarifOptimizator
          :used_memory_by_output => used_memory_by_output,
          }})
     end
-  end
-  
-  def calculate_and_save_final_tarif_sets
-    return nil if !save_interim_results_after_calculating_tarif_results
-    performance_checker.run_check_point('calculate_and_save_final_tarif_sets', 1) do
-      background_process_informer_operators.init(0.0, tarif_list_generator.operators.size)
-      background_process_informer_operators.increase_current_value(0, "clean_output_results")
-      [final_tarif_sets_saver, prepared_final_tarif_results_saver].each {|saver| saver.clean_output_results}
-      
-      background_process_informer_operators.increase_current_value(0, "calculate_and_save_final_tarif_sets_by_tarif")
-      tarif_list_generator.operators.each do |operator|
-        background_process_informer_tarifs.init(0.0, tarif_list_generator.tarifs[operator].size )
-        tarif_list_generator.tarifs[operator].each do |tarif|
-          calculate_and_save_final_tarif_sets_by_tarif(operator, tarif, accounting_period)
-          background_process_informer_tarifs.increase_current_value(1)
-        end
-        background_process_informer_tarifs.increase_current_value(0, "finish calculating one operator tarifs")
-        background_process_informer_tarifs.finish
-        background_process_informer_operators.increase_current_value(1)
-      end
-      background_process_informer_operators.increase_current_value(0, "finish calculating operators")
-      background_process_informer_operators.finish
-    end        
-  end
-  
-  def prepare_and_save_final_tarif_results
-    return nil if !(save_interim_results_after_calculating_tarif_results)# and save_interim_results_after_calculating_final_tarif_sets)
-    performance_checker.run_check_point('prepare_and_save_final_tarif_results', 1) do
-      background_process_informer_operators.init(0.0, tarif_list_generator.operators.size)
-      background_process_informer_operators.increase_current_value(0, "clean_output_results")
-      [prepared_final_tarif_results_saver].each {|saver| saver.clean_output_results}
-      
-      background_process_informer_operators.increase_current_value(0, "prepare_and_save_final_tarif_results_by_tarif")
-      tarif_list_generator.operators.each do |operator|
-        background_process_informer_tarifs.init(0.0, tarif_list_generator.tarifs[operator].size )
-        tarif_list_generator.tarifs[operator].each do |tarif|
-          prepare_and_save_final_tarif_results_by_tarif_for_presenatation(operator, tarif, accounting_period)
-          background_process_informer_tarifs.increase_current_value(1)
-        end
-        background_process_informer_tarifs.increase_current_value(0, "finish calculating one operator tarifs")
-        background_process_informer_tarifs.finish
-        background_process_informer_operators.increase_current_value(1)
-      end
-      background_process_informer_operators.increase_current_value(0, "finish calculating operators")
-      background_process_informer_operators.finish
-    end        
   end
   
   def calculate_one_operator(operator)

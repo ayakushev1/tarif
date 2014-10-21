@@ -20,6 +20,8 @@ GEM
       activesupport (= 4.1.0)
       builder (~> 3.1)
       erubis (~> 2.7.0)
+    active_type (0.3.0)
+      activerecord (>= 3.2)
     activemodel (4.1.0)
       activesupport (= 4.1.0)
       builder (~> 3.1)
@@ -214,6 +216,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_type
   annotate
   bcrypt-ruby (~> 3.1.2)
   better_errors

@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   include ApplicationHelper::DefaultRenderer, ApplicationHelper::AuthenticityAndAuthorization, ApplicationHelper::SetCurrentSession, 
-          ApplicationHelper::CustomerUsedServicesCheck, ApplicationHelper::DecreaseCustomerUsedServices
+          ApplicationHelper::CustomerUsedServicesCheck
   
   protect_from_forgery with: :exception
   skip_before_filter :verify_authenticity_token, if: -> { allowed_request_origin }

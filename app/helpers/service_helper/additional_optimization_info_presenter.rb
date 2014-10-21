@@ -68,7 +68,8 @@ class ServiceHelper::AdditionalOptimizationInfoPresenter
     service_packs_by_parts.each do |tarif, services_by_tarif|
       temp_result = {:tarif => tarif}
       services_by_tarif.each do |part, services|
-        temp_result.merge!({part => services.keys.size})
+        temp_result.merge!({part => services.size})
+#        temp_result.merge!({part => services.keys.size})
       end
       result << temp_result
     end if service_packs_by_parts

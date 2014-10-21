@@ -21,6 +21,6 @@ class Customer::Service < ActiveRecord::Base
   belongs_to :user, :class_name =>'User', :foreign_key => :user_id
   belongs_to :tarif_class, :class_name =>'TarifClass', :foreign_key => :tarif_class_id
   belongs_to :tarif_list, :class_name =>'TarifList', :foreign_key => :tarif_class_id
-  belongs_to :status, :class_name =>'Category', :foreign_key => :status_id
+  belongs_to :status, :class_name =>'::Category', :foreign_key => :status_id
   
 end

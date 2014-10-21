@@ -90,6 +90,7 @@ gem 'spawnling', :git => 'git://github.com/tra/spawnling'
 gem 'puma'
 
 gem 'devise'
+gem 'active_type'
 
 #gem 'sidekiq'
 gem 'delayed_job_active_record'

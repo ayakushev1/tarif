@@ -3,7 +3,7 @@ class Customer::CallsController < ApplicationController
   crudable_actions :index
   before_action -> {update_usage_pattern(params)}, only: [:set_calls_generation_params]
   before_action :setting_if_nil_default_calls_generation_params, only: [:set_calls_generation_params, :generate_calls]
-  after_action -> {decrease_customer_allowed_services_count('calls_modelling_count')}, only: :generate_calls
+  after_action -> {update_customer_info}, only: :generate_calls
 
   def set_default_calls_generation_params
     setting_default_calls_generation_params
@@ -16,8 +16,12 @@ class Customer::CallsController < ApplicationController
   
   def generate_calls
     Calls::Generator.new(self, customer_calls_generation_params, user_params).generate_calls
-    call_generation_param_saver('user_input').save({:result => customer_calls_generation_params})
     redirect_to customer_calls_path
+  end
+  
+  def update_customer_info
+    Customer::Info::CallsGenerationParams.update_info(current_user.id, customer_calls_generation_params)
+    Customer::Info::ServicesUsed.decrease_one_free_trials_by_one(current_user.id, 'calls_modelling_count')
   end
   
   def filtr
@@ -39,7 +43,6 @@ class Customer::CallsController < ApplicationController
     customer_calls_generation_params_filtr.each do |key, value|
       usage_pattern_id = session[:filtr][value.filtr_name]['phone_usage_type_id']
       session[:filtr][value.filtr_name] = Calls::Generator.default_calls_generation_params(key, usage_pattern_id)[key]
-      
     end
   end
   
@@ -66,7 +69,7 @@ class Customer::CallsController < ApplicationController
   end
   
   def setting_if_nil_default_calls_generation_params
-    saved_call_generation_param = call_generation_param_saver('user_input').results
+    saved_call_generation_param = Customer::Info::CallsGenerationParams.info(current_user.id)
     customer_calls_generation_params_filtr.each do |key, value|
 #      raise(StandardError, saved_call_generation_param)
       session[:filtr][value.filtr_name] = if saved_call_generation_param.blank?
@@ -114,9 +117,4 @@ class Customer::CallsController < ApplicationController
     end
   end
   
-  def call_generation_param_saver(name)
-#    @call_generation_param_saver ||= 
-    ServiceHelper::OptimizationResultSaver.new('call_generation_params', name, current_user.id)
-  end
-
 end

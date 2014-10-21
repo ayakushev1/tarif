@@ -1,7 +1,0 @@
-<%= link_to('На главную страницу', root_path, {:class => "btn btn-large", :type =>"button"}) %>
-<%= link_to('Вернуться к выбору вариантов загрузки звонков', demo_optimization_steps_choose_load_calls_options_path, {:class => "btn btn-large", :type =>"button"}) %>
-<%= link_to('Подобрать тариф', demo_tarif_optimizator_recalculate_path, {:class => "btn btn-large", :type =>"button"}) %>
-<%= link_to('Посмотреть результаты подбора тарифов', demo_optimization_results_show_customer_results_path, {:class => "btn btn-large", :type =>"button"}) %>
-<br />
-<br />
-<%= render :partial => 'demo/tarif_optimizator/input/input', :layout => 'application/layouts/accordion', :locals => {:name => 'customer_tarif_optimization_accord', :active => session[:current_accordion_page]['customer_tarif_optimization_accord'].to_i} %>

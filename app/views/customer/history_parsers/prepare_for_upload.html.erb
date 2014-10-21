@@ -1,0 +1,7 @@
+<%= render :partial => 'upload_form' %>
+      
+<%= link_to('Parse local history file', customer_history_parsers_parse_path ) %> 
+<br />
+<br />
+<%= render :partial => 'call_history_accord', :layout => 'application/layouts/accordion', 
+      :locals => {:name => 'call_history_accord', :active => session[:current_accordion_page]['call_history_accord'].to_i} %>

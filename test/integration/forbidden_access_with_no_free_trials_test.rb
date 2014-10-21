@@ -1,5 +1,5 @@
 require 'test_helper'
-#    ['optimization_steps', 'calls', 'history_parser', 'tarif_optimizator'].include?(controller_name)
+#    ['optimization_steps', 'calls', 'history_parsers', 'tarif_optimizators'].include?(controller_name)
 
 describe Demo::TarifOptimizatorController do
   before do
