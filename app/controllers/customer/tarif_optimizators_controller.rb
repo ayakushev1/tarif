@@ -2,7 +2,7 @@ class Customer::TarifOptimizatorsController < ApplicationController
   before_action -> {customer_tarif_optimizator.check_if_optimization_options_are_in_session}, only: [:index]
   before_action -> {customer_tarif_optimizator.validate_tarifs}, only: [:index, :recalculate]
   before_action -> {customer_tarif_optimizator.init_background_process_informer}, only: [:tarif_optimization_progress_bar, :calculation_status, :recalculate]
-  after_action -> {update_customer_infos}, only: :recalculate
+  after_action -> {customer_tarif_optimizator.update_customer_infos}, only: :recalculate
 
   helper_method :customer_tarif_optimizator
 

@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h3>Здравствуйте, <%= @user.name || @user.email %></h3>
+    <p> Подбор тарифа завершен. <br> </p>
+    <p>Для перехода на сайт нажмите: <%= link_to "Результаты подбора тарифа", @url %> </p>
+  </body>
+</html>

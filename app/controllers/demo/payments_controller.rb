@@ -1,5 +1,6 @@
 class Demo::PaymentsController < ApplicationController
   before_action :build_payment_instruction, only: [:new, :create]
+  attr_reader :payment_confirmation
 
   def create    
     if @payment_instruction.valid?        
@@ -16,7 +17,8 @@ class Demo::PaymentsController < ApplicationController
   end
   
   def process_payment
-    Demo::PaymentConfirmation.new(params).process_payment(current_user)    
+    @payment_confirmation = Demo::PaymentConfirmation.new(params)
+    payment_confirmation.process_payment    
     respond_to do |format|
       format.all {render nothing: true, status: 200}
     end

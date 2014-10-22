@@ -113,11 +113,12 @@ describe Demo::PaymentsController do
         'currency' => 643,
         'datetime' => Time.now(),
         'sender' => '',
-        'codepro' => '',
+        'codepro' => 'false',
         'label' => "#{@transaction_id}",
         'sha1_hash' => 'sha1_hash',
         'test_notification' => nil,
       }      
+      @request_params.merge!({'sha1_hash' => Digest::SHA1.hexdigest(Demo::PaymentConfirmation.new(@request_params).hash_string)})
     end
     
     it 'must return error if format is not yandex_payment_notification' do
@@ -145,6 +146,7 @@ describe Demo::PaymentsController do
         "datetime" => "2014-10-16T23:32:48Z", 
         "currency"=>"643"
         }
+      yandex_request_params.merge!({'sha1_hash' => Digest::SHA1.hexdigest(Demo::PaymentConfirmation.new(yandex_request_params).hash_string)})
 
       confirmation = Demo::PaymentConfirmation.new(yandex_request_params)
       confirmation.check_hash.must_be :==, true, [confirmation.hash_string, 'd730c965eba42090772ac9e7f82ee5aa189813da', confirmation]
@@ -152,9 +154,10 @@ describe Demo::PaymentsController do
 
     it 'must increase free trials' do
       @request.headers["CONTENT_TYPE"] = "application/x-www-form-urlencoded"
+      count_before = Customer::Info::ServicesUsed.info(@transaction_user_id)['tarif_optimization_count']
       post :process_payment, {:format => :yandex_payment_notification}.merge(@request_params)
       @transaction_user_id.must_be :==, @user.id
-      Customer::Info::ServicesUsed.where(:user_id => @transaction_user_id).first.info['tarif_optimization_count'].must_be :==, 2
+      Customer::Info::ServicesUsed.info(@transaction_user_id)['tarif_optimization_count'].must_be :==, count_before + 1
     end
   
   end  

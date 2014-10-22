@@ -205,7 +205,7 @@ class ServiceHelper::TarifOptimizationSqlBuilder
     service_category_tarif_class_ids.each do |service_category_tarif_class_id|
       next if service_category_tarif_class_id == -1
       raise(StandardError, [set_id, service_category_tarif_class_id]) if !query_constructor.tarif_class_categories[service_category_tarif_class_id]
-      condition_field = query_constructor.tarif_class_categories[service_category_tarif_class_id].conditions  
+      condition_field = query_constructor.tarif_class_categories[service_category_tarif_class_id]['conditions']  
       if condition_field and condition_field['tarif_set_must_include_tarif_options'] and 
         (condition_field['tarif_set_must_include_tarif_options'] & set_id.split('_').map{|s| s.to_i}).count == 0
       else

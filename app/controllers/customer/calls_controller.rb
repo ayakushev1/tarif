@@ -3,7 +3,7 @@ class Customer::CallsController < ApplicationController
   crudable_actions :index
   before_action -> {update_usage_pattern(params)}, only: [:set_calls_generation_params]
   before_action :setting_if_nil_default_calls_generation_params, only: [:set_calls_generation_params, :generate_calls]
-  after_action -> {update_customer_info}, only: :generate_calls
+  after_action -> {update_customer_infos}, only: :generate_calls
 
   def set_default_calls_generation_params
     setting_default_calls_generation_params
@@ -19,7 +19,7 @@ class Customer::CallsController < ApplicationController
     redirect_to customer_calls_path
   end
   
-  def update_customer_info
+  def update_customer_infos
     Customer::Info::CallsGenerationParams.update_info(current_user.id, customer_calls_generation_params)
     Customer::Info::ServicesUsed.decrease_one_free_trials_by_one(current_user.id, 'calls_modelling_count')
   end

@@ -24,22 +24,30 @@ class Customer::TarifOptimizator < ActiveType::Object
     Customer::Info::ServiceCategoriesSelect.update_info(current_user_id, service_categories_select.session_filtr_params)
     Customer::Info::TarifOptimizationParams.update_info(current_user_id, optimization_params.session_filtr_params)
 
-    Customer::Info::ServicesUsed.decrease_one_free_trials_by_one(current_user.id, 'tarif_optimization_count')
+    Customer::Info::ServicesUsed.decrease_one_free_trials_by_one(current_user_id, 'tarif_optimization_count')
+    UserMailer.tarif_optimization_complete(controller.current_user).deliver
   end
   
   def recalculate_on_back_ground
     prepare_background_process_informer
     if !(optimization_params.session_filtr_params['calculate_background_with_spawnling'] == 'false')
       Spawnling.new(:argv => "optimize for #{current_user_id}") do
-        tarif_optimization_starter.start_calculate_all_operator_tarifs(options)          
+        self.class.start_calculate_all_operator_tarifs(options)          
       end
     else
-      tarif_optimization_starter.delay.start_calculate_all_operator_tarifs(options)
+      raise(StandardError) if (Customer::Info::ServicesUsed.info(current_user_id)['paid_trials']).is_a?(String)
+      
+      priority = Customer::Info::ServicesUsed.info(current_user_id)['paid_trials'] = true ? 10 : 20
+      self.class.delay(:queue => 'tarif_optimization', :priority => priority).start_calculate_all_operator_tarifs(options)
     end              
   end
     
+  def self.start_calculate_all_operator_tarifs(options)
+    ServiceHelper::TarifOptimizator.new(options).calculate_all_operator_tarifs    
+  end
+  
   def recalculate_direct
-     tarif_optimization_starter.start_calculate_all_operator_tarifs(options)
+     self.class.start_calculate_all_operator_tarifs(options)
   end
   
   def prepare_background_process_informer

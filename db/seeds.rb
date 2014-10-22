@@ -12,6 +12,8 @@
   require File.expand_path(File.dirname(__FILE__))+"/seeds/#{part}.rb"
 end
 
+ServiceHelper::StatAndQuerySaver.save_stat_function_collector
+
 #raise(StandardError, calls)
 #Dir[Rails.root.join("db/seeds/tarif_tests/mts/tarifs/smart_plus.rb")].each { |f| require f }
 #Dir[Rails.root.join("db/seeds/tarif_tests/mts/tarif_options/everywhere_as_home.rb")].each { |f| require f }

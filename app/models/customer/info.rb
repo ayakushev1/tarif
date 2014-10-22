@@ -33,6 +33,6 @@ class Customer::Info < ActiveRecord::Base
   private
   
   def create_customer_transaction
-    Customer::Transaction.create(:user_id => self.user_id, :info_type_id => self.info_type_id, :status => {}, :description => self.info.to_json, :made_at => Time.zone.now)
+    result = Customer::Transaction.create(:user_id => self.user_id, :info_type_id => self.info_type_id, :status => {}, :description => self.info.to_json, :made_at => Time.zone.now)
   end
 end

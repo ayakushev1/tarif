@@ -36,4 +36,10 @@ class UserMailer < ActionMailer::Base
     @user = user
     mail(to: user.email, subject: "Подтверждение перевода денежных средств")
   end
+
+  def tarif_optimization_complete(user)
+    @url  = demo_optimization_results_show_customer_results_url #'http://www.mytarifs.ru/'
+    @user = user
+    mail(to: user.email, subject: "Подтверждение завершение подбора тарифа")
+  end
 end

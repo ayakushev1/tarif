@@ -40,6 +40,18 @@ class Customer::Info::ServiceChoices < ActiveType::Record[Customer::Info]
       'calculate_with_limited_scope' => 'false'
     }
   end
+  
+  def self.operators
+    [1025, 1028, 1030]
+  end
+  
+  def self.all_services_by_operator
+    result = {}
+    operators.each do |operator|
+      result[operator] = tarifs[operator] + common_services[operator] + tarif_options[operator]
+    end
+    result
+  end
 
   def self.tarifs
     {

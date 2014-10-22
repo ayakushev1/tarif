@@ -38,7 +38,7 @@ class Customer::HistoryParser < ActiveType::Object
     background_process_informer.init(0, 100)
   end
   
-  def update_customer_info
+  def update_customer_infos
     Customer::Info::CallsDetailsParams.update_info(current_user_id, user_params_filtr.session_filtr_params)
     Customer::Info::CallsParsingParams.update_info(current_user_id, parsing_params_filtr.session_filtr_params)
     Customer::Info::ServicesUsed.decrease_one_free_trials_by_one(current_user_id, 'calls_parsing_count')    
