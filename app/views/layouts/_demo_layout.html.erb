@@ -16,6 +16,8 @@
 	</div>
 	<div id="third_row" class="container-fluid">
 		<div id="third_row_left_column" class="span2">
+				<%= render('/application/menus/demo_menu') if true %>				
+				<br />			
 				<%= render('/application/menus/user_menu') if false or current_user_admin? %>				
 				<br />			
 				<%= render('/application/menus/admin_menu') if false or current_user_admin? %>	

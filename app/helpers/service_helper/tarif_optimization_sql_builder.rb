@@ -116,6 +116,8 @@ class ServiceHelper::TarifOptimizationSqlBuilder
     result += service_categories_cost_sql_from_service_categories(service_id, set_id, price_formula_order, part)
     sql = result.compact.join(' union ')
     sql = "with united_service_categories_cost_sql as (#{sql} ) select *, all_stat::json as all_stat from united_service_categories_cost_sql" unless sql.blank?
+    
+#    raise(StandardError, sql) if service_id == 330 and part == 'periodic'
 
     check_sql(sql, service_id, set_id, price_formula_order)
     execute_additional_sql_to_check_performance(sql, 'service_categories_cost_sql', 8)
@@ -180,6 +182,9 @@ class ServiceHelper::TarifOptimizationSqlBuilder
     price_formula_id = stat_details[:price_formula_id]
     price_formula_details = stat_function_collector.price_formula(price_formula_id) if price_formula_id
     formula_tarif_condition = price_formula_details["tarif_condition"] if price_formula_details
+
+#    raise(StandardError) if service_id == 322 and part == 'periodic'
+
     if formula_tarif_condition.blank? #and !['periodic', 'onetime'].include?(part)
       service_category_tarif_class_ids
     else
@@ -292,6 +297,8 @@ class ServiceHelper::TarifOptimizationSqlBuilder
     ].join(' ')
     sql = "(#{sql})"
 
+#    raise(StandardError, sql) if service_category_tarif_class_id == 117377 #service_id == 322 and part == 'periodic'
+
     check_sql(sql, service_id, service_category_tarif_class_id, service_category_group_id, price_formula_id, service_id, set_id,
       part, prev_group_call_ids, prev_stat_values_string)
     execute_additional_sql_to_check_performance(sql, 'service_category_cost_sql', 9)
@@ -310,6 +317,7 @@ class ServiceHelper::TarifOptimizationSqlBuilder
     else
       first_stat_sql(base_stat_sql, price_formula_id, excluded_call_ids_by_part, :group)
     end
+#    raise(StandardError, sql) if price_formula_id == 103619 #service_id == 322 and part == 'periodic'
 
     check_sql(sql, price_formula_id)
     execute_additional_sql_to_check_performance(sql, 'service_category_choice_sql', 10)

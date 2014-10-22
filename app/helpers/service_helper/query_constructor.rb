@@ -270,7 +270,7 @@ class ServiceHelper::QueryConstructor
       group("as_standard_category_group_id").pluck("as_standard_category_group_id, array_agg(id)").
       each {|ctc| tarif_class_categories_by_category_group[ctc[0]] =  ctc[1]}        
 
-    Service::CategoryTarifClass.where(:tarif_class_id => tarif_class_ids).active.where(:as_standard_category_group_id => nil).#original.
+    Service::CategoryTarifClass.where(:tarif_class_id => tarif_class_ids).active.#where(:as_standard_category_group_id => nil).#original.
       group("tarif_class_id").pluck("tarif_class_id, array_agg(id)").
       each {|ctc| tarif_class_categories_by_tarif_class[ctc[0]] =  ctc[1]}        
   end

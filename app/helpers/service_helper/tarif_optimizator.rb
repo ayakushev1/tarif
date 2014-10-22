@@ -324,7 +324,7 @@ class ServiceHelper::TarifOptimizator
       prepared_final_tarif_results = ServiceHelper::FinalTarifResultPreparator.prepare_final_tarif_results_by_tarif({
         :final_tarif_sets => saved_results['final_tarif_sets'].stringify_keys,
         :tarif_results => saved_results['tarif_results'].stringify_keys,
-        :groupped_identical_services => saved_results['groupped_identical_services'].stringify_keys,
+        :groupped_identical_services => (saved_results['groupped_identical_services'] || {}).stringify_keys,
         :service_description => saved_results['service_description'].stringify_keys,
         :operator_description => saved_results['operator_description'].stringify_keys,
         :categories => saved_results['categories'].stringify_keys,
