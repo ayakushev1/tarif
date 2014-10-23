@@ -71,11 +71,17 @@ class ServiceHelper::TarifResultSimlifier
       end
     end if tarif_sets
     
-    updated_tarif_results = tarif_results.clone
-    sub_tarif_sets_with_zero_results_1.each do |tarif_set_id|
-      updated_tarif_results.extract!(tarif_set_id)
-    end
+#    updated_tarif_results1 = tarif_results.clone
+#    sub_tarif_sets_with_zero_results_1.each do |tarif_set_id|
+#      updated_tarif_results1.extract!(tarif_set_id)
+#    end
+
+    updated_tarif_results = {}
+    tarif_results.each do |tarif_set_id, tarif_result|
+      updated_tarif_results[tarif_set_id] = tarif_result if !sub_tarif_sets_with_zero_results_1.include?(tarif_set_id)
+    end if tarif_results
     
+#    raise(StandardError)
     updated_tarif_sets = reorder_tarif_sets(updated_tarif_sets, updated_tarif_results)
 #    raise(StandardError, eliminate_identical_tarif_sets)
     updated_tarif_sets, updated_tarif_results = group_identical_tarif_sets(updated_tarif_sets, updated_tarif_results, services_to_not_excude, eliminate_identical_tarif_sets) if eliminate_identical_tarif_sets
