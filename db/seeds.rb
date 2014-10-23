@@ -4,21 +4,23 @@
 # categories tarif_classes parameters service/categories service/category_tarif_classes service/category_groups 
 # tarif_lists price_lists price/standard_formulas price/formulas customer/service relations customer/calls service/priorities
 
+# users
+# users/create_customer_info
+
+
 #Dir[Rails.root.join("db/seeds/definitions/*.rb")].sort.each { |f| require f }
 
 %w{
-  users/create_customer_info
 }.each do |part|
   require File.expand_path(File.dirname(__FILE__))+"/seeds/#{part}.rb"
 end
 
-ServiceHelper::StatAndQuerySaver.save_stat_function_collector
 
 #raise(StandardError, calls)
 #Dir[Rails.root.join("db/seeds/tarif_tests/mts/tarifs/smart_plus.rb")].each { |f| require f }
 #Dir[Rails.root.join("db/seeds/tarif_tests/mts/tarif_options/everywhere_as_home.rb")].each { |f| require f }
-#Dir[Rails.root.join("db/seeds/tarifs/**/*.rb")].each { |f| require f }
-
+Dir[Rails.root.join("db/seeds/tarifs/**/*.rb")].each { |f| require f }
+ServiceHelper::StatAndQuerySaver.save_stat_function_collector
 
 #  categories tarif_classes service/categories service/category_tarif_classes service/category_groups price/standard_formulas
 #  price_lists price/formulas relations

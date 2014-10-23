@@ -29,7 +29,7 @@ _sctcg_all_own_country_regions_calls_to_own_country_own_operator = {:name => '_s
   @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item_if_used, :price => 34.0})  
 
 #Ежемесячная плата
-  @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => _stf_price_by_1_month_if_used, :price => 210.0})
+  @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => _stf_price_by_1_month, :price => 210.0})
  
 #All own country regions, Calls, Outcoming, to_own_home_regions, to_own_operator
   @tc.add_grouped_service_category_tarif_class(_sctcg_all_own_country_regions_calls_to_own_home_regions, scg_mts_additional_minutes_150_included_in_tarif_calls[:id]) 

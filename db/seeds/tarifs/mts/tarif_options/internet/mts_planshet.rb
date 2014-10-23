@@ -18,10 +18,10 @@
 #auto_turbo_buttons 
 
 #Ежемесячная плата
-  @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => _stf_price_by_1_month_if_used, :price => 450.0})
+  @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => _stf_price_by_1_month, :price => 450.0})
 
 #Ежемесячная плата - скидка за подключение опции к тарифу Коннект
-  @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => _stf_price_by_1_month_if_used, :price => -50.0},
+  @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => _stf_price_by_1_month, :price => -50.0},
     :tarif_set_must_include_tarif_options => [_mts_mts_connect_4] )
 
 #All Russia rouming, internet, with turbo-buttons

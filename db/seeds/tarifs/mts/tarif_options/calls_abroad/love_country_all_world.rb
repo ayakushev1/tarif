@@ -14,7 +14,7 @@
   } } )
 
 #Ежемесячная плата
-  @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => _stf_price_by_1_month_if_used, :price => 290.0})
+  @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => _stf_price_by_1_month, :price => 290.0})
 
 #TODO проверить действует ли тариф на звонки в своем регионе
 #Own and home regions, Calls, Outcoming, to_russia, to own operator

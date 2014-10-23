@@ -63,6 +63,7 @@ class ServiceHelper::TarifOptimizationSqlBuilder
         prev_call_ids_count += tarif_results_value['call_id_count'] 
       end
       
+      next if (calls_count_by_parts[part] == 0) and !['periodic', 'onetime'].include?(part)
 #TODO подумать чтобы убрать !(calls_count_by_parts[part] == 0)
       if !(calls_count_by_parts[part] == 0) and prev_call_ids_count == calls_count_by_parts[part]
         empty_service_cost_sql(service_id, set_id, price_formula_order, part)

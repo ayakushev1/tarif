@@ -19,7 +19,7 @@
 _sctcg_all_russia_rouming_internet = {:name => '_sctcg_all_russia_rouming_internet', :service_category_rouming_id => _all_russia_rouming, :service_category_calls_id => _internet}
 
 #Ежемесячная плата
-  @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => _stf_price_by_1_month_if_used, :price => 350.0})
+  @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => _stf_price_by_1_month, :price => 350.0})
 
 #All Russia rouming, internet, with turbo-buttons
   @tc.add_one_service_category_tarif_class(_sctcg_all_russia_rouming_internet, {}, 
