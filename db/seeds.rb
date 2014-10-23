@@ -21,6 +21,8 @@ end
 #raise(StandardError, calls)
 #Dir[Rails.root.join("db/seeds/tarif_tests/mts/tarifs/smart_plus.rb")].each { |f| require f }
 #Dir[Rails.root.join("db/seeds/tarif_tests/mts/tarif_options/everywhere_as_home.rb")].each { |f| require f }
+
+#НЕ ЗАПУСКАТЬ ТАРИФЫ БЕЗ ОСТАЛЬНЫХ ТАБЛИЦ!!!
 Dir[Rails.root.join("db/seeds/tarifs/**/*.rb")].each { |f| require f }
 ServiceHelper::StatAndQuerySaver.save_stat_function_collector
 
