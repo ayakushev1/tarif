@@ -5,7 +5,7 @@
   :features => {:http => 'http://www.mts.ru/mob_connect/roaming/n_roaming/discounts/sms_paket/'},
   :dependency => {
     :categories => [_tcgsc_sms],
-    :incompatibility => {}, 
+    :incompatibility => {:sms_travelling_in_russia => [_mts_50_sms_travelling_in_russia, _mts_100_sms_travelling_in_russia]}, 
     :general_priority => _gp_tarif_option_without_limits,#_gp_tarif_option_with_limits,
     :other_tarif_priority => {:lower => [], :higher => []},
     :prerequisites => [],

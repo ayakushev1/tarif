@@ -5,7 +5,7 @@
   :features => {:http => 'http://www.mts.ru/mob_connect/tariffs/discounts/discounts_in_region/calls_on_number_mts/paketu/'},
   :dependency => {
     :categories => [_tcgsc_calls],
-    :incompatibility => {}, 
+    :incompatibility => {:additional_minutes_in_country => [_mts_additional_minutes_150, _mts_additional_minutes_300]}, 
     :general_priority => _gp_tarif_option,
     :other_tarif_priority => {:lower => [], :higher => []},
     :prerequisites => [_mts_smart, _mts_smart_plus, _mts_smart_top],

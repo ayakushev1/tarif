@@ -15,8 +15,8 @@
 #Добавление новых service_category_group
   #sms included in tarif
   scg_mts_umnyi_dom_included_in_tarif_sms = @tc.add_service_category_group(
-    {:name => 'scg_mts_smart_plus_included_in_tarif_sms' }, 
-    {:name => "price for _scg_mts_smart_plus_included_in_tarif_sms"}, 
+    {:name => 'scg_mts_umnyi_dom_included_in_tarif_sms' }, 
+    {:name => "price for _scg_mts_umnyi_dom_included_in_tarif_sms"}, 
     {:calculation_order => 0, :standard_formula_id => _stf_zero_count_volume_item, 
       :formula => {:window_condition => "(1000.0 >= count_volume)", :window_over => 'month'}, :price => 0.0, :description => '' }
     )

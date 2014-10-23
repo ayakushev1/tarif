@@ -11,7 +11,7 @@
     :general_priority => _gp_tarif_option_without_limits,#_gp_tarif_option_with_limits,
     :other_tarif_priority => {:lower => [_mts_mini_bit], :higher => []},
     :prerequisites => [],
-    :forbidden_tarifs => {:to_switch_on => [_mts_smart, _mts_smart_mini, _mts_smart_plus, _mts_ultra, _mts_mts_connect_4], :to_serve => []},
+    :forbidden_tarifs => {:to_switch_on => [_mts_smart, _mts_smart_mini, _mts_smart_plus, _mts_ultra, _mts_mts_connect_4, _mts_smart_top], :to_serve => []},
     :multiple_use => false
   } } )
 

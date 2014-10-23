@@ -5,7 +5,8 @@
   :features => {:http => 'http://www.mts.ru/mob_connect/messaging/sms/discount2/sms/'},
   :dependency => {
     :categories => [_tcgsc_sms],
-    :incompatibility => {:monthly_sms_packet => [_mts_monthly_sms_packet_100, _mts_monthly_sms_packet_300, _mts_monthly_sms_packet_500, _mts_monthly_sms_packet_1000]}, 
+    :incompatibility => {:sms_packets => [_mts_monthly_sms_packet_100, _mts_monthly_sms_packet_300, _mts_monthly_sms_packet_500, _mts_monthly_sms_packet_1000,
+      _mts_onetime_sms_packet_50, _mts_onetime_sms_packet_150, _mts_onetime_sms_packet_300]}, 
     :general_priority => _gp_tarif_option_without_limits,#_gp_tarif_option_with_limits,
     :other_tarif_priority => {:lower => [], :higher => []},
     :prerequisites => [],
