@@ -8,7 +8,7 @@
 # users/create_customer_info
 
 
-#Dir[Rails.root.join("db/seeds/definitions/*.rb")].sort.each { |f| require f }
+Dir[Rails.root.join("db/seeds/definitions/*.rb")].sort.each { |f| require f }
 
 %w{
 }.each do |part|
