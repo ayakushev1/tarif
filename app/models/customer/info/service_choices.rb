@@ -32,9 +32,20 @@ class Customer::Info::ServiceChoices < ActiveType::Record[Customer::Info]
   
   def self.default_values
     {
-      'tarifs_bln' => [], 'tarifs_mgf' => [], 'tarifs_mts' => [],
-      'tarif_options_bln' => [], 'tarif_options_mgf' => [], 'tarif_options_mts' => [], 
-      'common_services_bln' => [], 'common_services_mgf' => [], 'common_services_mts' => [], 
+      'tarifs_bln' => tarifs[1025], 'tarifs_mgf' => tarifs[1028], 'tarifs_mts' => tarifs[1030],
+      'common_services_bln' => common_services[1025], 'common_services_mgf' => common_services[1028], 'common_services_mts' => common_services[1030], 
+      'tarif_options_bln' => tarif_options_for_demo[1025], 'tarif_options_mgf' => tarif_options_for_demo[1028], 'tarif_options_mts' => tarif_options_for_demo[1030], 
+#      'accounting_period' => -1,
+      'calculate_only_chosen_services' => 'false',
+      'calculate_with_limited_scope' => 'false'
+    }
+  end
+  
+  def self.default_values_for_paid
+    {
+      'tarifs_bln' => tarifs[1025], 'tarifs_mgf' => tarifs[1028], 'tarifs_mts' => tarifs[1030],
+      'common_services_bln' => common_services[1025], 'common_services_mgf' => common_services[1028], 'common_services_mts' => common_services[1030], 
+      'tarif_options_bln' => tarif_options[1025], 'tarif_options_mgf' => tarif_options[1028], 'tarif_options_mts' => tarif_options[1030], 
 #      'accounting_period' => -1,
       'calculate_only_chosen_services' => 'false',
       'calculate_with_limited_scope' => 'false'
@@ -74,6 +85,15 @@ class Customer::Info::ServiceChoices < ActiveType::Record[Customer::Info]
       1025 => tarif_options_by_type[1025].map{|t| t[1]}.flatten,
       1028 => tarif_options_by_type[1028].map{|t| t[1]}.flatten,
       1030 => tarif_options_by_type[1030].map{|t| t[1]}.flatten,
+    }
+  end  
+
+  def self.tarif_options_for_demo
+    demo_option_types = [:country_rouming, :calls, :sms, :internet]
+    {
+      1025 => tarif_options_by_type[1025].map{|t| t[1] if demo_option_types.include?(t[0])}.flatten,
+      1028 => tarif_options_by_type[1028].map{|t| t[1] if demo_option_types.include?(t[0])}.flatten,
+      1030 => tarif_options_by_type[1030].map{|t| t[1] if demo_option_types.include?(t[0])}.flatten,
     }
   end  
 

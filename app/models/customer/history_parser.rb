@@ -26,11 +26,13 @@ class Customer::HistoryParser < ActiveType::Object
     Spawnling.new(:argv => "parsing call history file for #{current_user_id}") do
       background_process_informer.init(0, 100)
       send(parser_starter, call_history_file)
+      update_customer_infos
     end     
   end
   
   def recalculate_direct(parser_starter, call_history_file)
     send(parser_starter, call_history_file)
+    update_customer_infos
   end
 
   def prepare_background_process_informer

@@ -187,7 +187,7 @@ Category.create(id: 234, type_id: 22, level_id: nil, parent_id: 230, name: "Не
 Category.create(id: 240, type_id: 22, level_id: nil, parent_id: nil, name: "Общая")#"general")
 Category.create(id: 241, type_id: 22, level_id: nil, parent_id: 240, name: "Не выезжаю за пределы своего региона")#"home sitter")
 Category.create(id: 242, type_id: 22, level_id: nil, parent_id: 240, name: "Не выезжаю за пределы домашнего региона")#"home and home region sitter")
-Category.create(id: 243, type_id: 22, level_id: nil, parent_id: 240, name: "Часто путешесвую по России")#"active Russia traveller")
+Category.create(id: 243, type_id: 22, level_id: nil, parent_id: 240, name: "Часто путешествую по России")#"active Russia traveller")
 Category.create(id: 244, type_id: 22, level_id: nil, parent_id: 240, name: "Часто выезжаю заграницу")#"active foreign country traveller")
 
 Category.create(id: 300, type_id: 23, level_id: nil, parent_id: nil, name: "general priority")

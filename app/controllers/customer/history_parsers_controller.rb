@@ -4,7 +4,7 @@ class Customer::HistoryParsersController < ApplicationController
 
   before_action -> {customer_history_parser.check_if_parsing_params_in_session}, only: [:parse, :prepare_for_upload]
   before_action -> {customer_history_parser.init_background_process_informer}, only: [:upload, :calculation_status, :parse]
-  after_action -> {customer_history_parser.update_customer_infos}, only: :upload
+#  after_action -> {customer_history_parser.update_customer_infos}, only: :upload
 
   helper_method :customer_history_parser
 

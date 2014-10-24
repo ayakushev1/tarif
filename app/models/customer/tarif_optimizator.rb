@@ -39,15 +39,16 @@ class Customer::TarifOptimizator < ActiveType::Object
       
       priority = Customer::Info::ServicesUsed.info(current_user_id)['paid_trials'] = true ? 10 : 20
       self.class.delay(:queue => 'tarif_optimization', :priority => priority).start_calculate_all_operator_tarifs(options)
-    end              
+    end        
   end
     
   def self.start_calculate_all_operator_tarifs(options)
     ServiceHelper::TarifOptimizator.new(options).calculate_all_operator_tarifs    
+    update_customer_infos
   end
   
   def recalculate_direct
-     self.class.start_calculate_all_operator_tarifs(options)
+    self.class.start_calculate_all_operator_tarifs(options)
   end
   
   def prepare_background_process_informer

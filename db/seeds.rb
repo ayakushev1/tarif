@@ -11,6 +11,7 @@
 #Dir[Rails.root.join("db/seeds/definitions/*.rb")].sort.each { |f| require f }
 
 %w{
+ users/create_customer_info
 }.each do |part|
   require File.expand_path(File.dirname(__FILE__))+"/seeds/#{part}.rb"
 end

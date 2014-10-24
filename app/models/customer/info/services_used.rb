@@ -50,7 +50,7 @@ class Customer::Info::ServicesUsed < ActiveType::Record[Customer::Info]
     {
       'calls_modelling_count' => 2,
       'calls_parsing_count' => 2,
-      'tarif_optimization_count' => 1,
+      'tarif_optimization_count' => 2,
       'paid_trials' => true,
     }
   end
