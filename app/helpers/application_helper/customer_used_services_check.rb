@@ -15,22 +15,49 @@ module ApplicationHelper::CustomerUsedServicesCheck
   end
   
   def customer_has_free_trials?(controller_name_1 = controller_name)
-    free_trials = Customer::Info::ServicesUsed.info(current_user) || {}
     case 
-    when['calls', 'history_parsers'].include?(controller_name)
-      (free_trials['calls_modelling_count'] < 1 or free_trials['calls_parsing_count'] < 1) ? false : true
+    when controller_name_1 == 'calls'
+      customer_has_free_calls_modelling_trials?
+    when controller_name_1 == 'history_parsers'
+      customer_has_free_history_parsing_trials?
     when controller_name_1 == 'tarif_optimizators'
-      (free_trials['tarif_optimization_count'] < 1) ? false : true
+      customer_has_free_tarif_optimization_trials?
     when controller_name_1 == 'optimization_steps'
-      (free_trials['tarif_optimization_count'] < 1) ? false : true
-    when controller_name_1 == 'optimization_steps'
-      (free_trials['optimization_steps'] < 1 and free_trials['calls_parsing_count'] < 1 and free_trials['tarif_optimization_count'] < 1) ? false : true
+      customer_has_free_calls_modelling_trials? and customer_has_free_history_parsing_trials? and customer_has_free_tarif_optimization_trials?
     else
       true
     end
   end
+
+  def customer_has_free_calls_modelling_trials?
+    (customer_info and customer_info['calls_modelling_count'] < 1 ) ? false : true
+  end
   
+  def customer_has_free_history_parsing_trials?
+    (customer_info and customer_info['calls_parsing_count'] < 1 ) ? false : true
+  end
+  
+  def customer_has_free_tarif_optimization_trials?
+    (customer_info and customer_info['tarif_optimization_count'] < 1 ) ? false : true
+  end
+  
+  def customer_has_calls_loaded?
+    (customer_info and customer_info['has_calls_loaded'] == true ) ? true : false
+  end
+  
+  def customer_has_tarif_optimized?
+    (customer_info and customer_info['has_tarif_optimized'] == true ) ? true : false
+  end
+  
+  def customer_paid_trials?
+    (customer_info and customer_info['paid_trials'] == true ) ? true : false
+  end
+      
   protected
+  
+  def customer_info
+    @customer_info ||= Customer::Info::ServicesUsed.info(current_user.id)
+  end
   
   def fobidden_to_visit_customer_with_no_free_trials(controller_name_1 = controller_name)
     ['optimization_steps', 'calls', 'history_parsers', 'tarif_optimizators'].include?(controller_name_1)

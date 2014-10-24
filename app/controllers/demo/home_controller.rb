@@ -19,7 +19,7 @@ class Demo::HomeController < ApplicationController
   
   def final_tarif_results_presenter
     options = {
-      :user_id=> (current_user ? current_user.id.to_i : nil),
+      :user_id=> (0),
       :show_zero_tarif_result_by_parts => 'false',
       }
     @optimization_result_presenter ||= ServiceHelper::FinalTarifResultsPresenter.new(options)

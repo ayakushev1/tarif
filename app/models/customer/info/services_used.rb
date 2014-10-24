@@ -34,7 +34,7 @@ class Customer::Info::ServicesUsed < ActiveType::Record[Customer::Info]
       }, :last_update => Time.zone.now)
 
   end
-  
+
   def self.default_values
     {
       'calls_modelling_count' => 5,
