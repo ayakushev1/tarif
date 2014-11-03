@@ -1,7 +1,7 @@
 require 'test_helper'
 #    ['optimization_steps', 'calls', 'history_parsers', 'tarif_optimizators'].include?(controller_name)
 
-describe Demo::TarifOptimizatorController do
+describe Demo::TarifOptimizatorsController do
   before do
     @user = User.new(:id => 0, :name => "Гость", :email => "guest@example.com", :password => '111111', :password_confirmation => '111111', :confirmed_at => Time.zone.now)
     @user.skip_confirmation_notification!

@@ -25,14 +25,16 @@ class Customer::HistoryParser < ActiveType::Object
     prepare_background_process_informer
     Spawnling.new(:argv => "parsing call history file for #{current_user_id}") do
       background_process_informer.init(0, 100)
-      send(parser_starter, call_history_file)
+      message = send(parser_starter, call_history_file)
       update_customer_infos
+      message
     end     
   end
   
   def recalculate_direct(parser_starter, call_history_file)
-    send(parser_starter, call_history_file)
+    message = send(parser_starter, call_history_file)
     update_customer_infos
+    message
   end
 
   def prepare_background_process_informer
@@ -53,7 +55,8 @@ class Customer::HistoryParser < ActiveType::Object
   end
   
   def parse_file(file)
-    parser = Calls::HistoryParser.new(file, user_params, parsing_params)
+    parser = choose_parser(file)
+#    raise(StandardError)
     parser.parse
     message = {:file_is_good => true, 'message' => "Обработано #{parser.processed_percent}%"}
     call_history_to_save = {
@@ -66,6 +69,18 @@ class Customer::HistoryParser < ActiveType::Object
     call_history_to_save
   end
   
+  def choose_parser(file)
+    file_type = file_type(file)
+    case file_type
+    when 'html'
+      Calls::HistoryParser::MtsHtml.new(file, user_params, parsing_params)
+    when 'xls'
+      Calls::HistoryParser::BlnXls.new(file, user_params, parsing_params)
+    else
+      raise(StandardError, "Wrong file type: #{file_type}")
+    end      
+  end
+  
   def upload_file(uploaded_call_history_file)
     uploaded_call_history_file ? check_uploaded_call_history_file(uploaded_call_history_file) : {:file_is_good => false, 'message' => "Вы не выбрали файл для загрузки"}
   end
@@ -76,10 +91,15 @@ class Customer::HistoryParser < ActiveType::Object
     message = "Файл слишком большой: #{file_size}Mb. Он должен быть не больше #{parsing_params[:file_upload_max_size]}Mb"
     result = {:file_is_good => false, 'message' => message} if file_size > parsing_params[:file_upload_max_size]
 
-    file_type = call_history_file.original_filename.to_s.split('.')[1]
+    file_type = file_type(call_history_file)
     message = "Файл неправильного типа #{file_type}. Он должен быть один из #{parsing_params[:allowed_call_history_file_types]}"
     result = {:file_is_good => false, 'message' => message} if !parsing_params[:allowed_call_history_file_types].include?(file_type)
     result
+  end
+  
+  def file_type(file)
+    file_type = (file.public_methods.include?(:original_filename) ? file.original_filename.to_s.split('.')[1] : file.path.to_s.split('.')[1])    
+    file_type = file_type.downcase if file_type
   end
   
   def init_background_process_informer

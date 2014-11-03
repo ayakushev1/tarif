@@ -1,7 +1,7 @@
 Dir[Rails.root.join("db/seeds/definitions/*.rb")].sort.each { |f| require f }
 require 'nokogiri'
 require 'open-uri'
-class Calls::HistoryParser
+class Calls::HistoryParser::MtsHtml
   attr_reader :call_history_file, :background_process_informer
   attr_reader :doc, :table_heads, :row_column_index
   attr_reader :unprocessed, :processed, :ignorred, :original_row_number
@@ -221,7 +221,8 @@ class Calls::HistoryParser
   end
   
   def row_number(row)
-    if row_service(row)[0] == '_3g'
+    service = row_service(row)
+    if service and service[:base_service] == _3g
       {:number => row[row_column_index[:number]], :subservice => _unspecified_direction}
     else
       sub_service_id = (row[row_column_index[:number]] =~ /<--/) ? _inbound : _outbound
@@ -315,6 +316,7 @@ class Calls::HistoryParser
   end
   
   def row_date(row)
+#    raise(StandardError)
     "#{row[row_column_index[:date]]} #{row[row_column_index[:time]]} #{row[row_column_index[:gmt]]}".to_datetime
   end
   

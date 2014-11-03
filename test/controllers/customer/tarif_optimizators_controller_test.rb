@@ -1,6 +1,6 @@
 require 'test_helper'
 
-describe Customer::TarifOptimizatorController do
+describe Customer::TarifOptimizatorsController do
   describe 'tarif_results action' do
     it 'must work' do
       get :recalculate

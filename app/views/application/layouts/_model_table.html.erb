@@ -4,7 +4,7 @@ style_table = [
 ]
 
 table_html_options = {:id =>table.table_name, :class => 'table table-hover table-bordered table-condensed'}
-table_html_options = form_html_options.merge(html) if defined?(html)
+table_html_options = form_html_options.merge(html) if local_assigns.has_key?(:html)
 table_html_options = table_html_options.collect { |key, value| "#{key.to_s}=\"#{value.to_s}\""}.join(" ").html_safe
 
 %>
