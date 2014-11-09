@@ -2,7 +2,7 @@ class ServiceHelper::TarifResultSimlifier
   attr_reader :options             
   attr_accessor :updated_tarif_results, :groupped_identical_services 
   attr_accessor :tarif_sets, :services_that_depended_on, :operator, :tarif, :common_services, :common_services_by_parts,
-                :cons_tarif_results_by_parts, :tarif_results, :cons_tarif_results, :background_process_informer_tarif
+                :cons_tarif_results_by_parts, :tarif_results, :cons_tarif_results
   
   attr_reader :if_update_tarif_sets_to_calculate_from_with_cons_tarif_results,
               :eliminate_identical_tarif_sets
@@ -27,7 +27,6 @@ class ServiceHelper::TarifResultSimlifier
     @cons_tarif_results_by_parts = input_data[:cons_tarif_results_by_parts]
     @tarif_results = input_data[:tarif_results]
     @cons_tarif_results = input_data[:cons_tarif_results]
-    @background_process_informer_tarif = input_data[:background_process_informer_tarif]    
   end
   
   def simplify_tarif_results_and_tarif_sets

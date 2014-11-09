@@ -9,7 +9,7 @@ class Customer::TarifOptimizator < ActiveType::Object
   attribute :operators_optimization_progress_bar, default: proc {ProgressBarable.new(controller, 'operators_optimization', background_process_informer_operators.current_values)}
   attribute :tarifs_optimization_progress_bar, default: proc {ProgressBarable.new(controller, 'tarifs_optimization', background_process_informer_tarifs.current_values)}
   attribute :tarif_optimization_progress_bar, default: proc {ProgressBarable.new(controller, 'tarif_optimization', background_process_informer_tarif.current_values)}
-  attribute :tarif_optimization_starter, default: proc {ServiceHelper::TarifOptimizationStarter.new()}
+#  attribute :tarif_optimization_starter, default: proc {ServiceHelper::TarifOptimizationStarter.new()}
   attr_reader :controller
   attr_reader :background_process_informer_operators, :background_process_informer_tarifs, :background_process_informer_tarif
   
@@ -25,30 +25,56 @@ class Customer::TarifOptimizator < ActiveType::Object
     Customer::Info::TarifOptimizationParams.update_info(current_user_id, optimization_params.session_filtr_params)
 
     Customer::Info::ServicesUsed.decrease_one_free_trials_by_one(current_user_id, 'tarif_optimization_count')
-    UserMailer.tarif_optimization_complete(controller.current_user).deliver
   end
   
-  def recalculate_on_back_ground
+  def recalculate_on_background
     prepare_background_process_informer
-    if !(optimization_params.session_filtr_params['calculate_background_with_spawnling'] == 'false')
+    if (optimization_params.session_filtr_params['calculate_background_with_spawnling'] == 'true')
       Spawnling.new(:argv => "optimize for #{current_user_id}") do
-        self.class.start_calculate_all_operator_tarifs(options)          
+        ServiceHelper::TarifOptimizator.new(options).calculate_all_operator_tarifs    
+        update_customer_infos
+        UserMailer.tarif_optimization_complete(current_user_id).deliver
       end
     else
       raise(StandardError) if (Customer::Info::ServicesUsed.info(current_user_id)['paid_trials']).is_a?(String)
       
       priority = Customer::Info::ServicesUsed.info(current_user_id)['paid_trials'] = true ? 10 : 20
-      self.class.delay(:queue => 'tarif_optimization', :priority => priority).start_calculate_all_operator_tarifs(options)
+      update_customer_infos
+      
+      ServiceHelper::TarifOptimizator.new(options).clean_output_results
+      
+      is_send_email = false
+      number_of_workers_to_add = 0
+      options[:services_by_operator][:operators].each do |operator|
+        options[:services_by_operator][:tarifs][operator].each do |tarif|
+          options_to_calculate = options.merge({:use_background_process_informers => false})
+          options_to_calculate[:services_by_operator][:operators] = [operator]
+          options_to_calculate[:services_by_operator][:tarifs] = {operator => [tarif]}
+          options_to_calculate[:services_by_operator][:tarif_options] = {operator => options[:services_by_operator][:tarif_options][operator]}
+          options_to_calculate[:services_by_operator][:common_services] = {operator => options[:services_by_operator][:common_services][operator]}
+          is_send_email = true if operator == options[:services_by_operator][:operators].last and tarif == options[:services_by_operator][:tarifs][operator].last
+          number_of_workers_to_add += 1
+#          raise(StandardError, [options[:services_by_operator], options_to_calculate[:services_by_operator]])
+          
+#          ServiceHelper::TarifOptimizator.new(options_to_calculate).calculate_all_operator_tarifs(false)
+          
+          Delayed::Job.enqueue Background::Job::TarifOptimization.new(options_to_calculate, is_send_email), :priority => priority
+        end if options[:services_by_operator][:tarifs] and options[:services_by_operator][:tarifs][operator]
+      end if options[:services_by_operator] and options[:services_by_operator][:operators]       
+#      delay(:queue => 'tarif_optimization', :priority => priority).start_calculate_all_operator_tarifs(options)
+      number_of_workers_to_add = [
+        5 - Background::WorkerManager::Manager.worker_quantity('tarif_optimization'),
+        number_of_workers_to_add
+      ].min
+      Background::WorkerManager::Manager.start_number_of_worker('tarif_optimization', number_of_workers_to_add)
+      i = 0
     end        
   end
     
-  def self.start_calculate_all_operator_tarifs(options)
-    ServiceHelper::TarifOptimizator.new(options).calculate_all_operator_tarifs    
-    update_customer_infos
-  end
-  
   def recalculate_direct
-    self.class.start_calculate_all_operator_tarifs(options)
+    ServiceHelper::TarifOptimizator.new(options.merge({:use_background_process_informers => false})).calculate_all_operator_tarifs    
+    update_customer_infos
+#    UserMailer.tarif_optimization_complete(current_user_id).deliver
   end
   
   def prepare_background_process_informer

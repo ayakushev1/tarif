@@ -85,8 +85,8 @@ group :production do
 
 end
 
-#gem 'spawnling', '~>2.1' #background processing
-gem 'spawnling', :git => 'git://github.com/tra/spawnling'
+gem 'spawnling', '~>2.1' #background processing
+#gem 'spawnling', :git => 'git://github.com/tra/spawnling'
 
 gem 'puma'
 
@@ -99,11 +99,13 @@ gem "daemons"
  
 group :development, :test do
  gem 'foreman'
+ gem 'rush'
 # gem 'dotenv-rails'
 end 
 
 gem 'newrelic_rpm'
 
+gem 'platform-api'
 #gem 'ruby-prof'
 
 

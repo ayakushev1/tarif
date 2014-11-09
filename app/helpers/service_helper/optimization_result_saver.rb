@@ -1,4 +1,5 @@
 class ServiceHelper::OptimizationResultSaver
+  
   attr_reader :result_type, :name, :output_model, :user_id
   def initialize(result_type = nil, name = nil, user_id = 0)
     @result_type = result_type || 'optimization_results'
@@ -12,35 +13,48 @@ class ServiceHelper::OptimizationResultSaver
   end
   
   def save(output)
-#    raise(StandardError) if !output or !output[:accounting_period]
     where_hash = where_hash_from_output(output)
     model_to_save = output_model.where(where_hash)
-    result = if model_to_save.exists?
-      merged_output = results ? {:result => results.merge(output[:result])} : output
-      model_to_save.first.update_attributes(merged_output)    
-    else
-      model_to_save.create    
-      model_to_save.update_all(output)    
-    end    
-    result
+#    raise(StandardError) if model_to_save.count > 1
+    merged_output = results ? {:result => results.merge(output[:result])} : output
+    model_to_save.create! if !model_to_save.exists?
+
+    number_of_efforts_to_save = 10
+    i = 0
+    begin
+#      sleep(0.1) 
+      number_of_updated_rows = model_to_save.update_all(merged_output)
+      i += 1
+    end while number_of_updated_rows == 0 and i < number_of_efforts_to_save
+      
+    raise(StandardError, "sql cannot update records, sql = #{model_to_save.to_sql}") if number_of_updated_rows == 0
+
+    number_of_updated_rows
   end
   
   def override(output)
     where_hash = where_hash_from_output(output)
     model_to_save = output_model.where(where_hash)
-    if model_to_save.exists?
-      model_to_save.update_all(output)    
-    else
-      model_to_save.create    
-      model_to_save.update_all(output)    
-    end        
+    model_to_save.create! if !model_to_save.exists?
+
+#    raise(StandardError) if (!output[:operator_id] and output[:operator]) or (!output[:tarif_id] and output[:tarif])
+    
+    number_of_efforts_to_save = 10
+    i = 0
+    begin 
+#      sleep(0.1) 
+      number_of_updated_rows = model_to_save.update_all(output)
+      i += 1
+    end while number_of_updated_rows == 0 and i < number_of_efforts_to_save
+      
+    raise(StandardError, "sql cannot update records, sql = #{model_to_save.to_sql} output #{output}") if number_of_updated_rows == 0
   end
   
   def where_hash_from_output(output)
     where_hash = {}
     if output
-      where_hash.merge!({:operator_id => output[:operator]}) #if output[:operator]
-      where_hash.merge!({:tarif_id => output[:tarif]}) #if output[:tarif]
+      where_hash.merge!({:operator_id => output[:operator_id]}) #if output[:operator]
+      where_hash.merge!({:tarif_id => output[:tarif_id]}) #if output[:tarif]
       where_hash.merge!({:accounting_period => output[:accounting_period]}) #if output[:accounting_period]
     end
     where_hash

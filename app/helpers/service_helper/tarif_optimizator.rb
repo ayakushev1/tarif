@@ -7,14 +7,14 @@ class ServiceHelper::TarifOptimizator
               :performance_checker, :current_tarif_optimization_results, :tarif_optimization_sql_builder, :max_formula_order_collector, 
               :calls_stat_calculator, :prepared_final_tarif_results_saver, :operator_description
 #входные данные              
-  attr_reader :options, :fq_tarif_region_id  
+  attr_reader :options, :use_background_process_informers
 # параметры оптимизации 
   attr_reader :optimization_params, :check_sql_before_running, :execute_additional_sql, :service_ids_batch_size
 #настройки вывода результатов
   attr_reader  :simplify_tarif_results, :save_tarif_results_ord, :analyze_memory_used, :output_call_ids_to_tarif_results, :output_call_count_to_tarif_results, 
                :analyze_query_constructor_performance, :save_interim_results_after_calculating_tarif_results#, :save_interim_results_after_calculating_final_tarif_sets
 #user input
-  attr_reader :user_id, :accounting_period, :selected_service_categories, :calculate_with_limited_scope
+  attr_reader :user_id, :fq_tarif_region_id, :accounting_period, :selected_service_categories, :calculate_with_limited_scope
 #local
   attr_reader :calls_count_by_parts
   
@@ -28,6 +28,7 @@ class ServiceHelper::TarifOptimizator
   
   def init_input_data(options)
     @options = options
+    @use_background_process_informers = options[:use_background_process_informers] || true
     @fq_tarif_region_id = ((options[:user_region_id] and options[:user_region_id] != 0) ? options[:user_region_id] : 1238)
 #raise(StandardError, [@fq_tarif_region_id, options[:user_region_id]])    
     @user_id = options[:user_id] || 0
@@ -56,9 +57,11 @@ class ServiceHelper::TarifOptimizator
       @tarif_optimization_sql_builder = ServiceHelper::TarifOptimizationSqlBuilder.new(self, {:user_id => user_id, :accounting_period => accounting_period})
       @minor_result_saver = ServiceHelper::OptimizationResultSaver.new('optimization_results', 'minor_results', user_id)
       @tarif_list_generator = ServiceHelper::TarifListGenerator.new(options[:services_by_operator] || {})
-      @background_process_informer_operators = options[:background_process_informer_operators] || ServiceHelper::BackgroundProcessInformer.new('operators_optimization', user_id)
-      @background_process_informer_tarifs = options[:background_process_informer_tarifs] || ServiceHelper::BackgroundProcessInformer.new('tarifs_optimization', user_id)
-      @background_process_informer_tarif = options[:background_process_informer_tarif] || ServiceHelper::BackgroundProcessInformer.new('tarif_optimization', user_id)
+      if use_background_process_informers
+        @background_process_informer_operators = options[:background_process_informer_operators] || ServiceHelper::BackgroundProcessInformer.new('operators_optimization', user_id)
+        @background_process_informer_tarifs = options[:background_process_informer_tarifs] || ServiceHelper::BackgroundProcessInformer.new('tarifs_optimization', user_id)
+        @background_process_informer_tarif = options[:background_process_informer_tarif] || ServiceHelper::BackgroundProcessInformer.new('tarif_optimization', user_id)
+      end
       @operator_description = {}; Category.operators.all.each {|r| @operator_description[r['id'].to_s] = r}
     end
   end
@@ -71,52 +74,56 @@ class ServiceHelper::TarifOptimizator
     @service_ids_batch_size = (options[:service_ids_batch_size] ? options[:service_ids_batch_size].to_i : 10)
   end  
 
-  def calculate_all_operator_tarifs
+  def calculate_all_operator_tarifs(if_clean_output_results = true)
     performance_checker.run_check_point('calculate_all_operator_tarifs', 1) do
-      background_process_informer_operators.init(0.0, tarif_list_generator.operators.size)
+      background_process_informer_operators.init(0.0, tarif_list_generator.operators.size) if use_background_process_informers
       
-      background_process_informer_operators.increase_current_value(0, "clean_output_results")
-      [optimization_result_saver, final_tarif_sets_saver, prepared_final_tarif_results_saver, minor_result_saver].each {|saver| saver.clean_output_results} 
+      background_process_informer_operators.increase_current_value(0, "clean_output_results") if use_background_process_informers
+      clean_output_results if if_clean_output_results
 
-      background_process_informer_operators.increase_current_value(0, "calculating all_operator_tarifs")
+      background_process_informer_operators.increase_current_value(0, "calculating all_operator_tarifs") if use_background_process_informers
       tarif_list_generator.operators.each do |operator| 
         calculate_one_operator(operator) if !tarif_list_generator.tarifs[operator].blank?
-        background_process_informer_operators.increase_current_value(1)
+        background_process_informer_operators.increase_current_value(1) if use_background_process_informers
       end
     end
 
     update_minor_results
     
-    background_process_informer_operators.increase_current_value(0, "finish calculating operators")
-    background_process_informer_operators.finish
+    background_process_informer_operators.increase_current_value(0, "finish calculating operators") if use_background_process_informers
+    background_process_informer_operators.finish if use_background_process_informers
+  end
+  
+  def clean_output_results
+    [optimization_result_saver, final_tarif_sets_saver, prepared_final_tarif_results_saver, minor_result_saver].each {|saver| saver.clean_output_results}
   end
   
   def calculate_one_operator(operator)
     performance_checker.run_check_point('calculate_one_operator', 2) do      
-      background_process_informer_tarifs.init(0.0, tarif_list_generator.tarifs[operator].size )
+      background_process_informer_tarifs.init(0.0, tarif_list_generator.tarifs[operator].size ) if use_background_process_informers
             
       init_input_for_one_operator_calculation(operator)    
                   
-      background_process_informer_tarifs.increase_current_value(0, "calculate_calls_count_by_parts")
+      background_process_informer_tarifs.increase_current_value(0, "calculate_calls_count_by_parts") if use_background_process_informers
       performance_checker.run_check_point('calculate_calls_count_by_parts', 3) do
         calls_stat_calculator.calculate_calculation_scope(query_constructor, selected_service_categories) if calculate_with_limited_scope
         @calls_count_by_parts = calls_stat_calculator.calculate_calls_count_by_parts(query_constructor, 
           tarif_list_generator.uniq_parts_by_operator[operator], tarif_list_generator.uniq_parts_criteria_by_operator[operator])
       end      
       
-      background_process_informer_tarifs.increase_current_value(0, "calculate_tarifs")
+      background_process_informer_tarifs.increase_current_value(0, "calculate_tarifs") if use_background_process_informers
       tarif_list_generator.tarifs[operator].each do |tarif|
         calculate_one_tarif(operator, tarif)
-        background_process_informer_tarifs.increase_current_value(1)
+        background_process_informer_tarifs.increase_current_value(1) if use_background_process_informers
       end        
-      background_process_informer_tarifs.increase_current_value(0, "finish calculating one operator tarifs")
-      background_process_informer_tarifs.finish
+      background_process_informer_tarifs.increase_current_value(0, "finish calculating one operator tarifs") if use_background_process_informers
+      background_process_informer_tarifs.finish if use_background_process_informers
     end
   end 
   
   def init_input_for_one_operator_calculation(operator)
     performance_checker.run_check_point('init_input_for_one_operator_calculation', 3) do
-      background_process_informer_tarifs.increase_current_value(0, "init_input_for_one_operator_calculation")
+      background_process_informer_tarifs.increase_current_value(0, "init_input_for_one_operator_calculation") if use_background_process_informers
       @fq_tarif_operator_id = operator
       performance_checker.run_check_point('@stat_function_collector', 4) do
         @stat_function_collector = ServiceHelper::StatFunctionCollector.new(tarif_list_generator.all_services_by_operator[operator], 
@@ -131,13 +138,13 @@ class ServiceHelper::TarifOptimizator
       performance_checker.run_check_point('@max_formula_order_collector', 4) do
         @max_formula_order_collector = ServiceHelper::MaxPriceFormulaOrderCollector.new(tarif_list_generator.all_services_by_operator[operator], operator)
       end
-      background_process_informer_tarifs.increase_current_value(0, "")
+      background_process_informer_tarifs.increase_current_value(0, "") if use_background_process_informers
     end
   end
   
   def update_minor_results
     performance_checker.run_check_point('update_minor_results', 2) do
-      background_process_informer_operators.increase_current_value(0, "update_minor_results")
+      background_process_informer_operators.increase_current_value(0, "update_minor_results") if use_background_process_informers
       tarif_list_generator.calculate_service_packs; tarif_list_generator.calculate_service_packs_by_parts
       
       used_memory_by_output = {}
@@ -145,7 +152,7 @@ class ServiceHelper::TarifOptimizator
         used_memory_by_output = calculate_used_memory(output)
       end if analyze_memory_used    
     
-      minor_result_saver.override({:result => 
+      minor_result_saver.save({:result => 
         {:performance_results => performance_checker.show_stat_hash,
          :calls_stat => calls_stat_calculator.calculate_calls_stat(query_constructor),
 #         :service_packs_by_parts => tarif_list_generator.tarif_sets, #,будет показывать только последний посчитанный тариф
@@ -157,13 +164,13 @@ class ServiceHelper::TarifOptimizator
   
   def calculate_one_tarif(operator, tarif)
     performance_checker.run_check_point('calculate_one_tarif', 3) do      
-      background_process_informer_tarif.init(0.0, 100.0)
-      background_process_informer_tarif.increase_current_value(0, "init_input_for_one_tarif_calculation")
+      background_process_informer_tarif.init(0.0, 100.0) if use_background_process_informers
+      background_process_informer_tarif.increase_current_value(0, "init_input_for_one_tarif_calculation") if use_background_process_informers
       init_input_for_one_tarif_calculation(operator, tarif)  
       
-      background_process_informer_tarif.init(0.0, tarif_list_generator.all_tarif_parts_count[operator])
+      background_process_informer_tarif.init(0.0, tarif_list_generator.all_tarif_parts_count[operator]) if use_background_process_informers
       
-      background_process_informer_tarif.increase_current_value(0, "calculate_tarif_results")
+      background_process_informer_tarif.increase_current_value(0, "calculate_tarif_results") if use_background_process_informers
       [tarif_list_generator.tarif_options_slices, tarif_list_generator.tarifs_slices].each do |service_slice| 
         calculate_tarif_results(operator, service_slice)
       end
@@ -207,8 +214,8 @@ class ServiceHelper::TarifOptimizator
         }.stringify_keys)
       end      
       
-      background_process_informer_tarif.increase_current_value(0, "finish calculating one tarif")
-      background_process_informer_tarif.finish
+      background_process_informer_tarif.increase_current_value(0, "finish calculating one tarif") if use_background_process_informers
+      background_process_informer_tarif.finish if use_background_process_informers
     end
   end
   
@@ -225,7 +232,7 @@ class ServiceHelper::TarifOptimizator
   def save_tarif_results(operator, tarif = nil, accounting_period = '1_2014', result_to_save = {})
     output = {}
     performance_checker.run_check_point('save_tarif_results', 4) do
-      background_process_informer_tarif.increase_current_value(0, "override_tarif_results")
+      background_process_informer_tarif.increase_current_value(0, "override_tarif_results") if use_background_process_informers
       optimization_result_saver.override({:operator_id => operator.to_i, :tarif_id => tarif.to_i, :accounting_period => accounting_period, :result => {
         :tarif_sets => result_to_save[:tarif_sets],
         :cons_tarif_results => current_tarif_optimization_results.cons_tarif_results,
@@ -257,7 +264,6 @@ class ServiceHelper::TarifOptimizator
         :cons_tarif_results_by_parts => current_tarif_optimization_results.cons_tarif_results_by_parts,
         :tarif_results => current_tarif_optimization_results.tarif_results,
         :cons_tarif_results => current_tarif_optimization_results.cons_tarif_results,
-        :background_process_informer_tarif => background_process_informer_tarif,
       })
       
       tarif_result_simlifier.simplify_tarif_results_and_tarif_sets
@@ -266,8 +272,8 @@ class ServiceHelper::TarifOptimizator
   
   def calculate_and_save_final_tarif_sets_by_tarif(operator, tarif, accounting_period, saved_results = nil)
     performance_checker.run_check_point('calculate_and_save_final_tarif_sets_by_tarif', 4) do    
-      background_process_informer_tarif.init(0.0, 10.0)
-      background_process_informer_tarif.increase_current_value(0, "init final_tarif_set_generator")
+      background_process_informer_tarif.init(0.0, 10.0) if use_background_process_informers
+      background_process_informer_tarif.increase_current_value(0, "init final_tarif_set_generator") if use_background_process_informers
       final_tarif_set_generator = ServiceHelper::FinalTarifSetGenerator.new(options[:services_by_operator] || {})
       
       saved_results ||= optimization_result_saver.results({:operator_id => operator, :tarif_id => tarif, :accounting_period => accounting_period})
@@ -286,12 +292,12 @@ class ServiceHelper::TarifOptimizator
       saved_results = nil
       
       performance_checker.run_check_point('calculate_final_tarif_sets_by_tarif', 3) do
-        background_process_informer_tarif.increase_current_value(0, "calculate_final_tarif_sets")
-        final_tarif_set_generator.calculate_final_tarif_sets(operator, tarif, background_process_informer_tarif)
+        background_process_informer_tarif.increase_current_value(0, "calculate_final_tarif_sets") if use_background_process_informers
+        final_tarif_set_generator.calculate_final_tarif_sets(operator, tarif, (background_process_informer_tarif if use_background_process_informers))
       end
       
       performance_checker.run_check_point('save_final_tarif_sets_by_tarif', 3) do
-        background_process_informer_tarif.increase_current_value(0, "override final_tarif_sets")
+        background_process_informer_tarif.increase_current_value(0, "override final_tarif_sets") if use_background_process_informers
 #        raise(StandardError)
         final_tarif_sets_saver.override(
           {:operator_id => operator.to_i, :tarif_id => tarif.to_i, :accounting_period => accounting_period, :result => {
@@ -316,11 +322,11 @@ class ServiceHelper::TarifOptimizator
 
   def prepare_and_save_final_tarif_results_by_tarif_for_presenatation(operator, tarif, accounting_period, input_data = {}, saved_results = nil)
     performance_checker.run_check_point('prepare_and_save_final_tarif_results_by_tarif_for_presenatation', 4) do
-      background_process_informer_tarif.increase_current_value(0, "get saved final_tarif_sets")
+      background_process_informer_tarif.increase_current_value(0, "get saved final_tarif_sets") if use_background_process_informers
       saved_results ||= final_tarif_sets_saver.results({:operator_id => operator, :tarif_id => tarif, :accounting_period => accounting_period})
 #        raise(StandardError)
       
-      background_process_informer_tarif.increase_current_value(0, "calculate final_tarif_set_preparator")
+      background_process_informer_tarif.increase_current_value(0, "calculate final_tarif_set_preparator") if use_background_process_informers
       prepared_final_tarif_results = ServiceHelper::FinalTarifResultPreparator.prepare_final_tarif_results_by_tarif({
         :final_tarif_sets => saved_results['final_tarif_sets'].stringify_keys,
         :tarif_results => saved_results['tarif_results'].stringify_keys,
@@ -334,13 +340,13 @@ class ServiceHelper::TarifOptimizator
         :operator => operator, 
         :tarif => tarif, 
       })
-      background_process_informer_tarif.increase_current_value(0, "override prepared_final_tarif_results_by_tarif")
+      background_process_informer_tarif.increase_current_value(0, "override prepared_final_tarif_results_by_tarif") if use_background_process_informers
       prepared_final_tarif_results_saver.override({:operator_id => operator.to_i, :tarif_id => tarif.to_i, :accounting_period => accounting_period, :result => prepared_final_tarif_results})
       result = {}
     end    
   
-    background_process_informer_tarif.increase_current_value(0, "")
-    background_process_informer_tarif.finish
+    background_process_informer_tarif.increase_current_value(0, "") if use_background_process_informers
+    background_process_informer_tarif.finish if use_background_process_informers
   end
     
   def calculate_tarif_results(operator, service_slice)
@@ -367,7 +373,7 @@ class ServiceHelper::TarifOptimizator
         calculate_tarif_results_batch(batch_low_limit, batch_high_limit, price_formula_order)
         
         batch_count += 1
-        background_process_informer_tarif.increase_current_value(batch_high_limit - batch_low_limit + 1) 
+        background_process_informer_tarif.increase_current_value(batch_high_limit - batch_low_limit + 1) if use_background_process_informers
       end if current_tarif_optimization_results.service_ids_to_calculate
     end
   end
