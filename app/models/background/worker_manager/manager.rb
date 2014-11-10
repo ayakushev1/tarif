@@ -28,7 +28,7 @@ module Background::WorkerManager
     end
 
     def self.are_there_any_new_or_running_job?(worker_type)
-      Delayed::Job.where(:queue => worker_type.to_s, :failed_at => nil).exists?
+      (Delayed::Job.where(:queue => worker_type.to_s, :failed_at => nil).count > 1)
     end
     
   end
