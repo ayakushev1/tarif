@@ -3,6 +3,7 @@ module Background::WorkerManager
     include Background::WorkerManager::CommandGenerator
     
     def start_number_of_worker(worker_type, number)    
+      Rails.logger.info "Background::WorkerManager::Heroku.start_number_of_worker number #{number}"    
       run_worker(worker_type, number)
     end
     
@@ -11,6 +12,7 @@ module Background::WorkerManager
     end
     
     def stop_workers(worker_type, min_number)
+      Rails.logger.info "Background::WorkerManager::Heroku.stop_workers worker_quantity #{worker_quantity(worker_type)}"    
       scale_down(worker_type, min_number) if worker_quantity(worker_type) > min_number
     end
     
