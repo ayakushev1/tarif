@@ -9,11 +9,11 @@ class Customer::TarifOptimizatorsController < ApplicationController
   helper_method :customer_tarif_optimizator
 
   def index
-    heroku = Background::WorkerManager::Heroku.new().heroku
-    Rails.logger.info Background::WorkerManager::Heroku.new().worker_quantity('tarif_optimization')
-    Rails.logger.info heroku.formation.info('yakushev-tarif', 'tarif_optimization')    
-    Rails.logger.info heroku.dyno.list('yakushev-tarif')    
-    Rails.logger.info heroku.formation.list('yakushev-tarif')    
+#    heroku = Background::WorkerManager::Heroku.new().heroku
+#    Rails.logger.info Background::WorkerManager::Heroku.new().worker_quantity('tarif_optimization')
+#    Rails.logger.info heroku.formation.info('yakushev-tarif', 'tarif_optimization')    
+#    Rails.logger.info heroku.dyno.list('yakushev-tarif')    
+#    Rails.logger.info heroku.formation.list('yakushev-tarif')    
   end
 
  def select_services

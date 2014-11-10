@@ -98,6 +98,12 @@ form_item.init do |f|
  	 select(filtr_name, "calculate_background_with_spawnling", [["Yes", true], ["With delayed_jobs", false]], {:selected => s["calculate_background_with_spawnling"]}, html_options ),
   	],
   	
+  	[
+     label(filtr_name, "max_number_of_tarif_optimization_workers", "max number of tarif optimization workers"),
+     text_field(filtr_name, "max_number_of_tarif_optimization_workers", html_options.merge({:type => 'text', :value => s["max_number_of_tarif_optimization_workers"] }) ),
+  		
+  	]
+  	
   ]
 	    
   end

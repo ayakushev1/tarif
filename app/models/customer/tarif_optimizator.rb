@@ -62,8 +62,11 @@ class Customer::TarifOptimizator < ActiveType::Object
         end if options[:services_by_operator][:tarifs] and options[:services_by_operator][:tarifs][operator]
       end if options[:services_by_operator] and options[:services_by_operator][:operators]       
 #      delay(:queue => 'tarif_optimization', :priority => priority).start_calculate_all_operator_tarifs(options)
+      
+      base_worker_add_number = (optimization_params.session_filtr_params['max_number_of_tarif_optimization_workers'] || 3).to_i
+      base_worker_add_number = current_user_id == 1 ? base_worker_add_number : 1
       number_of_workers_to_add = [
-        5 - Background::WorkerManager::Manager.worker_quantity('tarif_optimization'),
+        base_worker_add_number - Background::WorkerManager::Manager.worker_quantity('tarif_optimization'),
         number_of_workers_to_add
       ].min
       Background::WorkerManager::Manager.start_number_of_worker('tarif_optimization', number_of_workers_to_add)
