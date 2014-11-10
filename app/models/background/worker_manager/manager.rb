@@ -11,6 +11,7 @@ module Background::WorkerManager
     
     def self.stop_workers_if_no_new_or_running_jobs(worker_type, min_number = 0)  
       Rails.logger.info "Background::WorkerManager::Manager.stop_workers_if_no_new_or_running_jobs condition #{are_there_any_new_or_running_job?(worker_type)}"    
+      Rails.logger.info "Delayed::Job.where(:queue => worker_type.to_s, :failed_at => nil).count #{Delayed::Job.where(:queue => worker_type.to_s, :failed_at => nil).count}"    
       worker_manager.stop_workers(worker_type, min_number) unless are_there_any_new_or_running_job?(worker_type)
     end
 
