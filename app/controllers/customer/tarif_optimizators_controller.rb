@@ -11,9 +11,9 @@ class Customer::TarifOptimizatorsController < ApplicationController
   def index
 #    heroku = Background::WorkerManager::Heroku.new().heroku
 #    Rails.logger.info Background::WorkerManager::Heroku.new().worker_quantity('tarif_optimization')
-#    Rails.logger.info heroku.formation.info('yakushev-tarif', 'tarif_optimization')    
-#    Rails.logger.info heroku.dyno.list('yakushev-tarif')    
-#    Rails.logger.info heroku.formation.list('yakushev-tarif')    
+#    Rails.logger.info heroku.formation.info(ENV["MY_HEROKU_APP_NAME"], 'tarif_optimization')    
+#    Rails.logger.info heroku.dyno.list(ENV["MY_HEROKU_APP_NAME"])    
+#    Rails.logger.info heroku.formation.list(ENV["MY_HEROKU_APP_NAME"])    
   end
 
  def select_services
