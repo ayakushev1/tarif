@@ -13,7 +13,8 @@ _mts_super_mts_star = 209; #тариф не забит (и его по-моем�
 _mts_smart_top = 212
 
 #common_services_ids
-_mts_own_country_rouming = 276; _mts_international_rouming = 277; _mts_own_country_rouming_internet = 312
+_mts_own_country_rouming = 276; _mts_international_rouming = 277; _mts_own_country_rouming_internet = 312;
+_mts_incoming_travelling_in_russia = 297;
 
 #tarif option ids
   #calls
@@ -25,7 +26,6 @@ _mts_love_country = 281; _mts_love_country_all_world = 309; _mts_outcoming_calls
 
   #country_rouming
 _mts_everywhere_as_home = 294; _mts_everywhere_as_home_Ultra = 282; _mts_everywhere_as_home_smart = 283;
-_mts_incoming_travelling_in_russia = 297;
 _mts_additional_minutes_150 = 321; _mts_additional_minutes_300 = 322;
 
   #international_rouming
