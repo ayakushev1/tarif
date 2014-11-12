@@ -76,7 +76,7 @@ class Customer::Info::ServiceChoices < ActiveType::Record[Customer::Info]
     {
       1025 => [650, 651, 652, 653, 654, 655],
       1028 => [174, 177, 178, 179],
-      1030 => [276, 277, 312],
+      1030 => [276, 277, 312, 297],
     }
   end  
 
@@ -121,7 +121,7 @@ class Customer::Info::ServiceChoices < ActiveType::Record[Customer::Info]
       },
       1030 => {
         :international_rouming => [288, 289, 290, 291, 292],
-        :country_rouming => [294, 282, 283, 297, 321, 322],  
+        :country_rouming => [294, 282, 283, 321, 322],  
         :mms => [323, 324, 325, 326],  
         :sms => [295, 296, 305, 306, 307, 308, 333, 334, 335, 336, 337, 338, 339],  
         :calls => [328, 329, 330, 331, 332, 281, 309, 293, 280],  
