@@ -95,7 +95,7 @@ class ServiceHelper::TarifResultSimlifier
     depended_on_services = services_that_depended_on.map{|d| d[1]}.flatten.uniq
     sub_tarif_sets_with_zero_results = []
     cons_tarif_results.each do |tarif_set_id, cons_tarif_result|
-      if cons_tarif_result['call_id_count'].to_i == 0 and cons_tarif_result['price_value'].to_f == 0.0
+      if cons_tarif_result['price_value'].to_f == 0.0 #and cons_tarif_result['call_id_count'].to_i == 0
         services = tarif_set_id.split('_').map(&:to_i)
         sub_tarif_sets_with_zero_results += (services - services_to_not_excude - sub_tarif_sets_with_zero_results) if (services & depended_on_services).blank?
       end
@@ -111,7 +111,7 @@ class ServiceHelper::TarifResultSimlifier
       non_zero_tarif_ids = []     
       tarif_results_by_part.each do |part, tarif_result_by_part|
         tarif_result_by_part.each do |service_id, tarif_result_by_part_and_service|        
-          if tarif_result_by_part_and_service['call_id_count'].to_i == 0 and tarif_result_by_part_and_service['price_value'].to_f == 0
+          if tarif_result_by_part_and_service['price_value'].to_f == 0 # and tarif_result_by_part_and_service['call_id_count'].to_i == 0
             zero_tarif_ids += ([tarif_result_by_part_and_service['tarif_class_id'].to_i] - zero_tarif_ids)
           else
             non_zero_tarif_ids += ([tarif_result_by_part_and_service['tarif_class_id'].to_i] - non_zero_tarif_ids)
