@@ -89,7 +89,7 @@ class Customer::Info::ServiceChoices < ActiveType::Record[Customer::Info]
   end  
 
   def self.tarif_options_for_demo
-    demo_option_types = [:country_rouming, :calls, :sms, :internet]
+    demo_option_types = [:international_rouming, :country_rouming, :calls, :sms, :internet]
     {
       1025 => tarif_options_by_type[1025].map{|t| t[1] if demo_option_types.include?(t[0])}.flatten,
       1028 => tarif_options_by_type[1028].map{|t| t[1] if demo_option_types.include?(t[0])}.flatten,
