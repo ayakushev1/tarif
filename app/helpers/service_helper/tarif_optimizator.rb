@@ -107,14 +107,20 @@ class ServiceHelper::TarifOptimizator
             
       init_input_for_one_operator_calculation(operator)    
                   
-      background_process_informer_tarifs.increase_current_value(0, "calculate_calls_count_by_parts") if use_background_process_informers
+      performance_checker.run_check_point('background_process_informer_tarifs', 3) do
+        background_process_informer_tarifs.increase_current_value(0, "calculate_calls_count_by_parts") if use_background_process_informers
+      end
+
       performance_checker.run_check_point('calculate_calls_count_by_parts', 3) do
         calls_stat_calculator.calculate_calculation_scope(query_constructor, selected_service_categories) if calculate_with_limited_scope
         @calls_count_by_parts = calls_stat_calculator.calculate_calls_count_by_parts(query_constructor, 
           tarif_list_generator.uniq_parts_by_operator[operator], tarif_list_generator.uniq_parts_criteria_by_operator[operator])
       end      
       
-      background_process_informer_tarifs.increase_current_value(0, "calculate_tarifs") if use_background_process_informers
+      performance_checker.run_check_point('background_process_informer_tarifs', 3) do
+        background_process_informer_tarifs.increase_current_value(0, "calculate_tarifs") if use_background_process_informers
+      end
+
       tarif_list_generator.tarifs[operator].each do |tarif|
         calculate_one_tarif(operator, tarif)
         background_process_informer_tarifs.increase_current_value(1) if use_background_process_informers
@@ -174,6 +180,7 @@ class ServiceHelper::TarifOptimizator
       background_process_informer_tarif.init(0.0, tarif_list_generator.all_tarif_parts_count[operator]) if use_background_process_informers
       
       background_process_informer_tarif.increase_current_value(0, "calculate_tarif_results") if use_background_process_informers
+      
       [tarif_list_generator.tarif_options_slices, tarif_list_generator.tarifs_slices].each do |service_slice| 
         calculate_tarif_results(operator, service_slice)
       end
@@ -297,14 +304,19 @@ class ServiceHelper::TarifOptimizator
       end
       saved_results = nil
       
-      performance_checker.run_check_point('FFF calculate_final_tarif_sets_by_tarif', 5) do
+      performance_checker.run_check_point('FFF background_process_informer_tarif', 5) do
         background_process_informer_tarif.increase_current_value(0, "calculate_final_tarif_sets") if use_background_process_informers
+      end
+      
+      performance_checker.run_check_point('FFF calculate_final_tarif_sets_by_tarif', 5) do
         final_tarif_set_generator.calculate_final_tarif_sets(operator, tarif, (background_process_informer_tarif if use_background_process_informers))
       end
 
-      performance_checker.run_check_point('FFF save_final_tarif_sets_by_tarif', 5) do
+      performance_checker.run_check_point('FFF background_process_informer_tarif', 5) do
         background_process_informer_tarif.increase_current_value(0, "override final_tarif_sets") if use_background_process_informers
+      end
 #        raise(StandardError)
+      performance_checker.run_check_point('FFF save_final_tarif_sets_by_tarif', 5) do
         final_tarif_sets_saver.override(
           {:operator_id => operator.to_i, :tarif_id => tarif.to_i, :accounting_period => accounting_period, :result => {
             :final_tarif_sets => final_tarif_set_generator.final_tarif_sets,
@@ -379,7 +391,10 @@ class ServiceHelper::TarifOptimizator
         calculate_tarif_results_batch(batch_low_limit, batch_high_limit, price_formula_order)
         
         batch_count += 1
-        background_process_informer_tarif.increase_current_value(batch_high_limit - batch_low_limit + 1) if use_background_process_informers
+
+        performance_checker.run_check_point('FFF background_process_informer_tarif', 7) do
+          background_process_informer_tarif.increase_current_value(batch_high_limit - batch_low_limit + 1) if use_background_process_informers
+        end
       end if current_tarif_optimization_results.service_ids_to_calculate
     end
   end

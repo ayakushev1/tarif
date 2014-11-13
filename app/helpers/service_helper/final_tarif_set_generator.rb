@@ -77,6 +77,7 @@ class ServiceHelper::FinalTarifSetGenerator
     end
 #    current_tarif_set.next_tarif_set_by_part(false)
         
+    i = 0
     while !current_tarif_set.current_tarif_set_by_part_index.blank? do
 #      raise(StandardError, [current_tarif_set_by_part_index, tarif_sets_services_as_array])
       
@@ -151,7 +152,8 @@ class ServiceHelper::FinalTarifSetGenerator
       end
         
       performance_checker.run_check_point('FFF background_process_informer_tarif', 7) do
-        background_process_informer_tarif.increase_current_value(1) if background_process_informer_tarif
+        background_process_informer_tarif.increase_current_value(1) if background_process_informer_tarif and (i / 100.0 - i / 100) == 0.0
+        i += 1
       end
 
     end 
