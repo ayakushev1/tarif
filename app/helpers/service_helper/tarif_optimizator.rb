@@ -181,10 +181,8 @@ class ServiceHelper::TarifOptimizator
       
       background_process_informer_tarif.increase_current_value(0, "calculate_tarif_results") if use_background_process_informers
       
-      [tarif_list_generator.tarif_options_slices, tarif_list_generator.tarifs_slices].each do |service_slice|
-        performance_checker.run_check_point('calculate_one_tarif', 4) do
-          calculate_tarif_results(operator, service_slice)
-        end 
+      [tarif_list_generator.tarif_options_slices, tarif_list_generator.tarifs_slices].each do |service_slice| 
+        calculate_tarif_results(operator, service_slice)
       end
       
       current_tarif_optimization_results.update_all_tarif_results_with_missing_prev_results
@@ -370,7 +368,7 @@ class ServiceHelper::TarifOptimizator
   end
     
   def calculate_tarif_results(operator, service_slice)
-    performance_checker.run_check_point('calculate_tarif_results', 5) do
+    performance_checker.run_check_point('calculate_tarif_results', 4) do
       service_slice_id = 0    
       begin
         break if !service_slice or !service_slice[operator] or !service_slice[operator][service_slice_id]
@@ -384,7 +382,7 @@ class ServiceHelper::TarifOptimizator
   end
   
   def calculate_tarif_results_batches(price_formula_order)
-    performance_checker.run_check_point('calculate_tarif_results_batches', 6) do
+    performance_checker.run_check_point('calculate_tarif_results_batches', 5) do
       batch_count = 1    
       while batch_count <= ( current_tarif_optimization_results.service_ids_to_calculate.count / service_ids_batch_size + 1) 
         batch_low_limit = service_ids_batch_size * (batch_count - 1)
@@ -394,7 +392,7 @@ class ServiceHelper::TarifOptimizator
         
         batch_count += 1
 
-        performance_checker.run_check_point('FFF background_process_informer_tarif', 7) do
+        performance_checker.run_check_point('FFF background_process_informer_tarif', 6) do
           background_process_informer_tarif.increase_current_value(batch_high_limit - batch_low_limit + 1) if use_background_process_informers
         end
       end if current_tarif_optimization_results.service_ids_to_calculate
@@ -402,20 +400,20 @@ class ServiceHelper::TarifOptimizator
   end
   
   def calculate_tarif_results_batch(batch_low_limit, batch_high_limit, price_formula_order)
-    performance_checker.run_check_point('calculate_tarif_results_batch', 7) do
+    performance_checker.run_check_point('calculate_tarif_results_batch', 6) do
       sql = ""
-      performance_checker.run_check_point('calculate_service_part_sql', 8) do
+      performance_checker.run_check_point('calculate_service_part_sql', 7) do
         sql = tarif_optimization_sql_builder.calculate_service_part_sql(current_tarif_optimization_results.service_ids_to_calculate[batch_low_limit..batch_high_limit], price_formula_order)
       end
       executed_tarif_result_batch_sql = execute_tarif_result_batch_sql(sql)  
-      performance_checker.run_check_point('process_tarif_results_batch', 8) do
+      performance_checker.run_check_point('process_tarif_results_batch', 7) do
         current_tarif_optimization_results.process_tarif_results_batch(executed_tarif_result_batch_sql, price_formula_order)
       end   
     end
   end
   
   def execute_tarif_result_batch_sql(sql)
-    performance_checker.run_check_point('execute_tarif_result_batch_sql', 8) do
+    performance_checker.run_check_point('execute_tarif_result_batch_sql', 7) do
       tarif_optimization_sql_builder.check_sql(sql, current_tarif_optimization_results.service_ids_to_calculate.count, sql.split(' ').size)
       Customer::Call.find_by_sql(sql) unless sql.blank?
     end
