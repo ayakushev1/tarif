@@ -181,8 +181,10 @@ class ServiceHelper::TarifOptimizator
       
       background_process_informer_tarif.increase_current_value(0, "calculate_tarif_results") if use_background_process_informers
       
-      [tarif_list_generator.tarif_options_slices, tarif_list_generator.tarifs_slices].each do |service_slice| 
-        calculate_tarif_results(operator, service_slice)
+      [tarif_list_generator.tarif_options_slices, tarif_list_generator.tarifs_slices].each do |service_slice|
+        performance_checker.run_check_point('calculate_one_tarif', 4) do
+          calculate_tarif_results(operator, service_slice)
+        end 
       end
       
       current_tarif_optimization_results.update_all_tarif_results_with_missing_prev_results
