@@ -56,6 +56,31 @@ class ServiceHelper::PerformanceChecker
 #    save(output)
   end
   
+  def add_current_results_to_saved_results(saved_performance_result)
+    joined_check_point_names = (saved_performance_result || {}).keys + (results || {}).keys
+    output = {}
+
+    joined_check_point_names.each do |check_point_name|
+#      raise(StandardError)
+      output[check_point_name] = {}
+      if saved_performance_result and saved_performance_result[check_point_name]
+        if results and results[check_point_name]
+          output[check_point_name]['duration'] = results[check_point_name]['duration']
+          output[check_point_name]['accumulated_duration'] = saved_performance_result[check_point_name]['accumulated_duration'].to_f + results[check_point_name]['accumulated_duration'].to_f
+          output[check_point_name]['max_duration'] = [saved_performance_result[check_point_name]['max_duration'].to_f + results[check_point_name]['max_duration'].to_f].max
+          output[check_point_name]['count'] = saved_performance_result[check_point_name]['count'].to_i + results[check_point_name]['count'].to_i
+          output[check_point_name]['max_duration_count'] = [saved_performance_result[check_point_name]['max_duration_count'].to_i + results[check_point_name]['max_duration_count'].to_i].max
+          output[check_point_name]['level'] = saved_performance_result[check_point_name]['level']
+        else
+          output[check_point_name] = saved_performance_result[check_point_name]
+        end
+      else
+        output[check_point_name] = results[check_point_name] if results
+      end      
+    end
+    output
+  end
+  
   def count(check_point_name)
     results[check_point_name]['count'].to_i
   end
@@ -80,9 +105,9 @@ class ServiceHelper::PerformanceChecker
 #    result.attributes[name] if result
 #  end
   
-  def show_stat
+  def show_stat(saved_performance_result = nil)
     result_string = ["\n", "level duration accumulated_duration max_duration average_duration max_duration_count count check_point"]
-    last_results = results
+    last_results = saved_performance_result || results
     last_results.keys.sort_by{|check_point| last_results[check_point]['level'].to_i}.each do |check_point|
 #    raise(StandardError, [result, ("%10.0f" % result['level']), 'ssss'])
       s = []
@@ -100,9 +125,9 @@ class ServiceHelper::PerformanceChecker
     result_string.join("\n\n")
   end
 
-  def show_stat_hash
+  def show_stat_hash(saved_performance_result = nil)
     result = []
-    last_results = results
+    last_results = saved_performance_result || results
     last_results.keys.sort_by{|check_point| last_results[check_point]['level'].to_i}.each do |check_point|
       s = {
         'level' => last_results[check_point]['level'],
