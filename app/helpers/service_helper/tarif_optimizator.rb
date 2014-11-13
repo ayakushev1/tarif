@@ -12,7 +12,9 @@ class ServiceHelper::TarifOptimizator
   attr_reader :optimization_params, :check_sql_before_running, :execute_additional_sql, :service_ids_batch_size
 #настройки вывода результатов
   attr_reader  :simplify_tarif_results, :save_tarif_results_ord, :analyze_memory_used, :output_call_ids_to_tarif_results, :output_call_count_to_tarif_results, 
-               :analyze_query_constructor_performance, :save_interim_results_after_calculating_tarif_results#, :save_interim_results_after_calculating_final_tarif_sets
+               :analyze_query_constructor_performance, :save_interim_results_after_calculating_tarif_results, :analyze_final_tarif_set_generator_performance
+               #, :save_interim_results_after_calculating_final_tarif_sets
+               
 #user input
   attr_reader :user_id, :fq_tarif_region_id, :accounting_period, :selected_service_categories, :calculate_with_limited_scope
 #local
@@ -28,7 +30,7 @@ class ServiceHelper::TarifOptimizator
   
   def init_input_data(options)
     @options = options
-    @use_background_process_informers = options[:use_background_process_informers] || true
+    @use_background_process_informers = options[:use_background_process_informers] != nil ? options[:use_background_process_informers] : true
     @fq_tarif_region_id = ((options[:user_region_id] and options[:user_region_id] != 0) ? options[:user_region_id] : 1238)
 #raise(StandardError, [@fq_tarif_region_id, options[:user_region_id]])    
     @user_id = options[:user_id] || 0
@@ -42,6 +44,7 @@ class ServiceHelper::TarifOptimizator
     @save_tarif_results_ord = (options[:save_tarif_results_ord] == 'true' ? true : false) 
     @analyze_memory_used = (options[:analyze_memory_used] == 'true' ? true : false) 
     @analyze_query_constructor_performance = (options[:analyze_query_constructor_performance] == 'true' ? true : false) 
+    @analyze_final_tarif_set_generator_performance = true
     @output_call_ids_to_tarif_results = false; @output_call_count_to_tarif_results = false
     @save_interim_results_after_calculating_tarif_results = (options[:save_interim_results_after_calculating_tarif_results] == 'true' ? true : false)
   end
@@ -194,7 +197,7 @@ class ServiceHelper::TarifOptimizator
           :services_that_depended_on => tarif_list_generator.services_that_depended_on,      
           :service_description => tarif_list_generator.service_description,   
           :common_services_by_parts => tarif_list_generator.common_services_by_parts,   
-          :common_services => tarif_list_generator.common_services,          
+          :common_services => tarif_list_generator.common_services,  
         }.stringify_keys)
       end
 #      raise(StandardError)
@@ -271,32 +274,35 @@ class ServiceHelper::TarifOptimizator
   end
   
   def calculate_and_save_final_tarif_sets_by_tarif(operator, tarif, accounting_period, saved_results = nil)
-    performance_checker.run_check_point('calculate_and_save_final_tarif_sets_by_tarif', 4) do    
+    performance_checker.run_check_point('FFF calculate_and_save_final_tarif_sets_by_tarif', 4) do    
       background_process_informer_tarif.init(0.0, 10.0) if use_background_process_informers
       background_process_informer_tarif.increase_current_value(0, "init final_tarif_set_generator") if use_background_process_informers
       final_tarif_set_generator = ServiceHelper::FinalTarifSetGenerator.new(options[:services_by_operator] || {})
       
       saved_results ||= optimization_result_saver.results({:operator_id => operator, :tarif_id => tarif, :accounting_period => accounting_period})
       
-      final_tarif_set_generator.set_input_data({
-        :tarif_sets => saved_results['tarif_sets'],          
-        :services_that_depended_on => saved_results['services_that_depended_on'],
-        :operator => operator,      
-        :common_services_by_parts => saved_results['common_services_by_parts'], 
-        :common_services => saved_results['common_services'],  
-        :cons_tarif_results_by_parts => saved_results['cons_tarif_results_by_parts'],
-        :tarif_results => saved_results['tarif_results'],
-        :cons_tarif_results => saved_results['cons_tarif_results'],
-        :groupped_identical_services => saved_results['groupped_identical_services'],
-      })
+      performance_checker.run_check_point('FFF final_tarif_set_generator.set_input_data', 5) do
+        final_tarif_set_generator.set_input_data({
+          :tarif_sets => saved_results['tarif_sets'],          
+          :services_that_depended_on => saved_results['services_that_depended_on'],
+          :operator => operator,      
+          :common_services_by_parts => saved_results['common_services_by_parts'], 
+          :common_services => saved_results['common_services'],  
+          :cons_tarif_results_by_parts => saved_results['cons_tarif_results_by_parts'],
+          :tarif_results => saved_results['tarif_results'],
+          :cons_tarif_results => saved_results['cons_tarif_results'],
+          :groupped_identical_services => saved_results['groupped_identical_services'],
+          :performance_checker => (analyze_final_tarif_set_generator_performance ? performance_checker : nil),        
+        })
+      end
       saved_results = nil
       
-      performance_checker.run_check_point('calculate_final_tarif_sets_by_tarif', 3) do
+      performance_checker.run_check_point('FFF calculate_final_tarif_sets_by_tarif', 5) do
         background_process_informer_tarif.increase_current_value(0, "calculate_final_tarif_sets") if use_background_process_informers
         final_tarif_set_generator.calculate_final_tarif_sets(operator, tarif, (background_process_informer_tarif if use_background_process_informers))
       end
-      
-      performance_checker.run_check_point('save_final_tarif_sets_by_tarif', 3) do
+
+      performance_checker.run_check_point('FFF save_final_tarif_sets_by_tarif', 5) do
         background_process_informer_tarif.increase_current_value(0, "override final_tarif_sets") if use_background_process_informers
 #        raise(StandardError)
         final_tarif_sets_saver.override(

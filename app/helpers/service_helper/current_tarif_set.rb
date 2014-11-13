@@ -7,6 +7,7 @@ class ServiceHelper::CurrentTarifSet
   attr_reader :history
   attr_reader :save_current_tarif_set_calculation_history, :part_sort_criteria_in_price_optimization,
               :use_price_comparison_in_current_tarif_set_calculation
+  attr_reader :performance_checker
   
   def initialize(options)    
     @history = []
@@ -29,6 +30,7 @@ class ServiceHelper::CurrentTarifSet
     @use_price_comparison_in_current_tarif_set_calculation = options[:use_price_comparison_in_current_tarif_set_calculation] == 'true' ? true : false
     @save_current_tarif_set_calculation_history = options[:save_current_tarif_set_calculation_history] == 'true' ? true : false
     @part_sort_criteria_in_price_optimization = options[:part_sort_criteria_in_price_optimization].to_sym
+    @performance_checker = options[:performance_checker]
   end
   
   def init_calculation_params
