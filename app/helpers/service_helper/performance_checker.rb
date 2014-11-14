@@ -56,10 +56,12 @@ class ServiceHelper::PerformanceChecker
 #    save(output)
   end
   
-  def add_current_results_to_saved_results(saved_performance_result)
-    joined_check_point_names = (saved_performance_result || {}).keys + (results || {}).keys
+  def add_current_results_to_saved_results(saved_performance_result, start_time)
+    joined_check_point_names = (saved_performance_result || {}).keys + (results || {}).keys - ['total_calculation_time']
     output = {}
-
+    
+    output['total_calculation_time'] = {'accumulated_duration' => (current.to_f - start_time.to_f)}
+    
     joined_check_point_names.each do |check_point_name|
 #      raise(StandardError)
       output[check_point_name] = {}

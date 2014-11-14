@@ -1,4 +1,4 @@
-threads Integer(ENV['MIN_THREADS']  || 1), Integer(ENV['MAX_THREADS'] || 5) 
+threads Integer(ENV['MIN_THREADS']  || 0), Integer(ENV['MAX_THREADS'] || 5) 
 
 workers Integer(ENV['PUMA_WORKERS'] || 1) 
 

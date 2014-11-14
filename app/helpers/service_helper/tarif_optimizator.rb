@@ -162,13 +162,17 @@ class ServiceHelper::TarifOptimizator
         used_memory_by_output = calculate_used_memory(output)
       end if analyze_memory_used    
     
-      saved_performance_results = minor_result_saver.results['original_performance_results'] if minor_result_saver.results
-      updated_original_performance_results = performance_checker.add_current_results_to_saved_results(saved_performance_results)
+      start_time = minor_result_saver.results['start_time'].to_datetime if minor_result_saver.results and minor_result_saver.results['start_time']
+      start_time = performance_checker.start if !start_time
       
-#      raise(StandardError, saved_performance_results.keys)
+      saved_performance_results = minor_result_saver.results['original_performance_results'] if minor_result_saver.results
+      updated_original_performance_results = performance_checker.add_current_results_to_saved_results(saved_performance_results, start_time)
+      
+#      raise(StandardError, start_time)
       minor_result_saver.save({:result => 
         {:performance_results => performance_checker.show_stat_hash(updated_original_performance_results),
          :original_performance_results => updated_original_performance_results,
+         :start_time => start_time,
          :calls_stat => calls_stat_calculator.calculate_calls_stat(query_constructor),
 #         :service_packs_by_parts => tarif_list_generator.tarif_sets, #,будет показывать только последний посчитанный тариф
          :service_packs_by_parts => tarif_list_generator.service_packs_by_parts,
