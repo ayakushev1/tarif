@@ -2,19 +2,21 @@
 form_item.init do |f|
 #  f.caption = "Choice of service"	
   f.set_fields do |filtr_name|
+	input_html = {:filtr_name => form_item.filtr_name, :class => "updatable form-control input-sm", :action_name => demo_tarif_optimizators_index_path}
+	label_html = {:class => "control-label input-sm"}
     html_options = {:action_name => demo_tarif_optimizators_index_path }
     s = f.session_filtr_params
 #	s = session[:filtr][filtr_name]
 	
   [
   	[
-     label(filtr_name, "calculate_with_limited_scope", "Считать только выбранные направления связи?"),
- 	 select(filtr_name, "calculate_with_limited_scope", [["Да", true], ["Считать все направления связи", false]], {:selected => s["calculate_with_limited_scope"]}, html_options ),
+     label(filtr_name, "calculate_with_limited_scope", "Считать только выбранные направления связи?", label_html),
+ 	 select(filtr_name, "calculate_with_limited_scope", [["Да", true], ["Считать все направления связи", false]], {:selected => s["calculate_with_limited_scope"]}, input_html ),
 
-  	 label(filtr_name, "accounting_period", "Период за который проводить расчет тарифов"),
+  	 label(filtr_name, "accounting_period", "Период за который проводить расчет тарифов", label_html),
   	 collection_select(filtr_name, "accounting_period", 
   	   customer_tarif_optimizator.accounting_periods, 
-  	   :accounting_period, :accounting_period, {:include_blank => "выберите период расчета", :selected => s["accounting_period"]}, html_options ),
+  	   :accounting_period, :accounting_period, {:include_blank => "выберите период расчета", :selected => s["accounting_period"]}, input_html ),
   	],
   ]
 	    

@@ -8,11 +8,11 @@ style_table = [
 ]
 
 form_html_options = {:id =>form_item.filtr_name, :class => "form-horizontal", :turbolinks => true}
-form_html_options = form_html_options.merge(html) if defined?(html)
+form_html_options = form_html_options.merge(html) if local_assigns[:html]
 
 form_options = {:method => 'get', :remote => false, :authenticity_token => true}
 
-form_options = form_options.merge(options) if defined?(options)
+form_options = form_options.merge(options) if local_assigns[:options]
 form_options = form_options.merge(form_html_options)
 
 %>
@@ -26,7 +26,7 @@ form_options = form_options.merge(form_html_options)
 <% end %>
 
 <%= form_tag(form_item.action_on_submit, form_options) do %>
-	<%if form_options[:class] =~ /form-inline/ %>
+	<%if form_options[:class] =~ /(form-inline|calls_form)/ %>
 	  <% form_item.fields(form_item.filtr_name) do |label, field| %>
 	      <%= add_css(label, style_table ) %>
 	      <%= add_css(field, style_table) %>

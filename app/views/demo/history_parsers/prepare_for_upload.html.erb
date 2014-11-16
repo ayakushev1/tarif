@@ -1,10 +1,7 @@
-<%= link_to('На главную страницу', root_path, {:class => "btn btn-large", :type =>"button"}) %>
-<%= link_to('Вернуться к выбору вариантов загрузки звонков', demo_optimization_steps_choose_load_calls_options_path, {:class => "btn btn-large", :type =>"button"}) %>
-<%= link_to('Перейти к подбору тарифа', demo_tarif_optimizators_index_path, {:class => "btn btn-large", :type =>"button"}) %>
-<br />
-<br />
+<% content_for :title, "Загрузка детализации звонков" %>
 
-<%= render :partial => 'upload_form' %>
+<%= render :partial => 'call_history_tabs', :layout => 'application/layouts/tabs', 
+      :locals => {:name => 'call_history_tabs', :active => session[:current_tabs_page]['call_history_tabs'].to_i} %>
+      
 <br />
-<%= render :partial => 'call_history_accord', :layout => 'application/layouts/accordion', 
-      :locals => {:name => 'call_history_accord', :active => session[:current_accordion_page]['call_history_accord'].to_i} %>
+<%= render :partial => 'upload_form' %>

@@ -8,10 +8,10 @@ style_table = [
 ]
 
 form_html_options = {:class => "form-horizontal", :turbolinks => true}
-form_html_options = form_html_options.merge(html) if defined?(html)
+form_html_options = form_html_options.merge(html) if local_assigns[:html]
 
 form_options = {:remote => true, :authenticity_token => true, :as => form_item.form_name}
-form_options = form_options.merge(options) if defined?(options)
+form_options = form_options.merge(options) if local_assigns[:options]
 form_options = form_options.merge(:html => form_html_options)
 
 %>

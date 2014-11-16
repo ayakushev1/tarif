@@ -1,4 +1,3 @@
-<%= link_to('На главную страницу', root_path, {:class => "btn btn-large", :type =>"button"}) %>
-<br />
-<br />
+<% content_for :title, "Результаты подбора тарифа" %>
+
 <%= render :partial => 'demo/optimization_results/results_for_customer/results_for_customer' %>

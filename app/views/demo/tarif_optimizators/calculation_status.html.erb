@@ -1,9 +1,10 @@
-<div>Статус расчета операторов</div>
+<% content_for :title, "Статус расчета операторов" %>
+
 <%= render :partial => 'tarif_optimization_progress_bar', :layout => 'application/layouts/progress_bar', :locals => {:progress_bar => customer_tarif_optimizator.operators_optimization_progress_bar} %>
 
-<div>Статус расчета тарифов</div>
+<h3>Статус расчета тарифов</h3>
 <%= render :partial => 'tarif_optimization_progress_bar', :layout => 'application/layouts/progress_bar', :locals => {:progress_bar => customer_tarif_optimizator.tarifs_optimization_progress_bar} %>
 
-<div>Статус расчета тарифа</div>
+<h3>Статус расчета тарифа</h3>
 <%= render :partial => 'tarif_optimization_progress_bar', :layout => 'application/layouts/progress_bar', :locals => {:progress_bar => customer_tarif_optimizator.tarif_optimization_progress_bar} %>
 

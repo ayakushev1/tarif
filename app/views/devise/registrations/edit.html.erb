@@ -1,34 +1,84 @@
-<h2>Редактировать <%= resource_name.to_s.humanize %></h2>
+<% content_for :title, "Редактировать #{resource_name.to_s.humanize}" %>
 
-<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+<%
+	input_html = {:class => "form-control input-sm "}
+	link_to_html = {:class => "btn btn-link", :type => 'button'}
+	submit_html = {:class => "btn btn-primary"}
+	label_html = {:class => "control-label input-sm"}
+%>
+
+
+<%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put, :class => "edit_form" }) do |f| %>
   <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) if current_user %>
 
-  <%= devise_error_messages! %>
+   <% if !devise_error_messages!.blank? %>
+	<div class="alert alert-warning alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert">
+			<span aria-hidden="true">&times;</span>
+			<span class="sr-only">Close</span>
+		</button>
+		<%= devise_error_messages! %>
+	</div>
+  <% end %>
 
-  <div><%= f.label :name %><br />
-  <%= f.text_field :name, autofocus: true %></div>
+  <div class="row">
+	  <div class="col-xs-6">
+	  	<%= f.label :name, label_html %>
+  		<%= f.text_field( :name, {autofocus: true }.merge(input_html) ) %>
+  	</div>
+  </div>
+  <br />
 
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, :disabled => true %></div>
+  <div class="row">
+	  <div class="col-xs-6">
+	  	<%= f.label :email, label_html %>
+  		<%= f.email_field( :email, {:disabled => true}.merge(input_html) ) %>
+  	</div>
+  </div>
+  <br />
 
   <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
     <div>Сейчас ожидаем подтверждение от: <%= resource.unconfirmed_email %></div>
   <% end %>
 
-  <div><%= f.label :password %> <i>(оставьте пустым если не хотите менять)</i><br />
-    <%= f.password_field :password, autocomplete: "off" %></div>
+  <div class="row">
+	  <div class="col-xs-6">
+  	<%= f.label :password, "Новый пароль", label_html %>
+  	<i>(оставьте пустым если не хотите менять)</i>
+    <%= f.password_field :password, {autofocus: true, autocomplete: "off"}.merge(input_html) %>
+  	</div>
+  </div>
+  <br />
 
-  <div><%= f.label :password_confirmation %><br />
-    <%= f.password_field :password_confirmation, autocomplete: "off" %></div>
+  <div class="row">
+	  <div class="col-xs-6">
+  	<%= f.label :password_confirmation, "Подтверждение нового пароля", label_html %>
+    <%= f.password_field :password_confirmation, {autocomplete: "off"}.merge(input_html) %>
+  	</div>
+  </div>
+  <br />
 
-  <div><%= f.label :current_password %> <i>(нам нужен ваш пароль для подтверждения изменений)</i><br />
-    <%= f.password_field :current_password, autocomplete: "off" %></div>
+  <div class="row">
+	  <div class="col-xs-6">
+  	<%= f.label :current_password, "Новый пароль", label_html %>
+  	<i>(нам нужен ваш пароль для подтверждения изменений)</i>
+    <%= f.password_field :current_password, {autocomplete: "off"}.merge(input_html) %>
+  	</div>
+  </div>
+  <br />
 
-  <div><%= f.submit "Изменить" %></div>
+  <div class="row">
+	  <div class="col-xs-6">
+  		<%= f.submit "Изменить", submit_html %>
+  	</div>
+  </div>
+  <br />
 <% end %>
 
 <h3>Удаление аккаунта</h3>
 
-<p>Хотите удалить ваш аккаунт? <%= button_to "Удалить мой аккаунт", registration_path(resource_name), data: { confirm: "Вы уверены?" }, method: :delete %></p>
-
-<%= link_to "Назад", :back %>
+<p>
+	Хотите удалить ваш аккаунт? 
+	<%= button_to "Удалить мой аккаунт", registration_path(resource_name), 
+		data: { confirm: "Вы уверены?" }, method: :delete, :class => "btn btn-danger", :type => 'button' %>
+</p>

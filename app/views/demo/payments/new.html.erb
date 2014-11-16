@@ -1,18 +1,48 @@
+<% content_for :title, "Выбор параметров платежа" %>
 
-<h3>Выбор параметров платежа</h3>
+<%
+	input_html = {:class => "form-control input-sm "}
+	link_to_html = {:class => "btn btn-link", :type => 'button'}
+	checkbox_to_html = {:class => " ", :type => 'radio'}
+	submit_html = {:class => "btn btn-primary"}
+	label_html = {:class => "control-label input-sm"}
+%>
 
- <%= form_for @payment_instruction do |f| %>
+<%= form_for @payment_instruction, html: {:class => "payment_block" } do |f| %>
 
- <%= @payment_instruction.errors[:sum] if !@payment_instruction.errors.blank? %>
- <%= f.label(:sum, "Сумма")%>
- <%= f.text_field(:sum) %>
+   <% if !@payment_instruction.errors.blank? %>
+	<div class="alert alert-warning alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert">
+			<span aria-hidden="true">&times;</span>
+			<span class="sr-only">Close</span>
+		</button>
+		<%= @payment_instruction.errors[:sum].map(&:to_s).join("/n") %>
+	</div>
+  <% end %>
+ 
+  <div class="row">
+	  <div class="col-xs-6">
+	  	<%= f.label :sum, "Сумма", label_html %>
+  		<%= f.text_field( :sum, {autofocus: true }.merge(input_html) ) %>
+  	</div>
+  </div>
+  <br />
 
- <%= f.label(:paymentType, "Яндекс.Деньгами") %>
- <%= f.radio_button(:paymentType, 'PC') %>
+	<%= f.label :paymentType, label_html do %>
+		<%= f.radio_button( :paymentType, 'PC', {}.merge(checkbox_to_html) ) %>
+		Яндекс.Деньгами
+	<% end %>
+	
+	<%= f.label :paymentType, label_html do %>
+		<%= f.radio_button( :paymentType, 'AC', {}.merge(checkbox_to_html) ) %>
+		Банковской картой
+	<% end %>
 
- <%= f.label(:paymentType, "Банковской картой") %>
- <%= f.radio_button(:paymentType, 'AC') %>
+  <div class="row">
+	  <div class="col-xs-6">
+  		<%= f.submit "Перевести", submit_html %>
+  	</div>
+  </div>
+  <br />
 
- <%= f.submit('Перевести') %>
-
- <% end %>
+<% end %>

@@ -20,10 +20,11 @@ get_tabs_current_page = ->
     tabs_name = $(tabs).attr("name")
     filtr[tabs_name] = -1
     i = 0
-    $(tabs).children("[class*=tab-content]").children("[class*=tab-pane]").each (index, element) ->
+    $(tabs).children("[class*=tab-pane]").each (index, element) ->
       body_tab_id = $(element).attr("id")
       if $(element).hasClass("active")
         filtr[tabs_name] = i 
+      i += 1
   filtr  
 
 #change history for browser to correctly replay on refresh and back button after ajax

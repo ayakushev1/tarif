@@ -1,19 +1,55 @@
-<h2>Вход</h2>
+<% content_for :title, "Вход" %>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name)) do |f| %>
+<%
+	input_html = {:class => "form-control input-sm "}
+	link_to_html = {:class => "btn btn-primary", :type => 'button', :'data-remote' => true, :method => 'get', :turbolinks => true}
+	submit_html = {:class => "btn btn-primary"}
+	label_html = {:class => "control-label input-sm"}
+%>
+
+<%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {:class => "edit_form"}) do |f| %>
   <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) if current_user %>
 
-  <div><%= f.label :email %><br />
-  <%= f.email_field :email, autofocus: true %></div>
+   <% if !devise_error_messages!.blank? %>
+	<div class="alert alert-warning alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert">
+			<span aria-hidden="true">&times;</span>
+			<span class="sr-only">Close</span>
+		</button>
+		<%= devise_error_messages! %>
+	</div>
+  <% end %>
 
-  <div><%= f.label :password %><br />
-    <%= f.password_field :password, autocomplete: "off" %></div>
+  <div class="row">
+	  <div class="col-xs-6">
+	  	<%= f.label :email, label_html %>
+  		<%= f.email_field( :email, {autofocus: true}.merge(input_html) ) %>
+  	</div>
+  </div>
+  <br />
+  
+  <div class="row">
+	  <div class="col-xs-6">
+  	<%= f.label :password, label_html %>
+    <%= f.password_field :password, {autocomplete: "off"}.merge(input_html) %>
+  	</div>
+  </div>
+  <br />
 
   <% if devise_mapping.rememberable? -%>
-    <div><%= f.check_box :remember_me %> <%= f.label :remember_me %></div>
+    <div>
+    	<%= f.label :remember_me, label_html %>
+    	<%= f.check_box :remember_me, input_html %> 
+  	</div>
+    <br />
   <% end -%>
 
-  <div><%= f.submit "Войти" %></div>
+  <div class="row">
+	  <div class="col-xs-4">
+  		<%= f.submit "Войти", submit_html %>
+  	</div>
+  </div>
+  <br />
 <% end %>
 
 <%= render "devise/shared/links" %>

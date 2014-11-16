@@ -1,4 +1,8 @@
-<%= render :partial => 'user', :layout => 'application/layouts/model_show', :locals => {:form_item => controller.user_form} %>
+<% content_for :title, "Профиль" %>
 
-<%= link_to( 'Редактировать профиль', edit_user_path(controller.user) )%> |
-<%= link_to 'На главную страницу', root_path %>
+<%	link_to_html = {:class => "btn btn-link", :type => 'button'} %>
+
+<%= render :partial => 'user', :layout => 'application/layouts/demo/model_show', :locals => {:form_item => controller.user_form} %>
+
+<%= link_to( 'Редактировать профиль', edit_user_path(controller.user), link_to_html )%> |
+<%= link_to 'На главную страницу', root_path, link_to_html %>

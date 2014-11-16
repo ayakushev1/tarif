@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   protected
 
   def main_layout
-    current_user_admin? ? 'application' : 'demo_application'
+    current_user_admin? ? 'demo_application' : 'demo_application'
   end
 
   private

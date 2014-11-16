@@ -1,20 +1,33 @@
 <% i = 0 %>
 <% active ||= 0 %>
 <% name ||= 'accord' %>
-<div class="accordion" id="<%= name %>" name=<%= name %> >
+<div class="panel-group" role="tablist" aria-multiselectable="true" id="<%= name %>" name=<%= name %> >
   <% content_from :accordion do |caption, body| %>
-    <div class="accordion-group">
-      <div class="accordion-heading">
-        <a class="accordion-toggle" data-toggle="collapse" data-parent="#<%= name %>" href="#<%= name + "_" + i.to_s %>">
-          <%= caption %>
-        </a>
+  	<% 
+  		heading = "heading_" + name + "_" + i.to_s
+  		collapse =  name + "_" + i.to_s
+  	%>
+  
+    <div class="panel panel-default">
+      <div class="panel-heading" role="tab"  id="<%= heading %>">
+      	<h4 class="panel-title">
+	        <a data-toggle="collapse" data-parent="#<%= name %>" href="#<%= collapse %>" aria-expanded="<%= (i==active) ? 'true' : 'false' %>"" aria-controls="<%= collapse %>">
+	          <%= caption %>
+	        </a>
+	    </h4>
       </div>
-      <div id="<%= name + "_" + i.to_s %>" class="accordion-body collapse <%= (i==active) ? 'in' : '' %>">
-        <div class="accordion-inner">
-          <%= body %>
+      
+      <div id="<%= collapse %>" class="panel-collapse collapse <%= (i==active) ? 'in' : '' %>" role="tabpanel" aria-labelledby="<%= heading %>">
+        <div class="panel-body">
+        	<div class="row">
+        		<div class="col-xs-12">
+        			<%= body %>
+        		</div>
+        	</div>          
         </div>
       </div>
     </div>
     <% i += 1 %>
   <% end %>
 </div>
+

@@ -13,6 +13,5 @@
  *= require_tree .
  *= require_self
  */
-@import 'scaffolds_1';
-@import 'bootstrap';
-@import "bootstrap-responsive"; 
+@import "bootstrap-sprockets";
+@import "bootstrap";

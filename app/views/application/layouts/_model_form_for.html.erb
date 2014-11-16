@@ -9,14 +9,14 @@ style_table = [
 
 #form_html_options = {:class => "form-horizontal", :turbolinks => true, :as => form_item.form_name}
 form_html_options = {:id =>form_item.form_name, :class => "form-horizontal", :turbolinks => true, :as => form_item.form_name}
-form_html_options = form_html_options.merge(html) if defined?(html)
+form_html_options = form_html_options.merge(html) if local_assigns[:html]
 
 form_options = {:authenticity_token => true, :remote => false, :include_id => true}
 #form_options = {:action => form_item.action_on_submit, :method => 'post', :authenticity_token => true, :remote => false, :include_id => true}
 
-form_options = form_options.merge(options) if defined?(options)
+form_options = form_options.merge(options) if local_assigns[:options]
 form_options = form_options.merge(form_html_options)
-form_options.merge!({:url => url, :as => as}) if defined?(url) and url
+form_options.merge!({:url => url, :as => as}) if local_assigns[:url] and url
 
 %>
 

@@ -1,0 +1,35 @@
+<% if controller.flash[:success]%>
+	<div class="alert alert-success alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert">
+			<span class="sr-only">Close</span>
+		</button>
+		<%= (controller.flash[:notice] )%>
+	</div>
+<% end %>
+
+<% if controller.flash[:notice]%>
+	<div class="alert alert-info alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert">
+			<span class="sr-only">Close</span>
+		</button>
+		<%= (controller.flash[:notice] )%>
+	</div>
+<% end %>
+
+<% if controller.flash[:error]%>
+	<div class="alert alert-danger alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert">&times;
+			<span class="sr-only">Close</span>
+		</button>
+		<%= controller.flash[:error] %>
+	</div>
+<% end %>
+
+<% if controller.flash[:alert]%>
+	<div class="alert alert-warning alert-dismissible" role="alert">
+	 	<button type="button" class="close" data-dismiss="alert">&times;
+			<span class="sr-only">Close</span>
+	 	</button>
+		<%= controller.flash[:alert]%>				
+	</div>
+<% end %>

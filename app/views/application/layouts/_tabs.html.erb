@@ -13,20 +13,23 @@ end
 
 %>
 
-<div class="tabbable" name=<%= name %> >
-  <ul class="nav nav-tabs">
-  	<% @content_from_tabs.each do |caption, body| %>
-      <li class="<%= (i==active) ? 'active' : '' %>"><a href="#<%= name + "_" + i.to_s %>" data-toggle="tab"><%= caption %></a></li>
-      <% i += 1 %>
+<ul class="nav nav-tabs">
+	<% @content_from_tabs.each do |caption, body| %>
+    	<li class="<%= (i==active) ? 'active' : '' %>"><a href="#<%= name + "_" + i.to_s %>" data-toggle="tab"><%= caption %></a></li>
+    	<% i += 1 %>
     <% end %>
-  </ul>
-  <div class="tab-content">
+</ul>
+<div class="tab-content tabbable"  name=<%= name %> >
   	<% i = 0 %>
   	<% @content_from_tabs.each do |caption, body| %>
-      <div class="tab-pane <%= (i==active) ? 'active' : '' %>" id="<%= name + "_" + i.to_s %>"><%= body %></div>
+	    <div class="tab-pane fade <%= (i==active) ? 'in active' : '' %>" id="<%= name + "_" + i.to_s %>">
+	    	<div class="row">
+		    	<div class="col-xs-12">	    		
+		    		<%= body %>
+	    		</div>
+	    	</div>
+	    </div>
   	<% i += 1 %>
     <% end %>
-
-  </div>
 </div>
 

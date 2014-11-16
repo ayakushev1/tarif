@@ -1,18 +1,18 @@
 <%
 
-content_in :accordion do |user| 
+content_in :tabs do |user| 
   [
     [
      'Выбор параметров расчета',
      (
-	  render(:partial => 'demo/tarif_optimizators/input/service_choices', :layout => 'application/layouts/filtr_form_3_columns', 
+	  render(:partial => 'demo/tarif_optimizators/input/service_choices', :layout => 'application/layouts/demo/filtr_form_2_columns', 
 	    :locals => {:form_item => customer_tarif_optimizator.service_choices} )
 		
      )          
     ], 
     [
      'Выбор услуг оператора',
-      render(:partial => 'demo/tarif_optimizators/input/service_categories_select', :layout => 'application/layouts/filtr_form_3_columns', 
+      render(:partial => 'demo/tarif_optimizators/input/service_categories_select', :layout => 'application/layouts/demo/filtr_form_4_columns', 
         :locals => {:form_item => customer_tarif_optimizator.service_categories_select} )
     ], 
   ] 

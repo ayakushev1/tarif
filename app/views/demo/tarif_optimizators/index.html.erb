@@ -1,7 +1,7 @@
-<%= link_to('На главную страницу', root_path, {:class => "btn btn-large", :type =>"button"}) %>
-<%= link_to('Вернуться к выбору вариантов загрузки звонков', demo_optimization_steps_choose_load_calls_options_path, {:class => "btn btn-large", :type =>"button"}) %>
-<%= link_to('Подобрать тариф', demo_tarif_optimizators_recalculate_path, {:class => "btn btn-large", :type =>"button"}) %>
-<%= link_to('Посмотреть результаты подбора тарифов', demo_optimization_results_show_customer_results_path, {:class => "btn btn-large", :type =>"button"}) %>
+<% content_for :title, "Задание параметров подбора тарифа" %>
+
+<%= link_to('Подобрать тариф', demo_tarif_optimizators_recalculate_path, {:class => "btn btn-primary", :type =>"button"}) %>
+<%= link_to('Посмотреть результаты подбора тарифов', demo_optimization_results_show_customer_results_path, {:class => "btn btn-primary", :type =>"button"}) %>
 <br />
 <br />
-<%= render :partial => 'demo/tarif_optimizators/input/input', :layout => 'application/layouts/accordion', :locals => {:name => 'customer_tarif_optimization_accord', :active => session[:current_accordion_page]['customer_tarif_optimization_accord'].to_i} %>
+<%= render :partial => 'demo/tarif_optimizators/input/input', :layout => 'application/layouts/tabs', :locals => {:name => 'customer_tarif_optimization_tabs', :active => session[:current_tabs_page]['customer_tarif_optimization_tabs'].to_i} %>

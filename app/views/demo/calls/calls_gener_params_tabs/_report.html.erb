@@ -10,11 +10,7 @@ table.init do |t|
 #  t.heads = model_keys.collect{|model_key| model_key.to_s.split('_').join(' ')}
   t.set_fields do |f| 
   	model_keys.collect do |key|
-  	  if key == 'price_value'
-  	  	f[key].round(0) if f[key]
-  	  else
-  	  	f[key]
-  	  end 
+      f[key] and !f[key].is_a?(String) ? f[key].round(1) : f[key]
     end
   end
 end

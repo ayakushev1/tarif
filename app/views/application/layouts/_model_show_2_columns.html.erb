@@ -3,7 +3,7 @@ style_table = [
    ]
 
 form_html_options = {:class => "raw"}
-form_html_options = form_html_options.merge(html) if defined?(html)
+form_html_options = form_html_options.merge(html) if local_assigns.has_key?[:html]
 form_html_options_1 = form_html_options.collect { |key, value| "#{key}='#{value}'" }.join(" ")
 
 

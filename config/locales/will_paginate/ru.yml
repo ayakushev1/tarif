@@ -1,5 +1,5 @@
 
 ru:
   will_paginate:
-    previous_label: Назад
-    next_label: Вперед
+    previous_label: <span class="glyphicon glyphicon-chevron-left"></span>
+    next_label: <span class="glyphicon glyphicon-chevron-right"></span>

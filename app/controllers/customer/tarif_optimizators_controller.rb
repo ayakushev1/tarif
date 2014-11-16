@@ -28,7 +28,7 @@ class Customer::TarifOptimizatorsController < ApplicationController
     end
   end
   
-  def recalculate     
+  def recalculate    
     redirect_to({:action => :index}, {:alert => "Выберите период для расчета"}) and return if customer_tarif_optimizator.options[:accounting_period].blank?
 
     if customer_tarif_optimizator.optimization_params.session_filtr_params['calculate_on_background'] == 'true'

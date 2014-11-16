@@ -1,12 +1,13 @@
 <div>
 	<h5>Базовое описание целей сайта</h5>
 	<p>На сайте мы поможем вам подобрать оптимальный тариф и тарифные опции.
-	    <a><%= link_to('Можете посмотреть пример подбора тарифа.', demo_home_demo_results_path) %></a>
+	    <a><%= link_to('Можете посмотреть пример подбора тарифа.', demo_home_demo_results_path,  {:class => "input"}) %></a>
 	   Ниже приведено более детальное описание. Если Вы хотите продолжить, то необходимо
 	   зарегистрироваться. 
 	</p>
-	<%= link_to('Зарегистрироваться', new_user_path, {:class => "btn btn-large", :type =>"button"}) %> 
-	<%= link_to('Войти', demo_login_path, {:class => "btn btn-large", :type =>"button"}) %> 
+	<%= link_to('Зарегистрироваться', new_user_path, {:class => "btn btn-success", :type =>"button"}) %> 
+	<br />
+	<%= link_to('Войти', demo_login_path, {:class => "btn btn-primary", :type =>"button"}) %> 
 </div>
 
 <br />

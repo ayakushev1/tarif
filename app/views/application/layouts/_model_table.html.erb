@@ -3,13 +3,14 @@ style_table = [
 #	[/a.*?href/, {:'data-remote' => true, :turbolinks => true}],
 ]
 
-table_html_options = {:id =>table.table_name, :class => 'table table-hover table-bordered table-condensed'}
-table_html_options = form_html_options.merge(html) if local_assigns.has_key?(:html)
+table_html_options = {:id =>table.table_name, :class => 'table table-bordered table-hover table-condensed'}
+table_html_options = form_html_options.merge(html) if local_assigns[:html]
 table_html_options = table_html_options.collect { |key, value| "#{key.to_s}=\"#{value.to_s}\""}.join(" ").html_safe
 
 %>
-
-<%= will_paginate(table.model, :class=>'pagination pagination-centered', :param_name => table.pagination_param_name) %>
+<div class="col-xs-12 text-center pagin_border">
+	<%= will_paginate(table.model, :class=>'pagination text-center', :param_name => table.pagination_param_name) %>
+</div>
 
 <% show_debug = false %>
 
@@ -17,7 +18,7 @@ table_html_options = table_html_options.collect { |key, value| "#{key.to_s}=\"#{
 <%= params if show_debug %>
 <%= session[:filtr] if show_debug %>
 <%= session[:current_id] if false %>
-<div><%=session[:progress_bar] if false%></div>
+<%=session[:progress_bar] if false%>
 
 <% if table.caption %> 
   <legend><%= table.caption %></legend>

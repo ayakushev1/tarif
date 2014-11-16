@@ -13,10 +13,15 @@ class Presenter
   def fields(*arg)
     content = @fields.call(*arg) if @fields
     if content.kind_of?(Array)
+#      raise(StandardError)
       content.collect { |f| yield f }
     else
       content
     end    
+  end
+  
+  def slice(slice_number, *arg)
+    
   end
   
   def init
