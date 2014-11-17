@@ -35,6 +35,8 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable, :confirmable, :lockable
   include PgJsonHelper, WhereHelper
 
+  has_many :visits
+  
   has_one :customer_infos_general, -> {where(:info_type_id => 1)}, :class_name =>'::Customer::Info', :foreign_key => :user_id, :dependent => :delete
   has_one :customer_infos_cash, -> {where(:info_type_id => 2)}, :class_name =>'::Customer::Info', :foreign_key => :user_id, :dependent => :delete
   has_one :customer_infos_services_used, -> {where(:info_type_id => 3)}, :class_name =>'::Customer::Info', :foreign_key => :user_id, :dependent => :delete

@@ -106,9 +106,10 @@ end
 
 gem 'newrelic_rpm'
 
-gem 'platform-api'
+gem 'platform-api' #heroku api
 #gem 'ruby-prof'
 
+gem 'ahoy_matey' #to track visits and events
 
 # Use unicorn as the app server
 # gem 'unicorn'

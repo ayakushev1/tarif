@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   
   protect_from_forgery with: :exception
   skip_before_filter :verify_authenticity_token, if: -> { allowed_request_origin }
+#  skip_before_filter :track_ahoy_visit
   before_action :set_current_session#, :authorize
   before_action :my_authenticate_user
   before_action :authorize
@@ -13,6 +14,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_user_admin?, :customer_has_free_trials?
 
   layout :main_layout
+  
 
   protected
 

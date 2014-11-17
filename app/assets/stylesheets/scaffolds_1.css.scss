@@ -1,4 +1,7 @@
 $current_table_raw: #ddd;
+$body-bg: #ffffff;
+@import "bootstrap-sprockets";
+@import "bootstrap";
 
 .current_table_raw {
   background-color: $current_table_raw;

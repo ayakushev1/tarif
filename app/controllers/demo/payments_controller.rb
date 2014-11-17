@@ -1,6 +1,9 @@
 class Demo::PaymentsController < ApplicationController
   before_action :build_payment_instruction, only: [:new, :create]
   attr_reader :payment_confirmation
+  after_action :track_new, only: :new
+  after_action :track_create, only: :create
+  after_action :track_process_payment, only: :process_payment
 
   def create    
     if @payment_instruction.valid?        
@@ -34,6 +37,30 @@ class Demo::PaymentsController < ApplicationController
       end
       
     end
+
+  def track_new
+    ahoy.track("#{controller_name}/#{action_name}", {
+      'flash' => flash,      
+      'params' => params,
+    })
+  end
+
+  def track_create
+    ahoy.track("#{controller_name}/#{action_name}", {
+      'flash' => flash,      
+      'params' => params,
+      'valid' => @payment_instruction.valid?,
+      'yandex_params' => @payment_instruction.url_to_yandex(current_user),
+    })
+  end
+
+  def track_process_payment
+    ahoy.track("#{controller_name}/#{action_name}", {
+      'flash' => flash,      
+      'params' => params,
+    })
+  end
+
     
 end
 

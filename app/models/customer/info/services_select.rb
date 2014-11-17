@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: customer_infos
+#
+#  id           :integer          not null, primary key
+#  user_id      :integer
+#  info_type_id :integer
+#  info         :json
+#  last_update  :datetime
+#
+
 class Customer::Info::ServicesSelect < ActiveType::Record[Customer::Info]
   def self.default_scope
     where(:info_type_id => 9)
