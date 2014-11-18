@@ -5,7 +5,7 @@
 	link_to_html = {:class => "btn btn-link", :type => 'button'}
 	checkbox_to_html = {:class => " ", :type => 'radio'}
 	submit_html = {:class => "btn btn-primary"}
-	label_html = {:class => "control-label "}
+	label_html = {:class11 => "control-label "}
 %>
 
 <%= form_for @payment_instruction, html: {:class => "payment_block" } do |f| %>
@@ -26,13 +26,14 @@
   		<%= f.text_field( :sum, {autofocus: true }.merge(input_html) ) %>
   	</div>
   </div>
-  <br />
 
+  <h3>Выберите оплату</h3>
+	
 	<%= f.label :paymentType, label_html do %>
 		<%= f.radio_button( :paymentType, 'PC', {}.merge(checkbox_to_html) ) %>
 		Яндекс.Деньгами
 	<% end %>
-	
+
 	<%= f.label :paymentType, label_html do %>
 		<%= f.radio_button( :paymentType, 'AC', {}.merge(checkbox_to_html) ) %>
 		Банковской картой
@@ -43,6 +44,5 @@
   		<%= f.submit "Перевести", submit_html %>
   	</div>
   </div>
-  <br />
 
 <% end %>
