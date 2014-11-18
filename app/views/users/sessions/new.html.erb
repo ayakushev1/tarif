@@ -1,10 +1,10 @@
 <% content_for :title, "Вход" %>
 
 <%
-	input_html = {:class => "form-control input-sm "}
+	input_html = {:class => "form-control  "}
 	link_to_html = {:class => "btn btn-primary", :type => 'button', :'data-remote' => true, :method => 'get', :turbolinks => true}
 	submit_html = {:class => "btn btn-primary"}
-	label_html = {:class => "control-label input-sm"}
+	label_html = {:class => "control-label "}
 %>
 
 <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {:class => "edit_form"}) do |f| %>

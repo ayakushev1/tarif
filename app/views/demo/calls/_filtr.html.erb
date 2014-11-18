@@ -3,8 +3,8 @@ form_item.init do |f|
 #  f.caption = "Filtr fields"	
   f.set_fields do |filtr_name|
     s = session[:filtr][filtr_name]
-	input_html = {:filtr_name => form_item.filtr_name, :class => "updatable form-control input-sm", :action_name => demo_calls_path}
-   	label_html = {:class => "control-label input-sm"}
+	input_html = {:filtr_name => form_item.filtr_name, :class => "updatable form-control ", :action_name => demo_calls_path}
+   	label_html = {:class => "control-label "}
     action_name = demo_calls_path
     query = Customer::Call.where(:user_id => controller.current_user.id).query_hash_from_filtr_with_all_keys_excluded(session[:filtr][filtr_name])
     user_calls_query = Customer::Call.where(:user_id => controller.current_user.id)
