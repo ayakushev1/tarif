@@ -6,12 +6,13 @@ class Demo::TarifOptimizatorsController < Customer::TarifOptimizatorsController
   private
   
   def track_recalculate
+    raise(StandardError, customer_tarif_optimizator.optimization_params)
     ahoy.track("#{controller_name}/#{action_name}", {
       'flash' => flash,      
-      'optimization_params' => customer_optimization_result.optimization_params,
-      'service_choices' => customer_optimization_result.service_choices,
-      'services_select' => customer_optimization_result.services_select,
-      'service_categories_select' => customer_optimization_result.service_categories_select,
+#      'optimization_params' => customer_tarif_optimizator.optimization_params,
+#      'service_choices' => customer_tarif_optimizator.service_choices,
+#      'services_select' => customer_tarif_optimizator.services_select,
+#      'service_categories_select' => customer_tarif_optimizator.service_categories_select,
     })
   end
 
