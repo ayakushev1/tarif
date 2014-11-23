@@ -50,7 +50,7 @@ class Demo::PaymentsController < ApplicationController
       'flash' => flash,      
       'params' => params,
       'valid' => @payment_instruction.valid?,
-      'yandex_params' => @payment_instruction.url_to_yandex(current_user),
+      'yandex_params' => @payment_instruction.to_yandex_params,
     })
   end
 

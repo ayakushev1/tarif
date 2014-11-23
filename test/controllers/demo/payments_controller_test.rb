@@ -1,4 +1,5 @@
 require 'test_helper'
+require 'minitest/mock'
 
 describe Demo::PaymentsController do
   before do
@@ -10,6 +11,7 @@ describe Demo::PaymentsController do
   describe 'new_form' do      
     it 'must show new payment form with filled fields' do
       sign_in @user
+
       @controller.stub :customer_has_free_trials?, false do
         get :new
         assert_select('form[id=new_demo_payment]')
@@ -128,7 +130,7 @@ describe Demo::PaymentsController do
     
     it 'must accept yandex post request' do
       @request.headers["CONTENT_TYPE"] = "application/x-www-form-urlencoded"
-      assert_difference 'Customer::Transaction.count' do
+      assert_difference 'Customer::Transaction.count', 2 do
         post :process_payment, {:format => :yandex_payment_notification}.merge(@request_params)
       end
       assert_response 200     
