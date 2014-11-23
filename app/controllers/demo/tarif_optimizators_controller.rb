@@ -6,7 +6,7 @@ class Demo::TarifOptimizatorsController < Customer::TarifOptimizatorsController
   private
   
   def track_recalculate
-    raise(StandardError, customer_tarif_optimizator.optimization_params)
+#    raise(StandardError, customer_tarif_optimizator.optimization_params)
     ahoy.track("#{controller_name}/#{action_name}", {
       'flash' => flash,      
 #      'optimization_params' => customer_tarif_optimizator.optimization_params,
