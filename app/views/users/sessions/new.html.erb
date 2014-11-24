@@ -7,6 +7,10 @@
 	label_html = {:class => "control-label "}
 %>
 
+<div class="row">
+	<div class="col-xs-3"></div>
+</div>
+
 <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {:class => "edit_form"}) do |f| %>
   <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) if current_user %>
 
@@ -21,7 +25,7 @@
   <% end %>
 
   <div class="row ">
-	  <div class="col-xs-12 text-center‏">
+	  <div class="col-xs-6 text-center‏">
 	  	<%= f.label :email, label_html %>
   		<%= f.email_field( :email, {autofocus: true}.merge(input_html) ) %>
   	</div>
@@ -29,7 +33,7 @@
   <br />
   
   <div class="row">
-	  <div class="col-xs-12 text-center‏">
+	  <div class="col-xs-6 text-center‏">
   	<%= f.label :password, label_html %>
     <%= f.password_field :password, {autocomplete: "off"}.merge(input_html) %>
   	</div>
@@ -51,5 +55,10 @@
   </div>
   <br />
 <% end %>
+
+<div class="row">
+	<div class="col-xs-3"></div>
+</div>
+
 
 <%= render "devise/shared/links" %>
