@@ -81,7 +81,7 @@ class Customer::TarifOptimizator < ActiveType::Object
   end
   
   def prepare_background_process_informer
-    [background_process_informer_operators, background_process_informer_tarifs, background_process_informer_tarif].each do |background_process_informer|
+    [background_process_informer_operators, background_process_informer_tarifs, background_process_informer_tarif].compact.each do |background_process_informer|
       background_process_informer.clear_completed_process_info_model
       background_process_informer.init
     end
