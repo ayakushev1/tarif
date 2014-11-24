@@ -11,7 +11,7 @@ table_html_options = table_html_options.collect { |key, value| "#{key.to_s}=\"#{
 <div class="table-responsive">
 
 	<div class="col-xs-12 text-center pagin_border">
-		<%= will_paginate(table.model, :class=>'pagination text-center', :param_name => table.pagination_param_name) %>
+		<%= will_paginate(table.model, :class=>'pagination text-center pagin_border', :param_name => table.pagination_param_name) %>
 	</div>
 	
 	<% show_debug = false %>

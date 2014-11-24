@@ -1,12 +1,16 @@
-$current_table_raw: #ddd;
+/*$current_table_raw: #ddd;
 $body-bg: #ffffff;
+*/
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
 
+/*
 .current_table_raw {
   background-color: $current_table_raw;
 }
+*/
+
 label {
   display: inline-block;
   max-width: 100%;
@@ -672,4 +676,35 @@ input[type="checkbox"] {
 }
 .modal {
   background: rgba(52, 73, 94, 0.9);
+}
+.range { 
+  -webkit-appearance: none;
+          appearance: none;
+  padding: 0;
+  border-radius: 5px;
+  overflow: hidden;
+  border: 1px solid #bdc3c7
+}
+.range::-moz-range-track {  
+  background: #ccc;
+  bwidth: 1px;
+  height: 1px;
+}
+.range::-webkit-slider-thumb {  
+  -webkit-appearance: none;
+  width:10px;
+  height:40px;
+  border: 1px solid #818181;
+  
+  border-radius: 2px;
+}
+.range::-webkit-slider-thumb:focus {
+  background: #417dea;
+}
+.range:focus {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+}
+.current_table_raw {
+  background: #D7EAFF;
 }

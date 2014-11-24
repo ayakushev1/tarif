@@ -22,7 +22,7 @@
   <% end %>
 
   <div class="row">
-	  <div class="col-xs-6">
+	  <div class="col-xs-12 text-center‏">
 	  	<%= f.label :name, label_html %>
   		<%= f.text_field( :name, {autofocus: true }.merge(input_html) ) %>
   	</div>
@@ -30,7 +30,7 @@
   <br />
 
   <div class="row">
-	  <div class="col-xs-6">
+	  <div class="col-xs-12 text-center‏">
 	  	<%= f.label :email, label_html %>
   		<%= f.email_field( :email, {:disabled => true}.merge(input_html) ) %>
   	</div>
@@ -42,7 +42,7 @@
   <% end %>
 
   <div class="row">
-	  <div class="col-xs-6">
+	  <div class="col-xs-12 text-center‏">
   	<%= f.label :password, "Новый пароль", label_html %>
   	<i>(оставьте пустым если не хотите менять)</i>
     <%= f.password_field :password, {autofocus: true, autocomplete: "off"}.merge(input_html) %>
@@ -51,7 +51,7 @@
   <br />
 
   <div class="row">
-	  <div class="col-xs-6">
+	  <div class="col-xs-12 text-center‏">
   	<%= f.label :password_confirmation, "Подтверждение нового пароля", label_html %>
     <%= f.password_field :password_confirmation, {autocomplete: "off"}.merge(input_html) %>
   	</div>
@@ -59,7 +59,7 @@
   <br />
 
   <div class="row">
-	  <div class="col-xs-6">
+	  <div class="col-xs-12 text-center‏">
   	<%= f.label :current_password, "Новый пароль", label_html %>
   	<i>(нам нужен ваш пароль для подтверждения изменений)</i>
     <%= f.password_field :current_password, {autocomplete: "off"}.merge(input_html) %>
@@ -68,7 +68,7 @@
   <br />
 
   <div class="row">
-	  <div class="col-xs-6">
+	  <div class="col-xs-12 text-center‏">
   		<%= f.submit "Изменить", submit_html %>
   	</div>
   </div>
