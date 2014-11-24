@@ -11,6 +11,7 @@ $body-bg: #ffffff;
 }
 */
 
+
 .dropdown-arrow-inverse {
   border-bottom-color: #34495e !important;
   border-top-color: #34495e !important;
@@ -2330,11 +2331,10 @@ fieldset[disabled] .input-group-btn .btn-default.active {
   border-radius: 0;
 }
 .dropdown-menu li:first-child > a {
-  border-radius: 6px 6px 0 0;
+  
   padding-top: 8px;
 }
 .dropdown-menu li:last-child > a {
-  border-radius: 0 0 6px 6px;
   padding-bottom: 10px;
 }
 .dropdown-menu li.active > a,
@@ -3732,6 +3732,7 @@ body {
   border-radius: 0 0 4px 4px;
   -webkit-box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
           box-shadow: 0 6px 12px rgba(0, 0, 0, .175);
+  width: 100%;
 }
 .navbar-default .navbar-nav .open .dropdown-menu > li > a {
   color: #333;
@@ -4123,7 +4124,17 @@ input[type="checkbox"] {
   padding: 0;
   border-radius: 5px;
   overflow: hidden;
-  border: 1px solid #bdc3c7
+  border: 1px solid #bdc3c7;
+  -webkit-border-top-left-radius: 5px !important;
+  -moz-border-top-left-radius: 5px !important;
+  -ms-border-top-left-radius: 5px !important;
+  -o-border-top-left-radius: 5px !important;
+  border-top-left-radius: 5px !important;
+  -webkit-border-bottom-left-radius: 5px !important;
+  -moz-border-bottom-left-radius: 5px !important;
+  -ms-border-bottom-left-radius: 5px !important;
+  -o-border-bottom-left-radius: 5px !important;
+  border-bottom-left-radius: 5px !important;
 }
 .range::-moz-range-track {  
   background: #ccc;
