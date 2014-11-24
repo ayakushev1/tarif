@@ -7,10 +7,6 @@
 	label_html = {:class => "control-label "}
 %>
 
-<div class="row">
-	<div class="col-xs-3"></div>
-</div>
-
 <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {:class => "edit_form"}) do |f| %>
   <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) if current_user %>
 
@@ -25,40 +21,42 @@
   <% end %>
 
   <div class="row ">
-	  <div class="col-xs-6 text-center‏">
+  	  <div class="col-xs-4"></div>
+	  <div class="col-xs-4">
 	  	<%= f.label :email, label_html %>
   		<%= f.email_field( :email, {autofocus: true}.merge(input_html) ) %>
-  	</div>
+   	  </div>
+  	  <div class="col-xs-4"></div>
   </div>
-  <br />
   
   <div class="row">
-	  <div class="col-xs-6 text-center‏">
-  	<%= f.label :password, label_html %>
-    <%= f.password_field :password, {autocomplete: "off"}.merge(input_html) %>
-  	</div>
+  	  <div class="col-xs-4"></div>
+	  <div class="col-xs-4">
+		  <%= f.label :password, label_html %>
+		  <%= f.password_field :password, {autocomplete: "off"}.merge(input_html) %>
+  	  </div>
+  	  <div class="col-xs-4"></div>
   </div>
-  <br />
 
   <% if devise_mapping.rememberable? -%>
-    <div>
+  <div class="row">
+  	  <div class="col-xs-4"></div>
+	  <div class="col-xs-4">
     	<%= f.label :remember_me, label_html %>
     	<%= f.check_box :remember_me, input_html %> 
-  	</div>
-    <br />
+  	  </div>
+  	  <div class="col-xs-4"></div>
+  </div>
   <% end -%>
 
   <div class="row">
+  	  <div class="col-xs-4"></div>
 	  <div class="col-xs-4">
   		<%= f.submit "Войти", submit_html %>
-  	</div>
+  	  </div>
+  	  <div class="col-xs-4"></div>
   </div>
-  <br />
 <% end %>
-
-<div class="row">
-	<div class="col-xs-3"></div>
-</div>
 
 
 <%= render "devise/shared/links" %>

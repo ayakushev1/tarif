@@ -22,45 +22,50 @@
   <% end %>
 
   <div class="row">
-	  <div class="col-xs-12 text-center‏">
+  	  <div class="col-xs-4"></div>
+	  <div class="col-xs-4">
 	  	<%= f.label :name, label_html %>
   		<%= f.text_field( :name, {autofocus: true }.merge(input_html) ) %>
-  	</div>
+  	  </div>
+  	  <div class="col-xs-4"></div>
   </div>
-  <br />
 
   <div class="row">
-	  <div class="col-xs-12 text-center‏">
+  	  <div class="col-xs-4"></div>
+	  <div class="col-xs-4">
 	  	<%= f.label :email, label_html %>
   		<%= f.email_field( :email, {}.merge(input_html) ) %>
-  	</div>
+  	  </div>
+  	  <div class="col-xs-4"></div>
   </div>
-  <br />
 
   <div class="row">
-	  <div class="col-xs-12 text-center‏">
-  	<%= f.label :password, "Новый пароль", label_html %>
-  	<% if @validatable %><i>(<%= @minimum_password_length %> знаков минимум)</i><% end %>
-    <%= f.password_field :password, {autocomplete: "off"}.merge(input_html) %>
-  	</div>
+  	  <div class="col-xs-4"></div>
+	  <div class="col-xs-4">
+	  	<%= f.label :password, "Новый пароль", label_html %>
+	  	<% if @validatable %><i>(<%= @minimum_password_length %> знаков минимум)</i><% end %>
+	    <%= f.password_field :password, {autocomplete: "off"}.merge(input_html) %>
+  	  </div>
+  	  <div class="col-xs-4"></div>
   </div>
-  <br />
 
 
   <div class="row">
-	  <div class="col-xs-12 text-center‏">
-  	<%= f.label :password_confirmation, "Подтверждение нового пароля", label_html %>
-    <%= f.password_field :password_confirmation, {autocomplete: "off"}.merge(input_html) %>
-  	</div>
+  	  <div class="col-xs-4"></div>
+	  <div class="col-xs-4">
+	  	<%= f.label :password_confirmation, "Подтверждение нового пароля", label_html %>
+	    <%= f.password_field :password_confirmation, {autocomplete: "off"}.merge(input_html) %>
+  	  </div>
+  	  <div class="col-xs-4"></div>
   </div>
-  <br />
 
   <div class="row">
-	  <div class="col-xs-12 text-center‏">
+  	  <div class="col-xs-4"></div>
+	  <div class="col-xs-4">
   		<%= f.submit "Зарегистрировать", submit_html %>
-  	</div>
+  	  </div>
+  	  <div class="col-xs-4"></div>
   </div>
-  <br />
 <% end %>
 
 <%= render "devise/shared/links" %>

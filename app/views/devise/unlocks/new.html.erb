@@ -21,19 +21,21 @@
   <% end %>
 
   <div class="row">
-	  <div class="col-xs-12 text-center‏">
+  	  <div class="col-xs-4"></div>
+	  <div class="col-xs-4">
 	  	<%= f.label :email, label_html %>
   		<%= f.email_field( :email, {autofocus: true}.merge(input_html) ) %>
-  	</div>
+  	  </div>
+  	  <div class="col-xs-4"></div>
   </div>
-  <br />
 
   <div class="row">
-	  <div class="col-xs-12 text-center‏">
+  	  <div class="col-xs-4"></div>
+	  <div class="col-xs-4">
   		<%= f.submit "Вышлите инструкции по разблокировке аккаунта", submit_html %>
-  	</div>
+  	  </div>
+  	  <div class="col-xs-4"></div>
   </div>
-  <br />
 <% end %>
 
 <%= render "devise/shared/links" %>

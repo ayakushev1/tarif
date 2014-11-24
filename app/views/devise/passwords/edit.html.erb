@@ -25,27 +25,30 @@
   <%= f.hidden_field :reset_password_token %>
 
   <div class="row">
-	  <div class="col-xs-12 text-center‏">
-  	<%= f.label :password, "New password", label_html %>
-    <%= f.password_field :password, {autofocus: true, autocomplete: "off"}.merge(input_html) %>
-  	</div>
+  	  <div class="col-xs-4"></div>
+	  <div class="col-xs-4">
+	  	<%= f.label :password, "New password", label_html %>
+	    <%= f.password_field :password, {autofocus: true, autocomplete: "off"}.merge(input_html) %>
+  	  </div>
+  	  <div class="col-xs-4"></div>
   </div>
-  <br />
 
   <div class="row">
-	  <div class="col-xs-12 text-center‏">
-  	<%= f.label :password_confirmation, "Confirm new password", label_html %>
-    <%= f.password_field :password_confirmation, {autocomplete: "off"}.merge(input_html) %>
-  	</div>
+  	  <div class="col-xs-4"></div>
+	  <div class="col-xs-4">
+	  	<%= f.label :password_confirmation, "Confirm new password", label_html %>
+	    <%= f.password_field :password_confirmation, {autocomplete: "off"}.merge(input_html) %>
+  	  </div>
+  	  <div class="col-xs-4"></div>
   </div>
-  <br />
 
   <div class="row">
-	  <div class="col-xs-12 text-center‏">
+  	  <div class="col-xs-4"></div>
+	  <div class="col-xs-4">
   		<%= f.submit "Сменить пароль", submit_html %>
-  	</div>
+  	  </div>
+  	  <div class="col-xs-4"></div>
   </div>
-  <br />
 <% end %>
 
 <%= render "devise/shared/links" %>

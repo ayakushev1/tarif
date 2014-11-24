@@ -11,7 +11,6 @@ $body-bg: #ffffff;
 }
 */
 
-
 .dropdown-arrow-inverse {
   border-bottom-color: #34495e !important;
   border-top-color: #34495e !important;
@@ -594,11 +593,11 @@ fieldset[disabled] .btn-inverse.active {
   padding-right: 30px;
 }
 .btn-link {
-  color: #16a085;
+  color: #337ab7;
 }
 .btn-link:hover,
 .btn-link:focus {
-  color: #1abc9c;
+  color: #337ab7;
   text-decoration: underline;
   background-color: transparent;
 }
@@ -4001,7 +4000,7 @@ input:focus {
 
 }
 .edit_form input {
-    width: 60%;
+    width: 100%;
 }
 .edit_form label {
 
@@ -4145,8 +4144,7 @@ input[type="checkbox"] {
   -webkit-appearance: none;
   width:10px;
   height:40px;
-  border: 1px solid #818181;
-  
+  border: 1px solid #818181; 
   border-radius: 2px;
 }
 .range::-webkit-slider-thumb:focus {
