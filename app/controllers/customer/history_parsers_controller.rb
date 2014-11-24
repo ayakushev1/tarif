@@ -42,7 +42,8 @@ class Customer::HistoryParsersController < ApplicationController
   end
   
   def customer_history_parser
-    @customer_history_parser ||= Customer::HistoryParser.new(self)
+#    @customer_history_parser ||= 
+    Customer::HistoryParser.new(self)
   end
   
 

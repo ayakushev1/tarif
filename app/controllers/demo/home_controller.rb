@@ -25,7 +25,8 @@ class Demo::HomeController < ApplicationController
       :user_id=> (current_user ? current_user.id : 0),
       :show_zero_tarif_result_by_parts => 'false',
       }
-    @optimization_result_presenter ||= ServiceHelper::FinalTarifResultsPresenter.new(options)
+#    @optimization_result_presenter ||= 
+    ServiceHelper::FinalTarifResultsPresenter.new(options)
   end  
 
   private

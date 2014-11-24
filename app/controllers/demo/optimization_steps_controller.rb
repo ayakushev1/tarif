@@ -3,7 +3,8 @@ class Demo::OptimizationStepsController < ApplicationController
   after_action :track_choose_load_calls_options, only: :choose_load_calls_options
   
   def load_calls_options
-    @load_calls_options ||= Filtrable.new(self, "load_calls_options")
+#    @load_calls_options ||= 
+    Filtrable.new(self, "load_calls_options")
   end
   
   private

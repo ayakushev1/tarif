@@ -46,7 +46,8 @@ class Customer::TarifOptimizatorsController < ApplicationController
   end 
   
   def customer_tarif_optimizator
-    @customer_tarif_optimizator ||= Customer::TarifOptimizator.new(self)
+#    @customer_tarif_optimizator ||= 
+    Customer::TarifOptimizator.new(self)
   end
   
 end
