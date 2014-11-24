@@ -101,7 +101,7 @@ class Calls::GenerationParamsPresenter
   
   def total_outcoming_sms_by_rouming
     {
-      :own_region => days_by_rouming[:own_region] * (1.0 - ccgp[:own_region]['share_of_incoming_calls'].to_f) * ccgp[:own_region]['number_of_ms_per_day'].to_f,
+      :own_region => days_by_rouming[:own_region] * (1.0 - ccgp[:own_region]['share_of_incoming_calls'].to_f) * ccgp[:own_region]['number_of_sms_per_day'].to_f,
       :home_region => days_by_rouming[:home_region] * (1.0 - ccgp[:home_region]['share_of_incoming_calls'].to_f) * ccgp[:home_region]['number_of_sms_per_day'].to_f,
       :own_country => days_by_rouming[:own_country] * (1.0 - ccgp[:own_country]['share_of_incoming_calls'].to_f) * ccgp[:own_country]['number_of_sms_per_day'].to_f,
       :abroad => days_by_rouming[:abroad] * (1.0 - ccgp[:abroad]['share_of_incoming_calls'].to_f) * ccgp[:abroad]['number_of_sms_per_day'].to_f,      
