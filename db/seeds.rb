@@ -11,7 +11,8 @@
 Dir[Rails.root.join("db/seeds/definitions/*.rb")].sort.each { |f| require f }
 
 %w{
-  categories
+  categories tarif_classes service/categories service/category_tarif_classes service/category_groups price/standard_formulas
+  price_lists price/formulas relations
 }.each do |part|
   require File.expand_path(File.dirname(__FILE__))+"/seeds/#{part}.rb"
 end
@@ -22,8 +23,8 @@ end
 #Dir[Rails.root.join("db/seeds/tarif_tests/mts/tarif_options/everywhere_as_home.rb")].each { |f| require f }
 
 #НЕ ЗАПУСКАТЬ ТАРИФЫ БЕЗ ОСТАЛЬНЫХ ТАБЛИЦ!!!
-#Dir[Rails.root.join("db/seeds/tarifs/**/*.rb")].each { |f| require f }
-#ServiceHelper::StatAndQuerySaver.save_stat_function_collector
+Dir[Rails.root.join("db/seeds/tarifs/**/*.rb")].each { |f| require f }
+ServiceHelper::StatAndQuerySaver.save_stat_function_collector
 
 #  categories tarif_classes service/categories service/category_tarif_classes service/category_groups price/standard_formulas
 #  price_lists price/formulas relations

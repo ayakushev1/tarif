@@ -10,11 +10,10 @@ class Customer::HistoryParser < ActiveType::Object
   attribute :parsing_params_filtr, default: proc {Filtrable.new(controller, "parsing_params")}
   attribute :user_params_filtr, default: proc {Filtrable.new(controller, "user_params")}
 
-  attribute :call_history_parsing_progress_bar, default: proc {ProgressBarable.new(controller, 'call_history_parsing', @background_process_informer.current_values)}
+  attribute :call_history_parsing_progress_bar, default: proc {ProgressBarable.new(controller, 'call_history_parsing', background_process_informer.current_values)}
   attribute :call_history_saver, default: proc {ServiceHelper::OptimizationResultSaver.new('call_history', 'call_history', current_user_id)}
 
   attr_reader :controller
-  attr_reader :background_process_informer
 
   def initialize(controller, init_values = {})
     super init_values
@@ -100,6 +99,10 @@ class Customer::HistoryParser < ActiveType::Object
   def file_type(file)
     file_type = (file.public_methods.include?(:original_filename) ? file.original_filename.to_s.split('.')[1] : file.path.to_s.split('.')[1])    
     file_type = file_type.downcase if file_type
+  end
+  
+  def background_process_informer
+    @background_process_informer ||= ServiceHelper::BackgroundProcessInformer.new('parsing_uploaded_file', current_user_id)
   end
   
   def init_background_process_informer

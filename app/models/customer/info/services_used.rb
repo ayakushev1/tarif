@@ -48,8 +48,8 @@ class Customer::Info::ServicesUsed < ActiveType::Record[Customer::Info]
 
   def self.default_values
     {
-      'calls_modelling_count' => 5,
-      'calls_parsing_count' => 3,
+      'calls_modelling_count' => 3,
+      'calls_parsing_count' => 1,
       'tarif_optimization_count' => 1,
       'has_calls_loaded' => false,
       'has_tarif_optimized' => false,
