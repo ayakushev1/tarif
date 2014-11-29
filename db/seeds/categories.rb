@@ -22,6 +22,8 @@ CategoryType.create(id: 24, name: "priority_relation")
 CategoryType.create(id: 25, name: "general_priority")
 CategoryType.create(id: 26, name: "tarif_class_general_service_categories")
 CategoryType.create(id: 27, name: "customer_info_type")
+CategoryType.create(id: 28, name: "customer_demand_type")
+CategoryType.create(id: 29, name: "customer_demand_status")
 
 CategoryLevel.delete_all
 CategoryLevel.create(id: 0,type_id: 0, level: 0, name: "world")
@@ -208,6 +210,16 @@ Category.create(id: 330, type_id: 26, level_id: nil, parent_id: nil, name: "call
 Category.create(id: 331, type_id: 26, level_id: nil, parent_id: nil, name: "sms")
 Category.create(id: 332, type_id: 26, level_id: nil, parent_id: nil, name: "mms")
 Category.create(id: 333, type_id: 26, level_id: nil, parent_id: nil, name: "internet")
+
+Category.create(id: 340, type_id: 28, level_id: nil, parent_id: nil, name: "Сообщение об ошибке на сайте")
+Category.create(id: 341, type_id: 28, level_id: nil, parent_id: nil, name: "Информационный запрос")
+Category.create(id: 342, type_id: 28, level_id: nil, parent_id: nil, name: "Предложение об улучшении предоставляемых услуг")
+Category.create(id: 343, type_id: 28, level_id: nil, parent_id: nil, name: "Предложение о сотрудничестве")
+Category.create(id: 344, type_id: 28, level_id: nil, parent_id: nil, name: "Жалоба")
+
+Category.create(id: 350, type_id: 29, level_id: nil, parent_id: nil, name: "Получено от пользователя")
+Category.create(id: 351, type_id: 29, level_id: nil, parent_id: nil, name: "В работе")
+Category.create(id: 352, type_id: 29, level_id: nil, parent_id: nil, name: "Обработано")
 
 Category.create(id: _russian_operators, type_id: 2, level_id: nil, parent_id: nil, name: "Russian operators")
 Category.create(id: _foreign_operators, type_id: 2, level_id: nil, parent_id: nil, name: "Foreign operators")

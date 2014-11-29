@@ -26,6 +26,8 @@ Rails.application.routes.draw do
   root 'demo/home#index'
 
   namespace :demo do
+    resources :demands, only: [:index, :new, :create]    
+
     controller :home do
       get 'home/demo_results' => :demo_results
       get 'home/full_demo_results' => :full_demo_results

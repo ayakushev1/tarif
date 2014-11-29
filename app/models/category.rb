@@ -52,6 +52,8 @@ class Category < ActiveRecord::Base
   scope :phone_usage_types_general, -> {where(:type_id => 22, :parent_id => 240)}
   scope :priority_type, -> {where(:type_id => 23)}
   scope :priority_relation, -> {where(:type_id => 24)}
+  scope :customer_demand_types, -> {where(:type_id => 28)}
+  scope :customer_demand_status, -> {where(:type_id => 29)}
   
   def self.type1(type_id)
     if type_id.blank?

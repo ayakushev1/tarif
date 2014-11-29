@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <p>
+      Поступило новое обращение ID: <%= @customer_demand.id %> от пользователя,
+      <br>
+    </p>
+    <div>
+    	  <p>Тип сообщения: <%= @customer_demand.type.name %></p>
+    </div>
+    <div>
+    	  <p>Тема сообщения:</p><%= @customer_demand.info["title"] %>
+    </div>
+    <div>
+    	  <p>Тело сообщения:</p><%= @customer_demand.info["message"] %>
+    </div>
+  </body>
+</html>

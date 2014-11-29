@@ -1,0 +1,55 @@
+<% content_for :title, "Письмо администрации сайта" %>
+
+<%
+	input_html = {:class => "form-control  "}
+	link_to_html = {:class => "btn btn-link", :type => 'button'}
+	submit_html = {:class => "btn btn-primary"}
+	label_html = {:class => "control-label "}
+	
+	form_name = "demo_demand"
+%>
+
+
+<%= form_for(@demand, html: {:class => "edit_form" }) do |f| %>
+  <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) if current_user %>
+
+   <% if !@demand.errors.blank? %>
+	<div class="alert alert-warning alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert">
+			<span aria-hidden="true">&times;</span>
+			<span class="sr-only">Close</span>
+		</button>
+		<ul>
+			<% @demand.errors.full_messages.each do |msg| %>
+				<li><%= msg %></li>
+			<% end %>
+		</ul>
+	</div>
+  <% end %>
+ 
+  <div class="row">
+	  <div class="col-xs-6">
+  		<%= f.collection_select(:type_id, Category.customer_demand_types, :id, :name,  {:include_blank => "выберите тип сообщения"}, {autofocus: true }.merge(input_html) ) %>
+  	  </div>
+  </div>
+
+  <div class="row">
+	  <div class="col-xs-6">
+	  	<%= label "info[title]", "Тема сообщения", label_html %>
+  		<%= text_field(form_name, "info[title]", input_html ) %>
+  	  </div>
+  </div>
+
+  <div class="row">
+	  <div class="col-xs-6">
+	  	<%= label "info[message]", "Сообщение", label_html %>
+  		<%= text_area(form_name, "info[message]", input_html ) %>
+  	  </div>
+  </div>
+
+  <div class="row">
+	  <div class="col-xs-4">
+  		<%= f.submit "Отправить", submit_html %>
+  	  </div>
+  </div>
+<% end %>

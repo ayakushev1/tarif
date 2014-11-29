@@ -27,7 +27,12 @@ class UserMailer < ActionMailer::Base
 
   def send_mail_to_admin_that_something_wrong_with_confirmation(payment_confirmation)
     @payment_confirmation = payment_confirmation
-    mail(to: 'mytarifs@yandex.ru', subject: "something wrong with payment confirmation from yandex")
+    mail(to: 'mytarifs@yandex.ru', subject: "Something wrong with payment confirmation from yandex")
+  end
+
+  def send_mail_to_admin_about_new_customer_demand(customer_demand)
+    @customer_demand = customer_demand
+    mail(to: 'mytarifs@yandex.ru', subject: "New customer demand #{customer_demand.id} from #{customer_demand.customer.email}")
   end
 
   def payment_confirmation(user, payment_confirmation)
