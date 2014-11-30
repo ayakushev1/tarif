@@ -59,7 +59,7 @@ class Calls::HistoryParser::MtsHtml
       doc_i += 1
     end 
     result.compact!
-    @background_process_informer.finish
+#    @background_process_informer.finish
     @processed = result
   end
   

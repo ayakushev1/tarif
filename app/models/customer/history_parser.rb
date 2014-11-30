@@ -26,6 +26,7 @@ class Customer::HistoryParser < ActiveType::Object
       background_process_informer.init(0, 100)
       message = send(parser_starter, call_history_file)
       update_customer_infos
+      @background_process_informer.finish
       message
     end     
   end

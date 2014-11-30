@@ -73,7 +73,7 @@ class Calls::HistoryParser::BlnXls
       doc_i += doc_inc
     end 
 #    result.compact!
-    @background_process_informer.finish
+#    @background_process_informer.finish
     @processed = result
   end
   
