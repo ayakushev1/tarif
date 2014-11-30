@@ -11,8 +11,16 @@ content_in :accordion do |user|
      render(:partial => 'demo/home/steps/call_model')
     ], 
     [
-     'Выбор услуг оператора',
+     'Подбор тарифа и выбор услуг оператора',
      render(:partial => 'demo/home/steps/limited_scope')
+    ], 
+    [
+     'Просмотр результатов подбора тарифов',
+     render(:partial => 'demo/home/steps/results')
+    ], 
+    [
+     'Перевод средств',
+     render(:partial => 'demo/home/steps/payment')
     ], 
   ] 
 end

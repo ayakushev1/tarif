@@ -108,7 +108,7 @@ form_item.init do |f|
   	 collection_select(filtr_name, "country_for_international_calls_ids", Category.where(:type_id=>0, :level_id=>2).where("id > ?", 1605), :id, :name,  {:include_blank => false, :selected => s_filtr["country_for_international_calls_ids"] }, input_html )
   	],   
   	
-  	[label(filtr_name, "number_of_sms_per_day", "Количество СМС, шт", label_html),
+  	[label(filtr_name, "number_of_sms_per_day", "Количество СМС в день, шт", label_html),
   	 content_tag(:div, {:class => "input-group"}) do
   	 	content_tag(:div, {:class => " "}) do
 		     text_field(filtr_name, "number_of_sms_per_day", input_html_range.merge(
@@ -117,7 +117,7 @@ form_item.init do |f|
 	  	content_tag(:span, s_filtr["number_of_sms_per_day"], {:class => "input-group-addon"})  
   	 end,
   	 
-  	label(filtr_name, "number_of_mms_per_day", "Количество ММС, шт", label_html),
+  	label(filtr_name, "number_of_mms_per_day", "Количество ММС в день, шт", label_html),
   	 content_tag(:div, {:class => "input-group"}) do
   	 	content_tag(:div, {:class => " "}) do
 		     text_field(filtr_name, "number_of_mms_per_day", input_html_range.merge(
