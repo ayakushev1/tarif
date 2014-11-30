@@ -9,11 +9,11 @@
       <br>
     </p>
     <div>
-    	  <%= @payment_confirmation %>
+    	  <%= @payment_confirmation.attributes if @payment_confirmation %>
     </div>
     <br />
     <div>
-    	  <%= @payment_confirmation.errors if @payment_confirmation %>
+    	  <%= @payment_confirmation.errors.full_messages if @payment_confirmation %>
     </div>
     <br />
     <div>

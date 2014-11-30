@@ -109,11 +109,23 @@ form_item.init do |f|
   	],   
   	
   	[label(filtr_name, "number_of_sms_per_day", "Количество СМС, шт", label_html),
-     text_field(filtr_name, "number_of_sms_per_day", input_html.merge({:type => 'text', :value => s_filtr["number_of_sms_per_day"] }) ),   
+  	 content_tag(:div, {:class => "input-group"}) do
+  	 	content_tag(:div, {:class => " "}) do
+		     text_field(filtr_name, "number_of_sms_per_day", input_html_range.merge(
+		     {:type => 'range', :min => 0, :max => 100, :step => 1, :value => s_filtr["number_of_sms_per_day"] }) ) 
+  	 	end +
+	  	content_tag(:span, s_filtr["number_of_sms_per_day"], {:class => "input-group-addon"})  
+  	 end,
   	 
-  	 label(filtr_name, "number_of_mms_per_day", "Количество ММС, шт", label_html),
-     text_field(filtr_name, "number_of_mms_per_day", input_html.merge({:type => 'text', :value => s_filtr["number_of_mms_per_day"] }) )
-  	],   
+  	label(filtr_name, "number_of_mms_per_day", "Количество ММС, шт", label_html),
+  	 content_tag(:div, {:class => "input-group"}) do
+  	 	content_tag(:div, {:class => " "}) do
+		     text_field(filtr_name, "number_of_mms_per_day", input_html_range.merge(
+		     {:type => 'range', :min => 0, :max => 100, :step => 1, :value => s_filtr["number_of_mms_per_day"] }) ) 
+  	 	end +
+	  	content_tag(:span, s_filtr["number_of_mms_per_day"], {:class => "input-group-addon"})  
+  	 end,
+    ],   
   	
   	[label(filtr_name, "internet_trafic_per_month", "Трафик интернета в месяц, Гб", label_html),
   	 content_tag(:div, {:class => "input-group"}) do
