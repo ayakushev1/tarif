@@ -97,24 +97,25 @@ class Customer::CallsController < ApplicationController
   end
   
   def customer_calls_generation_params_filtr
-    customer_calls_generation_params_filtr ||= {}
-    if customer_calls_generation_params_filtr.blank?
-      customer_calls_generation_params_filtr[:general] = Filtrable.new(self, "customer_calls_generation_params_general")
-      customer_calls_generation_params_filtr[:own_region] = Filtrable.new(self, "customer_calls_generation_params_own_region")
-      customer_calls_generation_params_filtr[:home_region] = Filtrable.new(self, "customer_calls_generation_params_home_region")
-      customer_calls_generation_params_filtr[:own_country] = Filtrable.new(self, "customer_calls_generation_params_own_country")
-      customer_calls_generation_params_filtr[:abroad] = Filtrable.new(self, "customer_calls_generation_params_abroad")
+    return @customer_calls_generation_params_filtr if @customer_calls_generation_params_filtr
+    @customer_calls_generation_params_filtr ||= {}
+    if @customer_calls_generation_params_filtr.blank?
+      @customer_calls_generation_params_filtr[:general] = Filtrable.new(self, "customer_calls_generation_params_general")
+      @customer_calls_generation_params_filtr[:own_region] = Filtrable.new(self, "customer_calls_generation_params_own_region")
+      @customer_calls_generation_params_filtr[:home_region] = Filtrable.new(self, "customer_calls_generation_params_home_region")
+      @customer_calls_generation_params_filtr[:own_country] = Filtrable.new(self, "customer_calls_generation_params_own_country")
+      @customer_calls_generation_params_filtr[:abroad] = Filtrable.new(self, "customer_calls_generation_params_abroad")
     end
-    customer_calls_generation_params_filtr      
+    @customer_calls_generation_params_filtr      
   end
   
   def update_location_data(params)
     if params['customer_calls_generation_params_general_filtr']
       user_session["country_id"] = params['customer_calls_generation_params_general_filtr']['country_id']
-      user_session["country_name"] = user_session["country_id"] ? Category.find(user_session["country_id"] ).name : nil
+      user_session["country_name"] = !user_session["country_id"].blank? ? ::Category.find(user_session["country_id"] ).name : nil
        
       user_session["region_id"] = params['customer_calls_generation_params_general_filtr']['region_id']
-      user_session["region_name"] = user_session["region_id"] ? Category.find(user_session["region_id"] ).name : nil
+      user_session["region_name"] = !user_session["region_id"].blank? ? ::Category.find(user_session["region_id"] ).name : nil
     end
   end
   

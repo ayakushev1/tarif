@@ -6,18 +6,22 @@ table.init do |t|
   t.heads = 
   ['Услуга', 'Направление', 'Пользователь', 'Параметры пользователя', 'Параметры 2-й стороны', 'Параметры подключения', 'Описание']
   t.set_fields do |call| 
+  	own_phone = [call.own_phone["number"], call.own_phone["operator"], call.own_phone["region"], call.own_phone["country"]].compact.join(", ")
+  	partner_phone = [call.partner_phone["number"], call.partner_phone["operator"], call.partner_phone["operator_type"], call.partner_phone["region"], call.partner_phone["country"]].compact.join(", ")
+  	connect = [call.connect["operator"], call.connect["region"], call.connect["country"]].compact.join(", ")
   [
 #  	call.id,
   	(call.base_service.name if call.base_service),
   	(call.base_subservice.name if call.base_subservice),
   	(call.user.name if call.user),
-  	 call.own_phone,
-#  	(call.own_phone["number"] if call.own_phone["number"]) +
-#  	(call.own_phone_region.name if call.own_phone_region) +
-#  	(call.own_phone_operator.name if call.own_phone_operator),
-  	call.partner_phone,
-  	call.connect,
-  	call.description,
+  	 own_phone,
+   	 partner_phone,
+   	 connect,
+  	 call.description,
+#  	 call.own_phone,
+#  	 call.partner_phone,
+#  	 call.connect,
+#  	 call.description,
     ] 
   end
 end

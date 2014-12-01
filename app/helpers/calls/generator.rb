@@ -19,6 +19,8 @@ class Calls::Generator
   
   def generate_calls#(params_to_search_optimal_tarif)
     calls = []
+    categories = {} 
+    ::Category.all.each { |o| categories[o.id] = o.name }
     
     (1..common_params["number_of_days_in_call_list"] ).each do |day|
         i = 0
@@ -35,12 +37,26 @@ class Calls::Generator
               :base_service_id => base_service_id, :base_subservice_id => choose_call_direction(rouming), :user_id => common_params["user_id"],
             :own_phone => {
               :number => common_params["own_phone_number"], :operator_id => common_params["own_operator_id"],
-              :region_id => common_params["own_region_id"], :country_id => common_params["own_country_id"] },
+              :region_id => common_params["own_region_id"], :country_id => common_params["own_country_id"],
+              :operator => categories[common_params["own_operator_id"]],
+              :region => categories[common_params["own_region_id"]],
+              :country => categories[common_params["own_country_id"]],
+              },
             :partner_phone => {
               :number => common_params["others_phone_number"], :operator_id => partner_operator_id, :operator_type_id => partner_operator_type_id,
-              :region_id => partner_region_id, :country_id => partner_country_id },
+              :region_id => partner_region_id, :country_id => partner_country_id, 
+              :operator => categories[partner_operator_id],
+              :operator_type => categories[partner_operator_type_id],
+              :region => categories[partner_region_id],
+              :country => categories[partner_country_id],
+              },
             :connect => {
-              :operator_id => initial_inputs[rouming]["connection_operator"], :region_id => initial_inputs[rouming]["connection_region"], :country_id => initial_inputs[rouming]["connection_country"] },
+              :operator_id => initial_inputs[rouming]["connection_operator"], :region_id => initial_inputs[rouming]["connection_region"], 
+              :country_id => initial_inputs[rouming]["connection_country"], 
+              :operator => categories[initial_inputs[rouming]["connection_operator"]],
+              :region => categories[initial_inputs[rouming]["connection_region"]],
+              :country => categories[initial_inputs[rouming]["connection_country"]],
+              },
             :description => {
               :time => set_date_time(day, i).to_s, :day => day, :month => set_month, :year => set_year, 
               :date => set_date_time(day, i).to_date.to_s, :date_number => day, :accounting_period => "#{set_month}_#{set_year}",

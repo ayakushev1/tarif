@@ -8,7 +8,7 @@ class Calls::HistoryParser::BlnXls
   attr_reader :call_history_file, :background_process_informer
   attr_reader :doc, :table_heads, :row_column_index
   attr_reader :unprocessed, :processed, :ignorred, :original_row_number
-  attr_reader :operators, :countries, :regions, :operators_by_country, :operator_phone_numbers
+  attr_reader :operators, :countries, :regions, :operators_by_country, :operator_phone_numbers, :categories
   attr_reader :user_params, :parsing_params
   
   def initialize(call_history_file, user_params, parsing_params = {})
@@ -30,6 +30,8 @@ class Calls::HistoryParser::BlnXls
     operator_set = Category.operators.pluck(:id, :name)
     @operators = {:ids => operator_set.map{|rs| rs[0].to_i}, :names => operator_set.map{|rs| rs[1].mb_chars.downcase.to_s}}
     @operators_by_country = Relation.operators_by_country.pluck(:owner_id, :children)
+    @categories = {} 
+    ::Category.all.each { |o| categories[o.id] = o.name }
   end
   
   def processed_percent    
@@ -94,6 +96,9 @@ class Calls::HistoryParser::BlnXls
         :operator_id => user_params[:operator_id],
         :region_id => user_params[:region_id], 
         :country_id => user_params[:country_id], 
+        :operator => categories[user_params[:operator_id]],
+        :region => categories[user_params[:region_id]],
+        :country => categories[user_params[:country_id]],
         },
       :partner_phone => {
         :number => number[:number], 
@@ -101,11 +106,18 @@ class Calls::HistoryParser::BlnXls
         :operator_type_id => number[:operator_type_id] || partner[:operator_type_id],
         :region_id => number[:region_id] || partner[:region_id], 
         :country_id => number[:country_id] || partner[:country_id], 
+        :operator => categories[(number[:operator_id] || partner[:operator_id])],
+        :operator_type => categories[(number[:operator_type_id] || partner[:operator_type_id])],
+        :region => categories[(number[:region_id] || partner[:region_id])],
+        :country => categories[(number[:country_id] || partner[:country_id])],
         },
       :connect => {
         :operator_id => roming[:operator_id],
         :region_id => roming[:region_id], 
         :country_id => roming[:country_id], 
+        :operator => categories[roming[:operator_id]],
+        :region => categories[roming[:region_id]],
+        :country => categories[roming[:country_id]],
         },
       :description => {
         :time => date.to_s, 
