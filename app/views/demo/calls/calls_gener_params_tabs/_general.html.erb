@@ -21,11 +21,6 @@ form_item.init do |f|
 #  	 submit_tag("Generate calls")
   	],
   	
-  	[
-  		"", content_tag(:div, session[:filtr]['customer_calls_generation_params_general_filtr']),
-  		"", content_tag(:div,  Calls::Generator.default_calls_generation_params(:general, session[:filtr]['customer_calls_generation_params_general_filtr']['phone_usage_type_id'])[:general]),
-  	],
-  	
   	[label(filtr_name, "country_id", "Ваша страна", label_html),
   	 collection_select(filtr_name, "country_id", Category.where(:id=>1100), :id, :name,  {:include_blank => false, :selected => s_filtr["country_id"] }, input_html ),
   	 
