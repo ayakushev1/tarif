@@ -98,7 +98,9 @@ class Customer::HistoryParser < ActiveType::Object
   end
   
   def file_type(file)
-    file_type = (file.public_methods.include?(:original_filename) ? file.original_filename.to_s.split('.')[1] : file.path.to_s.split('.')[1])    
+#    raise(StandardError, file_type)    
+    file_name_as_array = (file.public_methods.include?(:original_filename) ? file.original_filename.to_s.split('.') : file.path.to_s.split('.'))
+    file_type = file_name_as_array[file_name_as_array.size - 1] if file_name_as_array
     file_type = file_type.downcase if file_type
   end
   

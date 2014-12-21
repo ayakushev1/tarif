@@ -4,7 +4,7 @@ require 'roo'
 require 'spreadsheet'
 
 #require 'open-uri'
-class Calls::HistoryParser::BlnXls
+class Calls::HistoryParser::BlnXlsOld
   attr_reader :call_history_file, :background_process_informer
   attr_reader :doc, :table_heads, :row_column_index
   attr_reader :unprocessed, :processed, :ignorred, :original_row_number
@@ -57,18 +57,14 @@ class Calls::HistoryParser::BlnXls
       end
       
       service = row_service(doc_sheet.row(doc_i)); dup_service = row_service(doc_sheet.row(doc_i + 1))
-
-#      if date == row_date(doc_sheet.row(doc_i + 1)) and service and service[:base_service] == _calls and dup_service and dup_service[:base_service] == _calls
-#        doc_inc = 2
-#        row, dup_row = dup_row_calls(doc_i)
-#        dup_row = nil
-#      else
-#        doc_inc = 1
-#        row = doc_sheet.row(doc_i)
-#      end
-      
-      doc_inc = 1
-      row, dup_row = dup_row_calls(doc_i)
+      if date == row_date(doc_sheet.row(doc_i + 1)) and service and service[:base_service] == _calls and dup_service and dup_service[:base_service] == _calls
+        doc_inc = 2
+        row, dup_row = dup_row_calls(doc_i)
+        dup_row = nil
+      else
+        doc_inc = 1
+        row = doc_sheet.row(doc_i)
+      end
        
 #      raise(StandardError, [row, row_date(doc_sheet.row(doc_i))]) if !date 
       if date.to_date.month.to_i >= user_params[:accounting_period_month].to_i and date.to_date.year.to_i >= user_params[:accounting_period_year].to_i
@@ -147,7 +143,7 @@ class Calls::HistoryParser::BlnXls
     international_rouming_criteria = /мжнр\/роум/i
     international_calls_criteria = /международные звонки/i
     partner_items = take_out_special_symbols(row[row_column_index[:call_type]])
-#    partner_items += " " + take_out_special_symbols(dup_row[row_column_index[:call_type]]) if dup_row
+    partner_items += " " + take_out_special_symbols(dup_row[row_column_index[:call_type]]) if dup_row
 
     result = true
     
@@ -181,8 +177,6 @@ class Calls::HistoryParser::BlnXls
       operator_type_id = (operator_id and operator_id == _fixed_line_operator) ? _fixed_line : _mobile
 
       if !operator_id
-#        raise(StandardError, [row_column_index[:call_type]]) if !dup_row
-#        raise(StandardError, [row_column_index[:call_type]]) if !row_column_index
         unprocessed << {:unprocessed_column => :partner_operator, :value => dup_row[row_column_index[:call_type]], :row => dup_row} 
         result = nil
       end
@@ -255,22 +249,18 @@ class Calls::HistoryParser::BlnXls
     number_called = row[row_column_index[:number_called]]
 
     result = case 
-    when service == 'SMS/MMS'      
-      case
-      when  call_type =~ /Входящее SMS/i
-        {:base_service => _sms, :subservice => _inbound}
-      when  call_type =~ /Исходящее SMS/i
-        {:base_service => _sms, :subservice => _outbound}
-      when  call_type =~ /Входящее MMS/i
-        {:base_service => _mms, :subservice => _inbound}
-      when  call_type =~ /Исходящее MMS/i
-        {:base_service => _mms, :subservice => _outbound}
+    when service == 'Короткие сообщения'
+      (call_type == 'SMS прием') ? {:base_service => _sms, :subservice => _inbound} : {:base_service => _sms, :subservice => _outbound}
+    when service == 'MMS'
+      case  
+      when call_type == 'MMS'
+        {:base_service => _3g, :subservice => _unspecified_direction}
       when call_type =~ /прием/
         {:base_service => _mms, :subservice => _inbound}
       else
         {:base_service => _mms, :subservice => _outbound}
       end
-    when ['GPRS', 'GPRS-Internet', 'Premium Rate GPRS Internet'].include?(service)
+    when ['GPRS-Internet', 'Premium Rate GPRS Internet'].include?(service)
       {:base_service => _3g, :subservice => _unspecified_direction}
     when (service =~ /звонки/)
       case
@@ -318,9 +308,8 @@ class Calls::HistoryParser::BlnXls
   end
   
   def dup_row_calls(doc_i)
-    row_1 = doc_sheet.row(doc_i); row_2 = (doc_sheet.row(doc_i ) || [])
+    row_1 = doc_sheet.row(doc_i); row_2 = doc_sheet.row(doc_i + 1)
     service_1 = row_service(row_1); service_2 = row_service(row_2)
-#    raise(StandardError, [doc_i, doc_sheet.row(doc_i)]) if !row_1 or !row_2
     result = if service_1 and service_1[:base_service] == _calls  and service_2 and service_2[:base_service] == _calls
       case
       when [_inbound, _outbound].include?(service_1[:subservice]) 
@@ -328,13 +317,13 @@ class Calls::HistoryParser::BlnXls
       when [_inbound, _outbound].include?(service_2[:subservice])
         [row_2, row_1]
       else
-#        unprocessed << {:unprocessed_column => :dup_call_type, :value => row_1[row_column_index[:call_type]], :row => row_1}
-#        unprocessed << {:unprocessed_column => :dup_call_type, :value => row_2[row_column_index[:call_type]], :row => row_2}
+        unprocessed << {:unprocessed_column => :dup_call_type, :value => row_1[row_column_index[:call_type]], :row => row_1}
+        unprocessed << {:unprocessed_column => :dup_call_type, :value => row_2[row_column_index[:call_type]], :row => row_2}
         [row_1, row_2]
       end
     else
-#      unprocessed << {:unprocessed_column => :dup_call_type, :value => row_1[row_column_index[:call_type]], :row => row_1}
-#      unprocessed << {:unprocessed_column => :dup_call_type, :value => row_2[row_column_index[:call_type]], :row => row_2}
+      unprocessed << {:unprocessed_column => :dup_call_type, :value => row_1[row_column_index[:call_type]], :row => row_1}
+      unprocessed << {:unprocessed_column => :dup_call_type, :value => row_2[row_column_index[:call_type]], :row => row_2}
       [row_1, row_2]
     end      
   end
@@ -414,7 +403,7 @@ class Calls::HistoryParser::BlnXls
   def row_date(row)
     result = ""
     begin
-      result = row[row_column_index[:date]].to_datetime
+      result = "#{row[row_column_index[:date]]} #{row[row_column_index[:time]]}".to_datetime
       result = "invalid_date" if !result
     rescue ArgumentError
       result = "invalid_date"
@@ -424,19 +413,17 @@ class Calls::HistoryParser::BlnXls
   
   def check_if_table_correct
     result = true
-#    raise(StandardError)
 #    raise(StandardError, [table_heads, row_column_index, doc.worksheet('Sheet0').row(0), doc.worksheet('Sheet0').row(1), doc.worksheet('Sheet0').row(2)])
     result = false if table_heads_row == -1 #!= ['Дата звонка', 'Время звонка', 'Инициатор звонка', 'Набранный номер', 'Тип звонка', 'Услуга', 'Предварительная стоимость (без НДС)', 'Продолжительность', 'Объем (MB)', 'Номер БС']
     result 
   end
   
   def table_heads_row(test_row = nil)
-#    raise(StandardError)
     return @table_heads_row if @table_heads_row
-    test_row = ["Дата и время", "Исходящий номер", "Входящий номер", "Услуга", 
-      "Описание услуги", "Тип услуги", "Длительность, мин сек", "Стоимость. руб", "Размер сессии. МБ"] if !test_row
+    test_row = ['Дата звонка', 'Время звонка', 'Инициатор звонка', 'Набранный номер', 'Тип звонка', 'Услуга', 
+      'Предварительная стоимость (без НДС)', 'Продолжительность', 'Объем (MB)', 'Номер БС'] if !test_row
     @table_heads_row = -1
-    return @table_heads_row if !doc.sheets.include?('Sheet0')
+#    return @table_heads_row if !doc.sheets.include?('Sheet0')
     max_search_row = 10
     i = doc_sheet.first_row
     while (i < max_search_row)
@@ -455,17 +442,17 @@ class Calls::HistoryParser::BlnXls
   
   def row_column_index
     @row_column_index ||= {
-      :date => table_heads.index("Дата и время"),
-      :time => table_heads.index("Дата и время"),
+      :date => table_heads.index("Дата звонка"),
+      :time => table_heads.index("Время звонка"),
 #      :gmt => table_heads.index("GMT*"),
-      :number_init => table_heads.index("Исходящий номер"),
-      :number_called => table_heads.index("Входящий номер"),
-      :service => table_heads.index("Тип услуги"),
-      :call_type => table_heads.index("Описание услуги"),
-      :cost => table_heads.index("Стоимость. руб"),
-      :duration => table_heads.index("Длительность, мин сек"),
-      :volume => table_heads.index("Размер сессии. МБ"),      
-#      :bs_number => table_heads.index("Номер БС"),
+      :number_init => table_heads.index("Инициатор звонка"),
+      :number_called => table_heads.index("Набранный номер"),
+      :call_type => table_heads.index("Тип звонка"),
+      :service => table_heads.index("Услуга"),
+      :cost => table_heads.index("Предварительная стоимость (без НДС)"),
+      :duration => table_heads.index("Продолжительность"),
+      :volume => table_heads.index("Объем (MB)"),      
+      :bs_number => table_heads.index("Номер БС"),
     }
     @row_column_index
   end

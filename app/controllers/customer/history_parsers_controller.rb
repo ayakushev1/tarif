@@ -15,7 +15,7 @@ class Customer::HistoryParsersController < ApplicationController
   end
   
   def parse
-    local_call_history_file = File.open('tmp/beeline_original_2.XLS')
+    local_call_history_file = File.open('tmp/beeline_original_3.XLS')
 #    local_call_history_file = File.open('tmp/call_details_vgy_08092014.html')
     background_parser_processor(:parse_file, local_call_history_file)
   end
