@@ -238,12 +238,14 @@ class Calls::HistoryParser::BlnXls
       {:number => row[row_column_index[:number_init]], :subservice => _unspecified_direction}
     else
       phone = ((service[:subservice] == _inbound) ? row[row_column_index[:number_init]] : row[row_column_index[:number_called]])
+      phone = take_out_special_symbols_from_phone_number(phone) if phone
       phone = "7#{phone.to_s}" if phone and phone.to_s.length == 10
       phone_range = operator_phone_numbers.find_range(phone)
       result = {:number => phone, :subservice => service[:subservice]}
       if phone_range
         result.merge!(phone_range)
       end
+#      raise(StandardError, [row, phone, result]) if phone != '81037493492547'
       result
     end
   end
@@ -344,6 +346,13 @@ class Calls::HistoryParser::BlnXls
     special_symbols = ['.', ':', ';']
     special_symbols.each{|sym| result = result.mb_chars.downcase.to_s.split(sym).join(' ')}
     result.squish.split(' ')
+  end
+  
+  def take_out_special_symbols_from_phone_number(string)
+    result = string
+    special_symbols = ['.', ':', ';', ' ', '+', '-']
+    special_symbols.each{|sym| result = result.mb_chars.downcase.to_s.split(sym).join('')}
+    result #.squish.split('')
   end
   
   def find_operator_by_country(country_id)
