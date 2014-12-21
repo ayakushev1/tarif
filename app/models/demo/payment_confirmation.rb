@@ -48,7 +48,7 @@ class Demo::PaymentConfirmation  < ActiveType::Object
   
   def update_customer_info(current_user)
     User.transaction do
-      Customer::Info::ServicesUsed.update_free_trials_by_cash_amount(current_user.id, self.amount.to_f)
+      Customer::Info::ServicesUsed.update_free_trials_by_cash_amount(current_user.id, (self.amount.to_f / 0.98) )
       Customer::Info::ServiceChoices.update_info(current_user.id, Customer::Info::ServiceChoices.default_values_for_paid)
     end
   end
