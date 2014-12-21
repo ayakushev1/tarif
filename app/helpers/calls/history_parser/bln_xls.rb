@@ -49,6 +49,7 @@ class Calls::HistoryParser::BlnXls
     
     i = 0; doc_i = table_heads_row + 1
     while doc_i < doc_sheet.last_row and i < max_row_number
+#      raise(StandardError, [doc_sheet.last_row, max_row_number])
       date = row_date(doc_sheet.row(doc_i))
       if date == "invalid_date"
         doc_i += 1

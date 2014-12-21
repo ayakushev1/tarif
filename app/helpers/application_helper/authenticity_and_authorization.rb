@@ -30,7 +30,7 @@ module ApplicationHelper::AuthenticityAndAuthorization
       else
 #        raise(StandardError, [controller_name, action_name])
         if user_make_some_allowed_actions_with_devise_controllers
-
+          
         else
           if !current_user_admin?
             redirect_to(root_path) if !controller_has_public_url?
@@ -56,7 +56,7 @@ module ApplicationHelper::AuthenticityAndAuthorization
     end
     
     def user_make_some_allowed_actions_with_devise_controllers
-      user_login or user_confirm_his_email or user_unlock_his_email or user_change_passwords_his_email
+      user_login or user_confirm_his_email or user_unlock_his_email or user_reset_passwords or (current_user ? user_change_passwords_his_email : false)
     end
     
     def user_login
@@ -72,8 +72,13 @@ module ApplicationHelper::AuthenticityAndAuthorization
     end
     
     def user_change_passwords_his_email
+#      raise(StandardError, [controller_name, action_name])
       (controller_name == 'passwords' and (['new', 'create'].include?(action_name) or 
       (['edit', 'update'].include?(action_name) and params[:id] and current_user and current_user.id.to_i == params[:id].to_i) ) )
+    end
+    
+    def user_reset_passwords
+      (controller_name == 'passwords' and ['new', 'create', 'edit', 'update'].include?(action_name) )
     end
     
     def current_user_admin?
