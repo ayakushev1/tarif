@@ -15,11 +15,15 @@
    Перевод денег осуществляется через yandex-money. На данный момент вы можете перевести деньги с вашего yandex-кошелька или 
    с банковской карточки.
 </p>
+<p>С более подробным описанием можете ознакомиться ниже.
+</p>
 
 
 <%= link_to('Приступить к подбору тарифа', demo_optimization_steps_choose_load_calls_options_path, {:class => "btn btn-success", :type =>"button"}) %>
 <br /> 
 <%= link_to('Если Вы использовали вашу пробную попытку, то можете внести деньги', new_demo_payments_path, {:class => "btn btn-primary", :type =>"button"}) %>
+
+<h3>Детальное описание шагов по подбору тарифа</h3>
 
 <%= render :partial => 'demo/home/steps', :layout => 'application/layouts/accordion', :locals => {:name => 'demo_home_steps_accord', :active => session[:current_accordion_page]['demo_home_steps_accord'].to_i} %>
 

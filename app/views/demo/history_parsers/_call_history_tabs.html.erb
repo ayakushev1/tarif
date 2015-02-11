@@ -3,10 +3,6 @@
 content_in :tabs do |user| 
   [
     [
-     'Данные пользователя', 
-     render(:partial => 'demo/history_parsers/call_history/user_params', :layout => 'application/layouts/demo/filtr_form_2_columns', :locals => {:form_item => customer_history_parser.user_params_filtr})    
-    ], 
-    [
      'Необработанная история звонков', 
      render(:partial => 'demo/history_parsers/call_history/unprocessed', :layout => 'application/layouts/demo/model_table', :locals => {:table => customer_history_parser.call_history_unprocessed})    
     ], 

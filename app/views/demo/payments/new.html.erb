@@ -22,12 +22,12 @@
  
   <div class="row">
 	  <div class="col-xs-6">
-	  	<%= f.label :sum, "Сумма", label_html %>
+	  	<%= f.label :sum, "Сумма, рублей", label_html %>
   		<%= f.text_field( :sum, {autofocus: true }.merge(input_html) ) %>
   	</div>
   </div>
 
-  <h3>Выберите оплату</h3>
+  <h3>Выберите способ оплаты</h3>
 	
 	<%= f.label :paymentType, label_html do %>
 		<%= f.radio_button( :paymentType, 'PC', {}.merge(checkbox_to_html) ) %>
@@ -41,7 +41,7 @@
 
   <div class="row">
 	  <div class="col-xs-6">
-  		<%= f.submit "Перевести", submit_html %>
+  		<%= f.submit "Перейти на сайт yandex.ru для оплаты", submit_html %>
   	</div>
   </div>
 

@@ -11,7 +11,8 @@ form_item.init do |f|
   [
   	[
      label(filtr_name, "calculate_with_limited_scope", "Считать только выбранные направления связи?", label_html),
- 	 select(filtr_name, "calculate_with_limited_scope", [["Да", true], ["Считать все направления связи", false]], {:selected => s["calculate_with_limited_scope"]}, input_html ),
+ 	 select(filtr_name, "calculate_with_limited_scope", 
+ 	   [["Считать только выбранные направления связи", true], ["Считать все направления связи", false]], {:selected => s["calculate_with_limited_scope"]}, input_html ),
 
   	 label(filtr_name, "accounting_period", "Период за который проводить расчет тарифов", label_html),
   	 collection_select(filtr_name, "accounting_period", 
