@@ -59,7 +59,8 @@ class Customer::Info::ServiceChoices < ActiveType::Record[Customer::Info]
       'tarif_options_bln' => tarif_options[1025], 'tarif_options_mgf' => tarif_options[1028], 'tarif_options_mts' => tarif_options[1030], 
 #      'accounting_period' => -1,
       'calculate_only_chosen_services' => 'false',
-      'calculate_with_limited_scope' => 'false'
+      'calculate_with_limited_scope' => 'false',
+      'calculate_with_fixed_services' => 'false'
     }
   end
   

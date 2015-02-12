@@ -21,7 +21,7 @@ form_item.init do |f|
 
      label(filtr_name, "calculate_with_fixed_services", "Считать только выбранный тариф и опции?", label_html),
  	 select(filtr_name, "calculate_with_fixed_services", 
- 	   [["Считать только выбранный тариф и опции", true], ["Считать все тарифы и опции", true]], {:selected => s["calculate_with_fixed_services"]}, input_html ),
+ 	   [["Считать только выбранный тариф и опции", true], ["Считать все тарифы и опции", false]], {:selected => s["calculate_with_fixed_services"]}, input_html ),
   	],
   ]
 	    
