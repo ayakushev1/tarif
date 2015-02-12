@@ -48,7 +48,7 @@ class Customer::TarifOptimizatorsController < ApplicationController
       end
     else
       customer_tarif_optimizator.recalculate_direct
-      redirect_to(:action => :index)
+      redirect_to({:action => :index}, {:alert => "Расчет выполнен. Можете перейти к просмотру результатов"})
     end    
   end 
   
