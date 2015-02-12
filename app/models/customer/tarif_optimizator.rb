@@ -6,6 +6,7 @@ class Customer::TarifOptimizator < ActiveType::Object
   attribute :service_choices, default: proc {Filtrable.new(controller, "service_choices")}
   attribute :services_select, default: proc {Filtrable.new(controller, "services_select")}
   attribute :service_categories_select, default: proc {Filtrable.new(controller, "service_categories_select")}
+  attribute :services_for_calculation_select, default: proc {Filtrable.new(controller, "services_for_calculation_select")}
   attribute :operators_optimization_progress_bar, default: proc {ProgressBarable.new(controller, 'operators_optimization', background_process_informer_operators.current_values)}
   attribute :tarifs_optimization_progress_bar, default: proc {ProgressBarable.new(controller, 'tarifs_optimization', background_process_informer_tarifs.current_values)}
   attribute :tarif_optimization_progress_bar, default: proc {ProgressBarable.new(controller, 'tarif_optimization', background_process_informer_tarif.current_values)}
@@ -24,12 +25,19 @@ class Customer::TarifOptimizator < ActiveType::Object
     Customer::Info::ServiceCategoriesSelect.update_info(current_user_id, service_categories_select.session_filtr_params)
     Customer::Info::TarifOptimizationParams.update_info(current_user_id, optimization_params.session_filtr_params)
 
-    Customer::Info::ServicesUsed.decrease_one_free_trials_by_one(current_user_id, 'tarif_optimization_count')
+    if service_choices.session_filtr_params['calculate_with_fixed_services'] == 'true'
+      Customer::Info::ServicesUsed.decrease_one_free_trials_by_one(current_user_id, 'tarif_recalculation_count')
+    else
+      Customer::Info::ServicesUsed.decrease_one_free_trials_by_one(current_user_id, 'tarif_optimization_count')      
+    end
   end
   
   def recalculate_on_background
     prepare_background_process_informer
-    if (optimization_params.session_filtr_params['calculate_background_with_spawnling'] == 'true')
+#    raise(StandardError)
+    if (optimization_params.session_filtr_params['calculate_background_with_spawnling'] == 'true') or 
+      service_choices.session_filtr_params['calculate_with_fixed_services'] == 'true'
+      
       Spawnling.new(:argv => "optimize for #{current_user_id}") do
         ServiceHelper::TarifOptimizator.new(options).calculate_all_operator_tarifs    
         update_customer_infos
@@ -117,6 +125,7 @@ class Customer::TarifOptimizator < ActiveType::Object
       :operators => operators, :tarifs => tarifs, :tarif_options => tarif_options, 
       :common_services => common_services, 
       :calculate_only_chosen_services => service_choices.session_filtr_params['calculate_only_chosen_services'],
+      :calculate_with_fixed_services => service_choices.session_filtr_params['calculate_with_fixed_services'],
       :use_short_tarif_set_name => optimization_params.session_filtr_params['use_short_tarif_set_name'], 
       :calculate_with_multiple_use => optimization_params.session_filtr_params['calculate_with_multiple_use'],
       :if_update_tarif_sets_to_calculate_from_with_cons_tarif_results => optimization_params.session_filtr_params['if_update_tarif_sets_to_calculate_from_with_cons_tarif_results'],
@@ -134,10 +143,14 @@ class Customer::TarifOptimizator < ActiveType::Object
   end
   
   def operators
-    bln = services_select.session_filtr_params['operator_bln'] == 'true'? 1025 : nil
-    mgf = services_select.session_filtr_params['operator_mgf'] == 'true'? 1028 : nil
-    mts = services_select.session_filtr_params['operator_mts'] == 'true'? 1030 : nil
-    [bln, mgf, mts].compact    
+    if service_choices.session_filtr_params['calculate_with_fixed_services'] == 'true'
+      [services_for_calculation_select.session_filtr_params['operator_id'].to_i]
+    else
+      bln = services_select.session_filtr_params['operator_bln'] == 'true'? 1025 : nil
+      mgf = services_select.session_filtr_params['operator_mgf'] == 'true'? 1028 : nil
+      mts = services_select.session_filtr_params['operator_mts'] == 'true'? 1030 : nil
+      [bln, mgf, mts].compact    
+    end
   end
   
   def validate_tarifs
@@ -145,19 +158,31 @@ class Customer::TarifOptimizator < ActiveType::Object
   end
   
   def tarifs
-    {
-      1025 => (service_choices.session_filtr_params['tarifs_bln'] || []), 
-      1028 => (service_choices.session_filtr_params['tarifs_mgf'] || []), 
-      1030 => (service_choices.session_filtr_params['tarifs_mts'] || []), 
-    }     
+    if service_choices.session_filtr_params['calculate_with_fixed_services'] == 'true'
+      {
+        services_for_calculation_select.session_filtr_params['operator_id'].to_i => [services_for_calculation_select.session_filtr_params['tarif_to_calculate'].to_i]
+      }
+    else
+      {
+        1025 => (service_choices.session_filtr_params['tarifs_bln'] || []), 
+        1028 => (service_choices.session_filtr_params['tarifs_mgf'] || []), 
+        1030 => (service_choices.session_filtr_params['tarifs_mts'] || []), 
+      }     
+    end
   end
   
   def tarif_options
-    {
-      1025 => (service_choices.session_filtr_params['tarif_options_bln'] || []), 
-      1028 => (service_choices.session_filtr_params['tarif_options_mgf'] || []), 
-      1030 => (service_choices.session_filtr_params['tarif_options_mts'] || []), 
-    }     
+    if service_choices.session_filtr_params['calculate_with_fixed_services'] == 'true'
+      {
+        services_for_calculation_select.session_filtr_params['operator_id'].to_i => services_for_calculation_select.session_filtr_params['tarif_options_to_calculate'].map(&:to_i) - [0]
+      }
+    else
+      {
+        1025 => (service_choices.session_filtr_params['tarif_options_bln'] || []), 
+        1028 => (service_choices.session_filtr_params['tarif_options_mgf'] || []), 
+        1030 => (service_choices.session_filtr_params['tarif_options_mts'] || []), 
+      }     
+    end
   end
   
   def common_services

@@ -11,7 +11,7 @@ class ServiceHelper::TarifListGenerator
   attr_reader :gp_tarif_option, :gp_tarif_without_limits, :gp_tarif_with_limits, :gp_tarif_option_with_limits, :gp_common_service, :all_parts,
               :parts_used_as_multiple
          
-  attr_reader :calculate_with_multiple_use, :calculate_only_chosen_services
+  attr_reader :calculate_with_multiple_use, :calculate_only_chosen_services, :calculate_with_fixed_services
              
   
   def initialize(options = {} )
@@ -93,6 +93,7 @@ class ServiceHelper::TarifListGenerator
   def set_generation_params(options)
     @calculate_with_multiple_use = options[:calculate_with_multiple_use] == 'true' ? true : false
     @calculate_only_chosen_services = options[:calculate_only_chosen_services] == 'true' ? true : false
+    @calculate_with_fixed_services = options[:calculate_with_fixed_services] == 'true' ? true : false
   end
   
   def check_input_from_options    
@@ -263,7 +264,7 @@ class ServiceHelper::TarifListGenerator
 #TODO Разобраться что делать когда одна опция несовместима с двумя другими, которые между собой совместимы    
     @tarif_option_by_compatibility = {}
     @fobidden_combinations_by_service = {}
-    if calculate_only_chosen_services
+    if calculate_only_chosen_services or calculate_with_fixed_services
       service_packs_by_parts.each do |tarif, service_pack|
         tarif_option_by_compatibility[tarif] ||= {}
         service_pack.each do |part, services|
@@ -318,7 +319,7 @@ class ServiceHelper::TarifListGenerator
   def calculate_tarif_option_combinations
     @tarif_option_combinations = {}
     fobidden_combinations_by_set_id = {}
-    if calculate_only_chosen_services
+    if calculate_only_chosen_services or calculate_with_fixed_services
       tarif_option_by_compatibility.each do |tarif, service_pack|
         tarif_option_combinations[tarif] ||= {}
         service_pack.each do |part, incompatibility_groups|
@@ -417,7 +418,7 @@ class ServiceHelper::TarifListGenerator
               tarif_option_general_priority = dependencies[service]['general_priority']
               tarif_option_group << service if tarif_option_general_priority == gp_tarif_option
               tarif_option_with_limit_group << service if tarif_option_general_priority == gp_tarif_option_with_limits
-              if !calculate_only_chosen_services
+              if !calculate_only_chosen_services or !calculate_with_fixed_services
 #TODO вернуть когда добавлю вывод ошибок в фоновом режиме вычислений
                 raise(StandardError, "tarif_option #{service} has wrong general_priority") if false #![gp_tarif_option, gp_tarif_option_with_limits].include?(tarif_option_general_priority)
               end

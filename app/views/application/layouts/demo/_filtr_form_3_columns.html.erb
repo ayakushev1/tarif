@@ -1,0 +1,48 @@
+<%
+#style_table = [
+#	[/label/, {:class => ""}],
+#	[/(input|select|textarea).*?action/, {:filtr_name => form_item.filtr_name, :class => "updatable"}],
+#	[/(input|select).*?action/, {:class => "updatable "}],
+#	[/a.*?href.*?\/a/, {:class => "btn btn-primary", :type => 'button', :'data-remote' => true, :turbolinks => true}],
+#	[/input.*?type.*?submit/, {:class => "btn btn-primary"}],
+#]
+
+form_html_options = {:id =>form_item.filtr_name, :class => "", :turbolinks => true}
+form_html_options = form_html_options.merge(html) if local_assigns[:html]
+
+form_options = {:method => 'get', :remote => false, :authenticity_token => true}
+
+form_options = form_options.merge(options) if local_assigns[:options]
+form_options = form_options.merge(form_html_options)
+
+%>
+<%= session[:filtr] if false %>
+
+
+<%= form_tag(form_item.action_on_submit, form_options) do %>
+	<% if form_item.caption %> 
+		<legend><%= form_item.caption %></legend>
+	<% end %>
+
+	<% form_item.fields(form_item.filtr_name) do |label_1, field_1, label_2, field_2, label_3, field_3| %>
+		<div class="row">
+			<div class="col-xs-4">
+				<%= label_1 %>
+				<%= field_1 %>
+			</div>
+
+			<div class="col-xs-4">
+				<%= label_2 %>
+				<%= field_2 %>
+			</div>
+
+			<div class="col-xs-4">
+				<%= label_3 %>
+				<%= field_3 %>
+			</div>
+		</div>		
+		<br />
+	<% end %>	
+<% end %>
+
+

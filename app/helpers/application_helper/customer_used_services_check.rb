@@ -21,9 +21,10 @@ module ApplicationHelper::CustomerUsedServicesCheck
     when controller_name_1 == 'history_parsers'
       customer_has_free_history_parsing_trials?
     when controller_name_1 == 'tarif_optimizators'
-      customer_has_free_tarif_optimization_trials?
+      (customer_has_free_tarif_optimization_trials? or customer_has_free_tarif_recalculation_trials?)
     when controller_name_1 == 'optimization_steps'
-      customer_has_free_calls_modelling_trials? and customer_has_free_history_parsing_trials? and customer_has_free_tarif_optimization_trials?
+      customer_has_free_calls_modelling_trials? and customer_has_free_history_parsing_trials? and 
+        (customer_has_free_tarif_optimization_trials? or customer_has_free_tarif_recalculation_trials?)
     else
       true
     end
@@ -39,6 +40,10 @@ module ApplicationHelper::CustomerUsedServicesCheck
   
   def customer_has_free_tarif_optimization_trials?
     (customer_info and customer_info['tarif_optimization_count'] < 1 ) ? false : true
+  end
+  
+  def customer_has_free_tarif_recalculation_trials?
+    (customer_info and (customer_info['tarif_recalculation_count'] || 0) < 1 ) ? false : true
   end
   
   def customer_has_calls_loaded?

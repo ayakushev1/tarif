@@ -29,7 +29,7 @@
 	
 	        <div class="col-xs-9 ">
 	        	<div id="main_block_top_row_4" class="content">
-	        		<div><%= GC.stat if current_user_admin? %></div>
+	        		<div><%= GC.stat if current_user_admin? and false %></div>
 					<%= render('/application/shared/alerts') %>
 					
 					<div id=<%= view_id_name %> >

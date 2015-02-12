@@ -66,7 +66,7 @@ TarifClass.create(id: _mgf_megafon_online, operator_id: 1028, privacy_id: 2, sta
 TarifClass.create(id: _mgf_international, operator_id: 1028, privacy_id: 2, standard_service_id: 40, name: 'Международный')#
 TarifClass.create(id: _mgf_go_to_zero, operator_id: 1028, privacy_id: 2, standard_service_id: 40, name: 'Переходи на ноль')#
 TarifClass.create(id: _mgf_sub_moscow, operator_id: 1028, privacy_id: 2, standard_service_id: 40, name: 'Подмосковный')#
-TarifClass.create(id: 111, operator_id: 1028, privacy_id: 2, standard_service_id: 40, name: 'Подмосковный*')
+#TarifClass.create(id: 111, operator_id: 1028, privacy_id: 2, standard_service_id: 40, name: 'Подмосковный*')
 TarifClass.create(id: _mgf_city_connection, operator_id: 1028, privacy_id: 2, standard_service_id: 40, name: 'Связь городов')#
 TarifClass.create(id: _mgf_warm_welcome, operator_id: 1028, privacy_id: 2, standard_service_id: 40, name: 'Теплый прием')#
 #Мегафон, корпоративные, тарифы
@@ -155,7 +155,7 @@ TarifClass.create(id: _mts_mts_connect_4, operator_id: 1030, privacy_id: 2, stan
 TarifClass.create(id: _mts_mayak, operator_id: 1030, privacy_id: 2, standard_service_id: 40, name: 'Маяк')
 TarifClass.create(id: _mts_your_country, operator_id: 1030, privacy_id: 2, standard_service_id: 40, name: 'Твоя страна')
 TarifClass.create(id: _mts_super_mts, operator_id: 1030, privacy_id: 2, standard_service_id: 40, name: 'Супер МТС')
-TarifClass.create(id: _mts_super_mts_star, operator_id: 1030, privacy_id: 2, standard_service_id: 40, name: 'Суперс МТС*')
+#TarifClass.create(id: _mts_super_mts_star, operator_id: 1030, privacy_id: 2, standard_service_id: 40, name: 'Суперс МТС*')
 TarifClass.create(id: _mts_umnyi_dom, operator_id: 1030, privacy_id: 2, standard_service_id: 40, name: 'Умный дом')
 #МТС, корпоративные, тарифы
 TarifClass.create(id: 250, operator_id: 1030, privacy_id: 1, standard_service_id: 40, name: 'Бизнес безлимит L')

@@ -22,6 +22,9 @@ class TarifClass < ActiveRecord::Base
   has_many :service_category_tarif_classes, :class_name => 'Service::CategoryTarifClass', :foreign_key => :tarif_class_id
   has_many :tarif_lists, :class_name => 'TarifList', :foreign_key => :tarif_class_id
 
+  scope :for_business, -> {where(:privacy_id => 1)}
+  scope :for_private_use, -> {where(:privacy_id => 2)}
+
   scope :tarifs, -> {where(:standard_service_id => 40)}
   scope :common_services, -> {where(:standard_service_id => 41)}
   scope :special_services, -> {where(:standard_service_id => 42)}
@@ -37,6 +40,32 @@ class TarifClass < ActiveRecord::Base
   
   def self.with_not_null_dependency
     where("dependency is not null")
+  end
+  
+  def self.allowed_tarif_option_ids_for_tarif(operator_id, tarif_id)
+    return [] if !operator_id or !tarif_id
+    
+    tarif_option_ids = []
+    special_services.services_by_operator([operator_id]).each do |row|
+      dependency = row['dependency']
+      next if (row['is_archived'] == true or !dependency or !dependency['forbidden_tarifs'])
+
+      if !dependency['prerequisites'].blank? and dependency['prerequisites'].include?(tarif_id)
+        tarif_option_ids << row['id']
+      end
+      
+      if !dependency['forbidden_tarifs']['to_switch_on'].blank? and !dependency['forbidden_tarifs']['to_switch_on'].include?(tarif_id)
+        tarif_option_ids << row['id']
+      end
+      
+      if dependency['prerequisites'].blank? and dependency['forbidden_tarifs']['to_switch_on'].blank?
+        tarif_option_ids << row['id']
+      end
+
+#    raise(StandardError) if row['name'] == 'Везде как дома SMART'
+    end
+
+    tarif_option_ids.compact
   end
 
 end

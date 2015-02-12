@@ -5,7 +5,7 @@ content_in :tabs do |user|
     [
      'Выбор параметров расчета',
      (
-	  render(:partial => 'demo/tarif_optimizators/input/service_choices', :layout => 'application/layouts/demo/filtr_form_2_columns', 
+	  render(:partial => 'demo/tarif_optimizators/input/service_choices', :layout => 'application/layouts/demo/filtr_form_3_columns', 
 	    :locals => {:form_item => customer_tarif_optimizator.service_choices} )
 		
      )          
@@ -14,6 +14,11 @@ content_in :tabs do |user|
      'Выбор услуг оператора',
       render(:partial => 'demo/tarif_optimizators/input/service_categories_select', :layout => 'application/layouts/demo/filtr_form_4_columns', 
         :locals => {:form_item => customer_tarif_optimizator.service_categories_select} )
+    ], 
+    [
+     'Выбор тарифа и набора опций для расчета',
+	  render(:partial => 'demo/tarif_optimizators/input/services_for_calculation_select', :layout => 'application/layouts/demo/filtr_form_3_columns', 
+	    :locals => {:form_item => customer_tarif_optimizator.services_for_calculation_select} )
     ], 
   ] 
 end
