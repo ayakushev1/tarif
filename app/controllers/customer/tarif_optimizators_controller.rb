@@ -37,7 +37,7 @@ class Customer::TarifOptimizatorsController < ApplicationController
 #    raise(StandardError)
     if customer_tarif_optimizator.optimization_params.session_filtr_params['calculate_on_background'] == 'true' and
       customer_tarif_optimizator.service_choices.session_filtr_params['calculate_with_fixed_services'] == 'false'
-      
+#      raise(StandardError)
       customer_tarif_optimizator.recalculate_on_background
 #      sleep 0.2
       if customer_tarif_optimizator.optimization_params.session_filtr_params['calculate_background_with_spawnling'] == 'true' or 
@@ -47,6 +47,7 @@ class Customer::TarifOptimizatorsController < ApplicationController
         redirect_to root_path, {:alert => "Мы сообщим вам электронным письмом об окончании расчетов"}
       end
     else
+#      raise(StandardError)
       customer_tarif_optimizator.recalculate_direct
       redirect_to({:action => :index}, {:alert => "Расчет выполнен. Можете перейти к просмотру результатов"})
     end    
