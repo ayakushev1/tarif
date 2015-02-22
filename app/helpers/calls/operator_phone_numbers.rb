@@ -1,31 +1,33 @@
 Dir[Rails.root.join("db/seeds/definitions/*.rb")].sort.each { |f| require f }
+
 class Calls::OperatorPhoneNumbers
   attr_reader :phone_numbers, :ranges
+  
   def initialize
     @phone_numbers = init_phone_numbers
-	@ranges = init_phone_number_ranges
+	  @ranges = init_phone_number_ranges
   end
   
   def find_range(number)    
-	return nil if !number.is_a?(String)
-	length = number.length
-	return nil if length < 11
-	country_code = number.first(length - 10)
-	return nil if !['', '7', '+7', '07', '007'].include?(country_code)	
-	return nil if number.last(10) !~ /[0-9]{10}/
-	phone_without_country = number.last(10).to_i
-	return nil if phone_without_country < ranges[0] or phone_without_country > phone_numbers[ranges.last][:end_range]
-    phone_range = ranges.index{|r| phone_without_country < phone_numbers[r][:end_range] }
-	if phone_range
-	  result = phone_numbers[ranges[phone_range]].merge({:country_id => _russia})
-	  if result[:operator_id] == _fixed_line_operator
-	    result.merge!({:operator_type_id => _fixed_line})
-	  else
-	    result.merge!({:operator_type_id => _mobile})
-	  end
-	else
-	  nil
-	end
+  	return nil if !number.is_a?(String)
+  	length = number.length
+  	return nil if length < 11
+  	country_code = number.first(length - 10)
+  	return nil if !['', '7', '+7', '07', '007'].include?(country_code)	
+  	return nil if number.last(10) !~ /[0-9]{10}/
+  	phone_without_country = number.last(10).to_i
+  	return nil if phone_without_country < ranges[0] or phone_without_country > phone_numbers[ranges.last][:end_range]
+      phone_range = ranges.index{|r| phone_without_country < phone_numbers[r][:end_range] }
+  	if phone_range
+  	  result = phone_numbers[ranges[phone_range]].merge({:country_id => _russia})
+  	  if result[:operator_id] == _fixed_line_operator
+  	    result.merge!({:operator_type_id => _fixed_line})
+  	  else
+  	    result.merge!({:operator_type_id => _mobile})
+  	  end
+  	else
+  	  nil
+  	end
   end
   
   def init_phone_number_ranges

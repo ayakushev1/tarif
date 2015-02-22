@@ -2,16 +2,17 @@ class Customer::HistoryParser < ActiveType::Object
   attribute :session, default: proc {controller.session}
   attribute :user_session, default: proc {controller.user_session}
   attribute :current_user_id, :integer, default: proc {controller.current_user.id}
+
+  attribute :call_history_saver, default: proc {ServiceHelper::OptimizationResultSaver.new('call_history', 'call_history', current_user_id)}
+  attribute :call_history_results, default: proc {(call_history_saver.results || {'processed' => [{}], 'unprocessed' => [{}], 'ignorred' => [{}], 'original_doc' => [{}] } )}
   attribute :call_history, default: proc {ArrayOfHashable.new(controller, call_history_results['processed'])}
   attribute :call_history_unprocessed, default: proc {ArrayOfHashable.new(controller, call_history_results['unprocessed'])}
   attribute :call_history_ignorred, default: proc {ArrayOfHashable.new(controller, call_history_results['ignorred'])}
-  attribute :call_history_results, default: proc {(call_history_saver.results || {'processed' => [{}], 'unprocessed' => [{}], 'ignorred' => [{}], 'original_doc' => [{}] } )}
 
   attribute :parsing_params_filtr, default: proc {Filtrable.new(controller, "parsing_params")}
   attribute :user_params_filtr, default: proc {Filtrable.new(controller, "user_params")}
 
   attribute :call_history_parsing_progress_bar, default: proc {ProgressBarable.new(controller, 'call_history_parsing', background_process_informer.current_values)}
-  attribute :call_history_saver, default: proc {ServiceHelper::OptimizationResultSaver.new('call_history', 'call_history', current_user_id)}
 
   attr_reader :controller
 
@@ -55,30 +56,16 @@ class Customer::HistoryParser < ActiveType::Object
   end
   
   def parse_file(file)
-    parser = choose_parser(file)
+    parser = Calls::HistoryParser::Parser.new(file, user_params, parsing_params)
+#    parser = Calls::HistoryParser::Loader.parser(file_type(file)).new(file, user_params, parsing_params)
 #    raise(StandardError)
-    parser.parse
-    message = {:file_is_good => true, 'message' => "Обработано #{parser.processed_percent}%"}
-    call_history_to_save = {
-      'processed' => parser.processed,
-      'unprocessed' => parser.unprocessed,
-      'ignorred' => parser.ignorred,
-      'message' => message,
-    }
+    message = parser.parse
+
+    message = {:file_is_good => true, 'message' => "Обработано #{parser.processed_percent}%"} if !message
+    call_history_to_save = parser.parse_result.merge({'message' => message})
     call_history_saver.save({:result => call_history_to_save})
+
     call_history_to_save
-  end
-  
-  def choose_parser(file)
-    file_type = file_type(file)
-    case file_type
-    when 'html'
-      Calls::HistoryParser::MtsHtml.new(file, user_params, parsing_params)
-    when 'xls'
-      Calls::HistoryParser::BlnXls.new(file, user_params, parsing_params)
-    else
-      raise(StandardError, "Wrong file type: #{file_type}")
-    end      
   end
   
   def upload_file(uploaded_call_history_file)
@@ -87,6 +74,11 @@ class Customer::HistoryParser < ActiveType::Object
   
   def check_uploaded_call_history_file(call_history_file)
     result = {:file_is_good => true, 'message' => nil}
+
+#    raise(StandardError, user_params[:operator_id])    
+    message = "Не выбран оператор. Выберите вашего оператора"
+    result = {:file_is_good => false, 'message' => message} if user_params[:operator_id].blank? or user_params[:operator_id] == 0
+
     file_size = (call_history_file.size / 1000000.0).round(2) if call_history_file
     message = "Файл слишком большой: #{file_size}Mb. Он должен быть не больше #{parsing_params[:file_upload_max_size]}Mb"
     result = {:file_is_good => false, 'message' => message} if file_size > parsing_params[:file_upload_max_size]

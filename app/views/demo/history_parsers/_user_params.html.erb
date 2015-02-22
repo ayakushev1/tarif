@@ -14,7 +14,7 @@ form_item.init do |f|
     html_options = {:action_name => demo_history_parsers_prepare_for_upload_path}
   [
   	[label(filtr_name, "operator_id", "Ваш оператор", label_html),
-  	 collection_select(filtr_name, "operator_id", Category.russian_operators.where(:id => [1025, 1030]), :id, :name, {:include_blank => true, :selected => s_filtr["operator_id"] }, 
+  	 collection_select(filtr_name, "operator_id", Category.russian_operators.where(:id => [1025, 1028, 1030]), :id, :name, {:include_blank => true, :selected => s_filtr["operator_id"] }, 
   	 	input_html ),   
   	],  	
 

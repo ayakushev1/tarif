@@ -1,4 +1,5 @@
 Dir[Rails.root.join("db/seeds/definitions/*.rb")].sort.each { |f| require f }
+
 class Calls::Generator
   extend ActiveSupport::Concern
   attr_reader :context, :user_params, :common_params, :initial_inputs

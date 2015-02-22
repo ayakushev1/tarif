@@ -7,7 +7,7 @@ require 'spreadsheet'
 class Calls::HistoryParser::BlnXls
   attr_reader :call_history_file, :background_process_informer
   attr_reader :doc, :table_heads, :row_column_index
-  attr_reader :unprocessed, :processed, :ignorred, :original_row_number
+  attr_reader :unprocessed, :processed, :ignorred
   attr_reader :operators, :countries, :regions, :operators_by_country, :operator_phone_numbers, :categories
   attr_reader :user_params, :parsing_params
   
