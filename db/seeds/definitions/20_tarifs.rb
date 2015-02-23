@@ -11,6 +11,7 @@ _mts_super_mts_star = 209; #тариф не забит (и его по-моем�
   
   #new (after 20.09.2014) 
 _mts_smart_top = 212
+_mts_posekundny = 213 
 
 #common_services_ids
 _mts_own_country_rouming = 276; _mts_international_rouming = 277; _mts_own_country_rouming_internet = 312;

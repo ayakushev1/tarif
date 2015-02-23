@@ -33,10 +33,10 @@ class Calls::HistoryParser::OperatorProcessor::Bln < Calls::HistoryParser::Opera
     when row[row_column_index[:call_type]] =~ /городской/i
       [_fixed_line_operator, _fixed_line]
 
-    when row[row_column_index[:call_type]] =~ /рег. моб. бл|билайн (.*)|на рег. билайн|мобильный|(.*)билайн/i
+    when row[row_column_index[:call_type]] =~ /рег\. моб\. бл|билайн (.*)|на рег\. билайн|мобильный|(.*)билайн/i
       [_beeline, _mobile]
 
-    when row[row_column_index[:call_type]] =~ /(вх.|исх.)\/(.*)/i
+    when row[row_column_index[:call_type]] =~ /(вх\.|исх\.)\/(.*)/i
       operator_id, operator_index = find_operator(partner_items(row))
       operator_id ? [operator_id, _mobile] : [nil, nil]
 
@@ -61,7 +61,7 @@ class Calls::HistoryParser::OperatorProcessor::Bln < Calls::HistoryParser::Opera
     when :home_region
       ((row[row_column_index[:call_type]] + " " + row[row_column_index[:service]]) =~ /Домашний/)
     when :own_country
-      (row and row[row_column_index[:call_type]] =~ /рег. моб. бл \(другой регион\)|\(рег\)|регион/i)
+      (row and row[row_column_index[:call_type]] =~ /рег\. моб\. бл \(другой регион\)|\(рег\)|регион/i)
     when :international
       (row and row[row_column_index[:service]] =~ /мжнр\/роум/i)
     end
@@ -71,7 +71,7 @@ class Calls::HistoryParser::OperatorProcessor::Bln < Calls::HistoryParser::Opera
     {
       _calls => [
         {:service => /звонки/i, :call_type => nil},
-        {:service => /мжнр\/роум/i, :call_type => /входящий|исх./i},
+        {:service => /мжнр\/роум/i, :call_type => /входящий|исх\./i},
       ],
       _sms => [
         {:service => /SMS\/MMS/i, :call_type => /Входящее SMS|Исходящее SMS/i},

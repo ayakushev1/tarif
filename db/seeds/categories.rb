@@ -239,6 +239,7 @@ Category.create(id: 1032, type_id: 2, level_id: nil, parent_id: _russian_operato
 Category.create(id: 1033, type_id: 2, level_id: nil, parent_id: _russian_operators, name: "СМАРТС")
 Category.create(id: _fixed_line_operator, type_id: 2, level_id: nil, parent_id: _russian_operators, name: "Ростелеком")
 Category.create(id: _other_rusian_operator, type_id: 2, level_id: nil, parent_id: _russian_operators, name: "Разный Русский оператор")
+Category.create(id: 1036, type_id: 2, level_id: nil, parent_id: _foreign_operators, name: "Astelit")
 
 
 Category.create(id: _altai_region, type_id: 0, level_id: 3, parent_id: _russia, name: "Алтайский край")

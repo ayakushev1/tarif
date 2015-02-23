@@ -1,6 +1,6 @@
 class Calls::HistoryParser::Parser
   attr_reader :call_history_file, :user_params, :parsing_params
-  attr_reader :file_processer, :operator_processer, :background_process_informer
+  attr_reader :file_processer, :operator_processer, :background_process_informer, :message
   
   def initialize(call_history_file, user_params, parsing_params = {})
     @call_history_file = call_history_file
@@ -13,15 +13,15 @@ class Calls::HistoryParser::Parser
   end
   
   def parse
-    message = {:file_is_good => false, 'message' => "Не загружен файл"}
+    @message = {:file_is_good => false, 'message' => "Не загружен файл"}
     return message unless call_history_file
 
     table_heads_row = file_processer.table_heads_row(operator_processer.table_filtrs, operator_processer.correct_table_heads)    
-    message = {:file_is_good => false, 'message' => "Неправильный формат выписки"}
+    @message = {:file_is_good => false, 'message' => "Неправильный формат выписки"}
     return message if table_heads_row == -2
 
     table_heads = file_processer.table_heads(operator_processer.table_filtrs)
-    message = {:file_is_good => false, 'message' => "Неправильный формат выписки"}
+    @message = {:file_is_good => false, 'message' => "Неправильный формат выписки"}
 #    raise(StandardError, operator_processer.check_if_table_correct(table_heads))
     return message unless operator_processer.check_if_table_correct(table_heads)
     
@@ -49,7 +49,7 @@ class Calls::HistoryParser::Parser
         next
       end
       
-      if date.to_date.month.to_i >= user_params[:accounting_period_month].to_i and date.to_date.year.to_i == user_params[:accounting_period_year].to_i
+      if date.to_date.month.to_i >= user_params[:accounting_period_month].to_i and date.to_date.year.to_i >= user_params[:accounting_period_year].to_i
         operator_processer.parse_row(row, date) 
         i += 1
       end 
@@ -66,6 +66,7 @@ class Calls::HistoryParser::Parser
       'processed' => operator_processer.processed,
       'unprocessed' => operator_processer.unprocessed,
       'ignorred' => operator_processer.ignorred,
+      'message' => message,
     }
   end
 

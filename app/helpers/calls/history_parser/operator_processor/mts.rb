@@ -52,7 +52,7 @@ class Calls::HistoryParser::OperatorProcessor::Mts < Calls::HistoryParser::Opera
   def base_service_criteria
     {
       _calls => [
-        {:service => /Телеф.|cfu|cfac|cf busy|cf nrepl|cf nreach|cw|ch|ct|mpty/i},
+        {:service => /Телеф\.|cfu|cfac|cf busy|cf nrepl|cf nreach|cw|ch|ct|mpty/i},
       ],
       _sms => [
         {:service => /sms|Vam Zvonili\:|Abonent v seti\:/i},
@@ -72,13 +72,16 @@ class Calls::HistoryParser::OperatorProcessor::Mts < Calls::HistoryParser::Opera
   def base_subservice_criteria
     {
       _inbound => [
-        {:service => /sms i|ct|mpty|mms i|Vam Zvonili\:|Abonent v seti\:|/i}
+        {:service => /sms i|ct|mpty|mms i|Vam Zvonili\:|Abonent v seti\:/i}
       ],
       _outbound => [
-        {:service => /sms o|mms o||||/i}
+        {:service => /sms o|mms o/i}
       ],
       _unspecified_direction => [
-        {:service => /Данные|HSDPA \(3G\)|gprs|4G|MTS numbers||||/i}
+        {:service => /Данные|HSDPA \(3G\)|gprs|4G|MTS numbers/i}
+      ],
+      nil => [
+        {:service => /Телеф\./i}
       ],
     }
   end

@@ -144,7 +144,7 @@ class Calls::HistoryParser::OperatorProcessor::Operator
     when rouming_criteria(:international, row, region_id, home_region_id)
       country_id = find_rouming_country(row, region_index)
       if !country_id
-        unprocessed << {:unprocessed_column => :rouming_region, :value => row[row_column_index[:rouming]], :row => row}
+        unprocessed << {:unprocessed_column => :rouming_country, :value => row[row_column_index[:rouming]], :row => row}
         result = nil
       end
              
@@ -169,6 +169,7 @@ class Calls::HistoryParser::OperatorProcessor::Operator
   
   def find_rouming_operator(row, country_id)
     operator_id, operator_index = find_operator(rouming_items(row))
+#    raise(StandardError) if row.join(' ') =~ 'Astelit'
     operator_id = find_operator_by_country(country_id) if country_id and country_id != _russia and !operator_id 
     operator_id
   end
@@ -198,24 +199,27 @@ class Calls::HistoryParser::OperatorProcessor::Operator
   end
   
   def row_service(row) 
-    service = row_parser(row, base_service_criteria, :service)
-    subservice = row_parser(row, base_service_criteria, :subservice)
+    service = row_parser(row, base_service_criteria, :service, :service)
+    subservice = row_parser(row, base_subservice_criteria, :service, :subservice)
     {:base_service => service, :subservice => subservice} if service
   end
   
-  def row_parser(row, field_criteria, field_name)    
+  def row_parser(row, field_criteria, field_name, column_name)
+#    raise(StandardError) if row[row_column_index[:time]] =~ /19:26:01/
+    condition = false    
     field_criteria.each do |base_service, base_service_criteria_array|
       base_service_criteria_array.each do |service_criteria|
-        condition = true
+        condition = false
         service_criteria.each do |row_name, criteria|
-          condition = false if criteria and row[row_column_index[row_name]] =~ criteria
-          break if !condition
+          condition = true if criteria and row[row_column_index[row_name]] =~ criteria
+          break if condition
         end
         return base_service if condition
       end
     end
-    unprocessed << {:unprocessed_column => field_name, :value => row[row_column_index[field_name]], :row => row} if !condition    
-    ignorred << {:ignorred_column => :service, :value => row[row_column_index[:service]], :row => row} if field_name == :service
+#    raise(StandardError) if column_name == :subservice
+    unprocessed << {:unprocessed_column => column_name, :value => row[row_column_index[field_name]], :row => row} #if !condition    
+#    ignorred << {:ignorred_column => column_name, :value => row[row_column_index[field_name]], :row => row} if field_name == :service
     nil
   end
   

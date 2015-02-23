@@ -157,6 +157,7 @@ TarifClass.create(id: _mts_your_country, operator_id: 1030, privacy_id: 2, stand
 TarifClass.create(id: _mts_super_mts, operator_id: 1030, privacy_id: 2, standard_service_id: 40, name: 'Супер МТС')
 #TarifClass.create(id: _mts_super_mts_star, operator_id: 1030, privacy_id: 2, standard_service_id: 40, name: 'Суперс МТС*')
 TarifClass.create(id: _mts_umnyi_dom, operator_id: 1030, privacy_id: 2, standard_service_id: 40, name: 'Умный дом')
+TarifClass.create(id: _mts_posekundny, operator_id: 1030, privacy_id: 2, standard_service_id: 40, name: 'Посекудный')
 #МТС, корпоративные, тарифы
 TarifClass.create(id: 250, operator_id: 1030, privacy_id: 1, standard_service_id: 40, name: 'Бизнес безлимит L')
 TarifClass.create(id: 251, operator_id: 1030, privacy_id: 1, standard_service_id: 40, name: 'Бизнес безлимит XL')

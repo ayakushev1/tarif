@@ -33,10 +33,10 @@ class Calls::HistoryParser::OperatorProcessor::Megafon < Calls::HistoryParser::O
     when row[row_column_index[:service]] =~ /городской/i
       [_fixed_line_operator, _fixed_line]
 
-    when row[row_column_index[:service]] =~ /рег. моб. бл|билайн (.*)|на рег. билайн|мобильный|(.*)билайн/i
-      [_beeline, _mobile]
+    when row[row_column_index[:service]] =~ /С МегаФон|С номеров МегаФон|С номеров Единой сети МегаФон|На МегаФон|На номера МегаФон|На номера Единой сети МегаФон/i
+      [_megafon, _mobile]
 
-    when row[row_column_index[:service]] =~ /(вх.|исх.)\/(.*)/i
+    when row[row_column_index[:service]] =~ /(на мобильные номера|с мобильных номеров|вх\.|исх\.)\/(.*)/i
       operator_id, operator_index = find_operator(partner_items(row))
       operator_id ? [operator_id, _mobile] : [nil, nil]
 
@@ -47,7 +47,7 @@ class Calls::HistoryParser::OperatorProcessor::Megafon < Calls::HistoryParser::O
       find_partner_operator_and_type(row, country_id)
     end    
   end
-    
+
   def rouming_items(row)
     take_out_special_symbols(row[row_column_index[:rouming]])
   end
@@ -61,8 +61,8 @@ class Calls::HistoryParser::OperatorProcessor::Megafon < Calls::HistoryParser::O
     when :own_country
       (region_id and (region_id != home_region_id)) or
       row[row_column_index[:rouming]] =~ /Центральный филиал ОАО \"МегаФон\"|Северо-Западный филиал ОАО \"МегаФон\"|Дальневосточный филиал ОАО \"МегаФон\"|
-        Кавказский филиал ОАО \"МегаФон\"|Поволжский филиал ОАО \"МегаФон\"|Сибирский филиал ОАО \"МегаФон\"|Уральский филиал ОАО \"МегаФон\"|
-        Дальневосточный филиал ОАО \"МегаФон\"|Кавказский филиал ОАО \"МегаФон\"|Столичный филиал ОАО \"МегаФон\"/
+        aaaaa|Кавказский филиал ОАО \"МегаФон\"|Поволжский филиал ОАО \"МегаФон\"|Сибирский филиал ОАО \"МегаФон\"|Уральский филиал ОАО \"МегаФон\"|
+        aaaaa|Столичный филиал ОАО \"МегаФон\"/
     when :international
       !rouming_criteria(:own_region, row, region_id, home_region_id) and !rouming_criteria(:home_region, row, region_id, home_region_id) and !rouming_criteria(:own_country, row, region_id, home_region_id)      
     end
@@ -71,19 +71,20 @@ class Calls::HistoryParser::OperatorProcessor::Megafon < Calls::HistoryParser::O
   def base_service_criteria
     {
       _calls => [
-        {:service => /Телеф.|cfu|cfac|cf busy|cf nrepl|cf nreach|cw|ch|ct|mpty/i},
+        {:service => /на мобильные номера|с мобильных номеров|Входящий|Исходящий|На МегаФон|С МегаФон|С номеров МегаФон|На номера МегаФон|
+          aaaaa|С номеров Единой сети МегаФон|На номера Единой сети МегаФон|Исх\./i},
       ],
       _sms => [
-        {:service => /sms|Vam Zvonili\:|Abonent v seti\:/i},
+        {:service => /Исходящее SMS|Входящее SMS/i},
       ],
       _mms => [
         {:service => /mms/i},
       ],
       _3g => [
-        {:service => /Данные|HSDPA \(3G\)|gprs|4G/i},
+        {:service => /Мобильный интернет|Данные|HSDPA \(3G\)|gprs|4G/i},
       ],
       _periodic => [
-        {:service => /MTS numbers/i}
+        {:service => /ыыыы/i}
       ]
     }
   end
@@ -91,13 +92,13 @@ class Calls::HistoryParser::OperatorProcessor::Megafon < Calls::HistoryParser::O
   def base_subservice_criteria
     {
       _inbound => [
-        {:service => /sms i|ct|mpty|mms i|Vam Zvonili\:|Abonent v seti\:|/i}
+        {:service => /с мобильных номеров|Входящий|Входящее SMS|С МегаФон|С номеров МегаФон|С номеров Единой сети МегаФон|sms i|ct|mpty|mms i/i}
       ],
       _outbound => [
-        {:service => /sms o|mms o||||/i}
+        {:service => /на мобильные номера|Исходящий|Исходящее SMS|На МегаФон|На номера МегаФон|На номера Единой сети МегаФон|Исх\.|sms o|mms o/i}
       ],
       _unspecified_direction => [
-        {:service => /Данные|HSDPA \(3G\)|gprs|4G|MTS numbers||||/i}
+        {:service => /Мобильный интернет|Данные|HSDPA \(3G\)|gprs|4G/i}
       ],
     }
   end
