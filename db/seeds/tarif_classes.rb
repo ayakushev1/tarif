@@ -244,3 +244,23 @@ TarifClass.create(id: _mts_monthly_sms_packet_1000 , operator_id: 1030, privacy_
 TarifClass.create(id: _mts_mts_planshet , operator_id: 1030, privacy_id: 2, standard_service_id: 42, name: 'МТС Планшет')#интернет для планшетов
 TarifClass.create(id: _mts_mts_planshet_online , operator_id: 1030, privacy_id: 2, standard_service_id: 42, name: 'МТС Планшет Онлайн')#интернет для планшетов
 TarifClass.create(id: _mts_unlimited_internet_on_day , operator_id: 1030, privacy_id: 2, standard_service_id: 42, name: 'Интернет на день')#интернет для планшетов
+
+#Теле, частные, тарифы
+TarifClass.create(id: _tele_black, operator_id: _tele_2, privacy_id: 2, standard_service_id: 40, name: 'Черный')
+TarifClass.create(id: _tele_very_black, operator_id: _tele_2, privacy_id: 2, standard_service_id: 40, name: 'Очень черный')
+TarifClass.create(id: _tele_orange, operator_id: _tele_2, privacy_id: 2, standard_service_id: 40, name: 'Оранжевый')
+TarifClass.create(id: _tele_yellow, operator_id: _tele_2, privacy_id: 2, standard_service_id: 40, name: 'Желтый')
+TarifClass.create(id: _tele_green, operator_id: _tele_2, privacy_id: 2, standard_service_id: 40, name: 'Зеленый')
+
+#Теле, роуминг
+TarifClass.create(id: _tele_country_rouming , operator_id: _tele_2, privacy_id: 2, standard_service_id: 41, name: 'Путешествия по России')
+TarifClass.create(id: _tele_international_rouming , operator_id: _tele_2, privacy_id: 2, standard_service_id: 41, name: 'Путешествия по миру')
+TarifClass.create(id: _tele_intra_countries_services , operator_id: _tele_2, privacy_id: 2, standard_service_id: 41, name: 'Звонки за границу')
+
+#Теле, услуги
+TarifClass.create(id: _tele_sms_svoboda , operator_id: _tele_2, privacy_id: 2, standard_service_id: 42, name: 'SMS-свобода')#смс пакет - дневной
+TarifClass.create(id: _tele_internet_from_phone , operator_id: _tele_2, privacy_id: 2, standard_service_id: 42, name: 'Интернет с телефона')
+TarifClass.create(id: _tele_paket_interneta , operator_id: _tele_2, privacy_id: 2, standard_service_id: 42, name: 'Пакет интернета')
+TarifClass.create(id: _tele_portfel_interneta , operator_id: _tele_2, privacy_id: 2, standard_service_id: 42, name: 'Портфель интернета')
+TarifClass.create(id: _tele_day_in_net , operator_id: _tele_2, privacy_id: 2, standard_service_id: 42, name: 'День в сети')
+TarifClass.create(id: _tele_zero_everywhere , operator_id: _tele_2, privacy_id: 2, standard_service_id: 42, name: 'Везде ноль')

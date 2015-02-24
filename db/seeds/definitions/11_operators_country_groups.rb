@@ -184,6 +184,17 @@ end
     _tailand, _turkey, _south_ossetia, _uae, _japan]
   _bln_the_best_internet_in_rouming_groups_1 = _mts_sic_countries + _mts_europe_countries + _bln_my_planet_groups_popular_countries_2
   _bln_the_best_internet_in_rouming_groups_2 = _world_countries_without_russia - _bln_the_best_internet_in_rouming_groups_1 - [_abkhazia, _andorra, _cuba]
+
+_tele_service_to_tele_international_1 = _mts_sic_countries
+_tele_service_to_tele_international_2 = _mts_europe_countries
+_tele_service_to_tele_international_3 = [_usa, _canada]
+_tele_service_to_tele_international_4 = _world_countries_without_russia - _mts_sic_countries - _mts_europe_countries - _tele_service_to_tele_international_3
+_tele_service_to_tele_international_5 = _asia_countries + _australia_countries + _africa_countries
+_tele_service_to_tele_international_6 = _noth_america_countries + _south_america_countries
+
+_tele_service_to_sic_1 = [_uzbekistan, _tajikistan]
+_tele_service_to_sic_2 = [_azerbaijan, _belarus, _moldova]
+_tele_service_to_sic_3 = _mts_sic_countries - _tele_service_to_sic_1 - _tele_service_to_sic_2
   
   local_variables.each do |symbol|
     send(:define_method, symbol) do

@@ -196,6 +196,17 @@ rln << {:id => _relation_sc_bln_calls_to_other_countries_3, :type_id => _operato
 rln << {:id => _relation_sc_bln_the_best_internet_in_rouming_groups_1, :type_id => _operator_country_groups, :owner_id => _beeline, :parent_id => nil, :children => _bln_the_best_internet_in_rouming_groups_1,:name => 'Beeline, countries from _bln_the_best_internet_in_rouming_groups_1'}
 rln << {:id => _relation_sc_bln_the_best_internet_in_rouming_groups_2, :type_id => _operator_country_groups, :owner_id => _beeline, :parent_id => nil, :children => _bln_the_best_internet_in_rouming_groups_2,:name => 'Beeline, countries from _bln_the_best_internet_in_rouming_groups_2'}
 
+rln << {:id => _relation_service_to_tele_international_1, :type_id => _operator_country_groups, :owner_id => _tele_2, :parent_id => nil, :children => _tele_service_to_tele_international_1,:name => 'Tele, countries from _tele_service_to_tele_international_1'}
+rln << {:id => _relation_service_to_tele_international_2, :type_id => _operator_country_groups, :owner_id => _tele_2, :parent_id => nil, :children => _tele_service_to_tele_international_2,:name => 'Tele, countries from _tele_service_to_tele_international_2'}
+rln << {:id => _relation_service_to_tele_international_3, :type_id => _operator_country_groups, :owner_id => _tele_2, :parent_id => nil, :children => _tele_service_to_tele_international_3,:name => 'Tele, countries from _tele_service_to_tele_international_3'}
+rln << {:id => _relation_service_to_tele_international_4, :type_id => _operator_country_groups, :owner_id => _tele_2, :parent_id => nil, :children => _tele_service_to_tele_international_4,:name => 'Tele, countries from _tele_service_to_tele_international_4'}
+rln << {:id => _relation_service_to_tele_international_5, :type_id => _operator_country_groups, :owner_id => _tele_2, :parent_id => nil, :children => _tele_service_to_tele_international_5,:name => 'Tele, countries from _tele_service_to_tele_international_5'}
+rln << {:id => _relation_service_to_tele_international_6, :type_id => _operator_country_groups, :owner_id => _tele_2, :parent_id => nil, :children => _tele_service_to_tele_international_6,:name => 'Tele, countries from _tele_service_to_tele_international_6'}
+
+rln << {:id => _relation_service_to_tele_sic_1, :type_id => _operator_country_groups, :owner_id => _tele_2, :parent_id => nil, :children => _tele_service_to_sic_1,:name => 'Tele, countries from _tele_service_to_tele_sic_1'}
+rln << {:id => _relation_service_to_tele_sic_2, :type_id => _operator_country_groups, :owner_id => _tele_2, :parent_id => nil, :children => _tele_service_to_sic_2,:name => 'Tele, countries from _tele_service_to_tele_sic_2'}
+rln << {:id => _relation_service_to_tele_sic_3, :type_id => _operator_country_groups, :owner_id => _tele_2, :parent_id => nil, :children => _tele_service_to_sic_3,:name => 'Tele, countries from _tele_service_to_tele_sic_3'}
+
 
 rln << {:id => _relation_mgf_central_region, :type_id => _operator_region_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_central_region,:name => 'Megafone, cental region of Russia'}
 
@@ -204,6 +215,10 @@ rln << {:id => _relation_service_to_sic_operators_group, :type_id => _operator_p
 rln << {:id => _relation_service_to_other_operators_group, :type_id => _operator_partner_groups, :owner_id => nil, :parent_id => nil, :children => _other_operators_group,:name => 'Beeline, operators from _other_operators_group'}
 
 rln << {:id => _relation_service_to_bln_partner_operators, :type_id => _operator_partner_groups, :owner_id => _beeline, :parent_id => nil, :children => _bln_partner_operators,:name => 'Beeline, operators from _bln_partner_operators'}
+
+
+rln << {:id => _relation_tele_own_country_rouming_1, :type_id => _operator_region_groups, :owner_id => _tele_2, :parent_id => nil, :children => _tele_own_country_rouming_1,:name => '_tele_own_country_rouming_1'}
+
 
 
 rln << {:id => 20000, :type_id => _main_operator_by_country, :owner_id => _ukraiun, :parent_id => nil, :children => [_mts_ukrain],:name => ''}

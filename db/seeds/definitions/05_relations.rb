@@ -75,8 +75,16 @@ _relation_sc_bln_my_planet_groups_1 = 10381; _relation_sc_bln_my_planet_groups_2
 _relation_sc_bln_calls_to_other_countries_1 = 10385; _relation_sc_bln_calls_to_other_countries_2 = 10386; _relation_sc_bln_calls_to_other_countries_3 = 10387;
 _relation_sc_bln_the_best_internet_in_rouming_groups_1 = 10390; _relation_sc_bln_the_best_internet_in_rouming_groups_2 = 10391;
 
+_relation_service_to_tele_international_1 = 10500; _relation_service_to_tele_international_2 = 10501;
+_relation_service_to_tele_international_3 = 10502; _relation_service_to_tele_international_4 = 10503;
+_relation_service_to_tele_international_5 = 10504; _relation_service_to_tele_international_6 = 10505;
+
+_relation_service_to_tele_sic_1 = 10510; _relation_service_to_tele_sic_2 = 10511; _relation_service_to_tele_sic_3 = 10512;
+
 #operator_region_groups
 _relation_mgf_central_region = 11000;
+
+_relation_tele_own_country_rouming_1 = 11200; _relation_tele_own_country_rouming_2 = 11201; 
 
 
 

@@ -32,6 +32,10 @@ def access_methods_to_constant_service_categories
   _sc_bln_my_planet_groups_1 = 52; _sc_bln_my_planet_groups_2 = 53;
   _sc_bln_the_best_internet_in_rouming_groups_1 = 54; _sc_bln_the_best_internet_in_rouming_groups_2 = 55;
   
+  _sc_tele_own_country_rouming_1 = 60; _sc_tele_own_country_rouming_2 = 61;
+  
+  _sc_tele_sic_rouming = 65; _sc_tele_europe_rouming = 66; _sc_tele_asia_afr_aust_rouming = 67; _sc_tele_americas_rouming = 68; 
+  
   #география услуг
   _geography_services = 100;
   _service_to_own_region = 101; _service_to_home_region = 102; _service_to_own_country = 103; _service_to_group_of_countries = 104;
@@ -86,6 +90,11 @@ def access_methods_to_constant_service_categories
   _sc_service_to_bln_welcome_10 = 439; _sc_service_to_bln_welcome_11 = 440;
   
   _sc_bln_calls_to_other_countries_1 = 441; _sc_bln_calls_to_other_countries_2 = 442; _sc_bln_calls_to_other_countries_3 = 443; 
+  
+  _sc_service_to_tele_international_1 = 450; _sc_service_to_tele_international_2 = 451; _sc_service_to_tele_international_3 = 452; _sc_service_to_tele_international_4 = 453;
+  _sc_service_to_tele_international_5 = 454; _sc_service_to_tele_international_6 = 455;
+  
+  _sc_service_to_tele_sic_1 = 460; _sc_service_to_tele_sic_2 = 461; _sc_service_to_tele_sic_3 = 462;
   
   #partner type
   _partner_operator_services = 190;

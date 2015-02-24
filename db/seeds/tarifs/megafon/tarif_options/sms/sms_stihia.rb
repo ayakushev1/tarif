@@ -15,7 +15,7 @@
     :multiple_use => false
   } } )
 
-#mms included in tarif
+#sms included in tarif
   scg_mgf_sms_stihia = @tc.add_service_category_group(
     {:name => 'scg_mgf_sms_stihia' }, 
     {:name => "price for scg_mgf_sms_stihia"}, 

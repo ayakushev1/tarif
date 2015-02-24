@@ -15,7 +15,7 @@
     :multiple_use => true
   } } )
 
-#mms included in tarif
+#sms included in tarif
   scg_mgf_paket_sms_100 = @tc.add_service_category_group(
     {:name => 'scg_mgf_paket_sms_100' }, 
     {:name => "price for scg_mgf_paket_sms_100"}, 

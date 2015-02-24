@@ -146,6 +146,22 @@ _bln_mms = 720;
 _bln_highway_1 = 730; _bln_highway_3 = 731; _bln_highway_7 = 732; _bln_highway_15 = 733; _bln_highway_30 = 734;
 _bln_internet_on_day_100_mb = 735; _bln_internet_on_day_500_mb = 736;
 
+#Tele2
+#tarifs
+_tele_black = 800; _tele_very_black = 801; _tele_orange = 802; _tele_yellow = 803; _tele_green = 804;
+
+#common_services
+_tele_country_rouming = 830; _tele_international_rouming = 831;  _tele_intra_countries_services = 832;
+
+#calls
+_tele_zero_everywhere = 840;
+#sms
+_tele_sms_svoboda = 860; 
+
+#internet
+_tele_internet_from_phone = 880; _tele_paket_interneta = 881; _tele_portfel_interneta = 882; _tele_day_in_net = 883;
+
+
 
 
   local_variables.each do |symbol|

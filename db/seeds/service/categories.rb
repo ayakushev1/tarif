@@ -36,6 +36,18 @@ cat << {:id => _sc_mgf_cenral_regions_not_own_and_home_region, :name => 'Мег�
            :value_param_id => _fq_tarif_own_and_home_region_ids, :value => nil, :service_category_id => _sc_mgf_cenral_regions_not_own_and_home_region}
   crit << {:id => _sc_mgf_cenral_regions_not_own_and_home_region * 10 +1 , :criteria_param_id => _call_connect_region_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
            :eval_string => "Relation.operator_region_groups_by_group_id(#{_relation_mgf_central_region})", :service_category_id => _sc_mgf_cenral_regions_not_own_and_home_region}
+
+cat << {:id => _sc_tele_own_country_rouming_1, :name => 'Теле 2, Регионы 1', :type_id => _common, :parent_id => _intra_net_rouming, :level => 2, :path => [_category_rouming, _intra_net_rouming]}
+  crit << {:id => _sc_tele_own_country_rouming_1 * 10 , :criteria_param_id => _call_connect_region_id, :comparison_operator_id => _not_in_array, :value_choose_option_id => _field, 
+           :value_param_id => _fq_tarif_own_and_home_region_ids, :value => nil, :service_category_id => _sc_tele_own_country_rouming_1}
+  crit << {:id => _sc_tele_own_country_rouming_1 * 10 +1 , :criteria_param_id => _call_connect_region_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_region_groups_by_group_id(#{_relation_tele_own_country_rouming_1})", :service_category_id => _sc_tele_own_country_rouming_1}
+
+cat << {:id => _sc_tele_own_country_rouming_2, :name => 'Теле 2, Регионы 2', :type_id => _common, :parent_id => _intra_net_rouming, :level => 2, :path => [_category_rouming, _intra_net_rouming]}
+  crit << {:id => _sc_tele_own_country_rouming_2 * 10 , :criteria_param_id => _call_connect_region_id, :comparison_operator_id => _not_in_array, :value_choose_option_id => _field, 
+           :value_param_id => _fq_tarif_own_and_home_region_ids, :value => nil, :service_category_id => _sc_tele_own_country_rouming_2}
+  crit << {:id => _sc_tele_own_country_rouming_2 * 10 +1 , :criteria_param_id => _call_connect_region_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_region_groups_by_group_id(#{_relation_tele_own_country_rouming_2})", :service_category_id => _sc_tele_own_country_rouming_2}
   
 
 cat << {:id => 5, :name => 'группы стран', :type_id => _common, :parent_id => _intra_net_rouming, :level => 2, :path => [_category_rouming, _intra_net_rouming]}
@@ -234,6 +246,23 @@ cat << {:id => _sc_bln_the_best_internet_in_rouming_groups_2, :name => 'Стра
   crit << {:id => _sc_bln_the_best_internet_in_rouming_groups_2 * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
            :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_sc_bln_the_best_internet_in_rouming_groups_2})", :service_category_id => _sc_bln_the_best_internet_in_rouming_groups_2}
 
+
+
+cat << {:id => _sc_tele_sic_rouming, :name => 'Страны СНГ Теле 2', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_tele_sic_rouming * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_tele_service_to_tele_international_1})", :service_category_id => _sc_tele_sic_rouming}
+
+cat << {:id => _sc_tele_europe_rouming, :name => 'Страны Европы Теле 2', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_tele_europe_rouming * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_tele_service_to_tele_international_2})", :service_category_id => _sc_tele_europe_rouming}
+
+cat << {:id => _sc_tele_asia_afr_aust_rouming, :name => 'Страны Азии, Африки и Австраии Теле 2', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_tele_asia_afr_aust_rouming * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_tele_service_to_tele_international_5})", :service_category_id => _sc_tele_asia_afr_aust_rouming}
+
+cat << {:id => _sc_tele_americas_rouming, :name => 'Страны Южной и Северной Америки Теле 2', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_tele_americas_rouming * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_tele_service_to_tele_international_6})", :service_category_id => _sc_tele_americas_rouming}
 
 
 #география услуг
@@ -675,6 +704,43 @@ cat << {:id => _sc_service_to_bln_welcome_11, :name => 'Билайн, услуг
   crit << {:id => _sc_service_to_bln_welcome_11 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
            :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_bln_welcome_11})", :service_category_id => _sc_service_to_bln_welcome_11}
 
+
+cat << {:id => _sc_service_to_tele_international_1, :name => 'Теле 2, СНГ', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_tele_international_1 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_tele_international_1})", :service_category_id => _sc_service_to_tele_international_1}
+
+cat << {:id => _sc_service_to_tele_international_2, :name => 'Теле 2, Европа', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_tele_international_2 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_tele_international_2})", :service_category_id => _sc_service_to_tele_international_2}
+
+cat << {:id => _sc_service_to_tele_international_3, :name => 'Теле 2, США и Канада', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_tele_international_3 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_tele_international_3})", :service_category_id => _sc_service_to_tele_international_3}
+
+cat << {:id => _sc_service_to_tele_international_4, :name => 'Теле 2, Мир кроме СНГ, Европы, США и Канады', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_tele_international_4 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_tele_international_4})", :service_category_id => _sc_service_to_tele_international_4}
+
+cat << {:id => _sc_service_to_tele_international_5, :name => 'Теле 2, Африка, Азия, Австралия', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_tele_international_5 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_tele_international_5})", :service_category_id => _sc_service_to_tele_international_5}
+
+cat << {:id => _sc_service_to_tele_international_6, :name => 'Теле 2, Южная и Северная Америка', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_tele_international_6 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_tele_international_6})", :service_category_id => _sc_service_to_tele_international_6}
+
+
+cat << {:id => _sc_service_to_tele_sic_1, :name => 'Теле 2, СНГ, в Узбекистан и Таджикистан', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_tele_sic_1 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_tele_sic_1})", :service_category_id => _sc_service_to_tele_sic_1}
+
+cat << {:id => _sc_service_to_tele_sic_2, :name => 'Теле 2, СНГ, в Азербайджан, Беларусь и Молдову', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_tele_sic_2 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_tele_sic_2})", :service_category_id => _sc_service_to_tele_sic_2}
+
+cat << {:id => _sc_service_to_tele_sic_3, :name => 'Теле 2, СНГ, в остальные страны СНГ', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_tele_sic_3 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_tele_sic_3})", :service_category_id => _sc_service_to_tele_sic_3}
 
 
 
