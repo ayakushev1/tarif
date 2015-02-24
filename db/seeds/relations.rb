@@ -218,6 +218,7 @@ rln << {:id => _relation_service_to_bln_partner_operators, :type_id => _operator
 
 
 rln << {:id => _relation_tele_own_country_rouming_1, :type_id => _operator_region_groups, :owner_id => _tele_2, :parent_id => nil, :children => _tele_own_country_rouming_1,:name => '_tele_own_country_rouming_1'}
+rln << {:id => _relation_tele_own_country_rouming_2, :type_id => _operator_region_groups, :owner_id => _tele_2, :parent_id => nil, :children => _tele_own_country_rouming_2,:name => '_tele_own_country_rouming_2'}
 
 
 

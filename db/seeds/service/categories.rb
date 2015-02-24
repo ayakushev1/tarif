@@ -250,19 +250,19 @@ cat << {:id => _sc_bln_the_best_internet_in_rouming_groups_2, :name => 'Стра
 
 cat << {:id => _sc_tele_sic_rouming, :name => 'Страны СНГ Теле 2', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
   crit << {:id => _sc_tele_sic_rouming * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
-           :eval_string => "Relation.operator_country_groups_by_group_id(#{_tele_service_to_tele_international_1})", :service_category_id => _sc_tele_sic_rouming}
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_tele_international_1})", :service_category_id => _sc_tele_sic_rouming}
 
 cat << {:id => _sc_tele_europe_rouming, :name => 'Страны Европы Теле 2', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
   crit << {:id => _sc_tele_europe_rouming * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
-           :eval_string => "Relation.operator_country_groups_by_group_id(#{_tele_service_to_tele_international_2})", :service_category_id => _sc_tele_europe_rouming}
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_tele_international_2})", :service_category_id => _sc_tele_europe_rouming}
 
 cat << {:id => _sc_tele_asia_afr_aust_rouming, :name => 'Страны Азии, Африки и Австраии Теле 2', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
   crit << {:id => _sc_tele_asia_afr_aust_rouming * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
-           :eval_string => "Relation.operator_country_groups_by_group_id(#{_tele_service_to_tele_international_5})", :service_category_id => _sc_tele_asia_afr_aust_rouming}
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_tele_international_5})", :service_category_id => _sc_tele_asia_afr_aust_rouming}
 
 cat << {:id => _sc_tele_americas_rouming, :name => 'Страны Южной и Северной Америки Теле 2', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
   crit << {:id => _sc_tele_americas_rouming * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
-           :eval_string => "Relation.operator_country_groups_by_group_id(#{_tele_service_to_tele_international_6})", :service_category_id => _sc_tele_americas_rouming}
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_tele_international_6})", :service_category_id => _sc_tele_americas_rouming}
 
 
 #география услуг

@@ -155,6 +155,7 @@ _tele_country_rouming = 830; _tele_international_rouming = 831;  _tele_intra_cou
 
 #calls
 _tele_zero_everywhere = 840;
+
 #sms
 _tele_sms_svoboda = 860; 
 
