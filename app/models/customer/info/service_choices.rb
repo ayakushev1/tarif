@@ -78,7 +78,7 @@ class Customer::Info::ServiceChoices < ActiveType::Record[Customer::Info]
 
   def self.tarifs
     {
-      1023 => [800, 801, 802, 803, 804],
+#      1023 => [800, 801, 802, 803, 804],
       1025 => [600, 601, 602, 603, 604, 605, 610, 611, 612, 613,620, 621, 622, 623, 624, 626],
       1028 => [100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 112, 113],
       1030 => [200, 201, 202, 203, 204, 205, 206, 207, 208, 210, 212, 213],
@@ -87,7 +87,7 @@ class Customer::Info::ServiceChoices < ActiveType::Record[Customer::Info]
 
   def self.common_services
     {
-      1023 => [830, 831, 832],
+#      1023 => [830, 831, 832],
       1025 => [650, 651, 652, 653, 654, 655],
       1028 => [174, 177, 178, 179],
       1030 => [276, 277, 312, 297],
@@ -96,7 +96,7 @@ class Customer::Info::ServiceChoices < ActiveType::Record[Customer::Info]
 
   def self.tarif_options
     {
-      1023 => [840, 860, 880, 881, 882, 883],
+#      1023 => [840, 860, 880, 881, 882, 883],
       1025 => tarif_options_by_type[1025].map{|t| t[1]}.flatten.compact,
       1028 => tarif_options_by_type[1028].map{|t| t[1]}.flatten.compact,
       1030 => tarif_options_by_type[1030].map{|t| t[1]}.flatten.compact,
@@ -115,14 +115,14 @@ class Customer::Info::ServiceChoices < ActiveType::Record[Customer::Info]
 
   def self.tarif_options_by_type
     {
-      1023 => {
-        :international_rouming => [],
-        :country_rouming => [840],  
-        :mms => [],  
-        :sms => [860],  
-        :calls => [],  
-        :internet => [880, 881, 882, 883],  
-      },
+#      1023 => {
+#        :international_rouming => [],
+#        :country_rouming => [840],  
+#        :mms => [],  
+#        :sms => [860],  
+#        :calls => [],  
+#        :internet => [880, 881, 882, 883],  
+#      },
       1025 => {
         :international_rouming => [660, 661, 662, 663],
         :country_rouming => [670],  

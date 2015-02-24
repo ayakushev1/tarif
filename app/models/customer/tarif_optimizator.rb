@@ -187,7 +187,7 @@ class Customer::TarifOptimizator < ActiveType::Object
   
   def common_services
     {
-      1023 => (service_choices.session_filtr_params['common_services_tele2'] || [830, 831, 832]), 
+#      1023 => (service_choices.session_filtr_params['common_services_tele2'] || [830, 831, 832]), 
       1025 => (service_choices.session_filtr_params['common_services_bln'] || []), 
       1028 => (service_choices.session_filtr_params['common_services_mgf'] || []), 
       1030 => (service_choices.session_filtr_params['common_services_mts'] || []), 
