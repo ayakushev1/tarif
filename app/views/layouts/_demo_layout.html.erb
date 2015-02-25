@@ -24,9 +24,8 @@
 		<div class="row">
 			<div class="col-xs-3">
 				<%= render('/application/menus/demo_menu') %>
-				<br />
-				<%= render('/application/shared/vk_community_vidget') %>
 				<%= render('/application/menus/user_menu') if current_user_admin? %>	
+				<%= render('/application/shared/vk_community_vidget') %>
 			</div>					
 	
 	        <div class="col-xs-9 ">
