@@ -9,12 +9,17 @@
 </p>
 <p>	
    Если Вы хотите продолжить, то Вам необходимо зарегистрироваться. Регистрация необходима для того, чтобы мы могли отличать параметры
-   подбора тарифов разных пользователей, уведомлять Вас о завершении расчетов. Вы также сможете сообщить нам, если у вас что-то не получается, 
+   подбора тарифов разных пользователей, уведомлять Вас о завершении расчетов. Вы  сможете сообщить нам, если у вас что-то не получается, 
    или у вас есть предложения по улучшению наших севрисов, или вы хотите сообщить о нашей ошибке. 
 </p>
 <%= link_to('Зарегистрироваться', new_user_path, {:class => "btn btn-success", :type =>"button"}) %> 
 <br />
 <%= link_to('Войти', demo_login_path, {:class => "btn btn-primary", :type =>"button"}) %> 
+
+<br />
+<p>	
+   Для получения новостей от нас подпишитесь на наше сообщество вконтакте: <%= render('/application/shared/vk_community_vidget_low') %>
+</p>
 
 <%= render :partial => 'demo/home/opportunities', :layout => 'application/layouts/accordion', :locals => {:name => 'demo_home_opportunities_accord', :active => session[:current_accordion_page]['demo_home_opportunities_accord'].to_i} %>
 
