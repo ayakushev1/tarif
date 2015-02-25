@@ -4,7 +4,7 @@
   :features => {:http => 'http://spb.tele2.ru/tariff/orange/'},
   :dependency => {
     :incompatibility => {},
-    :general_priority => _gp_tarif_with_limits,
+    :general_priority => _gp_tarif_without_limits,
     :other_tarif_priority => {:lower => [], :higher => []},
     :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},
     :prerequisites => [],

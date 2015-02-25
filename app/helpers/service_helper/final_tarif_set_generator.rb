@@ -45,7 +45,6 @@ class ServiceHelper::FinalTarifSetGenerator
       current_uniq_service_sets, fobidden_info, best_current_uniq_service_sets = calculate_final_tarif_sets_by_tarif(
         tarif_sets[tarif], operator, tarif, tarif_results, background_process_informer_tarif)
     end
-      
     performance_checker.run_check_point('FFF update_current_uniq_sets_with_periodic_part', 6) do
       update_current_uniq_sets_with_periodic_part(current_uniq_service_sets, tarif_sets[tarif], best_current_uniq_service_sets)    
     end
@@ -56,7 +55,7 @@ class ServiceHelper::FinalTarifSetGenerator
   end
   
   def calculate_final_tarif_sets_by_tarif(tarif_sets_by_tarif, operator, tarif, tarif_results, background_process_informer_tarif = nil)
-    best_current_uniq_service_sets = {:prices => [100000000000.0], :set_ids => ['200']}
+    best_current_uniq_service_sets = {:prices => [100000000000.0], :set_ids => [tarif.to_s]}
     current_uniq_service_sets = {}
     fobidden_info = {}
     
@@ -79,7 +78,6 @@ class ServiceHelper::FinalTarifSetGenerator
         
     i = 0
     while !current_tarif_set.current_tarif_set_by_part_index.blank? do
-#      raise(StandardError, [current_tarif_set_by_part_index, tarif_sets_services_as_array])
       
       current_part = nil; current_services = nil; current_tarif_set_by_part_services = nil; current_tarif_set_by_part_name = nil; 
       common_services_to_exclude = nil; tarif_sets_by_part_services_list = nil;
@@ -93,7 +91,7 @@ class ServiceHelper::FinalTarifSetGenerator
         tarif_sets_by_part_services_list = tarif_sets_by_tarif[current_part].
           collect{|tarif_set_by_part_id, services| services - common_services_to_exclude}.collect{|f| tarif_set_id(f).to_sym}
       end
-      
+
       if current_tarif_set.current_part_index == 0
         performance_checker.run_check_point('FFF init_fobidden_info', 7) do
           current_uniq_service_sets[current_tarif_set_by_part_name] = {
@@ -125,7 +123,7 @@ class ServiceHelper::FinalTarifSetGenerator
           prev_tarif_sets_by_part = (current_uniq_service_sets[uniq_service_set_id][:tarif_sets_by_part] || [])
           current_uniq_service_sets[current_tarif_set_by_part_name][:tarif_sets_by_part] = 
             (existing_tarif_sets_by_part + prev_tarif_sets_by_part + [[current_part, tarif_set_by_part_id]]).uniq  
-
+          
           if !current_uniq_service_sets[current_tarif_set_by_part_name][:fobidden]
             if current_uniq_service_sets[current_tarif_set_by_part_name][:price]
               price_index = best_current_uniq_service_sets[:prices].index{|price| current_uniq_service_sets[current_tarif_set_by_part_name][:price] <= price }
@@ -142,11 +140,10 @@ class ServiceHelper::FinalTarifSetGenerator
         end
       end
 
-#       raise(StandardError, [current_tarif_set_by_part_name, current_part, current_uniq_service_sets[current_tarif_set_by_part_name][:fobidden]]) if
-#         "201_201_201_201_201_201_201_201_201_280" == uniq_service_set_id
+       raise(StandardError, [current_tarif_set_by_part_name, current_part, current_uniq_service_sets[current_tarif_set_by_part_name][:fobidden]]) if
+         "277_203_203_277_203_" == uniq_service_set_id
 #       raise(StandardError, current_uniq_service_sets[current_tarif_set_by_part_name][:fobidden]) if "201_201_201_201_201_201_201_201_201_280_201_280_281" == current_tarif_set_by_part_name
-          
-      
+                
       performance_checker.run_check_point('FFF current_tarif_set_next_tarif_set_by_part', 7) do
         current_tarif_set.next_tarif_set_by_part(current_uniq_service_sets[current_tarif_set_by_part_name][:fobidden])
       end
@@ -155,23 +152,26 @@ class ServiceHelper::FinalTarifSetGenerator
         background_process_informer_tarif.increase_current_value(1) if background_process_informer_tarif and (i / 100.0 - i / 100) == 0.0
         i += 1
       end
+#      raise(StandardError) if current_tarif_set.current_tarif_set_by_part_index.blank?
 
     end 
     
     @current_tarif_set_calculation_history = current_tarif_set.history if save_current_tarif_set_calculation_history
 
-#    raise(StandardError)
     performance_checker.run_check_point('FFF current_uniq_service_sets_extract_fobidden', 7) do
+#      raise(StandardError)
       current_uniq_service_sets.each do |current_uniq_service_set_id, current_uniq_service_set|
         if current_uniq_service_set[:fobidden]
           current_uniq_service_sets.extract!(current_uniq_service_set_id)
         end        
+        
         if current_uniq_service_set[:tarif_sets_by_part].size < current_tarif_set.max_part_index
           current_uniq_service_sets.extract!(current_uniq_service_set_id)
         end
+#    raise(StandardError) if "277_203_203_277_203_277_203" == current_uniq_service_set_id
       end
     end
-
+    
     [current_uniq_service_sets, fobidden_info, best_current_uniq_service_sets]
   end
 
@@ -181,6 +181,7 @@ class ServiceHelper::FinalTarifSetGenerator
   def update_current_uniq_sets_with_periodic_part(current_uniq_service_sets, tarif_sets_by_tarif, best_current_uniq_service_sets)
     services_that_depended_on_service_ids = services_that_depended_on.keys.map(&:to_i)    
     current_uniq_service_sets.each do |uniq_service_set_id, uniq_service_set|
+#    raise(StandardError)  
       if !uniq_service_set[:fobidden] and best_current_uniq_service_sets[:set_ids].include?(uniq_service_set_id)
         counted_depended_on_services = []
         (uniq_service_set[:service_ids] & services_that_depended_on_service_ids).each do |main_depended_service|
@@ -214,6 +215,7 @@ class ServiceHelper::FinalTarifSetGenerator
         short_service_set_id = uniq_service_set_id
       end          
       
+#    raise(StandardError)
       if !uniq_service_set[:fobidden]
         if !use_short_tarif_set_name and (final_tarif_sets[short_service_set_id] and (uniq_service_set_id != final_tarif_sets[short_service_set_id][:full_set_name]))
           final_tarif_sets[uniq_service_set_id] = uniq_service_set.merge(:full_set_name => uniq_service_set_id)

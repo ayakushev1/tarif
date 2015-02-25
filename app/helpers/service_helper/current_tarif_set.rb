@@ -3,7 +3,7 @@ class ServiceHelper::CurrentTarifSet
   attr_reader :parts, :tarif_sets_names_as_array, :tarif_sets_services_as_array, :tarif_sets_prices, :tarif_sets_counts
   attr_reader :max_part_index, :max_tarif_set_by_part_index, :tarif_price, :min_periodic_price, :services_that_depended_on_service_ids, :services_that_depended_on
   attr_reader :current_price, :best_possible_price
-  attr_reader :current_part_index, :current_part, :current_tarif_set_by_part_index, :current_set_price
+  attr_reader :current_part_index, :current_part, :current_tarif_set_by_part_index, :current_set_price, :has_one_full_set_been_calculated
   attr_reader :history
   attr_reader :save_current_tarif_set_calculation_history, :part_sort_criteria_in_price_optimization,
               :use_price_comparison_in_current_tarif_set_calculation
@@ -147,6 +147,7 @@ class ServiceHelper::CurrentTarifSet
     @current_part_index = 0
     @current_part = parts[current_part_index] if parts
     @current_tarif_set_by_part_index = [0] if current_part and tarif_sets_by_tarif[current_part]
+    @has_one_full_set_been_calculated = false
   end
   
   def current_services
@@ -163,22 +164,26 @@ class ServiceHelper::CurrentTarifSet
 
   def next_tarif_set_by_part(if_current_tarif_set_by_part_fobbiden)
     return_prev_best_current_price(if_current_tarif_set_by_part_fobbiden)
-    move_forward_based_on_price = if use_price_comparison_in_current_tarif_set_calculation
+    move_forward_based_on_price = if use_price_comparison_in_current_tarif_set_calculation and has_one_full_set_been_calculated
       current_price < best_possible_price 
 #      current_price < (best_possible_price - [best_possible_price * 0.01, 5].max)
     else
       false
     end
+
     if if_current_tarif_set_by_part_fobbiden or current_part_index == (max_part_index - 1) or move_forward_based_on_price
       if current_tarif_set_by_part_index[current_part_index] < (max_tarif_set_by_part_index[current_part_index] - 1)
         move_down
       else
+#    raise(StandardError) if current_tarif_set_by_part_index == [0, 0, 0, 0]
         move_back_and_down
       end
     else
       move_forward
     end
+    
     raise(StandardError) if current_tarif_set_by_part_index and current_tarif_set_by_part_index.size != current_part_index + 1   
+    
     @current_part = parts[current_part_index]
     if current_part_index == max_part_index - 1
       @current_set_price = calculate_current_price_for_chosen_parts(current_part_index)
@@ -225,6 +230,7 @@ class ServiceHelper::CurrentTarifSet
   def move_forward
     @current_part_index += 1
     @current_tarif_set_by_part_index << 0
+    @has_one_full_set_been_calculated = true if current_part_index == max_part_index - 1
   end
   
   def move_back_and_down
@@ -237,6 +243,7 @@ class ServiceHelper::CurrentTarifSet
       end
     end while  (next_part_index > -1) and next_tarif_set_by_part_index.blank?
     @current_part_index = next_part_index 
+#    raise(StandardError) if next_tarif_set_by_part_index.blank?
     @current_tarif_set_by_part_index = next_tarif_set_by_part_index
   end
 

@@ -173,10 +173,9 @@ class Customer::TarifOptimizator < ActiveType::Object
   
   def tarif_options
     if service_choices.session_filtr_params['calculate_with_fixed_services'] == 'true'
-      result = {
+      {
         services_for_calculation_select.session_filtr_params['operator_id'].to_i => services_for_calculation_select.session_filtr_params['tarif_options_to_calculate'].map(&:to_i) - [0]
       }
-#      raise(StandardError, result)
     else
       {
         1025 => (service_choices.session_filtr_params['tarif_options_bln'] || []), 

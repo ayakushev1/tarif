@@ -274,6 +274,7 @@ class ServiceHelper::TarifListGenerator
             tarif_option_by_compatibility[tarif][part][incompatibility_name] = [service]
           end
 
+#      raise(StandardError, @tarif_option_by_compatibility)
           if tarif_option_by_compatibility[tarif][part].blank?
             tarif_option_by_compatibility[tarif][part] = {""=>[]}
           end
