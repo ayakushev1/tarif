@@ -12,6 +12,7 @@ module ApplicationHelper::DefaultRenderer
     view_context.tap do |v|
       js_string = v.content_tag(:div, render_to_string(template), {:id => v.view_id_name})
       js_string = "$('##{id_of_page_to_substitute}').html(\" #{v.escape_javascript js_string} \");"          
+#      render action_name
       render :inline => js_string#, :layout => 'application'
     end
   end

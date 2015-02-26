@@ -60,7 +60,7 @@
 	<% end %>
 
 </div>
-	<%= render('/application/shared/yandex_metrika_informet') %>
+	<%= render('/application/shared/yandex_metrika_informet') if ENV["RAILS_ENV"] == "production" %>
 <div>
 	
 </div>

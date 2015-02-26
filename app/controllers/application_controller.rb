@@ -26,7 +26,7 @@ class ApplicationController < ActionController::Base
   private
   
   def run_gc
-    GC.start
+#    GC.start
   end
 
 end

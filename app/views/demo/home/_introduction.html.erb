@@ -18,7 +18,9 @@
 
 <br />
 <p>	
-   Для получения новостей от нас подпишитесь на наше сообщество вконтакте: <%= render('/application/shared/vk_community_vidget_low') %>
+   Для получения новостей от нас подпишитесь на наше сообщества в вконтакте и фейсбуке: 
+   <%= render('/application/shared/vk_follow') %>
+   <%= render('/application/shared/facebook_follow') %>
 </p>
 
 <%= render :partial => 'demo/home/opportunities', :layout => 'application/layouts/accordion', :locals => {:name => 'demo_home_opportunities_accord', :active => session[:current_accordion_page]['demo_home_opportunities_accord'].to_i} %>
