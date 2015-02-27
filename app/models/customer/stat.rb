@@ -47,16 +47,7 @@ class Customer::Stat < ActiveRecord::Base
   end
 
   def self.init_result_model(model_init_data = {})
-    demo_result_where_string = if model_init_data[:demo_result_id]
-      "result_key->'demo_result'->>'id' = " + model_init_data[:demo_result_id].to_s
-    else
-      "result_key->'demo_result'->>'id' is null"
-    end
-    
-    where(:result_type => model_init_data[:result_type]).
-    where(:result_name => model_init_data[:result_name]).
-    where(demo_result_where_string).
-    where(:user_id => model_init_data[:user_id]).
+    init_result_model(model_init_data).
     select("result as #{model_init_data[:result_name]}")
   end
   
@@ -64,7 +55,7 @@ class Customer::Stat < ActiveRecord::Base
     demo_result_where_string = if !model_init_data[:demo_result_id].blank?
       "result_key->'demo_result'->>'id' = '#{model_init_data[:demo_result_id].to_s}'"
     else
-      "(result_key->'demo_result'->>'id')::boolean is null"
+      "(result_key->'demo_result'->>'id')::integer is null"
     end
 
     result = where(:result_type => model_init_data[:result_type]).
