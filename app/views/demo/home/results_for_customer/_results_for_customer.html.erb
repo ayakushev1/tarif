@@ -1,9 +1,9 @@
+<%= render(:partial => 'demo/home/results_for_customer/result_select_params', :layout => 'application/layouts/demo/filtr_form_2_columns', 
+      :locals => {:form_item => controller.result_select_params}) %>
+
 <p>Для получения детальной информации по тарифу (верхняя таблица) или отдельной услуге (вторая таблица) выберите (кликните) нужную строку.
 	Но при этом постарайтесь не попасть на ссылку, так как при нажатии на ссылку вы перейдете на описание тарифа или тарифной опции.  
 </p>
-
-<%= render(:partial => 'demo/home/results_for_customer/result_select_params', :layout => 'application/layouts/demo/filtr_form_2_columns', 
-      :locals => {:form_item => controller.result_select_params}) %>
 
 <%= render :partial => 'demo/home/results_for_customer/service_sets', :layout => 'application/layouts/demo/model_table', :locals => {:table => controller.customer_service_sets}%>
 

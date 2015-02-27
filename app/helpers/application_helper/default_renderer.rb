@@ -1,6 +1,7 @@
 module ApplicationHelper::DefaultRenderer
 #  extend ActiveSupport::Concern
   def default_render(options = nil)
+#    raise(StandardError)
     respond_to do |format|
       format.js {render_js(view_context.default_view_id_name)}
       format.html
