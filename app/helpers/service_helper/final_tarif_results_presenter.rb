@@ -1,8 +1,9 @@
 class ServiceHelper::FinalTarifResultsPresenter
-  attr_reader :user_id, :level_to_show_tarif_result_by_parts
+  attr_reader :user_id, :demo_result_id, :level_to_show_tarif_result_by_parts
   
   def initialize(options = {})
     @user_id = options[:user_id] || 0
+    @demo_result_id = options[:demo_result_id]
     @level_to_show_tarif_result_by_parts = options[:show_zero_tarif_result_by_parts] == 'true' ? -1.0 : 0.0
   end
   
@@ -11,6 +12,7 @@ class ServiceHelper::FinalTarifResultsPresenter
       :result_type => 'optimization_results',
       :result_name => 'default_output_results_name',
       :user_id => user_id,
+      :demo_result_id => demo_result_id
     })
   end
   
@@ -142,6 +144,7 @@ class ServiceHelper::FinalTarifResultsPresenter
       :result_type => 'optimization_results',
       :result_name => 'prepared_final_tarif_results',
       :user_id => user_id,
+      :demo_result_id => demo_result_id
     }, 'service_set')
   end
   
@@ -150,6 +153,7 @@ class ServiceHelper::FinalTarifResultsPresenter
       :result_type => 'optimization_results',
       :result_name => 'prepared_final_tarif_results',
       :user_id => user_id,
+      :demo_result_id => demo_result_id
     }, 'tarif_results')
   end
   
@@ -158,6 +162,7 @@ class ServiceHelper::FinalTarifResultsPresenter
       :result_type => 'optimization_results',
       :result_name => 'prepared_final_tarif_results',
       :user_id => user_id,
+      :demo_result_id => demo_result_id
     }, 'tarif_detail_results')
   end
   

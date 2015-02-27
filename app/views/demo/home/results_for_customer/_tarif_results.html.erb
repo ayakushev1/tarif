@@ -8,12 +8,12 @@ table.init do |t|
   model_keys = t.model.collect {|row| row.keys }.flatten.uniq.collect{|key| key unless ['service category description ', 
   	'calls_volume', 'sms_volume', 'internet_volume',
   	].include?(key)}.compact  
-  t.heads = ['Услуга', 'Стоимость в месяц, руб', 'Кол-во обработанных записей', 'Кол-во минут', 'Кол-во смс и ммс', 'Объем интернета, Мб']
+  t.heads = ['Стоимость в месяц, руб', 'Услуга',  'Кол-во минут', 'Кол-во смс и ммс', 'Объем интернета, Мб']
   t.set_fields do |f| 
   	[
-  	 link_to_if(f['service_http'], f['service_name'], f['service_http']),    
      f['service_cost'],      
-     f['service_count'],      
+  	 link_to_if(f['service_http'], f['service_name'], f['service_http']),    
+#     f['service_count'],      
      f['calls_volume'],
      f['sms_volume'],
      f['internet_volume'],

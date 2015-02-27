@@ -1,0 +1,23 @@
+<%
+
+form_item.init do |f|
+#  f.caption = "User params"
+#  f.action_on_submit = demo_history_parsers_prepare_for_upload_path	  	
+  s_filtr = f.session_filtr_params
+	input_html = {:filtr_name => form_item.filtr_name, :class => "updatable form-control ", :action_name => demo_home_demo_results_path}
+	label_html = {:class11 => "control-label "}
+
+  f.set_fields do |filtr_name| 
+  [
+  	[label(filtr_name, "demo_result_id", "Пример расчета", label_html),
+  	 collection_select(filtr_name, "demo_result_id", 
+  	   Customer::Stat.where(
+  	     :user_id => 0, :result_type => "optimization_results", :result_name => "prepared_final_tarif_results").uniq.
+  	     select("result_key->'demo_result'->>'id' as id, result_key->'demo_result'->>'name' as name"), 
+  	   :id, :name, {:include_blank => "Выберите пример расчета", :selected => s_filtr["demo_result_id"] }, input_html ),   
+  	],  	
+  ] 
+  end
+end
+%>
+

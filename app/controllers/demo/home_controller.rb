@@ -6,6 +6,10 @@ class Demo::HomeController < ApplicationController
   def full_demo_results
     render nothing: true
   end
+  
+  def result_select_params
+    Filtrable.new(self, "result_select_params")
+  end
 
   def customer_service_sets
     ArrayOfHashable.new(self, final_tarif_results_presenter.customer_service_sets_array)
@@ -24,6 +28,7 @@ class Demo::HomeController < ApplicationController
     options = {
       :user_id=> (current_user ? current_user.id : 0),
       :show_zero_tarif_result_by_parts => 'false',
+      :demo_result_id => result_select_params.session_filtr_params['demo_result_id']
       }
 #    @optimization_result_presenter ||= 
     ServiceHelper::FinalTarifResultsPresenter.new(options)

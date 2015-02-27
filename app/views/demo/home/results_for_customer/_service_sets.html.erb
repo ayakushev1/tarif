@@ -7,7 +7,7 @@ table.init do |t|
   t.pagination_per_page = 12
   t.id_name = 'service_sets_id'
   model_keys = t.model.collect {|row| row.keys }.flatten.uniq.collect{|key| key }.compact  
-  t.heads = ['Стоимость в месяц, руб', 'Оператор', 'Тариф', 'Кол-во обработанных записей', 'Общие услуги', 'Тарифные опции', 
+  t.heads = ['Стоимость в месяц, руб', 'Оператор', 'Тариф', 'Общие услуги', 'Тарифные опции', 
   	'Взаимозаменяемые опции']#, 'Кол-во минут', 'Кол-во смс и ммс', 'Объем интернета, Мб']
   
   t.set_fields do |f|
@@ -36,7 +36,7 @@ table.init do |t|
      f['tarif_cost'],      
      f['operator_name'],     
   	 link_to_if(f['tarif_http'], f['tarif_name'], f['tarif_http']),    
-     f['service_set_count'],   
+#     f['service_set_count'],   
      common_services,   
      tarif_options,
      identical_services,
