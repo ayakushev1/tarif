@@ -10,12 +10,13 @@ form_item.init do |f|
   	     :user_id => 0, :result_type => "optimization_results", :result_name => "prepared_final_tarif_results").uniq.
   	     select("result_key->'demo_result'->>'id' as id, result_key->'demo_result'->>'name' as name").order("result_key->'demo_result'->>'id'")
   default_demo_result_id = collection_sql_demo_result_id.first ? collection_sql_demo_result_id.first[:id] : nil
+  default_demo_result_id = s_filtr["demo_result_id"].blank? ? default_demo_result_id : s_filtr["demo_result_id"] 
   
   f.set_fields do |filtr_name| 
   [
   	[label(filtr_name, "demo_result_id", "Пример расчета", label_html),
   	 collection_select(filtr_name, "demo_result_id", collection_sql_demo_result_id, 
-  	   :id, :name, {:include_blank => false, :selected => (s_filtr["demo_result_id"] || default_demo_result_id)}, input_html ),   
+  	   :id, :name, {:selected => default_demo_result_id}, input_html ),   
   	],  	
   ] 
   end

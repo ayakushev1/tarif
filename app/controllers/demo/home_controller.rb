@@ -25,10 +25,11 @@ class Demo::HomeController < ApplicationController
   end
   
   def final_tarif_results_presenter
+    demo_result_id = result_select_params.session_filtr_params['demo_result_id'].blank? ? 0 : result_select_params.session_filtr_params['demo_result_id']
     options = {
       :user_id=> (current_user ? current_user.id : 0),
       :show_zero_tarif_result_by_parts => 'false',
-      :demo_result_id => result_select_params.session_filtr_params['demo_result_id']
+      :demo_result_id => demo_result_id 
       }
 #    @optimization_result_presenter ||= 
     ServiceHelper::FinalTarifResultsPresenter.new(options)
