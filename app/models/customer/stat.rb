@@ -50,7 +50,7 @@ class Customer::Stat < ActiveRecord::Base
     demo_result_where_string = if model_init_data[:demo_result_id]
       "result_key->'demo_result'->>'id' = " + model_init_data[:demo_result_id].to_s
     else
-      "(result_key->'demo_result'->>'id')::boolean is null"
+      "result_key->'demo_result'->>'id' is null"
     end
     
     where(:result_type => model_init_data[:result_type]).
