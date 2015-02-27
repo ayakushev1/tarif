@@ -14,7 +14,7 @@ form_item.init do |f|
   	   Customer::Stat.where(
   	     :user_id => 0, :result_type => "optimization_results", :result_name => "prepared_final_tarif_results").uniq.
   	     select("result_key->'demo_result'->>'id' as id, result_key->'demo_result'->>'name' as name"), 
-  	   :id, :name, {:include_blank => "Выберите пример расчета", :selected => s_filtr["demo_result_id"] }, input_html ),   
+  	   :id, :name, {:include_blank => false, :selected => s_filtr["demo_result_id"] }, input_html ),   
   	],  	
   ] 
   end

@@ -1,5 +1,15 @@
-<% content_for :title, "Пример результатов подбора тарифа" %>
+<% content_for :title, "Примеры подбора тарифа и опций" %>
 
-<%= link_to('На главную страницу', root_path, {:class => "btn btn-success", :type =>"button"}) %>
+<div class="row">
+	<div class="col-xs-2">
+		<%= link_to('Зарегистрироваться', new_user_path, {:class => "btn btn-success", :type =>"button"}) %> 
+	</div>
+	<div class="col-xs-1">
+		<%= link_to('Войти', demo_login_path, {:class => "btn btn-success", :type =>"button"}) %> 
+	</div>
+	<div class="col-xs-2">
+		<%= link_to('На главную страницу', root_path, {:class => "btn btn-success", :type =>"button"}) %>
+	</div>
+</div>
 <br />
 <%= render :partial => 'demo/home/results_for_customer/results_for_customer' %>
