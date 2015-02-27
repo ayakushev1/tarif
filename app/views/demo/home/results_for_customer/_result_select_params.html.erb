@@ -9,7 +9,7 @@ form_item.init do |f|
   collection_sql_demo_result_id = Customer::Stat.where(
   	     :user_id => 0, :result_type => "optimization_results", :result_name => "prepared_final_tarif_results").uniq.
   	     select("result_key->'demo_result'->>'id' as id, result_key->'demo_result'->>'name' as name").order("result_key->'demo_result'->>'id'")
-  default_demo_result_id = collection_sql_demo_result_id ? collection_sql_demo_result_id.first[:id] : nil
+  default_demo_result_id = collection_sql_demo_result_id.first ? collection_sql_demo_result_id.first[:id] : nil
   
   f.set_fields do |filtr_name| 
   [
