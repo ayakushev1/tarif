@@ -1,5 +1,5 @@
 class Demo::HomeController < ApplicationController
-
+  before_action :calls_stat_options
   after_action :track_demo_results, only: :demo_results
   after_action :track_index, only: :index
 
@@ -40,6 +40,26 @@ class Demo::HomeController < ApplicationController
 #    @optimization_result_presenter ||= 
     ServiceHelper::FinalTarifResultsPresenter.new(options)
   end  
+  
+  def calls_stat_options
+#    raise(StandardError, session[:current_accordion_page]['result_select_column_accord'])
+    Filtrable.new(self, "calls_stat_options")
+  end
+  
+  def calls_stat
+    filtr = calls_stat_options.session_filtr_params
+    calls_stat_options = filtr.keys.map{|key| key if filtr[key] == 'true'}
+    calls_stat_options = {"rouming" => 'true'} if calls_stat_options.blank?
+    ArrayOfHashable.new(self, minor_result_presenter.calls_stat_array(calls_stat_options) )    
+  end
+
+  def minor_result_presenter
+    options = {
+      :user_id=> 0,
+      :demo_result_id => demo_result_id 
+      }
+    @minor_result_presenter ||= ServiceHelper::AdditionalOptimizationInfoPresenter.new(options)
+  end   
   
   def service_sets_id
     customer_service_sets.model_size == 0 ? -1 : session[:current_id]['service_sets_id']

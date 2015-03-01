@@ -5,9 +5,10 @@ get_accordion_current_page = ->
       accordion_name = $(accordion).attr("name")
       filtr[accordion_name] = -1
       i = 0
-      $(accordion).find("[class*=accordion-toggle]").each (index, element) ->
-        body_accordion_id = $(element).attr("href")        
-        if $(body_accordion_id).hasClass("in")
+      $(accordion).find("[class*=panel-collapse]").each (index, element) ->
+#        body_accordion_id = $(element).attr("href")        
+#        if $(body_accordion_id).hasClass("in")
+        if $(element).hasClass("in")
           filtr[accordion_name] = i
         i += 1
 #      alert(filtr[accordion_name])

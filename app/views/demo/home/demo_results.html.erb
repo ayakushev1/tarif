@@ -20,8 +20,10 @@
 </div>
 <br/>
 
-<!--
-<%= render :partial => 'demo/home/results_for_customer/result_select_column', :layout => 'application/layouts/accordion', :locals => {:name => 'result_select_column_accord', :active => session[:current_accordion_page]['result_select_column_accord'].to_i} %>
--->
+<% accordion_page = session[:current_accordion_page].blank? ? 222 : session[:current_accordion_page]['result_select_column_accord'].to_i %>
+
+<%= render :partial => 'demo/home/results_for_customer/call_stat/call_stat', :layout => 'application/layouts/accordion', 
+           :locals => {:name => 'result_select_column_accord', 
+           :active => accordion_page} %>
 
 <%= render :partial => 'demo/home/results_for_customer/results_for_customer' %>

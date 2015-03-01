@@ -31,7 +31,6 @@ class Customer::Stat < ActiveRecord::Base
   
   def self.get_results(model_init_data = {})
     result_model = init_result_model(model_init_data)
-    
     results = {}
     result_model.each do |result_item|
       result_item.attributes[model_init_data[:result_name]].each do |result_type, result_value|
@@ -43,15 +42,18 @@ class Customer::Stat < ActiveRecord::Base
         end
       end
     end if result_model
+#      raise(StandardError, results) if results.blank?
     results
   end
 
   def self.init_result_model(model_init_data = {})
-    init_result_model(model_init_data).
+    result = init_result_model_without_select(model_init_data).
     select("result as #{model_init_data[:result_name]}")
+#    raise(StandardError, result.to_sql)
+    result
   end
   
-  def self.init_result_model(model_init_data = {})
+  def self.init_result_model_without_select(model_init_data = {})
     demo_result_where_string = if !model_init_data[:demo_result_id].blank?
       "result_key->'demo_result'->>'id' = '#{model_init_data[:demo_result_id].to_s}'"
     else
@@ -61,8 +63,8 @@ class Customer::Stat < ActiveRecord::Base
     result = where(:result_type => model_init_data[:result_type]).
     where(:result_name => model_init_data[:result_name]).
     where(demo_result_where_string).
-    where(:user_id => model_init_data[:user_id]).
-    select("result as #{model_init_data[:result_name]}")
+    where(:user_id => model_init_data[:user_id])
+#    select("result as #{model_init_data[:result_name]}")
 #    raise(StandardError, result.to_sql)
 
   end

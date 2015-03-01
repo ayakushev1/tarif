@@ -1,7 +1,7 @@
 <% i = 0 %>
 <% active ||= 0 %>
 <% name ||= 'accord' %>
-<div class="panel-group" role="tablist" aria-multiselectable="true" id="<%= name %>" name=<%= name %> >
+<div class="panel-group accordion" role="tablist" aria-multiselectable="true" id="<%= name %>" name=<%= name %> >
   <% content_from :accordion do |caption, body| %>
   	<% 
   		heading = "heading_" + name + "_" + i.to_s

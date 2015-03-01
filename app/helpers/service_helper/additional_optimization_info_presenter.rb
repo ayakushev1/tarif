@@ -1,14 +1,16 @@
 class ServiceHelper::AdditionalOptimizationInfoPresenter
-  attr_reader :user_id
+  attr_reader :user_id, :demo_result_id
   
   def initialize(options = {})
     @user_id = options[:user_id] || 0
+    @demo_result_id = options[:demo_result_id]
   end
   
   def results
     Customer::Stat.get_results({
       :result_type => 'optimization_results',
       :result_name => 'minor_results',
+      :demo_result_id => demo_result_id,
       :user_id => user_id,
     })
   end
@@ -25,6 +27,7 @@ class ServiceHelper::AdditionalOptimizationInfoPresenter
     Customer::Stat.get_named_results({
       :result_type => 'optimization_results',
       :result_name => 'minor_results',
+      :demo_result_id => demo_result_id,
       :user_id => user_id,
     }, 'performance_results') || [{}]
   end
@@ -59,7 +62,7 @@ class ServiceHelper::AdditionalOptimizationInfoPresenter
       
       result = []
       result_hash.each {|name, value| result << value if value['count'] > 0 }
-      false ? result.sort_by!{|item| item['name_string']} : result
+      true ? result.sort_by!{|item| item['name_string']} : result
     end    
   end
   
@@ -89,17 +92,20 @@ class ServiceHelper::AdditionalOptimizationInfoPresenter
   end
   
   def calls_stat
-    Customer::Stat.get_named_results({
+    result = Customer::Stat.get_named_results({
       :result_type => 'optimization_results',
       :result_name => 'minor_results',
+      :demo_result_id => demo_result_id,
       :user_id => user_id,
-    }, 'calls_stat') 
+    }, 'calls_stat')     
+    result
   end
 
   def service_packs_by_parts
     Customer::Stat.get_named_results({
       :result_type => 'optimization_results',
       :result_name => 'minor_results',
+      :demo_result_id => demo_result_id,
       :user_id => user_id,
     }, 'service_packs_by_parts') 
   end
@@ -108,6 +114,7 @@ class ServiceHelper::AdditionalOptimizationInfoPresenter
     used_memory_output = Customer::Stat.get_named_results({
       :result_type => 'optimization_results',
       :result_name => 'minor_results',
+      :demo_result_id => demo_result_id,
       :user_id => user_id,
     }, 'used_memory_by_output') 
 

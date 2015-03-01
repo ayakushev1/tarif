@@ -9,31 +9,31 @@ form_item.init do |f|
   [
   	[
  	 check_box(filtr_name, "rouming", (s["rouming"] == 'true' ? {:checked => 'checked'} : {} ).merge(html_options), true, false ),
-     label(filtr_name, "rouming", "rouming	."),
+     label(filtr_name, "rouming", "Роуминг	."),
 # 	 select(filtr_name, "rouming", [["show", true], ["not show", false]], {:selected => s["rouming"]}, html_options ),
   	],
 
   	[
  	 check_box(filtr_name, "service", (s["service"] == 'true' ? {:checked => 'checked'} : {} ).merge(html_options), true, false ),
-     label(filtr_name, "service", "	service		."),
+     label(filtr_name, "service", "	Услуга		."),
 # 	 select(filtr_name, "service", [["show", true], ["not show", false]], {:selected => s["service"]}, html_options ),
   	],
 
   	[
  	 check_box(filtr_name, "direction", (s["direction"] == 'true' ? {:checked => 'checked'} : {} ).merge(html_options), true, false ),
-     label(filtr_name, "direction", "	service direction	."),
+     label(filtr_name, "direction", "	Направление связи	."),
 # 	 select(filtr_name, "direction", [["show", true], ["not show", false]], {:selected => s["direction"]}, html_options ),
   	],
 
   	[
  	 check_box(filtr_name, "geo", (s["geo"] == 'true' ? {:checked => 'checked'} : {} ).merge(html_options), true, false ),
-     label(filtr_name, "geo", "	geo	."),
+     label(filtr_name, "geo", "	Куда	."),
 # 	 select(filtr_name, "geo", [["show", true], ["not show", false]], {:selected => s["geo"]}, html_options ),
   	],
 
   	[
  	 check_box(filtr_name, "operator", (s["operator"] == 'true' ? {:checked => 'checked'} : {} ).merge(html_options), true, false ),
-     label(filtr_name, "operator", "	operator"),
+     label(filtr_name, "operator", "	На какого оператору "),
 # 	 select(filtr_name, "operator", [["show", true], ["not show", false]], {:selected => s["operator"]}, html_options ),
   	],	
   ]
