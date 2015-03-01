@@ -116,6 +116,6 @@ module ApplicationHelper::AuthenticityAndAuthorization
 
     def controller_has_free_public_url?
 #      raise(StandardError, [controller_name, action_name])
-      ((controller_name == 'demo/home' or controller_name == 'home') and ['demo_results', 'index'].include?(action_name))
+      ((controller_name == 'demo/home' or controller_name == 'home') and ['demo_results', 'index', 'recommendation_select'].include?(action_name))
     end
 end

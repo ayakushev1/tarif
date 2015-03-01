@@ -14,9 +14,9 @@ form_item.init do |f|
   
   f.set_fields do |filtr_name| 
   [
-  	[label(filtr_name, "demo_result_id", "Пример расчета", label_html),
-  	 collection_select(filtr_name, "demo_result_id", collection_sql_demo_result_id, 
-  	   :id, :name, {:selected => default_demo_result_id}, input_html ),   
+  	[label(filtr_name, "demo_result_id", "Доступные рекомендации", label_html),
+  	 collection_select(filtr_name, "demo_result_id", Content::Article.demo_results, 
+  	   :id, :title, {:selected => default_demo_result_id}, input_html ),   
   	],  	
   ] 
   end

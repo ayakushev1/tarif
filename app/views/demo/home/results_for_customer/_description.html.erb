@@ -1,0 +1,14 @@
+<% if demo_result_description%>
+
+	<h3><i><%= demo_result_description['title'] %></i></h3>
+	
+	<% if demo_result_description['content'] %>
+		<p><strong>Модель использования: </strong><%= demo_result_description['content']['usage_model'] %></p>
+		
+		<p><strong>Рекомендация: </strong><%= demo_result_description['content']['summary'] %></p>
+		
+		<p><strong>Комментарий: </strong><%= demo_result_description['content']['body'] %></p>
+		
+	<% end %>
+	
+<% end %>

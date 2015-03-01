@@ -12,13 +12,14 @@ class Customer::TarifOptimizatorsController < ApplicationController
 
   helper_method :customer_tarif_optimizator
 
-  def index
+#  def index
 #    heroku = Background::WorkerManager::Heroku.new().heroku
 #    Rails.logger.info Background::WorkerManager::Heroku.new().worker_quantity('tarif_optimization')
 #    Rails.logger.info heroku.formation.info(ENV["MY_HEROKU_APP_NAME"], 'tarif_optimization')    
 #    Rails.logger.info heroku.dyno.list(ENV["MY_HEROKU_APP_NAME"])    
 #    Rails.logger.info heroku.formation.list(ENV["MY_HEROKU_APP_NAME"])    
-  end
+#    flash[:alert] = 'sssss'
+#  end
 
  def select_services
     session[:filtr]['service_choices_filtr'].merge!(Customer::Info::ServicesSelect.process_selecting_services(params['services_select_filtr']))
@@ -27,9 +28,9 @@ class Customer::TarifOptimizatorsController < ApplicationController
   end
   
   def calculation_status
-#    raise(StandardError)
     if !customer_tarif_optimizator.background_process_informer_operators.calculating?      
-      redirect_to(:action => :index)
+      redirect_to({:action => :index}, :alert => "Расчет закончен")
+#      raise(StandardError, flash[:alert])
     end
   end
   

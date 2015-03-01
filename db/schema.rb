@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141129011132) do
+ActiveRecord::Schema.define(version: 20150301005708) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -29,6 +29,20 @@ ActiveRecord::Schema.define(version: 20141129011132) do
   add_index "ahoy_events", ["time"], name: "index_ahoy_events_on_time", using: :btree
   add_index "ahoy_events", ["user_id"], name: "index_ahoy_events_on_user_id", using: :btree
   add_index "ahoy_events", ["visit_id"], name: "index_ahoy_events_on_visit_id", using: :btree
+
+  create_table "calls", force: true do |t|
+    t.integer "base_service_id"
+    t.integer "base_subservice_id"
+    t.integer "user_id"
+    t.json    "own_phone"
+    t.json    "partner_phone"
+    t.json    "connect"
+    t.json    "description"
+  end
+
+  add_index "calls", ["base_service_id"], name: "index_calls_on_base_service_id", using: :btree
+  add_index "calls", ["base_subservice_id"], name: "index_calls_on_base_subservice_id", using: :btree
+  add_index "calls", ["user_id"], name: "index_calls_on_user_id", using: :btree
 
   create_table "categories", force: true do |t|
     t.string  "name"
@@ -52,6 +66,32 @@ ActiveRecord::Schema.define(version: 20141129011132) do
   create_table "category_types", force: true do |t|
     t.string "name"
   end
+
+  create_table "content_articles", force: true do |t|
+    t.integer  "author_id"
+    t.string   "title"
+    t.json     "content"
+    t.integer  "type_id"
+    t.integer  "status_id"
+    t.json     "key"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "content_articles", ["author_id"], name: "index_content_articles_on_author_id", using: :btree
+  add_index "content_articles", ["status_id"], name: "index_content_articles_on_status_id", using: :btree
+  add_index "content_articles", ["type_id"], name: "index_content_articles_on_type_id", using: :btree
+
+  create_table "content_categories", force: true do |t|
+    t.string  "name"
+    t.integer "level_id"
+    t.integer "type_id"
+    t.integer "parent_id"
+  end
+
+  add_index "content_categories", ["level_id"], name: "index_content_categories_on_level_id", using: :btree
+  add_index "content_categories", ["parent_id"], name: "index_content_categories_on_parent_id", using: :btree
+  add_index "content_categories", ["type_id"], name: "index_content_categories_on_type_id", using: :btree
 
   create_table "customer_background_stats", force: true do |t|
     t.integer  "user_id"

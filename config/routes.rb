@@ -30,6 +30,7 @@ Rails.application.routes.draw do
 
     controller :home do
       get 'home/demo_results' => :demo_results
+      get 'home/recommendation_select' => :recommendation_select
       get 'home/full_demo_results' => :full_demo_results
     end
 
@@ -101,6 +102,11 @@ Rails.application.routes.draw do
       get 'optimization_results/show_results' => :show_results
       get 'optimization_results/show_customer_results' => :show_customer_results
       get 'optimization_results/show_additional_info' => :show_additional_info
+    end
+    
+    controller :optimization_result_movers do
+      post 'optimization_result_movers/move' => :move
+      get 'optimization_result_movers/new' => :new
     end
     
     resources :services, only: [:index] do

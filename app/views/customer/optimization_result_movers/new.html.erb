@@ -1,0 +1,59 @@
+<% content_for :title, "Выбор параметров перемещения результатов оптимизации" %>
+
+<%
+	input_html = {:class => "form-control"}
+	link_to_html = {:class => "btn btn-link", :type => 'button'}
+	checkbox_to_html = {:class => " ", :type => 'radio'}
+	submit_html = {:class => "btn btn-primary"}
+	label_html = {:class11 => "control-label "}
+%>
+
+<%= form_for @optimization_result_mover, url: customer_optimization_result_movers_move_path, 
+      html: {:'data-confirm' => "Вы уверены, что хотите переместить данные?", :class => "payment_block" } do |f| %>
+
+   <% if !@optimization_result_mover.errors.blank? %>
+	<div class="alert alert-warning alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert">
+			<span aria-hidden="true">&times;</span>
+			<span class="sr-only">Close</span>
+		</button>
+		<%= @optimization_result_mover.errors[:sum].map(&:to_s).join("/n") %>
+	</div>
+  <% end %>
+
+  <div class="row">
+	  <div class="col-xs-12">
+	  	<%= f.label :article_id, "Рекомендация", label_html %>
+  		<%= f.collection_select(:article_id, Content::Article.demo_results, :id, :title, {}, input_html ) %>
+  	</div>
+  </div>
+
+  <div class="row">
+	  <div class="col-xs-6">
+	  	<%= f.label :user_id_copy_from, "Пользователь результаты которого будут перемещаться", label_html %>
+  		<%= f.collection_select(:user_id_copy_from, User.where("id < 30"), :id, :name, {}, input_html ) %>
+  	</div>
+  </div>
+
+  <div class="row">
+	  <div class="col-xs-6">
+	  	<%= f.label :user_id_copy_to, "Пользователь результаты которого будут перемещаться", label_html %>
+  		<%= f.collection_select(:user_id_copy_to, User.where("id < 30"), :id, :name, {}, input_html ) %>
+  	</div>
+  </div>
+
+  <div class="row">
+	  <div class="col-xs-6">
+	  	<%= f.label :data_to_copy, "Данные для перемещения", label_html %>
+  		<%= f.select(:data_to_copy, [['minor_results', 'minor_results'], ['prepared_final_tarif_results', 'prepared_final_tarif_results']], 
+  		      {}, input_html.merge({:multiple => true, :size => 2}) ) %>
+  	</div>
+  </div>
+
+  <div class="row">
+	  <div class="col-xs-6">
+  		<%= f.submit "Переместить результаты", submit_html %>
+  	</div>
+  </div>
+
+<% end %>

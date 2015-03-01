@@ -16,13 +16,17 @@ class ServiceHelper::FinalTarifResultsPresenter
     })
   end
   
-  def customer_service_sets_array
+  def customer_service_sets_array(operators_to_choose = [])
     result = []
+    operators_to_choose = operators_to_choose.map(&:to_i)
     prepared_service_sets.each do |service_set_id, prepared_service_set|
+#      raise(StandardError, prepared_service_set)
+      next if !operators_to_choose.blank? and !operators_to_choose.include?(prepared_service_set["operator"])
       result << {'service_sets_id' => service_set_id}.merge(prepared_service_set)
     end if prepared_service_sets
     result = result.compact
     new_result = []
+    
     result.each do |f|
       additions = {}
       

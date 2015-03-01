@@ -24,6 +24,12 @@ CategoryType.create(id: 26, name: "tarif_class_general_service_categories")
 CategoryType.create(id: 27, name: "customer_info_type")
 CategoryType.create(id: 28, name: "customer_demand_type")
 CategoryType.create(id: 29, name: "customer_demand_status")
+CategoryType.create(id: 30, name: "content_type")
+CategoryType.create(id: 31, name: "content_status")
+CategoryType.create(id: 32, name: "content_key_rouming")
+CategoryType.create(id: 33, name: "content_key_service")
+CategoryType.create(id: 34, name: "content_key_destination")
+CategoryType.create(id: 35, name: "content_key_usage_intensity")
 
 CategoryLevel.delete_all
 CategoryLevel.create(id: 0,type_id: 0, level: 0, name: "world")
