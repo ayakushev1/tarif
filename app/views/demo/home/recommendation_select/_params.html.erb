@@ -60,17 +60,23 @@ form_item.init do |f|
   	 collection_select(filtr_name, "destinations", Content::Category.destination, 
   	   :id, :name, {:include_blank => "Вcе направления", :selected => s_filtr["destinations"] }, input_html.merge({:multiple => true, :size => 5}) ),   
   	],  	
-
+=begin
   	[
-#  	 label(filtr_name, "intensities", "Показывать рекомендации только для выбранных вариантов использования", label_html),
-#  	 collection_select(filtr_name, "intensities", Content::Category.intensity, 
-#  	   :id, :name, {:include_blank => "Вcе варианты", :selected => s_filtr["intensities"] }, input_html.merge({:multiple => true, :size => 5}) ),   
+  	 label(filtr_name, "intensities[calls]", "Показывать рекомендации только для выбранных вариантов частоты использования звонков и смс", label_html),
+  	 collection_select(filtr_name, "intensities[calls]", Content::Category.intensity, 
+  	   :id, :name, {:include_blank => "Вcе варианты", :selected => (s_filtr["intensities"] || {})['calls'] }, input_html.merge({:multiple => true, :size => 6}) ),   
 
+  	 label(filtr_name, "intensities[internet]", "Показывать рекомендации только для выбранных вариантов частоты использования интернета", label_html),
+  	 collection_select(filtr_name, "intensities[internet]", Content::Category.intensity, 
+  	   :id, :name, {:include_blank => "Вcе варианты", :selected => (s_filtr["intensities"] || {})['internet'] }, input_html.merge({:multiple => true, :size => 6}) ),   
+  	 ],  
+=end
+     [
   	 label(filtr_name, "demo_result_id", "Доступные рекомендации", label_html),
   	 collection_select(filtr_name, "demo_result_id", recommendation_query, 
   	   :id, :title, {:selected => default_demo_result_id}, input_html.merge({:multiple => false, :size => [recommendation_query.count, 1].min}) ),   
 
-  	],  	
+  	 ],  	
   ] 
   end
 end

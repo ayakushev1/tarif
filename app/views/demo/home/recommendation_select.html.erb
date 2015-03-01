@@ -8,6 +8,8 @@
 <p><strong>Краткое описание: </strong><%=  recommendation['content']['summary'] if recommendation and recommendation['content'] %></p>
 -->
 
+<p style="font-size: small">Для выбора нескольких значений удерживайте клавишу Ctrl</p>
+
 <%= render(:partial => 'demo/home/recommendation_select/params', :layout => 'application/layouts/demo/filtr_form_2_columns', 
       :locals => {:form_item => controller.recommendation_select_params}) %>
 

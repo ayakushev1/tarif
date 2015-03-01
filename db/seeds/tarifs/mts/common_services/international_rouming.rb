@@ -57,7 +57,7 @@ _sctcg_mts_other_countries_sms_outcoming = {:name => '_sctcg_mts_other_countries
 _sctcg_mts_other_countries_internet = {:name => '_sctcg_mts_other_countries_internet', :service_category_rouming_id => _sc_mts_other_countries_rouming, :service_category_calls_id => _internet}
 
 #Europe, calls, incoming
-  @tc.add_one_service_category_tarif_class(_sctcg_mts_europe_calls_incoming, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 79.0})  
+  @tc.add_one_service_category_tarif_class(_sctcg_mts_europe_calls_incoming, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 85.0})  
 
 #Europe, calls, outcoming, to Russia
   @tc.add_as_other_service_category_tarif_class(_sctcg_mts_europe_calls_to_russia, _sctcg_mts_europe_calls_incoming)
@@ -66,7 +66,7 @@ _sctcg_mts_other_countries_internet = {:name => '_sctcg_mts_other_countries_inte
   @tc.add_as_other_service_category_tarif_class(_sctcg_mts_europe_calls_to_rouming_country, _sctcg_mts_europe_calls_incoming)
 
 #Europe, calls, outcoming, to not rouming country and not Russia
-  @tc.add_one_service_category_tarif_class(_sctcg_mts_europe_calls_to_not_rouming_country, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 129.0})  
+  @tc.add_one_service_category_tarif_class(_sctcg_mts_europe_calls_to_not_rouming_country, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 135.0})  
 
 #Europe, sms, outcoming
   @tc.add_one_service_category_tarif_class(_sctcg_mts_europe_sms_outcoming, {}, {:standard_formula_id => _stf_price_by_count_volume_item, :price => 19.0})  
@@ -76,7 +76,7 @@ _sctcg_mts_other_countries_internet = {:name => '_sctcg_mts_other_countries_inte
 
 
 #SIC_1, calls, incoming
-  @tc.add_one_service_category_tarif_class(_sctcg_mts_sic_1_calls_incoming, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 33.0})  
+  @tc.add_one_service_category_tarif_class(_sctcg_mts_sic_1_calls_incoming, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 39.0})  
 
 #SIC_1, calls, outcoming, to Russia
   @tc.add_as_other_service_category_tarif_class(_sctcg_mts_sic_1_calls_to_russia, _sctcg_mts_sic_1_calls_incoming)
@@ -85,10 +85,10 @@ _sctcg_mts_other_countries_internet = {:name => '_sctcg_mts_other_countries_inte
   @tc.add_as_other_service_category_tarif_class(_sctcg_mts_sic_1_calls_to_rouming_country, _sctcg_mts_sic_1_calls_incoming)
 
 #SIC_1, calls, outcoming, to SIC,  to not rouming country and not Russia
-  @tc.add_one_service_category_tarif_class(_sctcg_mts_sic_1_calls_to_not_rouming_not_russia_to_sic, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 103.0})  
+  @tc.add_one_service_category_tarif_class(_sctcg_mts_sic_1_calls_to_not_rouming_not_russia_to_sic, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 109.0})  
 
 #SIC_1, calls, outcoming, to not SIC, to not rouming country and not Russia
-  @tc.add_one_service_category_tarif_class(_sctcg_mts_sic_1_calls_to_not_rouming_not_russia_not_sic, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 129.0})  
+  @tc.add_one_service_category_tarif_class(_sctcg_mts_sic_1_calls_to_not_rouming_not_russia_not_sic, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 135.0})  
 
 #SIC_1, sms, outcoming
   @tc.add_one_service_category_tarif_class(_sctcg_mts_sic_1_sms_outcoming, {}, {:standard_formula_id => _stf_price_by_count_volume_item, :price => 7.5})  
@@ -98,7 +98,7 @@ _sctcg_mts_other_countries_internet = {:name => '_sctcg_mts_other_countries_inte
 
 
 #SIC_2, calls, incoming
-  @tc.add_one_service_category_tarif_class(_sctcg_mts_sic_2_calls_incoming, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 59.0})  
+  @tc.add_one_service_category_tarif_class(_sctcg_mts_sic_2_calls_incoming, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 65.0})  
 
 #SIC_2, calls, outcoming, to Russia
   @tc.add_as_other_service_category_tarif_class(_sctcg_mts_sic_2_calls_to_russia, _sctcg_mts_sic_2_calls_incoming)
@@ -107,7 +107,7 @@ _sctcg_mts_other_countries_internet = {:name => '_sctcg_mts_other_countries_inte
   @tc.add_as_other_service_category_tarif_class(_sctcg_mts_sic_2_calls_to_rouming_country, _sctcg_mts_sic_2_calls_incoming)
 
 #SIC_2, calls, outcoming, to not rouming country and not Russia
-  @tc.add_one_service_category_tarif_class(_sctcg_mts_sic_2_calls_to_not_rouming_country, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 129.0})  
+  @tc.add_one_service_category_tarif_class(_sctcg_mts_sic_2_calls_to_not_rouming_country, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 135.0})  
 
 #SIC_2, sms, outcoming
   @tc.add_one_service_category_tarif_class(_sctcg_mts_sic_2_sms_outcoming, {}, {:standard_formula_id => _stf_price_by_count_volume_item, :price => 15.0})  
@@ -129,7 +129,7 @@ _sctcg_mts_other_countries_internet = {:name => '_sctcg_mts_other_countries_inte
   @tc.add_one_service_category_tarif_class(_sctcg_mts_sic_3_calls_to_not_rouming_not_russia_to_sic, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 38.0})  
 
 #SIC_3, calls, outcoming, to not SIC, to not rouming country and not Russia
-  @tc.add_one_service_category_tarif_class(_sctcg_mts_sic_3_calls_to_not_rouming_not_russia_not_sic, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 129.0})  
+  @tc.add_one_service_category_tarif_class(_sctcg_mts_sic_3_calls_to_not_rouming_not_russia_not_sic, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 135.0})  
 
 #SIC_3, sms, outcoming
   @tc.add_one_service_category_tarif_class(_sctcg_mts_sic_3_sms_outcoming, {}, {:standard_formula_id => _stf_price_by_count_volume_item, :price => 4.5})  
@@ -139,7 +139,7 @@ _sctcg_mts_other_countries_internet = {:name => '_sctcg_mts_other_countries_inte
 
 
 #Other countries, calls, incoming
-  @tc.add_one_service_category_tarif_class(_sctcg_mts_other_countries_calls_incoming, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 149.0})  
+  @tc.add_one_service_category_tarif_class(_sctcg_mts_other_countries_calls_incoming, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 155.0})  
 
 #Other countries, calls, outcoming
   @tc.add_as_other_service_category_tarif_class(_sctcg_mts_other_countries_calls_outcoming, _sctcg_mts_other_countries_calls_incoming)

@@ -35,7 +35,7 @@ category = {:name => '_sctcg_own_home_regions_calls_to_mgf_country_group_5', :se
 
 #Own and home regions, sms, Outcoming, to sms_sic_plus_countries
 category = {:name => '_sctcg_own_home_regions_sms_to_sms_sic_plus_countries', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _sc_service_to_mgf_sms_sic_plus}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_count_volume_item, :price => 5.0})
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_count_volume_item, :price => 3.5  })
 
 #Own and home regions, sms, Outcoming, sms_other_countries
 category = {:name => '_sctcg_own_home_regions_sms_to_sms_other_countries', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _sc_service_to_mgf_sms_other_countries}
@@ -89,7 +89,7 @@ category = {:name => '_sctcg_cenral_regions_not_own_and_home_region_calls_to_mgf
 
 #Central regions RF except for Own and home regions, sms, Outcoming, to sms_sic_plus_countries
 category = {:name => '_sctcg_cenral_regions_not_own_and_home_region_sms_to_sms_sic_plus_countriesy', :service_category_rouming_id => _sc_mgf_cenral_regions_not_own_and_home_region, :service_category_calls_id => _sms_out, :service_category_geo_id => _sc_service_to_mgf_sms_sic_plus}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_count_volume_item, :price => 5.0},
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_count_volume_item, :price => 3.5},
     :tarif_set_must_include_tarif_options => [_mgf_everywhere_moscow_in_central_region] )  
 
 #Central regions RF except for Own and home regions, sms, Outcoming, sms_other_countries
