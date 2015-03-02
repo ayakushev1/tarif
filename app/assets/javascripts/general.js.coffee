@@ -34,7 +34,7 @@ $(document).on 'click', 'a', (e) ->
   history.pushState {page: this.href}, '', this.href
 
 
-$(document).on 'click', "[type=checkbox]", ->
+$(document).on 'change', "[type=checkbox]", ->
   if $.isEmptyObject($(this).attr('checked'))
     $(this).attr('checked', true)
   else

@@ -1,5 +1,5 @@
 class Demo::HomeController < ApplicationController
-  before_action :calls_stat_options
+#  before_action :calls_stat_options
   after_action :track_demo_results, only: :demo_results
   after_action :track_index, only: :index
 
@@ -42,7 +42,7 @@ class Demo::HomeController < ApplicationController
   end  
   
   def calls_stat_options
-#    raise(StandardError, session[:current_accordion_page]['result_select_column_accord'])
+#    raise(StandardError, session['calls_stat_options_filtr'])
     Filtrable.new(self, "calls_stat_options")
   end
   
