@@ -140,7 +140,7 @@
 
 #Own and home regions, sms, outcoming, to_not_own_country, others (отрегулировано порядоком вычисления, а не категорией)
   category = {:name => '_sctcg_own_home_regions_sms_to_other_countries', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_mts_other_countries}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_count_volume_item, :price => 5.25})
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_count_volume_item, :price => 5.25})
 
 #Own and home regions, Internet
   category = {:name => '_sctcg_own_home_regions_internet', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _internet}
