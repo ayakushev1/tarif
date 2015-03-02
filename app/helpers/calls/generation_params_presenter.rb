@@ -22,11 +22,13 @@ class Calls::GenerationParamsPresenter
   end  
   
   def days_by_rouming
+    total_share = ccgp[:general]['share_of_time_in_own_region'].to_f + ccgp[:general]['share_of_time_in_home_region'].to_f +
+                  ccgp[:general]['share_of_time_in_own_country'].to_f + ccgp[:general]['share_of_time_abroad'].to_f
     {
-      :own_region => ccgp[:general]['share_of_time_in_own_region'].to_f * g.common_params['number_of_days_in_call_list'],
-      :home_region => ccgp[:general]['share_of_time_in_home_region'].to_f * g.common_params['number_of_days_in_call_list'],
-      :own_country => ccgp[:general]['share_of_time_in_own_country'].to_f * g.common_params['number_of_days_in_call_list'],
-      :abroad => ccgp[:general]['share_of_time_abroad'].to_f * g.common_params['number_of_days_in_call_list'],
+      :own_region => ccgp[:general]['share_of_time_in_own_region'].to_f * g.common_params['number_of_days_in_call_list'] / total_share,
+      :home_region => ccgp[:general]['share_of_time_in_home_region'].to_f * g.common_params['number_of_days_in_call_list'] / total_share,
+      :own_country => ccgp[:general]['share_of_time_in_own_country'].to_f * g.common_params['number_of_days_in_call_list'] / total_share,
+      :abroad => ccgp[:general]['share_of_time_abroad'].to_f * g.common_params['number_of_days_in_call_list'] / total_share,
     }
   end
   
@@ -88,6 +90,10 @@ class Calls::GenerationParamsPresenter
       :own_country => total_outcoming_call_duration_by_rouming[:own_country] * ccgp[:own_country]['share_of_regional_calls'].to_f,
       :abroad => total_outcoming_call_duration_by_rouming[:abroad] * ccgp[:abroad]['share_of_regional_calls'].to_f,      
     }
+  end
+  
+  def total_share_of_outcoming_calls
+    1.0
   end
   
   def total_international_call_duration_by_rouming
