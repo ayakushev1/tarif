@@ -27,7 +27,9 @@ class Calls::Generator
         i = 0
         [_calls, _sms, _mms,  _3g].each do |base_service_id|
           rouming = choose_rouming_option
-          (0..([0, count_per_day_by_base_service(rouming, base_service_id)].max)).each do |day_item|
+          max_count_per_day_by_base_service = [0, count_per_day_by_base_service(rouming, base_service_id)].max
+          next if max_count_per_day_by_base_service == 0
+          (0..max_count_per_day_by_base_service).each do |day_item|
             call_destination = choose_call_destination(rouming)
             call_direction = choose_call_direction(rouming)
             partner_operator_id, partner_operator_type_id, partner_region_id, partner_country_id = choose_call_operator(rouming, call_direction, call_destination)
