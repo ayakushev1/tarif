@@ -482,7 +482,9 @@ class Calls::Generator
   end
       
   def duration_by_base_service(rouming, base_service_id)
-    base_service_id == _calls ? random(initial_inputs[rouming]["average_duration_of_call"]) * 60.0 : 0.0
+    average_duraton_of_max_duration = initial_inputs[rouming]["average_duration_of_call"] / common_params["max_duration_of_call"]
+    base_service_id == _calls ? random(average_duraton_of_max_duration) * common_params["max_duration_of_call"] * 60.0 * 1.5 : 0.0
+#    raise(StandardError, [initial_inputs[rouming]["average_duration_of_call"], common_params["max_duration_of_call"], random(average_duraton_of_max_duration) * 60.0 * 1.5 ])
   end
       
   def volume_by_base_service(rouming, base_service_id)
@@ -684,12 +686,14 @@ class Calls::Generator
   module Helper
     def random(average)
       x = rand
-      pi = 3.1415926535897932384626433832#BigMath.PI(10)
-      if x < 0.25
-        Math.sin(x * average * pi) * average
-      else
-        average * 2.0 + Math.sin((x - 3.0/4.0) * pi) * average 
-      end
+      (x ** average) * Math.exp(-x) / Math.gamma(average)
+#      Math.exp(average * (Math.exp(x) - 1.0))
+#      pi = 3.1415926535897932384626433832#BigMath.PI(10)
+#      if x < 0.25
+#        Math.sin(x * average * pi) * average
+#      else
+#        average * 2.0 + Math.sin((x - 3.0/4.0) * pi) * average 
+#      end
     end
     
   end
