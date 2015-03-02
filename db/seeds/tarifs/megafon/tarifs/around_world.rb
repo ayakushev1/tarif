@@ -99,11 +99,11 @@ category = {:name => '_sctcg_around_world_2_calls_to_rouming_country', :service_
 
 #Around_world_2, sms, incoming
 category = {:name => '_sctcg_around_world_2_sms_incoming', :service_category_rouming_id => _sc_mgf_around_world_countries_2, :service_category_calls_id => _sms_in}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 0.0})
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_count_volume_item, :price => 0.0})
 
 #Around_world_2, sms, outcoming
 category = {:name => '_sctcg_around_world_2_sms_outcoming', :service_category_rouming_id => _sc_mgf_around_world_countries_2, :service_category_calls_id => _sms_out}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 6.0})
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_count_volume_item, :price => 6.0})
 
 
 #Around_world_3, Calls, Incoming
@@ -120,11 +120,11 @@ category = {:name => '_sctcg_around_world_3_calls_to_rouming_country', :service_
 
 #Around_world_3, sms, incoming
 category = {:name => '_sctcg_around_world_3_sms_incoming', :service_category_rouming_id => _sc_mgf_around_world_countries_3, :service_category_calls_id => _sms_in}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 0.0})
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_count_volume_item, :price => 0.0})
 
 #Around_world_3, sms, outcoming
 category = {:name => '_sctcg_around_world_3_sms_outcoming', :service_category_rouming_id => _sc_mgf_around_world_countries_3, :service_category_calls_id => _sms_out}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 9.0})
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_count_volume_item, :price => 9.0})
 
 
 #Around_world_4, Calls, Incoming
@@ -141,15 +141,15 @@ category = {:name => '_sctcg_around_world_4_calls_to_rouming_country', :service_
 
 #Around_world_4, sms, incoming
 category = {:name => '_sctcg_around_world_4_sms_incoming', :service_category_rouming_id => _sc_mgf_around_world_countries_4, :service_category_calls_id => _sms_in}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 0.0})
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_count_volume_item, :price => 0.0})
 
 #Around_world_4, sms, outcoming
 category = {:name => '_sctcg_around_world_4_sms_outcoming', :service_category_rouming_id => _sc_mgf_around_world_countries_4, :service_category_calls_id => _sms_out}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 16.0})
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_count_volume_item, :price => 16.0})
 
 #Around_world_4, Internet
   category = {:name => '_sctcg_around_world_5_internet', :service_category_rouming_id => _sc_mgf_around_world_countries_5, :service_category_calls_id => _internet}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 9.9})
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_volume_m_byte, :price => 9.9})
 
 
 

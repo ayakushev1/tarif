@@ -48,7 +48,7 @@ category = {:name => '_sctcg_own_home_regions_sms_to_all_own_country_regions', :
 
 #Own and home regions, sms, Outcoming, to_bln_international_1 (СНГ, Грузия), телефоны Билайн
 category = {:name => '_sctcg_own_home_regions_sms_to_bln_international_1', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _sc_service_to_bln_international_1, :service_category_partner_type_id =>  _service_to_bln_partner_operator}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 2.95})
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_count_volume_item, :price => 2.95})
 
 
 
@@ -63,7 +63,7 @@ category = {:name => '_sctcg_own_home_regions_mms_to_all_own_country_regions', :
 
 #Own and home regions, Internet
   category = {:name => 'own_and_home_regions_internet', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _internet}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_count_volume_item, :price => 3.0})
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_volume_m_byte, :price => 3.0})
 
 
 #Own country, mms, incoming
