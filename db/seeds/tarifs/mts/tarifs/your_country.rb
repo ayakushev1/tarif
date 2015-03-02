@@ -16,19 +16,19 @@
   @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => _stf_price_by_1_month, :price => 0.0})
 
 #All_russia_rouming, mms, Incoming
-  category = {:name => '_sctcg_own_home_regions_sms_incoming', :service_category_rouming_id => _all_russia_rouming, :service_category_calls_id => _mms_in}
+  category = {:name => '_sctcg_all_russia_mms_incoming', :service_category_rouming_id => _all_russia_rouming, :service_category_calls_id => _mms_in}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_zero_count_volume_item, :price => 0.0})
 
 #All_russia_rouming, mms, Outcoming
-  category = {:name => '_sctcg_own_home_regions_sms_incoming', :service_category_rouming_id => _all_russia_rouming, :service_category_calls_id => _mms_out}
+  category = {:name => '_sctcg_all_russia_mms_outcoming', :service_category_rouming_id => _all_russia_rouming, :service_category_calls_id => _mms_out}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => _stf_price_by_count_volume_item, :price => 6.5})  
 
 #All_world_rouming, mms, Incoming
-  category = {:name => '_sctcg_own_home_regions_sms_incoming', :service_category_rouming_id => _all_world_rouming, :service_category_calls_id => _mms_in}
+  category = {:name => '_sctcg_all_world_mms_incoming', :service_category_rouming_id => _all_world_rouming, :service_category_calls_id => _mms_in}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_zero_count_volume_item, :price => 0.0})
 
 #All_world_rouming, mms, Outcoming
-  category = {:name => '_sctcg_own_home_regions_sms_incoming', :service_category_rouming_id => _all_world_rouming, :service_category_calls_id => _mms_out}
+  category = {:name => '_sctcg_all_world_mms_outcoming', :service_category_rouming_id => _all_world_rouming, :service_category_calls_id => _mms_out}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => _stf_price_by_count_volume_item, :price => 6.5})  
 
 
@@ -229,7 +229,7 @@
 #Tarif option MMS+ (discount 50%)
 #Другие mms категории должны иметь мешьший приоритет, или не пересекаться с опцией
 _sctcg_own_home_regions_mms_to_own_country_own_operator = { :name => '_sctcg_own_home_regions_mms_to_own_country_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _mms_out, :service_category_geo_id => _service_to_all_own_country_regions, :service_category_partner_type_id => _service_to_own_operator}
-_sctcg_intranet_rouming_mms_to_own_country_own_operator = { :name => '_sctcg_own_home_regions_mms_to_own_country_own_operator', :service_category_rouming_id => _intra_net_rouming, :service_category_calls_id => _mms_out, :service_category_geo_id => _service_to_all_own_country_regions, :service_category_partner_type_id => _service_to_own_operator}
+_sctcg_intranet_rouming_mms_to_own_country_own_operator = { :name => '_sctcg_intranet_rouming_mms_to_own_country_own_operator', :service_category_rouming_id => _intra_net_rouming, :service_category_calls_id => _mms_out, :service_category_geo_id => _service_to_all_own_country_regions, :service_category_partner_type_id => _service_to_own_operator}
 
 #Переход на тариф
   @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item_if_used, :price => 34.0},
