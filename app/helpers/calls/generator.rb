@@ -27,8 +27,10 @@ class Calls::Generator
         i = 0
         [_calls, _sms, _mms,  _3g].each do |base_service_id|
           rouming = choose_rouming_option
+          
           max_count_per_day_by_base_service = [0, count_per_day_by_base_service(rouming, base_service_id)].max
           next if max_count_per_day_by_base_service == 0
+          
           (0..max_count_per_day_by_base_service).each do |day_item|
             call_destination = choose_call_destination(rouming)
             call_direction = choose_call_direction(rouming)
@@ -483,7 +485,7 @@ class Calls::Generator
       
   def duration_by_base_service(rouming, base_service_id)
     average_duraton_of_max_duration = initial_inputs[rouming]["average_duration_of_call"] / common_params["max_duration_of_call"]
-    base_service_id == _calls ? random(average_duraton_of_max_duration) * common_params["max_duration_of_call"] * 60.0 * 1.5 : 0.0
+    base_service_id == _calls ? random(average_duraton_of_max_duration) * common_params["max_duration_of_call"] * 60.0 : 0.0
 #    raise(StandardError, [initial_inputs[rouming]["average_duration_of_call"], common_params["max_duration_of_call"], random(average_duraton_of_max_duration) * 60.0 * 1.5 ])
   end
       
