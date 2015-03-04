@@ -17,8 +17,9 @@ class Demo::HomeController < ApplicationController
   end
   
   def customer_service_sets
-    return @customer_service_sets if @customer_service_sets
-    @customer_service_sets = ArrayOfHashable.new(self, 
+#    return @customer_service_sets if @customer_service_sets
+#    @customer_service_sets = 
+    ArrayOfHashable.new(self, 
       final_tarif_results_presenter.customer_service_sets_array((recommendation_select_params.session_filtr_params['operator_ids'] || []) - ['']))
   end
   
@@ -58,7 +59,8 @@ class Demo::HomeController < ApplicationController
       :user_id=> 0,
       :demo_result_id => demo_result_id 
       }
-    @minor_result_presenter ||= ServiceHelper::AdditionalOptimizationInfoPresenter.new(options)
+#    @minor_result_presenter ||= 
+    ServiceHelper::AdditionalOptimizationInfoPresenter.new(options)
   end   
   
   def service_sets_id
