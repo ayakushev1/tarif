@@ -180,15 +180,16 @@ class ServiceHelper::FinalTarifResultsPresenter
           additions[service_category_name]['fix'] += (f['service_category_description']['service_category_one_time_id'] + f['service_category_description']['service_category_periodic_id']).uniq    
         end
 
-        additions[service_category_name]['rouming'] = additions[service_category_name]['rouming'].uniq.join(', ')
-        additions[service_category_name]['geo'] = additions[service_category_name]['geo'].uniq.join(', ')
-        additions[service_category_name]['geo_details'] = additions[service_category_name]['geo_details'].uniq.join(', ')
-        additions[service_category_name]['partner'] = additions[service_category_name]['partner'].uniq.join(', ')
-        additions[service_category_name]['calls'] = additions[service_category_name]['calls'].uniq.join(', ')
-        additions[service_category_name]['fix'] = additions[service_category_name]['fix'].uniq.join(', ')
+      end
+
+      additions[service_category_name]['rouming'] = additions[service_category_name]['rouming'].uniq.join(', ')
+      additions[service_category_name]['geo'] = additions[service_category_name]['geo'].uniq.join(', ')
+      additions[service_category_name]['geo_details'] = additions[service_category_name]['geo_details'].uniq.join(', ')
+      additions[service_category_name]['partner'] = additions[service_category_name]['partner'].uniq.join(', ')
+      additions[service_category_name]['calls'] = additions[service_category_name]['calls'].uniq.join(', ')
+      additions[service_category_name]['fix'] = additions[service_category_name]['fix'].uniq.join(', ')
 
 #        raise(StandardError)
-      end
       result << additions[service_category_name]
     end
 #    raise(StandardError, result)
