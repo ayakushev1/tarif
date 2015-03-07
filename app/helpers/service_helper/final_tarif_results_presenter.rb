@@ -193,7 +193,7 @@ class ServiceHelper::FinalTarifResultsPresenter
       result << additions[service_category_name]
     end
 #    raise(StandardError, result)
-#    result.sort_by!{|item| (item['rouming'] || "") + (item['calls'] || "")}    
+    result.sort_by!{|item| (item['rouming'] || "") + (item['calls'] || "")}    
     result
   end
   
