@@ -193,6 +193,7 @@ class ServiceHelper::FinalTarifResultsPresenter
     end
 #    raise(StandardError, result)
     result.sort_by!{|item| (item['rouming'] || "") + (item['calls'] || "")}    
+    result
   end
   
   def aggregate_prepared_tarif_detail_results(service_set_id)
