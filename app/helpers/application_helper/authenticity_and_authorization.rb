@@ -104,18 +104,19 @@ module ApplicationHelper::AuthenticityAndAuthorization
     
     def allowed_user_agents
       [
-        "Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)",
-        "Mozilla/5.0 (compatible; YandexWebmaster/2.0; +http://yandex.com/bots)",
-        "Mozilla/5.0 (compatible; YandexMetrika/2.0; +http://yandex.com/bots)",      
+#        "Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)",
+#        "Mozilla/5.0 (compatible; YandexWebmaster/2.0; +http://yandex.com/bots)",
+#        "Mozilla/5.0 (compatible; YandexMetrika/2.0; +http://yandex.com/bots)",      
       ]      
     end
     
     def controller_has_public_url?
-      (self.class.name =~ /Demo/) ? true : false
+      ((self.class.name =~ /Demo/) or controller_has_free_public_url?) ? true : false
     end
 
     def controller_has_free_public_url?
 #      raise(StandardError, [controller_name, action_name])
-      ((controller_name == 'demo/home' or controller_name == 'home') and ['demo_results', 'index', 'recommendation_select'].include?(action_name))
+      ((controller_name == 'demo/home' or controller_name == 'home') and ['index', 'short_description', 'detailed_description'].include?(action_name)) or
+      ((controller_path == 'content/articles') and ['show', 'index', 'call_statistic', 'detailed_results'].include?(action_name))
     end
 end

@@ -1,0 +1,7 @@
+<% content_for :title, "Статистика услуг" %>
+ 
+<%= render(:partial => 'content/articles/call_stat/calls_stat_options', :layout => 'application/layouts/filtr_form', 
+           :locals => {:form_item => controller.calls_stat_options, :html => {:class => "form-inline"}} ) %>
+            
+<%= render(:partial => 'content/articles/call_stat/calls_stat', :layout => 'application/layouts/model_table', 
+           :locals => {:table => controller.calls_stat}) %>	

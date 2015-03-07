@@ -1,0 +1,7 @@
+<% content_for :title, "Детальное описание затрат на мобильную связь" %>
+
+<p style="font-size: small">Для получения детальной информации по тарифу (верхняя таблица) или отдельной услуге (вторая таблица) выберите (кликните) нужную строку.
+	Но при этом постарайтесь не попасть на ссылку, так как при нажатии на ссылку вы перейдете на описание тарифа или тарифной опции.  
+</p>
+
+<%= render :partial => 'content/articles/detailed_results/detailed_results_tabs', :layout => 'application/layouts/tabs', :locals => {:name => 'content_articles_detailed_results_tabs', :active => session[:current_tabs_page]['content_articles_detailed_results_tabs'].to_i} %>

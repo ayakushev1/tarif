@@ -10,11 +10,11 @@
 
 <p style="font-size: small">Для выбора нескольких значений удерживайте клавишу Ctrl</p>
 
-<%= render(:partial => 'demo/home/recommendation_select/params', :layout => 'application/layouts/demo/filtr_form_2_columns', 
+<%= render(:partial => 'content/articles/index/params', :layout => 'application/layouts/demo/filtr_form_2_columns', 
       :locals => {:form_item => controller.recommendation_select_params}) %>
 
 <div class="row">
 	<div class="col-xs-2">
-		<%= link_to('Перейти к рекомендации', demo_home_demo_results_path, {:class => "btn btn-success", :type =>"button"}) %> 
+		<%= link_to('Перейти к рекомендации', content_articles_show_path, {:class => "btn btn-success", :type =>"button"}) %> 
 	</div>
 </div>

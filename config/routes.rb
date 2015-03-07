@@ -25,13 +25,22 @@ Rails.application.routes.draw do
 #  root 'home#index'
   root 'demo/home#index'
 
+  namespace :content do
+    controller :articles do
+      get 'articles/show' => :show
+      get 'articles/index' => :index
+      get 'articles/call_statistic' => :call_statistic
+      get 'articles/detailed_results' => :detailed_results
+    end
+  end
+  
   namespace :demo do
     resources :demands, only: [:index, :new, :create]    
 
     controller :home do
-      get 'home/demo_results' => :demo_results
-      get 'home/recommendation_select' => :recommendation_select
-      get 'home/full_demo_results' => :full_demo_results
+      get 'home/short_description' => :short_description
+      get 'home/detailed_description' => :detailed_description
+#      get 'home/demo_results' => :demo_results
     end
 
     controller :sessions do

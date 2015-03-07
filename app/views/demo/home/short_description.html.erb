@@ -1,0 +1,21 @@
+<% content_for :title, "Подбор лучшего тарифа" %>
+
+<h3>Описание возможностей сайта</h3>
+<p>На сайте мы поможем вам подобрать оптимальный тариф и тарифные опции. 
+   Ниже приведено описание возможностей сайта.
+</p>
+
+<% accordion_page = session[:current_accordion_page].blank? ? 222 : session[:current_accordion_page]['demo_home_opportunities_accord'].to_i %>
+
+<%= render :partial => 'demo/home/opportunities', :layout => 'application/layouts/accordion', 
+           :locals => {:name => 'demo_home_opportunities_accord', :active => accordion_page} %>
+
+
+<div class="row">
+	<div class="col-xs-3">
+		<%= link_to('Зарегистрироваться', new_user_path, {:class => "btn btn-success", :type =>"button"}) %> 
+	</div>
+	<div class="col-xs-2">
+		<%= link_to('Войти', demo_login_path, {:class => "btn btn-primary", :type =>"button"}) %> 
+	</div>
+</div>
