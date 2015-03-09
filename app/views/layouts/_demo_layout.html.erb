@@ -1,5 +1,4 @@
-<div class="col-xs-1"></div>
-<div class="col-xs-10">
+<div class="col-xs-12">
 	<div class="navbar navbar-inverse nav-top" role="navigation">
 		<div class="container">
 			<%= render 'demo/sessions/current_user_info'%>
@@ -12,31 +11,27 @@
 		</div>
 	</div>
 </div>	
-<div class="col-xs-1"></div>
 
 <div id="container" class="container">
 	<div class="row">
 		<div class="col-xs-12">
-			<div class="col-xs-1"></div>
-			<div class="col-xs-2">
+			<div class="col-xs-3">
 				<h2><%= yield(:menu).blank? ? 'Меню' : yield(:menu) %></h2>
 			</div>
-			<div class="col-xs-8">
+			<div class="col-xs-9">
 				<h2><%= yield(:title).blank? ? 'Title' : yield(:title) %></h2>
 			</div>
-			<div class="col-xs-1"></div>
 		</div>
 	</div>
 
 	<div class="row">
-		<div class="col-xs-1"></div>
-		<div class="col-xs-2">
+		<div class="col-xs-3">
 			<%= render('/application/menus/main_menu') %>
 			<br />
 			<%= render('/application/shared/vk_community_vidget') %>
 		</div>					
 
-        <div class="col-xs-8">
+        <div class="col-xs-9">
         	<div id="main_block_top_row_4" class="content">
         		<div><%= GC.stat if current_user_admin? and false %></div>
 				<%= render('/application/shared/alerts') %>
@@ -46,7 +41,6 @@
 				</div>	  
         	</div>
         </div>
-        <div class="col-xs-1"></div>
 	</div>
 
 </div>
