@@ -83,6 +83,7 @@ module ApplicationHelper::AuthenticityAndAuthorization
     
     def current_user_admin?
       (current_user and current_user.email == ENV["TARIF_ADMIN_USERNAME"])
+      #raise(StandardError)
     end
     
     def allow_skip_authenticate_user

@@ -11,7 +11,7 @@
 Dir[Rails.root.join("db/seeds/definitions/*.rb")].sort.each { |f| require f }
 
 %w{
-  categories tarif_classes service/categories service/category_tarif_classes service/category_groups price/standard_formulas
+  categories tarif_classes parameters service/categories service/category_tarif_classes service/category_groups price/standard_formulas
   price_lists price/formulas relations
 }.each do |part|
   require File.expand_path(File.dirname(__FILE__))+"/#{part}.rb"

@@ -1,9 +1,9 @@
 source 'http://rubygems.org'
-ruby "2.1.3"
+ruby "2.2.1"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 #TODO обновить до 4.1.0
-gem 'rails', '4.1.0'
+gem 'rails', "4.1.3"
 
 gem 'pg'
 gem 'nokogiri'
@@ -73,8 +73,8 @@ group :test do
   gem 'database_cleaner'
 #  gem 'connection_pool'
 #  gem 'minitest-rails-capybara'
-  gem 'capybara_minitest_spec'
-  gem "capybara-webkit"  
+#  gem 'capybara_minitest_spec'
+#  gem "capybara-webkit"  
   gem 'selenium-webdriver'
 #  gem 'minitest-colorize'
 #  gem 'minitest-focus'
@@ -101,6 +101,7 @@ gem "daemons"
 group :development, :test do
  gem 'foreman'
  gem 'rush'
+# gem 'web-console', '~> 2.0'
 # gem 'dotenv-rails'
 end 
 

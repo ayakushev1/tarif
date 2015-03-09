@@ -4,8 +4,6 @@ class AddTimeIndexToCustomerCalls < ActiveRecord::Migration
       CREATE INDEX index_customer_calls_on_description_year ON customer_calls ( (description->>'year') );
       CREATE INDEX index_customer_calls_on_description_month ON customer_calls ( (description->>'month') );
       CREATE INDEX index_customer_calls_on_description_day ON customer_calls ( (description->>'day') );
-      CREATE INDEX index_customer_calls_on_description_duration ON customer_calls ( (description->>'duration') );
-      CREATE INDEX index_customer_calls_on_description_volume ON customer_calls ( (description->>'volume') );
       CREATE INDEX index_customer_calls_on_description_cost ON customer_calls ( (description->>'cost') );
       CREATE INDEX index_customer_calls_on_description_date ON customer_calls ( (description->>'date') );
       CREATE INDEX index_customer_calls_on_description_date_number ON customer_calls ( (description->>'date_number') );
@@ -18,8 +16,6 @@ class AddTimeIndexToCustomerCalls < ActiveRecord::Migration
       DROP INDEX index_customer_calls_on_description_year;
       DROP INDEX index_customer_calls_on_description_month;
       DROP INDEX index_customer_calls_on_description_day;
-      DROP INDEX index_customer_calls_on_description_duration;
-      DROP INDEX index_customer_calls_on_description_volume;
       DROP INDEX index_customer_calls_on_description_cost;
       DROP INDEX index_customer_calls_on_description_date;
       DROP INDEX index_customer_calls_on_description_date_number;

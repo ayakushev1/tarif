@@ -8,7 +8,7 @@ class AddNameToServiceCategoryTarifClass < ActiveRecord::Migration
     add_index :price_standard_formulas, :name
     add_index :price_formulas, :name
     add_index :price_lists, :name
-    add_index :tarif_classes, :name
+#    add_index :tarif_classes, :name
     add_index :tarif_lists, :name
   end
 end
