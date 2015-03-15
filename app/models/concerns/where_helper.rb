@@ -9,15 +9,15 @@ module WhereHelper
     
     def query_from_filtr(filtr_data, field_to_exclude_from_query = nil)
       data = clean_filtr_data_from_excluded_field(filtr_data.deep_dup, field_to_exclude_from_query)
-      result = self.where(true)
+      result = self.where('true')
       data.each do |key, value|
         result = result.where_from_filtr(key, value)
       end if filtr_data.kind_of?(Hash)
-      result.where(true)
+      result.where('true')
     end
 
     def where_from_filtr(key, value)
-      result = self.where(true)
+      result = self.where('true')
       col={}
       columns.each{|c| col[c.name] = c.type}
       if col.keys.include?(key.to_s)
