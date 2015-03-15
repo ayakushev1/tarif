@@ -1,8 +1,11 @@
 require 'test_helper'
+#require 'lib/calls/history_parser/mts'
 
-describe Calls::HistoryParser::MtsHtml do
+describe Calls::HistoryParser::OperatorProcessor::Mts do
+  
   before do
-   @parser = Calls::HistoryParser::MtsHtml.new(self, Calls::Generator.new(self, {}, {"user_id" => 0}), nil)
+    
+   @parser = Calls::HistoryParser::OperatorProcessor::Mts.new(self, Calls::Generator.new(self, {}, {"user_id" => 0}), nil)
 #   @parser.parse(4000) if @parser.processed.blank?
     
   end

@@ -1,7 +1,7 @@
 require 'test_helper'
 
-describe Calls::HistoryParser::BlnXls < ActiveSupport::TestCase do
-  @@parser_bln_xls_test = Calls::HistoryParser::BlnXls.new(File.open('tmp/beeline_original_2.XLS'), {"user_id" => 0}, {
+describe Calls::HistoryParser::OperatorProcessor::Bln < ActiveSupport::TestCase do
+  @@parser_bln_xls_test = Calls::HistoryParser::OperatorProcessor::Bln.new(File.open('tmp/beeline_original_2.XLS'), {"user_id" => 0}, {
     :call_history_max_line_to_process => 5000,
     :background_update_frequency => 100,
   })
