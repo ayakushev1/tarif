@@ -56,7 +56,7 @@ class ServiceHelper::TarifOptimizator
       @optimization_result_saver = ServiceHelper::OptimizationResultSaver.new('optimization_results', nil, user_id)
       @final_tarif_sets_saver = ServiceHelper::OptimizationResultSaver.new('optimization_results', 'final_tarif_sets', user_id)
       @prepared_final_tarif_results_saver = ServiceHelper::OptimizationResultSaver.new('optimization_results', 'prepared_final_tarif_results', user_id)
-      @calls_stat_calculator = ServiceHelper::CallsStatCalculator.new({:user_id => user_id, :accounting_period => accounting_period})
+      @calls_stat_calculator = Customer::Call::StatCalculator.new({:user_id => user_id, :accounting_period => accounting_period})
       @tarif_optimization_sql_builder = ServiceHelper::TarifOptimizationSqlBuilder.new(self, {:user_id => user_id, :accounting_period => accounting_period})
       @minor_result_saver = ServiceHelper::OptimizationResultSaver.new('optimization_results', 'minor_results', user_id)
       @tarif_list_generator = ServiceHelper::TarifListGenerator.new(options[:services_by_operator] || {})

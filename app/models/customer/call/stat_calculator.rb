@@ -1,5 +1,6 @@
 Dir[Rails.root.join("db/seeds/definitions/01_service_categories.rb")].sort.each { |f| require f }
-class ServiceHelper::CallsStatCalculator
+
+class Customer::Call::StatCalculator
   attr_reader :user_id, :accounting_period, :calculation_scope, :calculation_scope_where_hash
   
   def initialize(options = {})
