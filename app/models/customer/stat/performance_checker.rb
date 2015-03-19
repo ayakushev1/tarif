@@ -1,4 +1,4 @@
-class ServiceHelper::PerformanceChecker
+class Customer::Stat::PerformanceChecker #ServiceHelper::PerformanceChecker
   attr_reader :name, :output_model, :start
   attr_accessor :results
   def initialize(name = nil)

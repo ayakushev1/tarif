@@ -50,7 +50,7 @@ class ServiceHelper::TarifOptimizator
   end
   
   def init_additional_general_classes
-    @performance_checker = ServiceHelper::PerformanceChecker.new()
+    @performance_checker = Customer::Stat::PerformanceChecker.new()
     performance_checker.clean_history;
     performance_checker.run_check_point('init_additional_general_classes', 1) do
       @optimization_result_saver = Customer::Stat::OptimizationResult.new('optimization_results', nil, user_id)

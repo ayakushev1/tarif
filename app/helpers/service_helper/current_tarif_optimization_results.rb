@@ -20,7 +20,7 @@ class ServiceHelper::CurrentTarifOptimizationResults
   end
   
   def init_inputs_from_tarif_optimizator
-    @performance_checker = tarif_optimizator.performance_checker || ServiceHelper::PerformanceChecker.new()
+    @performance_checker = tarif_optimizator.performance_checker || Customer::Stat::PerformanceChecker.new()
     @save_tarif_results_ord = tarif_optimizator.save_tarif_results_ord 
     @simplify_tarif_results = tarif_optimizator.simplify_tarif_results
     @use_background_process_informers = tarif_optimizator.use_background_process_informers
