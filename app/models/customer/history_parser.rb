@@ -97,11 +97,11 @@ class Customer::HistoryParser < ActiveType::Object
   end
   
   def background_process_informer
-    @background_process_informer ||= ServiceHelper::BackgroundProcessInformer.new('parsing_uploaded_file', current_user_id)
+    @background_process_informer ||= Customer::BackgroundStat::Informer.new('parsing_uploaded_file', current_user_id)
   end
   
   def init_background_process_informer
-    @background_process_informer ||= ServiceHelper::BackgroundProcessInformer.new('parsing_uploaded_file', current_user_id)
+    @background_process_informer ||= Customer::BackgroundStat::Informer.new('parsing_uploaded_file', current_user_id)
   end
   
   def user_params

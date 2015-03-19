@@ -1,4 +1,4 @@
-class ServiceHelper::BackgroundProcessInformer
+class Customer::BackgroundStat::Informer #ServiceHelper::BackgroundProcessInformer
   attr_reader :name, :process_info_model, :user_id
   def initialize(name, user_id)
     @name = name || 'default_background_process_name'

@@ -97,9 +97,9 @@ class Customer::TarifOptimizator < ActiveType::Object
   
   def init_background_process_informer
 #    GC.start
-    @background_process_informer_operators ||= ServiceHelper::BackgroundProcessInformer.new('operators_optimization', current_user_id)
-    @background_process_informer_tarifs ||= ServiceHelper::BackgroundProcessInformer.new('tarifs_optimization', current_user_id)
-    @background_process_informer_tarif ||= ServiceHelper::BackgroundProcessInformer.new('tarif_optimization', current_user_id)
+    @background_process_informer_operators ||= Customer::BackgroundStat::Informer.new('operators_optimization', current_user_id)
+    @background_process_informer_tarifs ||= Customer::BackgroundStat::Informer.new('tarifs_optimization', current_user_id)
+    @background_process_informer_tarif ||= Customer::BackgroundStat::Informer.new('tarif_optimization', current_user_id)
   end
    
   def options

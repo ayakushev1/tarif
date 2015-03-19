@@ -9,7 +9,7 @@ class Calls::HistoryParser::Parser
     
     @file_processer = Calls::HistoryParser::ClassLoader.file_processer(@call_history_file).new(@call_history_file)
     @operator_processer = Calls::HistoryParser::ClassLoader.operator_processer(@call_history_file, user_params[:operator_id]).new(user_params)
-    @background_process_informer = parsing_params[:background_process_informer] || ServiceHelper::BackgroundProcessInformer.new('parsing_uploaded_file', user_params[:user_id])
+    @background_process_informer = parsing_params[:background_process_informer] || Customer::BackgroundStat::Informer.new('parsing_uploaded_file', user_params[:user_id])
   end
   
   def parse
