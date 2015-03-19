@@ -1,4 +1,4 @@
-class ServiceHelper::FinalTarifResultsPresenter
+class Customers::FinalTarifResultsPresenter #ServiceHelper::FinalTarifResultsPresenter
   attr_reader :user_id, :demo_result_id, :level_to_show_tarif_result_by_parts
   
   def initialize(options = {})

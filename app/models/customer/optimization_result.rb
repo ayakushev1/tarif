@@ -37,7 +37,7 @@ class Customer::OptimizationResult < ActiveType::Object
       :use_price_comparison_in_current_tarif_set_calculation => optimization_params.session_filtr_params['use_price_comparison_in_current_tarif_set_calculation'],
       :max_tarif_set_count_per_tarif => optimization_params.session_filtr_params['max_tarif_set_count_per_tarif'],
       }
-    @optimization_result_presenter ||= ServiceHelper::OptimizationResultPresenter.new(options)
+    @optimization_result_presenter ||= Customers::OptimizationResultPresenter.new(options)
   end
   
   def final_tarif_results_presenter
@@ -45,11 +45,11 @@ class Customer::OptimizationResult < ActiveType::Object
       :user_id=> current_user_id,
       :show_zero_tarif_result_by_parts => (optimization_params_session_info['show_zero_tarif_result_by_parts'] || 'false'),
       }
-    @optimization_result_presenter ||= ServiceHelper::FinalTarifResultsPresenter.new(options)
+    @optimization_result_presenter ||= Customers::FinalTarifResultsPresenter.new(options)
   end
   
   def minor_result_presenter
-    @minor_result_presenter ||= ServiceHelper::AdditionalOptimizationInfoPresenter.new({:user_id=> current_user_id })
+    @minor_result_presenter ||= Customers::AdditionalOptimizationInfoPresenter.new({:user_id=> current_user_id })
   end   
   
   def optimization_params_session_info

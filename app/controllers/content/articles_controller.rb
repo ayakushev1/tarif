@@ -36,7 +36,7 @@ class Content::ArticlesController < ApplicationController
       :demo_result_id => demo_result_id 
       }
 #    @optimization_result_presenter ||= 
-    ServiceHelper::FinalTarifResultsPresenter.new(options)
+    Customers::FinalTarifResultsPresenter.new(options)
   end  
   
   def calls_stat_options
@@ -57,7 +57,7 @@ class Content::ArticlesController < ApplicationController
       :demo_result_id => demo_result_id 
       }
 #    @minor_result_presenter ||= 
-    ServiceHelper::AdditionalOptimizationInfoPresenter.new(options)
+    Customers::AdditionalOptimizationInfoPresenter.new(options)
   end   
   
   def service_sets_id

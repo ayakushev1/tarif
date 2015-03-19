@@ -1,4 +1,4 @@
-class ServiceHelper::AdditionalOptimizationInfoPresenter
+class Customers::AdditionalOptimizationInfoPresenter #ServiceHelper::AdditionalOptimizationInfoPresenter
   attr_reader :user_id, :demo_result_id
   
   def initialize(options = {})
