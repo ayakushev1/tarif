@@ -21,7 +21,7 @@ class ServiceHelper::StatFunctionCollector
   end
   
   def load_stat(operator_id, region_id)
-    stat_function_collector_saver = ServiceHelper::OptimizationResultSaver.new('preloaded_calculations', 'stat_function_collector', nil)
+    stat_function_collector_saver = Customer::Stat::OptimizationResult.new('preloaded_calculations', 'stat_function_collector', nil)
     loaded_data = stat_function_collector_saver.results({:operator_id => operator_id.to_i, :tarif_id => region_id.to_i})
     return calculate_stat if loaded_data.blank?
     

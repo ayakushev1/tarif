@@ -1,4 +1,4 @@
-class ServiceHelper::OptimizationResultSaver
+class Customer::Stat::OptimizationResult #ServiceHelper::OptimizationResultSaver
   
   attr_reader :result_type, :name, :output_model, :user_id
   def initialize(result_type = nil, name = nil, user_id = 0)

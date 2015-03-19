@@ -3,7 +3,7 @@ class Customer::HistoryParser < ActiveType::Object
   attribute :user_session, default: proc {controller.user_session}
   attribute :current_user_id, :integer, default: proc {controller.current_user.id}
 
-  attribute :call_history_saver, default: proc {ServiceHelper::OptimizationResultSaver.new('call_history', 'call_history', current_user_id)}
+  attribute :call_history_saver, default: proc {Customer::Stat::OptimizationResult.new('call_history', 'call_history', current_user_id)}
   attribute :call_history_results, default: proc {(call_history_saver.results || {'processed' => [{}], 'unprocessed' => [{}], 'ignorred' => [{}], 'original_doc' => [{}] } )}
   attribute :call_history, default: proc {ArrayOfHashable.new(controller, call_history_results['processed'])}
   attribute :call_history_unprocessed, default: proc {ArrayOfHashable.new(controller, call_history_results['unprocessed'])}

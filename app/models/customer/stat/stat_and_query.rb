@@ -1,13 +1,13 @@
-class ServiceHelper::StatAndQuerySaver
+class Customer::Stat::StatAndQuery #ServiceHelper::StatAndQuerySaver
   def self.save_stat_function_collector(operators = nil, all_services_by_operator = nil, region_id = nil, optimization_params = nil)
     operators ||= Customer::Info::ServiceChoices.operators
     all_services_by_operator ||= Customer::Info::ServiceChoices.all_services_by_operator
     region_id ||= 1238
     optimization_params = optimization_params || {:common => ['multiple_use_of_tarif_option', 'auto_turbo_buttons'], :onetime => [], :periodic => [], :calls => [], :sms => [], :internet => ['multiple_use_of_tarif_option']}
     
-    stat_function_collector_saver = ServiceHelper::OptimizationResultSaver.new('preloaded_calculations', 'stat_function_collector', nil)
+    stat_function_collector_saver = Customer::Stat::OptimizationResult.new('preloaded_calculations', 'stat_function_collector', nil)
     stat_function_collector_saver.clean_output_results
-    query_constructor_saver = ServiceHelper::OptimizationResultSaver.new('preloaded_calculations', 'query_constructor', nil)
+    query_constructor_saver = Customer::Stat::OptimizationResult.new('preloaded_calculations', 'query_constructor', nil)
     query_constructor_saver.clean_output_results
     operators.each do |operator| 
       @fq_tarif_operator_id = operator

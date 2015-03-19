@@ -54,7 +54,7 @@ class ServiceHelper::QueryConstructor
   end
   
   def load_query(operator_id, region_id)
-    query_constructor_saver = ServiceHelper::OptimizationResultSaver.new('preloaded_calculations', 'query_constructor', nil)
+    query_constructor_saver = Customer::Stat::OptimizationResult.new('preloaded_calculations', 'query_constructor', nil)
     loaded_data = query_constructor_saver.results({:operator_id => operator_id.to_i, :tarif_id => region_id.to_i})
     return calculate_query if loaded_data.blank?
 
