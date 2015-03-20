@@ -1,4 +1,4 @@
-class ServiceHelper::TarifCreator
+class TarifCreator #ServiceHelper::TarifCreator
   
   attr_reader :options, :operator_id, :tarif_class_id
 

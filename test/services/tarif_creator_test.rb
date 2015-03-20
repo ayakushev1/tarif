@@ -1,13 +1,13 @@
 require 'test_helper'
 
-describe ServiceHelper::TarifCreator do
+describe TarifCreator do
   before do
     @operator_id = _mts
-    @tc = ServiceHelper::TarifCreator.new(@operator_id)
+    @tc = TarifCreator.new(@operator_id)
   end
   
   it 'must exists' do
-    ServiceHelper::TarifCreator.must_be :==, ServiceHelper::TarifCreator
+    TarifCreator.must_be :==, TarifCreator
   end
   
   describe 'initialize' do    

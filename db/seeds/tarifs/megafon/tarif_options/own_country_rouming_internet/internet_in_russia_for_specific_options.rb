@@ -1,4 +1,4 @@
-@tc = ServiceHelper::TarifCreator.new(_megafon)
+@tc = TarifCreator.new(_megafon)
 @tc.create_tarif_class({
   :id => _mgf_internet_in_russia_for_specific_options, :name => 'Интернет по России для определенных опций', :operator_id => _megafon, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://moscow.megafon.ru/roaming/national/inet.html'},

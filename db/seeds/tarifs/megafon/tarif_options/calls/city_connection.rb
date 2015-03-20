@@ -1,4 +1,4 @@
-@tc = ServiceHelper::TarifCreator.new(_megafon)
+@tc = TarifCreator.new(_megafon)
 @tc.create_tarif_class({
   :id => _mgf_option_city_connection, :name => 'опция Связь городов', :operator_id => _megafon, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {

@@ -1,5 +1,5 @@
 #Входящие в поездках по России
-@tc = ServiceHelper::TarifCreator.new(_mts)
+@tc = TarifCreator.new(_mts)
 @tc.create_tarif_class({
   :id => _mts_incoming_travelling_in_russia, :name => 'Входящие в поездках по России', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _common_service,
   :features => {:http => 'http://www.mts.ru/mob_connect/roaming/n_roaming/discounts/incoming_calls/'},

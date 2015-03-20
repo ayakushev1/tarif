@@ -1,4 +1,4 @@
-@tc = ServiceHelper::TarifCreator.new(_tele_2)
+@tc = TarifCreator.new(_tele_2)
 @tc.create_tarif_class({
   :id => _tele_country_rouming, :name => 'Путешествия по России', :operator_id => _tele_2, :privacy_id => _person, :standard_service_id => _common_service,
   :features => {:http => 'http://spb.tele2.ru/roaming/russia/'},

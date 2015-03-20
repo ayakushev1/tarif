@@ -1,5 +1,5 @@
 #Own country rouming
-@tc = ServiceHelper::TarifCreator.new(_beeline)
+@tc = TarifCreator.new(_beeline)
 @tc.create_tarif_class({
   :id => _bln_own_country_rouming, :name => 'Путешествие по России', :operator_id => _beeline, :privacy_id => _person, :standard_service_id => _common_service,
   :features => {:http => 'http://moskva.beeline.ru/customers/products/mobile/roaming/puteshestvia-po-rossii/'},

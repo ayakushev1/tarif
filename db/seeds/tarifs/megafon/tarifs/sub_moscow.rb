@@ -1,4 +1,4 @@
-@tc = ServiceHelper::TarifCreator.new(_megafon)
+@tc = TarifCreator.new(_megafon)
 @tc.create_tarif_class({
   :id => _mgf_sub_moscow, :name => 'Подмосковный', :operator_id => _megafon, :privacy_id => _person, :standard_service_id => _tarif,
   :features => {:http => 'http://moscow.megafon.ru/tariffs/alltariffs/any_operator/podmoskovnyy/podmoskovnyy.html'},

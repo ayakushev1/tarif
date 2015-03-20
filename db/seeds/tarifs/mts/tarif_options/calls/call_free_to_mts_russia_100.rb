@@ -1,5 +1,5 @@
 #Звони бесплатно на МТС России 100
-@tc = ServiceHelper::TarifCreator.new(_mts)
+@tc = TarifCreator.new(_mts)
 @tc.create_tarif_class({
   :id => _mts_call_free_to_mts_russia_100, :name => 'Звони бесплатно на МТС России 100', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://www.mts.ru/mob_connect/tariffs/discounts/discounts_in_region/calls_on_number_mts/free_call_100/'},

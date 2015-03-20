@@ -1,4 +1,4 @@
-@tc = ServiceHelper::TarifCreator.new(_beeline)
+@tc = TarifCreator.new(_beeline)
 @tc.create_tarif_class({
   :id => _bln_planet_of_internet_post, :name => 'Планета Интернета (постоплата)', :operator_id => _beeline, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://moskva.beeline.ru/customers/products/mobile/services/details/planeta-interneta/'},

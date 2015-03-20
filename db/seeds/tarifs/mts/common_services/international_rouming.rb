@@ -1,5 +1,5 @@
 #International rouming
-@tc = ServiceHelper::TarifCreator.new(_mts)
+@tc = TarifCreator.new(_mts)
 @tc.create_tarif_class({
   :id => _mts_international_rouming, :name => 'Международный роуминг', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _common_service,
   :features => {:http => 'http://www.mts.ru/mob_connect/roaming/i_roaming/howtoget/'},

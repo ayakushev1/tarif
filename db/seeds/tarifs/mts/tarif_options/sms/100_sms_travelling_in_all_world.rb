@@ -1,5 +1,5 @@
 #100 SMS в поездках по миру
-@tc = ServiceHelper::TarifCreator.new(_mts)
+@tc = TarifCreator.new(_mts)
 @tc.create_tarif_class({
   :id => _mts_100_sms_travelling_in_all_world, :name => '100 SMS в поездках по миру', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://www.mts.ru/mob_connect/roaming/i_roaming/discount_roaming/sms_paket/'},

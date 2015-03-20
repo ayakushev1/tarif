@@ -1,5 +1,5 @@
 #SMS пакет 150 (onetime)
-@tc = ServiceHelper::TarifCreator.new(_mts)
+@tc = TarifCreator.new(_mts)
 @tc.create_tarif_class({
   :id => _mts_onetime_sms_packet_150, :name => 'SMS пакет 150', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://www.mts.ru/mob_connect/messaging/sms/discount2/sms/'},

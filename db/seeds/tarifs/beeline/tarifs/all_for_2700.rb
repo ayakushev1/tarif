@@ -1,4 +1,4 @@
-@tc = ServiceHelper::TarifCreator.new(_beeline)
+@tc = TarifCreator.new(_beeline)
 @tc.create_tarif_class({
   :id => _bln_all_for_2700, :name => 'Всё за 2700', :operator_id => _beeline, :privacy_id => _person, :standard_service_id => _tarif,
   :features => {:http => 'http://moskva.beeline.ru/customers/products/mobile/tariffs/details/vse-za-2700/'},

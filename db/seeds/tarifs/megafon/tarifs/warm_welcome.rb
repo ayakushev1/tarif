@@ -1,4 +1,4 @@
-@tc = ServiceHelper::TarifCreator.new(_megafon)
+@tc = TarifCreator.new(_megafon)
 @tc.create_tarif_class({
   :id => _mgf_warm_welcome, :name => 'Теплый прием', :operator_id => _megafon, :privacy_id => _person, :standard_service_id => _tarif,
   :features => {:http => 'http://moscow.megafon.ru/tariffs/alltariffs/other_cities_and_countries/warm_welkom_plus/warm_welkom_plus.html'},

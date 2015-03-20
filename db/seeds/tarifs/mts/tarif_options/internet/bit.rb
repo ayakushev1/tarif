@@ -1,5 +1,5 @@
 #БИТ
-@tc = ServiceHelper::TarifCreator.new(_mts)
+@tc = TarifCreator.new(_mts)
 @tc.create_tarif_class({
   :id => _mts_bit, :name => 'БИТ', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://www.mts.ru/mobil_inet_and_tv/internet_phone/tarifs/bit/'},

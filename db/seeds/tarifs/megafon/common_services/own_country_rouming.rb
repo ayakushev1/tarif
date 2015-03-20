@@ -1,5 +1,5 @@
 #Own country rouming
-@tc = ServiceHelper::TarifCreator.new(_megafon)
+@tc = TarifCreator.new(_megafon)
 @tc.create_tarif_class({
   :id => _mgf_own_country_rouming, :name => 'Путешествие по России', :operator_id => _megafon, :privacy_id => _person, :standard_service_id => _common_service,
   :features => {:http => 'http://moscow.megafon.ru/roaming/national/?aid=1058'},

@@ -1,4 +1,4 @@
-@tc = ServiceHelper::TarifCreator.new(_megafon)
+@tc = TarifCreator.new(_megafon)
 @tc.create_tarif_class({
   :id => _mgf_intra_countries_services, :name => 'Международные вызовы', :operator_id => _megafon, :privacy_id => _person, :standard_service_id => _common_service,
   :features => {:http => 'http://megafon.ru'},

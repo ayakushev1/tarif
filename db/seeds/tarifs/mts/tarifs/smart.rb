@@ -1,5 +1,5 @@
 #Smart
-@tc = ServiceHelper::TarifCreator.new(_mts)
+@tc = TarifCreator.new(_mts)
 @tc.create_tarif_class({
   :id => _mts_smart, :name => 'Smart', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _tarif,
   :features => {:http => 'http://www.mts.ru/mob_connect/tariffs/tariffs/smart/'},

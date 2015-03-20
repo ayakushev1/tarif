@@ -1,5 +1,5 @@
 #МТС Планшет Онлайн
-@tc = ServiceHelper::TarifCreator.new(_mts)
+@tc = TarifCreator.new(_mts)
 @tc.create_tarif_class({
   :id => _mts_mts_planshet_online, :name => 'МТС Планшет Онлайн', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {
