@@ -1,4 +1,4 @@
-class ServiceHelper::CurrentTarifOptimizationResults
+class TarifOptimization::CurrentTarifOptimizationResults #ServiceHelper::CurrentTarifOptimizationResults
   attr_reader :tarif_optimizator, :performance_checker, :use_background_process_informers, :background_process_informer_tarif, :options
   attr_reader :service_ids_to_calculate, :cons_tarif_results, :cons_tarif_results_by_parts, :tarif_results, :tarif_results_ord, #:prev_service_call_ids, 
               :prev_service_group_call_ids, :prev_service_call_ids_by_parts#, :calls_count_by_parts

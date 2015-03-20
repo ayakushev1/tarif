@@ -1,9 +1,9 @@
 require 'test_helper'
 
-describe ServiceHelper::TarifListGenerator do
+describe TarifOptimization::TarifListGenerator do
   before do
 #=begin    
-    @trg = ServiceHelper::TarifListGenerator.new({
+    @trg = TarifOptimization::TarifListGenerator.new({
       :use_short_tarif_set_name => 'true',
       :operators => [_beeline, _megafon, _mts],
       :tarifs => {_beeline => [], _megafon => [], _mts => [
@@ -33,7 +33,7 @@ describe ServiceHelper::TarifListGenerator do
       ]},
       })
 #=end      
-#    @trg = ServiceHelper::TarifListGenerator.new({})
+#    @trg = TarifOptimization::TarifListGenerator.new({})
      @tarif = 200
      @trg.calculate_tarif_sets_and_slices(1030, @tarif)
      @trg.calculate_final_tarif_sets

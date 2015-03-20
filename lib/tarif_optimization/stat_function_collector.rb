@@ -1,4 +1,4 @@
-class ServiceHelper::StatFunctionCollector
+class TarifOptimization::StatFunctionCollector
   attr_reader :tarif_class_ids, :service_stat, :service_group_stat, :service_group_ids, :service_category_by_group_and_service_id
   attr_reader :price_standard_formulas, :price_formulas, :optimization_params, :tarif_class_parts 
   

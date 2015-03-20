@@ -1,13 +1,13 @@
 require 'test_helper'
 
-describe ServiceHelper::MaxPriceFormulaOrderCollector do
+describe TarifOptimization::MaxPriceFormulaOrderCollector do
   before do
-    @tarif_list_generator = ServiceHelper::TarifListGenerator.new
-    @mpfoc = ServiceHelper::MaxPriceFormulaOrderCollector.new(@tarif_list_generator, 0)
+    @tarif_list_generator = TarifOptimization::TarifListGenerator.new
+    @mpfoc = TarifOptimization::MaxPriceFormulaOrderCollector.new(@tarif_list_generator, 0)
   end
   
   it 'must exists' do
-    ServiceHelper::MaxPriceFormulaOrderCollector.must_be :==, ServiceHelper::MaxPriceFormulaOrderCollector
+    TarifOptimization::MaxPriceFormulaOrderCollector.must_be :==, ServiceHelper::MaxPriceFormulaOrderCollector
   end
   
   describe 'calculate_max_order_by_operator' do

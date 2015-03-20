@@ -1,4 +1,4 @@
-class ServiceHelper::MaxPriceFormulaOrderCollector
+class TarifOptimization::MaxPriceFormulaOrderCollector
   attr_reader :tarif_class_ids, :operator, :max_order_by_operator, :max_order_by_service, :max_order_by_price_list
   attr_reader :max_order_by_service_and_part, :max_order_by_price_list_and_part
 

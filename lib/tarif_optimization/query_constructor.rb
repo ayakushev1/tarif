@@ -1,4 +1,4 @@
-class ServiceHelper::QueryConstructor
+class TarifOptimization::QueryConstructor
   include ::ParameterHelper
   attr_reader :context, :parameters, :criteria_where_hash, :criteria_category, :categories_where_hash,
               :tarif_classes_categories_where_hash

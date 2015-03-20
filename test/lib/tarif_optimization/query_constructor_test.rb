@@ -2,7 +2,7 @@ require 'test_helper'
 
 describe ServiceHelper do
   it 'must exists' do
-    ServiceHelper::QueryConstructor.must_be :==, ServiceHelper::QueryConstructor
+    TarifOptimization::QueryConstructor.must_be :==, ServiceHelper::QueryConstructor
   end
   
   describe 'QueryConstructor class' do
@@ -10,7 +10,7 @@ describe ServiceHelper do
       @fq_tarif_operator_id = 1025; @fq_tarif_region_id = 1238; #context variables
       @tarif_class_id = [0, 75, 77, 80, 93]
             
-      @q = ServiceHelper::QueryConstructor.new(self, {:tarif_class_ids => @tarif_class_id})
+      @q = TarifOptimization::QueryConstructor.new(self, {:tarif_class_ids => @tarif_class_id})
     end
     
     describe 'init method' do
@@ -36,7 +36,7 @@ describe ServiceHelper do
       
       it 'must load tarif_class_categories into only with specified ids' do
         tarif_class_id = [0]
-        q = ServiceHelper::QueryConstructor.new(self, {:tarif_class_ids => tarif_class_id})
+        q = TarifOptimization::QueryConstructor.new(self, {:tarif_class_ids => tarif_class_id})
         chosen_tarif_class_categories = q.tarif_class_categories.collect{|tc| tc[0].to_i}
         correct_tarif_class_categories = Service::CategoryTarifClass.where(:tarif_class_id => tarif_class_id).order(:id).pluck(:id)
         (chosen_tarif_class_categories - correct_tarif_class_categories).must_be :==, [], correct_tarif_class_categories
@@ -61,7 +61,7 @@ describe ServiceHelper do
         end
         
         it 'must accept array of params_ids' do
-          q_with_params = ServiceHelper::QueryConstructor.new(self, {:parameter_ids => [0, 1, 2], :criterium_ids => [], :tarif_class_ids => @tarif_class_id})
+          q_with_params = TarifOptimization::QueryConstructor.new(self, {:parameter_ids => [0, 1, 2], :criterium_ids => [], :tarif_class_ids => @tarif_class_id})
           q_with_params.parameters[1].wont_be_nil
           q_with_params.parameters[1].must_be :==, Parameter.find(1)
           q_with_params.parameters[3].must_be_nil

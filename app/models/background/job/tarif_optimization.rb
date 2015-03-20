@@ -8,7 +8,7 @@ module Background::Job
     
     def perform
 #      raise(StandardError, priority)
-      ServiceHelper::TarifOptimizator.new(options).calculate_all_operator_tarifs(false)
+      TarifOptimization::TarifOptimizator.new(options).calculate_all_operator_tarifs(false)
       UserMailer.tarif_optimization_complete(options[:user_id]).deliver if is_send_email == true
     end    
 

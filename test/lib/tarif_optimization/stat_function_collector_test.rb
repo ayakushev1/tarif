@@ -1,13 +1,13 @@
 require 'test_helper'
 
-describe ServiceHelper::StatFunctionCollector do
+describe TarifOptimization::StatFunctionCollector do
   before do
-    @tarif_list_generator = ServiceHelper::TarifListGenerator.new
-    @sfc = ServiceHelper::StatFunctionCollector.new(@tarif_list_generator.all_services[2])
+    @tarif_list_generator = TarifOptimization::TarifListGenerator.new
+    @sfc = TarifOptimization::StatFunctionCollector.new(@tarif_list_generator.all_services[2])
   end
   
   it 'must exists' do
-    ServiceHelper::StatFunctionCollector.must_be :==, ServiceHelper::StatFunctionCollector
+    TarifOptimization::StatFunctionCollector.must_be :==, ServiceHelper::StatFunctionCollector
   end
   
   describe 'collect_stat_for_service_category_groups' do

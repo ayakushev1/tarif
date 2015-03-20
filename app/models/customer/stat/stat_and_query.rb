@@ -12,7 +12,7 @@ class Customer::Stat::StatAndQuery #ServiceHelper::StatAndQuerySaver
     operators.each do |operator| 
       @fq_tarif_operator_id = operator
       @fq_tarif_region_id = region_id
-      stat_function_collector = ServiceHelper::StatFunctionCollector.new(all_services_by_operator[operator], optimization_params, operator, region_id, false)
+      stat_function_collector = TarifOptimization::StatFunctionCollector.new(all_services_by_operator[operator], optimization_params, operator, region_id, false)
 
       stat_function_collector_saver.save({:operator_id => operator.to_i, :tarif_id => region_id.to_i, :result => {
         'service_stat' => stat_function_collector.service_stat,
@@ -24,7 +24,7 @@ class Customer::Stat::StatAndQuery #ServiceHelper::StatAndQuerySaver
         'tarif_class_parts' => stat_function_collector.tarif_class_parts,
       } }) #.to_json
 
-      query_constructor = ServiceHelper::QueryConstructor.new(self, {:tarif_class_ids => all_services_by_operator[operator]}, operator, region_id, false )
+      query_constructor = TarifOptimization::QueryConstructor.new(self, {:tarif_class_ids => all_services_by_operator[operator]}, operator, region_id, false )
       query_constructor_saver.save({:operator_id => operator.to_i, :tarif_id => region_id.to_i, :result => {
         'comparison_operators' => query_constructor.comparison_operators,
         'categories' => query_constructor.categories,

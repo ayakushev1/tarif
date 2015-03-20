@@ -1,4 +1,4 @@
-class ServiceHelper::TarifOptimizationSqlBuilder
+class TarifOptimization::TarifOptimizationSqlBuilder
   attr_reader :tarif_optimizator, :performance_checker, :options, :user_id, :accounting_period
 
   def initialize(tarif_optimizator, options = {})
@@ -10,18 +10,18 @@ class ServiceHelper::TarifOptimizationSqlBuilder
 #    raise(StandardError)
   end
   
-# параметры из ServiceHelper::CurrentTarifOptimizationResults
+# параметры из TarifOptimization::CurrentTarifOptimizationResults
   def tarif_results; current_tarif_optimization_results.tarif_results; end
   
   def prev_service_call_ids_by_parts; current_tarif_optimization_results.prev_service_call_ids_by_parts; end
   def calls_count_by_parts; tarif_optimizator.calls_count_by_parts; end
   def calculation_scope ; tarif_optimizator.calls_stat_calculator.calculation_scope; end
   
-# optimization params from ServiceHelper::TarifOptimizator
+# optimization params from TarifOptimization::TarifOptimizator
   def check_sql_before_running; tarif_optimizator.check_sql_before_running; end
   def execute_additional_sql; tarif_optimizator.execute_additional_sql; end
 
-# optimization classes from ServiceHelper::TarifOptimizator
+# optimization classes from TarifOptimization::TarifOptimizator
   def current_tarif_optimization_results; tarif_optimizator.current_tarif_optimization_results; end
   def tarif_list_generator; tarif_optimizator.tarif_list_generator; end
   def stat_function_collector; tarif_optimizator.stat_function_collector; end

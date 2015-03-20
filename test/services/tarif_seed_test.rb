@@ -3,7 +3,7 @@ tarif_file_name = 'mts/tarif_options/everywhere_as_home.rb'
 #Dir[Rails.root.join("db/seeds/tarifs/#{tarif_file_name}")].each { |f| require f }
 #Dir[Rails.root.join("db/seeds/tarif_tests/#{tarif_file_name}")].each { |f| require f }
 
-describe ServiceHelper::TarifSeedTester do
+describe TarifSeedTester do
   class Foo
     @@init_tarif_optimizator_for_tarif_seed_test = nil
     @@tarif_seed_tester = nil
@@ -13,7 +13,7 @@ describe ServiceHelper::TarifSeedTester do
     unless Foo.class_variable_get(:@@init_tarif_optimizator_for_tarif_seed_test)
       options = {:operators => [1030], :tarifs => [[203]], :tarif_sets => [[[203]]], :common_services => [[[]]], :tarif_options => [[[[304]]]]}
 #      options = {:operators => [1030], :tarifs => [[203]], :tarif_sets => [[[276, 277, 203]]], :common_services => [[[276, 277]]], :tarif_options => [[[[283],[289]]]]}
-      tarif_seed_tester = ServiceHelper::TarifSeedTester.new(options)
+      tarif_seed_tester = TarifSeedTester.new(options)
       tarif_seed_tester.tarif_optimizator.calculate_one_operator_tarifs(0)
       Foo.class_variable_set(:@@tarif_seed_tester, tarif_seed_tester)
       Foo.class_variable_set(:@@init_tarif_optimizator_for_tarif_seed_test, 'done')

@@ -1,5 +1,5 @@
 #TODO рассмотреть возможность добавить исключение опций из оптимизации по cost factor (цена на единицу объема выше определенного порога)
-class ServiceHelper::TarifListGenerator  
+class TarifOptimization::TarifListGenerator  
   attr_reader :options, :operators, :tarifs, :common_services, :tarif_options             
   attr_accessor :all_services, :all_services_by_operator, :dependencies, :service_description, :uniq_parts_by_operator, :uniq_parts_criteria_by_operator, 
                 :all_services_by_parts, :common_services_by_parts, :service_packs, :service_packs_by_parts, :services_that_depended_on, :periodic_services, :onetime_services,

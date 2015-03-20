@@ -7,7 +7,7 @@ class Customer::ServicesController < ApplicationController
   def calculate_statistic
     filtr = {:user_id => current_user.id, :phone_number => session[:current_id]['consolidated_customer_service_id'].to_s}
     tarif_class_ids = Customer::Service.where(filtr).pluck(:tarif_class_id)
-    ServiceHelper::QueryConstructor.new(self, {:tarif_class_ids => tarif_class_ids, :user_id => user_id}).
+    TarifOptimization::QueryConstructor.new(self, {:tarif_class_ids => tarif_class_ids, :user_id => user_id}).
       calculate_stat(Customer::Stat, filtr, {'count' => "count(id)", 'array_agg' => "array_agg(id)"})    #array_agg
 
     redirect_to :action => :index
@@ -26,7 +26,7 @@ class Customer::ServicesController < ApplicationController
   def customer_calls
     current_customer_service = customer_services.model.where(:id => session[:current_id]['customer_service_id']).first
     tarif_class_id = current_customer_service.tarif_class_id if current_customer_service
-    query_constructor = ServiceHelper::QueryConstructor.new(self, {:tarif_class_ids => [tarif_class_id], :user_id => user_id})
+    query_constructor = TarifOptimization::QueryConstructor.new(self, {:tarif_class_ids => [tarif_class_id], :user_id => user_id})
     @bench = query_constructor.bench
     call_ids = query_constructor.call_ids_by_tarif_class_id[(tarif_class_id || 0)] if query_constructor.call_ids_by_tarif_class_id
     Tableable.new(self, Customer::Call.includes(:base_service, :base_subservice, :user).where(:id => call_ids) )

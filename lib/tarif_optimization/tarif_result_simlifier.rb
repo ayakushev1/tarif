@@ -1,4 +1,4 @@
-class ServiceHelper::TarifResultSimlifier  
+class TarifOptimization::TarifResultSimlifier  
   attr_reader :options             
   attr_accessor :updated_tarif_results, :groupped_identical_services 
   attr_accessor :tarif_sets, :services_that_depended_on, :operator, :tarif, :common_services, :common_services_by_parts,

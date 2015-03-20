@@ -1,4 +1,4 @@
-class ServiceHelper::CurrentTarifSet  
+class TarifOptimization::CurrentTarifSet  
   attr_reader :tarif_sets_by_tarif, :cons_tarif_results_by_parts, :new_cons_tarif_results_by_parts, :tarif, :services_that_depended_on, :tarif_results
   attr_reader :parts, :tarif_sets_names_as_array, :tarif_sets_services_as_array, :tarif_sets_prices, :tarif_sets_counts
   attr_reader :max_part_index, :max_tarif_set_by_part_index, :tarif_price, :min_periodic_price, :services_that_depended_on_service_ids, :services_that_depended_on

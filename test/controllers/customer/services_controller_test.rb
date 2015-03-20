@@ -79,7 +79,7 @@ describe Customer::ServicesController do
         get :index, :current_id => {'customer_service_id' => 2, 'consolidated_customer_service_id' => 7000000000}
         tarif_class_id = @controller.customer_services.model.where(:id => session[:current_id]['customer_service_id']).last.tarif_class_id
         
-        chosen_tarif_class_categories = tarif_class_category_ids = ServiceHelper::QueryConstructor.new(self, {:tarif_class_ids => [tarif_class_id]}).tarif_class_categories.collect{|tc| tc[0].to_i}.sort
+        chosen_tarif_class_categories = tarif_class_category_ids = TarifOptimization::QueryConstructor.new(self, {:tarif_class_ids => [tarif_class_id]}).tarif_class_categories.collect{|tc| tc[0].to_i}.sort
         correct_tarif_class_categories = Service::CategoryTarifClass.where(:tarif_class_id => 0).order(:id).pluck(:id)
         (chosen_tarif_class_categories - correct_tarif_class_categories).must_be :==, [], correct_tarif_class_categories        
       end 

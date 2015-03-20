@@ -1,4 +1,4 @@
-class ServiceHelper::FinalTarifResultPreparator
+class TarifOptimization::FinalTarifResultPreparator
   
   def self.service_set_services_description(service_ids, service_description)
     service_set_services_description = {}

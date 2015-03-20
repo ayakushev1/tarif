@@ -1,4 +1,4 @@
-class ServiceHelper::FinalTarifSetGenerator  
+class TarifOptimization::FinalTarifSetGenerator  
   attr_reader :options             
   attr_accessor :final_tarif_sets 
   attr_accessor :current_tarif_set_calculation_history 
@@ -62,7 +62,7 @@ class ServiceHelper::FinalTarifSetGenerator
     
     current_tarif_set = nil
     performance_checker.run_check_point('FFF ServiceHelper_CurrentTarifSet_new', 7) do
-      current_tarif_set = ServiceHelper::CurrentTarifSet.new({
+      current_tarif_set = TarifOptimization::CurrentTarifSet.new({
           :tarif_sets_by_tarif => tarif_sets_by_tarif, 
           :cons_tarif_results_by_parts => cons_tarif_results_by_parts, 
           :tarif => tarif.to_s,

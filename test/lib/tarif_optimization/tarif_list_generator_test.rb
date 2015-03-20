@@ -1,13 +1,13 @@
 require 'test_helper'
 
-describe ServiceHelper::TarifListGenerator do
+describe TarifOptimization::TarifListGenerator do
   it 'must exists' do
-    ServiceHelper::TarifListGenerator.must_be :==, ServiceHelper::TarifListGenerator
+    TarifOptimization::TarifListGenerator.must_be :==, ServiceHelper::TarifListGenerator
   end
   
   before do
 =begin
-    @trg = ServiceHelper::TarifListGenerator.new({
+    @trg = TarifOptimization::TarifListGenerator.new({
       :operators => [_beeline, _megafon, _mts],
       :tarifs => {_beeline => [], _megafon => [], _mts => [_mts_red_energy, _mts_ultra, _mts_smart_plus, _mts_mts_connect_4]},      
       :common_services => {_beeline => [], _megafon => [], _mts => [_mts_own_country_rouming, _mts_international_rouming, _mts_own_country_rouming_internet]},
@@ -32,7 +32,7 @@ describe ServiceHelper::TarifListGenerator do
       ]},
       })
 =end
-      @@service_helper_tarif_list_generator_for_test ||= ServiceHelper::TarifListGenerator.new({:use_short_tarif_set_name => 'true'})
+      @@service_helper_tarif_list_generator_for_test ||= TarifOptimization::TarifListGenerator.new({:use_short_tarif_set_name => 'true'})
       @empty_trg = @@service_helper_tarif_list_generator_for_test
       #raise(StandardError, [@empty_trg.final_tarif_sets[_mts], @empty_trg.final_tarif_sets[_mts].size])
 
