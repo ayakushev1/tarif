@@ -1,4 +1,4 @@
-class Demo::Payment < ActiveType::Object
+class Customer::Payment < ActiveType::Object
   attribute :action, :string, default: "https://money.yandex.ru/quickpay/confirm.xml"
   attribute :receiver, :string, default:  "410011358898478"
   attribute :formcomment, :string, default: "Проект www.mytrifs.ru"
@@ -8,7 +8,7 @@ class Demo::Payment < ActiveType::Object
   attribute :targets, :string, default: "www.mytarifs.ru Перевод средств"
   attribute :sum, :float, default: 100.00
   attribute :paymentType, :string, default: "PC"
-  attribute :successURL, :string, default: "www.mytarifs.ru/demo/payments/wait_for_payment_being_processed"
+  attribute :successURL, :string, default: "www.mytarifs.ru/customer/payments/wait_for_payment_being_processed"
         
   validates_numericality_of :sum, greater_than_or_equal_to: 100.0
   validates_inclusion_of :paymentType, in: %w( AC PC )

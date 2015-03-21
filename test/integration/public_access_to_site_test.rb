@@ -164,7 +164,7 @@ describe UsersController do
 end
      
 
-describe Demo::PaymentsController do
+describe Customer::PaymentsController do
   before do
     @request.env["devise.mapping"] = Devise.mappings[:user]
   end

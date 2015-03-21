@@ -120,6 +120,7 @@ module ApplicationHelper::AuthenticityAndAuthorization
       ((controller_name == 'demo/home' or controller_name == 'home') and ['index', 'short_description', 'detailed_description'].include?(action_name)) or
       ((controller_path == 'content/articles') and ['show', 'index', 'call_statistic', 'detailed_results'].include?(action_name)) or
       ((controller_path == 'customer/calls') and ['index', 'set_calls_generation_params', 'set_default_calls_generation_params', 'generate_calls'].include?(action_name)) or
+      ((controller_path == 'customer/payments') and ['create', 'new', 'edit', 'show', 'update', 'wait_for_payment_being_processed', 'process_payment'].include?(action_name)) or
       ((controller_path == 'customer/demands') and ['index', 'create', 'new'].include?(action_name))
     end
 end

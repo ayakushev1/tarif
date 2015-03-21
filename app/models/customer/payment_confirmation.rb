@@ -1,5 +1,5 @@
 require "digest"
-class Demo::PaymentConfirmation  < ActiveType::Object
+class Customer::PaymentConfirmation  < ActiveType::Object
 
   attribute :notification_type, :string
   attribute :operation_id, :string

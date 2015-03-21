@@ -33,7 +33,7 @@ describe Demo::HomeController do
       sign_in @user
       Customer::Info::ServicesUsed.where(:user_id =>@user.id).first_or_create.update(:info => {:calls_modelling_count => 0})
       get :index
-      assert_select("[href*='demo/payments/new']") 
+      assert_select("[href*='customer/payments/new']") 
     end
   
   end

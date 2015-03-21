@@ -1,4 +1,4 @@
-class Demo::PaymentsController < ApplicationController
+class Customer::PaymentsController < ApplicationController
   before_action :build_payment_instruction, only: [:new, :create]
 #  attr_reader :payment_confirmation
   after_action :track_new, only: :new
@@ -20,7 +20,7 @@ class Demo::PaymentsController < ApplicationController
   end
   
   def process_payment
-    payment_confirmation = Demo::PaymentConfirmation.new(params)
+    payment_confirmation = Customer::PaymentConfirmation.new(params)
     payment_confirmation.process_payment    
     respond_to do |format|
       format.all {render nothing: true, status: 200}
@@ -30,10 +30,10 @@ class Demo::PaymentsController < ApplicationController
   private
   
     def build_payment_instruction      
-      if params[:demo_payment]
-        @payment_instruction = Demo::Payment.new(params[:demo_payment].permit!)
+      if params[:customer_payment]
+        @payment_instruction = Customer::Payment.new(params[:customer_payment].permit!)
       else
-        @payment_instruction = Demo::Payment.new()
+        @payment_instruction = Customer::Payment.new()
       end
       
     end

@@ -80,14 +80,6 @@ Rails.application.routes.draw do
       get 'optimization_results/show_customer_results' => :show_customer_results
     end
     
-    resource :payments
-    
-    controller :payments do
-#      get 'payments/' => :new
-#      post 'payments/' => :create
-      get 'payments/wait_for_payment_being_processed' => :wait_for_payment_being_processed
-      post 'payments/process_payment' => :process_payment
-    end
   end  
 =begin  
     controller :project_support do
@@ -137,6 +129,14 @@ Rails.application.routes.draw do
       get 'history_parsers/calculation_status' => :calculation_status
     end
 
+    resource :payments
+    
+    controller :payments do
+#      get 'payments/' => :new
+#      post 'payments/' => :create
+      get 'payments/wait_for_payment_being_processed' => :wait_for_payment_being_processed
+      post 'payments/process_payment' => :process_payment
+    end
   end
 
   namespace :price do

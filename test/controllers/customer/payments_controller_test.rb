@@ -1,7 +1,7 @@
 require 'test_helper'
 require 'minitest/mock'
 
-describe Demo::PaymentsController do
+describe Customer::PaymentsController do
   before do
     @user = User.new(:id => 0, :name => "Гость", :email => "guest@example.com", :password => '111111', :password_confirmation => '111111', :confirmed_at => Time.zone.now)
     @user.skip_confirmation_notification!
@@ -24,7 +24,7 @@ describe Demo::PaymentsController do
     it 'must create payment_form if form filled correctly' do
       sign_in @user
       @controller.stub :customer_has_free_trials?, false do
-        post :create, :demo_payment => {:sum => 100.0, :paymentType => 'AC'}
+        post :create, :customer_payment => {:sum => 100.0, :paymentType => 'AC'}
         @response.header['Location'].must_be :=~, /money.yandex.ru/
       end
     end
@@ -32,7 +32,7 @@ describe Demo::PaymentsController do
     it 'must render new if form filled not correctly' do
       sign_in @user
       @controller.stub :customer_has_free_trials?, false do
-        post :create, :demo_payment => {:sum => 99.0, :paymentType => 'AC1'}
+        post :create, :customer_payment => {:sum => 99.0, :paymentType => 'AC1'}
         assert_select("form[id='new_demo_payment']")
       end
     end
@@ -40,7 +40,7 @@ describe Demo::PaymentsController do
     it 'new_form must show alert' do
       sign_in @user
       @controller.stub :customer_has_free_trials?, false do
-        post :create, :demo_payment => {:sum => 99.0, :paymentType => 'AC1'}
+        post :create, :customer_payment => {:sum => 99.0, :paymentType => 'AC1'}
         assert_select("div[class*=field_with_errors]")
       end
     end
@@ -49,7 +49,7 @@ describe Demo::PaymentsController do
       sign_in @user
       @controller.stub :customer_has_free_trials?, false do        
         assert_difference 'Customer::Transaction.count' do
-          post :create, :demo_payment => {:sum => 100.0, :paymentType => 'AC'}
+          post :create, :customer_payment => {:sum => 100.0, :paymentType => 'AC'}
         end
       end
     end
@@ -57,7 +57,7 @@ describe Demo::PaymentsController do
     it 'request to yandex must include transaction_id in label param if form filled correctly' do
       sign_in @user
       @controller.stub :customer_has_free_trials?, false do        
-        post :create, :demo_payment => {:sum => 100.0, :paymentType => 'AC'}
+        post :create, :customer_payment => {:sum => 100.0, :paymentType => 'AC'}
         transaction_id = Customer::Transaction.order(:id).last.id 
         @response.header['Location'].must_be :=~, /label=#{transaction_id}/  
       end
@@ -71,7 +71,7 @@ describe Demo::PaymentsController do
       @controller.stub :customer_has_free_trials?, false do
         get :wait_for_payment_being_processed
         assert_response :success
-        assert_select("[href='/demo/payments/wait_for_payment_being_processed']")
+        assert_select("[href='/customer/payments/wait_for_payment_being_processed']")
       end
     end
 
@@ -80,7 +80,7 @@ describe Demo::PaymentsController do
       @controller.stub :customer_has_free_trials?, false do
         get :wait_for_payment_being_processed
         assert_response :success
-        assert_select("[href='/demo/payments/wait_for_payment_being_processed']")
+        assert_select("[href='/customer/payments/wait_for_payment_being_processed']")
       end
     end
   
@@ -97,7 +97,7 @@ describe Demo::PaymentsController do
     before  do
       sign_in @user
       @controller.stub :customer_has_free_trials?, false do        
-        post :create, :demo_payment => {:sum => 100.0, :paymentType => 'AC'}
+        post :create, :customer_payment => {:sum => 100.0, :paymentType => 'AC'}
       end
       get :wait_for_payment_being_processed
 #      assert_response :success, [@response.redirect_url, @response.message, @controller.alert, @controller.params, User.find(0)]
@@ -120,7 +120,7 @@ describe Demo::PaymentsController do
         'sha1_hash' => 'sha1_hash',
         'test_notification' => nil,
       }      
-      @request_params.merge!({'sha1_hash' => Digest::SHA1.hexdigest(Demo::PaymentConfirmation.new(@request_params).hash_string)})
+      @request_params.merge!({'sha1_hash' => Digest::SHA1.hexdigest(Customer::PaymentConfirmation.new(@request_params).hash_string)})
     end
     
     it 'must return error if format is not yandex_payment_notification' do
@@ -148,9 +148,9 @@ describe Demo::PaymentsController do
         "datetime" => "2014-10-16T23:32:48Z", 
         "currency"=>"643"
         }
-      yandex_request_params.merge!({'sha1_hash' => Digest::SHA1.hexdigest(Demo::PaymentConfirmation.new(yandex_request_params).hash_string)})
+      yandex_request_params.merge!({'sha1_hash' => Digest::SHA1.hexdigest(Customer::PaymentConfirmation.new(yandex_request_params).hash_string)})
 
-      confirmation = Demo::PaymentConfirmation.new(yandex_request_params)
+      confirmation = Customer::PaymentConfirmation.new(yandex_request_params)
       confirmation.check_hash.must_be :==, true, [confirmation.hash_string, 'd730c965eba42090772ac9e7f82ee5aa189813da', confirmation]
     end
 

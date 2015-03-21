@@ -1,9 +1,9 @@
 require 'test_helper'
 
-describe Demo::Payment < ActiveSupport::TestCase do
+describe Customer::Payment < ActiveSupport::TestCase do
   describe 'attributes' do
     before  do
-      @instruction = Demo::Payment.new()
+      @instruction = Customer::Payment.new()
       @default_values = {
         :action => "https://money.yandex.ru/quickpay/confirm.xml",
         :receiver => "410011358898478",
@@ -14,7 +14,7 @@ describe Demo::Payment < ActiveSupport::TestCase do
         :targets => "www.mytarifs.ru Перевод средств",
         :sum => 100.00,
         :paymentType => "PC",
-        :successURL => "www.mytarifs.ru/demo/payments/wait_for_payment_being_processed"
+        :successURL => "www.mytarifs.ru/customer/payments/wait_for_payment_being_processed"
       }
     end
     
