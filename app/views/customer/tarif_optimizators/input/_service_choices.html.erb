@@ -2,66 +2,26 @@
 form_item.init do |f|
 #  f.caption = "Choice of service"	
   f.set_fields do |filtr_name|
+	input_html = {:filtr_name => form_item.filtr_name, :class => "updatable form-control ", :action_name => customer_tarif_optimizators_index_path}
+	label_html = {:class => "control-label "}
     html_options = {:action_name => customer_tarif_optimizators_index_path }
     s = f.session_filtr_params
 #	s = session[:filtr][filtr_name]
 	
   [
   	[
-     '',
-     label(filtr_name, "", "Билайн"),
-
-     '',
-     label(filtr_name, "", "Мегафон"),
-
-     '',
-     label(filtr_name, "", "МТС"),
-  	],
-  	
-  	[
-     label(filtr_name, "tarifs_bln", "Тарифы для оптимизации"),
-     text_area(filtr_name, "tarifs_bln", html_options.merge({:type => 'textarea', :value => s["tarifs_bln"], :rows => 1 }) ),
-
-     '',
-     text_area(filtr_name, "tarifs_mgf", html_options.merge({:type => 'textarea', :value => s["tarifs_mgf"], :rows => 1 }) ),
-
-     '',
-     text_area(filtr_name, "tarifs_mts", html_options.merge({:type => 'textarea', :value => s["tarifs_mts"], :rows => 1  }) ),   
-  	],
-  	
-  	[
-     label(filtr_name, "common_services_bln", "Общие сервисы"),
-     text_area(filtr_name, "common_services_bln", html_options.merge({:type => 'textarea', :value => s["common_services_bln"], :rows => 1  }) ),     		
-
-     '',
-     text_area(filtr_name, "common_services_mgf", html_options.merge({:type => 'textarea', :value => s["common_services_mgf"], :rows => 1  }) ),     		
-
-     '',
-     text_area(filtr_name, "common_services_mts", html_options.merge({:type => 'textarea', :value => s["common_services_mts"], :rows => 1  }) ),     		        
-  	],
-  	
-  	[
-     label(filtr_name, "tarif_options_bln", "Тарифные опции"),
-     text_area(filtr_name, "tarif_options_bln", html_options.merge({:type => 'textarea', :value => s["tarif_options_bln"], :rows => 2  }) ),     		
-
-     '',
-     text_area(filtr_name, "tarif_options_mgf", html_options.merge({:type => 'textarea', :value => s["tarif_options_mgf"], :rows => 2  }) ),     		
-
-     '',
-     text_area(filtr_name, "tarif_options_mts", html_options.merge({:type => 'textarea', :value => s["tarif_options_mts"], :rows => 2  }) ),     		        
-  	],
-  	
-  	[
-     label(filtr_name, "calculate_only_chosen_services", "Считать только выбранные тариф и опции?"),
- 	 select(filtr_name, "calculate_only_chosen_services", [["Да", true], ["Считать все варианты", false]], {:selected => s["calculate_only_chosen_services"]}, html_options ),
-
-     label(filtr_name, "calculate_with_limited_scope", "Считать только выбранные направления связи?"),
- 	 select(filtr_name, "calculate_with_limited_scope", [["Да", true], ["Считать все направления связи", false]], {:selected => s["calculate_with_limited_scope"]}, html_options ),
-
-  	 label(filtr_name, "accounting_period", "Период за который проводить расчет тарифов"),
+  	 label(filtr_name, "accounting_period", "Период за который проводить расчет тарифов", label_html),
   	 collection_select(filtr_name, "accounting_period", 
   	   customer_tarif_optimizator.accounting_periods, 
-  	   :accounting_period, :accounting_period, {:include_blank => "выберите период расчета", :selected => s["accounting_period"]}, html_options ),
+  	   :accounting_period, :accounting_period, {:include_blank => "выберите период расчета", :selected => s["accounting_period"]}, input_html ),
+
+     label(filtr_name, "calculate_with_limited_scope", "Считать только выбранные услуги связи?", label_html),
+ 	 select(filtr_name, "calculate_with_limited_scope", 
+ 	   [["Считать только выбранные услуги связи", true], ["Считать все услуги связи", false]], {:selected => s["calculate_with_limited_scope"]}, input_html ),
+
+     label(filtr_name, "calculate_with_fixed_services", "Считать только выбранный тариф и опции?", label_html),
+ 	 select(filtr_name, "calculate_with_fixed_services", 
+ 	   [["Считать только выбранный тариф и опции", true], ["Считать все тарифы и опции", false]], {:selected => s["calculate_with_fixed_services"]}, input_html ),
   	],
   ]
 	    

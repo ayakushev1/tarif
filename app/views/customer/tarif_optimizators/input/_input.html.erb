@@ -1,17 +1,8 @@
 <%
 
-content_in :accordion do |user| 
+content_in :tabs do |user| 
   [
-    [
-     'Choice of services',
-     (
-	  link_to('Recalculate', customer_tarif_optimizators_recalculate_path ) + "  |  ".html_safe +
-	  render(:partial => 'customer/tarif_optimizators/input/service_choices', :layout => 'application/layouts/filtr_form_3_columns', 
-	    :locals => {:form_item => customer_tarif_optimizator.service_choices} )
-		
-     )          
-    ], 
-    [
+    ([
      'Optimization params',
      (
 	  link_to('Recalculate', customer_tarif_optimizators_recalculate_path ) + "  |  ".html_safe +
@@ -19,19 +10,31 @@ content_in :accordion do |user|
 	    :locals => {:form_item => customer_tarif_optimizator.optimization_params} )
 		
      )          
-    ], 
-    [
+    ] if current_user_admin?), 
+    ([
      'Services list',
 	  link_to('Recalculate', customer_tarif_optimizators_recalculate_path ) +
       render(:partial => 'customer/tarif_optimizators/input/services_select', :layout => 'application/layouts/filtr_form_3_columns', 
         :locals => {:form_item => customer_tarif_optimizator.services_select} )
+    ] if current_user_admin?), 
+    [
+     'Выбор параметров расчета',
+     (
+	  render(:partial => 'customer/tarif_optimizators/input/service_choices', :layout => 'application/layouts/demo/filtr_form_3_columns', 
+	    :locals => {:form_item => customer_tarif_optimizator.service_choices} )
+		
+     )          
     ], 
     [
-     'Service categories list',
-	  link_to('Recalculate', customer_tarif_optimizators_recalculate_path ) +
-      render(:partial => 'customer/tarif_optimizators/input/service_categories_select', :layout => 'application/layouts/filtr_form_3_columns', 
+     'Выбор услуг оператора',
+      render(:partial => 'customer/tarif_optimizators/input/service_categories_select', :layout => 'application/layouts/demo/filtr_form_4_columns', 
         :locals => {:form_item => customer_tarif_optimizator.service_categories_select} )
     ], 
-  ] 
+    [
+     'Выбор тарифа и набора опций для расчета',
+	  render(:partial => 'customer/tarif_optimizators/input/services_for_calculation_select', :layout => 'application/layouts/demo/filtr_form_3_columns', 
+	    :locals => {:form_item => customer_tarif_optimizator.services_for_calculation_select} )
+    ], 
+  ].compact 
 end
 %>

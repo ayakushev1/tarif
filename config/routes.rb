@@ -47,20 +47,6 @@ Rails.application.routes.draw do
       get 'logout' => :destroy
     end
     
-    controller :calls do
-      get 'calls/' => :index
-      get 'calls/set_calls_generation_params' => :set_calls_generation_params
-      get 'calls/set_default_calls_generation_params' => :set_default_calls_generation_params
-      get 'calls/generate_calls' => :generate_calls
-    end
-
-    controller :tarif_optimizators do      
-      get 'tarif_optimizators/index' => :index
-      get 'tarif_optimizators/recalculate' => :recalculate
-      get 'tarif_optimizators/calculation_status' => :calculation_status
-      get 'tarif_optimizators/select_services' => :select_services
-    end
-
     controller :optimization_results do
       get 'optimization_results/show_customer_results' => :show_customer_results
     end

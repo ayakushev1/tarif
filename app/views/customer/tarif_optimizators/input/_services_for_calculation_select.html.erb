@@ -2,9 +2,9 @@
 form_item.init do |f|
 #  f.caption = "Services for calculation select"	
   f.set_fields do |filtr_name|
-	input_html = {:filtr_name => form_item.filtr_name, :class => "updatable form-control ", :action_name => demo_tarif_optimizators_index_path}
+	input_html = {:filtr_name => form_item.filtr_name, :class => "updatable form-control ", :action_name => customer_tarif_optimizators_index_path}
 	label_html = {:class => "control-label "}
-    html_options = {:action_name => demo_tarif_optimizators_index_path }
+    html_options = {:action_name => customer_tarif_optimizators_index_path }
     s = f.session_filtr_params
 #	s = session[:filtr][filtr_name]
     query_for_tarif = TarifClass.tarifs.for_private_use.services_by_operator([s["operator_id"]])
