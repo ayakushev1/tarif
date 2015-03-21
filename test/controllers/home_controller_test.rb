@@ -1,6 +1,6 @@
 require 'test_helper'
 
-describe Demo::HomeController do
+describe HomeController do
   before do
     @user = User.new(:id => 0, :name => "Гость", :email => "guest@example.com", :password => '111111', :password_confirmation => '111111', :confirmed_at => Time.zone.now)
     @user.skip_confirmation_notification!
@@ -11,13 +11,13 @@ describe Demo::HomeController do
     it 'must work for html request' do
       get :index
       assert_response :success
-      assert_select('div[id=?]', 'demo_home_index')
+      assert_select('div[id=?]', 'home_index')
     end
     
     it 'must work for ajax request' do
       xhr :get, :index, format: :js
       assert_response :success
-      @response.body.html_safe.must_be :=~, /div id=\\\"demo_home_index\\\"/
+      @response.body.html_safe.must_be :=~, /div id=\\\"home_index\\\"/
     end
   end
               

@@ -14,8 +14,8 @@ describe Customer::PaymentsController do
 
       @controller.stub :customer_has_free_trials?, false do
         get :new
-        assert_select('form[id=new_demo_payment]')
-        assert_select("[id=demo_payment_sum][value*='100']")
+        assert_select('form[id=new_customer_payment]')
+        assert_select("[id=customer_payment_sum][value*='100']")
       end
     end
   end
@@ -33,7 +33,7 @@ describe Customer::PaymentsController do
       sign_in @user
       @controller.stub :customer_has_free_trials?, false do
         post :create, :customer_payment => {:sum => 99.0, :paymentType => 'AC1'}
-        assert_select("form[id='new_demo_payment']")
+        assert_select("form[id='new_customer_payment']")
       end
     end
   

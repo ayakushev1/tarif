@@ -2,9 +2,9 @@
 
 <h3>Подробное описание шагов по подбору тарифа</h3>
 
-<% accordion_page = session[:current_accordion_page].blank? ? 222 : session[:current_accordion_page]['demo_home_steps_accord'].to_i %>
+<% accordion_page = session[:current_accordion_page].blank? ? 222 : session[:current_accordion_page]['home_steps_accord'].to_i %>
 
 <%= render :partial => 'home/steps', :layout => 'application/layouts/accordion', 
-           :locals => {:name => 'demo_home_steps_accord', :active => accordion_page} %>
+           :locals => {:name => 'home_steps_accord', :active => accordion_page} %>
 
 
