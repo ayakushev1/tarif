@@ -18,7 +18,7 @@
 	<% end %>
 		 
 	<%if controller.customer_has_tarif_optimized? %>
-		<li><%= link_to content_tag(:span, image_tag("left_menu_6.png", :alt => 'Результаты подбора тарифа')) + 'Результаты подбора тарифа', demo_optimization_results_show_customer_results_path %></li>
+		<li><%= link_to content_tag(:span, image_tag("left_menu_6.png", :alt => 'Результаты подбора тарифа')) + 'Результаты подбора тарифа', customer_optimization_results_show_customer_results_path %></li>
 	<% end %>
 			 
 		<li><%= link_to content_tag(:span, image_tag("left_menu_7.png", :alt => 'Перевод средств')) + 'Перевод средств', new_customer_payments_path %></li>

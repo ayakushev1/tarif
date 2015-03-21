@@ -1,4 +1,4 @@
-class Demo::OptimizationStepsController < ApplicationController
+class Customer::OptimizationStepsController < ApplicationController
   
   after_action :track_choose_load_calls_options, only: :choose_load_calls_options
   

@@ -84,11 +84,11 @@ describe Customer::PaymentsController do
       end
     end
   
-    it 'must redirect_to demo_optimization_steps_choose_load_calls_options_path if customer has free trials' do
+    it 'must redirect_to customer_optimization_steps_choose_load_calls_options_path if customer has free trials' do
       sign_in @user
       @controller.stub :customer_has_free_trials?, true do
         get :wait_for_payment_being_processed
-        assert_redirected_to demo_optimization_steps_choose_load_calls_options_path
+        assert_redirected_to customer_optimization_steps_choose_load_calls_options_path
       end
     end
   end

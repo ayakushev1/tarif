@@ -10,7 +10,7 @@
   {:class => "btn btn-primary", :type =>"button"}) if controller.customer_has_free_trials?('tarif_optimizators') and 
    Customer::Call.where(:user_id => current_user.id).exists? %>
 
-<%= link_to('Результаты подбора тарифа', demo_optimization_results_show_customer_results_path, 
+<%= link_to('Результаты подбора тарифа', customer_optimization_results_show_customer_results_path, 
   {:class => "btn btn-primary", :type =>"button"}) %>
   
 

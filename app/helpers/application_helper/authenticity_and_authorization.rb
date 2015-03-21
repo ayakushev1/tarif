@@ -123,6 +123,7 @@ module ApplicationHelper::AuthenticityAndAuthorization
       ((controller_path == 'customer/payments') and ['create', 'new', 'edit', 'show', 'update', 'wait_for_payment_being_processed', 'process_payment'].include?(action_name)) or
       ((controller_path == 'home') and ['short_description', 'detailed_description'].include?(action_name)) or
       ((controller_path == 'customer/history_parsers') and ['prepare_for_upload', 'upload', 'calculation_status'].include?(action_name)) or
+      ((controller_path == 'customer/optimization_steps') and ['choose_load_calls_options', 'check_loaded_calls', 'choose_optimization_options', 'optimize_tarifs', 'show_optimized_tarifs'].include?(action_name)) or
       ((controller_path == 'customer/demands') and ['index', 'create', 'new'].include?(action_name))
     end
 

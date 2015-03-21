@@ -47,14 +47,6 @@ Rails.application.routes.draw do
       get 'logout' => :destroy
     end
     
-    controller :optimization_steps do      
-      get 'optimization_steps/choose_load_calls_options' => :choose_load_calls_options
-      get 'optimization_steps/check_loaded_calls' => :check_loaded_calls
-      get 'optimization_steps/choose_optimization_options' => :choose_optimization_options
-      get 'optimization_steps/optimize_tarifs' => :optimize_tarifs
-      get 'optimization_steps/show_optimized_tarifs' => :show_optimized_tarifs
-    end
-    
     controller :calls do
       get 'calls/' => :index
       get 'calls/set_calls_generation_params' => :set_calls_generation_params
@@ -85,6 +77,14 @@ Rails.application.routes.draw do
   namespace :customer do
     resources :demands, only: [:index, :new, :create]    
 
+    controller :optimization_steps do      
+      get 'optimization_steps/choose_load_calls_options' => :choose_load_calls_options
+      get 'optimization_steps/check_loaded_calls' => :check_loaded_calls
+      get 'optimization_steps/choose_optimization_options' => :choose_optimization_options
+      get 'optimization_steps/optimize_tarifs' => :optimize_tarifs
+      get 'optimization_steps/show_optimized_tarifs' => :show_optimized_tarifs
+    end
+    
     controller :tarif_optimizators do
       get 'tarif_optimizators/index' => :index
       get 'tarif_optimizators/recalculate' => :recalculate
