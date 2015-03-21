@@ -3,13 +3,15 @@
               :action_name => customer_history_parsers_upload_path,
               :method => customer_history_parser.parsing_params[:file_upload_form_method], 
               :remote => customer_history_parser.parsing_params[:file_upload_remote_mode], 
-              :'data-type' => :html, :multipart => true, 
+              :'data-type' => :html, 
+              :multipart => true, 
               :turbolinks => customer_history_parser.parsing_params[:file_upload_turbolink_mode]) do %>
 
-	<p><label for="call_history">Выберите файл</label>
-
-	<%= file_field_tag 'call_history' %>
-
-	<%= submit_tag "Загрузить" %>  
+	<label for="call_history" , class="btn btn-primary" >Выберите файл</label>
+	<div hidden>
+		<%= text_field_tag('call_history', nil, "type" => "file")%>
+	</div>		
+	<%= submit_tag("Загрузить историю звонков", {:class => "btn btn-primary"} ) %>  
 
 <% end %>
+

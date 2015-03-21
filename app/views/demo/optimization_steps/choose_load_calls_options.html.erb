@@ -3,7 +3,7 @@
 <%= link_to('Моделировать историю звонков', customer_calls_set_calls_generation_params_path, 
   {:class => "btn btn-primary", :type =>"button"}) if controller.customer_has_free_trials?('calls')%>
   
-<%= link_to('Загрузить историю звонков', demo_history_parsers_prepare_for_upload_path, 
+<%= link_to('Загрузить историю звонков', customer_history_parsers_prepare_for_upload_path, 
   {:class => "btn btn-primary", :type =>"button"}) if controller.customer_has_free_trials?('history_parsers') %>
   
 <%= link_to('Подобрать тариф', demo_tarif_optimizators_index_path, 

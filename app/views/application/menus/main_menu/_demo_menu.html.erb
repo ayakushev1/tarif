@@ -6,7 +6,7 @@
 	<% end %>
 		 
 	<%if controller.customer_has_free_history_parsing_trials? %>
-		<li><%= link_to content_tag(:span, image_tag("left_menu_3.png", :alt => 'Загрузка истории звонков')) + 'Загрузка истории звонков', demo_history_parsers_prepare_for_upload_path %></li>
+		<li><%= link_to content_tag(:span, image_tag("left_menu_3.png", :alt => 'Загрузка истории звонков')) + 'Загрузка истории звонков', customer_history_parsers_prepare_for_upload_path %></li>
 	<% end %>
 		 
 	<%if controller.customer_has_calls_loaded? %>

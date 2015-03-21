@@ -1,7 +1,16 @@
+<% content_for :title, "Загрузка детализации звонков" %>
+
+<%= render(:partial => 'customer/history_parsers/user_params', 
+      :layout => 'application/layouts/demo/filtr_form_2_columns', 
+      :locals => {:form_item => customer_history_parser.user_params_filtr}) %>
+
 <%= render :partial => 'upload_form' %>
+
+<br />
+
+<h3>Детали обработки загруженной детализации звонков</h3>
+
+<%= render :partial => 'call_history_tabs', :layout => 'application/layouts/tabs', 
+      :locals => {:name => 'call_history_tabs', :active => session[:current_tabs_page]['call_history_tabs'].to_i} %>
       
-<%= link_to('Parse local history file', customer_history_parsers_parse_path ) %> 
-<br />
-<br />
-<%= render :partial => 'call_history_accord', :layout => 'application/layouts/accordion', 
-      :locals => {:name => 'call_history_accord', :active => session[:current_accordion_page]['call_history_accord'].to_i} %>
+

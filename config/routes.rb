@@ -62,13 +62,6 @@ Rails.application.routes.draw do
       get 'calls/generate_calls' => :generate_calls
     end
 
-    controller :history_parsers do
-      get 'history_parsers/prepare_for_upload' => :prepare_for_upload
-      post 'history_parsers/upload' => :upload
-      get 'history_parsers/upload' => :upload
-      get 'history_parsers/calculation_status' => :calculation_status
-    end
-
     controller :tarif_optimizators do      
       get 'tarif_optimizators/index' => :index
       get 'tarif_optimizators/recalculate' => :recalculate
