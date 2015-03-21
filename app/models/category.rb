@@ -3,9 +3,9 @@
 # Table name: categories
 #
 #  id        :integer          not null, primary key
-#  name      :string(255)
-#  level_id  :integer
+#  name      :string
 #  type_id   :integer
+#  level_id  :integer
 #  parent_id :integer
 #
 

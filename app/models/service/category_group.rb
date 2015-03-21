@@ -3,7 +3,7 @@
 # Table name: service_category_groups
 #
 #  id             :integer          not null, primary key
-#  name           :string(255)
+#  name           :string
 #  operator_id    :integer
 #  tarif_class_id :integer
 #  criteria       :json

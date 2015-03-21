@@ -1,6 +1,6 @@
 # == Schema Information
 #
-# Table name: demo_demands
+# Table name: customer_demands
 #
 #  id             :integer          not null, primary key
 #  customer_id    :integer
@@ -12,7 +12,7 @@
 #  updated_at     :datetime
 #
 
-class Demo::Demand < ActiveRecord::Base
+class Customer::Demand < ActiveRecord::Base
 
   belongs_to :customer, :class_name =>'User', :foreign_key => :customer_id
   belongs_to :type, :class_name =>'::Category', :foreign_key => :type_id

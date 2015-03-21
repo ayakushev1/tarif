@@ -4,7 +4,7 @@
 #
 #  id                :integer          not null, primary key
 #  user_id           :integer
-#  phone_number      :string(255)
+#  phone_number      :string
 #  filtr             :text
 #  result            :json
 #  stat_from         :datetime
@@ -13,9 +13,9 @@
 #  updated_at        :datetime
 #  operator_id       :integer
 #  tarif_id          :integer
-#  accounting_period :string(255)
-#  result_type       :string(255)
-#  result_name       :string(255)
+#  accounting_period :string
+#  result_type       :string
+#  result_name       :string
 #  result_key        :json
 #
 

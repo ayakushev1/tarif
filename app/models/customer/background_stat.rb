@@ -5,8 +5,8 @@
 #  id          :integer          not null, primary key
 #  user_id     :integer
 #  result      :json
-#  result_type :string(255)
-#  result_name :string(255)
+#  result_type :string
+#  result_name :string
 #  result_key  :json
 #  created_at  :datetime
 #  updated_at  :datetime

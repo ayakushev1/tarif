@@ -3,7 +3,7 @@
 # Table name: category_levels
 #
 #  id      :integer          not null, primary key
-#  name    :string(255)
+#  name    :string
 #  level   :integer
 #  type_id :integer
 #

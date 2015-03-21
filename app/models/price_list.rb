@@ -3,7 +3,7 @@
 # Table name: price_lists
 #
 #  id                              :integer          not null, primary key
-#  name                            :string(255)
+#  name                            :string
 #  tarif_class_id                  :integer
 #  tarif_list_id                   :integer
 #  service_category_group_id       :integer

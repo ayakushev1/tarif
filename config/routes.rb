@@ -35,8 +35,6 @@ Rails.application.routes.draw do
   end
   
   namespace :demo do
-    resources :demands, only: [:index, :new, :create]    
-
     controller :home do
       get 'home/short_description' => :short_description
       get 'home/detailed_description' => :detailed_description
@@ -100,6 +98,8 @@ Rails.application.routes.draw do
   resources :tarif_lists, :price_lists
   
   namespace :customer do
+    resources :demands, only: [:index, :new, :create]    
+
     controller :tarif_optimizators do
       get 'tarif_optimizators/index' => :index
       get 'tarif_optimizators/recalculate' => :recalculate

@@ -4,7 +4,7 @@
 #
 #  id             :integer          not null, primary key
 #  user_id        :integer
-#  phone_number   :string(255)
+#  phone_number   :string
 #  tarif_class_id :integer
 #  tarif_list_id  :integer
 #  status_id      :integer

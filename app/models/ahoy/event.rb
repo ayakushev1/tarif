@@ -5,7 +5,7 @@
 #  id         :uuid             not null, primary key
 #  visit_id   :uuid
 #  user_id    :integer
-#  name       :string(255)
+#  name       :string
 #  properties :json
 #  time       :datetime
 #

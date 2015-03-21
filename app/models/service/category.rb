@@ -3,7 +3,7 @@
 # Table name: service_categories
 #
 #  id        :integer          not null, primary key
-#  name      :string(255)
+#  name      :string
 #  type_id   :integer
 #  parent_id :integer
 #  level     :integer

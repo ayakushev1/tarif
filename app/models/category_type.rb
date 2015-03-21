@@ -3,7 +3,7 @@
 # Table name: category_types
 #
 #  id   :integer          not null, primary key
-#  name :string(255)
+#  name :string
 #
 
 class CategoryType < ActiveRecord::Base

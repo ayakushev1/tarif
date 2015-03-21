@@ -3,7 +3,7 @@
 # Table name: tarif_lists
 #
 #  id             :integer          not null, primary key
-#  name           :string(255)
+#  name           :string
 #  tarif_class_id :integer
 #  region_id      :integer
 #  features       :json

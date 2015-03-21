@@ -3,7 +3,7 @@
 # Table name: price_formulas
 #
 #  id                  :integer          not null, primary key
-#  name                :string(255)
+#  name                :string
 #  price_list_id       :integer
 #  calculation_order   :integer
 #  standard_formula_id :integer

@@ -3,9 +3,9 @@
 # Table name: parameters
 #
 #  id             :integer          not null, primary key
-#  name           :string(255)
-#  description    :string(255)
-#  nick_name      :string(255)
+#  name           :string
+#  description    :string
+#  nick_name      :string
 #  source_type_id :integer
 #  source         :json
 #  display        :json

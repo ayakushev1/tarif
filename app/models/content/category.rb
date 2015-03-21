@@ -3,7 +3,7 @@
 # Table name: content_categories
 #
 #  id        :integer          not null, primary key
-#  name      :string(255)
+#  name      :string
 #  level_id  :integer
 #  type_id   :integer
 #  parent_id :integer

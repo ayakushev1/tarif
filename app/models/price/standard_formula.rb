@@ -3,7 +3,7 @@
 # Table name: price_standard_formulas
 #
 #  id             :integer          not null, primary key
-#  name           :string(255)
+#  name           :string
 #  formula        :json
 #  price_unit_id  :integer
 #  volume_id      :integer

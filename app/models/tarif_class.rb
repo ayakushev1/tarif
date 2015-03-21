@@ -3,7 +3,7 @@
 # Table name: tarif_classes
 #
 #  id                  :integer          not null, primary key
-#  name                :string(255)
+#  name                :string
 #  operator_id         :integer
 #  privacy_id          :integer
 #  standard_service_id :integer

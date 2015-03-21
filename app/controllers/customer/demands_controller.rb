@@ -1,4 +1,4 @@
-class Demo::DemandsController < ApplicationController
+class Customer::DemandsController < ApplicationController
 
   before_action :check_if_user_spaming_site, only: [:new, :create]
   before_action :build_demand, only: [:new, :create]
@@ -17,17 +17,17 @@ class Demo::DemandsController < ApplicationController
   private
   
     def build_demand      
-      if params[:demo_demand]
-        @demand = Demo::Demand.new({:customer_id => current_user.id, :status_id => demand_is_received_from_customer}.merge(params[:demo_demand].permit!))
+      if params[:customer_demand]
+        @demand = Customer::Demand.new({:customer_id => current_user.id, :status_id => demand_is_received_from_customer}.merge(params[:customer_demand].permit!))
       else
-        @demand = Demo::Demand.new()
+        @demand = Customer::Demand.new()
       end
       
     end
     
     def check_if_user_spaming_site
       max_unprocessed_customer_demands = 3
-      user_demand_count = Demo::Demand.where({:customer_id => current_user.id, :status_id => demand_is_received_from_customer}).count
+      user_demand_count = Customer::Demand.where({:customer_id => current_user.id, :status_id => demand_is_received_from_customer}).count
       if user_demand_count >= max_unprocessed_customer_demands
         redirect_to root_path, {:alert => "Вы слишком часто пишите нам сообщения. Наберитесь терпения - мы рассмотрим ваше обращение"}
       end
