@@ -26,7 +26,7 @@ describe Demo::HomeController do
       sign_in @user
       get :index
       Customer::Info::ServicesUsed.where(:user_id =>@user.id).count.must_be :==, 1
-      assert_select('[href*=choose_load_calls_options]') #, @response.body # href="/demo/calls/set_calls_generation_params"
+      assert_select('[href*=choose_load_calls_options]') #, @response.body # href="/customer/calls/set_calls_generation_params"
     end
   
     it 'must show payment button if no free trails' do

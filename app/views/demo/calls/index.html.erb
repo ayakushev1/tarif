@@ -1,7 +1,0 @@
-<% content_for :title, "Список звонков" %>
-
-<%= render :partial => 'filtr', :layout => 'application/layouts/demo/filtr_inline_form', 
-  :locals => {:form_item => controller.filtr, :html => {:class => "calls_form"} }%>
-<br />
-<%= render :partial => 'calls', :layout => 'application/layouts/demo/model_table', :locals => {:table => controller.customer_calls}%>
-
