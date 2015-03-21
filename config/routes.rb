@@ -23,7 +23,13 @@ Rails.application.routes.draw do
 #  devise_for :users, :path => '', :path_names => {:sign_in => 'login', :sign_out => 'logout'}
 #  devise_for :users, path: "auth", path_names: { sign_in: 'login', sign_out: 'logout', password: 'secret', confirmation: 'verification', unlock: 'unblock', registration: 'register', sign_up: 'cmon_let_me_in' }
 #  root 'home#index'
-  root 'demo/home#index'
+  root 'home#index'
+
+  controller :home do
+    get 'home/short_description' => :short_description
+    get 'home/detailed_description' => :detailed_description
+#      get 'home/demo_results' => :demo_results
+  end
 
   namespace :content do
     controller :articles do
@@ -35,12 +41,6 @@ Rails.application.routes.draw do
   end
   
   namespace :demo do
-    controller :home do
-      get 'home/short_description' => :short_description
-      get 'home/detailed_description' => :detailed_description
-#      get 'home/demo_results' => :demo_results
-    end
-
     controller :sessions do
       get 'login' => :new
       post 'submit_login' => :create
@@ -154,11 +154,6 @@ Rails.application.routes.draw do
   
 
   resources :users, :tarif_classes
-
-  controller :home1 do
-    get 'home1/index' => :index
-  end  
-
 
   resources :parameters, only: :index
   resources :categories, only: :index

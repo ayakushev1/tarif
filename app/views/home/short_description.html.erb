@@ -7,7 +7,7 @@
 
 <% accordion_page = session[:current_accordion_page].blank? ? 222 : session[:current_accordion_page]['demo_home_opportunities_accord'].to_i %>
 
-<%= render :partial => 'demo/home/opportunities', :layout => 'application/layouts/accordion', 
+<%= render :partial => 'home/opportunities', :layout => 'application/layouts/accordion', 
            :locals => {:name => 'demo_home_opportunities_accord', :active => accordion_page} %>
 
 

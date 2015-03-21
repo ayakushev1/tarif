@@ -1,8 +1,7 @@
-<h1>Home page</h1>
-
-<p id="notice"><%= notice %></p>
-
-<div>
-</div>
+<% if current_user %>
+  <%= render :partial => 'home/optimization_step_description' %>
+<% else %>  
+  <%= render :partial => 'home/introduction' %>
+<% end %>  
 
 
