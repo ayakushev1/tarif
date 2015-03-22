@@ -42,7 +42,7 @@ class Customer::Info::ServicesUsed < ActiveType::Record[Customer::Info]
       'tarif_optimization_count' => (existing_info['tarif_optimization_count'] || 0) - (service_used.to_s == 'tarif_optimization_count' ? 1 : 0),
       'tarif_recalculation_count' => (existing_info['tarif_recalculation_count'] || 0) - (service_used.to_s == 'tarif_recalculation_count' ? 1 : 0),
       'has_calls_loaded' => (['calls_modelling_count', 'calls_parsing_count'].include?(service_used.to_s) ? true : existing_info['has_calls_loaded']),
-      'has_tarif_optimized' => (['tarif_optimization_count'].include?(service_used.to_s) ? true : existing_info['has_tarif_optimized']),
+      'has_tarif_optimized' => (['tarif_optimization_count', 'tarif_recalculation_count'].include?(service_used.to_s) ? true : existing_info['has_tarif_optimized']),
       'paid_trials' => existing_info['paid_trials'],
       }, :last_update => Time.zone.now)
 

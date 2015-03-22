@@ -51,6 +51,7 @@ module ApplicationHelper::CustomerUsedServicesCheck
   end
   
   def customer_has_tarif_optimized?
+#    raise(StandardError)
     (customer_info and customer_info['has_tarif_optimized'] == true ) ? true : false
   end
   
