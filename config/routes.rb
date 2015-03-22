@@ -15,9 +15,6 @@ Rails.application.routes.draw do
     post "submit_login" => "users/sessions#create"
     get "logout" => "users/sessions#destroy"
 
-    get "demo/login" => "users/sessions#new"
-    post "demo/submit_login" => "users/sessions#create"
-    get "demo/logout" => "users/sessions#destroy"
   end
 
 #  devise_for :users, :path => '', :path_names => {:sign_in => 'login', :sign_out => 'logout'}
@@ -28,7 +25,6 @@ Rails.application.routes.draw do
   controller :home do
     get 'home/short_description' => :short_description
     get 'home/detailed_description' => :detailed_description
-#      get 'home/demo_results' => :demo_results
   end
 
   namespace :content do
@@ -40,20 +36,6 @@ Rails.application.routes.draw do
     end
   end
   
-  namespace :demo do
-    controller :sessions do
-      get 'login' => :new
-      post 'submit_login' => :create
-      get 'logout' => :destroy
-    end
-    
-  end  
-=begin  
-    controller :project_support do
-      get 'project_support/donate' => :donate
-    end
-  end
-=end  
   resources :tarif_lists, :price_lists
   
   namespace :customer do
