@@ -7,15 +7,15 @@ class HomeController < ApplicationController
   private
   
   def track_demo_results
-    ahoy.track("#{controller_name}/#{action_name}", {
-      'flash' => flash,      
-    }) if params.count == 2
+#    ahoy.track("#{controller_name}/#{action_name}", {
+#      'flash' => flash,      
+#    }) if params.count == 2
   end
 
   def track_index
-    ahoy.track("#{controller_name}/#{action_name}", {
-      'flash' => flash,      
-    }) if params.count == 2
+#    ahoy.track("#{controller_name}/#{action_name}", {
+#      'flash' => flash,      
+#    }) if params.count == 2
   end
 
 end

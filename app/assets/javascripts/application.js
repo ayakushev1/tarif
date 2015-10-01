@@ -11,7 +11,7 @@
 // GO AFTER THE REQUIRES BELOW.
 //
 //= require jquery
-//= require ahoy
+// require ahoy
 // require jquery.ui.all
 // require jquery.ui.datepicker
 // require jquery.ui.draggable

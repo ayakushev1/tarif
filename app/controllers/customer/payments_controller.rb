@@ -39,26 +39,26 @@ class Customer::PaymentsController < ApplicationController
     end
 
   def track_new
-    ahoy.track("#{controller_name}/#{action_name}", {
-      'flash' => flash,      
-      'params' => params,
-    })
+#    ahoy.track("#{controller_name}/#{action_name}", {
+#      'flash' => flash,      
+#      'params' => params,
+#    })
   end
 
   def track_create
-    ahoy.track("#{controller_name}/#{action_name}", {
-      'flash' => flash,      
-      'params' => params,
-      'valid' => @payment_instruction.valid?,
-      'yandex_params' => @payment_instruction.to_yandex_params,
-    })
+#    ahoy.track("#{controller_name}/#{action_name}", {
+#      'flash' => flash,      
+#      'params' => params,
+#      'valid' => @payment_instruction.valid?,
+#      'yandex_params' => @payment_instruction.to_yandex_params,
+#    })
   end
 
   def track_process_payment
-    ahoy.track("#{controller_name}/#{action_name}", {
-      'flash' => flash,      
-      'params' => params,
-    })
+ #   ahoy.track("#{controller_name}/#{action_name}", {
+ #     'flash' => flash,      
+ #     'params' => params,
+ #   })
   end
 
     

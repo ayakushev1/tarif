@@ -77,7 +77,8 @@ class Customers::FinalTarifResultsPresenter #ServiceHelper::FinalTarifResultsPre
       new_result << f.merge(additions)
     end
     new_result.sort_by!{|item| item['service_set_price']}  
-  
+    
+ 
   end
   
   def customer_tarif_results_array(service_set_id)
@@ -109,6 +110,7 @@ class Customers::FinalTarifResultsPresenter #ServiceHelper::FinalTarifResultsPre
       new_result << f.merge(additions)
     end
     new_result
+    
 #    new_result.sort_by!{|item| (item['rouming'] || "") + (item['calls'] || "")}    
   end
     

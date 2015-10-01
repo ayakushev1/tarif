@@ -18,7 +18,7 @@ class Customer::OptimizationResultMover < ActiveType::Object
   
   def insert_customer_stat
     data_to_insert = customer_stat_records_to_copy
-#    raise(StandardError, data_to_insert.map{|a| a['id']})
+#    raise(StandardError, data_to_insert.map{|a| a[:user_id]})
     Customer::Stat.create(data_to_insert)    
   end
   
@@ -30,6 +30,7 @@ class Customer::OptimizationResultMover < ActiveType::Object
                   merge({:user_id => user_id_copy_to, :result_key => {:demo_result => {:id => article_id}}})
 #      raise(StandardError, result[0].keys)            
     end
+#    raise(StandardError, result) 
     result
   end
   

@@ -14,9 +14,9 @@ class Customer::OptimizationResultMoversController < ApplicationController
 
   private
   
-    def build_optimization_result_mover      
-#      raise(StandardError, params)
+    def build_optimization_result_mover            
       if params[:customer_optimization_result_mover]
+#        raise(StandardError, params)
         @optimization_result_mover = Customer::OptimizationResultMover.new(params[:customer_optimization_result_mover].permit!)
       else
         @optimization_result_mover = Customer::OptimizationResultMover.new()

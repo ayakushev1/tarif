@@ -10,8 +10,8 @@ class Customer::OptimizationStepsController < ApplicationController
   private
   
   def track_choose_load_calls_options
-    ahoy.track("#{controller_name}/#{action_name}", {
-      'flash' => flash,      
-    }) if params.count == 2
+#    ahoy.track("#{controller_name}/#{action_name}", {
+#      'flash' => flash,      
+#    }) if params.count == 2
   end
 end

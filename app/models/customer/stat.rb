@@ -32,6 +32,7 @@ class Customer::Stat < ActiveRecord::Base
   def self.get_results(model_init_data = {})
     result_model = init_result_model(model_init_data)
     results = {}
+#    raise(StandardError, init_result_model(model_init_data))
     result_model.each do |result_item|
       result_item.attributes[model_init_data[:result_name]].each do |result_type, result_value|
         if result_value.is_a?(Hash)
