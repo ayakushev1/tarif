@@ -1,0 +1,18 @@
+sudo mount.cifs //192.168.56.1/Sites /sites -o user=ag.yakushev
+lanch server to get access to pg from host TRUSTED_IP=10.0.2.2 rails s (Puma)
+list of rubies - rvm list
+set defulat ruby - rvm --default use ruby-2.1.1
+or rvm use 2.1.1
+to load seed data in test db - rake db:seed RAILS_ENV=test
+to clear log - rake log:clear 
+
+Heroku
+heroku labs:enable log-runtime-metrics  to test memory usage in time and see results in logs
+
+Foreman
+foreman start -f Procfile.development
+foreman start -f Procfile.development_with_jobs
+foreman run rake db:seed
+
+testing
+foreman run bin/spring rake test test/models/customer/payment_instruction_to_yandex_test.rb
