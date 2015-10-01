@@ -14,9 +14,7 @@ form_item.init do |f|
  	 select(filtr_name, "service_set_based_on_tarif_sets_or_tarif_results", [
  	 	["final tarif sets by parts", "final_tarif_sets_by_parts"], ["all tarif results", "all_tarif_results"], ["cons tarif results", "cons_tarif_results"]], 
  	 	{:selected => s["service_set_based_on_tarif_sets_or_tarif_results"]}, input_html ),
-  	],
 
-  	[
      label(filtr_name, "what_format_of_results", "what format of results?", label_html),
  	 select(filtr_name, "what_format_of_results", [
  	 	["tarif results by parts", "results_by_parts"], ["tarif results by services", "results_by_services"], ["tarif results for customer", "results_for_customer"]], 
@@ -29,17 +27,15 @@ form_item.init do |f|
 
      label(filtr_name, "use_short_tarif_set_name", "Use_short_tarif_set_name?", label_html),
  	 select(filtr_name, "use_short_tarif_set_name", [["Yes", true], ["No, use long", false]], {:selected => s["use_short_tarif_set_name"]}, input_html ),
-  	],
-  	
-  	[
+
      label(filtr_name, "calculate_with_multiple_use", "Calculate with multiple_use of tarif_options", label_html),
  	 select(filtr_name, "calculate_with_multiple_use", [["Yes", true], ["No", false]], {:selected => s["calculate_with_multiple_use"]}, input_html ),
-
-     label(filtr_name, "simplify_tarif_results", "Simplify tarif_results?", label_html),
- 	 select(filtr_name, "simplify_tarif_results", [["Simplify", true], ["Do not simplify", false]], {:selected => s["simplify_tarif_results"]}, input_html ),
   	],
   	
   	[
+     label(filtr_name, "simplify_tarif_results", "Simplify tarif_results?", label_html),
+ 	 select(filtr_name, "simplify_tarif_results", [["Simplify", true], ["Do not simplify", false]], {:selected => s["simplify_tarif_results"]}, input_html ),
+
      label(filtr_name, "eliminate_identical_tarif_sets", "eliminate_identical_tarif_sets", label_html),
  	 select(filtr_name, "eliminate_identical_tarif_sets", [["Yes", true], ["No", false]], {:selected => s["eliminate_identical_tarif_sets"]}, input_html ),
 
@@ -53,17 +49,15 @@ form_item.init do |f|
 
      label(filtr_name, "analyze_memory_used", "Analyze memory used?", label_html),
  	 select(filtr_name, "analyze_memory_used", [["Analyse", true], ["Do not analyse", false]], {:selected => s["analyze_memory_used"]}, input_html ),
-  	],
-  	
-  	[
+
      label(filtr_name, "analyze_query_constructor_performance", "Analyze query_constructor_performance?", label_html),
  	 select(filtr_name, "analyze_query_constructor_performance", [["Analyse", true], ["Do not analyse", false]], {:selected => s["analyze_query_constructor_performance"]}, input_html ),
-
-     label(filtr_name, "service_ids_batch_size", "Service_ids batch size", label_html),
-     text_field(filtr_name, "service_ids_batch_size", input_html.merge({:type => 'text', :value => s["service_ids_batch_size"] }) ),
   	],
   	
   	[
+     label(filtr_name, "service_ids_batch_size", "Service_ids batch size", label_html),
+     text_field(filtr_name, "service_ids_batch_size", input_html.merge({:type => 'text', :value => s["service_ids_batch_size"] }) ),
+
      label(filtr_name, "save_interim_results_after_calculating_tarif_results", "Save interim results after calculating tarif_results?", label_html),
  	 select(filtr_name, "save_interim_results_after_calculating_tarif_results", [["Save", true], ["Do not save", false]], {:selected => s["save_interim_results_after_calculating_tarif_results"]}, input_html ),
 
@@ -77,19 +71,17 @@ form_item.init do |f|
 
      label(filtr_name, "show_zero_tarif_result_by_parts", "Show zero tarif_result_by_parts?", label_html),
  	 select(filtr_name, "show_zero_tarif_result_by_parts", [["Show", true], ["Do not show", false]], {:selected => s["show_zero_tarif_result_by_parts"]}, input_html ),
+
+     label(filtr_name, "save_current_tarif_set_calculation_history", "save current_tarif_set calculation history?", label_html),
+ 	 select(filtr_name, "save_current_tarif_set_calculation_history", [["Save", true], ["Do not save", false]], {:selected => s["save_current_tarif_set_calculation_history"]}, input_html ),
   	],
   	
   	[
-     label(filtr_name, "save_current_tarif_set_calculation_history", "save current_tarif_set calculation history?", label_html),
- 	 select(filtr_name, "save_current_tarif_set_calculation_history", [["Save", true], ["Do not save", false]], {:selected => s["save_current_tarif_set_calculation_history"]}, input_html ),
-
      label(filtr_name, "part_sort_criteria_in_price_optimization", "part sort_criteria in price_optimization", label_html),
  	 select(filtr_name, "part_sort_criteria_in_price_optimization", 
  	 [["max_value", 'max_value'], ["min_value", 'min_value'], ["min_max_difference", 'min_max_difference'], ["min_max_difference_to_max_value", 'min_max_difference_to_max_value'], 
  	 ["reverse_min_value", 'reverse_min_value'], ["auto", 'auto']], {:selected => s["part_sort_criteria_in_price_optimization"]}, input_html ),
-  	],
-  	
-  	[
+
      label(filtr_name, "max_tarif_set_count_per_tarif", "Max final_tarif_set number per tarif", label_html),
      text_field(filtr_name, "max_tarif_set_count_per_tarif", input_html.merge({:type => 'text', :value => s["max_tarif_set_count_per_tarif"] }) ),
 
