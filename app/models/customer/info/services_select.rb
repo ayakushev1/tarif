@@ -30,6 +30,7 @@ class Customer::Info::ServicesSelect < ActiveType::Record[Customer::Info]
   end
 
   def self.process_selecting_services(params)
+#    raise(StandardError)
     service_choices_filtr = {}
     if params
       if params['operator_bln'] == 'true'

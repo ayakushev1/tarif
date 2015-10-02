@@ -57,6 +57,19 @@ form_item.init do |f|
      '',
      text_area(filtr_name, "tarif_options_mts", input_html.merge({:type => 'textarea', :value => s["tarif_options_mts"], :rows => 2  }) ),     		        
   	],
+
+  	[
+     label(filtr_name, "calculate_only_chosen_services", "Считать только выбранные тариф и опции?", label_html),
+ 	 select(filtr_name, "calculate_only_chosen_services", [["Да", true], ["Считать все варианты", false]], {:selected => s["calculate_only_chosen_services"]}, input_html ),
+ 	 
+     label(filtr_name, "calculate_with_limited_scope", "Считать только выбранные направления связи?", label_html),
+ 	 select(filtr_name, "calculate_with_limited_scope", [["Да", true], ["Считать все направления связи", false]], {:selected => s["calculate_with_limited_scope"]}, input_html ),
+  	 
+  	 label(filtr_name, "accounting_period", "Период за который проводить расчет тарифов", label_html),
+  	 collection_select(filtr_name, "accounting_period", 
+  	   customer_tarif_optimizator.accounting_periods, 
+  	   :accounting_period, :accounting_period, {:include_blank => "выберите период расчета", :selected => s["accounting_period"]}, input_html ),
+  	],
   	
   ]
 	    

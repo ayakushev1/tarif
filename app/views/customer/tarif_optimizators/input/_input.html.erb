@@ -5,7 +5,6 @@ content_in :tabs do |user|
     ([
      'Optimization params',
      (
-	  link_to('Recalculate', customer_tarif_optimizators_recalculate_path ) + "  |  ".html_safe +
 	  render(:partial => 'customer/tarif_optimizators/input/optimization_params', :layout => 'application/layouts/demo/filtr_form_3_columns', 
 	    :locals => {:form_item => customer_tarif_optimizator.optimization_params} )
 		
@@ -23,7 +22,6 @@ content_in :tabs do |user|
 
     ([
      'Services list',
-	  link_to('Recalculate', customer_tarif_optimizators_recalculate_path ) +
       render(:partial => 'customer/tarif_optimizators/input/services_select', :layout => 'application/layouts/demo/filtr_form_3_columns', 
         :locals => {:form_item => customer_tarif_optimizator.services_select} )
     ] if current_user_admin?), 
