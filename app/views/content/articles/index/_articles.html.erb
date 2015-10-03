@@ -1,0 +1,27 @@
+<%
+table.init do |t|
+  t.caption = 'Список рекомендаций'
+  t.base_name = 'content_articles'
+  t.pagination_per_page = 10
+  t.id_name = 'id'#'service_category_tarif_class_id'
+  
+#  t.heads = ['id', 'author_id', 'title', 'content', 'type_id', 'status_id', 'key', '']
+  t.heads = ['Название рекомендации', 'Пользовательская модель', '']
+  
+  t.set_fields do |f| 
+  	[
+#  	 f['id'],
+#  	 f['author_id'],
+  	 f['title'],
+  	 (f['content']['usage_model'] if f['content']),
+#  	 (f['content']['summary'] if f['content']),
+#  	 (f['content']['body'] if f['content']),
+#     f['type_id'],
+#     f['status_id'],
+#     f['key'],
+     link_to( content_tag(:span, image_tag("left_menu_5.png", :alt => 'Подробное описание')), 
+       content_articles_show_path, {:remote => false}),
+  	] 
+  end
+end
+%>

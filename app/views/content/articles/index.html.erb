@@ -1,20 +1,12 @@
-<% content_for :title, "Выбор рекомендации по тарифам и опциям" %>
+<% content_for :title, "Выбор рекомендации по тарифам и опциям " %>
 
 <% recommendation = Content::Article.demo_results.where(:id => controller.demo_result_id).first %>
-
-<p><strong>Выбранный вариант: </strong><i><%= recommendation.blank? ? "Рекомендация не выбрана" : recommendation['title'] %></i></p>
-
-<!--
-<p><strong>Краткое описание: </strong><%=  recommendation['content']['summary'] if recommendation and recommendation['content'] %></p>
--->
 
 <p style="font-size: small">Для выбора нескольких значений удерживайте клавишу Ctrl</p>
 
 <%= render(:partial => 'content/articles/index/params', :layout => 'application/layouts/demo/filtr_form_2_columns', 
-      :locals => {:form_item => controller.recommendation_select_params}) %>
+    :locals => {:form_item => controller.recommendation_select_params}) %>
 
-<div class="row">
-	<div class="col-xs-2">
-		<%= link_to('Перейти к рекомендации', content_articles_show_path, {:class => "btn btn-success", :type =>"button"}) %> 
-	</div>
-</div>
+<%= render(:partial => 'content/articles/index/articles', :layout => 'application/layouts/demo/model_table', 
+	:locals => {:table => controller.articles}) %>
+	

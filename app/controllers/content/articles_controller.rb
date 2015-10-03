@@ -1,5 +1,23 @@
 class Content::ArticlesController < ApplicationController
 
+  def articles
+    s_filtr = recommendation_select_params.session_filtr_params
+    choosen_operators = ((s_filtr["operator_ids"] || []) -['']).map(&:to_i)
+    choosen_roumings = ((s_filtr["roumings"] || []) -['']).map(&:to_i)
+    choosen_services = ((s_filtr["services"] || []) -['']).map(&:to_i)
+    choosen_destinations = ((s_filtr["destinations"] || []) -['']).map(&:to_i)
+    
+    recommendation_query = Content::Article.demo_results.published
+    recommendation_query = recommendation_query.
+      where("(key->>'operators')::jsonb @> '#{choosen_operators}'::jsonb").
+      where("(key->>'roumings')::jsonb @> '#{choosen_roumings}'::jsonb").
+      where("(key->>'services')::jsonb @> '#{choosen_services}'::jsonb").
+      where("(key->>'destinations')::jsonb @> '#{choosen_destinations}'::jsonb")
+#    raise(StandardError, [choosen_roumings, recommendation_query.to_sql])
+
+    Tableable.new(self, recommendation_query)
+  end
+  
   def recommendation_select_params
     Filtrable.new(self, "recommendation_select_params")
   end
@@ -65,7 +83,7 @@ class Content::ArticlesController < ApplicationController
   end
   
   def demo_result_id
-    recommendation_select_params.session_filtr_params['demo_result_id'].blank? ? 1 : recommendation_select_params.session_filtr_params['demo_result_id'].to_i
+    session[:current_id]['content_articles_id'].blank? ? -1 : session[:current_id]['content_articles_id'].to_i
   end
 
 end

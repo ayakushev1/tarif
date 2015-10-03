@@ -1,44 +1,9 @@
 <%
-
 form_item.init do |f|
-#  f.caption = "User params"
-#  f.action_on_submit = customer_history_parsers_prepare_for_upload_path	  	
   s_filtr = f.session_filtr_params
   input_html = {:filtr_name => form_item.filtr_name, :class => "updatable form-control ", :action_name => content_articles_index_path}
   label_html = {:class11 => "control-label "}
   
-  collection_sql_demo_result_id = Customer::Stat.where(
-  	     :user_id => 0, :result_type => "optimization_results", :result_name => "prepared_final_tarif_results").uniq.
-  	     select("result_key->'demo_result'->>'id' as id, result_key->'demo_result'->>'name' as name").order("result_key->'demo_result'->>'id'")
-  
-  default_demo_result_id = collection_sql_demo_result_id.first ? collection_sql_demo_result_id.first[:id] : nil
-  default_demo_result_id = s_filtr["demo_result_id"].blank? ? default_demo_result_id : s_filtr["demo_result_id"] 
-  
-  recommendation_query = Content::Article.demo_results.collect do |demo_result| #where("key->'operators' && ? ",s_filtr["operator_ids"])
-  	choose_all_operators = ((s_filtr["operator_ids"] || []) -['']).blank?
-  	all_chosen_operators_in_keys = (demo_result['key']['operators'] and ((s_filtr["operator_ids"] || []).map(&:to_i) - demo_result['key']['operators']).blank?)
-  	
-  	choose_all_roumings = ((s_filtr["roumings"] || []) -['']).blank?
-  	all_chosen_roumings_in_keys = (demo_result['key']['roumings'] and ((s_filtr["roumings"] || []).map(&:to_i) - demo_result['key']['roumings']).blank?)
-  	
-  	choose_all_services = ((s_filtr["services"] || []) -['']).blank?
-  	all_chosen_services_in_keys = (demo_result['key']['services'] and ((s_filtr["services"] || []).map(&:to_i) - demo_result['key']['services']).blank?)
-  	
-  	choose_all_destinations = ((s_filtr["destinations"] || []) -['']).blank?
-  	all_chosen_destinations_in_keys = (demo_result['key']['destinations'] and ((s_filtr["destinations"] || []).map(&:to_i) - demo_result['key']['destinations']).blank?)
-  	
-#  	choose_all_intensities = ((s_filtr["intensities"] || []) -['']).blank?
-#  	all_chosen_intensities_in_keys = (demo_result['key']['intensities'] and ((s_filtr["intensities"] || []).map(&:to_i) - demo_result['key']['intensities']).blank?)
-  	
-  	 
-    demo_result if (choose_all_operators or all_chosen_operators_in_keys) and
-      (choose_all_roumings or all_chosen_roumings_in_keys) and (choose_all_services or all_chosen_services_in_keys) and
-      (choose_all_destinations or all_chosen_destinations_in_keys)# and (choose_all_intensities or all_chosen_intensities_in_keys)
-      
-#    raise(StandardError, [choose_all_operators, all_chosen_operators_in_keys])
-  end.compact
-  
-#  raise(StandardError, recommendation_query)
   f.set_fields do |filtr_name| 
   [
   	[
@@ -71,12 +36,6 @@ form_item.init do |f|
   	   :id, :name, {:include_blank => "Вcе варианты", :selected => (s_filtr["intensities"] || {})['internet'] }, input_html.merge({:multiple => true, :size => 6}) ),   
   	 ],  
 =end
-     [
-  	 label(filtr_name, "demo_result_id", "Доступные рекомендации", label_html),
-  	 collection_select(filtr_name, "demo_result_id", recommendation_query, 
-  	   :id, :title, {:selected => default_demo_result_id}, input_html.merge({:multiple => false, :size => [recommendation_query.count, 1].min}) ),   
-
-  	 ],  	
   ] 
   end
 end
