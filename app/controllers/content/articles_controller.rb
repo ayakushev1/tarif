@@ -1,5 +1,14 @@
 class Content::ArticlesController < ApplicationController
 
+  def show
+    if params['content_articles_id']
+      session[:current_id] ||= []
+      session[:current_id]['content_articles_id'] = params['content_articles_id']
+    end
+    
+    redirect_to content_articles_index_path if !session[:current_id] or !session[:current_id]['content_articles_id']
+  end
+  
   def articles
     s_filtr = recommendation_select_params.session_filtr_params
     choosen_operators = ((s_filtr["operator_ids"] || []) -['']).map(&:to_i)
