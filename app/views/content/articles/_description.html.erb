@@ -1,4 +1,4 @@
-<% if demo_result_description%>
+<% if demo_result_description %>
 
 	<h3><i><%= demo_result_description['title'] %></i></h3>
 	
@@ -8,8 +8,11 @@
 		<p><strong>Рекомендация: </strong><%= demo_result_description['content']['summary'] %></p>
 		
 		<p><strong>Комментарий: </strong><%= demo_result_description['content']['body'] %></p>
-		
-
 	<% end %>
+<% else %>
+
+	<p><strong>Не выбрана рекомендация</strong>,
+	<%= link_to('перейдите к выбору рекомендации', content_articles_index_path, {:remote => false})%>
+	</p>
 	
 <% end %>
