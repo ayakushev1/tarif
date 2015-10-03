@@ -1,7 +1,5 @@
 <% content_for :title, "Выбор рекомендации по тарифам и опциям " %>
 
-<% recommendation = Content::Article.demo_results.where(:id => controller.demo_result_id).first %>
-
 <p style="font-size: small">Для выбора нескольких значений удерживайте клавишу Ctrl</p>
 
 <%= render(:partial => 'content/articles/index/params', :layout => 'application/layouts/demo/filtr_form_2_columns', 
