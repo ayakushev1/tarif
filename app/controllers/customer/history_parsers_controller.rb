@@ -1,19 +1,20 @@
 class Customer::HistoryParsersController < ApplicationController
+  include Customer::HistoryParsersHelper
   include Crudable
   crudable_actions :index
 
-  before_action -> {customer_history_parser.check_if_parsing_params_in_session}, only: [:parse, :prepare_for_upload]
-  before_action -> {customer_history_parser.init_background_process_informer}, only: [:upload, :calculation_status, :parse]
-#  after_action -> {customer_history_parser.update_customer_infos}, only: :upload
+  before_action :check_if_parsing_params_in_session, only: [:parse, :prepare_for_upload]
+  before_action :init_background_process_informer, only: [:upload, :calculation_status, :parse]
+#  after_action :update_customer_infos, only: :upload
   after_action :track_upload, only: :upload
   after_action :track_prepare_for_upload, only: :prepare_for_upload
 
   helper_method :customer_history_parser
 
   def calculation_status
-    if !customer_history_parser.background_process_informer.calculating?   
-#      message = customer_history_parser.call_history_results['message']
-#      raise(StandardError, customer_history_parser.call_history_results['message'])
+    if !background_process_informer.calculating?   
+#      message = call_history_results['message']
+#      raise(StandardError, call_history_results['message'])
       redirect_to({:action => :prepare_for_upload})#, {:alert => message, :notice => message})
     end
   end
@@ -28,7 +29,7 @@ class Customer::HistoryParsersController < ApplicationController
   end
 
   def upload
-    message = customer_history_parser.upload_file(params[:call_history])
+    message = upload_file(params[:call_history])
     if message[:file_is_good] == true
       background_parser_processor(:parse_uploaded_file, params[:call_history])
     else
@@ -37,29 +38,29 @@ class Customer::HistoryParsersController < ApplicationController
   end
   
   def background_parser_processor(parser_starter, call_history_file)  
-    customer_history_parser.call_history_saver.clean_output_results         
+    call_history_saver.clean_output_results         
      
-    if customer_history_parser.parsing_params[:calculate_on_background]
-      customer_history_parser.recalculate_on_back_ground(parser_starter, call_history_file)
+    if parsing_params[:calculate_on_background]
+      recalculate_on_back_ground(parser_starter, call_history_file)
       redirect_to :action => :calculation_status
     else      
-      message = customer_history_parser.recalculate_direct(parser_starter, call_history_file) 
+      message = recalculate_direct(parser_starter, call_history_file) 
       redirect_to({:action => :prepare_for_upload}, {:notice => message})
     end
   end
   
-  def customer_history_parser
+#  def customer_history_parser
 #    @customer_history_parser ||= 
-    Customer::HistoryParser.new(self)
-  end
+#    Customer::HistoryParser.new(self)
+#  end
   
   private
   
   def track_upload
 #    ahoy.track "#{controller_name}/#{action_name}", {
 #      'flash' => flash,
-#      'parsing_params' => customer_history_parser.parsing_params, 
-#      'user_params' => customer_history_parser.user_params,
+#      'parsing_params' => parsing_params, 
+#      'user_params' => user_params,
 #      }
   end
 

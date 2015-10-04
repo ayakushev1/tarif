@@ -1,6 +1,6 @@
 class Customer::HistoryParser < ActiveType::Object
   attribute :session, default: proc {controller.session}
-  attribute :user_session, default: proc {controller.user_session}
+#  attribute :user_session, default: proc {controller.user_session}
   attribute :current_user_id, :integer, default: proc {controller.current_user.id}
 
   attribute :call_history_saver, default: proc {Customer::Stat::OptimizationResult.new('call_history', 'call_history', current_user_id)}
