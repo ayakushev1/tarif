@@ -1,0 +1,55 @@
+<%
+style_table = [
+	[/label/, {:class => "control-label span2"}],
+	[/(input|select|textarea).*?type.*?text/, {:class => "controls updatable", :filtr_name => form_item.form_name}],
+	[/input.*?type.*?submit/, {:class => "btn", :filtr_name => form_item.form_name}],
+	[/a.*?href.*?\/a/, {:class => "btn ", :'data-remote' => true, :turbolinks => true}],
+	
+]
+
+form_html_options = {:class => "form-horizontal", :turbolinks => true}
+form_html_options = form_html_options.merge(html) if local_assigns[:html]
+
+form_options = {:remote => true, :authenticity_token => true, :as => form_item.form_name}
+form_options = form_options.merge(options) if local_assigns[:options]
+form_options = form_options.merge(:html => form_html_options)
+
+%>
+
+<% if form_item.caption %> 
+  <legend><%= form_item.caption %></legend>
+<% end %>
+
+<%= form_options if false %>
+<%= form_tag(options[:url], form_options) do %>
+    <% if form_item.model.errors.any? %>
+	  <div id="error_explanation" class="alert-error">
+	    <h2><%= pluralize(form_item.model.errors.count, "error") %> prohibited this item from being saved:</h2>	
+	    <ul>
+	      <% form_item.model.errors.full_messages.each do |msg| %>
+            <li><%= msg %></li>
+	      <% end %>
+	    </ul>
+	  </div>
+    <% end %>
+
+	<%if form_options[:class] =~ /form-inline/ %>
+	  <% form_item.fields do |label, field| %>
+	      <%= add_css(label, style_table ) %>
+	      <%= add_css(field, style_table) %>
+	  <% end %>
+	<% else %>
+		<fieldset>
+		  <% form_item.fields do |label, field| %>
+		    <div class="control-group">
+		      <%= add_css(label, style_table ) %>
+		      <div class="controls"><%= add_css(field, style_table) %></div>
+		    </div>
+		  <% end %>
+		</fieldset>
+	<% end %>
+<% end %>
+
+
+
+

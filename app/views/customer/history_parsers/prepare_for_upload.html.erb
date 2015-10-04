@@ -1,7 +1,7 @@
 <% content_for :title, "Загрузка детализации звонков" %>
 
 <%= render(:partial => 'customer/history_parsers/user_params', 
-      :layout => 'application/layouts/demo/filtr_form_2_columns', 
+      :layout => 'application/layouts/filtr_form_2_columns', 
       :locals => {:form_item => customer_history_parser.user_params_filtr}) %>
 
 <%= render :partial => 'upload_form' %>

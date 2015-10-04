@@ -1,13 +1,13 @@
 <%
-style_table = [
-	[/label/, {:class => "control-label"}],
-	[/(input|select|textarea).*?action/, {:filtr_name => form_item.filtr_name, :class => "updatable control"}],
+#style_table = [
+#	[/label/, {:class => ""}],
+#	[/(input|select|textarea).*?action/, {:filtr_name => form_item.filtr_name, :class => "updatable"}],
 #	[/(input|select).*?action/, {:class => "updatable "}],
-	[/a.*?href.*?\/a/, {:class => "btn ", :'data-remote' => true, :turbolinks => true}],
-	[/input.*?type.*?submit/, {:class => "btn "}],
-]
+#	[/a.*?href.*?\/a/, {:class => "btn btn-primary", :type => 'button', :'data-remote' => true, :turbolinks => true}],
+#	[/input.*?type.*?submit/, {:class => "btn btn-primary"}],
+#]
 
-form_html_options = {:id =>form_item.filtr_name, :class => "row-fluid", :turbolinks => true}
+form_html_options = {:id =>form_item.filtr_name, :class => "history_filter", :turbolinks => true}
 form_html_options = form_html_options.merge(html) if local_assigns[:html]
 
 form_options = {:method => 'get', :remote => false, :authenticity_token => true}
@@ -18,28 +18,26 @@ form_options = form_options.merge(form_html_options)
 %>
 <%= session[:filtr] if false %>
 
+
 <%= form_tag(form_item.action_on_submit, form_options) do %>
-  <% if form_item.caption %> 
-	<legend><%= form_item.caption %></legend>
-  <% end %>
+	<% if form_item.caption %> 
+		<legend><%= form_item.caption %></legend>
+	<% end %>
 
- 	<div class="span5">
-	    <% form_item.fields(form_item.filtr_name) do |label_1, field_1, label_2, field_2| %>
-		  <div class="control-group row-fluid">
-		    <div class="span5 text-right"><strong><%= add_css(label_1, style_table ) %></strong></div>
-		    <div class="span7 text-left"><%= add_css(field_1, style_table) %></div>
-	      </div>
-		<% end %>
-  	</div>
-	<div class="span6 ">
-    	<% form_item.fields(form_item.filtr_name) do |label_1, field_1, label_2, field_2| %>
-	      <div class="control-group row-fluid">
-	        <div class="span5 text-right"><strong><%= add_css(label_2, style_table ) %></strong></div>
-	        <div class="span7 text-left"><%= add_css(field_2, style_table) %></div>
-	      </div>
-		<% end %>
-  	</div>
+	<% form_item.fields(form_item.filtr_name) do |label_1, field_1, label_2, field_2| %>
+		<div class="row">
+			<div class="col-xs-6">
+				<%= label_1 %>
+				<%= field_1 %>
+			</div>
 
+			<div class="col-xs-6">
+				<%= label_2 %>
+				<%= field_2 %>
+			</div>
+		</div>		
+		<br />
+	<% end %>	
 <% end %>
 
 
