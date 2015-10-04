@@ -24,8 +24,8 @@ module ApplicationHelper::AuthenticityAndAuthorization
     
   private
     def authorize
-#      raise(StandardError, [controller_name, action_name])
       if controller_name == 'users' or controller_name == 'registrations'
+#        raise(StandardError, [controller_name, action_name])
         redirect_to(root_path, alert: 'Вы пытаетесь получить доступ к чужому счету') if !user_access_to_his_account and !user_is_registering
       else
 #        raise(StandardError, [controller_name, action_name])
@@ -50,9 +50,18 @@ module ApplicationHelper::AuthenticityAndAuthorization
     end
     
     def user_access_to_his_account
-      #raise(StandardError, [controller_name, action_name])
-      ((controller_name == 'users' or controller_name == 'registrations') and ['show', 'edit', 'update'].include?(action_name) and params[:id] and
-      current_user and current_user.id.to_i == params[:id].to_i)
+#      raise(StandardError, [controller_name, action_name])
+      comparison_between_form_and_params = case action_name
+      when 'show', 'edit'
+        params[:id] and current_user and current_user.id.to_i == params[:id].to_i
+      when 'update'
+#        raise(StandardError)
+        params[:user] and current_user and current_user.valid_password?(params[:user][:password])
+      else
+        false
+      end
+
+      (['users', 'registrations'].include?(controller_name) and comparison_between_form_and_params)      
     end
     
     def user_make_some_allowed_actions_with_devise_controllers

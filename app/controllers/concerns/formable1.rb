@@ -1,4 +1,4 @@
-class Formable < Presenter
+class Formable1 < Presenter
   attr_accessor :form_name, :caption, :action_on_submit
   
   def initialize(controller, model)

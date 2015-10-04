@@ -4,8 +4,9 @@ class ApplicationController < ActionController::Base
   helper_method :current_user_admin?, :customer_has_free_trials?
 
   include SavableInSession::Filtrable, SavableInSession::ArrayOfHashable, SavableInSession::Tableable, SavableInSession::ProgressBarable,
-          SavableInSession::SessionInitializers
-  helper_method :session_filtr_params
+          SavableInSession::Formable, SavableInSession::SessionInitializers
+  
+  helper_method :session_filtr_params, :session_model_params
 
   
   before_action :run_gc

@@ -20,6 +20,36 @@ module SavableInSession::SessionInitializers
     end if params[filtr_name]
   end
 
+  def init_session_for_formable(formable)
+    session[:form][formable.form_name] ||= {}
+  end
+
+  def set_session_from_params_for_formable(formable)
+    form_name = formable.form_name
+    
+    if params[:id]
+      if params[form_name]
+        session[:form][form_name][:id] = params[:id]
+        session[:form][form_name] = params[form_name]
+      else
+        if session[:form][form_name][:id] != params[:id]
+          session[:form][form_name][:id] = params[:id]
+          formable.model.attributes.each do |col, value|
+            session[:form][form_name][col] = value    
+          end
+        end        
+      end
+    else
+      if params[form_name]
+        session[:form][form_name][:id] = nil
+        session[:form][form_name] = params[form_name]
+      end
+    end
+  end
+  
+
+ 
+ 
   
   def set_pagination_current_id(tableable)
     pagination_name = tableable.pagination_name

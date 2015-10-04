@@ -9,15 +9,15 @@ form_item.init do |fi|
 
 	   [f.label("operator_id", "Operator"),
      	f.collection_select("operator_id", Category.russian_operators.all, :id, :name, 
-	  	  {:include_blank => true, :selected => fi.session_model_params["operator_id"] }, action )   ],	
+	  	  {:include_blank => true, :selected => session_model_params(fi)["operator_id"] }, action )   ],	
 
 	   [f.label("privacy_id", "Privacy"),
      	f.collection_select("privacy_id", Category.privacy.all, :id, :name, 
-	  	  {:include_blank => true, :selected => fi.session_model_params["privacy_id"] }, action )   ],	
+	  	  {:include_blank => true, :selected => session_model_params(fi)["privacy_id"] }, action )   ],	
 
 	   [f.label("standard_service_id", "Standard service"),
      	f.collection_select("standard_service_id", Category.standard_services.all, :id, :name, 
-	  	  {:include_blank => true, :selected => fi.session_model_params["standard_service_id"] }, action )   ],	
+	  	  {:include_blank => true, :selected => session_model_params(fi)["standard_service_id"] }, action )   ],	
 
 	   [f.label(" "), f.submit]
 	]

@@ -11,6 +11,6 @@ class ParametersController < ApplicationController
   end
 
   def parameter_show
-    Formable.new(self, Parameter.where(:id => session[:current_id]['parameters_id']).first )
+    create_formable(Parameter.where(:id => session[:current_id]['parameters_id']).first )
   end
 end

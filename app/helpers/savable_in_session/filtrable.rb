@@ -13,6 +13,7 @@ module SavableInSession::Filtrable
   
   class Filtrable
     include SavableInSession::AssistanceInView
+
     attr_accessor :filtr_name, :caption, :action_on_submit
     
     def initialize(filtr_name)
