@@ -32,23 +32,5 @@ module SavableInSession::ProgressBarable
       current_value / (max_value - min_value)
     end
   end
-
-  private
   
-  def init_session_for_progress_barable(progress_barable)
-    session[:progress_bar][progress_barable.progress_bar_name] ||= {}
-  end
-  
-  def set_session_from_options_for_progress_barable(progress_barable)    
-    progress_barable.options.each do |key, value|
-      session[:progress_bar][progress_barable.progress_bar_name][key.to_s] = value
-    end if progress_barable.options
-  end
-  
-  def set_session_from_params_for_progress_barable(progress_barable)    
-    params[progress_barable.progress_bar_name].each do |key, value|
-      session[:progress_bar][progress_barable.progress_bar_name][key] = value
-    end if params[progress_barable.progress_bar_name]
-  end
-
 end
