@@ -1,7 +1,5 @@
 module Customer::HistoryParsersHelper
-#  extend ActiveSupport::Concern
-  include SavableInSession::Filtrable, SavableInSession::ArrayOfHashable, SavableInSession::Tableable, SavableInSession::ProgressBarable,
-          SavableInSession::Formable, SavableInSession::SessionInitializers
+  include SavableInSession::Filtrable, SavableInSession::ArrayOfHashable, SavableInSession::ProgressBarable, SavableInSession::SessionInitializers
 
   def current_user_id
     current_user.id

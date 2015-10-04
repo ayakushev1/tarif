@@ -1,4 +1,4 @@
-class Customer::OptimizationResult < ActiveType::Object
+class Customer::OptimizationResult1 < ActiveType::Object
   attribute :current_user_id, :integer, default: proc {@controller.current_user.id}
   attribute :customer_service_sets, default: proc {
     options = {:base_name => 'service_sets', :current_id_name => 'service_sets_id', :id_name => 'service_sets_id'}
