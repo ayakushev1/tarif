@@ -4,7 +4,7 @@ content_in :tabs do |user|
   [
     ([
      'Параметры загрузки и обработки истории звонков', 
-     render(:partial => 'parsing_params', :layout => 'application/layouts/filtr_form_2_columns', :locals => {:form_item => customer_history_parser.parsing_params_filtr})        	
+     render(:partial => 'parsing_params', :layout => 'application/layouts/demo/filtr_form_3_columns', :locals => {:form_item => customer_history_parser.parsing_params_filtr})        	
     ] if current_user_admin?),
     [
      'Необработанная история звонков', 

@@ -1,40 +1,40 @@
 <%
 form_item.init do |f|
 #  f.caption = "Uploading and parsing params"	
+  input_html = {:filtr_name => form_item.filtr_name, :class => "updatable form-control ", :action_name => customer_history_parsers_prepare_for_upload_path}
+  label_html = {:class => "control-label "}
   s = session_filtr_params(f)
   f.set_fields do |filtr_name|
-    html_options = {:action_name => customer_history_parsers_prepare_for_upload_path }
+
   [
   	[
-     label(filtr_name, "calculate_on_background", "calculate_on_background"),
- 	 select(filtr_name, "calculate_on_background", [["background calculation", true], ["direct calculation", false]], {:selected => s["calculate_on_background"]}, html_options ),
+     label(filtr_name, "calculate_on_background", "calculate_on_background", label_html),
+ 	 select(filtr_name, "calculate_on_background", [["background calculation", true], ["direct calculation", false]], {:selected => s["calculate_on_background"]}, input_html ),
 
-     label(filtr_name, "save_processes_result_to_stat", "Save processes result to stat&"),
- 	 select(filtr_name, "save_processes_result_to_stat", [["True", true], ["False", false]], {:selected => s["save_processes_result_to_stat"]}, html_options ),
+     label(filtr_name, "save_processes_result_to_stat", "Save processes result to stat&", label_html),
+ 	 select(filtr_name, "save_processes_result_to_stat", [["True", true], ["False", false]], {:selected => s["save_processes_result_to_stat"]}, input_html ),
+
+     label(filtr_name, "file_upload_max_size", "File upload max size, Mb", label_html),
+     text_field(filtr_name, "file_upload_max_size", input_html.merge({:type => 'text', :value => s["file_upload_max_size"] }) ),
   	],
 
   	[
-     label(filtr_name, "file_upload_max_size", "File upload max size, Mb"),
-     text_field(filtr_name, "file_upload_max_size", html_options.merge({:type => 'text', :value => s["file_upload_max_size"] }) ),
+     label(filtr_name, "call_history_max_line_to_process", "Call history max line to process", label_html),
+     text_field(filtr_name, "call_history_max_line_to_process", input_html.merge({:type => 'text', :value => s["call_history_max_line_to_process"] }) ),
 
-     label(filtr_name, "call_history_max_line_to_process", "Call history max line to process"),
-     text_field(filtr_name, "call_history_max_line_to_process", html_options.merge({:type => 'text', :value => s["call_history_max_line_to_process"] }) ),
+     label(filtr_name, "background_update_frequency", "Background update frequency", label_html),
+     text_field(filtr_name, "background_update_frequency", input_html.merge({:type => 'text', :value => s["background_update_frequency"] }) ),
+
+     label(filtr_name, "file_upload_form_method", "File upload form method", label_html),
+ 	 select(filtr_name, "file_upload_form_method", [["Post", 'post'], ["Get", 'get']], {:selected => s["file_upload_form_method"]}, input_html ),
   	],
 
   	[
-     label(filtr_name, "background_update_frequency", "Background update frequency"),
-     text_field(filtr_name, "background_update_frequency", html_options.merge({:type => 'text', :value => s["background_update_frequency"] }) ),
+     label(filtr_name, "file_upload_remote_mode", "File upload remote mode", label_html),
+ 	 select(filtr_name, "file_upload_remote_mode", [["True", true], ["False", false]], {:selected => s["file_upload_remote_mode"]}, input_html ),
 
-     label(filtr_name, "file_upload_form_method", "File upload form method"),
- 	 select(filtr_name, "file_upload_form_method", [["Post", 'post'], ["Get", 'get']], {:selected => s["file_upload_form_method"]}, html_options ),
-  	],
-
-  	[
-     label(filtr_name, "file_upload_remote_mode", "File upload remote mode"),
- 	 select(filtr_name, "file_upload_remote_mode", [["True", true], ["False", false]], {:selected => s["file_upload_remote_mode"]}, html_options ),
-
-     label(filtr_name, "file_upload_turbolink_mode", "File upload turbolink mode"),
- 	 select(filtr_name, "file_upload_turbolink_mode", [["True", true], ["False", false]], {:selected => s["file_upload_turbolink_mode"]}, html_options ),
+     label(filtr_name, "file_upload_turbolink_mode", "File upload turbolink mode", label_html),
+ 	 select(filtr_name, "file_upload_turbolink_mode", [["True", true], ["False", false]], {:selected => s["file_upload_turbolink_mode"]}, input_html ),
   	],
 
   ]
