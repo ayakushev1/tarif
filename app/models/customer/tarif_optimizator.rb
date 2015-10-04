@@ -7,9 +7,22 @@ class Customer::TarifOptimizator < ActiveType::Object
   attribute :services_select, default: proc {controller.create_filtrable("services_select")}
   attribute :service_categories_select, default: proc {controller.create_filtrable("service_categories_select")}
   attribute :services_for_calculation_select, default: proc {controller.create_filtrable("services_for_calculation_select")}
-  attribute :operators_optimization_progress_bar, default: proc {ProgressBarable.new(controller, 'operators_optimization', background_process_informer_operators.current_values)}
-  attribute :tarifs_optimization_progress_bar, default: proc {ProgressBarable.new(controller, 'tarifs_optimization', background_process_informer_tarifs.current_values)}
-  attribute :tarif_optimization_progress_bar, default: proc {ProgressBarable.new(controller, 'tarif_optimization', background_process_informer_tarif.current_values)}
+
+  attribute :operators_optimization_progress_bar, default: proc {
+    options = {'action_on_update_progress' => controller.customer_tarif_optimizators_calculation_status_path}.merge(
+      background_process_informer_operators.current_values);
+    controller.create_progress_barable('operators_optimization', options)}
+  attribute :tarifs_optimization_progress_bar, default: proc {
+    options = {'action_on_update_progress' => controller.customer_tarif_optimizators_calculation_status_path}.merge(
+      background_process_informer_tarifs.current_values);
+    controller.create_progress_barable('tarifs_optimization', options)
+#    raise(StandardError)
+    }
+  attribute :tarif_optimization_progress_bar, default: proc {
+    options = {'action_on_update_progress' => controller.customer_tarif_optimizators_calculation_status_path}.merge(
+      background_process_informer_tarif.current_values);
+    controller.create_progress_barable('tarif_optimization', options)}
+
 #  attribute :tarif_optimization_starter, default: proc {TarifOptimization::TarifOptimizationStarter.new()}
   attr_reader :controller
   attr_reader :background_process_informer_operators, :background_process_informer_tarifs, :background_process_informer_tarif
@@ -152,9 +165,9 @@ class Customer::TarifOptimizator < ActiveType::Object
     if service_choices_session_filtr_params['calculate_with_fixed_services'] == 'true'
       [services_for_calculation_select_session_filtr_params['operator_id'].to_i]
     else
-      bln = services_select_session_filtr_params['operator_bln'] == 'true'? 1025 : nil
-      mgf = services_select_session_filtr_params['operator_mgf'] == 'true'? 1028 : nil
-      mts = services_select_session_filtr_params['operator_mts'] == 'true'? 1030 : nil
+      bln = services_for_calculation_select_session_filtr_params['operator_bln'] == 'true'? 1025 : nil
+      mgf = services_for_calculation_select_session_filtr_params['operator_mgf'] == 'true'? 1028 : nil
+      mts = services_for_calculation_select_session_filtr_params['operator_mts'] == 'true'? 1030 : nil
       [bln, mgf, mts].compact    
     end
   end

@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
           ApplicationHelper::CustomerUsedServicesCheck
   helper_method :current_user_admin?, :customer_has_free_trials?
 
-  include SavableInSession::Filtrable, SavableInSession::ArrayOfHashable, SavableInSession::Tableable
+  include SavableInSession::Filtrable, SavableInSession::ArrayOfHashable, SavableInSession::Tableable, SavableInSession::ProgressBarable
   helper_method :session_filtr_params
 
   

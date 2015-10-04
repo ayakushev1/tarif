@@ -18,7 +18,10 @@ class Customer::HistoryParser < ActiveType::Object
   attribute :parsing_params_filtr, default: proc {controller.create_filtrable("parsing_params")}
   attribute :user_params_filtr, default: proc {controller.create_filtrable("user_params")}
 
-  attribute :call_history_parsing_progress_bar, default: proc {ProgressBarable.new(controller, 'call_history_parsing', background_process_informer.current_values)}
+  attribute :call_history_parsing_progress_bar, default: proc {
+    options = {'action_on_update_progress' => controller.customer_history_parsers_calculation_status_path}.merge(
+      background_process_informer.current_values)
+    controller.create_progress_barable('call_history_parsing', options)}
 
   attr_reader :controller
 

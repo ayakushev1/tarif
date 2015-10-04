@@ -1,4 +1,4 @@
-class ProgressBarable < Presenter
+class ProgressBarable1 < Presenter
   attr_accessor :progress_bar, :progress_bar_name, :caption, :action_on_update_progress, 
     :min_value, :max_value, :current_value, :text_value, :options
   
