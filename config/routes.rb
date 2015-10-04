@@ -36,18 +36,16 @@ Rails.application.routes.draw do
     end
   end
   
-  resources :tarif_lists, :price_lists
-  
   namespace :customer do
     resources :demands, only: [:index, :new, :create]    
 
-    controller :optimization_steps do      
-      get 'optimization_steps/choose_load_calls_options' => :choose_load_calls_options
-      get 'optimization_steps/check_loaded_calls' => :check_loaded_calls
-      get 'optimization_steps/choose_optimization_options' => :choose_optimization_options
-      get 'optimization_steps/optimize_tarifs' => :optimize_tarifs
-      get 'optimization_steps/show_optimized_tarifs' => :show_optimized_tarifs
-    end
+#    controller :optimization_steps do      
+#      get 'optimization_steps/choose_load_calls_options' => :choose_load_calls_options
+#      get 'optimization_steps/check_loaded_calls' => :check_loaded_calls
+#      get 'optimization_steps/choose_optimization_options' => :choose_optimization_options
+#      get 'optimization_steps/optimize_tarifs' => :optimize_tarifs
+#      get 'optimization_steps/show_optimized_tarifs' => :show_optimized_tarifs
+#    end
     
     controller :tarif_optimizators do
       get 'tarif_optimizators/index' => :index
@@ -110,23 +108,24 @@ Rails.application.routes.draw do
 #    get 'categories/' => 'categories#index'    
   end
   
-
-  resources :users, :tarif_classes
-
-  resources :parameters, only: :index
-  resources :categories, only: :index
+  resources :users
+  
+#  resources :tarif_lists, :price_lists  
+#  resources :tarif_classes
+#  resources :parameters, only: :index
+#  resources :categories, only: :index
   
 
-  controller :sessions do
-    get 'login' => :new
-    post 'submit_login' => :create
-    get 'logout' => :destroy
-    get 'new_location' => :new_location
-    get 'set_new_location' => :choose_location
-  end
+#  controller :sessions do
+#    get 'login' => :new
+#    post 'submit_login' => :create
+#    get 'logout' => :destroy
+#    get 'new_location' => :new_location
+#    get 'set_new_location' => :choose_location
+#  end
 
 #for testing
-  get "formable_concerns/", :controller => 'formable_concerns', :action => :new, :as => "formable_concerns/new"     
+#  get "formable_concerns/", :controller => 'formable_concerns', :action => :new, :as => "formable_concerns/new"     
 
 #  get "users/new_1", :controller => 'users', :action => :new, :as => "new/users" #for testing     
 

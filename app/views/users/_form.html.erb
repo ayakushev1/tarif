@@ -1,7 +1,7 @@
 <%
 
 form_item.init do |fi|
-  action_path = fi.model.id ? edit_user_path(fi.model) : new_user_path	
+  action_path = fi.model.id ? edit_user_path(fi.model) : new_user_registration_path	
   action = {:action_name => action_path }
   fi.set_fields do |f|
  	  [
