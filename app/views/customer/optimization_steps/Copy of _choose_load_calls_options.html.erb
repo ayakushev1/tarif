@@ -3,7 +3,7 @@
 form_item.init do |f|
 #  f.caption = "User params"
   f.action_on_submit = customer_history_parsers_prepare_for_upload_path	  	
-  s_filtr = f.session_filtr_params
+  s_filtr = session_filtr_params(f)
   months = (1..12).map{|i| [i]}
   years = (2013..2015).map{|i| [i]}
   f.set_fields do |filtr_name| 

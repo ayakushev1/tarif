@@ -37,7 +37,7 @@ table_html_options = table_html_options.collect { |key, value| "#{key.to_s}=\"#{
 
   <tbody>
     <% table.model.each do |item| %>
-    <tr <%= table.raw_details(item) %> >
+    <tr <%= table.row_details(item) %> >
       <% table.fields(item) do |field| %>
         <td>
         	<%= add_css(field, style_table) %>

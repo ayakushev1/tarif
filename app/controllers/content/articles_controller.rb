@@ -1,16 +1,16 @@
 class Content::ArticlesController < ApplicationController
 
   def show
-    if params['content_articles_id']
+    if params['content_article_id']
       session[:current_id] ||= []
-      session[:current_id]['content_articles_id'] = params['content_articles_id']
+      session[:current_id]['content_article_id'] = params['content_article_id']
     end
-    
-    redirect_to content_articles_index_path if !session[:current_id] or !session[:current_id]['content_articles_id']
+#    raise(StandardError) if !session[:current_id] or !session[:current_id]['content_article_id']
+    redirect_to content_articles_index_path if !session[:current_id] or !session[:current_id]['content_article_id']
   end
   
   def articles
-    s_filtr = recommendation_select_params.session_filtr_params
+    s_filtr = session_filtr_params(recommendation_select_params)
     choosen_operators = ((s_filtr["operator_ids"] || []) -['']).map(&:to_i)
     choosen_roumings = ((s_filtr["roumings"] || []) -['']).map(&:to_i)
     choosen_services = ((s_filtr["services"] || []) -['']).map(&:to_i)
@@ -24,11 +24,11 @@ class Content::ArticlesController < ApplicationController
       where("(key->>'destinations')::jsonb @> '#{choosen_destinations}'::jsonb")
 #    raise(StandardError, [choosen_roumings, recommendation_query.to_sql])
 
-    Tableable.new(self, recommendation_query)
+    create_tableable(recommendation_query)
   end
   
   def recommendation_select_params
-    Filtrable.new(self, "recommendation_select_params")
+    create_filtrable("recommendation_select_params")
   end
 
   def demo_result_description
@@ -37,23 +37,29 @@ class Content::ArticlesController < ApplicationController
   end
   
   def customer_service_sets
+    options = {:base_name => 'service_sets', :current_id_name => 'service_sets_id', :id_name => 'service_sets_id'}
 #    return @customer_service_sets if @customer_service_sets
 #    @customer_service_sets = 
-    ArrayOfHashable.new(self, 
-      final_tarif_results_presenter.customer_service_sets_array((recommendation_select_params.session_filtr_params['operator_ids'] || []) - ['']))
+    create_array_of_hashable(final_tarif_results_presenter.
+      customer_service_sets_array((session_filtr_params(recommendation_select_params)['operator_ids'] || []) - ['']), options)
   end
   
   def customer_tarif_results        
-    ArrayOfHashable.new(self, final_tarif_results_presenter.customer_tarif_results_array(service_sets_id))
+    options = {:base_name => 'service_results', :current_id_name => 'service_id', :id_name => 'service_id'}
+    result = create_array_of_hashable(final_tarif_results_presenter.customer_tarif_results_array(service_sets_id), options)
+#    raise(StandardError)
   end
 
   def customer_tarif_detail_results
-    ArrayOfHashable.new(self, final_tarif_results_presenter.customer_tarif_detail_results_array(
-      service_sets_id, session[:current_id]['service_id']))
+    options = {:base_name => 'tarif_detail_results', :current_id_name => 'service_category_name', :id_name => 'service_category_name'}
+    create_array_of_hashable(final_tarif_results_presenter.customer_tarif_detail_results_array(
+      service_sets_id, session[:current_id]['service_id']), options)
   end
   
   def aggregated_customer_tarif_detail_results
-    ArrayOfHashable.new(self, final_tarif_results_presenter.aggregated_customer_tarif_detail_results_array(service_sets_id))
+    options = {:base_name => 'aggregated_tarif_detail_results', :current_id_name => 'service_category_name', :id_name => 'service_category_name'}
+    create_array_of_hashable(final_tarif_results_presenter.aggregated_customer_tarif_detail_results_array(service_sets_id), options)
+#    raise(StandardError)
   end
   
   def final_tarif_results_presenter
@@ -68,14 +74,15 @@ class Content::ArticlesController < ApplicationController
   
   def calls_stat_options
 #    raise(StandardError, session['calls_stat_options_filtr'])
-    Filtrable.new(self, "calls_stat_options")
+    create_filtrable("calls_stat_options")
   end
   
   def calls_stat
-    filtr = calls_stat_options.session_filtr_params
+    filtr = session_filtr_params(calls_stat_options)
     calls_stat_options = filtr.keys.map{|key| key if filtr[key] == 'true'}
     calls_stat_options = {"rouming" => 'true'} if calls_stat_options.blank?
-    ArrayOfHashable.new(self, minor_result_presenter.calls_stat_array(calls_stat_options) )    
+    options = {:base_name => 'calls_stat', :current_id_name => 'calls_stat_category', :id_name => 'calls_stat_category'}
+    create_array_of_hashable(minor_result_presenter.calls_stat_array(calls_stat_options), options)    
   end
 
   def minor_result_presenter
@@ -92,7 +99,7 @@ class Content::ArticlesController < ApplicationController
   end
   
   def demo_result_id
-    session[:current_id]['content_articles_id'].blank? ? -1 : session[:current_id]['content_articles_id'].to_i
+    session[:current_id]['content_article_id'].blank? ? -1 : session[:current_id]['content_article_id'].to_i
   end
 
 end

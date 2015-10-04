@@ -1,11 +1,11 @@
 #$(document).on "ajax:success", "*", (e, data, status, xhr) ->
-#  raw_url = $(this).attr("action_name")
+#  row_url = $(this).attr("action_name")
 
 #  $.ajax
-#    url: raw_url, 
+#    url: row_url, 
 #    async: false,
 #    data: filtr,
 #    dataType: "script",
-#    headers: referer: raw_url
+#    headers: referer: row_url
 #    success: (data, textStatus, jqXHR) ->
  

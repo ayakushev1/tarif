@@ -21,7 +21,6 @@ class Formable < Presenter
   private
   
   def init_session
-    c.session[:form] ||= {}
     c.session[:form][form_name] ||= {}
   end
 

@@ -2,7 +2,7 @@
 form_item.init do |fi|
   fi.set_fields do |filtr_name|
     action = {:action_name => parameters_path}
-    s = fi.session_filtr_params
+    s = session_filtr_params(fi)
     query = Parameter.query_hash_from_filtr_with_all_keys_excluded(s)
   [
   	["", collection_select(filtr_name, "source_type_id", Category.where(:id => Parameter.query_from_filtr(s, "source_type_id").pluck(:source_type_id).uniq ), :id, :name, 

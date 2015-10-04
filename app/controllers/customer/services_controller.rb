@@ -19,7 +19,7 @@ class Customer::ServicesController < ApplicationController
   end
 
   def customer_services
-    Tableable.new(self, Customer::Service.includes(:user, :tarif_class, :tarif_list, :status ).
+    create_tableable(Customer::Service.includes(:user, :tarif_class, :tarif_list, :status ).
       where(:user_id => current_user.id, :phone_number => session[:current_id]['consolidated_customer_service_id'].to_s) )
   end
   
@@ -29,11 +29,11 @@ class Customer::ServicesController < ApplicationController
     query_constructor = TarifOptimization::QueryConstructor.new(self, {:tarif_class_ids => [tarif_class_id], :user_id => user_id})
     @bench = query_constructor.bench
     call_ids = query_constructor.call_ids_by_tarif_class_id[(tarif_class_id || 0)] if query_constructor.call_ids_by_tarif_class_id
-    Tableable.new(self, Customer::Call.includes(:base_service, :base_subservice, :user).where(:id => call_ids) )
+    create_tableable(Customer::Call.includes(:base_service, :base_subservice, :user).where(:id => call_ids) )
   end
 
   def stats
-    Tableable.new(self, Customer::Stat.includes(:user).
+    create_tableable(Customer::Stat.includes(:user).
       where(:user_id => current_user.id, :phone_number => session[:current_id]['consolidated_customer_service_id']).
       order(:phone_number, :stat_from) )
   end

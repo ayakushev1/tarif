@@ -23,7 +23,6 @@ class ProgressBarable < Presenter
   private
   
   def init_session
-    c.session[:progress_bar] ||= {}
     c.session[:progress_bar][progress_bar_name] ||= {}
   end
   

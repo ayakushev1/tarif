@@ -3,11 +3,11 @@ class ParametersController < ApplicationController
   crudable_actions :index
   
   def parameter_filtr
-    Filtrable.new(self, "parameters")
+    create_filtrable("parameters")
   end
 
   def parameters
-    Tableable.new(self, Parameter.query_from_filtr(parameter_filtr.session_filtr_params) )
+    create_tableable(Parameter.query_from_filtr(session_filtr_params(parameter_filtr)) )
   end
 
   def parameter_show

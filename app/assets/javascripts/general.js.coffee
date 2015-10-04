@@ -75,23 +75,23 @@ $(document).on 'change', ".updatable", ->
     success: ->
       $(":input")[element_before_ajax_index + 1].focus() 
         
-$(document).on 'click', "tr[id*=raw]", ->
-  raw_name = $(this).attr("raw_name")
-  $("[id^=#{raw_name}]").not(this).removeClass("current_table_raw")
-  $(this).addClass("current_table_raw")
-  raw_id_name = $(this).attr("current_id_name")
-  raw_url = $(this).attr("action_name")
+$(document).on 'click', "tr[id*=row]", ->
+  row_name = $(this).attr("row_name")
+  $("[id^=#{row_name}]").not(this).removeClass("current_table_row")
+  $(this).addClass("current_table_row")
+  row_id_name = $(this).attr("current_id_name")
+  row_url = $(this).attr("action_name")
   
   filtr = {}
   filtr["current_id"] = {}
-  filtr["current_id"][raw_id_name] = $(this).attr("value")
+  filtr["current_id"][row_id_name] = $(this).attr("value")
   filtr["current_tabs_page"] = get_tabs_current_page()
   filtr["current_accordion_page"] = get_accordion_current_page()
 
   $.ajax
-    url: raw_url, 
+    url: row_url, 
     async: false,
     data: filtr,
     dataType: "script",
-    headers: referer: raw_url
+    headers: referer: row_url
     success: (data, textStatus, jqXHR) ->

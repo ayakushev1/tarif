@@ -13,9 +13,9 @@
   <tbody>
     <% i=0; table.each do |item| %>
     <% phone_number = item.phone_number   %>
-    <% current_class =( (phone_number == session[:current_id]['consolidated_customer_service_id']) ? 'class=current_table_raw' : ' '  ) %>
+    <% current_class =( (phone_number == session[:current_id]['consolidated_customer_service_id']) ? 'class=current_table_row' : ' '  ) %>
     
-    <tr <%= "id=consolidated_customer_services_raw_#{i} raw_name=consolidated_customer_services_raw \
+    <tr <%= "id=consolidated_customer_services_row_#{i} row_name=consolidated_customer_services_row \
             action_name=#{customer_services_path} current_id_name=consolidated_customer_service_id #{current_class} value=#{phone_number}" %> >
         <td><%= (item.user.name if item.user ) %></td>
         <td><%= item.phone_number %></td>

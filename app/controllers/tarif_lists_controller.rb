@@ -4,30 +4,30 @@ class TarifListsController < ApplicationController
   crudable_actions :index, :show
   
   def tarif_list_filtr
-    Filtrable.new(self, "tarif_list")
+    create_filtrable("tarif_list")
   end
 
   def tarif_lists
-    Tableable.new(self, TarifList.includes(:tarif_class, :region).query_from_filtr(tarif_list_filtr.session_filtr_params) )
+    create_tableable(TarifList.includes(:tarif_class, :region).query_from_filtr(session_filtr_params(tarif_list_filtr)) )
   end
 
   def price_list_filtr
-    Filtrable.new(self, "price_list")
+    create_filtrable("price_list")
   end
 
   def price_lists_for_index
-    Tableable.new(self, PriceList.includes(:tarif_class, :tarif_list, :service_category_group, :service_category_tarif_class).
+    create_tableable(PriceList.includes(:tarif_class, :tarif_list, :service_category_group, :service_category_tarif_class).
       all_price_lists(session[:current_id]['tarif_list_id'] ) )
   end
   
   def price_lists_for_show
-    Tableable.new(self, price_lists_to_show(
+    create_tableable(price_lists_to_show(
       PriceList.includes(:tarif_class, :tarif_list, :service_category_group, :service_category_tarif_class).
-        query_from_filtr(price_list_filtr.session_filtr_params), price_list_filtr.session_filtr_params['price_list_to_show'] ) )
+        query_from_filtr(session_filtr_params(price_list_filtr)), session_filtr_params(price_list_filtr)['price_list_to_show'] ) )
   end
   
   def price_formulas
-    Tableable.new(self, Price::Formula.includes(:price_list, :standard_formula, :price_unit, :volume, :volume_unit).
+    create_tableable(Price::Formula.includes(:price_list, :standard_formula, :price_unit, :volume, :volume_unit).
       with_price_list(session[:current_id]['price_list_id']) )
   end
   

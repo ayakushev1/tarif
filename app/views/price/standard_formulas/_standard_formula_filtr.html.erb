@@ -1,6 +1,6 @@
 <%
 form_item.init do |fi|
-  s = fi.session_filtr_params	
+  s = session_filtr_params(fi)	
   fi.caption = "Price standard formula filtr fields"	
   fi.set_fields do |filtr_name|
   	action = {:action_name => price_standard_formulas_path} 

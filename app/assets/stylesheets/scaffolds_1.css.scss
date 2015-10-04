@@ -1,4 +1,4 @@
-/*$current_table_raw: #ddd;
+/*$current_table_row: #ddd;
 $body-bg: #ffffff;
 */
 
@@ -6,8 +6,8 @@ $body-bg: #ffffff;
 @import "bootstrap";
 
 /*
-.current_table_raw {
-  background-color: $current_table_raw;
+.current_table_row {
+  background-color: $current_table_row;
 }
 */
 
@@ -4155,7 +4155,7 @@ input[type="checkbox"] {
   -webkit-box-shadow: none;
   box-shadow: none;
 }
-.current_table_raw {
+.current_table_row {
   background: #D7EAFF;
 }
 /* END USER CODE */

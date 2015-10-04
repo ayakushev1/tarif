@@ -2,16 +2,18 @@
 form_item.init do |fi|
   fi.caption = "Service category filtr fields"	
   action = {:action_name => service_categories_path}
+  s_filtr = session_filtr_params(fi)
+  
   fi.set_fields do |filtr_name| 
   [
   	[label(filtr_name, "type_id", "Service category type"),
   	 collection_select(filtr_name, "type_id", Category.service_category_types, :id, :name, 
-  	   {:include_blank => true, :selected => fi.session_filtr_params["type_id"] }, action )
+  	   {:include_blank => true, :selected => s_filtr["type_id"] }, action )
   	],
 
   	[label(filtr_name, "level", "Level"),
   	 collection_select(filtr_name, "level", Service::Category.select(:level).order(:level).uniq, :level, :level, 
-  	   {:include_blank => true, :selected => fi.session_filtr_params["level"] }, action )
+  	   {:include_blank => true, :selected => s_filtr["level"] }, action )
   	],
   ] 
   end

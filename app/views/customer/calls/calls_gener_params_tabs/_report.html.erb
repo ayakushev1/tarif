@@ -1,10 +1,10 @@
 <%
 table.init do |t|
 #  t.caption = 'Call generation params report'
-  t.base_name = 'call_generation_params_report'
-  t.current_id_name = 'param'
+#  t.base_name = 'call_generation_params_report'
+#  t.current_id_name = 'param'
   t.pagination_per_page = 20
-  t.id_name = 'param'
+#  t.id_name = 'param'
   model_keys = t.model.collect {|row| row.keys }.flatten.uniq.collect{|key| key unless [].include?(key)}.compact
   t.heads = ["Параметр", "Свой регион", "Домашний регион", "Россия, за пределами домашнего региона", "Зарубежом"]  
 #  t.heads = model_keys.collect{|model_key| model_key.to_s.split('_').join(' ')}

@@ -1,6 +1,6 @@
 <%
 form_item.init do |fi|
-  s = fi.session_filtr_params	
+  s = session_filtr_params(fi)	
   tarif_list_id = controller.tarif_list.id
   fi.caption = "Price list filtr fields"	
   fi.set_fields do |filtr_name|

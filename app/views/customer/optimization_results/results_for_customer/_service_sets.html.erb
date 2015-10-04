@@ -2,10 +2,10 @@
 #raise(StandadError)
 table.init do |t|
   t.caption = 'Список лучших тарифов'
-  t.base_name = 'service_sets'
-  t.current_id_name = 'service_sets_id'
+#  t.base_name = 'service_sets'
+#  t.current_id_name = 'service_sets_id'
   t.pagination_per_page = 5
-  t.id_name = 'service_sets_id'
+#  t.id_name = 'service_sets_id'
   model_keys = t.model.collect {|row| row.keys }.flatten.uniq.collect{|key| key }.compact  
   t.heads = ['Стоимость в месяц, руб', 'Оператор', 'Тариф', 'Общие услуги', 'Тарифные опции', 'Взаимозаменяемые опции']
 #  t.heads = ['Оператор', 'Тариф', 'Стоимость в месяц, руб', 'Кол-во обработанных записей', 'Общие услуги', 'Тарифные опции', 

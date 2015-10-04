@@ -5,7 +5,7 @@ form_item.init do |f|
 	input_html = {:filtr_name => form_item.filtr_name, :class => "updatable form-control ", :action_name => content_articles_call_statistic_path}
 	label_html = {:class => "control-label "}
     html_options = {:action_name => content_articles_show_path }
-    s = f.session_filtr_params
+    s = session_filtr_params(f)
     #raise(StandardError, select(filtr_name, "rouming", [["show", true], ["not show", false]], {:selected => s["rouming"]}, html_options ))
 	
   [

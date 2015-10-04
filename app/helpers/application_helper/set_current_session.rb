@@ -1,8 +1,14 @@
 module ApplicationHelper::SetCurrentSession
-
+  
   def set_current_session
+    session[:current_id] ||= {}
+    session[:filtr] ||= {}
+    session[:form] ||= {}
+    session[:progress_bar] ||= {}
+    session[:pagination] ||= {}    
     set_current_tabs_pages
     set_current_accordion_pages
+#    raise(StandardError)
   end
 
   def set_current_tabs_pages

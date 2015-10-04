@@ -3,11 +3,11 @@ class Price::FormulasController < ApplicationController
   crudable_actions :index
   
   def formula_filtr
-    Filtrable.new(self, "price_formula")
+    create_filtrable("price_formula")
   end
 
   def formulas
-    Tableable.new(self, Price::Formula.query_from_filtr(formula_filtr.session_filtr_params) )
+    create_tableable(Price::Formula.query_from_filtr(session_filtr_params(formula_filtr)) )
   end
 
 end

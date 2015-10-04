@@ -3,7 +3,7 @@ form_item.init do |f|
   f.set_fields do |filtr_name|
 	input_html = {:filtr_name => form_item.filtr_name, :class => "updatable form-control ", :action_name => customer_tarif_optimizators_index_path}
 	label_html = {:class => "control-label "}
-    s = f.session_filtr_params
+    s = session_filtr_params(f)
     query_for_tarif = TarifClass.tarifs.for_private_use.services_by_operator([s["operator_id"]])
     allowed_tarif_options_for_tarif = TarifClass.allowed_tarif_option_ids_for_tarif(s["operator_id"].to_i, s["tarif_to_calculate"].to_i)
     query_for_tarif_options = TarifClass.where(:id => allowed_tarif_options_for_tarif)

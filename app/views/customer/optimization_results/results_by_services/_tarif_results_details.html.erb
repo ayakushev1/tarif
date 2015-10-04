@@ -1,10 +1,10 @@
 <%
 table.init do |t|
   t.caption = 'Tarif detail results'
-  t.base_name = 'tarif_detail_results'
-  t.current_id_name = 'service_category_name'
+#  t.base_name = 'tarif_detail_results'
+#  t.current_id_name = 'service_category_name'
   t.pagination_per_page = 100
-  t.id_name = 'service_category_name'#'service_category_tarif_class_id'
+#  t.id_name = 'service_category_name'#'service_category_tarif_class_id'
   model_keys = t.model.collect {|row| row.keys }.flatten.uniq.collect{|key| key unless ['service_category_description',
   	'rouming', 'geo', 'geo_details', 'partner', 'calls', 'fix', 
   	'calls_volume', 'sms_volume', 'internet_volume', 'call_ids'].include?(key)}.compact  

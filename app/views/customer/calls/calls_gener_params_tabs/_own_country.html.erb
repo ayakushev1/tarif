@@ -9,7 +9,7 @@ form_item.init do |f|
 	submit_html = {:class => "btn btn-primary"}
 	label_html = {:class => "control-label "}
   f.action_on_submit = customer_calls_generate_calls_path	
-  s_filtr = controller.customer_calls_generation_params_filtr[:own_country].session_filtr_params	
+  s_filtr = session_filtr_params(controller.customer_calls_generation_params_filtr[:own_country])	
   f.set_fields do |filtr_name| 
     html_options = {:action_name => customer_calls_set_calls_generation_params_path}
   [

@@ -1,10 +1,10 @@
 <%
 table.init do |t|
   t.caption = 'Агрегированная детализация по услугам'
-  t.base_name = 'aggregated_tarif_detail_results'
-  t.current_id_name = 'service_category_name'
+#  t.base_name = 'aggregated_tarif_detail_results'
+#  t.current_id_name = 'service_category_name'
   t.pagination_per_page = 100
-  t.id_name = 'service_category_name'#'service_category_tarif_class_id'
+#  t.id_name = 'service_category_name'#'service_category_tarif_class_id'
   model_keys = t.model.collect {|row| row.keys }.flatten.uniq.collect{|key| key unless [].include?(key)}.compact  
   t.heads = ['Стоимость в месяц, руб', 'Тип роуминга', 'Услуга', 'География услуги', 'Тип принимающего оператор', 'Кол-во минут', 'Кол-во смс и ммс', 'Объем интернета, Мб']
   t.set_fields do |f| 

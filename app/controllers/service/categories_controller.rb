@@ -3,7 +3,7 @@ class Service::CategoriesController < ApplicationController
   crudable_actions :index
   
   def service_category_filtr
-    Filtrable.new(self, "service_categories")
+    create_filtrable("service_categories")
   end
 
   def service_categories
@@ -16,16 +16,16 @@ class Service::CategoriesController < ApplicationController
       SELECT p.id, p.name, p.type_id, p.parent_id, p.level, parents[1:depth-1] as parents, array_agg(c.name) FROM parent p left join service_categories c on array[c.id] <@ parents where parents[depth] is null
       group by p.id, p.name, p.type_id, p.parent_id, p.level, parents, depth "
 
-#    Tableable.new(self, Service::Category.find_by_sql(sql) )
-    Tableable.new(self, Service::Category.query_from_filtr(service_category_filtr.session_filtr_params) )
+#    create_tableable(Service::Category.find_by_sql(sql) )
+    create_tableable(Service::Category.query_from_filtr(session_filtr_params(service_category_filtr)) )
   end
 
   def child_service_categories
-    Tableable.new(self, Service::Category.where(:parent_id => session[:current_id]["service_category_id"].to_i))
+    create_tableable(Service::Category.where(:parent_id => session[:current_id]["service_category_id"].to_i))
   end
 
   def service_criteria
-    Tableable.new(self, Service::Criterium.where(:service_category_id => session['current_id']['child_service_category_id'].to_i) )
+    create_tableable(Service::Criterium.where(:service_category_id => session['current_id']['child_service_category_id'].to_i) )
   end
 
 end

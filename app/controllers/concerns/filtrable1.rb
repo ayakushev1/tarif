@@ -1,8 +1,9 @@
-class Filtrable < Presenter
+class Filtrable1 < Presenter
   attr_accessor :filtr_name, :caption, :action_on_submit
   
-  def initialize(controller, filtr_name)
-    super(controller)
+  def initialize(controller1, filtr_name)
+#    raise(StandardError, controller_name)
+    super(controller1)
     @filtr_name = "#{filtr_name}_filtr"
     init_session
     set_session_from_params
@@ -15,9 +16,7 @@ class Filtrable < Presenter
   private
   
   def init_session
-    c.session[:filtr] ||= {}
     c.session[:filtr][filtr_name] ||= {}
-    c.session[:pagination] ||= {}
   end
   
   def set_session_from_params    

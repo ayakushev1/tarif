@@ -3,15 +3,15 @@ class CategoriesController < ApplicationController
   crudable_actions :index
   
   def category_filtr
-    Filtrable.new(self, "categories")
+    create_filtrable("categories")
   end
 
   def categories
-    s = category_filtr.session_filtr_params
-    Tableable.new(self, Category.query_from_filtr(category_filtr.session_filtr_params) )
+    s = session_filtr_params(category_filtr)
+    create_tableable(Category.query_from_filtr(session_filtr_params(category_filtr)) )
   end
 
   def child_categories
-    Tableable.new(self, Category.where(:parent_id => session[:current_id]["category_id"]))
+    create_tableable(Category.where(:parent_id => session[:current_id]["category_id"]))
   end
 end

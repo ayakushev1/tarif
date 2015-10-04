@@ -26,17 +26,18 @@ class Customer::CallsController < ApplicationController
   
   def filtr
 #    @filtr ||= 
-    Filtrable.new(self, "customer_calls")
+    create_filtrable("customer_calls")
   end
   
   def customer_calls
 #    @customer_calls ||= 
-    Tableable.new(self, Customer::Call.where(:user_id => current_user.id).query_from_filtr(filtr.session_filtr_params))
+    create_tableable(Customer::Call.where(:user_id => current_user.id).query_from_filtr(session_filtr_params(filtr)))
   end
   
   def calls_gener_params_report
+    options = {:base_name => 'call_generation_params_report', :current_id_name => 'param', :id_name => 'param'}
 #    @calls_gener_params_report ||= 
-    ArrayOfHashable.new(self, 
+    create_array_of_hashable(
       Calls::GenerationParamsPresenter.new(Calls::Generator.new(self, customer_calls_generation_params, user_params), customer_calls_generation_params).report )
   end
   
@@ -85,7 +86,7 @@ class Customer::CallsController < ApplicationController
   def customer_calls_generation_params
     result = {}
     customer_calls_generation_params_filtr.keys.each do |key|
-      result[key] = customer_calls_generation_params_filtr[key].session_filtr_params
+      result[key] = session_filtr_params(customer_calls_generation_params_filtr[key])
     end
     result
   end
@@ -100,11 +101,11 @@ class Customer::CallsController < ApplicationController
     return @customer_calls_generation_params_filtr if @customer_calls_generation_params_filtr
     @customer_calls_generation_params_filtr ||= {}
     if @customer_calls_generation_params_filtr.blank?
-      @customer_calls_generation_params_filtr[:general] = Filtrable.new(self, "customer_calls_generation_params_general")
-      @customer_calls_generation_params_filtr[:own_region] = Filtrable.new(self, "customer_calls_generation_params_own_region")
-      @customer_calls_generation_params_filtr[:home_region] = Filtrable.new(self, "customer_calls_generation_params_home_region")
-      @customer_calls_generation_params_filtr[:own_country] = Filtrable.new(self, "customer_calls_generation_params_own_country")
-      @customer_calls_generation_params_filtr[:abroad] = Filtrable.new(self, "customer_calls_generation_params_abroad")
+      @customer_calls_generation_params_filtr[:general] = create_filtrable("customer_calls_generation_params_general")
+      @customer_calls_generation_params_filtr[:own_region] = create_filtrable("customer_calls_generation_params_own_region")
+      @customer_calls_generation_params_filtr[:home_region] = create_filtrable("customer_calls_generation_params_home_region")
+      @customer_calls_generation_params_filtr[:own_country] = create_filtrable("customer_calls_generation_params_own_country")
+      @customer_calls_generation_params_filtr[:abroad] = create_filtrable("customer_calls_generation_params_abroad")
     end
     @customer_calls_generation_params_filtr      
   end
