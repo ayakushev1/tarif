@@ -1,6 +1,6 @@
 class Customer::CallsController < ApplicationController
-  include Crudable
-  crudable_actions :index
+#  include Crudable
+#  crudable_actions :index
   before_action -> {update_usage_pattern(params)}, only: [:set_calls_generation_params]
   before_action :setting_if_nil_default_calls_generation_params, only: [:set_calls_generation_params, :generate_calls]
   after_action -> {update_customer_infos}, only: :generate_calls

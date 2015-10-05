@@ -16,9 +16,9 @@ module SavableInSession::Formable
     attr_accessor :form_name, :caption, :action_on_submit
     attr_reader :model
     
-    def initialize(model)
+    def initialize(model, model_name = "base_name")
       @model = model
-      @base_name = model.class.name.underscore.gsub(/\//, "_").to_sym || controller.model_name || controller.controller_path.gsub(/\//, "_").underscore.singularize.to_sym
+      @base_name = model.class.name.underscore.gsub(/\//, "_").to_sym || model_name # || controller.model_name || controller.controller_path.gsub(/\//, "_").underscore.singularize.to_sym
       @form_name = "#{@base_name}_form"
     end
   end

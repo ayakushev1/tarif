@@ -1,7 +1,7 @@
 class Customer::HistoryParsersController < ApplicationController
   include Customer::HistoryParsersHelper
-  include Crudable
-  crudable_actions :index
+#  include Crudable
+#  crudable_actions :index
 
   before_action :check_if_parsing_params_in_session, only: [:parse, :prepare_for_upload]
   before_action :init_background_process_informer, only: [:upload, :calculation_status, :parse]
