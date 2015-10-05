@@ -53,6 +53,7 @@ GEM
       activerecord (>= 3.2, <= 4.3)
       rake (~> 10.4)
     arel (6.0.0)
+    aspector (0.14.0)
     autoprefixer-rails (5.1.7)
       execjs
       json
@@ -256,6 +257,7 @@ DEPENDENCIES
   active_type
   ahoy_matey
   annotate
+  aspector
   autoprefixer-rails
   bcrypt-ruby (~> 3.1.2)
   better_errors

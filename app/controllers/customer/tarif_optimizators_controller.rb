@@ -38,7 +38,7 @@ class Customer::TarifOptimizatorsController < ApplicationController
   end
   
   def recalculate    
-#    raise(StandardError)
+#    raise(StandardError, [session_filtr_params(service_choices)['calculate_with_fixed_services']])
     if session_filtr_params(optimization_params)['calculate_on_background'] == 'true' and
       session_filtr_params(service_choices)['calculate_with_fixed_services'] == 'false'
 #      raise(StandardError)

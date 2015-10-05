@@ -112,6 +112,8 @@ gem 'platform-api' #heroku api
 
 gem 'ahoy_matey' #to track visits and events
 
+gem 'aspector' # allows to use aspect oriented programming with Ruby
+
 # Use unicorn as the app server
 # gem 'unicorn'
 

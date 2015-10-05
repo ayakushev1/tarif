@@ -64,9 +64,14 @@ module Customer::TarifOptimizatorHelper
 #    raise(StandardError)
     if (session_filtr_params(optimization_params)['calculate_background_with_spawnling'] == 'true') or 
       session_filtr_params(service_choices)['calculate_with_fixed_services'] == 'true'
-      
       Spawnling.new(:argv => "optimize for #{current_user_id}") do
-        TarifOptimization::TarifOptimizator.new(options).calculate_all_operator_tarifs    
+        tarif_optimizator = TarifOptimization::TarifOptimizator.new(options)
+
+        Customer::Stat::PerformanceCheckerAspector.apply(tarif_optimizator)
+        tarif_optimizator.calculate_all_operator_tarifs(true)
+
+        tarif_optimizator.update_minor_results
+        
         update_customer_infos
         UserMailer.tarif_optimization_complete(current_user_id).deliver
       end
@@ -110,7 +115,14 @@ module Customer::TarifOptimizatorHelper
   end
     
   def recalculate_direct
-    TarifOptimization::TarifOptimizator.new(options.merge({:use_background_process_informers => false})).calculate_all_operator_tarifs    
+    tarif_optimizator = TarifOptimization::TarifOptimizator.new(options.merge({:use_background_process_informers => false}))   
+    
+#    @performance_checker = tarif_optimizator.performance_checker
+    Customer::Stat::PerformanceCheckerAspector.apply(tarif_optimizator)
+
+    tarif_optimizator.calculate_all_operator_tarifs(true)
+    tarif_optimizator.update_minor_results
+    
     update_customer_infos
 #    UserMailer.tarif_optimization_complete(current_user_id).deliver
   end
@@ -187,9 +199,9 @@ module Customer::TarifOptimizatorHelper
   end
   
   def validate_tarifs
-    params['service_choices_filtr'].merge!(Customer::Info::ServiceChoices.validate_tarifs(session_filtr_params(service_choices))) if params['service_choices_filtr']
+    params['service_choices_filtr'].merge!(Customer::Info::ServiceChoices.validate_tarifs(params['service_choices_filtr'])) if params['service_choices_filtr']
 #    session[:filtr]['service_choices_filtr'].merge!(Customer::Info::ServiceChoices.validate_tarifs(session_filtr_params(service_choices)))
-#    raise(StandardError, session[:filtr]['service_choices_filtr'])
+#    raise(StandardError, params)#session[:filtr]['service_choices_filtr'])
   end
   
   def tarifs

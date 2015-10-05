@@ -1,6 +1,8 @@
 #TODO убрать part 'mms'
-class TarifOptimization::TarifOptimizator
 #TODO - обновить в тарифах поля с month, day or week
+
+class TarifOptimization::TarifOptimizator
+
 #дополнительные классы
   attr_reader :tarif_list_generator, :final_tarif_set_generator, :stat_function_collector, :query_constructor, :optimization_result_saver, :minor_result_saver, 
               :final_tarif_sets_saver, :background_process_informer_operators, :background_process_informer_tarifs, :background_process_informer_tarif, 
@@ -24,7 +26,9 @@ class TarifOptimization::TarifOptimizator
     self.extend Helper
     init_input_data(options)
     init_output_params(options)
-    init_additional_general_classes    
+    @performance_checker = Customer::Stat::PerformanceChecker.new()
+#    performance_checker.clean_history;
+   init_additional_general_classes    
     init_optimization_params
   end
   
@@ -50,23 +54,19 @@ class TarifOptimization::TarifOptimizator
   end
   
   def init_additional_general_classes
-    @performance_checker = Customer::Stat::PerformanceChecker.new()
-    performance_checker.clean_history;
-    performance_checker.run_check_point('init_additional_general_classes', 1) do
-      @optimization_result_saver = Customer::Stat::OptimizationResult.new('optimization_results', nil, user_id)
-      @final_tarif_sets_saver = Customer::Stat::OptimizationResult.new('optimization_results', 'final_tarif_sets', user_id)
-      @prepared_final_tarif_results_saver = Customer::Stat::OptimizationResult.new('optimization_results', 'prepared_final_tarif_results', user_id)
-      @calls_stat_calculator = Customer::Call::StatCalculator.new({:user_id => user_id, :accounting_period => accounting_period})
-      @tarif_optimization_sql_builder = TarifOptimization::TarifOptimizationSqlBuilder.new(self, {:user_id => user_id, :accounting_period => accounting_period})
-      @minor_result_saver = Customer::Stat::OptimizationResult.new('optimization_results', 'minor_results', user_id)
-      @tarif_list_generator = TarifOptimization::TarifListGenerator.new(options[:services_by_operator] || {})
-      if use_background_process_informers
-        @background_process_informer_operators = options[:background_process_informer_operators] || Customer::BackgroundStat::Informer.new('operators_optimization', user_id)
-        @background_process_informer_tarifs = options[:background_process_informer_tarifs] || Customer::BackgroundStat::Informer.new('tarifs_optimization', user_id)
-        @background_process_informer_tarif = options[:background_process_informer_tarif] || Customer::BackgroundStat::Informer.new('tarif_optimization', user_id)
-      end
-      @operator_description = {}; Category.operators.all.each {|r| @operator_description[r['id'].to_s] = r}
+    @optimization_result_saver = Customer::Stat::OptimizationResult.new('optimization_results', nil, user_id)
+    @final_tarif_sets_saver = Customer::Stat::OptimizationResult.new('optimization_results', 'final_tarif_sets', user_id)
+    @prepared_final_tarif_results_saver = Customer::Stat::OptimizationResult.new('optimization_results', 'prepared_final_tarif_results', user_id)
+    @calls_stat_calculator = Customer::Call::StatCalculator.new({:user_id => user_id, :accounting_period => accounting_period})
+    @tarif_optimization_sql_builder = TarifOptimization::TarifOptimizationSqlBuilder.new(self, {:user_id => user_id, :accounting_period => accounting_period})
+    @minor_result_saver = Customer::Stat::OptimizationResult.new('optimization_results', 'minor_results', user_id)
+    @tarif_list_generator = TarifOptimization::TarifListGenerator.new(options[:services_by_operator] || {})
+    if use_background_process_informers
+      @background_process_informer_operators = options[:background_process_informer_operators] || Customer::BackgroundStat::Informer.new('operators_optimization', user_id)
+      @background_process_informer_tarifs = options[:background_process_informer_tarifs] || Customer::BackgroundStat::Informer.new('tarifs_optimization', user_id)
+      @background_process_informer_tarif = options[:background_process_informer_tarif] || Customer::BackgroundStat::Informer.new('tarif_optimization', user_id)
     end
+    @operator_description = {}; Category.operators.all.each {|r| @operator_description[r['id'].to_s] = r}
   end
   
   def init_optimization_params
@@ -78,20 +78,18 @@ class TarifOptimization::TarifOptimizator
   end  
 
   def calculate_all_operator_tarifs(if_clean_output_results = true)
-    performance_checker.run_check_point('calculate_all_operator_tarifs', 1) do
-      background_process_informer_operators.init(0.0, tarif_list_generator.operators.size) if use_background_process_informers
-      
-      background_process_informer_operators.increase_current_value(0, "clean_output_results") if use_background_process_informers
-      clean_output_results if if_clean_output_results
+    background_process_informer_operators.init(0.0, tarif_list_generator.operators.size) if use_background_process_informers
+    
+    background_process_informer_operators.increase_current_value(0, "clean_output_results") if use_background_process_informers
+    clean_output_results if if_clean_output_results
 
-      background_process_informer_operators.increase_current_value(0, "calculating all_operator_tarifs") if use_background_process_informers
-      tarif_list_generator.operators.each do |operator| 
-        calculate_one_operator(operator) if !tarif_list_generator.tarifs[operator].blank?
-        background_process_informer_operators.increase_current_value(1) if use_background_process_informers
-      end
+    background_process_informer_operators.increase_current_value(0, "calculating all_operator_tarifs") if use_background_process_informers
+    tarif_list_generator.operators.each do |operator| 
+      calculate_one_operator(operator) if !tarif_list_generator.tarifs[operator].blank?
+      background_process_informer_operators.increase_current_value(1) if use_background_process_informers
     end
 
-    update_minor_results
+#    update_minor_results
     
     background_process_informer_operators.increase_current_value(0, "finish calculating operators") if use_background_process_informers
     background_process_informer_operators.finish if use_background_process_informers
