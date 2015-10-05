@@ -64,6 +64,7 @@ module Customer::TarifOptimizatorHelper
 #    raise(StandardError)
     if (session_filtr_params(optimization_params)['calculate_background_with_spawnling'] == 'true') or 
       session_filtr_params(service_choices)['calculate_with_fixed_services'] == 'true'
+#      raise(StandardError)
       Spawnling.new(:argv => "optimize for #{current_user_id}") do
         tarif_optimizator = TarifOptimization::TarifOptimizator.new(options)
 
@@ -75,7 +76,7 @@ module Customer::TarifOptimizatorHelper
         update_customer_infos
         UserMailer.tarif_optimization_complete(current_user_id).deliver
       end
-    else
+    else      
       raise(StandardError) if (Customer::Info::ServicesUsed.info(current_user_id)['paid_trials']).is_a?(String)
       
       priority = Customer::Info::ServicesUsed.info(current_user_id)['paid_trials'] = true ? 10 : 20
@@ -85,6 +86,7 @@ module Customer::TarifOptimizatorHelper
       
       is_send_email = false
       number_of_workers_to_add = 0
+#      raise(StandardError)
       options[:services_by_operator][:operators].each do |operator|
         options[:services_by_operator][:tarifs][operator].each do |tarif|
           options_to_calculate = options.merge({:use_background_process_informers => false})
@@ -186,14 +188,15 @@ module Customer::TarifOptimizatorHelper
   
   def operators
     service_choices_session_filtr_params = session_filtr_params(service_choices)
-    services_for_calculation_select_session_filtr_params = session_filtr_params(services_for_calculation_select)
+    services_select_session_filtr_params = session_filtr_params(services_select)
     
+#    raise(StandardError)
     if service_choices_session_filtr_params['calculate_with_fixed_services'] == 'true'
       [services_for_calculation_select_session_filtr_params['operator_id'].to_i]
     else
-      bln = services_for_calculation_select_session_filtr_params['operator_bln'] == 'true'? 1025 : nil
-      mgf = services_for_calculation_select_session_filtr_params['operator_mgf'] == 'true'? 1028 : nil
-      mts = services_for_calculation_select_session_filtr_params['operator_mts'] == 'true'? 1030 : nil
+      bln = services_select_session_filtr_params['operator_bln'] == 'true'? 1025 : nil
+      mgf = services_select_session_filtr_params['operator_mgf'] == 'true'? 1028 : nil
+      mts = services_select_session_filtr_params['operator_mts'] == 'true'? 1030 : nil
       [bln, mgf, mts].compact    
     end
   end
