@@ -4,7 +4,7 @@ module Customer::HistoryParsersHelper
   def current_user_id
     current_user.id
   end
-  
+   
   def call_history_saver
     Customer::Stat::OptimizationResult.new('call_history', 'call_history', current_user_id)
   end
