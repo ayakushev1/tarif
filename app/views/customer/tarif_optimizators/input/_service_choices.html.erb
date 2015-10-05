@@ -12,7 +12,7 @@ form_item.init do |f|
   	[
   	 label(filtr_name, "accounting_period", "Период за который проводить расчет тарифов", label_html),
   	 collection_select(filtr_name, "accounting_period", 
-  	   customer_tarif_optimizator.accounting_periods, 
+  	   accounting_periods, 
   	   :accounting_period, :accounting_period, {:include_blank => "выберите период расчета", :selected => s["accounting_period"]}, input_html ),
 
      label(filtr_name, "calculate_with_limited_scope", "Считать только выбранные услуги связи?", label_html),

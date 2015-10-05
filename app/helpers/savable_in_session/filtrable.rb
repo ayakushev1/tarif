@@ -3,7 +3,7 @@ module SavableInSession::Filtrable
   def create_filtrable(filtr_name)
     filtr_name = "#{filtr_name}_filtr"
     init_session_for_filtrable(filtr_name)
-    set_session_from_params_for_filtrable(filtr_name)
+#    set_session_from_params_for_filtrable(filtr_name)
     Filtrable.new(filtr_name)
   end
   

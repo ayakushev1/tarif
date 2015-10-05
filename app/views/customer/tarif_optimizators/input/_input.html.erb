@@ -6,7 +6,7 @@ content_in :tabs do |user|
      'Optimization params',
      (
 	  render(:partial => 'customer/tarif_optimizators/input/optimization_params', :layout => 'application/layouts/filtr_form_3_columns', 
-	    :locals => {:form_item => customer_tarif_optimizator.optimization_params} )
+	    :locals => {:form_item => optimization_params} )
 		
      )          
     ] if current_user_admin?), 
@@ -15,7 +15,7 @@ content_in :tabs do |user|
      'Service choices',
      (
 	  render(:partial => 'customer/tarif_optimizators/input/admin_service_choices', :layout => 'application/layouts/filtr_form_4_columns', 
-	    :locals => {:form_item => customer_tarif_optimizator.service_choices} )
+	    :locals => {:form_item => service_choices} )
 		
      )          
     ] if current_user_admin?), 
@@ -23,14 +23,14 @@ content_in :tabs do |user|
     ([
      'Services list',
       render(:partial => 'customer/tarif_optimizators/input/services_select', :layout => 'application/layouts/filtr_form_3_columns', 
-        :locals => {:form_item => customer_tarif_optimizator.services_select} )
+        :locals => {:form_item => services_select} )
     ] if current_user_admin?), 
 
     [
      'Выбор параметров расчета',
      (
 	  render(:partial => 'customer/tarif_optimizators/input/service_choices', :layout => 'application/layouts/filtr_form_3_columns', 
-	    :locals => {:form_item => customer_tarif_optimizator.service_choices} )
+	    :locals => {:form_item => service_choices} )
 		
      )          
     ], 
@@ -38,12 +38,12 @@ content_in :tabs do |user|
     [
      'Выбор услуг оператора',
       render(:partial => 'customer/tarif_optimizators/input/service_categories_select', :layout => 'application/layouts/filtr_form_4_columns', 
-        :locals => {:form_item => customer_tarif_optimizator.service_categories_select} )
+        :locals => {:form_item => service_categories_select} )
     ], 
     [
      'Выбор тарифа и набора опций для расчета',
 	  render(:partial => 'customer/tarif_optimizators/input/services_for_calculation_select', :layout => 'application/layouts/filtr_form_3_columns', 
-	    :locals => {:form_item => customer_tarif_optimizator.services_for_calculation_select} )
+	    :locals => {:form_item => services_for_calculation_select} )
     ], 
   ].compact 
 end

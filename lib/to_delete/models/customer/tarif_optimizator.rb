@@ -1,4 +1,4 @@
-class Customer::TarifOptimizator < ActiveType::Object
+class Customer::TarifOptimizator1 < ActiveType::Object
   attribute :session, default: proc {controller.session}
   attribute :user_session, default: proc {controller.user_session}
   attribute :current_user_id, :integer, default: proc {controller.current_user.id}
