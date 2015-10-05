@@ -11,13 +11,15 @@ module SavableInSession::SessionInitializers
   end
   
   def set_session_from_params_for_filtrable(filtr_name)    
-    params[filtr_name].each do |key, value|
+    params_to_set = params.extract!(filtr_name)
+#    raise(StandardError, [filtr_name, params_to_set, params]) if filtr_name == "services_for_calculation_select_filtr"
+    params_to_set[filtr_name].each do |key, value|
       session[:pagination].each do |key_p, value_p|
         session[:pagination][key_p] = 1
       end if session[:filtr][filtr_name][key] != value
       
       session[:filtr][filtr_name][key] = value
-    end if params[filtr_name]
+    end if params_to_set[filtr_name]
   end
 
   def init_session_for_formable(formable)
@@ -26,11 +28,12 @@ module SavableInSession::SessionInitializers
 
   def set_session_from_params_for_formable(formable)
     form_name = formable.form_name
+    params_to_set = params.extract!(form_name)
     
     if params[:id]
-      if params[form_name]
+      if params_to_set[form_name]
         session[:form][form_name][:id] = params[:id]
-        session[:form][form_name] = params[form_name]
+        session[:form][form_name] = params_to_set[form_name]
       else
         if session[:form][form_name][:id] != params[:id]
           session[:form][form_name][:id] = params[:id]
@@ -40,16 +43,12 @@ module SavableInSession::SessionInitializers
         end        
       end
     else
-      if params[form_name]
+      if params_to_set[form_name]
         session[:form][form_name][:id] = nil
-        session[:form][form_name] = params[form_name]
+        session[:form][form_name] = params_to_set[form_name]
       end
     end
   end
-  
-
- 
- 
   
   def set_pagination_current_id(tableable)
     pagination_name = tableable.pagination_name
@@ -93,15 +92,21 @@ module SavableInSession::SessionInitializers
   end
   
   def set_session_from_options_for_progress_barable(progress_barable)    
-    progress_barable.options.each do |key, value|
-      session[:progress_bar][progress_barable.progress_bar_name][key.to_s] = value
-    end if progress_barable.options
+    options = progress_barable.options
+    progress_bar_name = progress_barable.progress_bar_name
+    
+    options.each do |key, value|
+      session[:progress_bar][progress_bar_name][key.to_s] = value
+    end if options
   end
   
   def set_session_from_params_for_progress_barable(progress_barable)    
-    params[progress_barable.progress_bar_name].each do |key, value|
-      session[:progress_bar][progress_barable.progress_bar_name][key] = value
-    end if params[progress_barable.progress_bar_name]
+    progress_bar_name = progress_barable.progress_bar_name
+    params_to_set = params.extract!(progress_bar_name)
+    
+    params_to_set[progress_bar_name].each do |key, value|
+      session[:progress_bar][progress_bar_name][key] = value
+    end if params_to_set[progress_bar_name]
   end
 
 end

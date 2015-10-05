@@ -1,5 +1,7 @@
 module Customer::TarifOptimizatorHelper
   include SavableInSession::Filtrable, SavableInSession::ArrayOfHashable, SavableInSession::ProgressBarable, SavableInSession::SessionInitializers
+
+  attr_reader :background_process_informer_operators, :background_process_informer_tarifs, :background_process_informer_tarif
   
   def current_user_id
     current_user.id
