@@ -111,7 +111,7 @@ module Customer::TarifOptimizatorHelper
   end
     
   def recalculate_direct
-    calculate(options.merge({:use_background_process_informers => true}))
+    calculate(options.merge({:use_background_process_informers => false}))
 #    UserMailer.tarif_optimization_complete(current_user_id).deliver
   end
   
