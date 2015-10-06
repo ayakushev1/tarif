@@ -75,7 +75,6 @@ class TarifOptimization::TarifOptimizationSqlBuilder
 
 #    raise(StandardError, [sql])
     check_sql(sql, price_formula_order)
-    execute_additional_sql_to_check_performance(sql, 'calculate_service_list_sql', 6)
     sql
   end
   
@@ -108,7 +107,6 @@ class TarifOptimization::TarifOptimizationSqlBuilder
 #    raise(StandardError, [sql]) if sql.blank?
     
     check_sql(sql, service_id, set_id, price_formula_order)    
-    execute_additional_sql_to_check_performance(sql, 'service_cost_sql', 7)
     sql
   end
   
@@ -121,8 +119,6 @@ class TarifOptimization::TarifOptimizationSqlBuilder
 #    raise(StandardError, sql) if service_id == 330 and part == 'periodic'
 
     check_sql(sql, service_id, set_id, price_formula_order)
-    execute_additional_sql_to_check_performance(sql, 'service_categories_cost_sql', 8)
-    show_bad_performing_sql(sql, 'service_categories_cost_sql', 110.01)
     sql
   end
   
@@ -227,7 +223,6 @@ class TarifOptimization::TarifOptimizationSqlBuilder
       where(:user_id => user_id).where("description->>'accounting_period' = '#{accounting_period}'").
       where(query_constructor.joined_tarif_classes_category_where_hash(service_category_tarif_class_ids))
 #    raise(StandardError, [accounting_period, result.to_sql])   
-    execute_additional_sql_to_check_performance(result.to_sql, 'calculate_base_stat_sql', 9)
     result
   end
   
@@ -302,8 +297,6 @@ class TarifOptimization::TarifOptimizationSqlBuilder
 
     check_sql(sql, service_id, service_category_tarif_class_id, service_category_group_id, price_formula_id, service_id, set_id,
       part, prev_group_call_ids, prev_stat_values_string)
-    execute_additional_sql_to_check_performance(sql, 'service_category_cost_sql', 9)
-    show_bad_performing_sql(sql, 'service_category_cost_sql', 110.01)
 #    raise(StandardError, stat_function_collector.price_formula_string(price_formula_id)) if service_id == 294 and part == 'periodic'
     sql
   end
@@ -321,7 +314,6 @@ class TarifOptimization::TarifOptimizationSqlBuilder
 #    raise(StandardError, sql) if price_formula_id == 103619 #service_id == 322 and part == 'periodic'
 
     check_sql(sql, price_formula_id)
-    execute_additional_sql_to_check_performance(sql, 'service_category_choice_sql', 10)
     sql
   end 
 
@@ -354,7 +346,6 @@ class TarifOptimization::TarifOptimizationSqlBuilder
     ].join(' ')
 
     check_sql(sql, price_formula_id, prev_group_call_ids, prev_stat_values_string)
-    execute_additional_sql_to_check_performance(sql, 'service_category_accumulated_stat_sql', 11)
     sql
   end
   
@@ -384,7 +375,6 @@ class TarifOptimization::TarifOptimizationSqlBuilder
     end  
 #    raise(StandardError) #if price_formula['standard_formula_id'] == 18
     check_sql(sql, price_formula_id)
-    execute_additional_sql_to_check_performance(sql, 'first_stat_sql', 12)
     show_bad_performing_sql(sql, 'first_stat_sql', 0.01)
     sql
   end
@@ -408,12 +398,8 @@ class TarifOptimization::TarifOptimizationSqlBuilder
       sql
     end
     
-    def execute_additional_sql_to_check_performance(sql, checkpoint_name, checkpoint_level)
-      if execute_additional_sql
-        performance_checker.run_check_point(checkpoint_name, checkpoint_level) do
-          Customer::Call.connection.execute(sql)
-        end
-      end
+    def execute_additional_sql_to_check_performance(sql)
+      Customer::Call.connection.execute(sql)
     end
     
     def show_bad_performing_sql(sql, checkpoint_name, time_limit, *params_to_show)

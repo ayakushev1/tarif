@@ -138,38 +138,32 @@ class TarifOptimization::CurrentTarifOptimizationResults #ServiceHelper::Current
   end
 
   def set_current_results(current_service_slice)
-    performance_checker.run_check_point('set_current_tarif_results', 9) do
-      i = 0
-      @service_ids_to_calculate = []#{:ids => [], :set_ids => [], :parts => []}
-      current_service_slice[:ids].each do |service_id|      
-        tarif_set_id = current_service_slice[:set_ids][i]
-        prev_tarif_set_id = current_service_slice[:prev_set_ids][i]
-        part = current_service_slice[:parts][i] 
+    i = 0
+    @service_ids_to_calculate = []#{:ids => [], :set_ids => [], :parts => []}
+    current_service_slice[:ids].each do |service_id|      
+      tarif_set_id = current_service_slice[:set_ids][i]
+      prev_tarif_set_id = current_service_slice[:prev_set_ids][i]
+      part = current_service_slice[:parts][i] 
+      
+
+      init_current_results_hashes_first_step(tarif_set_id)     
+      if !(tarif_results[tarif_set_id] and tarif_results[tarif_set_id][part])
+      end
+
+      if !tarif_results[tarif_set_id] or !tarif_results[tarif_set_id][part] or !tarif_results[tarif_set_id][part][service_id]
+        init_current_results_hashes_second_step(tarif_set_id, part)
+        set_current_service_ids_to_calculate(tarif_set_id, part, service_id)
         
-
-        init_current_results_hashes_first_step(tarif_set_id)     
-        if !(tarif_results[tarif_set_id] and tarif_results[tarif_set_id][part])
-        end
-
-        if !tarif_results[tarif_set_id] or !tarif_results[tarif_set_id][part] or !tarif_results[tarif_set_id][part][service_id]
-#    raise(StandardError, tarif_results[tarif_set_id][part]) if part == "own-country-rouming/calls" and tarif_set_id == "276_200"
-          init_current_results_hashes_second_step(tarif_set_id, part)
-          set_current_service_ids_to_calculate(tarif_set_id, part, service_id)
-          
-          if tarif_results[prev_tarif_set_id] and tarif_results[prev_tarif_set_id][part]
-            set_current_tarif_results_ord(tarif_set_id, prev_tarif_set_id, service_id) if save_tarif_results_ord
+        if tarif_results[prev_tarif_set_id] and tarif_results[prev_tarif_set_id][part]
+          set_current_tarif_results_ord(tarif_set_id, prev_tarif_set_id, service_id) if save_tarif_results_ord
 #            set_current_prev_service_call_ids(tarif_set_id, prev_tarif_set_id, service_id)
-            set_current_prev_service_group_call_ids(tarif_set_id, prev_tarif_set_id, service_id)
-            set_current_prev_service_call_ids_by_parts(tarif_set_id, prev_tarif_set_id, service_id)
-            set_current_tarif_results(tarif_set_id, prev_tarif_set_id, service_id)
-    raise(StandardError, [service_id, prev_tarif_set_id, part, tarif_results[prev_tarif_set_id][part],
-      current_service_slice]) if false and tarif_set_id == '312_203_283'  
-          end
+          set_current_prev_service_group_call_ids(tarif_set_id, prev_tarif_set_id, service_id)
+          set_current_prev_service_call_ids_by_parts(tarif_set_id, prev_tarif_set_id, service_id)
+          set_current_tarif_results(tarif_set_id, prev_tarif_set_id, service_id)
         end
-        i += 1
-#    raise(StandardError, [ tarif_results['203']]) if tarif_set_id == '203_283'  
-      end if current_service_slice  
-    end
+      end
+      i += 1
+    end if current_service_slice  
   end
   
   def init_current_results_hashes_first_step(tarif_set_id)
@@ -251,43 +245,37 @@ class TarifOptimization::CurrentTarifOptimizationResults #ServiceHelper::Current
   end
 
   def update_all_tarif_results_with_missing_prev_results
-    background_process_informer_tarif.increase_current_value(0, "update_all_tarif_results_with_missing_prev_results") if use_background_process_informers
-    performance_checker.run_check_point('update_all_tarif_results_with_missing_prev_results', 4) do
-      tarif_results.keys.sort{|t| t.split('_').size}.each do |tarif_set_id|
-        tarif_result = tarif_results[tarif_set_id]
-        service_id = tarif_set_id.split('_')[0].to_i
-        missed_parts = tarif_optimizator.tarif_list_generator.parts_by_service[service_id] - tarif_results[tarif_set_id].keys
-        current_tarif_set_size = tarif_set_id.split('_').count
+    tarif_results.keys.sort{|t| t.split('_').size}.each do |tarif_set_id|
+      tarif_result = tarif_results[tarif_set_id]
+      service_id = tarif_set_id.split('_')[0].to_i
+      missed_parts = tarif_optimizator.tarif_list_generator.parts_by_service[service_id] - tarif_results[tarif_set_id].keys
+      current_tarif_set_size = tarif_set_id.split('_').count
+      current_tarif_set = tarif_optimizator.tarif_list_generator.tarif_set_id(tarif_set_id.split('_')[0..(current_tarif_set_size - 1)])
+      while current_tarif_set_size > 0 and !missed_parts.blank?
         current_tarif_set = tarif_optimizator.tarif_list_generator.tarif_set_id(tarif_set_id.split('_')[0..(current_tarif_set_size - 1)])
-        while current_tarif_set_size > 0 and !missed_parts.blank?
-          #raise(StandardError, [])
-          current_tarif_set = tarif_optimizator.tarif_list_generator.tarif_set_id(tarif_set_id.split('_')[0..(current_tarif_set_size - 1)])
-          
-          tarif_results[current_tarif_set].each do |part, prev_tarif_result_by_part|
-            tarif_results[tarif_set_id] ||= {}  
-            prev_tarif_result_by_part.each do |key, prev_tarif_result|
-              tarif_results[tarif_set_id][part] ||= {} 
-              tarif_results[tarif_set_id][part][key] = prev_tarif_result if tarif_results[tarif_set_id][part][key].blank?
-            end
-          end if tarif_results[current_tarif_set]
+        
+        tarif_results[current_tarif_set].each do |part, prev_tarif_result_by_part|
+          tarif_results[tarif_set_id] ||= {}  
+          prev_tarif_result_by_part.each do |key, prev_tarif_result|
+            tarif_results[tarif_set_id][part] ||= {} 
+            tarif_results[tarif_set_id][part][key] = prev_tarif_result if tarif_results[tarif_set_id][part][key].blank?
+          end
+        end if tarif_results[current_tarif_set]
 
-          tarif_results_ord[current_tarif_set].each do |part, prev_tarif_results_by_part|
-            tarif_results_ord[tarif_set_id][part] ||= {}
-            prev_tarif_results_by_part.each do |key_ord, prev_tarif_results_ord_val|
-              tarif_results_ord[tarif_set_id][part][key_ord] ||= {}
-              prev_tarif_results_ord_val.each do |key, prev_tarif_result_ord| 
-                tarif_results_ord[tarif_set_id][part][key_ord][key] = prev_tarif_result_ord if false 
-              end
+        tarif_results_ord[current_tarif_set].each do |part, prev_tarif_results_by_part|
+          tarif_results_ord[tarif_set_id][part] ||= {}
+          prev_tarif_results_by_part.each do |key_ord, prev_tarif_results_ord_val|
+            tarif_results_ord[tarif_set_id][part][key_ord] ||= {}
+            prev_tarif_results_ord_val.each do |key, prev_tarif_result_ord| 
+              tarif_results_ord[tarif_set_id][part][key_ord][key] = prev_tarif_result_ord if false 
             end
-          end if tarif_results_ord[current_tarif_set] and save_tarif_results_ord
+          end
+        end if tarif_results_ord[current_tarif_set] and save_tarif_results_ord
 
-          missed_parts = (tarif_optimizator.tarif_list_generator.parts_by_service[service_id] - tarif_results[current_tarif_set].keys) if tarif_results[current_tarif_set]
-          current_tarif_set_size -= 1
-          
-        end
+        missed_parts = (tarif_optimizator.tarif_list_generator.parts_by_service[service_id] - tarif_results[current_tarif_set].keys) if tarif_results[current_tarif_set]
+        current_tarif_set_size -= 1        
       end
-#            raise(StandardError)
-    end 
+    end
   end
 
   def calculate_all_cons_tarif_results_by_parts

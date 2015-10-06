@@ -22,35 +22,19 @@ class TarifOptimization::QueryConstructor
   end
   
   def calculate_query
-    if performance_checker
-      performance_checker.run_check_point('load_comparison_operators', 15) {load_comparison_operators}
-      performance_checker.run_check_point('load_category_ids', 15) {load_category_ids}
-      performance_checker.run_check_point('load_required_service_category_tarif_class_ids', 15) {load_required_service_category_tarif_class_ids}
-      performance_checker.run_check_point('load_service_category_tarif_class_ids_by_tarif_class', 15) {load_service_category_tarif_class_ids_by_tarif_class}
-      performance_checker.run_check_point('load_service_category_group_ids_by_tarif_class', 15) {load_service_category_group_ids_by_tarif_class}
-      performance_checker.run_check_point('load_category_groups', 15) {load_category_groups}
-      performance_checker.run_check_point('load_service_categories', 15) {load_service_categories}
-      performance_checker.run_check_point('load_service_criteria', 15) {load_service_criteria}
-      performance_checker.run_check_point('load_parameters', 15) {load_parameters(options[:parameter_ids])}
-          
-      performance_checker.run_check_point('calculate_service_criteria_where_hash', 15) {calculate_service_criteria_where_hash}
-      performance_checker.run_check_point('calculate_service_categories_where_hash', 15) {calculate_service_categories_where_hash}
-      performance_checker.run_check_point('calculate_tarif_classes_categories_where_hash', 15) {calculate_tarif_classes_categories_where_hash}
-    else
-      load_comparison_operators
-      load_category_ids
-      load_required_service_category_tarif_class_ids
-      load_service_category_tarif_class_ids_by_tarif_class
-      load_service_category_group_ids_by_tarif_class
-      load_category_groups
-      load_service_categories
-      load_service_criteria
-      load_parameters(options[:parameter_ids])
-      
-      calculate_service_criteria_where_hash
-      calculate_service_categories_where_hash
-      calculate_tarif_classes_categories_where_hash      
-    end
+    load_comparison_operators
+    load_category_ids
+    load_required_service_category_tarif_class_ids
+    load_service_category_tarif_class_ids_by_tarif_class
+    load_service_category_group_ids_by_tarif_class
+    load_category_groups
+    load_service_categories
+    load_service_criteria
+    load_parameters(options[:parameter_ids])
+    
+    calculate_service_criteria_where_hash
+    calculate_service_categories_where_hash
+    calculate_tarif_classes_categories_where_hash      
   end
   
   def load_query(operator_id, region_id)

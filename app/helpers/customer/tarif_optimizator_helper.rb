@@ -66,14 +66,8 @@ module Customer::TarifOptimizatorHelper
       session_filtr_params(service_choices)['calculate_with_fixed_services'] == 'true'
 #      raise(StandardError)
       Spawnling.new(:argv => "optimize for #{current_user_id}") do
-        tarif_optimizator = TarifOptimization::TarifOptimizator.new(options)
+        calculate(options)
 
-        Customer::Stat::PerformanceCheckerAspector.apply(tarif_optimizator)
-        tarif_optimizator.calculate_all_operator_tarifs(true)
-
-        tarif_optimizator.update_minor_results
-        
-        update_customer_infos
         UserMailer.tarif_optimization_complete(current_user_id).deliver
       end
     else      
@@ -117,16 +111,24 @@ module Customer::TarifOptimizatorHelper
   end
     
   def recalculate_direct
-    tarif_optimizator = TarifOptimization::TarifOptimizator.new(options.merge({:use_background_process_informers => false}))   
-    
-#    @performance_checker = tarif_optimizator.performance_checker
-    Customer::Stat::PerformanceCheckerAspector.apply(tarif_optimizator)
+    calculate(options.merge({:use_background_process_informers => false}))
+#    UserMailer.tarif_optimization_complete(current_user_id).deliver
+  end
+  
+  def calculate(options)
+    tarif_optimizator = TarifOptimization::TarifOptimizator.new(options)   
+
+    Customer::Stat::PerformanceChecker.apply(TarifOptimization::TarifOptimizator)
+    Customer::Stat::PerformanceChecker.apply(TarifOptimization::FinalTarifSetGenerator)
+    Customer::Stat::PerformanceChecker.apply(TarifOptimization::CurrentTarifSet)
+    Customer::Stat::PerformanceChecker.apply(TarifOptimization::QueryConstructor)
+    Customer::Stat::PerformanceChecker.apply(TarifOptimization::CurrentTarifOptimizationResults)
+    Customer::Stat::PerformanceChecker.apply(TarifOptimization::CurrentTarifOptimizationResults)
 
     tarif_optimizator.calculate_all_operator_tarifs(true)
     tarif_optimizator.update_minor_results
     
     update_customer_infos
-#    UserMailer.tarif_optimization_complete(current_user_id).deliver
   end
   
   def prepare_background_process_informer
