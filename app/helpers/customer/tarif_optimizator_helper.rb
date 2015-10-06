@@ -64,9 +64,9 @@ module Customer::TarifOptimizatorHelper
 #    raise(StandardError)
     if (session_filtr_params(optimization_params)['calculate_background_with_spawnling'] == 'true') or 
       session_filtr_params(service_choices)['calculate_with_fixed_services'] == 'true'
-#      raise(StandardError)
+
       Spawnling.new(:argv => "optimize for #{current_user_id}") do
-        calculate(options)
+        calculate(options.merge({:use_background_process_informers => true}))
 
         UserMailer.tarif_optimization_complete(current_user_id).deliver
       end
@@ -111,7 +111,7 @@ module Customer::TarifOptimizatorHelper
   end
     
   def recalculate_direct
-    calculate(options.merge({:use_background_process_informers => false}))
+    calculate(options.merge({:use_background_process_informers => true}))
 #    UserMailer.tarif_optimization_complete(current_user_id).deliver
   end
   
@@ -125,6 +125,11 @@ module Customer::TarifOptimizatorHelper
     Customer::Stat::PerformanceChecker.apply(TarifOptimization::CurrentTarifOptimizationResults)
     Customer::Stat::PerformanceChecker.apply(TarifOptimization::CurrentTarifOptimizationResults)
 
+    if options[:use_background_process_informers]
+      Customer::BackgroundStat::Informer.apply(TarifOptimization::TarifOptimizator)
+      Customer::BackgroundStat::Informer.apply(TarifOptimization::FinalTarifSetGenerator)
+    end
+
     tarif_optimizator.calculate_all_operator_tarifs(true)
     tarif_optimizator.update_minor_results
     
@@ -136,6 +141,7 @@ module Customer::TarifOptimizatorHelper
       background_process_informer.clear_completed_process_info_model
       background_process_informer.init
     end
+    
   end
   
   def init_background_process_informer

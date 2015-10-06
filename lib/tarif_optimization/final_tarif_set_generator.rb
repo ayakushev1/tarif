@@ -4,7 +4,7 @@ class TarifOptimization::FinalTarifSetGenerator
   attr_accessor :current_tarif_set_calculation_history 
   attr_accessor :tarif_sets, :services_that_depended_on, :operator, :common_services, :common_services_by_parts,
                 :cons_tarif_results_by_parts, :tarif_results, :cons_tarif_results, :groupped_identical_services,
-                :performance_checker
+                :performance_checker, :background_process_informer_tarif
   
   attr_reader :use_short_tarif_set_name
          
@@ -36,20 +36,21 @@ class TarifOptimization::FinalTarifSetGenerator
   end
   
   def calculate_final_tarif_sets(operator_1 = nil, tarif_1 = nil, background_process_informer_tarif = nil)
+    @background_process_informer_tarif = background_process_informer_tarif
     tarif = tarif_1.to_s  
 
     @final_tarif_sets = {}
 
     current_uniq_service_sets = nil; fobidden_info = nil; best_current_uniq_service_sets = nil
     current_uniq_service_sets, fobidden_info, best_current_uniq_service_sets = calculate_final_tarif_sets_by_tarif(
-      tarif_sets[tarif], operator, tarif, tarif_results, background_process_informer_tarif)
+      tarif_sets[tarif], operator, tarif, tarif_results)
 
     update_current_uniq_sets_with_periodic_part(current_uniq_service_sets, tarif_sets[tarif], best_current_uniq_service_sets)    
 
     load_current_uniq_service_sets_to_final_tarif_sets(current_uniq_service_sets, fobidden_info)
   end
   
-  def calculate_final_tarif_sets_by_tarif(tarif_sets_by_tarif, operator, tarif, tarif_results, background_process_informer_tarif = nil)
+  def calculate_final_tarif_sets_by_tarif(tarif_sets_by_tarif, operator, tarif, tarif_results)
     best_current_uniq_service_sets = {:prices => [100000000000.0], :set_ids => [tarif.to_s]}
     current_uniq_service_sets = {}
     fobidden_info = {}
@@ -124,8 +125,6 @@ class TarifOptimization::FinalTarifSetGenerator
       end
 
       current_tarif_set.next_tarif_set_by_part(current_uniq_service_sets[current_tarif_set_by_part_name][:fobidden])
-
-      background_process_informer_tarif.increase_current_value(1) if background_process_informer_tarif and (i / 100.0 - i / 100) == 0.0
     end 
     
     @current_tarif_set_calculation_history = current_tarif_set.history if save_current_tarif_set_calculation_history

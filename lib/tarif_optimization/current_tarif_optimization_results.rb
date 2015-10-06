@@ -1,5 +1,5 @@
 class TarifOptimization::CurrentTarifOptimizationResults #ServiceHelper::CurrentTarifOptimizationResults
-  attr_reader :tarif_optimizator, :performance_checker, :use_background_process_informers, :background_process_informer_tarif, :options
+  attr_reader :tarif_optimizator, :performance_checker, :options
   attr_reader :service_ids_to_calculate, :cons_tarif_results, :cons_tarif_results_by_parts, :tarif_results, :tarif_results_ord, #:prev_service_call_ids, 
               :prev_service_group_call_ids, :prev_service_call_ids_by_parts#, :calls_count_by_parts
   attr_reader :save_tarif_results_ord, :simplify_tarif_results
@@ -23,8 +23,6 @@ class TarifOptimization::CurrentTarifOptimizationResults #ServiceHelper::Current
     @performance_checker = tarif_optimizator.performance_checker || Customer::Stat::PerformanceChecker.new()
     @save_tarif_results_ord = tarif_optimizator.save_tarif_results_ord 
     @simplify_tarif_results = tarif_optimizator.simplify_tarif_results
-    @use_background_process_informers = tarif_optimizator.use_background_process_informers
-    @background_process_informer_tarif = tarif_optimizator.background_process_informer_tarif if use_background_process_informers
   end
   
   def process_tarif_results_batch(executed_tarif_result_batch_sql, price_formula_order)
@@ -279,7 +277,6 @@ class TarifOptimization::CurrentTarifOptimizationResults #ServiceHelper::Current
   end
 
   def calculate_all_cons_tarif_results_by_parts
-    background_process_informer_tarif.increase_current_value(0, "calculate_all_cons_tarif_results_by_parts") if use_background_process_informers
     tarif_results.each do |tarif_set_id, tarif_results_by_parts|
       cons_tarif_results[tarif_set_id] = {'call_id_count' => 0, 'price_value' => 0.0}
       cons_tarif_results_by_parts[tarif_set_id] = {}

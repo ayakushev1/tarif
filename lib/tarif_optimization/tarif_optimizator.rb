@@ -78,21 +78,11 @@ class TarifOptimization::TarifOptimizator
   end  
 
   def calculate_all_operator_tarifs(if_clean_output_results = true)
-    background_process_informer_operators.init(0.0, tarif_list_generator.operators.size) if use_background_process_informers
-    
-    background_process_informer_operators.increase_current_value(0, "clean_output_results") if use_background_process_informers
     clean_output_results if if_clean_output_results
-
-    background_process_informer_operators.increase_current_value(0, "calculating all_operator_tarifs") if use_background_process_informers
     tarif_list_generator.operators.each do |operator| 
       calculate_one_operator(operator) if !tarif_list_generator.tarifs[operator].blank?
-      background_process_informer_operators.increase_current_value(1) if use_background_process_informers
     end
-
-#    update_minor_results
-    
-    background_process_informer_operators.increase_current_value(0, "finish calculating operators") if use_background_process_informers
-    background_process_informer_operators.finish if use_background_process_informers
+#    update_minor_results    
   end
   
   def clean_output_results
@@ -100,17 +90,12 @@ class TarifOptimization::TarifOptimizator
   end
   
   def calculate_one_operator(operator)
-    background_process_informer_tarifs.init(0.0, tarif_list_generator.tarifs[operator].size ) if use_background_process_informers
-          
     init_input_for_one_operator_calculation(operator)                    
     init_calls_count_by_parts(operator)
 
     tarif_list_generator.tarifs[operator].each do |tarif|
       calculate_one_tarif(operator, tarif)
-      background_process_informer_tarifs.increase_current_value(1) if use_background_process_informers
     end        
-    background_process_informer_tarifs.increase_current_value(0, "finish calculating one operator tarifs") if use_background_process_informers
-    background_process_informer_tarifs.finish if use_background_process_informers
   end 
   
   def init_calls_count_by_parts(operator)
@@ -120,14 +105,11 @@ class TarifOptimization::TarifOptimizator
   end
   
   def init_input_for_one_operator_calculation(operator)
-    background_process_informer_tarifs.increase_current_value(0, "init_input_for_one_operator_calculation") if use_background_process_informers
     @fq_tarif_operator_id = operator
 
     init_stat_function_collector(operator)    
     init_query_constructor(operator)
     init_max_formula_order_collector(operator)
-
-    background_process_informer_tarifs.increase_current_value(0, "") if use_background_process_informers
   end
   
   def init_stat_function_collector(operator)
@@ -147,7 +129,6 @@ class TarifOptimization::TarifOptimizator
   end
   
   def update_minor_results
-    background_process_informer_operators.increase_current_value(0, "update_minor_results") if use_background_process_informers
     tarif_list_generator.calculate_service_packs; tarif_list_generator.calculate_service_packs_by_parts
     
     used_memory_by_output = {}
@@ -171,15 +152,7 @@ class TarifOptimization::TarifOptimizator
   end
   
   def calculate_one_tarif(operator, tarif)
-    background_process_informer_tarif.init(0.0, 100.0) if use_background_process_informers
-    background_process_informer_tarif.increase_current_value(0, "init_input_for_one_tarif_calculation") if use_background_process_informers
-    
     init_input_for_one_tarif_calculation(operator, tarif)  
-    
-    background_process_informer_tarif.init(0.0, tarif_list_generator.all_tarif_parts_count[operator]) if use_background_process_informers
-    
-    background_process_informer_tarif.increase_current_value(0, "calculate_tarif_results") if use_background_process_informers
-    
     [tarif_list_generator.tarif_options_slices, tarif_list_generator.tarifs_slices].each do |service_slice| 
       calculate_tarif_results(operator, service_slice)
     end
@@ -224,8 +197,6 @@ class TarifOptimization::TarifOptimizator
       }.stringify_keys)
     end      
     
-    background_process_informer_tarif.increase_current_value(0, "finish calculating one tarif") if use_background_process_informers
-    background_process_informer_tarif.finish if use_background_process_informers
   end
   
   def init_input_for_one_tarif_calculation(operator, tarif = nil)
@@ -236,7 +207,6 @@ class TarifOptimization::TarifOptimizator
   
   def save_tarif_results(operator, tarif = nil, accounting_period = '1_2014', result_to_save = {})
     output = {}
-    background_process_informer_tarif.increase_current_value(0, "override_tarif_results") if use_background_process_informers
     optimization_result_saver.override({:operator_id => operator.to_i, :tarif_id => tarif.to_i, :accounting_period => accounting_period, :result => {
       :tarif_sets => result_to_save[:tarif_sets],
       :cons_tarif_results => current_tarif_optimization_results.cons_tarif_results,
@@ -271,8 +241,6 @@ class TarifOptimization::TarifOptimizator
   end
   
   def calculate_and_save_final_tarif_sets_by_tarif(operator, tarif, accounting_period, saved_results = nil)
-    background_process_informer_tarif.init(0.0, 10.0) if use_background_process_informers
-    background_process_informer_tarif.increase_current_value(0, "init final_tarif_set_generator") if use_background_process_informers
     @final_tarif_set_generator = TarifOptimization::FinalTarifSetGenerator.new(options[:services_by_operator] || {})
     
     saved_results ||= optimization_result_saver.results({:operator_id => operator, :tarif_id => tarif, :accounting_period => accounting_period})
@@ -292,11 +260,7 @@ class TarifOptimization::TarifOptimizator
 
     saved_results = nil
     
-    background_process_informer_tarif.increase_current_value(0, "calculate_final_tarif_sets") if use_background_process_informers
-    
-    final_tarif_set_generator.calculate_final_tarif_sets(operator, tarif, (background_process_informer_tarif if use_background_process_informers))
-
-    background_process_informer_tarif.increase_current_value(0, "override final_tarif_sets") if use_background_process_informers
+    final_tarif_set_generator.calculate_final_tarif_sets(operator, tarif, background_process_informer_tarif)
 
     final_tarif_sets_saver.override(
       {:operator_id => operator.to_i, :tarif_id => tarif.to_i, :accounting_period => accounting_period, :result => {
@@ -318,10 +282,8 @@ class TarifOptimization::TarifOptimizator
   end
   
   def prepare_and_save_final_tarif_results_by_tarif_for_presenatation(operator, tarif, accounting_period, input_data = {}, saved_results = nil)
-    background_process_informer_tarif.increase_current_value(0, "get saved final_tarif_sets") if use_background_process_informers
     saved_results ||= final_tarif_sets_saver.results({:operator_id => operator, :tarif_id => tarif, :accounting_period => accounting_period})
     
-    background_process_informer_tarif.increase_current_value(0, "calculate final_tarif_set_preparator") if use_background_process_informers
     prepared_final_tarif_results = TarifOptimization::FinalTarifResultPreparator.prepare_final_tarif_results_by_tarif({
       :final_tarif_sets => saved_results['final_tarif_sets'].stringify_keys,
       :tarif_results => saved_results['tarif_results'].stringify_keys,
@@ -335,12 +297,9 @@ class TarifOptimization::TarifOptimizator
       :operator => operator, 
       :tarif => tarif, 
     })
-    background_process_informer_tarif.increase_current_value(0, "override prepared_final_tarif_results_by_tarif") if use_background_process_informers
+
     prepared_final_tarif_results_saver.override({:operator_id => operator.to_i, :tarif_id => tarif.to_i, :accounting_period => accounting_period, :result => prepared_final_tarif_results})
-    result = {}
-  
-    background_process_informer_tarif.increase_current_value(0, "") if use_background_process_informers
-    background_process_informer_tarif.finish if use_background_process_informers
+    result = {}  
   end
     
   def calculate_tarif_results(operator, service_slice)
@@ -364,8 +323,6 @@ class TarifOptimization::TarifOptimizator
       calculate_tarif_results_batch(batch_low_limit, batch_high_limit, price_formula_order)
       
       batch_count += 1
-
-      background_process_informer_tarif.increase_current_value(batch_high_limit - batch_low_limit + 1) if use_background_process_informers
     end if current_tarif_optimization_results.service_ids_to_calculate
   end
   
