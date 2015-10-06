@@ -10,12 +10,12 @@ module Background::Job
 #      raise(StandardError, priority)
       tarif_optimizator = ::TarifOptimization::TarifOptimizator.new(options)
 
-      ::Customer::Stat::PerformanceChecker.apply(TarifOptimization::TarifOptimizator)
-      ::Customer::Stat::PerformanceChecker.apply(TarifOptimization::FinalTarifSetGenerator)
-      ::Customer::Stat::PerformanceChecker.apply(TarifOptimization::CurrentTarifSet)
-      ::Customer::Stat::PerformanceChecker.apply(TarifOptimization::QueryConstructor)
-      ::Customer::Stat::PerformanceChecker.apply(TarifOptimization::CurrentTarifOptimizationResults)
-      ::Customer::Stat::PerformanceChecker.apply(TarifOptimization::CurrentTarifOptimizationResults)
+      ::Customer::Stat::PerformanceChecker.apply(::TarifOptimization::TarifOptimizator)
+      ::Customer::Stat::PerformanceChecker.apply(::TarifOptimization::FinalTarifSetGenerator)
+      ::Customer::Stat::PerformanceChecker.apply(::TarifOptimization::CurrentTarifSet)
+      ::Customer::Stat::PerformanceChecker.apply(::TarifOptimization::QueryConstructor)
+      ::Customer::Stat::PerformanceChecker.apply(::TarifOptimization::CurrentTarifOptimizationResults)
+      ::Customer::Stat::PerformanceChecker.apply(::TarifOptimization::CurrentTarifOptimizationResults)
 
       tarif_optimizator.calculate_all_operator_tarifs(false)
       tarif_optimizator.update_minor_results
