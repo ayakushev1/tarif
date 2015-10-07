@@ -122,13 +122,15 @@ class Calls::Generator
     result = []
     case own_operator_id.to_i
     when _beeline
-      result = [_megafon, _mts]
+      result = [_megafon, _mts, _tele_2]
     when _megafon
-      result = [_beeline, _mts]
+      result = [_mts, _tele_2, _beeline]
     when _mts
-      result = [_beeline, _megafon]
-    else
+      result = [_tele_2, _beeline, _megafon]
+    when _tele_2
       result = [_beeline, _megafon, _mts]
+    else
+      result = [_beeline, _megafon, _mts, _tele_2]
     end
     result       
   end
