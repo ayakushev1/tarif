@@ -14,7 +14,7 @@ content_in :tabs do |user|
     ([
      'Service choices',
      (
-	  render(:partial => 'customer/tarif_optimizators/input/admin_service_choices', :layout => 'application/layouts/filtr_form_4_columns', 
+	  render(:partial => 'customer/tarif_optimizators/input/admin_service_choices', :layout => 'application/layouts/filtr_form_5_columns', 
 	    :locals => {:form_item => service_choices} )
 		
      )          
@@ -22,7 +22,7 @@ content_in :tabs do |user|
 
     ([
      'Services list',
-      render(:partial => 'customer/tarif_optimizators/input/services_select', :layout => 'application/layouts/filtr_form_3_columns', 
+      render(:partial => 'customer/tarif_optimizators/input/services_select', :layout => 'application/layouts/filtr_form_4_columns', 
         :locals => {:form_item => services_select} )
     ] if current_user_admin?), 
 

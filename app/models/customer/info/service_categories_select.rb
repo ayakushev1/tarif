@@ -180,6 +180,7 @@ class Customer::Info::ServiceCategoriesSelect < ActiveType::Record[Customer::Inf
     when '230'; 230; #:service_to_beeline 
     when '231'; 231; #:service_to_megafon 
     when '232'; 232; #:service_to_mts
+    when '233'; 233; #:service_to_tele2
     when ''; nil
     else
       raise(StandardError)

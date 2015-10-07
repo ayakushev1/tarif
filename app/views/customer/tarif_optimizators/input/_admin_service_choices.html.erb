@@ -10,6 +10,9 @@ form_item.init do |f|
   	 '', '',
   	 	
      '',
+     label(filtr_name, "", "Теле2", label_html),
+
+     '',
      label(filtr_name, "", "Билайн", label_html),
 
      '',
@@ -22,6 +25,9 @@ form_item.init do |f|
   	[
      label(filtr_name, "tarifs_bln", "Тарифы для оптимизации", label_html), '',
      
+     '',
+     text_area(filtr_name, "tarifs_tel", input_html.merge({:type => 'textarea', :value => s["tarifs_tel"], :rows => 1 }) ),
+
      '',
      text_area(filtr_name, "tarifs_bln", input_html.merge({:type => 'textarea', :value => s["tarifs_bln"], :rows => 1 }) ),
 
@@ -36,6 +42,9 @@ form_item.init do |f|
      label(filtr_name, "common_services_bln", "Общие сервисы", label_html),'',
      
      '',
+     text_area(filtr_name, "common_services_tel", input_html.merge({:type => 'textarea', :value => s["common_services_tel"], :rows => 1  }) ),     		
+
+     '',
      text_area(filtr_name, "common_services_bln", input_html.merge({:type => 'textarea', :value => s["common_services_bln"], :rows => 1  }) ),     		
 
      '',
@@ -48,6 +57,9 @@ form_item.init do |f|
   	[
      label(filtr_name, "tarif_options_bln", "Тарифные опции", label_html),'',
      
+     '',
+     text_area(filtr_name, "tarif_options_tel", input_html.merge({:type => 'textarea', :value => s["tarif_options_tel"], :rows => 2  }) ),     		
+
      '',
      text_area(filtr_name, "tarif_options_bln", input_html.merge({:type => 'textarea', :value => s["tarif_options_bln"], :rows => 2  }) ),     		
 

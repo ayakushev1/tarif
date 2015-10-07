@@ -6,6 +6,8 @@ def access_methods_to_constant_operator_country_groups
   _barnaul = 1205;_blagoveshensk = 1208;
   _bryansk = 1209; _vladimir = 1212; _ivanovo = 1218; _kaluga = 1224; _kursk = 1231; _kostroma = 1227;
   _nigni_novgorod = 1241; _orel = 1245; _rezyan = 1252; _smolensk = 1258; _tver = 1262; _tula = 1264; _yaroslav = 1278;
+  
+  _sevastopol = 1282;
    
   _altai_region = 1101; _amur_region = 1102; _arhangelsk_region = 1103; _astrahan_region = 1104; _belgorod_region = 1105;
   _bryansk_region = 1106; _vladimir_region = 1107; _vologda_region =1108; _voroneg_region = 1109; _volgograd_region = 1110; 
@@ -23,7 +25,7 @@ def access_methods_to_constant_operator_country_groups
   _tambov_region = 1165; _tver_region = 1166; _tomsk_region = 1167; _tula_region = 1168; _tumen_region = 1169; _ulyanovsk_region = 1170;
   _habarovsk_region = 1171; _hanty_mansiisk_region = 1172; _chelyabinsk_region = 1173; _chechen_region = 1174; _chita_region = 1175; 
   _chuvashia_region = 1176; _chukotka_region = 1177; _yamalo_nenetsk_region = 1178; _yaroslav_region = 1179; _altai_republik = 1180; 
-  _zabaikalsk_region = 1181;
+  _zabaikalsk_region = 1181; _krum = 1182;
 
 #all
   _regions = [_moscow, _moscow_region, _piter, _piter_region, _ekaterin, _ekaterin_region]

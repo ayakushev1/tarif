@@ -24,7 +24,7 @@ class Customer::Info::ServicesSelect < ActiveType::Record[Customer::Info]
   
   def self.default_values
     {
-      'operator_bln' => 'true', 'operator_mgf' => 'true', 'operator_mts' => 'true',
+       'operator_tel' => 'true','operator_bln' => 'true', 'operator_mgf' => 'true', 'operator_mts' => 'true',
       'tarifs' => 'true', 'common_services' => 'true', 'all_tarif_options' => 'false'
     }
   end
@@ -33,6 +33,12 @@ class Customer::Info::ServicesSelect < ActiveType::Record[Customer::Info]
 #    raise(StandardError)
     service_choices_filtr = {}
     if params
+      if params['operator_tel'] == 'true'
+        input = selected_services(1023, params)
+        service_choices_filtr['tarifs_tel'] = input['tarifs']
+        service_choices_filtr['common_services_tel'] = input['common_services']
+        service_choices_filtr['tarif_options_tel'] = input['tarif_options']
+      end
       if params['operator_bln'] == 'true'
         input = selected_services(1025, params)
         service_choices_filtr['tarifs_bln'] = input['tarifs']

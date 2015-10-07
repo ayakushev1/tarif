@@ -33,10 +33,10 @@ class TarifOptimization::TarifListGenerator
   end
   
   def set_operators_and_services(options)
-    @operators = (!options[:operators].blank? ? options[:operators] : [1025, 1028, 1030])
-    @tarifs = {1025 => [], 1028 => [], 1030 => []}
-    @common_services = {1025 => [], 1028 => [], 1030 => []}
-    @tarif_options = {1025 => [], 1028 => [], 1030 => []}
+    @operators = (!options[:operators].blank? ? options[:operators] : [1023, 1025, 1028, 1030])
+    @tarifs = {1023 => [], 1025 => [], 1028 => [], 1030 => []}
+    @common_services = {1023 => [], 1025 => [], 1028 => [], 1030 => []}
+    @tarif_options = {1023 => [], 1025 => [], 1028 => [], 1030 => []}
     operators.each do |operator|
       tarifs[operator] = options[:tarifs][operator] if options and options[:tarifs] and options[:tarifs][operator]  
       common_services[operator] = options[:common_services][operator] if options and options[:common_services] and options[:common_services][operator]  
@@ -44,7 +44,7 @@ class TarifOptimization::TarifListGenerator
     end if operators
     all_tarifs_count = tarifs.map{|operator, tarif_by_operator| tarif_by_operator.size }.sum
     if all_tarifs_count == 0
-      default_tarifs = {1025 => [], 1028 => [100], 1030 => [200]}
+      default_tarifs = {1023 => [], 1025 => [], 1028 => [100], 1030 => [200]}
       operators.each do |operator|
         tarifs[operator] = default_tarifs[operator]
       end

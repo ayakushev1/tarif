@@ -123,7 +123,6 @@ module Customer::TarifOptimizatorHelper
     Customer::Stat::PerformanceChecker.apply(TarifOptimization::CurrentTarifSet)
     Customer::Stat::PerformanceChecker.apply(TarifOptimization::QueryConstructor)
     Customer::Stat::PerformanceChecker.apply(TarifOptimization::CurrentTarifOptimizationResults)
-    Customer::Stat::PerformanceChecker.apply(TarifOptimization::CurrentTarifOptimizationResults)
 
     if options[:use_background_process_informers]
       Customer::BackgroundStat::Informer.apply(TarifOptimization::TarifOptimizator)
@@ -165,9 +164,9 @@ module Customer::TarifOptimizatorHelper
      :analyze_memory_used => optimization_params_session_filtr_params['analyze_memory_used'], 
      :analyze_query_constructor_performance => optimization_params_session_filtr_params['analyze_query_constructor_performance'], 
      :save_interim_results_after_calculating_tarif_results => optimization_params_session_filtr_params['save_interim_results_after_calculating_tarif_results'], 
-  #   :save_interim_results_after_calculating_final_tarif_sets => optimization_params_session_filtr_params['save_interim_results_after_calculating_final_tarif_sets'], 
-  
+  #   :save_interim_results_after_calculating_final_tarif_sets => optimization_params_session_filtr_params['save_interim_results_after_calculating_final_tarif_sets'],   
      :service_ids_batch_size => optimization_params_session_filtr_params['service_ids_batch_size'], 
+
      :accounting_period => service_choices_session_filtr_params['accounting_period'],
      :calculate_with_limited_scope => service_choices_session_filtr_params['calculate_with_limited_scope'],
      :selected_service_categories => selected_service_categories,
@@ -202,10 +201,11 @@ module Customer::TarifOptimizatorHelper
     if service_choices_session_filtr_params['calculate_with_fixed_services'] == 'true'
       [services_for_calculation_select_session_filtr_params['operator_id'].to_i]
     else
+      tel = services_select_session_filtr_params['operator_tel'] == 'true'? 1023 : nil
       bln = services_select_session_filtr_params['operator_bln'] == 'true'? 1025 : nil
       mgf = services_select_session_filtr_params['operator_mgf'] == 'true'? 1028 : nil
       mts = services_select_session_filtr_params['operator_mts'] == 'true'? 1030 : nil
-      [bln, mgf, mts].compact    
+      [tel, bln, mgf, mts].compact    
     end
   end
   
@@ -225,6 +225,7 @@ module Customer::TarifOptimizatorHelper
       }
     else
       {
+        1023 => (service_choices_session_filtr_params['tarifs_tel'] || []), 
         1025 => (service_choices_session_filtr_params['tarifs_bln'] || []), 
         1028 => (service_choices_session_filtr_params['tarifs_mgf'] || []), 
         1030 => (service_choices_session_filtr_params['tarifs_mts'] || []), 
@@ -242,6 +243,7 @@ module Customer::TarifOptimizatorHelper
       }
     else
       {
+        1023 => (service_choices_session_filtr_params['tarif_options_tel'] || []), 
         1025 => (service_choices_session_filtr_params['tarif_options_bln'] || []), 
         1028 => (service_choices_session_filtr_params['tarif_options_mgf'] || []), 
         1030 => (service_choices_session_filtr_params['tarif_options_mts'] || []), 
@@ -253,7 +255,7 @@ module Customer::TarifOptimizatorHelper
     service_choices_session_filtr_params = session_filtr_params(service_choices)
 
     {
-      1023 => (service_choices_session_filtr_params['common_services_tele2'] || [830, 831, 832]), 
+      1023 => (service_choices_session_filtr_params['common_services_tel'] || [830, 831, 832]), 
       1025 => (service_choices_session_filtr_params['common_services_bln'] || []), 
       1028 => (service_choices_session_filtr_params['common_services_mgf'] || []), 
       1030 => (service_choices_session_filtr_params['common_services_mts'] || []), 

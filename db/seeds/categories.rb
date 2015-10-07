@@ -329,6 +329,7 @@ Category.create(id: _yamalo_nenetsk_region, type_id: 0, level_id: 3, parent_id: 
 Category.create(id: _yaroslav_region, type_id: 0, level_id: 3, parent_id: _russia, name: "Ярославская область")
 Category.create(id: _altai_republik, type_id: 0, level_id: 3, parent_id: _russia, name: "Республика Алтай")
 Category.create(id: _zabaikalsk_region, type_id: 0, level_id: 3, parent_id: _russia, name: "Забайкальский край")
+Category.create(id: _krum, type_id: 0, level_id: 3, parent_id: _russia, name: "Республика Крым")
 
 
 Category.create(id: 1200, type_id: 0, level_id: 3, parent_id: _russia, name: "Абакан")
@@ -413,6 +414,7 @@ Category.create(id: _yaroslav, type_id: 0, level_id: 3, parent_id: _russia, name
 Category.create(id: 1279, type_id: 0, level_id: 3, parent_id: _russia, name: "Владикавказ")
 Category.create(id: 1280, type_id: 0, level_id: 3, parent_id: _russia, name: "Горно-Алтайск")
 Category.create(id: 1281, type_id: 0, level_id: 3, parent_id: _russia, name: "Ставрополь")
+Category.create(id: _sevastopol, type_id: 0, level_id: 3, parent_id: _russia, name: "Севастополь")
 
 
 Category.create(id: 1501, type_id: 0, level_id: 3, parent_id: _ukraiun, name: "регион Украины")

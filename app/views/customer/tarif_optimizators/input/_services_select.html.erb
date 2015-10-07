@@ -7,6 +7,9 @@ form_item.init do |f|
 	
   [
   	[
+     label(filtr_name, "operator_tel", "Теле2", label_html),
+ 	 check_box(filtr_name, "operator_tel", (s["operator_tel"] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
+
      label(filtr_name, "operator_bln", "Билайн", label_html),
  	 check_box(filtr_name, "operator_bln", (s["operator_bln"] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
 
@@ -26,25 +29,26 @@ form_item.init do |f|
 
      label(filtr_name, "all_tarif_options", "Все тарифные опции", label_html),
  	 check_box(filtr_name, "all_tarif_options", (s["all_tarif_options"] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
+
+     label(filtr_name, "international_rouming", "Опция для международного роуминга", label_html),
+ 	 check_box(filtr_name, "international_rouming", (s["international_rouming"] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
   	],
 
   	[
-     label(filtr_name, "international_rouming", "Опция для международного роуминга", label_html),
- 	 check_box(filtr_name, "international_rouming", (s["international_rouming"] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
-
      label(filtr_name, "country_rouming", "Опции для путешествий по России", label_html),
  	 check_box(filtr_name, "country_rouming", (s["country_rouming"] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
 
      label(filtr_name, "calls", "Опции для звонков", label_html),
  	 check_box(filtr_name, "calls", (s["calls"] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
-  	],
 
-  	[
      label(filtr_name, "sms", "Опции для смс", label_html),
  	 check_box(filtr_name, "sms", (s["sms"] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
 
      label(filtr_name, "mms", "Опции для ммс", label_html),
  	 check_box(filtr_name, "mms", (s["mms"] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
+  	],
+
+  	[
 
      label(filtr_name, "internet", "Опции для интернета", label_html),
  	 check_box(filtr_name, "internet", (s["internet"] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
