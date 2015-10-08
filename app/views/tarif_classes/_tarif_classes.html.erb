@@ -1,0 +1,21 @@
+<%
+table.init do |t|
+#  t.caption = 'Tarif classes'
+  t.heads = ['Id', 'Name', 'Operator', 'Privacy', 'Standrd service', '']
+  t.set_fields do |tarif_class| 
+  [
+    tarif_class.id, 
+    tarif_class.name, 
+    (tarif_class.operator.name if tarif_class.operator), 
+    (tarif_class.privacy.name if tarif_class.privacy), 
+    (tarif_class.standard_service.name if tarif_class.standard_service), 
+#    (tarif_class.created_at.to_formatted_s(:short) if  tarif_class.created_at), 
+#    (tarif_class.updated_at.to_formatted_s(:short) if tarif_class.updated_at), 
+    link_to( 'Show', tarif_class), 
+#    link_to( 'Edit', edit_tarif_class_path(tarif_class)), 
+#    link_to( 'Destroy', tarif_class, method: :delete, data: { confirm: 'Are you sure?' } )
+  ] 
+  end
+end
+%>
+

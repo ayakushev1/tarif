@@ -1,0 +1,27 @@
+<%
+form_item.init do |fi|
+input_html = {:filtr_name => form_item.filtr_name, :class => "updatable form-control ", :action_name => tarif_classes_path}
+label_html = {:class => "control-label "}
+  s = session_filtr_params(fi)	
+#  fi.caption = "Tarif class filtr fields"	
+  fi.set_fields do |filtr_name|
+    [
+      [
+      	label(filtr_name, "operator_id", "Оператор", label_html),
+      	collection_select(filtr_name, "operator_id", Category.where(:id => TarifClass.query_from_filtr(s, "operator_id").pluck(:operator_id).uniq ), :id, :name, 
+	  	{:include_blank => "operator", :selected => s["operator_id"] }, input_html )
+	  ],
+      [
+      	label(filtr_name, "privacy_id", "Для физических или юридических лиц", label_html),
+      	collection_select(filtr_name, "privacy_id", Category.where(:id => TarifClass.query_from_filtr(s, "privacy_id").pluck(:privacy_id).uniq ), :id, :name, 
+	  	{:include_blank => "privacy", :selected => s["privacy_id"] }, input_html )
+	  ],
+      [
+      	label(filtr_name, "standard_service_id", "Тип услуги", label_html),
+      	collection_select(filtr_name, "standard_service_id", Category.where(:id => TarifClass.query_from_filtr(s, "standard_service_id").pluck(:standard_service_id).uniq ), :id, :name, 
+	  	{:include_blank => "standard service", :selected => s["standard_service_id"] }, input_html )
+	  ],
+    ] 
+  end
+end
+%>

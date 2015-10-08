@@ -109,9 +109,9 @@ Rails.application.routes.draw do
   end
   
   resources :users
+  resources :tarif_classes
   
 #  resources :tarif_lists, :price_lists  
-#  resources :tarif_classes
 #  resources :parameters, only: :index
 #  resources :categories, only: :index
   
