@@ -2,9 +2,11 @@
 
 User-agent: Googlebot
 Disallow: 
+Sitemap: http://www.mytarifs.ru/sitemap.xml
 
 User-agent: Yandex
 Disallow: 
+Sitemap: http://www.mytarifs.ru/sitemap.xml
 
 User-agent: *
 Disallow: /
