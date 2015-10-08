@@ -58,6 +58,7 @@ module Calls::OperatorPhoneNumbers::Ranges
 4940000000  => {:code => 494, :start_range => 4940000000, :end_range => 4949999999, :operator_id => 1034, :region_id => 1119},
 4950000000  => {:code => 495, :start_range => 4950000000, :end_range => 4959999999, :operator_id => 1034, :region_id => 1238},
 4960000000  => {:code => 496, :start_range => 4960000000, :end_range => 4969999999, :operator_id => 1034, :region_id => 1127},
+4990000000  => {:code => 499, :start_range => 4990000000, :end_range => 4999999999, :operator_id => 1034, :region_id => 1238},
 8110000000  => {:code => 811, :start_range => 8110000000, :end_range => 8119999999, :operator_id => 1034, :region_id => 1138},
 8120000000  => {:code => 812, :start_range => 8120000000, :end_range => 8129999999, :operator_id => 1034, :region_id => 1255},
 8130000000  => {:code => 813, :start_range => 8130000000, :end_range => 8139999999, :operator_id => 1034, :region_id => 1124},
