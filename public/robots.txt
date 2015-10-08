@@ -9,4 +9,4 @@ Disallow:
 Sitemap: http://www.mytarifs.ru/sitemap.xml
 
 User-agent: *
-Disallow: /
+Disallow: 
