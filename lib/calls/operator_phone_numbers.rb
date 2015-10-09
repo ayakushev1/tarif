@@ -21,8 +21,12 @@ class Calls::OperatorPhoneNumbers
   	  hash_key = phone_range.to_a[0][0]
   	  result = phone_numbers[hash_key].merge({:country_id => _russia, :operator_type_id => _mobile})
 #  	  raise(StandardError, result)
-  	else
-  	  nil
+  	else 
+  	  if phone_without_country >= 9000000000
+  	    result = {:operator_id => 1035, :country_id => _russia, :operator_type_id => _mobile}
+  	  else
+  	    nil
+  	  end
   	end
   end
 end
