@@ -1,16 +1,16 @@
 <%
 table.init do |t|
-  t.caption = 'Price formulas'
-  t.heads = ['Id', 'name', 'order', 'standard formula', 'formula', 'price', 'price unit', 'volume', 'volume uint', 'Description']
+#  t.caption = 'Price formulas'
+  t.heads = ['order', 'standard formula name', 'formula', 'price', 'price unit', 'volume', 'volume uint', 'Description']
   t.set_fields do |f| 
   [
-    f.id, 
-    f.name, 
+#    f.id, 
+#    f.name, 
 #    (f.price_list.name if f.price_list), 
     f.calculation_order, 
     (f.standard_formula.name if f.standard_formula), 
     f.formula, 
-    f.price, 
+    (f.price.to_s(:rounded, precision: 2) if f.price), 
     (f.price_unit.name if f.price_unit), 
     (f.volume.name if f.volume), 
     (f.volume_unit.name if f.volume_unit), 

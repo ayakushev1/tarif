@@ -4,8 +4,8 @@ require 'will_paginate/array'
 
 module SavableInSession::Tableable
 
-  def create_tableable(model)
-    tableable = Tableable.new(model)
+  def create_tableable(model, options = {})
+    tableable = Tableable.new(model, options)
     set_pagination_current_id(tableable)
 
     tableable.pagination_page = session[:pagination][tableable.pagination_name]
@@ -22,14 +22,16 @@ module SavableInSession::Tableable
     
     attr_accessor :base_name, :caption, :heads, :pagination_per_page, :id_name, :pagination_page, :row_current_id, :row_action
     attr_writer :current_row_class, :current_id_name
-    attr_reader :pagination_param_name, :pagination_name, :table_name, :model_size
+    attr_reader :pagination_param_name, :pagination_name, :table_name, :model_size, :options
     
-    def initialize(model)
+    def initialize(model, options = {})
+      @options = options
       @model = model
       @model_size =model.count
-      @base_name = model.table_name.singularize
+      @base_name = options[:base_name] || model.table_name.singularize
       @table_name = "#{@base_name}_table"
       @id_name = :id
+      @pagination_per_page =options[:pagination_per_page] || 10
     end
     
     def pagination_page

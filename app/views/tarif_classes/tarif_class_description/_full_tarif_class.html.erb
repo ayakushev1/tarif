@@ -1,0 +1,45 @@
+<%
+form_item.init do |fi|
+#  fi.caption = 'Show tarif class'
+  fi.set_fields do |tarif_class| 
+  	 incompatibility = {}
+  	 if tarif_class.dependency and tarif_class.dependency['incompatibility']
+  	 	tarif_class.dependency['incompatibility'].each do |key, value|
+  	 		incompatibility[key] = TarifClass.where(:id => value).map(&:name)
+  	 	end  	 	 
+  	 end
+  	 general_priority = if tarif_class.dependency and tarif_class.dependency['general_priority']
+  	 	Category.where(:id => tarif_class.dependency['general_priority']).map(&:name).first 
+  	 end
+  	 lower_tarif_priority = if tarif_class.dependency and tarif_class.dependency['other_tarif_priority'] and tarif_class.dependency['other_tarif_priority']['lower'] 
+  	 	TarifClass.where(:id => tarif_class.dependency['other_tarif_priority']['lower']).map(&:name)
+  	 end
+  	 higher_tarif_priority = if tarif_class.dependency and tarif_class.dependency['other_tarif_priority'] and tarif_class.dependency['other_tarif_priority']['higher'] 
+  	 	TarifClass.where(:id => tarif_class.dependency['other_tarif_priority']['higher']).map(&:name)
+  	 end
+  	 prerequisites = if tarif_class.dependency and tarif_class.dependency['prerequisites']
+  	 	TarifClass.where(:id => tarif_class.dependency['prerequisites']).map(&:name).first 
+  	 end
+  	
+	[
+#	  ['Id', tarif_class.id], 
+#	  ['Name', tarif_class.name], 
+	  ['Оператор', (tarif_class.operator.name if tarif_class.operator) ], 
+	  ['Для физических или юридических лиц', (tarif_class.privacy.name if tarif_class.privacy) ], 
+	  ['Тариф или опция', (tarif_class.standard_service.name if tarif_class.standard_service) ], 
+	  ['Адрес в интернете', link_to_if(tarif_class.features, tarif_class.features['http'], tarif_class.features['http'], :target => "_blank") ], 
+	  ['Автоматически подобранные категории', (tarif_class.dependency['parts'] if tarif_class.dependency) ], 
+#	  ['Категории введенные вручную', (tarif_class.dependency['categories'] if tarif_class.dependency) ], 
+	  ['Несовместимость', incompatibility], 
+	  ['Общий приоритет', general_priority ], 
+	  ['Тарифы с меньшим приоритетом', lower_tarif_priority], 
+	  ['Тарифы с большим приоритетом', higher_tarif_priority], 
+	  ['Требования', prerequisites], 
+	  ['Возможность использовать несколько раз', (tarif_class.dependency['multiple_use'] if tarif_class.dependency) ], 
+#	  ['Created', (tarif_class.created_at.to_formatted_s(:short) if  tarif_class.created_at) ], 
+#	  ['Updated', (tarif_class.updated_at.to_formatted_s(:short) if tarif_class.updated_at) ],
+#      [link_to('Edit', edit_tarif_class_path(tarif_class) ), link_to( 'Back', tarif_classes_path)],  
+	] 
+  end
+end	
+%>

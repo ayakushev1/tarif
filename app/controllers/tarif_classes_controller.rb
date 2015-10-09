@@ -1,21 +1,88 @@
 class TarifClassesController < ApplicationController
-  include Crudable
-  crudable_actions :all
+#  include Crudable
+#  crudable_actions :all
   
   def tarif_class_filtr
     create_filtrable("tarif_class")
   end
 
+ def tarif_class_form
+    create_formable(TarifClass.where(:id => session[:current_id]['tarif_class_id']).first)
+  end
+
   def tarif_classes
-    create_tableable(TarifClass.query_from_filtr(session_filtr_params(tarif_class_filtr)) )
+    filtr = session_filtr_params(tarif_class_filtr)
+    category = (filtr.extract!('dependency_parts')['dependency_parts'] || []) - ['']
+    create_tableable(TarifClass.query_from_filtr(filtr).where("(dependency->>'parts')::jsonb @> '#{category}'::jsonb"))
+#    raise(StandardError, filtr)
   end
 
   def price_lists_for_index
-    create_tableable(PriceList.tarif_class_price_lists(session[:current_id]['tarif_class_id'] ) )
+    create_tableable(price_list )
   end
   
-  def price_lists_for_show
-    create_tableable(PriceList.tarif_class_price_lists(tarif_class.id) ) 
+  def price_lists_for_show_fixed
+    options = {:base_name => 'price_lists_for_show_fixed'}
+    create_tableable(price_list.
+      joins(:service_category_tarif_class).
+      where("service_category_group_id is Null and (service_category_one_time_id is not Null or service_category_periodic_id is not Null)"),
+      options )
+  end
+  
+  def price_formulas_fixed
+    create_tableable(Price::Formula.with_price_list(session[:current_id]['price_lists_for_show_fixed_id']) )
+  end
+  
+  def price_lists_for_show_calls
+    options = {:base_name => 'price_lists_for_show_calls', :pagination_per_page => 100}
+    create_tableable(price_list.
+      joins(:service_category_tarif_class).
+      where("service_category_group_id is Null").
+      where(:service_category_tarif_classes => {:service_category_calls_id => [301, 302, 303]}).
+      order("service_category_tarif_classes.service_category_calls_id").
+      order("service_category_tarif_classes.service_category_rouming_id").
+      order("service_category_tarif_classes.service_category_geo_id"),
+      options )
+  end
+  
+  def price_formulas_calls
+    create_tableable(Price::Formula.with_price_list(session[:current_id]['price_lists_for_show_calls_id']) )
+  end
+  
+  def price_lists_for_show_sms_mms
+    options = {:base_name => 'price_lists_for_show_sms_mms', :pagination_per_page => 100}
+    create_tableable(price_list.
+      joins(:service_category_tarif_class).
+      where("service_category_group_id is Null").
+      where(:service_category_tarif_classes => {:service_category_calls_id => [310, 311, 312, 320, 321, 322]}).
+      order("service_category_tarif_classes.service_category_calls_id").
+      order("service_category_tarif_classes.service_category_rouming_id").
+      order("service_category_tarif_classes.service_category_geo_id"),
+      options )
+  end
+  
+  def price_formulas_sms_mms
+    create_tableable(Price::Formula.with_price_list(session[:current_id]['price_lists_for_show_sms_mms_id']) )
+  end
+  
+  def price_lists_for_show_internet
+    options = {:base_name => 'price_lists_for_show_internet', :pagination_per_page => 100}
+    create_tableable(price_list.
+      joins(:service_category_tarif_class).
+      where("service_category_group_id is Null").
+      where(:service_category_tarif_classes => {:service_category_calls_id => [330, 340, 341, 342]}).
+      order("service_category_tarif_classes.service_category_calls_id").
+      order("service_category_tarif_classes.service_category_rouming_id").
+      order("service_category_tarif_classes.service_category_geo_id"),
+      options )
+  end
+  
+  def price_formulas_internet
+    create_tableable(Price::Formula.with_price_list(session[:current_id]['price_lists_for_show_internet_id']) )
+  end
+  
+  def price_lists_for_show_non_groups
+    create_tableable(price_list.where("service_category_group_id is Null") )
   end
   
   def price_formulas
@@ -23,6 +90,27 @@ class TarifClassesController < ApplicationController
 #    create_tableable(Price::Formula.where(:price_list_id => session[:current_id]['price_list_id']) )
   end
   
+  def service_categories_for_groups    
+    create_tableable(Service::CategoryTarifClass.
+      where(:tarif_class_id => session[:current_id]['tarif_class_id']).
+      where("as_standard_category_group_id is not Null").
+      order(:as_standard_category_group_id, :service_category_calls_id, :service_category_rouming_id, :service_category_geo_id)
+      )
+#    create_tableable(PriceList.where(:service_category_group_id => service_category_groups_ids) )
+#    raise(StandardError, PriceList.where(:service_category_group_id => service_category_groups_ids).to_sql )
+  end
+
+  def price_formulas_groups
+    as_standard_category_group_id = Service::CategoryTarifClass.where(:id => session[:current_id]['service_category_tarif_class_id']).pluck(:as_standard_category_group_id)[0]
+    price_list_id = PriceList.where(:service_category_group_id => as_standard_category_group_id).pluck(:id)[0]
+    create_tableable(Price::Formula.with_price_list(price_list_id) )
+#    raise(StandardError, price_list_id)
+#    create_tableable(Price::Formula.where(:price_list_id => session[:current_id]['price_list_id']) )
+  end
+  
+  def price_list
+    PriceList.tarif_class_price_lists(session[:current_id]['tarif_class_id']).includes(:service_category_tarif_class, :formulas)
+  end
 private
 
 end

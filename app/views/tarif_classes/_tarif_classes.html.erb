@@ -1,11 +1,11 @@
 <%
 table.init do |t|
 #  t.caption = 'Tarif classes'
-  t.heads = ['Id', 'Name', 'Operator', 'Privacy', 'Standrd service', '']
+  t.heads = ['Name', 'Operator', 'Privacy', 'Standrd service', '']
   t.set_fields do |tarif_class| 
   [
-    tarif_class.id, 
-    tarif_class.name, 
+#    tarif_class.id, 
+    link_to_if(tarif_class.features, tarif_class.name, tarif_class.features['http'], :target => "_blank"), 
     (tarif_class.operator.name if tarif_class.operator), 
     (tarif_class.privacy.name if tarif_class.privacy), 
     (tarif_class.standard_service.name if tarif_class.standard_service), 

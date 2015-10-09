@@ -1,0 +1,45 @@
+<%
+table.init do |t|
+#  t.caption = 'Price lists'
+#  t.heads = ['Id', 'Name', 'tarif class', 'tarif list', 'service category group', 'service category tarif class', 'Is active', 'Features', 'Description']
+  t.heads = ['Кол-во цен', 'Price', 'Price order', 'calls', 'rouming', 'geo', 'partner', 'Is active', 'Conditions - tarif', 'tarif option', 'tarif option order']
+  t.set_fields do |f| 
+  	s = f.service_category_tarif_class
+  	tarif_set_must_include_tarif_options = if s.conditions and s.conditions['tarif_set_must_include_tarif_options']
+  		TarifClass.where(:id => s.conditions['tarif_set_must_include_tarif_options']).pluck(:name)
+  	end
+
+  [
+	 f.formulas.map(&:price).count,
+	 f.formulas.map(&:price).map{|w| w.to_s(:rounded, precision: 2)}[0],
+	 f.formulas.map(&:calculation_order)[0],
+#    f.id, 
+#    f.name, 
+#    (f.tarif_class.name if f.tarif_class), 
+#    (f.tarif_list.name if f.tarif_list), 
+    (s.service_category_calls.name if s and s.service_category_calls),
+#    (f.service_category_group.name if f.service_category_group), 
+    (s.service_category_rouming.name if s and s.service_category_rouming),
+    (s.service_category_geo.name if s and s.service_category_geo),
+    (s.service_category_partner_type.name if s and s.service_category_partner_type),
+#    (s.service_category_one_time.name if s and s.service_category_one_time),
+#    (s.service_category_periodic.name if s and s.service_category_periodic),
+    f.is_active, 
+#    f.features, 
+#    (s.conditions['parts'] if s.conditions), 
+#    (s.conditions['parts_criteria'] if s.conditions), 
+    tarif_set_must_include_tarif_options, 
+    (s.tarif_option.name if s.tarif_option), 
+    (s.tarif_option_order), 
+#    f.description, 
+#    (f.created_at.to_formatted_s(:short) if  f.created_at), 
+#    (f.updated_at.to_formatted_s(:short) if f.updated_at), 
+#    link_to( 'Show', f), 
+#    link_to( 'Edit', edit_price_list_path(f)), 
+#    link_to( 'Destroy', f, method: :delete, data: { confirm: 'Are you sure?' } )
+  ] 
+  end
+end
+%>
+
+service_category_calls_id

@@ -21,6 +21,11 @@ label_html = {:class => "control-label "}
       	collection_select(filtr_name, "standard_service_id", Category.where(:id => TarifClass.query_from_filtr(s, "standard_service_id").pluck(:standard_service_id).uniq ), :id, :name, 
 	  	{:include_blank => "standard service", :selected => s["standard_service_id"] }, input_html )
 	  ],
+      [
+      	label(filtr_name, "dependency_parts", "Категория услуги", label_html),
+      	select(filtr_name, "dependency_parts", TarifClass.where('dependency is not Null').inject([]){ |array, q| array + q['dependency']['parts'] if q['dependency']['parts']}.uniq, 
+	  	{:include_blank => "dependency_parts", :selected => (s["dependency_parts"])}, input_html.merge({:multiple => true, :size => 10}) )
+	  ],
     ] 
   end
 end
