@@ -2,9 +2,13 @@
 table.init do |t|
 #  t.caption = 'Price lists'
 #  t.heads = ['Id', 'Name', 'tarif class', 'tarif list', 'service category group', 'service category tarif class', 'Is active', 'Features', 'Description']
-  t.heads = ['Кол-во цен', 'Price', 'Price order', 'service category group', 'calls', 'rouming', 'geo', 'partner', 'Is active', 'tarif_option', 'tarif_option_order']
+  t.heads = ['Кол-во цен', 'Price', 'Price order', 'service category group', 'calls', 'rouming', 'geo', 'partner', 'Is active', 'Conditions - tarif', 'tarif_option', 'tarif_option_order']
   t.set_fields do |f| 
   	s = PriceList.where(:service_category_group_id => f.as_standard_category_group_id)
+  	
+  	tarif_set_must_include_tarif_options = if f.conditions
+  		TarifClass.where(:id => f.conditions['tarif_set_must_include_tarif_options']).pluck(:name)
+  	end
   [
 	 s.map(&:formulas).count,
 	 s.map{|r| r.formulas.map(&:price).map{|w| w.to_s(:rounded, precision: 2)}[0]}[0],
@@ -20,6 +24,7 @@ table.init do |t|
 #    (f.service_category_periodic.name if s and s.service_category_periodic),
     f.is_active, 
 #    f.conditions, 
+    tarif_set_must_include_tarif_options, 
     (f.tarif_option.name if f.tarif_option), 
     (f.tarif_option_order), 
 #    (f.created_at.to_formatted_s(:short) if  f.created_at), 

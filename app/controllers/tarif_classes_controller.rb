@@ -94,6 +94,7 @@ class TarifClassesController < ApplicationController
     create_tableable(Service::CategoryTarifClass.
       where(:tarif_class_id => session[:current_id]['tarif_class_id']).
       where("as_standard_category_group_id is not Null").
+      order("conditions->>'tarif_set_must_include_tarif_options' DESC"). 
       order(:as_standard_category_group_id, :service_category_calls_id, :service_category_rouming_id, :service_category_geo_id)
       )
 #    create_tableable(PriceList.where(:service_category_group_id => service_category_groups_ids) )
@@ -109,7 +110,9 @@ class TarifClassesController < ApplicationController
   end
   
   def price_list
-    PriceList.tarif_class_price_lists(session[:current_id]['tarif_class_id']).includes(:service_category_tarif_class, :formulas)
+    PriceList.tarif_class_price_lists(session[:current_id]['tarif_class_id']).
+      includes(:service_category_tarif_class, :formulas).
+      order("service_category_tarif_classes.conditions->>'tarif_set_must_include_tarif_options'  DESC")
   end
 private
 
