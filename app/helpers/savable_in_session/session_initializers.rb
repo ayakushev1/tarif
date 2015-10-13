@@ -12,7 +12,7 @@ module SavableInSession::SessionInitializers
   
   def set_session_from_params_for_filtrable(filtr_name)    
     params_to_set = params.extract!(filtr_name)
-#    raise(StandardError, [filtr_name, params_to_set, params]) if filtr_name == "services_for_calculation_select_filtr"
+#    raise(StandardError, [filtr_name, session[:filtr], params_to_set, params]) if filtr_name == "tarif_class_filtr"
     params_to_set[filtr_name].each do |key, value|
       session[:pagination].each do |key_p, value_p|
         session[:pagination][key_p] = 1
@@ -20,7 +20,8 @@ module SavableInSession::SessionInitializers
       
       session[:filtr][filtr_name][key] = value
     end if params_to_set[filtr_name]
-  end
+#     raise(StandardError, session[:filtr][filtr_name]) if filtr_name == "tarif_class_filtr"
+ end
 
   def init_session_for_formable(formable)
     session[:form][formable.form_name] ||= {}

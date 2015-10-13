@@ -13,6 +13,9 @@ _mts_super_mts_star = 209; #тариф не забит (и его по-моем�
 _mts_smart_top = 212
 _mts_posekundny = 213 
 
+  #new (after 11.10.2015) 
+_mts_smart_nonstop = 214
+
 #common_services_ids
 _mts_own_country_rouming = 276; _mts_international_rouming = 277; _mts_own_country_rouming_internet = 312;
 _mts_incoming_travelling_in_russia = 297;

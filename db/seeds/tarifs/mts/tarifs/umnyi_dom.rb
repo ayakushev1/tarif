@@ -32,11 +32,11 @@
   @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => _stf_price_by_1_month, :price => 300.0})
 
 #All_russia_rouming, mms, Incoming
-  category = {:name => '_sctcg_own_home_regions_sms_incoming', :service_category_rouming_id => _all_russia_rouming, :service_category_calls_id => _mms_in}
+  category = {:name => '_sctcg_own_home_regions_mms_incoming', :service_category_rouming_id => _all_russia_rouming, :service_category_calls_id => _mms_in}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_zero_count_volume_item, :price => 0.0})
 
 #All_world_rouming, mms, Incoming
-  category = {:name => '_sctcg_own_home_regions_sms_incoming', :service_category_rouming_id => _all_world_rouming, :service_category_calls_id => _mms_in}
+  category = {:name => '_sctcg_own_home_regions_mms_incoming', :service_category_rouming_id => _all_world_rouming, :service_category_calls_id => _mms_in}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_zero_count_volume_item, :price => 0.0})
 
 #Own and home regions, mms, outcoming, to own and home regions, to all operators
@@ -51,11 +51,11 @@
 
 #TODO исправить на правильный регион, а также ниже в Tarif option MMS+ (discount 50%)
 #All_russia_rouming, mms, outcoming, to_own_country
-  category = {:name => '_sctcg_own_home_regions_sms_incoming', :service_category_rouming_id => _all_russia_rouming, :service_category_geo_id => _service_to_own_country, :service_category_calls_id => _mms_out}
+  category = {:name => '_sctcg_own_home_regions_mms_incoming', :service_category_rouming_id => _all_russia_rouming, :service_category_geo_id => _service_to_own_country, :service_category_calls_id => _mms_out}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => _stf_price_by_count_volume_item, :price => 6.5})  
 
 #All_world_rouming, mms, Outcoming
-  category = {:name => '_sctcg_own_home_regions_sms_incoming', :service_category_rouming_id => _all_world_rouming, :service_category_calls_id => _mms_out}
+  category = {:name => '_sctcg_own_home_regions_mms_incoming', :service_category_rouming_id => _all_world_rouming, :service_category_calls_id => _mms_out}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => _stf_price_by_count_volume_item, :price => 6.5})  
 
 #Own and home regions, calls, incoming

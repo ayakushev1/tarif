@@ -35,11 +35,15 @@ def access_methods_to_constant_operator_country_groups
     eval("_mts_love_countries_#{name} << country_array[0]") if country_array[2]
   end
   
-  _mts_your_country_1 = [_azerbaijan, _belarus]; _mts_your_country_2 = [_china]; _mts_your_country_3 = [_moldova];
-  _mts_your_country_4 = [_uzbekistan]; _mts_your_country_5 = [_tajikistan]; _mts_your_country_6 = [_armenia];
-  _mts_your_country_7 = [_vietnam, _south_korea, _singapur]; 
-  _mts_your_country_8 = _mts_sic_countries - [_azerbaijan, _belarus, _moldova, _uzbekistan, _tajikistan, _armenia]; 
-  _mts_your_country_9 = _mts_other_countries - [_china, _vietnam, _south_korea, _singapur];
+  _mts_your_country_1 = [_azerbaijan, _belarus]; #20
+  _mts_your_country_2 = [_china, _south_korea]; #3
+  _mts_your_country_3 = [_moldova];#9
+  _mts_your_country_4 = [_uzbekistan]; #4
+  _mts_your_country_5 = [_georgia, _kyrgyzstan]; #12
+  _mts_your_country_6 = [_armenia]; #5 #15
+  _mts_your_country_7 = [_vietnam, _abkhazia, _kazakhstan, _tajikistan, _turkmenistan, _south_ossetia]; #8
+  _mts_your_country_8 = _mts_sic_countries - [_azerbaijan, _belarus, _moldova, _uzbekistan, _tajikistan, _georgia, _kyrgyzstan, _armenia, _abkhazia, _kazakhstan, _turkmenistan, _south_ossetia];
+  _mts_your_country_9 = _mts_other_countries - [_china, _vietnam, _south_korea];
 
 
 #megafone

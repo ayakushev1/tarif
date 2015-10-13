@@ -8,7 +8,7 @@ module SavableInSession::Formable
   end
   
   def session_model_params(formable)
-    session[:form][formable.form_name]
+    session[:form][formable.form_name].dup
   end
   
   class Formable

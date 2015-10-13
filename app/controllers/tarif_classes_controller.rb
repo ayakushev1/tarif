@@ -4,6 +4,7 @@ class TarifClassesController < ApplicationController
   
   def tarif_class_filtr
     create_filtrable("tarif_class")
+#    raise(StandardError, session[:filtr])
   end
 
  def tarif_class_form
@@ -11,10 +12,11 @@ class TarifClassesController < ApplicationController
   end
 
   def tarif_classes
+#    raise(StandardError, session[:filtr])
     filtr = session_filtr_params(tarif_class_filtr)
+#    raise(StandardError, filtr)
     category = (filtr.extract!('dependency_parts')['dependency_parts'] || []) - ['']
     create_tableable(TarifClass.query_from_filtr(filtr).where("(dependency->>'parts')::jsonb @> '#{category}'::jsonb"))
-#    raise(StandardError, filtr)
   end
 
   def price_lists_for_index

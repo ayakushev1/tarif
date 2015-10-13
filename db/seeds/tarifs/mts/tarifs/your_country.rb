@@ -60,59 +60,63 @@
   
 #Own and home regions, calls, outcoming, _azerbaijan, _belarus
   category = {:name => '_sctcg_own_home_regions_calls_to_azerbaijan_belarus', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_your_country_1}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 9.5})
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 20.0})
 
-#Own and home regions, Calls, outcoming, to_china
-  category = {:name => '_sctcg_own_home_regions_calls_to_china', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_your_country_2}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 1.0})
+#Own and home regions, Calls, outcoming, to_china _south_korea
+  category = {:name => '_sctcg_own_home_regions_calls_to_china_south_korea', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_your_country_2}
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 3.0})
 
 #Own and home regions, Calls, outcoming, to_moldova
   category = {:name => '_sctcg_own_home_regions_calls_to_moldova', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_your_country_3}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 4.5})
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 9.0})
 
 #Own and home regions, Calls, outcoming, to_uzbekistan
   category = {:name => '_sctcg_own_home_regions_calls_to_uzbekistan', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_your_country_4}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 2.5})
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 4.0})
 
-#Own and home regions, Calls, outcoming, to_tajikistan
-  category = {:name => '_sctcg_own_home_regions_calls_to_tajikistan', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_your_country_5}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 4.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
-   :formula => {
-     :stat_params => {:sum_duration => "sum(((description->>'duration')::float)/60.0)",
-                      :times_of_14_minutes => "sum(ceil(ceil(((description->>'duration')::float)/60.0)/14.0))",
-                      :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
-     :method => 'price_formulas.price * times_of_14_minutes + (sum_duration - times_of_14_minutes) * 1.0'}, } )
+#Own and home regions, Calls, outcoming, to_georgia_kyrgyzstan
+  category = {:name => '_sctcg_own_home_regions_calls_to_georgia_kyrgyzstan', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_your_country_5}
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 12.0})
+#  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 12.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
+#   :formula => {
+#     :stat_params => {:sum_duration => "sum(((description->>'duration')::float)/60.0)",
+#                      :times_of_14_minutes => "sum(ceil(ceil(((description->>'duration')::float)/60.0)/14.0))",
+#                      :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
+#     :method => 'price_formulas.price * times_of_14_minutes + (sum_duration - times_of_14_minutes) * 1.0'}, } )
 
 #Own and home regions, Calls, outcoming, to_armenia
   category = {:name => '_sctcg_own_home_regions_calls_to_armenia', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_your_country_6}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 8.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
-   :formula => {
-     :stat_params => {:sum_duration => "sum(((description->>'duration')::float)/60.0)",
-                      :times_of_4_minutes => "sum(ceil(ceil(((description->>'duration')::float)/60.0)/4.0))",
-                      :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
-     :method => 'price_formulas.price * times_of_4_minutes + (sum_duration - times_of_4_minutes) * 0.0'}, } )
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 5.0})
+#  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 5.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
+#   :formula => {
+#     :stat_params => {:sum_duration => "sum(((description->>'duration')::float)/60.0)",
+#                      :times_of_4_minutes => "sum(ceil(ceil(((description->>'duration')::float)/60.0)/4.0))",
+#                      :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
+#     :method => 'price_formulas.price * times_of_4_minutes + (sum_duration - times_of_4_minutes) * 0.0'}, } )
 
-#Own and home regions, Calls, outcoming, to_vietnam_south_korea_singapur
+#Own and home regions, Calls, outcoming, to_vietnam_south_korea_singapur _vietnam, _abkhazia, _kazakhstan, _tajikistan, _turkmenistan, _south_ossetia
   category = {:name => '_sctcg_own_home_regions_calls_to_vietnam_south_korea_singapur', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_your_country_7}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 1.5, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
-   :formula => {
-     :stat_params => {:sum_duration_minute_between_5_and_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) between 5.0 and 10.0 then ceil(((description->>'duration')::float)/60.0) - 5.0 else 0.0 end)",
-                      :sum_duration_minute_less_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) < 5.0 then ceil(((description->>'duration')::float)/60.0) else 0.0 end)",
-                      :count_duration_minute_more_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 10.0 then 1.0 else 0.0 end)",
-                      :sum_duration_minute_more_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 10.0 then ceil(((description->>'duration')::float)/60.0) - 10.0 else 0.0 end)",
-                      :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
-     :method => 'price_formulas.price * (sum_duration_minute_between_5_and_10 + count_duration_minute_more_10 * 10.0) + 4.5 * (sum_duration_minute_less_5 + sum_duration_minute_more_10)'}, } )
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 8.0})
+#  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 1.5, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
+#   :formula => {
+#     :stat_params => {:sum_duration_minute_between_5_and_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) between 5.0 and 10.0 then ceil(((description->>'duration')::float)/60.0) - 5.0 else 0.0 end)",
+#                      :sum_duration_minute_less_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) < 5.0 then ceil(((description->>'duration')::float)/60.0) else 0.0 end)",
+#                      :count_duration_minute_more_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 10.0 then 1.0 else 0.0 end)",
+#                      :sum_duration_minute_more_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 10.0 then ceil(((description->>'duration')::float)/60.0) - 10.0 else 0.0 end)",
+#                      :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
+#     :method => 'price_formulas.price * (sum_duration_minute_between_5_and_10 + count_duration_minute_more_10 * 10.0) + 4.5 * (sum_duration_minute_less_5 + sum_duration_minute_more_10)'}, } )
 
 #Own and home regions, Calls, outcoming, to_other_sic
   category = {:name => '_sctcg_own_home_regions_calls_to_other_sic', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_your_country_8}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 1.5, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
-   :formula => {
-     :stat_params => {:sum_duration_minute_between_5_and_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) between 5.0 and 10.0 then ceil(((description->>'duration')::float)/60.0) - 5.0 else 0.0 end)",
-                      :sum_duration_minute_less_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) < 5.0 then ceil(((description->>'duration')::float)/60.0) else 0.0 end)",
-                      :count_duration_minute_more_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 10.0 then 1.0 else 0.0 end)",
-                      :sum_duration_minute_more_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 10.0 then ceil(((description->>'duration')::float)/60.0) - 10.0 else 0.0 end)",
-                      :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
-     :method => 'price_formulas.price * (sum_duration_minute_between_5_and_10 + count_duration_minute_more_10 * 10.0) + 4.5 * (sum_duration_minute_less_5 + sum_duration_minute_more_10)'}, } )
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 10.0})
+#  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 1.5, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
+#   :formula => {
+#     :stat_params => {:sum_duration_minute_between_5_and_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) between 5.0 and 10.0 then ceil(((description->>'duration')::float)/60.0) - 5.0 else 0.0 end)",
+#                      :sum_duration_minute_less_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) < 5.0 then ceil(((description->>'duration')::float)/60.0) else 0.0 end)",
+#                      :count_duration_minute_more_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 10.0 then 1.0 else 0.0 end)",
+#                      :sum_duration_minute_more_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 10.0 then ceil(((description->>'duration')::float)/60.0) - 10.0 else 0.0 end)",
+#                      :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
+ #    :method => 'price_formulas.price * (sum_duration_minute_between_5_and_10 + count_duration_minute_more_10 * 10.0) + 4.5 * (sum_duration_minute_less_5 + sum_duration_minute_more_10)'}, } )
 
 #Own and home regions, Calls, outcoming, to_europe
   category = {:name => '_sctcg_own_home_regions_calls_europe', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_mts_europe}
@@ -128,15 +132,15 @@
 
 #Own and home regions, sms, outcoming, to_own_home_regions
   category = {:name => '_sctcg_own_home_regions_sms_to_own_home_regions', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_own_and_home_regions}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_count_volume_item, :price => 2.0})
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_count_volume_item, :price => 2.5})
 
 #Own and home regions, sms, outcoming, to_own_country
   category = {:name => '_sctcg_own_home_regions_sms_to_own_country', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_own_country}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_count_volume_item, :price => 2.0})
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_count_volume_item, :price => 2.5})
 
 #Own and home regions, sms, outcoming, to_sic_country
   category = {:name => '_sctcg_own_home_regions_sms_to_sic_country', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_mts_sic}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_count_volume_item, :price => 2.0})
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_count_volume_item, :price => 3.0})
 
 #Own and home regions, sms, outcoming, to_europe
   category = {:name => '_sctcg_own_home_regions_sms_to_europe', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_mts_europe}
@@ -158,69 +162,82 @@
 #При этом звонки на МТС - по тарифу для роуминга
 
 #Own country, calls, outcoming, _azerbaijan, _belarus
-  category = {:name => '_sctcg_own_country_calls_to_azerbaijan_belarus', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_your_country_1}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 9.5})
+#own_country_rouming, calls, outcoming, to_own_country, to_own_operator
+  category = {:name => '_sctcg_own_country_rouming_calls_to_own_country_to_own_operator', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country, :service_category_partner_type_id => _service_to_own_operator}
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 3.0})
 
-#Own country, Calls, outcoming, to_china
-  category = {:name => '_sctcg_own_country_calls_to_china', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_your_country_2}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 1.0})
+#own_country_rouming, calls, outcoming, to_own_country, to_not_own_operator
+  category = {:name => '_sctcg_own_country_rouming_calls_to_own_country_to_not_own_operator', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country, :service_category_partner_type_id => _service_to_not_own_operator}
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 3.0})
 
-#Own country, Calls, outcoming, to_moldova
-  category = {:name => '_sctcg_own_country_calls_to_moldova', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_your_country_3}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 4.5})
+  
+#own_country_rouming, calls, outcoming, _azerbaijan, _belarus
+  category = {:name => '_sctcg_own_country_rouming_calls_to_azerbaijan_belarus', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_your_country_1}
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 20.0})
 
-#Own country, Calls, outcoming, to_uzbekistan
-  category = {:name => '_sctcg_own_country_calls_to_uzbekistan', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_your_country_4}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 2.5})
+#own_country_rouming, Calls, outcoming, to_china _south_korea
+  category = {:name => '_sctcg_own_country_rouming_calls_to_china_south_korea', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_your_country_2}
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 3.0})
 
-#Own country, Calls, outcoming, to_tajikistan
-  category = {:name => '_sctcg_own_country_calls_to_tajikistan', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_your_country_5}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 4.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
-   :formula => {
-     :stat_params => {:sum_duration => "sum(((description->>'duration')::float)/60.0)",
-                      :times_of_14_minutes => "sum(ceil(ceil(((description->>'duration')::float)/60.0)/14.0))",
-                      :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
-     :method => 'price_formulas.price * times_of_14_minutes + (sum_duration - times_of_14_minutes) * 1.0'}, } )
+#own_country_rouming, Calls, outcoming, to_moldova
+  category = {:name => '_sctcg_own_country_rouming_calls_to_moldova', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_your_country_3}
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 9.0})
 
-#Own country, Calls, outcoming, to_armenia
-  category = {:name => '_sctcg_own_country_calls_to_armenia', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_your_country_6}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 8.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
-   :formula => {
-     :stat_params => {:sum_duration => "sum(((description->>'duration')::float)/60.0)",
-                      :times_of_4_minutes => "sum(ceil(ceil(((description->>'duration')::float)/60.0)/4.0))",
-                      :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
-     :method => 'price_formulas.price * times_of_4_minutes + (sum_duration - times_of_4_minutes) * 0.0'}, } )
+#own_country_rouming, Calls, outcoming, to_uzbekistan
+  category = {:name => '_sctcg_own_country_rouming_calls_to_uzbekistan', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_your_country_4}
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 4.0})
 
-#Own country, Calls, outcoming, to_vietnam_south_korea_singapur
-  category = {:name => '_sctcg_own_country_calls_to_vietnam_south_korea_singapur', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_your_country_7}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 1.5, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
-   :formula => {
-     :stat_params => {:sum_duration_minute_between_5_and_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) between 5.0 and 10.0 then ceil(((description->>'duration')::float)/60.0) - 5.0 else 0.0 end)",
-                      :sum_duration_minute_less_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) < 5.0 then ceil(((description->>'duration')::float)/60.0) else 0.0 end)",
-                      :count_duration_minute_more_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 10.0 then 1.0 else 0.0 end)",
-                      :sum_duration_minute_more_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 10.0 then ceil(((description->>'duration')::float)/60.0) - 10.0 else 0.0 end)",
-                      :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
-     :method => 'price_formulas.price * (sum_duration_minute_between_5_and_10 + count_duration_minute_more_10 * 10.0) + 4.5 * (sum_duration_minute_less_5 + sum_duration_minute_more_10)'}, } )
+#own_country_rouming, Calls, outcoming, to_georgia_kyrgyzstan
+  category = {:name => '_sctcg_own_country_rouming_calls_to_georgia_kyrgyzstan', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_your_country_5}
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 12.0})
+#  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 12.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
+#   :formula => {
+#     :stat_params => {:sum_duration => "sum(((description->>'duration')::float)/60.0)",
+#                      :times_of_14_minutes => "sum(ceil(ceil(((description->>'duration')::float)/60.0)/14.0))",
+#                      :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
+#     :method => 'price_formulas.price * times_of_14_minutes + (sum_duration - times_of_14_minutes) * 1.0'}, } )
 
-#Own country, Calls, outcoming, to_other_sic
-  category = {:name => '_sctcg_own_country_calls_to_other_sic', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_your_country_8}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 1.5, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
-   :formula => {
-     :stat_params => {:sum_duration_minute_between_5_and_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) between 5.0 and 10.0 then ceil(((description->>'duration')::float)/60.0) - 5.0 else 0.0 end)",
-                      :sum_duration_minute_less_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) < 5.0 then ceil(((description->>'duration')::float)/60.0) else 0.0 end)",
-                      :sum_duration_minute_more_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 10.0 then ceil(((description->>'duration')::float)/60.0) - 10.0 else 0.0 end)",
-                      :count_duration_minute_more_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 10.0 then 1.0 else 0.0 end)",
-                      :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
-     :method => 'price_formulas.price * (sum_duration_minute_between_5_and_10 + count_duration_minute_more_10 * 10.0) + 4.5 * (sum_duration_minute_less_5 + sum_duration_minute_more_10)'}, } )
+#own_country_rouming, Calls, outcoming, to_armenia
+  category = {:name => '_sctcg_own_country_rouming_calls_to_armenia', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_your_country_6}
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 5.0})
+#  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 5.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
+#   :formula => {
+#     :stat_params => {:sum_duration => "sum(((description->>'duration')::float)/60.0)",
+#                      :times_of_4_minutes => "sum(ceil(ceil(((description->>'duration')::float)/60.0)/4.0))",
+#                      :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
+#     :method => 'price_formulas.price * times_of_4_minutes + (sum_duration - times_of_4_minutes) * 0.0'}, } )
 
-#Own country, Calls, outcoming, to_europe
-  category = {:name => '_sctcg_own_country_calls_europe', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_mts_europe}
+#own_country_rouming, Calls, outcoming, to_vietnam_south_korea_singapur _vietnam, _abkhazia, _kazakhstan, _tajikistan, _turkmenistan, _south_ossetia
+  category = {:name => '_sctcg_own_country_rouming_calls_to_vietnam_south_korea_singapur', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_your_country_7}
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 8.0})
+#  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 1.5, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
+#   :formula => {
+#     :stat_params => {:sum_duration_minute_between_5_and_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) between 5.0 and 10.0 then ceil(((description->>'duration')::float)/60.0) - 5.0 else 0.0 end)",
+#                      :sum_duration_minute_less_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) < 5.0 then ceil(((description->>'duration')::float)/60.0) else 0.0 end)",
+#                      :count_duration_minute_more_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 10.0 then 1.0 else 0.0 end)",
+#                      :sum_duration_minute_more_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 10.0 then ceil(((description->>'duration')::float)/60.0) - 10.0 else 0.0 end)",
+#                      :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
+#     :method => 'price_formulas.price * (sum_duration_minute_between_5_and_10 + count_duration_minute_more_10 * 10.0) + 4.5 * (sum_duration_minute_less_5 + sum_duration_minute_more_10)'}, } )
+
+#own_country_rouming, Calls, outcoming, to_other_sic
+  category = {:name => '_sctcg_own_country_rouming_calls_to_other_sic', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_your_country_8}
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 10.0})
+#  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 1.5, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
+#   :formula => {
+#     :stat_params => {:sum_duration_minute_between_5_and_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) between 5.0 and 10.0 then ceil(((description->>'duration')::float)/60.0) - 5.0 else 0.0 end)",
+#                      :sum_duration_minute_less_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) < 5.0 then ceil(((description->>'duration')::float)/60.0) else 0.0 end)",
+#                      :count_duration_minute_more_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 10.0 then 1.0 else 0.0 end)",
+#                      :sum_duration_minute_more_10 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 10.0 then ceil(((description->>'duration')::float)/60.0) - 10.0 else 0.0 end)",
+#                      :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
+ #    :method => 'price_formulas.price * (sum_duration_minute_between_5_and_10 + count_duration_minute_more_10 * 10.0) + 4.5 * (sum_duration_minute_less_5 + sum_duration_minute_more_10)'}, } )
+
+#own_country_rouming, Calls, outcoming, to_europe
+  category = {:name => '_sctcg_own_country_rouming_calls_europe', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_mts_europe}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 2,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 49.0})
 
-#Own country, calls, outcoming, to_other_country
-  category = {:name => '_sctcg_own_country_calls_to_other_countries', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_your_country_9}
+#own_country_rouming, calls, outcoming, to_other_country
+  category = {:name => '_sctcg_own_country_rouming_calls_other_country', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_your_country_9}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 2,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 70.0})
-
 
 #Own country, sms, Incoming
   category = {:name => 'own_country_sms_incoming', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _sms_in}
