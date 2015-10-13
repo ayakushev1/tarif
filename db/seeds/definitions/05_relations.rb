@@ -17,6 +17,8 @@ _relation_mts_your_country_1 = 10228; _relation_mts_your_country_2 = 10229; _rel
 _relation_mts_your_country_4 = 10231; _relation_mts_your_country_5 = 10232; _relation_mts_your_country_6 = 10233;
 _relation_mts_your_country_7 = 10234; _relation_mts_your_country_8 = 10235; _relation_mts_your_country_9 = 10236
 
+_relation_mts_free_journey = 10237
+
 _relation_mgf_rouming_in_50_sms_europe = 10239;
 _relation_mgf_rouming_in_option_around_world_1 = 10240; _relation_mgf_rouming_in_option_around_world_2 = 10241;
 _relation_mgf_rouming_in_option_around_world_3 = 10242; _relation_mgf_rouming_not_russia_not_in_50_sms_europe = 10243; 

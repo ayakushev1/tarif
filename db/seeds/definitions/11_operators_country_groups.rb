@@ -9,6 +9,20 @@ def access_methods_to_constant_operator_country_groups
     _gersi, _men, _gernsi, 
     ]
   _mts_sic_countries = [_belarus, _moldova, _ukraiun, _abkhazia, _armenia, _azerbaijan, _georgia, _kazakhstan, _kyrgyzstan, _tajikistan, _turkmenistan, _uzbekistan, _south_ossetia]          
+ 
+  _mts_sic_abkhazia = [_abkhazia] #155
+  _mts_sic_south_ossetia = [_south_ossetia] 
+  _mts_sic_135_to_other_countries = _mts_sic_countries - [_abkhazia]
+  _mts_sic_109_to_sic = [_belarus, _armenia, _ukraiun]
+  _mts_sic_14_for_40_internet = [_armenia, _ukraiun]
+  _mts_sic_12_for_40_internet = [_belarus,]
+  _mts_sic_30_for_40_internet =_mts_sic_countries - [_belarus, _armenia, _ukraiun]
+  _mts_sic_45_to_russia = [_tajikistan] 
+  _mts_sic_65_to_russia = [_armenia, _kyrgyzstan, _moldova, _uzbekistan] 
+  _mts_sic_75_to_russia = [_belarus] 
+  _mts_sic_85_to_russia = [_azerbaijan, _kazakhstan, _ukraiun] 
+  _mts_sic_115_to_russia = [_georgia, _turkmenistan] 
+ 
   _mts_sic_1_countries = [_belarus, _ukraiun, _armenia, _turkmenistan,]              
   _mts_sic_2_countries = [_abkhazia, _azerbaijan, _georgia, _kazakhstan,  _kyrgyzstan, _tajikistan, _uzbekistan,]  
   _mts_sic_2_1_countries = [_abkhazia, _georgia, _kazakhstan,  _kyrgyzstan, _tajikistan]  
@@ -18,6 +32,9 @@ def access_methods_to_constant_operator_country_groups
     
   _mts_from_11_9_option_countries_1 = [_egypt, _israel, _china, _cuba, _uae, _tailand, _tunis, _turkey, _south_korea]
   _mts_from_11_9_option_countries_2 = _mts_other_countries - _mts_europe_countries - _mts_sic_countries - _mts_from_11_9_option_countries_1
+
+  _mts_from_free_journey = [_australia, _austria, _armenia, _great_britain, _hungary, _germany, _greece, _israel, _ireland, _italy, 
+    _uae, _poland, _portugal, _france, _czech_republic]
   
   _mts_bit_abrod_1 = [_abkhazia, _austria, _azerbaijan, _albania, _andorra, _bosnia_and_herzegovina, _belarus, _great_britain, _gibraltar, _honkong, _georgia, _denmark, _ireland, 
     _iceland, _spain, _italy, _kazakhstan, _cyprus, _kyrgyzstan, _luxembourg, _malta, _macedonia, _moldova, _uae, _poland, _romania, _san_marino, _serbia, 

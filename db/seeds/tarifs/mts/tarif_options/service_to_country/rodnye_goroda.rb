@@ -10,6 +10,7 @@
     :other_tarif_priority => {:lower => [], :higher => [_mts_love_country_all_world]},
     :prerequisites => [],
     :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},
+    :is_archived => true,
     :multiple_use => false
   } } )
 

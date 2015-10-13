@@ -216,8 +216,13 @@ TarifClass.create(id: _mts_100_sms_travelling_in_all_world , operator_id: 1030, 
 TarifClass.create(id: _mts_love_country_all_world , operator_id: 1030, privacy_id: 2, standard_service_id: 42, name: 'Любимая страна. Весь мир')#звонки в другие города
 TarifClass.create(id: _mts_additional_internet_500_mb , operator_id: 1030, privacy_id: 2, standard_service_id: 42, name: 'Дополнительный пакет 500 Мб')#дополнительный объем интернета для Smart and Ultra
 TarifClass.create(id: _mts_additional_internet_1_gb , operator_id: 1030, privacy_id: 2, standard_service_id: 42, name: 'Дополнительный пакет 1 Гб')#дополнительный объем интернета для Smart and Ultra
+TarifClass.create(id: _mts_additional_internet_smart_mini , operator_id: 1030, privacy_id: 2, standard_service_id: 42, name: 'Дополнительный пакет интернета Smart mini')#дополнительный объем интернета для Smart and Ultra
+TarifClass.create(id: _mts_additional_internet_smart , operator_id: 1030, privacy_id: 2, standard_service_id: 42, name: 'Дополнительный пакет интернета Smart')#дополнительный объем интернета для Smart and Ultra
+TarifClass.create(id: _mts_additional_internet_smart_other , operator_id: 1030, privacy_id: 2, standard_service_id: 42, name: 'Дополнительный пакет интернета Smart Nonstop, Plus, Top')#дополнительный объем интернета для Smart and Ultra
+TarifClass.create(id: _mts_turbo_button_100_mb , operator_id: 1030, privacy_id: 2, standard_service_id: 42, name: 'Турбо-кнопка 100 Мб')#дополнительный объем интернета для Smart and Ultra
 TarifClass.create(id: _mts_turbo_button_500_mb , operator_id: 1030, privacy_id: 2, standard_service_id: 42, name: 'Турбо-кнопка 500 Мб')#дополнительный объем интернета для Smart and Ultra
 TarifClass.create(id: _mts_turbo_button_2_gb , operator_id: 1030, privacy_id: 2, standard_service_id: 42, name: 'Турбо-кнопка 2 Гб')#дополнительный объем интернета для Smart and Ultra
+TarifClass.create(id: _mts_turbo_button_5_gb , operator_id: 1030, privacy_id: 2, standard_service_id: 42, name: 'Турбо-кнопка 5 Гб')#дополнительный объем интернета для Smart and Ultra
 TarifClass.create(id: _mts_internet_mini , operator_id: 1030, privacy_id: 2, standard_service_id: 42, name: 'Интернет-Mini')#дополнительный объем интернета
 TarifClass.create(id: _mts_internet_maxi , operator_id: 1030, privacy_id: 2, standard_service_id: 42, name: 'Интернет-Maxi')#дополнительный объем интернета
 TarifClass.create(id: _mts_internet_super , operator_id: 1030, privacy_id: 2, standard_service_id: 42, name: 'Интернет-Super')#дополнительный объем интернета
@@ -245,6 +250,9 @@ TarifClass.create(id: _mts_monthly_sms_packet_1000 , operator_id: 1030, privacy_
 TarifClass.create(id: _mts_mts_planshet , operator_id: 1030, privacy_id: 2, standard_service_id: 42, name: 'МТС Планшет')#интернет для планшетов
 TarifClass.create(id: _mts_mts_planshet_online , operator_id: 1030, privacy_id: 2, standard_service_id: 42, name: 'МТС Планшет Онлайн')#интернет для планшетов
 TarifClass.create(id: _mts_unlimited_internet_on_day , operator_id: 1030, privacy_id: 2, standard_service_id: 42, name: 'Интернет на день')#интернет для планшетов
+TarifClass.create(id: _mts_unlimited_sms , operator_id: 1030, privacy_id: 2, standard_service_id: 42, name: 'Безлимитные SMS')#смс пакет - месячный
+TarifClass.create(id: _mts_free_journey , operator_id: 1030, privacy_id: 2, standard_service_id: 42, name: 'Свободное путешествие')#смс пакет - месячный
+TarifClass.create(id: _mts_single_country , operator_id: 1030, privacy_id: 2, standard_service_id: 42, name: 'Единая страна')#
 
 #Теле, частные, тарифы
 TarifClass.create(id: _tele_black, operator_id: _tele_2, privacy_id: 2, standard_service_id: 40, name: 'Черный')

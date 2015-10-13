@@ -28,7 +28,7 @@ _sctcg_mts_europe_rouming_sms_outcoming = {:name => '_sctcg_mts_europe_rouming_s
          :stat_params => {:tarif_option_count_of_usage => "ceil(count(description->>'volume') / 100.0)", :count_volume => "count(description->>'volume')"},
          :method => "price_formulas.price * tarif_option_count_of_usage" } } } )
 
-@tc.add_tarif_class_categories
+@tc.add_tarif_class_categories 
 
 
 #Есть три способа подключения опции: наберите на своем мобильном телефоне *111*1103#вызов - отправьте SMS на номер 111 с текстом 1103 ;

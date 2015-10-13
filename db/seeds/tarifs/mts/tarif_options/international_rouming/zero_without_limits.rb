@@ -39,7 +39,7 @@ _sctcg_mts_other_countries_calls_to_russia = {:name => '_sctcg_mts_other_countri
 scg_mts_zero_without_limits_calls_first_200_minites = @tc.add_service_category_group(
   {:name => 'scg_mts_zero_without_limits_calls_first_200_minites' }, 
   {:name => "price for scg_mts_zero_without_limits_calls_first_200_minites"}, 
-  {:calculation_order => 0, :price => 0.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute, :name => '_stf_mts_zero_without_limits_calls_first_200_minites', :description => '', 
+  {:calculation_order => 0, :price => 25.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute, :name => '_stf_mts_zero_without_limits_calls_first_200_minites', :description => '', 
    :formula => {
      :window_condition => "(200.0 >= sum_duration_minute)", :window_over => 'month',
      :stat_params => {:sum_duration_minute_after_10_min => "sum(case when ceil(((description->>'duration')::float)/60.0) > 10.0 then ceil(((description->>'duration')::float)/60.0) - 10.0 else 0.0 end)",
@@ -47,7 +47,7 @@ scg_mts_zero_without_limits_calls_first_200_minites = @tc.add_service_category_g
      :method => 'price_formulas.price * sum_duration_minute_after_10_min'}, }  )
 
 #Ежедневная плата
-  @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => _stf_fixed_price_if_used_in_1_day_duration, :price => 33.0})
+  @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => _stf_fixed_price_if_used_in_1_day_duration, :price => 95.0})
 
 #Europe, calls, incoming
   @tc.add_grouped_service_category_tarif_class(_sctcg_mts_europe_calls_incoming, scg_mts_zero_without_limits_calls_first_200_minites[:id])
@@ -56,14 +56,14 @@ scg_mts_zero_without_limits_calls_first_200_minites = @tc.add_service_category_g
 
 #Europe, calls, outcoming, to Russia
   @tc.add_one_service_category_tarif_class(_sctcg_mts_europe_calls_to_russia, {}, 
-  {:calculation_order => 0, :price => 15.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute, :name => '_stf_mts_zero_without_limits_calls_first_200_minites', :description => '', 
+  {:calculation_order => 0, :price => 25.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute, :name => '_stf_mts_zero_without_limits_calls_first_200_minites', :description => '', 
    :formula => {
      :stat_params => {:sum_duration_minute_between_2_and_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) between 2.0 and 5.0 then ceil(((description->>'duration')::float)/60.0) - 1.0 else 0.0 end)",
                       :sum_duration_minute_less_2 => "sum(case when ceil(((description->>'duration')::float)/60.0) < 2.0 then 1.0 else 0.0 end)",
                       :count_duration_minute_more_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 5.0 then 1.0 else 0.0 end)",
                       :sum_duration_minute_more_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 5.0 then ceil(((description->>'duration')::float)/60.0) - 5.0 else 0.0 end)",
                       :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
-     :method => 'price_formulas.price * (sum_duration_minute_between_2_and_5 + count_duration_minute_more_5 * 5.0) + 79.0 * (sum_duration_minute_less_2 + sum_duration_minute_more_5)'}, } )
+     :method => 'price_formulas.price * (sum_duration_minute_between_2_and_5 + count_duration_minute_more_5 * 5.0) + 50.0 * (sum_duration_minute_less_2 + sum_duration_minute_more_5)'}, } )
 
 #SIC_1, calls, incoming
   @tc.add_grouped_service_category_tarif_class(_sctcg_mts_sic_1_calls_incoming, scg_mts_zero_without_limits_calls_first_200_minites[:id])
@@ -72,14 +72,14 @@ scg_mts_zero_without_limits_calls_first_200_minites = @tc.add_service_category_g
 
 #SIC_1, calls, outcoming, to Russia
   @tc.add_one_service_category_tarif_class(_sctcg_mts_sic_1_calls_to_russia, {}, 
-  {:calculation_order => 0, :price => 15.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute, :name => '_stf_mts_zero_without_limits_calls_first_200_minites', :description => '', 
+  {:calculation_order => 0, :price => 25.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute, :name => '_stf_mts_zero_without_limits_calls_first_200_minites', :description => '', 
    :formula => {
      :stat_params => {:sum_duration_minute_between_2_and_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) between 2.0 and 5.0 then ceil(((description->>'duration')::float)/60.0) else 0.0 end)",
                       :sum_duration_minute_less_2 => "sum(case when ceil(((description->>'duration')::float)/60.0) < 2.0 then 1.0 else 0.0 end)",
                       :count_duration_minute_more_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 5.0 then 1.0 else 0.0 end)",
                       :sum_duration_minute_more_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 5.0 then ceil(((description->>'duration')::float)/60.0) - 5.0 else 0.0 end)",
                       :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
-     :method => 'price_formulas.price * (sum_duration_minute_between_2_and_5 + count_duration_minute_more_5 * 5.0) + 25.0 * (sum_duration_minute_less_2 + sum_duration_minute_more_5)'}, } )
+     :method => 'price_formulas.price * (sum_duration_minute_between_2_and_5 + count_duration_minute_more_5 * 5.0) + 75.0 * (sum_duration_minute_less_2 + sum_duration_minute_more_5)'}, } )
 
 #SIC_2_1, calls, incoming
   @tc.add_grouped_service_category_tarif_class(_sctcg_mts_sic_2_1_calls_incoming, scg_mts_zero_without_limits_calls_first_200_minites[:id])
@@ -88,14 +88,14 @@ scg_mts_zero_without_limits_calls_first_200_minites = @tc.add_service_category_g
 
 #SIC_2_1, calls, outcoming, to Russia
   @tc.add_one_service_category_tarif_class(_sctcg_mts_sic_2_1_calls_to_russia, {}, 
-  {:calculation_order => 0, :price => 15.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute, :name => '_stf_mts_zero_without_limits_calls_first_200_minites', :description => '', 
+  {:calculation_order => 0, :price => 25.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute, :name => '_stf_mts_zero_without_limits_calls_first_200_minites', :description => '', 
    :formula => {
      :stat_params => {:sum_duration_minute_between_2_and_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) between 2.0 and 5.0 then ceil(((description->>'duration')::float)/60.0) else 0.0 end)",
                       :sum_duration_minute_less_2 => "sum(case when ceil(((description->>'duration')::float)/60.0) < 2.0 then 1.0 else 0.0 end)",
                       :count_duration_minute_more_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 5.0 then 1.0 else 0.0 end)",
                       :sum_duration_minute_more_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 5.0 then ceil(((description->>'duration')::float)/60.0) - 5.0 else 0.0 end)",
                       :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
-     :method => 'price_formulas.price * (sum_duration_minute_between_2_and_5 + count_duration_minute_more_5 * 5.0) + 59.0 * (sum_duration_minute_less_2 + sum_duration_minute_more_5)'}, } )
+     :method => 'price_formulas.price * (sum_duration_minute_between_2_and_5 + count_duration_minute_more_5 * 5.0) + 115.0 * (sum_duration_minute_less_2 + sum_duration_minute_more_5)'}, } )
 
 #Other countries, calls, incoming
   @tc.add_grouped_service_category_tarif_class(_sctcg_mts_other_countries_calls_incoming, scg_mts_zero_without_limits_calls_first_200_minites[:id])
@@ -104,7 +104,7 @@ scg_mts_zero_without_limits_calls_first_200_minites = @tc.add_service_category_g
 
 #Other countries, calls, to Russia
   @tc.add_one_service_category_tarif_class(_sctcg_mts_other_countries_calls_to_russia, {}, 
-  {:calculation_order => 0, :price => 15.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute, :name => '_stf_mts_zero_without_limits_calls_first_200_minites', :description => '', 
+  {:calculation_order => 0, :price => 25.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute, :name => '_stf_mts_zero_without_limits_calls_first_200_minites', :description => '', 
    :formula => {
      :stat_params => {:sum_duration_minute_between_2_and_5 => "sum(case when ceil(((description->>'duration')::float)/60.0) between 2.0 and 5.0 then ceil(((description->>'duration')::float)/60.0) else 0.0 end)",
                       :sum_duration_minute_less_2 => "sum(case when ceil(((description->>'duration')::float)/60.0) < 2.0 then 1.0 else 0.0 end)",

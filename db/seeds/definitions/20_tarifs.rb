@@ -31,19 +31,23 @@ _mts_love_country = 281; _mts_love_country_all_world = 309; _mts_outcoming_calls
   #country_rouming
 _mts_everywhere_as_home = 294; _mts_everywhere_as_home_Ultra = 282; _mts_everywhere_as_home_smart = 283;
 _mts_additional_minutes_150 = 321; _mts_additional_minutes_300 = 322;
+_mts_single_country = 348   #new from 11.10.2015
 
   #international_rouming
 _mts_zero_without_limits = 288; _mts_bit_abroad = 289; _mts_maxi_bit_abroad = 290; _mts_super_bit_abroad = 291;
 _mts_100mb_in_latvia_and_litva = 292; 
+_mts_free_journey = 347   #new from 11.10.2015
 
   #internet
 _mts_internet_packet_200mb = 298; _mts_internet_packet_300mb = 299; _mts_internet_packet_450mb = 300; _mts_internet_packet_900mb = 301;#это архивные опции
 _mts_bit = 302; _mts_super_bit = 303; _mts_mini_bit = 304;
 _mts_additional_internet_500_mb =310; _mts_additional_internet_1_gb = 311;
 _mts_turbo_button_500_mb = 313; _mts_turbo_button_2_gb = 314; 
-_mts_internet_mini = 315; _mts_internet_maxi = 316; _mts_internet_super = 317; _mts_internet_vip = 318;  
+_mts_internet_mini = 315; _mts_internet_maxi = 316; _mts_internet_super = 317; _mts_internet_vip = 318;
+_mts_turbo_button_5_gb = 319; _mts_turbo_button_100_mb = 320;  #new from 11.10.2015
 _mts_mts_planshet = 340; _mts_mts_planshet_online = 341;
 _mts_unlimited_internet_on_day = 342
+_mts_additional_internet_smart_mini =343; _mts_additional_internet_smart =344; _mts_additional_internet_smart_other =345; #new from 11.10.2015
 
   #mms
 _mts_mms_packet_10 = 323; _mts_mms_packet_20 = 324; _mts_mms_packet_50 = 325; _mts_mms_discount_50_percent = 326;
@@ -56,6 +60,7 @@ _mts_50_sms_travelling_in_russia = 295; _mts_100_sms_travelling_in_russia = 296;
 _mts_50_sms_in_europe = 305; _mts_100_sms_in_europe = 306; _mts_50_sms_travelling_in_all_world = 307; _mts_100_sms_travelling_in_all_world = 308;
 _mts_onetime_sms_packet_50 = 333; _mts_onetime_sms_packet_150 = 334; _mts_onetime_sms_packet_300 = 335; 
 _mts_monthly_sms_packet_100 = 336; _mts_monthly_sms_packet_300 = 337; _mts_monthly_sms_packet_500 = 338; _mts_monthly_sms_packet_1000 = 339;
+_mts_unlimited_sms = 346   #new from 11.10.2015
 
 #_mts_everywhere_as_home_smart_plus = 319; _mts_everywhere_as_home_smart_mini = 320
 

@@ -18,7 +18,7 @@ scg_mts_zero_to_mts_russia_100_included_in_tarif_calls = @tc.add_service_categor
   {:name => 'scg_mts_zero_to_mts_russia_100_included_in_tarif_calls' }, 
   {:name => "price for scg_mts_zero_to_mts_russia_100_included_in_tarif_calls"}, 
   {:calculation_order => 0, :standard_formula_id => _stf_price_by_sum_duration_minute, 
-    :formula => {:window_condition => "(80.0 >= sum_duration_minute)", :window_over => 'day'}, :price => 2.0, :description => '' }
+    :formula => {:window_condition => "(80.0 >= sum_duration_minute)", :window_over => 'day'}, :price => 3.5, :description => '' }
   )
   
 #own region rouming    
@@ -31,11 +31,11 @@ scg_mts_zero_to_mts_russia_100_included_in_tarif_calls = @tc.add_service_categor
   category = {:name => '_sctcg_own_home_regions_calls_to_own_home_regions_to_fixed_line', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_fixed_line}
   @tc.add_grouped_service_category_tarif_class(category, scg_mts_zero_to_mts_russia_100_included_in_tarif_calls[:id])
 
-#Own region, calls, outcoming, to own country, to own opertor
+#Own region, calls, outcoming, to own country, to own operator
   category = {:name => '_sctcg_own_home_regions_calls_to_own_country_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country, :service_category_partner_type_id => _service_to_own_operator}
   @tc.add_one_service_category_tarif_class(category, {}, 
   {:calculation_order => 0, :standard_formula_id => _stf_price_by_sum_duration_minute, 
-    :formula => {:window_condition => "(80.0 >= sum_duration_minute)", :window_over => 'day'}, :price => 2.0, :description => '' }  )
+    :formula => {:window_condition => "(100.0 >= sum_duration_minute)", :window_over => 'day'}, :price => 3.5, :description => '' }  )
 
 @tc.add_tarif_class_categories
 

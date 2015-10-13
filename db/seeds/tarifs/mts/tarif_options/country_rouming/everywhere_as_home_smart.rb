@@ -8,7 +8,7 @@
     :incompatibility => {:everywhere_as_home => [_mts_everywhere_as_home, _mts_everywhere_as_home_Ultra, _mts_everywhere_as_home_smart]}, 
     :general_priority => _gp_tarif_option,
     :other_tarif_priority => {:lower => [], :higher => []},
-    :prerequisites => [_mts_smart_mini,_mts_smart, _mts_smart_plus, _mts_smart_top],
+    :prerequisites => [_mts_smart_mini], #,_mts_smart, _mts_smart_plus, _mts_smart_top],
     :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},
     :multiple_use => false
   } } )

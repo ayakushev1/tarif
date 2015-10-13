@@ -2,13 +2,13 @@
 @tc = TarifCreator.new(_mts)
 @tc.create_tarif_class({
   :id => _mts_turbo_button_500_mb, :name => 'Турбо-кнопка 500 Мб', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _special_service,
-  :features => {:http => 'http://www.mts.ru/mobil_inet_and_tv/internet_phone/additionally_services/turbo_smart/'},
+  :features => {:http => 'http://www.mts.ru/mobil_inet_and_tv/internet_phone/additionally_services/turbo/'},
   :dependency => {
     :categories => [_tcgsc_internet],
     :incompatibility => {}, 
     :general_priority => _gp_tarif_option_without_limits,#_gp_tarif_option_with_limits,
     :other_tarif_priority => {:lower => [], :higher => []},
-    :prerequisites => [_mts_smart, _mts_smart_plus, _mts_smart_top, _mts_ultra],
+    :prerequisites => [_mts_smart, _mts_smart_plus, _mts_smart_top, _mts_ultra, _mts_smart_nonstop, _mts_smart_mini],
     :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},
     :multiple_use => true
   } } )
@@ -18,7 +18,7 @@
 scg_mts_additional_internet_500_mb_for_smart = @tc.add_service_category_group(
     {:name => 'scg_mts_additional_internet_500_mb_for_smart' }, 
     {:name => "price for scg_mts_additional_internet_500_mb_for_smart"}, 
-    {:calculation_order => 0, :price => 75.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_mts_additional_internet_500_mb_for_smart', :description => '', 
+    {:calculation_order => 0, :price => 95.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_mts_additional_internet_500_mb_for_smart', :description => '', 
      :formula => {
        :window_condition => "(500.0 >= sum_volume)", :window_over => 'month',
        :stat_params => {:sum_volume => "sum((description->>'volume')::float)"},
@@ -48,7 +48,7 @@ scg_mts_additional_internet_500_mb_for_smart = @tc.add_service_category_group(
 
 #Тарифная опция: Турбо-кнопка 500 Мб
 #Квота трафика: 500 Мб
-#Стоимость: 75 руб.
+#Стоимость: 95 руб.
 #Как подключить:
 #наберите *167#;
 #отправьте SMS с текстом 167 на номер 53401 .

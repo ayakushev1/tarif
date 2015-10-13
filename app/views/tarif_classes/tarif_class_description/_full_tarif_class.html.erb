@@ -18,7 +18,7 @@ form_item.init do |fi|
   	 	TarifClass.where(:id => tarif_class.dependency['other_tarif_priority']['higher']).map(&:name)
   	 end
   	 prerequisites = if tarif_class.dependency and tarif_class.dependency['prerequisites']
-  	 	TarifClass.where(:id => tarif_class.dependency['prerequisites']).map(&:name).first 
+  	 	TarifClass.where(:id => tarif_class.dependency['prerequisites']).map(&:name) 
   	 end
   	
 	[
@@ -34,7 +34,7 @@ form_item.init do |fi|
 	  ['Общий приоритет', general_priority ], 
 	  ['Тарифы с меньшим приоритетом', lower_tarif_priority], 
 	  ['Тарифы с большим приоритетом', higher_tarif_priority], 
-	  ['Требования', prerequisites], 
+	  ['Требуемые тарифы или опции', prerequisites], 
 	  ['Возможность использовать несколько раз', (tarif_class.dependency['multiple_use'] if tarif_class.dependency) ], 
 #	  ['Created', (tarif_class.created_at.to_formatted_s(:short) if  tarif_class.created_at) ], 
 #	  ['Updated', (tarif_class.updated_at.to_formatted_s(:short) if tarif_class.updated_at) ],

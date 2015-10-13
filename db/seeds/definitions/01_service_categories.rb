@@ -12,7 +12,7 @@ def access_methods_to_constant_service_categories
   _sc_mts_rouming_in_bit_abrod_option_countries_1 = 25; _sc_mts_rouming_in_bit_abrod_option_countries_2 = 26;
   _sc_mts_rouming_in_bit_abrod_option_countries_3 = 27; _sc_mts_rouming_in_bit_abrod_option_countries_4 = 28;
   _all_russia_rouming = 29;
-  
+ 
   _sc_mgf_rouming_in_option_around_world_1 = 30; _sc_mgf_rouming_in_option_around_world_2 = 31; _sc_mgf_rouming_in_option_around_world_3 = 32;
   _sc_mgf_rouming_in_50_sms_europe = 33; _sc_mgf_rouming_not_russia_not_in_50_sms_europe = 34;
   _sc_mgf_europe_international_rouming = 35; _sc_mgf_sic_international_rouming = 36; 
@@ -36,6 +36,8 @@ def access_methods_to_constant_service_categories
   
   _sc_tele_sic_rouming = 65; _sc_tele_europe_rouming = 66; _sc_tele_asia_afr_aust_rouming = 67; _sc_tele_americas_rouming = 68; 
   
+  _sc_rouming_mts_free_journey = 69; 
+   
   #география услуг
   _geography_services = 100;
   _service_to_own_region = 101; _service_to_home_region = 102; _service_to_own_country = 103; _service_to_group_of_countries = 104;

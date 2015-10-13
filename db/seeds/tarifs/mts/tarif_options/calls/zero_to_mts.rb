@@ -11,7 +11,7 @@
     :prerequisites => [_mts_super_mts],
     :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},
     :multiple_use => false
-  } } )
+  } } ) 
 
 #calls included in tarif
 scg_mts_zero_to_mts_to_own_home_regions_included_in_tarif_calls = @tc.add_service_category_group(

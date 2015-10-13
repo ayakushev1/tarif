@@ -30,7 +30,8 @@ _sctcg_own_country_internet = {:name => 'own_country_internet', :service_categor
      :multiple_use_of_tarif_option => {
        :group_by => 'day',
        :stat_params => {:tarif_option_count_of_usage => "ceil(sum((description->>'volume')::float) / 10.0)", :sum_volume => "sum((description->>'volume')::float)"},
-       :method => "price_formulas.price * tarif_option_count_of_usage", 
+       :method => "case when tarif_option_count_of_usage > 1.0 then price_formulas.price * tarif_option_count_of_usage / 2.0 when tarif_option_count_of_usage = 1.0 then price_formulas.price else 0.0 end", 
+#       :method => "price_formulas.price * tarif_option_count_of_usage", 
      }
    }, 
   } )
@@ -46,7 +47,8 @@ _sctcg_own_country_internet = {:name => 'own_country_internet', :service_categor
      :multiple_use_of_tarif_option => {
        :group_by => 'day',
        :stat_params => {:tarif_option_count_of_usage => "ceil(sum((description->>'volume')::float) / 10.0)", :sum_volume => "sum((description->>'volume')::float)"},
-       :method => "price_formulas.price * tarif_option_count_of_usage", 
+       :method => "case when tarif_option_count_of_usage > 1.0 then price_formulas.price * tarif_option_count_of_usage / 2.0 when tarif_option_count_of_usage = 1.0 then price_formulas.price else 0.0 end", 
+#       :method => "price_formulas.price * tarif_option_count_of_usage", 
      }
    } 
   } )

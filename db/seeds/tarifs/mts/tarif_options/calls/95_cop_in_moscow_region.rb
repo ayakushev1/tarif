@@ -13,9 +13,6 @@
     :multiple_use => false
   } } )
 
-_sctcg_home_region_calls_to_own_home_regions = {:name => '_sctcg_home_region_calls_to_own_home_regions', :service_category_rouming_id => _home_region_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions}
- 
- 
 #Переход на тариф
   @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item_if_used, :price => 35.0})  
 
@@ -23,7 +20,8 @@ _sctcg_home_region_calls_to_own_home_regions = {:name => '_sctcg_home_region_cal
   @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => _stf_fixed_price_if_used_in_1_day_duration, :price => 0.95})
 
 #Own region, Calls, outcoming, to own and home regions, to all opertors
-  @tc.add_one_service_category_tarif_class(_sctcg_home_region_calls_to_own_home_regions, {}, 
+  category = {:name => '_sctcg_home_region_calls_to_own_home_regions', :service_category_rouming_id => _home_region_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions}
+  @tc.add_one_service_category_tarif_class(category, {}, 
     {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 0.95})
 
 @tc.add_tarif_class_categories

@@ -1,8 +1,8 @@
-#Дополнительный пакет 500 Мб
+#Дополнительный пакет Smart
 @tc = TarifCreator.new(_mts)
 @tc.create_tarif_class({
-  :id => _mts_additional_internet_500_mb, :name => 'Дополнительный пакет 500 Мб', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _special_service,
-  :features => {:http => 'http://www.mts.ru/mobil_inet_and_tv/internet_phone/additionally_services/add_smart/'},
+  :id => _mts_additional_internet_smart, :name => 'Дополнительный пакет интернета Smart', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _special_service,
+  :features => {:http => 'http://www.mts.ru/mobil_inet_and_tv/internet_phone/additionally_services/more_traffik/Internet_Smart/'},
   :dependency => {
     :categories => [_tcgsc_internet],
     :incompatibility => {
@@ -11,17 +11,17 @@
       :internet_comp => [_mts_mts_planshet, _mts_internet_mini, _mts_internet_maxi, _mts_internet_super, _mts_internet_vip]}, 
     :general_priority => _gp_tarif_option_without_limits,#_gp_tarif_option_with_limits,
     :other_tarif_priority => {:lower => [], :higher => []},
-    :prerequisites => [_mts_smart, _mts_smart_mini, _mts_smart_plus, _mts_smart_top, _mts_smart_nonstop],
+    :prerequisites => [_mts_smart],
     :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},
     :multiple_use => true
   } } )
 
 #Добавление новых service_category_group
   #internet included in tarif
-scg_mts_additional_internet_500_mb_for_smart = @tc.add_service_category_group(
-    {:name => 'scg_mts_additional_internet_500_mb_for_smart' }, 
-    {:name => "price for scg_mts_additional_internet_500_mb_for_smart"}, 
-    {:calculation_order => 0, :price => 75.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_mts_additional_internet_500_mb_for_smart', :description => '', 
+scg_mts_additional_internet_smart = @tc.add_service_category_group(
+    {:name => 'scg_mts_additional_internet_smart' }, 
+    {:name => "price for scg_mts_additional_internet_smart"}, 
+    {:calculation_order => 0, :price => 50.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_mts_additional_internet_smart', :description => '', 
      :formula => {
        :window_condition => "(500.0 >= sum_volume)", :window_over => 'month',
        :stat_params => {:sum_volume => "sum((description->>'volume')::float)"},
@@ -35,15 +35,10 @@ scg_mts_additional_internet_500_mb_for_smart = @tc.add_service_category_group(
      }, 
     } )
 
-_sctcg_own_home_regions_internet = {:name => '_sctcg_own_home_regions_internet', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _internet}
-_sctcg_own_country_internet = {:name => 'own_country_internet', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _internet}
 
-#Own and home regions, Internet
-  @tc.add_grouped_service_category_tarif_class(_sctcg_own_home_regions_internet, scg_mts_additional_internet_500_mb_for_smart[:id])
-
-#Own country, Internet
-  @tc.add_grouped_service_category_tarif_class(_sctcg_own_country_internet, scg_mts_additional_internet_500_mb_for_smart[:id], 
-    :tarif_set_must_include_tarif_options => [_mts_everywhere_as_home_smart] )
+#All Russia rouming, Internet
+  category = {:name => '_sctcg_all_russia_internet', :service_category_rouming_id => _all_russia_rouming, :service_category_calls_id => _internet}
+  @tc.add_grouped_service_category_tarif_class(category, scg_mts_additional_internet_smart[:id])
 
 @tc.add_tarif_class_categories
 

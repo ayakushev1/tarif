@@ -20,20 +20,20 @@ _sctcg_bit_abrod_4_rouming_internet = {:name => '_sctcg_bit_abrod_4_rouming_inte
 
 #bit_abrod_1 rouming, internet
   @tc.add_one_service_category_tarif_class(_sctcg_bit_abrod_1_rouming_internet, {}, 
-    {:calculation_order => 0, :price => 2000.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => '_stf_bit_abrod_1_rouming_internet', :description => '', 
+    {:calculation_order => 0, :price => 7.5, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => '_stf_bit_abrod_1_rouming_internet', :description => '', 
      :formula => {
-       :window_condition => "(50.0 >= sum_volume)", :window_over => 'day',
+       :window_condition => "(200.0 >= sum_volume)", :window_over => 'day',
        :stat_params => {:sum_volume => "sum((description->>'volume')::float)"},
        :method => "case when sum_volume > 0.0 then price_formulas.price else 0.0 end",
        
        :multiple_use_of_tarif_option => {
          :group_by => 'day',
-         :stat_params => {:tarif_option_count_of_usage => "ceil(sum((description->>'volume')::float) / 50.0)", :sum_volume => "sum((description->>'volume')::float)"},
+         :stat_params => {:tarif_option_count_of_usage => "ceil(sum((description->>'volume')::float) / 200.0)", :sum_volume => "sum((description->>'volume')::float)"},
          :method => "price_formulas.price * tarif_option_count_of_usage" } } } )
 
 #bit_abrod_2 rouming, internet
   @tc.add_one_service_category_tarif_class(_sctcg_bit_abrod_2_rouming_internet, {}, 
-    {:calculation_order => 0, :price => 2000.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => '_stf_bit_abrod_2_rouming_internet', :description => '', 
+    {:calculation_order => 0, :price => 7.5, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => '_stf_bit_abrod_2_rouming_internet', :description => '', 
      :formula => {
        :window_condition => "(200.0 >= sum_volume)", :window_over => 'day',
        :stat_params => {:sum_volume => "sum((description->>'volume')::float)"},
@@ -46,28 +46,28 @@ _sctcg_bit_abrod_4_rouming_internet = {:name => '_sctcg_bit_abrod_4_rouming_inte
 
 #bit_abrod_3 rouming, internet
   @tc.add_one_service_category_tarif_class(_sctcg_bit_abrod_3_rouming_internet, {}, 
-    {:calculation_order => 0, :price => 2000.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => '_stf_bit_abrod_3_rouming_internet', :description => '', 
+    {:calculation_order => 0, :price => 7.5, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => '_stf_bit_abrod_3_rouming_internet', :description => '', 
      :formula => {
-       :window_condition => "(500.0 >= sum_volume)", :window_over => 'day',
+       :window_condition => "(200.0 >= sum_volume)", :window_over => 'day',
        :stat_params => {:sum_volume => "sum((description->>'volume')::float)"},
        :method => "case when sum_volume > 0.0 then price_formulas.price else 0.0 end",
        
        :multiple_use_of_tarif_option => {
          :group_by => 'day',
-         :stat_params => {:tarif_option_count_of_usage => "ceil(sum((description->>'volume')::float) / 500.0)", :sum_volume => "sum((description->>'volume')::float)"},
+         :stat_params => {:tarif_option_count_of_usage => "ceil(sum((description->>'volume')::float) / 200.0)", :sum_volume => "sum((description->>'volume')::float)"},
          :method => "price_formulas.price * tarif_option_count_of_usage" } } } )
 
 #bit_abrod_4 rouming, internet
   @tc.add_one_service_category_tarif_class(_sctcg_bit_abrod_4_rouming_internet, {}, 
-    {:calculation_order => 0, :price => 20000.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => '_stf_bit_abrod_4_rouming_internet', :description => '', 
+    {:calculation_order => 0, :price => 200.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => '_stf_bit_abrod_4_rouming_internet', :description => '', 
      :formula => {
-       :window_condition => "(100.0 >= sum_volume)", :window_over => 'day',
+       :window_condition => "(20.0 >= sum_volume)", :window_over => 'day',
        :stat_params => {:sum_volume => "sum((description->>'volume')::float)"},
        :method => "case when sum_volume > 0.0 then price_formulas.price else 0.0 end",
        
        :multiple_use_of_tarif_option => {
          :group_by => 'day',
-         :stat_params => {:tarif_option_count_of_usage => "ceil(sum((description->>'volume')::float) / 100.0)", :sum_volume => "sum((description->>'volume')::float)"},
+         :stat_params => {:tarif_option_count_of_usage => "ceil(sum((description->>'volume')::float) / 20.0)", :sum_volume => "sum((description->>'volume')::float)"},
          :method => "price_formulas.price * tarif_option_count_of_usage" } } } )
 
 @tc.add_tarif_class_categories

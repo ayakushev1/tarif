@@ -13,8 +13,12 @@
     :multiple_use => false
   } } )
 
-#Own country, calls, incoming
-  category = {:name => 'own_country_calls_incoming', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_in}
+#Own country, calls, incoming, from own operator
+  category = {:name => 'own_country_calls_incoming_from_own_operator', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_in, :service_category_partner_type_id => _service_to_own_operator}
+  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 0.0})  
+
+#Own country, calls, incoming, from other operatora
+  category = {:name => 'own_country_calls_incoming_from_other_operators', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_in, :service_category_partner_type_id => _service_to_not_own_operator}
   @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 8.9})  
 
 #Own country, calls, outcoming, to all own country regions, to all operators

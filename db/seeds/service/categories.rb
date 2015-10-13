@@ -127,6 +127,10 @@ cat << {:id => _sc_mts_rouming_in_bit_abrod_option_countries_4, :name => 'Стр
   crit << {:id => _sc_mts_rouming_in_bit_abrod_option_countries_4 * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
            :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mts_internet_bit_abrod_4})", :service_category_id => _sc_mts_rouming_in_bit_abrod_option_countries_4}
 
+cat << {:id => _sc_rouming_mts_free_journey, :name => 'Страны МТС Свободное путешествие', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_rouming_mts_free_journey * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mts_free_journey})", :service_category_id => _sc_rouming_mts_free_journey}
+
 
 cat << {:id => _sc_mgf_rouming_in_option_around_world_1, :name => 'Страны Мегафон 1-я группа опции вокруг мира', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
   crit << {:id => _sc_mgf_rouming_in_option_around_world_1 * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 

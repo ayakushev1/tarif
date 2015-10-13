@@ -85,6 +85,8 @@ rln << {:id => _relation_mts_your_country_7, :type_id => _operator_country_group
 rln << {:id => _relation_mts_your_country_8, :type_id => _operator_country_groups, :owner_id => _mts, :parent_id => nil, :children => _mts_your_country_8,:name => 'MTS, countries from _mts_your_country_8 tarif option'}
 rln << {:id => _relation_mts_your_country_9, :type_id => _operator_country_groups, :owner_id => _mts, :parent_id => nil, :children => _mts_your_country_9,:name => 'MTS, countries from _mts_your_country_9 tarif option'}
 
+rln << {:id => _relation_mts_free_journey, :type_id => _operator_country_groups, :owner_id => _mts, :parent_id => nil, :children => _mts_from_free_journey,:name => 'MTS, countries from _mts_from_free_journey tarif option'}
+
 rln << {:id => _relation_mgf_rouming_in_option_around_world_1, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_option_around_world_1,:name => 'Megafone, countries from _mgf_option_around_world_1 tarif option'}
 rln << {:id => _relation_mgf_rouming_in_option_around_world_2, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_option_around_world_2,:name => 'Megafone, countries from _mgf_option_around_world_2 tarif option'}
 rln << {:id => _relation_mgf_rouming_in_option_around_world_3, :type_id => _operator_country_groups, :owner_id => _megafon, :parent_id => nil, :children => _mgf_option_around_world_3,:name => 'Megafone, countries from _mgf_option_around_world_3 tarif option'}

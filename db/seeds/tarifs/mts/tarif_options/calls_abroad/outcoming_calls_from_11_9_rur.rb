@@ -61,7 +61,7 @@ category = {:name => '_sctcg_mts_other_countries_2_calls_to_russia', :service_ca
 category = {:name => '_sctcg_mts_other_countries_2_calls_to_rouming_country', :service_category_rouming_id => _sc_mts_rouming_in_11_9_option_countries_2, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_rouming_country}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => _stf_price_by_sum_duration_minute, :price => 79.0, :description => '' } )
      
-@tc.add_tarif_class_categories
+@tc.add_tarif_class_categories 
 
 #Тарификация поминутная, начиная с первой секунды вызова.
 #Оплата исходящих вызовов с использованием специального кода *137* на телефоны других стран производится по базовым тарифам на услуги международного роуминга.

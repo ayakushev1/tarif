@@ -11,6 +11,7 @@
     :prerequisites => [],
     :forbidden_tarifs => {:to_switch_on => [_mts_red_energy, _mts_a_mobile, _mts_smart, _mts_smart_mini, _mts_smart_plus, _mts_ultra, _mts_super_mts, _mts_smart_top], 
       :to_serve => [_mts_a_mobile]}, 
+    :is_archived => true,
     :multiple_use => false
   } } )
 
