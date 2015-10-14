@@ -8,6 +8,22 @@ def access_methods_to_constant_operator_country_groups
     _montenegro, _czech_republic, _switzerland, _sweden, _estonia,
     _gersi, _men, _gernsi, 
     ]
+  
+  
+  _mts_europe_countries_25_25_25_135 = [_latvia, _lithuania, _netherlands, _finland, _sweden, _estonia]
+  _mts_europe_countries_30_30_30_135 = [_bulgaria]
+  _mts_europe_countries_45_45_45_135 = [_denmark, _slovenia]
+  _mts_europe_countries_50_50_50_135 = [_albania, _cyprus]
+  _mts_europe_countries_60_60_60_135 = [_spain, _turkey, _montenegro]
+  _mts_europe_countries_65_65_65_135 = [_hungary, _liechtenstein, _poland, _romania, _gibraltar]
+  _mts_europe_countries_65_65_75_135 = [_greece, _italy]
+  _mts_europe_countries_99_99_99_135 = [_croatia]
+  _mts_europe_countries_115_115_115_135 = [_iceland, _israel, _slovakia, _france, _bosnia_and_herzegovina, _malta]
+  _mts_europe_countries_155_155_155_155 = [_switzerland]
+  _mts_europe_countries_85_85_85_135 = _mts_europe_countries - _mts_europe_countries_25_25_25_135 - _mts_europe_countries_30_30_30_135 - _mts_europe_countries_45_45_45_135 -
+    _mts_europe_countries_50_50_50_135 - _mts_europe_countries_60_60_60_135 - _mts_europe_countries_65_65_65_135 - _mts_europe_countries_65_65_75_135 -
+    _mts_europe_countries_99_99_99_135 - _mts_europe_countries_115_115_115_135 - _mts_europe_countries_155_155_155_155
+    
   _mts_sic_countries = [_belarus, _moldova, _ukraiun, _abkhazia, _armenia, _azerbaijan, _georgia, _kazakhstan, _kyrgyzstan, _tajikistan, _turkmenistan, _uzbekistan, _south_ossetia]          
  
   _mts_sic_abkhazia = [_abkhazia] #155
@@ -28,7 +44,20 @@ def access_methods_to_constant_operator_country_groups
   _mts_sic_2_1_countries = [_abkhazia, _georgia, _kazakhstan,  _kyrgyzstan, _tajikistan]  
   _mts_sic_2_2_countries = [_azerbaijan, _uzbekistan]  
   _mts_sic_3_countries = [ _south_ossetia]  
+  
   _mts_other_countries = _world_countries_without_russia - _mts_europe_countries - _mts_sic_countries
+  _mts_other_countries_60_60_60_60 = [_egypt, ]
+  _mts_other_countries_65_65_65_135 = [_south_korea, ]
+  _mts_other_countries_99_99_99_155 = [_japan, ]
+  _mts_other_countries_200_200_200_200 = [_canada, _usa, ]
+  _mts_other_countries_250_250_250_250 = _africa_countries - _mts_other_countries_60_60_60_60 + 
+    [
+      _bolivia, _venesuala, _vietnam, _dominiknskaya_republic, _india, _indonezia, _iordania, _iraq, _iran, _iemen, _kambodga, _katar, _columbia, _kosta_rika, _cuba, 
+      _kuveit, _laos, _livan, _maldiv_islands, _mexica, _nepal, _uae, _oman, _pakistan, _palestina, _paragvay, _puerto_riko, _saudov_aravia, _singapur, _siria, _taivan, 
+      _urugvai, _fillipiny, _shri_lanka, _ekvador, _yamayka
+     ] 
+  _mts_other_countries_155_155_155_155 = [_australia, _nigeria, _center_africa_republic] + _noth_america_countries + _south_america_countries + _asia_countries - 
+    [_south_korea, _japan, _canada, _usa, ] - _mts_other_countries_250_250_250_250
     
   _mts_from_11_9_option_countries_1 = [_egypt, _israel, _china, _cuba, _uae, _tailand, _tunis, _turkey, _south_korea]
   _mts_from_11_9_option_countries_2 = _mts_other_countries - _mts_europe_countries - _mts_sic_countries - _mts_from_11_9_option_countries_1
@@ -36,12 +65,11 @@ def access_methods_to_constant_operator_country_groups
   _mts_from_free_journey = [_australia, _austria, _armenia, _great_britain, _hungary, _germany, _greece, _israel, _ireland, _italy, 
     _uae, _poland, _portugal, _france, _czech_republic]
   
-  _mts_bit_abrod_1 = [_abkhazia, _austria, _azerbaijan, _albania, _andorra, _bosnia_and_herzegovina, _belarus, _great_britain, _gibraltar, _honkong, _georgia, _denmark, _ireland, 
-    _iceland, _spain, _italy, _kazakhstan, _cyprus, _kyrgyzstan, _luxembourg, _malta, _macedonia, _moldova, _uae, _poland, _romania, _san_marino, _serbia, 
-    _slovakia, _slovenia, _tailand, _turkmenistan, _uzbekistan, _france, _sweden, _switzerland, _south_korea, ]    
-  _mts_bit_abrod_2 = [ _armenia, _belgium, _hungary, _gernsi, _germany, _greece, _gersi, _egypt, _china, _estonia, _portugal, _tajikistan, _tunis, _turkey, _croatia, _czech_republic, _the_faroe_islands, _men]
-  _mts_bit_abrod_3 = [_bulgaria, _israel, _canada, _latvia, _lithuania, _liechtenstein, _norway, _usa, _ukraiun, _finland, _montenegro, _estonia ]
-  _mts_bit_abrod_4 = _mts_other_countries - _mts_bit_abrod_1 - _mts_bit_abrod_2 - _mts_bit_abrod_3
+  _mts_bit_abrod_0 = [_south_ossetia, _turkmenistan] #нет интернета
+  _mts_bit_abrod_1 = _mts_europe_countries +  _mts_sic_countries + [_egypt, _israel, _canada, _china, _uae, _usa, _tailand, _turkey, _south_korea]
+  _mts_bit_abrod_2 = []
+  _mts_bit_abrod_3 = []
+  _mts_bit_abrod_4 = _mts_other_countries - _mts_bit_abrod_0 - _mts_bit_abrod_1 - _mts_bit_abrod_2 - _mts_bit_abrod_3
   
   _mts_love_countries_4_9 = []; _mts_love_countries_5_5 = []; _mts_love_countries_5_9 = []; _mts_love_countries_6_9 = []; _mts_love_countries_7_9 = []
   _mts_love_countries_8_9 = []; _mts_love_countries_9_9 = []; _mts_love_countries_11_5 = []; _mts_love_countries_12_9 = []; 

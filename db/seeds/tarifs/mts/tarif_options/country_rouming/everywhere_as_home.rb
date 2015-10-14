@@ -5,7 +5,11 @@
   :features => {:http => 'http://www.mts.ru/mob_connect/roaming/n_roaming/discounts/kakdoma/'},
   :dependency => {
     :categories => [_tcgsc_calls],
-    :incompatibility => {:everywhere_as_home => [_mts_everywhere_as_home, _mts_everywhere_as_home_Ultra, _mts_everywhere_as_home_smart]}, 
+    :incompatibility => 
+      {
+        :everywhere_as_home => [_mts_everywhere_as_home, _mts_everywhere_as_home_Ultra, _mts_everywhere_as_home_smart],
+        :single_country => [_mts_single_country, _mts_everywhere_as_home]
+        }, 
     :general_priority => _gp_tarif_option,
     :other_tarif_priority => {:lower => [_mts_rodnye_goroda, _mts_love_country], :higher => [_mts_love_country_all_world]},
     :prerequisites => [],

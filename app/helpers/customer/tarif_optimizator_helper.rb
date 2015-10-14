@@ -176,6 +176,7 @@ module Customer::TarifOptimizatorHelper
         :common_services => common_services, 
         :calculate_only_chosen_services => service_choices_session_filtr_params['calculate_only_chosen_services'],
         :calculate_with_fixed_services => service_choices_session_filtr_params['calculate_with_fixed_services'],
+        
         :use_short_tarif_set_name => optimization_params_session_filtr_params['use_short_tarif_set_name'], 
         :calculate_with_multiple_use => optimization_params_session_filtr_params['calculate_with_multiple_use'],
         :if_update_tarif_sets_to_calculate_from_with_cons_tarif_results => optimization_params_session_filtr_params['if_update_tarif_sets_to_calculate_from_with_cons_tarif_results'],
@@ -196,6 +197,7 @@ module Customer::TarifOptimizatorHelper
   def operators
     service_choices_session_filtr_params = session_filtr_params(service_choices)
     services_select_session_filtr_params = session_filtr_params(services_select)
+    services_for_calculation_select_session_filtr_params = session_filtr_params(services_for_calculation_select)
     
 #    raise(StandardError)
     if service_choices_session_filtr_params['calculate_with_fixed_services'] == 'true'
@@ -255,7 +257,7 @@ module Customer::TarifOptimizatorHelper
     service_choices_session_filtr_params = session_filtr_params(service_choices)
 
     {
-      1023 => (service_choices_session_filtr_params['common_services_tel'] || [830, 831, 832]), 
+      1023 => (service_choices_session_filtr_params['common_services_tel'] || []), 
       1025 => (service_choices_session_filtr_params['common_services_bln'] || []), 
       1028 => (service_choices_session_filtr_params['common_services_mgf'] || []), 
       1030 => (service_choices_session_filtr_params['common_services_mts'] || []), 

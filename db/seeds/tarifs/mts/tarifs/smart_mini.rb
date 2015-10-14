@@ -147,7 +147,7 @@
   category = {:name => '_sctcg_all_world_sms_incoming', :service_category_rouming_id => _all_world_rouming, :service_category_calls_id => _sms_in}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_zero_count_volume_item, :price => 0.0})
 
-#Tarif option Везде как дома
+#Tarif option Везде как дома Smart
  
 #Переход на тариф
   @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on.merge({:tarif_option_id => _mts_everywhere_as_home_smart, :tarif_option_order => 0}), {}, 

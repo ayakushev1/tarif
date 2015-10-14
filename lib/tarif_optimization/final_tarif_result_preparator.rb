@@ -133,8 +133,9 @@ class TarifOptimization::FinalTarifResultPreparator
     service_category_tarif_class_id = price_value_detail['service_category_tarif_class_id']
     service_category_group_id = price_value_detail['service_category_group_id']
 
-    service_category_description = { 'service_category_rouming_id' => [], 'service_category_geo_id' => [], 'service_category_geo_id_details' => [],
-      'service_category_partner_type_id' => [], 'service_category_calls_id' => [], 'service_category_one_time_id' => [], 'service_category_periodic_id' => [],}
+    service_category_description = { 'service_category_rouming_id' => [], 'service_category_geo_id' => [], 'service_category_rouming_id_details' => [],
+      'service_category_geo_id_details' => [], 'service_category_partner_type_id' => [], 'service_category_calls_id' => [], 
+      'service_category_one_time_id' => [], 'service_category_periodic_id' => [],}
        
     return service_category_description if !service_category_group_id
     
@@ -146,12 +147,41 @@ class TarifOptimization::FinalTarifResultPreparator
 
 #      raise(StandardError) if service_category_group_id    
 
-      service_category_description['service_category_rouming_id'] << categories[tarif_category['service_category_rouming_id'].to_s]['name'] if 
-        tarif_category['service_category_rouming_id'] and categories[tarif_category['service_category_rouming_id'].to_s]
+      if tarif_category['service_category_rouming_id'] and categories[tarif_category['service_category_rouming_id'].to_s]
+        rouming_name = categories[tarif_category['service_category_rouming_id'].to_s]['name']
+        eval_strings = Service::Criterium.where(:service_category_id => tarif_category['service_category_rouming_id'].to_i).
+          where.not(:value => nil).pluck(:value)
+#          raise(StandardError, eval_strings)  if !eval_strings.blank? and !(['услуги в страну нахождения (роуминга)', 'услуги в СНГ', 'услуги за пределы России и страны нахождения (роуминга)', 'услуги за пределы России, СНГ и страны нахождения (роуминга)', 'услуги в Россию'].include?(rouming_name))
+        if !eval_strings.blank?# and !eval_strings[0].blank?
+          detailed_rouming_name = if eval_strings.is_a?(Array)
+            country_ids = eval_strings
+            country_names = Category.where(:id => country_ids).pluck(:name)
+             "#{country_names.join(', ')}"
+          else
+            'не могу показать список, сообщите администратору'
+          end          
+        end
+        
+        
+        service_category_description['service_category_rouming_id'] << categories[tarif_category['service_category_rouming_id'].to_s]['name']
+        service_category_description['service_category_rouming_id_details'] << (detailed_rouming_name || '')
+      end
 
       if tarif_category['service_category_geo_id'] and categories[tarif_category['service_category_geo_id'].to_s]
         geo_name = categories[tarif_category['service_category_geo_id'].to_s]['name']
-#        raise(StandardError) if geo_name == 'услуги в Европу МТС'
+        eval_strings = Service::Criterium.where(:service_category_id => tarif_category['service_category_geo_id'].to_i).
+          where.not(:value => nil).pluck(:value)
+#          raise(StandardError, eval_strings)  if !eval_strings.blank? and !(['услуги в страну нахождения (роуминга)', 'услуги в СНГ', 'услуги за пределы России и страны нахождения (роуминга)', 'услуги за пределы России, СНГ и страны нахождения (роуминга)', 'услуги в Россию'].include?(geo_name))
+        if !eval_strings.blank?# and !eval_strings[0].blank?
+          detailed_geo_name = if eval_strings.is_a?(Array)
+            country_ids = eval_strings
+            country_names = Category.where(:id => country_ids).pluck(:name)
+             "#{country_names.join(', ')}"
+          else
+            'не могу показать список, сообщите администратору'
+          end          
+        end
+        
         eval_strings = Service::Criterium.where(:service_category_id => tarif_category['service_category_geo_id'].to_i).
           where.not(:eval_string => nil).pluck(:eval_string)
         if !eval_strings.blank? and !eval_strings[0].blank?

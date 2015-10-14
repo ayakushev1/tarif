@@ -128,6 +128,7 @@ class Customers::FinalTarifResultsPresenter #ServiceHelper::FinalTarifResultsPre
       
       if f and f['service_category_description']
         additions['rouming'] = f['service_category_description']['service_category_rouming_id'].uniq.join(', ')    
+        additions['rouming_details'] = f['service_category_description']['service_category_rouming_id_details'].uniq.join(', ')    
         additions['geo'] = f['service_category_description']['service_category_geo_id'].uniq.join(', ')    
         additions['geo_details'] = f['service_category_description']['service_category_geo_id_details'].uniq.join(', ')    
         additions['partner'] = f['service_category_description']['service_category_partner_type_id'].uniq.join(', ')    
@@ -160,7 +161,7 @@ class Customers::FinalTarifResultsPresenter #ServiceHelper::FinalTarifResultsPre
         additions[service_category_name] = {
           'price_value' => 0.0,
           'calls_volume' => 0.0, 'sms_volume' => 0, 'internet_volume' => 0.0, 'call_ids' => [],
-          'rouming' => [], 'geo' => [], 'geo_details' => [], 'partner' => [], 'calls' => [], 'fix' => []
+          'rouming' => [], 'rouming_details' => [], 'geo' => [], 'geo_details' => [], 'partner' => [], 'calls' => [], 'fix' => []
         } 
         end
         
@@ -175,6 +176,7 @@ class Customers::FinalTarifResultsPresenter #ServiceHelper::FinalTarifResultsPre
         
         if f and f['service_category_description']
           additions[service_category_name]['rouming'] += f['service_category_description']['service_category_rouming_id'].uniq    
+          additions[service_category_name]['rouming_details'] += f['service_category_description']['service_category_rouming_id_details'].uniq    
           additions[service_category_name]['geo'] += f['service_category_description']['service_category_geo_id'].uniq    
           additions[service_category_name]['geo_details'] += f['service_category_description']['service_category_geo_id_details'].uniq    
           additions[service_category_name]['partner'] += f['service_category_description']['service_category_partner_type_id'].uniq    
@@ -185,6 +187,7 @@ class Customers::FinalTarifResultsPresenter #ServiceHelper::FinalTarifResultsPre
       end
 
       additions[service_category_name]['rouming'] = additions[service_category_name]['rouming'].uniq.join(', ')
+      additions[service_category_name]['rouming_details'] = additions[service_category_name]['rouming_details'].uniq.join(', ')
       additions[service_category_name]['geo'] = additions[service_category_name]['geo'].uniq.join(', ')
       additions[service_category_name]['geo_details'] = additions[service_category_name]['geo_details'].uniq.join(', ')
       additions[service_category_name]['partner'] = additions[service_category_name]['partner'].uniq.join(', ')

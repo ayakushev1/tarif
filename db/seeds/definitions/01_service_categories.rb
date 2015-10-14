@@ -37,7 +37,19 @@ def access_methods_to_constant_service_categories
   _sc_tele_sic_rouming = 65; _sc_tele_europe_rouming = 66; _sc_tele_asia_afr_aust_rouming = 67; _sc_tele_americas_rouming = 68; 
   
   _sc_rouming_mts_free_journey = 69; 
+  _sc_rouming_mts_sic_abkhazia = 70; _sc_rouming_mts_sic_south_ossetia =  71;  _sc_rouming_mts_sic_135_to_other_countries = 81;
+  _sc_rouming_mts_sic_109_to_sic = 82; _sc_rouming_mts_sic_14_for_40_internet = 83; _sc_rouming_mts_sic_12_for_40_internet = 84;
+  _sc_rouming_mts_sic_30_for_40_internet = 85; _sc_rouming_mts_sic_45_to_russia = 86; _sc_rouming_mts_sic_65_to_russia = 87; 
+  _sc_rouming_mts_sic_75_to_russia = 88; _sc_rouming_mts_sic_85_to_russia = 89; _sc_rouming_mts_sic_115_to_russia = 90; 
    
+  _sc_rouming_mts_europe_countries_25_25_25_135 = 91; _sc_rouming_mts_europe_countries_30_30_30_135 = 92; _sc_rouming_mts_europe_countries_45_45_45_135 = 93;
+  _sc_rouming_mts_europe_countries_50_50_50_135 = 94; _sc_rouming_mts_europe_countries_60_60_60_135 = 95; _sc_rouming_mts_europe_countries_65_65_65_135 = 96;
+  _sc_rouming_mts_europe_countries_65_65_75_135 = 97; _sc_rouming_mts_europe_countries_99_99_99_135 = 98; _sc_rouming_mts_europe_countries_115_115_115_135 = 99;
+  _sc_rouming_mts_europe_countries_155_155_155_155 = 500; _sc_rouming_mts_europe_countries_85_85_85_135 = 501;
+
+  _sc_rouming_mts_other_countries_60_60_60_60 = 502; _sc_rouming_mts_other_countries_65_65_65_135 = 503; _sc_rouming_mts_other_countries_99_99_99_155 = 504;
+  _sc_rouming_mts_other_countries_200_200_200_200 = 505; _sc_rouming_mts_other_countries_250_250_250_250 =  506; _sc_rouming_mts_other_countries_155_155_155_155 = 507; 
+
   #география услуг
   _geography_services = 100;
   _service_to_own_region = 101; _service_to_home_region = 102; _service_to_own_country = 103; _service_to_group_of_countries = 104;

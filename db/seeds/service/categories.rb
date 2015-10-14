@@ -268,6 +268,122 @@ cat << {:id => _sc_tele_americas_rouming, :name => 'Страны Южной и �
   crit << {:id => _sc_tele_americas_rouming * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
            :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_tele_international_6})", :service_category_id => _sc_tele_americas_rouming}
 
+cat << {:id => _sc_rouming_mts_sic_abkhazia, :name => 'Страны МТС СНГ для роуминга, Абхазия', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_rouming_mts_sic_abkhazia * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value => _mts_sic_abkhazia, :service_category_id => _sc_rouming_mts_sic_abkhazia}
+
+cat << {:id => _sc_rouming_mts_sic_south_ossetia, :name => 'Страны МТС СНГ для роуминга, Южная Осетия', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_rouming_mts_sic_south_ossetia * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value => _mts_sic_south_ossetia, :service_category_id => _sc_rouming_mts_sic_south_ossetia}
+
+cat << {:id => _sc_rouming_mts_sic_135_to_other_countries, :name => 'Страны МТС СНГ для роуминга, звонки в другие страны за 135 руб', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_rouming_mts_sic_135_to_other_countries * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value => _mts_sic_135_to_other_countries, :service_category_id => _sc_rouming_mts_sic_135_to_other_countries}
+
+cat << {:id => _sc_rouming_mts_sic_109_to_sic, :name => 'Страны МТС СНГ для роуминга, звонки в СНГ за 109 руб', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_rouming_mts_sic_109_to_sic * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value => _mts_sic_109_to_sic, :service_category_id => _sc_rouming_mts_sic_109_to_sic}
+
+cat << {:id => _sc_rouming_mts_sic_14_for_40_internet, :name => 'Страны МТС СНГ для роуминга, интернет за 14 руб', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_rouming_mts_sic_14_for_40_internet * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value => _mts_sic_14_for_40_internet, :service_category_id => _sc_rouming_mts_sic_14_for_40_internet}
+
+cat << {:id => _sc_rouming_mts_sic_12_for_40_internet, :name => 'Страны МТС СНГ для роуминга, интернет за 12 руб', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_rouming_mts_sic_12_for_40_internet * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value => _mts_sic_12_for_40_internet, :service_category_id => _sc_rouming_mts_sic_12_for_40_internet}
+
+cat << {:id => _sc_rouming_mts_sic_30_for_40_internet, :name => 'Страны МТС СНГ для роуминга, интернет за 40 руб', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_rouming_mts_sic_30_for_40_internet * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value => _mts_sic_30_for_40_internet, :service_category_id => _sc_rouming_mts_sic_30_for_40_internet}
+
+cat << {:id => _sc_rouming_mts_sic_45_to_russia, :name => 'Страны МТС СНГ для роуминга, звонки в Россию за 45 руб', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_rouming_mts_sic_45_to_russia * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value => _mts_sic_45_to_russia, :service_category_id => _sc_rouming_mts_sic_45_to_russia}
+
+cat << {:id => _sc_rouming_mts_sic_65_to_russia, :name => 'Страны МТС СНГ для роуминга, звонки в Россию за 65 руб', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_rouming_mts_sic_65_to_russia * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value => _mts_sic_65_to_russia, :service_category_id => _sc_rouming_mts_sic_65_to_russia}
+
+cat << {:id => _sc_rouming_mts_sic_75_to_russia, :name => 'Страны МТС СНГ для роуминга, звонки в Россию за 75 руб', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_rouming_mts_sic_75_to_russia * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value => _mts_sic_75_to_russia, :service_category_id => _sc_rouming_mts_sic_75_to_russia}
+
+cat << {:id => _sc_rouming_mts_sic_85_to_russia, :name => 'Страны МТС СНГ для роуминга, звонки в Россию за 85 руб', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_rouming_mts_sic_85_to_russia * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value => _mts_sic_85_to_russia, :service_category_id => _sc_rouming_mts_sic_85_to_russia}
+
+cat << {:id => _sc_rouming_mts_sic_115_to_russia, :name => 'Страны МТС СНГ для роуминга, звонки в Россию за 115 руб', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_rouming_mts_sic_115_to_russia * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value => _mts_sic_115_to_russia, :service_category_id => _sc_rouming_mts_sic_115_to_russia}
+
+cat << {:id => _sc_rouming_mts_europe_countries_25_25_25_135, :name => 'Страны МТС Европа для роуминга, звонки в Россию за 25 руб', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_rouming_mts_europe_countries_25_25_25_135 * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value => _mts_europe_countries_25_25_25_135, :service_category_id => _sc_rouming_mts_europe_countries_25_25_25_135}
+
+cat << {:id => _sc_rouming_mts_europe_countries_30_30_30_135, :name => 'Страны МТС Европа для роуминга, звонки в Россию за 30 руб', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_rouming_mts_europe_countries_30_30_30_135 * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value => _mts_europe_countries_30_30_30_135, :service_category_id => _sc_rouming_mts_europe_countries_30_30_30_135}
+
+cat << {:id => _sc_rouming_mts_europe_countries_45_45_45_135, :name => 'Страны МТС Европа для роуминга, звонки в Россию за 45 руб', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_rouming_mts_europe_countries_45_45_45_135 * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value => _mts_europe_countries_45_45_45_135, :service_category_id => _sc_rouming_mts_europe_countries_45_45_45_135}
+
+cat << {:id => _sc_rouming_mts_europe_countries_50_50_50_135, :name => 'Страны МТС Европа для роуминга, звонки в Россию за 50 руб', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_rouming_mts_europe_countries_50_50_50_135 * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value => _mts_europe_countries_50_50_50_135, :service_category_id => _sc_rouming_mts_europe_countries_50_50_50_135}
+
+cat << {:id => _sc_rouming_mts_europe_countries_60_60_60_135, :name => 'Страны МТС Европа для роуминга, звонки в Россию за 60 руб', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_rouming_mts_europe_countries_60_60_60_135 * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value => _mts_europe_countries_60_60_60_135, :service_category_id => _sc_rouming_mts_europe_countries_60_60_60_135}
+
+cat << {:id => _sc_rouming_mts_europe_countries_65_65_65_135, :name => 'Страны МТС Европа для роуминга, звонки в Россию за 65 руб', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_rouming_mts_europe_countries_65_65_65_135 * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value => _mts_europe_countries_65_65_65_135, :service_category_id => _sc_rouming_mts_europe_countries_65_65_65_135}
+
+cat << {:id => _sc_rouming_mts_europe_countries_65_65_75_135, :name => 'Страны МТС Европа для роуминга, звонки в Россию за 75 руб', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_rouming_mts_europe_countries_65_65_75_135 * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value => _mts_europe_countries_65_65_75_135, :service_category_id => _sc_rouming_mts_europe_countries_65_65_75_135}
+
+cat << {:id => _sc_rouming_mts_europe_countries_85_85_85_135, :name => 'Страны МТС Европа для роуминга, звонки в Россию за 85 руб', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_rouming_mts_europe_countries_85_85_85_135 * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value => _mts_europe_countries_85_85_85_135, :service_category_id => _sc_rouming_mts_europe_countries_85_85_85_135}
+
+cat << {:id => _sc_rouming_mts_europe_countries_99_99_99_135, :name => 'Страны МТС Европа для роуминга, звонки в Россию за 99 руб', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_rouming_mts_europe_countries_99_99_99_135 * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value => _mts_europe_countries_99_99_99_135, :service_category_id => _sc_rouming_mts_europe_countries_99_99_99_135}
+
+cat << {:id => _sc_rouming_mts_europe_countries_115_115_115_135, :name => 'Страны МТС Европа для роуминга, звонки в Россию за 115 руб', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_rouming_mts_europe_countries_115_115_115_135 * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value => _mts_europe_countries_115_115_115_135, :service_category_id => _sc_rouming_mts_europe_countries_115_115_115_135}
+
+cat << {:id => _sc_rouming_mts_europe_countries_155_155_155_155, :name => 'Страны МТС Европа для роуминга, звонки в Россию за 155 руб', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_rouming_mts_europe_countries_155_155_155_155 * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value => _mts_europe_countries_155_155_155_155, :service_category_id => _sc_rouming_mts_europe_countries_155_155_155_155}
+
+cat << {:id => _sc_rouming_mts_other_countries_60_60_60_60, :name => 'Страны МТС Другие страны для роуминга, звонки в Россию за 60 руб', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_rouming_mts_other_countries_60_60_60_60 * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value => _mts_other_countries_60_60_60_60, :service_category_id => _sc_rouming_mts_other_countries_60_60_60_60}
+
+cat << {:id => _sc_rouming_mts_other_countries_65_65_65_135, :name => 'Страны МТС Другие страны для роуминга, звонки в Россию за 65 руб', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_rouming_mts_other_countries_65_65_65_135 * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value => _mts_other_countries_65_65_65_135, :service_category_id => _sc_rouming_mts_other_countries_65_65_65_135}
+
+cat << {:id => _sc_rouming_mts_other_countries_99_99_99_155, :name => 'Страны МТС Другие страны для роуминга, звонки в Россию за 99 руб', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_rouming_mts_other_countries_99_99_99_155 * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value => _mts_other_countries_99_99_99_155, :service_category_id => _sc_rouming_mts_other_countries_99_99_99_155}
+
+cat << {:id => _sc_rouming_mts_other_countries_200_200_200_200, :name => 'Страны МТС Другие страны для роуминга, звонки в Россию за 200 руб', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_rouming_mts_other_countries_200_200_200_200 * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value => _mts_other_countries_200_200_200_200, :service_category_id => _sc_rouming_mts_other_countries_200_200_200_200}
+
+cat << {:id => _sc_rouming_mts_other_countries_250_250_250_250, :name => 'Страны МТС Другие страны для роуминга, звонки в Россию за 250 руб', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_rouming_mts_other_countries_250_250_250_250 * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value => _mts_other_countries_250_250_250_250, :service_category_id => _sc_rouming_mts_other_countries_250_250_250_250}
+
+cat << {:id => _sc_rouming_mts_other_countries_155_155_155_155, :name => 'Страны МТС Другие страны для роуминга, звонки в Россию за 155 руб', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+  crit << {:id => _sc_rouming_mts_other_countries_155_155_155_155 * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value => _mts_other_countries_155_155_155_155, :service_category_id => _sc_rouming_mts_other_countries_155_155_155_155}
+
 
 #география услуг
 cat << {:id => _geography_services, :name => 'география услуг', :type_id => _common, :parent_id => nil, :level => 0, :path => []}
