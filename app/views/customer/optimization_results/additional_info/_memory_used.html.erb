@@ -3,7 +3,7 @@ table.init do |t|
 #  t.caption = 'memory_used'
 #  t.base_name = 'memory_used'
 #  t.current_id_name = 'objects'
-  t.pagination_per_page = 30
+#  t.pagination_per_page = 30
 #  t.id_name = 'objects'#'service_category_tarif_class_id'
   model_keys = t.model.collect {|row| row.keys }.flatten.uniq.collect{|key| key unless [].include?(key)}.compact  
   t.heads = model_keys.collect{|model_key| model_key.to_s.split('_').join(' ')}

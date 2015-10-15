@@ -35,7 +35,7 @@ class Customer::CallsController < ApplicationController
   end
   
   def calls_gener_params_report
-    options = {:base_name => 'call_generation_params_report', :current_id_name => 'param', :id_name => 'param'}
+    options = {:base_name => 'call_generation_params_report', :current_id_name => 'param', :id_name => 'param', :pagination_per_page => 20}
 #    @calls_gener_params_report ||= 
     create_array_of_hashable(
       Calls::GenerationParamsPresenter.new(Calls::Generator.new(self, customer_calls_generation_params, user_params), customer_calls_generation_params).report )

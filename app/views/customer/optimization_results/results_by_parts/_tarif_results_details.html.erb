@@ -3,7 +3,7 @@ table.init do |t|
   t.caption = 'Tarif results details'
 #  t.base_name = 'tarif_results_details'
 #  t.current_id_name = 'service_category_name'
-  t.pagination_per_page = 100
+#  t.pagination_per_page = 100
 #  t.id_name = 'service_category_name'#'service_category_tarif_class_id'
 #  model_keys = t.model.collect {|row| row.keys }.flatten.uniq.collect{|key| key unless [ ].include?(key)}.compact  
   model_keys = t.model.collect {|row| row.keys }.flatten.uniq.collect{|key| key unless [ 'call_ids'].include?(key)}.compact  

@@ -14,17 +14,17 @@ module Customer::HistoryParsersHelper
   end
   
   def call_history
-    options = {:base_name => 'call_history', :current_id_name => 'base_service_id', :id_name => 'base_service_id'}
+    options = {:base_name => 'call_history', :current_id_name => 'base_service_id', :id_name => 'base_service_id', :pagination_per_page => 10}
     create_array_of_hashable(call_history_results['processed'], options)
   end
   
   def call_history_unprocessed
-    options = {:base_name => 'unprocessed_call_history', :current_id_name => 'unprocessed_column', :id_name => 'unprocessed_column'}
+    options = {:base_name => 'unprocessed_call_history', :current_id_name => 'unprocessed_column', :id_name => 'unprocessed_column', :pagination_per_page => 10}
     create_array_of_hashable(call_history_results['unprocessed'], options)
   end
   
   def call_history_ignorred
-    options = {:base_name => 'ignorred_call_history', :current_id_name => 'ignorred_column', :id_name => 'ignorred_column'}
+    options = {:base_name => 'ignorred_call_history', :current_id_name => 'ignorred_column', :id_name => 'ignorred_column', :pagination_per_page => 10}
     create_array_of_hashable(call_history_results['ignorred'], options)
   end
 

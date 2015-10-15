@@ -6,60 +6,60 @@ module Customer::OptimizationResultsHelper
   end
   
   def customer_service_sets
-    options = {:base_name => 'service_sets', :current_id_name => 'service_sets_id', :id_name => 'service_sets_id'}
+    options = {:base_name => 'service_sets', :current_id_name => 'service_sets_id', :id_name => 'service_sets_id', :pagination_per_page => 5}
     result = create_array_of_hashable(final_tarif_results_presenter.customer_service_sets_array, options)
 #    raise(StandardError)
   end
   
   def customer_tarif_results
-    options = {:base_name => 'service_results', :current_id_name => 'service_id', :id_name => 'service_id'}
+    options = {:base_name => 'service_results', :current_id_name => 'service_id', :id_name => 'service_id', :pagination_per_page => 20}
     create_array_of_hashable(final_tarif_results_presenter.customer_tarif_results_array(session[:current_id]['service_sets_id']), options)
   end
   
   def customer_tarif_detail_results
-    options = {:base_name => 'tarif_detail_results', :current_id_name => 'service_category_name', :id_name => 'service_category_name'}
+    options = {:base_name => 'tarif_detail_results', :current_id_name => 'service_category_name', :id_name => 'service_category_name', :pagination_per_page => 100}
     create_array_of_hashable(final_tarif_results_presenter.customer_tarif_detail_results_array(session[:current_id]['service_sets_id'], session[:current_id]['service_id']), options)
   end
   
   def service_sets
-    options = {:base_name => 'service_sets', :current_id_name => 'service_sets_id', :id_name => 'service_sets_id'}
+    options = {:base_name => 'service_sets', :current_id_name => 'service_sets_id', :id_name => 'service_sets_id', :pagination_per_page => 12}
     create_array_of_hashable(optimization_result_presenter.service_sets_array, options)
   end
   
   def tarif_results
-    options = {:base_name => 'tarif_results', :current_id_name => 'tarif_results_id', :id_name => 'tarif_results_id'}
+    options = {:base_name => 'tarif_results', :current_id_name => 'tarif_results_id', :id_name => 'tarif_results_id', :pagination_per_page => 20}
     create_array_of_hashable(optimization_result_presenter.tarif_results_array( session[:current_id]['service_sets_id']), options)
   end
   
   def tarif_results_details
-    options = {:base_name => 'tarif_detail_results', :current_id_name => 'service_category_name', :id_name => 'service_category_name'}
+    options = {:base_name => 'tarif_detail_results', :current_id_name => 'service_category_name', :id_name => 'service_category_name', :pagination_per_page => 100}
     create_array_of_hashable(optimization_result_presenter.tarif_results_details_array(session[:current_id]['service_sets_id'], session[:current_id]['tarif_results_id']), options)
   end
 
   def performance_results
-    options = {:base_name => 'performace_results', :current_id_name => 'check_point', :id_name => 'check_point'}
+    options = {:base_name => 'performace_results', :current_id_name => 'check_point', :id_name => 'check_point', :pagination_per_page => 50}
     create_array_of_hashable(minor_result_presenter.performance_results, options)
   end
   
   def service_packs_by_parts
-    options = {:base_name => 'service_packs_by_parts', :current_id_name => 'tarif', :id_name => 'tarif'}
+    options = {:base_name => 'service_packs_by_parts', :current_id_name => 'tarif', :id_name => 'tarif', :pagination_per_page => 10}
     create_array_of_hashable(minor_result_presenter.service_packs_by_parts_array, options)
   end
   
   def memory_used
-    options = {:base_name => 'memory_used', :current_id_name => 'objects', :id_name => 'objects'}
+    options = {:base_name => 'memory_used', :current_id_name => 'objects', :id_name => 'objects', :pagination_per_page => 30}
     create_array_of_hashable(minor_result_presenter.used_memory_by_output, options)
   end
   
   def current_tarif_set_calculation_history
-    options = {:base_name => 'current_tarif_set_calculation_history', :current_id_name => 'count', :id_name => 'count'}
+    options = {:base_name => 'current_tarif_set_calculation_history', :current_id_name => 'count', :id_name => 'count', :pagination_per_page => 100}
     create_array_of_hashable(minor_result_presenter.current_tarif_set_calculation_history, options)
   end
   
   def calls_stat
     filtr = session_filtr_params(calls_stat_options)
     calls_stat_options = filtr.keys.map{|key| key if filtr[key] == 'true'}
-    options = {:base_name => 'calls_stat', :current_id_name => 'calls_stat_category', :id_name => 'calls_stat_category'}
+    options = {:base_name => 'calls_stat', :current_id_name => 'calls_stat_category', :id_name => 'calls_stat_category', :pagination_per_page => 100}
     create_array_of_hashable(minor_result_presenter.calls_stat_array(calls_stat_options), options )
   end
    
