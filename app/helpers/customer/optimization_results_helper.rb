@@ -7,7 +7,8 @@ module Customer::OptimizationResultsHelper
   
   def customer_service_sets
     options = {:base_name => 'service_sets', :current_id_name => 'service_sets_id', :id_name => 'service_sets_id'}
-    create_array_of_hashable(final_tarif_results_presenter.customer_service_sets_array, options)
+    result = create_array_of_hashable(final_tarif_results_presenter.customer_service_sets_array, options)
+#    raise(StandardError)
   end
   
   def customer_tarif_results
