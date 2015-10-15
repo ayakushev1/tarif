@@ -33,6 +33,7 @@ module SavableInSession::ArrayOfHashable
       @base_name = options[:base_name] || 'array_table'
       @table_name = "#{@base_name}_table"      
       @id_name = options[:id_name] || model[0].keys.first if model[0]
+      @pagination_per_page =options[:pagination_per_page] || 10
     end
     
     def model
