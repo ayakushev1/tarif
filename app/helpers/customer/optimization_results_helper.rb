@@ -7,23 +7,29 @@ module Customer::OptimizationResultsHelper
   
   def customer_service_sets
     options = {:base_name => 'service_sets', :current_id_name => 'service_sets_id', :id_name => 'service_sets_id', :pagination_per_page => 5}
-    result = create_array_of_hashable(final_tarif_results_presenter.customer_service_sets_array, options)
-#    raise(StandardError)
+    @service_sets ||= create_array_of_hashable(final_tarif_results_presenter.customer_service_sets_array, options)
+#    raise(StandardError, @service_sets)
+  end
+  
+  def customer_service_set_tarif_id
+    service_sets_index = customer_service_sets.model.index{|m| m['service_sets_id'] == session[:current_id]['service_sets_id']}
+    customer_service_sets.model[service_sets_index]['tarif'].to_i if customer_service_sets.model[service_sets_index] and customer_service_sets.model[service_sets_index]['tarif']
   end
   
   def customer_tarif_results
+#    raise(StandardError, customer_service_set_tarif_id)
     options = {:base_name => 'service_results', :current_id_name => 'service_id', :id_name => 'service_id', :pagination_per_page => 20}
-    create_array_of_hashable(final_tarif_results_presenter.customer_tarif_results_array(session[:current_id]['service_sets_id']), options)
+    create_array_of_hashable(final_tarif_results_presenter.customer_tarif_results_array(customer_service_set_tarif_id, session[:current_id]['service_sets_id']), options)
   end
   
   def customer_tarif_detail_results
     options = {:base_name => 'tarif_detail_results', :current_id_name => 'service_category_name', :id_name => 'service_category_name', :pagination_per_page => 100}
-    create_array_of_hashable(final_tarif_results_presenter.customer_tarif_detail_results_array(session[:current_id]['service_sets_id'], session[:current_id]['service_id']), options)
+    create_array_of_hashable(final_tarif_results_presenter.customer_tarif_detail_results_array(customer_service_set_tarif_id, session[:current_id]['service_sets_id'], session[:current_id]['service_id']), options)
   end
   
   def service_sets
     options = {:base_name => 'service_sets', :current_id_name => 'service_sets_id', :id_name => 'service_sets_id', :pagination_per_page => 12}
-    create_array_of_hashable(optimization_result_presenter.service_sets_array, options)
+    @service_sets ||= create_array_of_hashable(optimization_result_presenter.service_sets_array, options)
   end
   
   def tarif_results

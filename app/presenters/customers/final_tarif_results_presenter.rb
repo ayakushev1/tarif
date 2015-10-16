@@ -81,9 +81,9 @@ class Customers::FinalTarifResultsPresenter #ServiceHelper::FinalTarifResultsPre
  
   end
   
-  def customer_tarif_results_array(service_set_id)
+  def customer_tarif_results_array(tarif_id, service_set_id)
     result = []
-    prepared_tarif_results_1 = prepared_tarif_results
+    prepared_tarif_results_1 = prepared_tarif_results(tarif_id)
     prepared_tarif_results_1[service_set_id].each do |service_id, prepared_tarif_result|       
       if prepared_tarif_result['call_id_count'].to_i > level_to_show_tarif_result_by_parts or prepared_tarif_result['price_value'].to_f > level_to_show_tarif_result_by_parts
         result << {'service_id' => service_id}.merge(prepared_tarif_result)
@@ -114,8 +114,8 @@ class Customers::FinalTarifResultsPresenter #ServiceHelper::FinalTarifResultsPre
 #    new_result.sort_by!{|item| (item['rouming'] || "") + (item['calls'] || "")}    
   end
     
-  def customer_tarif_detail_results_array(service_set_id, service_id)
-    result = take_out_zero_items_from_prepared_tarif_detail_results(service_set_id, service_id)
+  def customer_tarif_detail_results_array(tarif_id, service_set_id, service_id)
+    result = take_out_zero_items_from_prepared_tarif_detail_results(tarif_id, service_set_id, service_id)
     new_result = []
     result.each do |f|
       additions = {}
@@ -128,7 +128,7 @@ class Customers::FinalTarifResultsPresenter #ServiceHelper::FinalTarifResultsPre
       
       if f and f['service_category_description']
         additions['rouming'] = f['service_category_description']['service_category_rouming_id'].uniq.join(', ')    
-        additions['rouming_details'] = f['service_category_description']['service_category_rouming_id_details'].uniq.join(', ')    
+        additions['rouming_details'] = (f['service_category_description']['service_category_rouming_id_details'] || []).uniq.join(', ')    
         additions['geo'] = f['service_category_description']['service_category_geo_id'].uniq.join(', ')    
         additions['geo_details'] = f['service_category_description']['service_category_geo_id_details'].uniq.join(', ')    
         additions['partner'] = f['service_category_description']['service_category_partner_type_id'].uniq.join(', ')    
@@ -137,22 +137,24 @@ class Customers::FinalTarifResultsPresenter #ServiceHelper::FinalTarifResultsPre
       end
       new_result << f.merge(additions)
     end
+#    new_result = new_result.compact
     new_result.sort_by!{|item| (item['rouming'] || "") + (item['calls'] || "")}    
   end
   
-  def take_out_zero_items_from_prepared_tarif_detail_results(service_set_id, service_id)
+  def take_out_zero_items_from_prepared_tarif_detail_results(tarif_id, service_set_id, service_id)
     result = []
-    prepared_tarif_detail_results[service_set_id][service_id].each do |service_category_name, prepared_tarif_detail_result|       
+    prepared_tarif_detail_results_1 = prepared_tarif_detail_results(tarif_id)
+    prepared_tarif_detail_results_1[service_set_id][service_id].each do |service_category_name, prepared_tarif_detail_result|       
       if prepared_tarif_detail_result['call_id_count'].to_i > level_to_show_tarif_result_by_parts or prepared_tarif_detail_result['price_value'].to_f > level_to_show_tarif_result_by_parts
         result << {'service_category_name' => service_category_name}.merge(prepared_tarif_detail_result)
       end
-    end if prepared_tarif_detail_results and prepared_tarif_detail_results[service_set_id] and prepared_tarif_detail_results[service_set_id][service_id]
+    end if prepared_tarif_detail_results_1 and prepared_tarif_detail_results_1[service_set_id] and prepared_tarif_detail_results_1[service_set_id][service_id]
 #    result = result.compact 
     result  
   end
       
-  def aggregated_customer_tarif_detail_results_array(service_set_id)
-    aggregated_prepared_tarif_detail_results = aggregate_prepared_tarif_detail_results(service_set_id)
+  def aggregated_customer_tarif_detail_results_array(tarif_id, service_set_id)
+    aggregated_prepared_tarif_detail_results = aggregate_prepared_tarif_detail_results(tarif_id, service_set_id)
     result = []
     aggregated_prepared_tarif_detail_results.each do |service_category_name, aggregated_prepared_tarif_detail_result|
       additions = {}
@@ -176,7 +178,7 @@ class Customers::FinalTarifResultsPresenter #ServiceHelper::FinalTarifResultsPre
         
         if f and f['service_category_description']
           additions[service_category_name]['rouming'] += f['service_category_description']['service_category_rouming_id'].uniq    
-          additions[service_category_name]['rouming_details'] += f['service_category_description']['service_category_rouming_id_details'].uniq    
+          additions[service_category_name]['rouming_details'] += (f['service_category_description']['service_category_rouming_id_details'] || []).uniq    
           additions[service_category_name]['geo'] += f['service_category_description']['service_category_geo_id'].uniq    
           additions[service_category_name]['geo_details'] += f['service_category_description']['service_category_geo_id_details'].uniq    
           additions[service_category_name]['partner'] += f['service_category_description']['service_category_partner_type_id'].uniq    
@@ -187,7 +189,7 @@ class Customers::FinalTarifResultsPresenter #ServiceHelper::FinalTarifResultsPre
       end
 
       additions[service_category_name]['rouming'] = additions[service_category_name]['rouming'].uniq.join(', ')
-      additions[service_category_name]['rouming_details'] = additions[service_category_name]['rouming_details'].uniq.join(', ')
+      additions[service_category_name]['rouming_details'] = (additions[service_category_name]['rouming_details'] || []).uniq.join(', ')
       additions[service_category_name]['geo'] = additions[service_category_name]['geo'].uniq.join(', ')
       additions[service_category_name]['geo_details'] = additions[service_category_name]['geo_details'].uniq.join(', ')
       additions[service_category_name]['partner'] = additions[service_category_name]['partner'].uniq.join(', ')
@@ -202,9 +204,10 @@ class Customers::FinalTarifResultsPresenter #ServiceHelper::FinalTarifResultsPre
     result
   end
   
-  def aggregate_prepared_tarif_detail_results(service_set_id)
+  def aggregate_prepared_tarif_detail_results(tarif_id, service_set_id)
     result = {}
-    prepared_tarif_detail_results[service_set_id].each do |service_id, prepared_tarif_detail_results_by_service_set|
+    prepared_tarif_detail_results_1 = prepared_tarif_detail_results(tarif_id)
+    prepared_tarif_detail_results_1[service_set_id].each do |service_id, prepared_tarif_detail_results_by_service_set|
       prepared_tarif_detail_results_by_service_set.each do |service_category_name, prepared_tarif_detail_result|       
         if prepared_tarif_detail_result['call_id_count'].to_i > level_to_show_tarif_result_by_parts or prepared_tarif_detail_result['price_value'].to_f > level_to_show_tarif_result_by_parts
           if result[service_category_name]
@@ -214,7 +217,7 @@ class Customers::FinalTarifResultsPresenter #ServiceHelper::FinalTarifResultsPre
           end
         end
       end if prepared_tarif_detail_results_by_service_set
-    end if prepared_tarif_detail_results and prepared_tarif_detail_results[service_set_id]
+    end if prepared_tarif_detail_results_1 and prepared_tarif_detail_results_1[service_set_id]
 #        raise(StandardError, result.keys)
 #    result = result.compact
    result   
@@ -229,8 +232,9 @@ class Customers::FinalTarifResultsPresenter #ServiceHelper::FinalTarifResultsPre
     }, 'service_set')
   end
   
-  def prepared_tarif_results
+  def prepared_tarif_results(tarif_id)
     Customer::Stat.get_named_results({
+      :tarif_id => tarif_id,
       :result_type => 'optimization_results',
       :result_name => 'prepared_final_tarif_results',
       :user_id => user_id,
@@ -238,13 +242,14 @@ class Customers::FinalTarifResultsPresenter #ServiceHelper::FinalTarifResultsPre
     }, 'tarif_results')
   end
   
-  def prepared_tarif_detail_results
+  def prepared_tarif_detail_results(tarif_id)
     Customer::Stat.get_named_results({
+      :tarif_id => tarif_id,
       :result_type => 'optimization_results',
       :result_name => 'prepared_final_tarif_results',
       :user_id => user_id,
       :demo_result_id => demo_result_id
     }, 'tarif_detail_results')
   end
-  
+
 end

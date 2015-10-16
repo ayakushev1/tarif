@@ -60,11 +60,16 @@ class Customer::Stat < ActiveRecord::Base
     else
       "(result_key->'demo_result'->>'id')::integer is null"
     end
-
+    tarif_id_where_string = if model_init_data[:tarif_id]
+      "tarif_id = #{model_init_data[:tarif_id]}"
+    else
+      'true'
+    end
     result = where(:result_type => model_init_data[:result_type]).
     where(:result_name => model_init_data[:result_name]).
     where(demo_result_where_string).
-    where(:user_id => model_init_data[:user_id])
+    where(:user_id => model_init_data[:user_id]).
+    where(tarif_id_where_string)
 #    select("result as #{model_init_data[:result_name]}")
 #    raise(StandardError, result.to_sql)
 
