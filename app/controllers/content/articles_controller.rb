@@ -38,14 +38,14 @@ class Content::ArticlesController < ApplicationController
   
   def customer_service_set_tarif_id
     service_sets_index = customer_service_sets.model.index{|m| m['service_sets_id'] == session[:current_id]['service_sets_id']}
-    customer_service_sets.model[service_sets_index]['tarif'].to_i if customer_service_sets.model[service_sets_index] and customer_service_sets.model[service_sets_index]['tarif']
+    @customer_service_set_tarif_id ||= customer_service_sets.model[service_sets_index]['tarif'].to_i if customer_service_sets.model[service_sets_index] and customer_service_sets.model[service_sets_index]['tarif']
   end
   
   def customer_service_sets
     options = {:base_name => 'service_sets', :current_id_name => 'service_sets_id', :id_name => 'service_sets_id', :pagination_per_page => 12}
 #    return @customer_service_sets if @customer_service_sets
 #    @customer_service_sets = 
-    create_array_of_hashable(final_tarif_results_presenter.
+    @customer_service_sets ||= create_array_of_hashable(final_tarif_results_presenter.
       customer_service_sets_array((session_filtr_params(recommendation_select_params)['operator_ids'] || []) - ['']), options)
   end
   
