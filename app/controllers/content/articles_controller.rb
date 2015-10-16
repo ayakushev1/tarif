@@ -37,7 +37,7 @@ class Content::ArticlesController < ApplicationController
   end
   
   def customer_service_set_tarif_id
-    service_sets_index = customer_service_sets.model.index{|m| m['service_sets_id'] == session[:current_id]['service_sets_id']}
+    service_sets_index = (customer_service_sets.model.index{|m| m['service_sets_id'] == session[:current_id]['service_sets_id']} || 0)
     @customer_service_set_tarif_id ||= customer_service_sets.model[service_sets_index]['tarif'].to_i if customer_service_sets.model[service_sets_index] and customer_service_sets.model[service_sets_index]['tarif']
   end
   
