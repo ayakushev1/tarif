@@ -23,8 +23,13 @@ label_html = {:class => "control-label "}
 	  ],
       [
       	label(filtr_name, "dependency_parts", "Категория услуги", label_html),
-      	select(filtr_name, "dependency_parts", TarifClass.where('dependency is not Null').inject([]){ |array, q| array + q['dependency']['parts'] if q['dependency']['parts']}.uniq, 
+      	select(filtr_name, "dependency_parts", TarifClass.where('dependency is not Null').inject([]){ |array, q| array + q['dependency']['parts'] if (q['dependency'] and q['dependency']['parts'])}.uniq, 
 	  	{:include_blank => "dependency_parts", :selected => (s["dependency_parts"])}, input_html.merge({:multiple => true, :size => 10}) )
+	  ],
+      [
+      	label(filtr_name, "dependency_is_archived", "Архивный?", label_html),
+      	select(filtr_name, "dependency_is_archived", [['true', 'true'], ['false', 'false']], 
+	  	{:include_blank => "dependency_is_archived", :selected => (s["dependency_is_archived"])}, input_html )
 	  ],
     ] 
   end

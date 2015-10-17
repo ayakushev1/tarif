@@ -36,6 +36,7 @@ form_item.init do |fi|
 	  ['Тарифы с большим приоритетом', higher_tarif_priority], 
 	  ['Требуемые тарифы или опции', prerequisites], 
 	  ['Возможность использовать несколько раз', (tarif_class.dependency['multiple_use'] if tarif_class.dependency) ], 
+	  ['Является архивным?', ((tarif_class.dependency['is_archived'] || false) if tarif_class.dependency) ], 
 #	  ['Created', (tarif_class.created_at.to_formatted_s(:short) if  tarif_class.created_at) ], 
 #	  ['Updated', (tarif_class.updated_at.to_formatted_s(:short) if tarif_class.updated_at) ],
 #      [link_to('Edit', edit_tarif_class_path(tarif_class) ), link_to( 'Back', tarif_classes_path)],  

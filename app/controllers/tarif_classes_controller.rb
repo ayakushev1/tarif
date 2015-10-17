@@ -14,9 +14,21 @@ class TarifClassesController < ApplicationController
   def tarif_classes
 #    raise(StandardError, session[:filtr])
     filtr = session_filtr_params(tarif_class_filtr)
-#    raise(StandardError, filtr)
     category = (filtr.extract!('dependency_parts')['dependency_parts'] || []) - ['']
-    create_tableable(TarifClass.query_from_filtr(filtr).where("(dependency->>'parts')::jsonb @> '#{category}'::jsonb"))
+    is_archived = filtr.extract!('dependency_is_archived')['dependency_is_archived']
+    where_for_is_archived = case is_archived
+      when is_archived.blank?
+        "true"
+      when 'false' 
+        "(dependency->>'is_archived')::boolean = false or (dependency->>'is_archived') is null"
+      when 'true'
+        "(dependency->>'is_archived')::boolean = true"
+      end
+      
+#    raise(StandardError, [is_archived, sql])
+    create_tableable(TarifClass.query_from_filtr(filtr).
+      where("(dependency->>'parts')::jsonb @> '#{category}'::jsonb").
+      where(where_for_is_archived))
   end
 
   def price_lists_for_index
