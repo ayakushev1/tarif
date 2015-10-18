@@ -7,7 +7,7 @@
     :incompatibility => {},
     :general_priority => _gp_common_service,
     :other_tarif_priority => {:lower => [], :higher => []},
-    :prerequisites => [_bln_all_for_600_post, _bln_all_for_900_post, _bln_all_for_1200_post, _bln_all_for_2700_post, _bln_total_all_post],
+    :prerequisites => [_bln_all_for_600_post, _bln_all_for_900_post, _bln_all_for_1500_post, _bln_all_for_2700_post, _bln_total_all_post],
     :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},
     :multiple_use => false
   } } )

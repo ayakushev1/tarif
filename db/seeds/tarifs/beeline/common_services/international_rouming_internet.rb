@@ -7,7 +7,7 @@
     :incompatibility => {},
     :general_priority => _gp_common_service,
     :other_tarif_priority => {:lower => [], :higher => []},
-    :prerequisites => [_bln_all_for_150, _bln_all_for_390, _bln_all_for_600, _bln_all_for_900, _bln_all_for_1200, _bln_all_for_2700,
+    :prerequisites => [_bln_all_for_200, _bln_all_for_400, _bln_all_for_600, _bln_all_for_900, _bln_all_for_1500, _bln_all_for_2700,
                        _bln_go, _bln_welcome, _bln_mobile_pencioner, _bln_zero_doubts, _bln_co_communication
                        ],
     :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},

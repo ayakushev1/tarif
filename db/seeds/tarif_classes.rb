@@ -1,14 +1,14 @@
 TarifClass.delete_all
 #Билайн, частные, тарифы
-TarifClass.create(id: _bln_all_for_150, operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Всё за 150')
-TarifClass.create(id: _bln_all_for_390, operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Всё за 390')
+TarifClass.create(id: _bln_all_for_200, operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Всё за 200')
+TarifClass.create(id: _bln_all_for_400, operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Всё за 400')
 TarifClass.create(id: _bln_all_for_600, operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Всё за 600')
 TarifClass.create(id: _bln_all_for_900, operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Всё за 900')
-TarifClass.create(id: _bln_all_for_1200, operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Всё за 1200')
+TarifClass.create(id: _bln_all_for_1500, operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Всё за 1500')
 TarifClass.create(id: _bln_all_for_2700, operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Всё за 2700')
 TarifClass.create(id: _bln_all_for_600_post, operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Всё за 600 (постоплатный)')
 TarifClass.create(id: _bln_all_for_900_post, operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Всё за 900 (постоплатный)')
-TarifClass.create(id: _bln_all_for_1200_post, operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Всё за 1200 (постоплатный)')
+TarifClass.create(id: _bln_all_for_1500_post, operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Всё за 1500 (постоплатный)')
 TarifClass.create(id: _bln_all_for_2700_post, operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Всё за 2700 (постоплатный)')
 TarifClass.create(id: _bln_total_all_post, operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Совсем Всё (постоплатный)')
 TarifClass.create(id: _bln_go, operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Go!')

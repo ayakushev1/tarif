@@ -6,7 +6,7 @@
     :incompatibility => {:sms_options => [_bln_sms_without_borders, _bln_my_sms, _bln_my_sms_post]}, 
     :general_priority => _gp_tarif_option_without_limits,#_gp_tarif_option_with_limits,
     :other_tarif_priority => {:lower => [], :higher => []},
-    :prerequisites => [_bln_all_for_150, _bln_all_for_390, _bln_all_for_900, 
+    :prerequisites => [_bln_all_for_200, _bln_all_for_400, _bln_all_for_900, 
                        _bln_go, _bln_welcome, _bln_mobile_pencioner, _bln_zero_doubts, _bln_co_communication
                        ],
     :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},

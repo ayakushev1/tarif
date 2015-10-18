@@ -9,8 +9,8 @@
     :prerequisites => [],
     :forbidden_tarifs => {
       :to_switch_on => 
-        [_bln_all_for_150, _bln_all_for_390, _bln_all_for_600, _bln_all_for_900, _bln_all_for_1200, _bln_all_for_2700,
-         _bln_all_for_600_post, _bln_all_for_900_post, _bln_all_for_1200_post, _bln_all_for_2700_post, _bln_total_all_post,
+        [_bln_all_for_200, _bln_all_for_400, _bln_all_for_600, _bln_all_for_900, _bln_all_for_1500, _bln_all_for_2700,
+         _bln_all_for_600_post, _bln_all_for_900_post, _bln_all_for_1500_post, _bln_all_for_2700_post, _bln_total_all_post,
          _bln_go], 
        :to_serve => []},
     :multiple_use => false
