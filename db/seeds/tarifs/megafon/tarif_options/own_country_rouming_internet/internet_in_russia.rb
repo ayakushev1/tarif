@@ -4,7 +4,7 @@
   :features => {:http => 'http://moscow.megafon.ru/roaming/national/inet.html'},
   :dependency => {
     :incompatibility => {:mgf_internet_in_russia_1 => [_mgf_internet_in_russia, _mgf_internet_xl],
-      :mgf_internet_in_russia => [_mgf_internet_in_russia_for_specific_options, _mgf_internet_in_russia, _mgf_gigabite_to_road],
+      :mgf_internet_in_russia => [_mgf_be_as_home, _mgf_internet_in_russia_for_specific_options, _mgf_internet_in_russia, _mgf_gigabite_to_road],
       }, 
     :general_priority => _gp_tarif_option,
     :other_tarif_priority => {:lower => [], :higher => []},
@@ -22,8 +22,8 @@
 #  @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => _stf_fixed_price_if_used_in_1_day_duration, :price => 10.0})
 
 #Own country, Internet
-category = {:name => '_sctcg_mgf_own_country_rouming_internet', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _internet}
-  @tc.add_only_service_category_tarif_class(category)  
+#category = {:name => '_sctcg_mgf_own_country_rouming_internet', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _internet}
+#  @tc.add_only_service_category_tarif_class(category)  
 
 
 

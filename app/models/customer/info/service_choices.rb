@@ -86,7 +86,7 @@ class Customer::Info::ServiceChoices < ActiveType::Record[Customer::Info]
     {
       1023 => [800, 801, 802, 803, 804],
       1025 => [600, 601, 602, 603, 604, 605, 610, 611, 612, 613,620, 621, 622, 623, 624, 626],
-      1028 => [100, 101, 102, 103, 104, 105, 106, 107, 108, 109, 110, 112, 113],
+      1028 => [100, 101, 102, 103, 104, 105, 106, 107, 109, 110, 113], #108, 112,  
       1030 => [200, 201, 202, 203, 204, 205, 206, 207, 208, 210, 212, 213, 214],
     }
   end  
@@ -102,7 +102,7 @@ class Customer::Info::ServiceChoices < ActiveType::Record[Customer::Info]
 
   def self.tarif_options
     {
-      1023 => [840, 860, 880, 881, 882, 883],
+      1023 => tarif_options_by_type[1023].map{|t| t[1]}.flatten.compact,
       1025 => tarif_options_by_type[1025].map{|t| t[1]}.flatten.compact,
       1028 => tarif_options_by_type[1028].map{|t| t[1]}.flatten.compact,
       1030 => tarif_options_by_type[1030].map{|t| t[1]}.flatten.compact,
@@ -144,11 +144,11 @@ class Customer::Info::ServiceChoices < ActiveType::Record[Customer::Info]
           410, 411, 412, 413, #sms
           430, 431, 432, #internet
           ],
-        :country_rouming => [440, 441, 442, 443, 444, 445],  
+        :country_rouming => [440, 441, 442, 443, 444, 445, 493],  
         :mms => [450, 451, 452],  
         :sms => [455, 456, 457, 458, 459, 460, 461, 462, 463, 464, 465, 466],  
-        :calls => [470, 471, 472, 473],  
-        :internet => [475, 476, 477, 478, 479, 480, 481, 482, 484, 485, 486, 487],  
+        :calls => [470, 471, 472, 473, 489, 490, 491, 492],  
+        :internet => [475, 476, 477, 478, 479, 480, 481, 482, 484, 485, 486, 487, 488],  
       },
       1030 => {
         :international_rouming => [288, 289, 290, 291, 292, 347],

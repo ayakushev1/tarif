@@ -3,7 +3,7 @@
   :id => _mgf_travel_without_worry, :name => 'Путешествуй без забот', :operator_id => _megafon, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://moscow.megafon.ru/roaming/national/tww.html'},
   :dependency => {
-    :incompatibility => {:intra_country_rouming => [_mgf_all_russia, _mgf_travel_without_worry, _mgf_everywhere_moscow_in_central_region]}, 
+    :incompatibility => {:intra_country_rouming => [_mgf_be_as_home, _mgf_all_russia, _mgf_travel_without_worry, _mgf_everywhere_moscow_in_central_region]}, 
     :general_priority => _gp_tarif_option,
     :other_tarif_priority => {:lower => [], :higher => []},
     :prerequisites => [],
@@ -54,7 +54,7 @@
   @tc.add_grouped_service_category_tarif_class(category, scg_mgf_travel_without_worry_calls[:id])
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 3.0})
 
-#Own country, sms, outcoming, to own country, to all operators
+#Own country, sms, outcoming, to all own country regions, to all operators
   category = {:name => '_sctcg_own_country_sms_to_all_own_country_regions', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_all_own_country_regions}
   @tc.add_grouped_service_category_tarif_class(category, scg_mgf_travel_without_worry_sms[:id])
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 3.9})

@@ -9,7 +9,7 @@
     :general_priority => _gp_tarif_option_without_limits,#_gp_tarif_option_with_limits,
     :other_tarif_priority => {:lower => [], :higher => []},
     :prerequisites => [],
-    :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},
+    :forbidden_tarifs => {:to_switch_on => [_mgf_all_included_xs, _mgf_all_included_s, _mgf_all_included_l, _mgf_all_included_m, _mgf_all_included_vip], :to_serve => []},
     :multiple_use => false
   } } )
 
@@ -21,7 +21,7 @@ scg_mgf_internet_l = @tc.add_service_category_group(
     {:name => "price for scg_mgf_internet_l"}, 
     {:calculation_order => 0, :price => 890.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_mgf_internet_l', :description => '', 
      :formula => {
-       :window_condition => "(15000.0 >= sum_volume)", :window_over => 'month',
+       :window_condition => "(18000.0 >= sum_volume)", :window_over => 'month',
        :stat_params => {:sum_volume => "sum((description->>'volume')::float)"},
        :method => "case when sum_volume > 0.0 then price_formulas.price else 0.0 end",
        
@@ -29,9 +29,9 @@ scg_mgf_internet_l = @tc.add_service_category_group(
          :group_by => 'month',
          :stat_params => {
            :sum_volume => "sum((description->>'volume')::float)",
-           :count_of_usage_of_1000 => "ceil((sum((description->>'volume')::float) - 15000.0) / 1000.0)",
-           :count_of_usage_of_2500 => "ceil((sum((description->>'volume')::float) - 15000.0) / 2500.0)"},
-       :method => "price_formulas.price + case when count_of_usage_of_1000 > 2.0 then count_of_usage_of_2500 * 300.0 when count_of_usage_of_1000 > 0 then count_of_usage_of_1000 * 150.0 else 0 end",
+           :count_of_usage_of_1000 => "ceil((sum((description->>'volume')::float) - 18000.0) / 1000.0)",
+           :count_of_usage_of_5000 => "ceil((sum((description->>'volume')::float) - 18000.0) / 5000.0)"},
+       :method => "price_formulas.price + case when count_of_usage_of_1000 > 2.0 then count_of_usage_of_5000 * 400.0 when count_of_usage_of_1000 > 0 then count_of_usage_of_1000 * 150.0 else 0 end",
        }
      }, 
     } )

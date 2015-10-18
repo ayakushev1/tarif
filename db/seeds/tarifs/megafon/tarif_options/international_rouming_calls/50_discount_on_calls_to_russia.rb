@@ -5,12 +5,16 @@
   :features => {:http => 'http://moscow.megafon.ru/roaming/world/50disc.html'},
   :dependency => {
     :incompatibility => {
+      :international_calls_options => [
+        _mgf_all_world, _mgf_minute_packs_25_europe, _mgf_minute_packs_50_europe, _mgf_minute_packs_25_world, _mgf_minute_packs_50_world, 
+        _mgf_30_minutes_all_world, _mgf_far_countries, _mgf_option_around_world, _mgf_100_minutes_europe],
       :discount_on_calls_to_russia => [_mgf_50_discount_on_calls_to_russia, _mgf_25_discount_on_calls_to_russia_and_all_incoming],
-      :international_calls_options_with_50_discount_out => [_mgf_50_discount_on_calls_to_russia, _mgf_all_world, _mgf_30_minutes_all_world, _mgf_far_countries, _mgf_option_around_world, _mgf_100_minutes_europe]}, 
+      :international_calls_options_with_50_discount_out => [_mgf_minute_packs_25_europe, _mgf_minute_packs_50_europe, _mgf_minute_packs_25_world, _mgf_minute_packs_50_world, _mgf_50_discount_on_calls_to_russia, _mgf_all_world, _mgf_30_minutes_all_world, _mgf_far_countries, _mgf_option_around_world, _mgf_100_minutes_europe]}, 
     :general_priority => _gp_tarif_option,
     :other_tarif_priority => {:lower => [], :higher => []},
     :prerequisites => [],
     :forbidden_tarifs => {:to_switch_on => [_mgf_around_world], :to_serve => []},
+    :is_archived => true,
     :multiple_use => false
   } } )
 

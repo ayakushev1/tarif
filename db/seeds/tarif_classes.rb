@@ -139,6 +139,13 @@ TarifClass.create(id: _mgf_bit_mega_pro_150, operator_id: 1028, privacy_id: 2, s
 TarifClass.create(id: _mgf_bit_mega_pro_250, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'БИТ MegaPRO 250')
 TarifClass.create(id: _mgf_bit_mega_pro_500, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'БИТ MegaPRO 500')
 
+TarifClass.create(id: _mgf_internet_tablet, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Интернет Планшет')
+TarifClass.create(id: _mgf_minute_packs_25_europe, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Пакеты минут 25 Европа и СНГ')
+TarifClass.create(id: _mgf_minute_packs_25_world, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Пакеты минут 25 Мир')
+TarifClass.create(id: _mgf_minute_packs_50_europe, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Пакеты минут 50 Европа и СНГ')
+TarifClass.create(id: _mgf_minute_packs_50_world, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Пакеты минут 50 Мир')
+TarifClass.create(id: _mgf_be_as_home, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Будь как дома')
+
 #TarifClass.create(id: _mgf_prodli_skorost, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Продли скорость')
 #TarifClass.create(id: _mgf_prodli_skorost_lite, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Продли скорость Лайт')
 #TarifClass.create(id: _mgf_prodli_skorost_mega, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Продли скорость Мега')

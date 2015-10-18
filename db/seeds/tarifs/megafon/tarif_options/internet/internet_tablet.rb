@@ -1,41 +1,42 @@
 @tc = TarifCreator.new(_megafon)
 @tc.create_tarif_class({
-  :id => _mgf_bit_mega_pro_500, :name => 'БИТ MegaPRO 500', :operator_id => _megafon, :privacy_id => _person, :standard_service_id => _special_service,
-  :features => {:http => 'http://moscow.megafon.ru/internet/options/bit_megafonpro.html'},
+  :id => _mgf_internet_tablet, :name => 'Интернет Планшет', :operator_id => _megafon, :privacy_id => _person, :standard_service_id => _special_service,
+  :features => {:http => 'http://moscow.megafon.ru/internet/options/internet_tablet.html'},
   :dependency => {
-    :incompatibility => {:mgf_internet_24 => [_mgf_internet_24, _mgf_internet_xs, _mgf_internet_s, _mgf_internet_m, _mgf_internet_l, _mgf_internet_xl, 
-      _mgf_internet_24_pro, _mgf_bit_pro, _mgf_bit_mega_pro_150, _mgf_bit_mega_pro_250, _mgf_bit_mega_pro_500],
-      }, 
+    :incompatibility => {:mgf_internet_tablet => [_mgf_internet_tablet, _mgf_internet_xs, _mgf_internet_s, _mgf_internet_m, _mgf_internet_l, _mgf_internet_xl]}, 
     :general_priority => _gp_tarif_option_without_limits,#_gp_tarif_option_with_limits,
     :other_tarif_priority => {:lower => [], :higher => []},
-    :prerequisites => [_mgf_all_included_xs, _mgf_all_included_s, _mgf_all_included_m, _mgf_all_included_l, _mgf_all_included_vip, 
-      _mgf_sub_moscow, _mgf_around_world, _mgf_international, _mgf_city_connection, ],
+    :prerequisites => [_mgf_megafon_online],
     :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},
-    :is_archived => true,
     :multiple_use => false
   } } )
-  
 
+#Переход на тариф
+  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item, :price => 100.0})  
+
+#Ежемесячная плата
+  @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => _stf_price_by_1_month, :price => 0.0})
+
+  
+ 
 #Добавление новых service_category_group
 #internet included in tarif
-scg_mgf_bit_mega_pro_500 = @tc.add_service_category_group(
-    {:name => 'scg_mgf_bit_mega_pro_500' }, 
-    {:name => "price for scg_mgf_bit_mega_pro_500"}, 
-    {:calculation_order => 0, :price => 29.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_mgf_bit_mega_pro_500', :description => '', 
+scg_mgf_internet_tablet = @tc.add_service_category_group(
+    {:name => 'scg_mgf_internet_tablet' }, 
+    {:name => "price for scg_mgf_internet_tablet"}, 
+    {:calculation_order => 0, :price => 30.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_mgf_internet_tablet', :description => '', 
      :formula => {
-       :window_condition => "(500.0 >= sum_volume)", :window_over => 'day',
-       :stat_params => {:sum_volume => "sum((description->>'volume')::float)"},
-       :method => "case when sum_volume > 0.0 then price_formulas.price else 0.0 end",
+       :window_condition => "(320.0 >= sum_volume)", :window_over => 'day',
+       :stat_params => {
+         :sum_volume => "sum((description->>'volume')::float)",
+         :volume_more_than_20 => "(sum((description->>'volume')::float) - 20.0)"},
+       :method => "case when volume_more_than_20 > 0.0 then price_formulas.price else 0.0 end",
      }, 
     } )
 
-#Own and home regions, Internet
-  category = {:name => '_sctcg_own_home_regions_internet', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _internet}
-  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_bit_mega_pro_500[:id])
-
-#Own country, Internet
-  category = {:name => 'own_country_internet', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _internet}
-  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_bit_mega_pro_500[:id])
+#_all_russia_rouming, Internet
+  category = {:name => '_sctcg_own_home_regions_internet', :service_category_rouming_id => _all_russia_rouming, :service_category_calls_id => _internet}
+  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_internet_tablet[:id])
 
 
 @tc.add_tarif_class_categories

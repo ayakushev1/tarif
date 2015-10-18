@@ -30,8 +30,8 @@ scg_mgf_internet_s = @tc.add_service_category_group(
          :stat_params => {
            :sum_volume => "sum((description->>'volume')::float)",
            :count_of_usage_of_1000 => "ceil((sum((description->>'volume')::float) - 3000.0) / 1000.0)",
-           :count_of_usage_of_2500 => "ceil((sum((description->>'volume')::float) - 3000.0) / 2500.0)"},
-       :method => "price_formulas.price + case when count_of_usage_of_1000 > 2.0 then count_of_usage_of_2500 * 300.0 when count_of_usage_of_1000 > 0 then count_of_usage_of_1000 * 150.0 else 0 end",
+           :count_of_usage_of_5000 => "ceil((sum((description->>'volume')::float) - 3000.0) / 5000.0)"},
+       :method => "price_formulas.price + case when count_of_usage_of_1000 > 2.0 then count_of_usage_of_5000 * 400.0 when count_of_usage_of_1000 > 0 then count_of_usage_of_1000 * 150.0 else 0 end",
        }
      }, 
     } )

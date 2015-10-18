@@ -93,7 +93,16 @@ def access_methods_to_constant_operator_country_groups
 
 #megafone
 
- _mgf_europe_international_rouming = _mts_europe_countries + [_armenia, _belarus, _moldova, _ukraiun, _south_ossetia] - [_israel]
+  _mgf_europe_countries = [
+    _austria,  _albania, _andorra, _belgium, _bulgaria, _bosnia_and_herzegovina, _vatican, _great_britain, _hungary, _germany, _gibraltar,
+    _greenland, _denmark, _greece, _ireland, _israel, _iceland, _spain, _italy, _cyprus, _latvia,
+    _liechtenstein, _lithuania, _luxembourg, _macedonia, _malta, _monaco, _netherlands, _norway, _poland, _portugal,
+    _romania, _san_marino, _serbia, _slovakia, _slovenia,  _turkey, _the_faroe_islands, _finland, _france, _croatia,
+    _montenegro, _czech_republic, _switzerland, _sweden, _estonia,
+    _gersi, _men, _gernsi, 
+    ]
+    
+ _mgf_europe_international_rouming = _mgf_europe_countries + [_armenia, _belarus, _moldova, _ukraiun, _south_ossetia] - [_israel]
  _mgf_sic_international_rouming = _mts_sic_countries - [_armenia, _belarus, _moldova, _ukraiun, _south_ossetia]
  
  _mgf_extended_countries_international_rouming = [_bagam_islands, _belis, _benin, _botsvana, _bruney, _burundy, _butan, 
@@ -104,7 +113,7 @@ def access_methods_to_constant_operator_country_groups
    _center_africa_republic, _chad, _chily, _ekvador, _ekvator_gvinea
    ]
 
- _mgf_option_around_world_2 = [_egypt, _tailand, _uae, _israel, _vietnam, _australia, _japan, _indonezia]
+ _mgf_option_around_world_2 = [_vietnam, _honkong, _egypt, _israel, _north_korea, _south_korea, _tailand, _uae, _puerto_riko, _usa, _japan]
  _mgf_option_around_world_1 = _mts_europe_countries + _mts_sic_countries - _mgf_option_around_world_2
  _mgf_option_around_world_3 = _world_countries_without_russia - _mgf_option_around_world_1 - _mgf_option_around_world_2
  _mgf_other_countries_international_rouming = _world_countries_without_russia - _mgf_option_around_world_1 - _mgf_option_around_world_2 - _mgf_extended_countries_international_rouming
@@ -138,10 +147,10 @@ rescue
   raise(StandardError, [_asia_countries, _mts_europe_countries, [_turkey, _israel, _usa, _canada], _mgf_country_group_2])
 end
   
-  _mgf_warm_welcome_plus_1 = [_tajikistan]
-  _mgf_warm_welcome_plus_2 = [_ukraiun]
-  _mgf_warm_welcome_plus_3 = [_abkhazia, _georgia, _kazakhstan, _kyrgyzstan, _turkmenistan, _uzbekistan, _south_ossetia]
-  _mgf_warm_welcome_plus_4 = [_armenia]
+  _mgf_warm_welcome_plus_1 = [_tajikistan, _ukraiun, _armenia, _kazakhstan, _kyrgyzstan, _turkmenistan]
+  _mgf_warm_welcome_plus_2 = [_abkhazia, _south_ossetia]
+  _mgf_warm_welcome_plus_3 = [_georgia, ]
+  _mgf_warm_welcome_plus_4 = [_uzbekistan, ]
   _mgf_warm_welcome_plus_5 = [_azerbaijan, _belarus]
   _mgf_warm_welcome_plus_6 = [_moldova]
   
@@ -154,7 +163,7 @@ end
 
   _mgf_around_world_countries_1 = _mts_europe_countries + [_turkey]
   _mgf_around_world_countries_2 = _mts_sic_countries + [_abkhazia, _georgia, _south_ossetia]
-  _mgf_around_world_countries_3 = [_egypt, _tailand, _uae, _israel, _vietnam, _australia, _japan, _indonezia, _palestina]
+  _mgf_around_world_countries_3 = [_vietnam, _honkong, _egypt, _israel, _north_korea, _south_korea, _tailand, _uae, _puerto_riko, _usa, _japan]
   _mgf_around_world_countries_4 = _world_countries_without_russia - _mgf_around_world_countries_1 - _mgf_around_world_countries_2 - _mgf_around_world_countries_3
   _mgf_around_world_countries_5 = [_austria, _armenia, _belarus, _great_britain, _germany, _greece, _egypt, _israel, _ireland,
     _spain, _italy, _lithuania, _latvia, _liechtenstein, _uae, _portugal, _romania, _turkey, _ukraiun, _finland, 

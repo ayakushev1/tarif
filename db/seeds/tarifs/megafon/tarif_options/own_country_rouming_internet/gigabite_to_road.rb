@@ -4,12 +4,13 @@
   :features => {:http => 'http://moscow.megafon.ru/roaming/national/gbpack.html'},
   :dependency => {
     :incompatibility => {
-      :mgf_internet_in_russia => [_mgf_internet_in_russia_for_specific_options, _mgf_internet_in_russia, _mgf_gigabite_to_road],
+      :mgf_internet_in_russia => [_mgf_be_as_home, _mgf_internet_in_russia_for_specific_options, _mgf_internet_in_russia, _mgf_gigabite_to_road],
+      :mgf_internet_s_xl => [_mgf_internet_xs, _mgf_internet_s, _mgf_internet_m, _mgf_internet_l, _mgf_internet_xl],
     }, 
     :general_priority => _gp_tarif_option,
     :other_tarif_priority => {:lower => [], :higher => []},
     :prerequisites => [],
-    :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},
+    :forbidden_tarifs => {:to_switch_on => [_mgf_all_included_xs, _mgf_all_included_s, _mgf_all_included_l, _mgf_all_included_m, _mgf_all_included_vip], :to_serve => []},
     :multiple_use => true
   } } )
 
@@ -19,8 +20,12 @@ category = {:name => '_sctcg_mgf_own_country_rouming_internet', :service_categor
   @tc.add_one_service_category_tarif_class(category, {}, 
     {:calculation_order => 0, :price => 300.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_mgf_own_country_rouming_internet', :description => '', 
      :formula => {
+       :window_condition => "(1000000.0 >= sum_volume)", :window_over => 'month',
+         :stat_params => {:tarif_option_count_of_usage => "ceil(sum((description->>'volume')::float) / 1000.0)", :sum_volume => "sum((description->>'volume')::float)"},
+         :method => "price_formulas.price * tarif_option_count_of_usage", 
+       
        :multiple_use_of_tarif_option => {
-         :group_by => 'day',
+         :group_by => 'month',
          :stat_params => {:tarif_option_count_of_usage => "ceil(sum((description->>'volume')::float) / 1000.0)", :sum_volume => "sum((description->>'volume')::float)"},
          :method => "price_formulas.price * tarif_option_count_of_usage", 
        }

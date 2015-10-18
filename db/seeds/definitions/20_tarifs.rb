@@ -83,6 +83,7 @@ _mgf_own_country_rouming = 174; _mgf_international_rouming = 177; _mgf_intra_cou
 #international rouming, calls
 _mgf_all_world = 400; _mgf_30_minutes_all_world = 401; _mgf_far_countries = 402; _mgf_option_around_world = 403; _mgf_100_minutes_europe = 404;
 _mgf_25_discount_on_calls_to_russia_and_all_incoming = 405; _mgf_50_discount_on_calls_to_russia = 406; _mgf_50_discount_on_all_incoming_calls = 407;
+_mgf_minute_packs_25_europe = 489; _mgf_minute_packs_50_europe = 490; _mgf_minute_packs_25_world = 491; _mgf_minute_packs_50_world = 492  #new from 11.10.2015
 
 #international rouming, sms
 _mgf_50_sms_all_world = 410; _mgf_100_sms_all_world = 411; _mgf_50_sms_europe = 412; _mgf_100_sms_europe = 413
@@ -93,6 +94,7 @@ _mgf_internet_abroad_10 = 430; _mgf_internet_abroad_30 = 431; _mgf_vacation_onli
 #own_country rouming, calls
 _mgf_all_russia = 440; _mgf_travel_without_worry = 441; _mgf_everywhere_moscow_in_central_region = 442; 
 _mgf_internet_in_russia = 443; _mgf_internet_in_russia_for_specific_options = 444; _mgf_gigabite_to_road = 445;
+_mgf_be_as_home = 493  #new from 11.10.2015
 
 #mms
 _mgf_mms_24 = 450; _mgf_paket_mms_10 = 451; _mgf_paket_mms_50 = 452;
@@ -115,7 +117,8 @@ _mgf_unlimited_communication = 470; _mgf_call_to_russia = 471; _mgf_call_to_all_
 _mgf_internet_extra_1_gb = 475;
 _mgf_internet_xs = 476; _mgf_internet_s = 477; _mgf_internet_m = 478; _mgf_internet_l = 479; _mgf_internet_xl = 480;
 _mgf_internet_24 = 481; _mgf_internet_24_pro = 482; 
-_mgf_bit_pro = 484; _mgf_bit_mega_pro_150 = 485; _mgf_bit_mega_pro_250 = 486; _mgf_bit_mega_pro_500 = 487;  
+_mgf_bit_pro = 484; _mgf_bit_mega_pro_150 = 485; _mgf_bit_mega_pro_250 = 486; _mgf_bit_mega_pro_500 = 487;
+_mgf_internet_tablet = 488;  #new from 11.10.2015
  
 
 #beeline

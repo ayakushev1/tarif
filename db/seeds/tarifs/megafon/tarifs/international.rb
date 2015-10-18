@@ -8,6 +8,7 @@
     :other_tarif_priority => {:lower => [], :higher => []},
     :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},
     :prerequisites => [],
+    :is_archived => true,
     :multiple_use => false
   } } )
 

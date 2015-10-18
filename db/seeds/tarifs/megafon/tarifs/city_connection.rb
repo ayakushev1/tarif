@@ -8,6 +8,7 @@
     :other_tarif_priority => {:lower => [], :higher => []},
     :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},
     :prerequisites => [],
+    :is_archived => true,
     :multiple_use => false
   } } )
   
@@ -84,16 +85,12 @@ category = {:name => '_sctcg_own_home_regions_calls_incoming', :service_category
 
 #Central regions RF except for Own and home regions, Calls, Outcoming, to_own_and_home_region
 category = {:name => '_sctcg_own_home_regions_calls_to_own_home_regions', :service_category_rouming_id => _sc_mgf_cenral_regions_not_own_and_home_region, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions}
-  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_city_connectioncalls[:id],
-    :tarif_set_must_include_tarif_options => [_mgf_everywhere_moscow_in_central_region] )  
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 1.0},
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 1.0},
     :tarif_set_must_include_tarif_options => [_mgf_everywhere_moscow_in_central_region] )  
 
 #Central regions RF except for Own and home regions, Calls, Outcoming, to_own_country
 category = {:name => '_sctcg_own_home_regions_calls_to_own_country', :service_category_rouming_id => _sc_mgf_cenral_regions_not_own_and_home_region, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country}
-  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_city_connectioncalls[:id],
-    :tarif_set_must_include_tarif_options => [_mgf_everywhere_moscow_in_central_region] )  
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 1.0 },
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 1.0 },
     :tarif_set_must_include_tarif_options => [_mgf_everywhere_moscow_in_central_region] )  
 
 #Central regions RF except for Own and home regions, sms, incoming

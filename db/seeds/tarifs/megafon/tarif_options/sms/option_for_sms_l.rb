@@ -14,15 +14,36 @@
     :multiple_use => false
   } } )
 
+  #sms included in tarif
+  scg_mgf_option_for_sms_l_sms = @tc.add_service_category_group(
+    {:name => 'scg_mgf_option_for_sms_l_sms' }, 
+    {:name => "price for scg_mgf_option_for_sms_l_sms"}, 
+    {:calculation_order => 0, :standard_formula_id => _stf_zero_count_volume_item, 
+      :formula => {:window_condition => "(600 >= count_volume)", :window_over => 'month'}, :price => 0.0, :description => '' }
+    )
+
+#Подключение услуги
+  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item, :price => 300.0})
+
 #Own and home regions, sms, to_own_and_home_regions
 category = {:name => '_sctcg_own_home_regions_sms_to_own_and_home_regions', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_own_and_home_regions}
-  @tc.add_one_service_category_tarif_class(category, {},
-    {:calculation_order => 0, :price => 300.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _item, :description => '', 
-     :formula => {
-       :window_condition => "(600 >= count_volume)", :window_over => 'month',
-       :stat_params => {:count_volume => "count(description->>'volume')"},
-       :method => "case when count_volume > 0.0 then price_formulas.price else 0.0 end",
-   } } )
+  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_option_for_sms_l_sms[:id])
+
+
+#Tarif option 'Будь как дома'
+#Другие категории опции должны иметь мешьший приоритет, или не пересекаться с опцией
+#Подключение услуги
+  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item, :price => 30.0},
+    :tarif_set_must_include_tarif_options => [_mgf_be_as_home] )  
+
+#Ежедневная плата
+  @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => _stf_fixed_price_if_used_in_1_day_duration, :price => 15.0},
+    :tarif_set_must_include_tarif_options => [_mgf_be_as_home] )  
+
+#Own country, sms, to_own_and_home_regions
+category = {:name => '_sctcg_own_country_sms_to_own_and_home_regions', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_own_and_home_regions}
+  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_option_for_sms_l_sms[:id], :tarif_set_must_include_tarif_options => [_mgf_be_as_home] )  
+
 
 
 @tc.add_tarif_class_categories

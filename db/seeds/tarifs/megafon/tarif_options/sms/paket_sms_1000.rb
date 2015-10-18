@@ -12,6 +12,7 @@
     :prerequisites => [_mgf_all_included_xs, _mgf_all_included_s, _mgf_all_included_l, _mgf_all_included_m, _mgf_all_included_vip, 
       _mgf_go_to_zero, _mgf_sub_moscow, _mgf_around_world, _mgf_all_simple, _mgf_warm_welcome, _mgf_go_to_zero, _mgf_city_connection],
     :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},
+    :is_archived => true,
     :multiple_use => true
   } } )
 

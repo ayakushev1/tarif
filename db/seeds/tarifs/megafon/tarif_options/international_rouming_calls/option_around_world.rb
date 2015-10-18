@@ -4,7 +4,10 @@
   :id => _mgf_option_around_world, :name => 'опция Вокруг света', :operator_id => _megafon, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://moscow.megafon.ru/roaming/world/aworld.html'},
   :dependency => {
-    :incompatibility => {:international_calls_options => [_mgf_all_world, _mgf_30_minutes_all_world, _mgf_far_countries, _mgf_option_around_world, _mgf_100_minutes_europe]}, 
+    :incompatibility => {
+      :international_calls_options => [
+        _mgf_all_world, _mgf_minute_packs_25_europe, _mgf_minute_packs_50_europe, _mgf_minute_packs_25_world, _mgf_minute_packs_50_world, 
+        _mgf_30_minutes_all_world, _mgf_far_countries, _mgf_option_around_world, _mgf_100_minutes_europe]}, 
     :general_priority => _gp_tarif_option,
     :other_tarif_priority => {:lower => [], :higher => []},
     :prerequisites => [],
@@ -21,53 +24,53 @@
 
 #Страны Европы и СНГ, Турция, Абхазия, Южная Осетия, calls, incoming
 category = {:name => '_sctcg_mgf_option_around_world_1_calls_incoming', :service_category_rouming_id => _sc_mgf_rouming_in_option_around_world_1, :service_category_calls_id => _calls_in}
-  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 6.0})  
+  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 13.0})  
 
 #Страны Европы и СНГ, Турция, Абхазия, Южная Осетия, calls, outcoming, to Russia
 category = {:name => '_sctcg_mgf_option_around_world_1_calls_to_russia', :service_category_rouming_id => _sc_mgf_rouming_in_option_around_world_1, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_russia}
-  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 6.0})  
+  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 13.0})  
 
 #Страны Европы и СНГ, Турция, Абхазия, Южная Осетия, calls, outcoming, to rouming country
 category = {:name => '_sctcg_mgf_option_around_world_1_calls_to_rouming_country', :service_category_rouming_id => _sc_mgf_rouming_in_option_around_world_1, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_rouming_country}
-  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 6.0})  
+  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 13.0})  
 
 #Страны Европы и СНГ, Турция, Абхазия, Южная Осетия, sms, outcoming
 category = {:name => '_sctcg_mgf_option_around_world_1_sms_outcoming', :service_category_rouming_id => _sc_mgf_rouming_in_option_around_world_1, :service_category_calls_id => _sms_out}
-  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_count_volume_item, :price => 6.0})  
+  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_count_volume_item, :price => 11.0})  
 
 
-#Египет, Таиланд, ОАЭ, Израиль, Вьетнам, Австралия, Япония, Индонезия, calls, incoming
+#Виргинские о-ва (США), Вьетнам, Гонконг, Египет, Израиль, Корея, Корея Южная, ОАЭ, Пуэрто-Рико, США, Таиланд, Япония, calls, incoming
 category = {:name => '_sctcg_mgf_option_around_world_2_calls_incoming', :service_category_rouming_id => _sc_mgf_rouming_in_option_around_world_2, :service_category_calls_id => _calls_in}
-  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 9.0})  
+  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 19.0})  
 
-#Египет, Таиланд, ОАЭ, Израиль, Вьетнам, Австралия, Япония, Индонезия, calls, outcoming, to Russia
+#Виргинские о-ва (США), Вьетнам, Гонконг, Египет, Израиль, Корея, Корея Южная, ОАЭ, Пуэрто-Рико, США, Таиланд, Япония, calls, outcoming, to Russia
 category = {:name => '_sctcg_mgf_option_around_world_2_calls_to_russia', :service_category_rouming_id => _sc_mgf_rouming_in_option_around_world_2, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_russia}
-  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 9.0})  
+  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 19.0})  
 
-#Египет, Таиланд, ОАЭ, Израиль, Вьетнам, Австралия, Япония, Индонезия, calls, outcoming, to rouming country
+#Виргинские о-ва (США), Вьетнам, Гонконг, Египет, Израиль, Корея, Корея Южная, ОАЭ, Пуэрто-Рико, США, Таиланд, Япония, calls, outcoming, to rouming country
 category = {:name => '_sctcg_mgf_option_around_world_2_calls_to_rouming_country', :service_category_rouming_id => _sc_mgf_rouming_in_option_around_world_2, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_rouming_country}
-  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 9.0})  
+  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 19.0})  
 
-#Египет, Таиланд, ОАЭ, Израиль, Вьетнам, Австралия, Япония, Индонезия, sms, incoming
+#Виргинские о-ва (США), Вьетнам, Гонконг, Египет, Израиль, Корея, Корея Южная, ОАЭ, Пуэрто-Рико, США, Таиланд, Япония, sms, incoming
 category = {:name => '_sctcg_mgf_option_around_world_2_sms_outcoming', :service_category_rouming_id => _sc_mgf_rouming_in_option_around_world_2, :service_category_calls_id => _sms_out}
-  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_count_volume_item, :price => 9.0})  
+  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_count_volume_item, :price => 14.0})  
 
 
-#США, Канада, Куба, Тунис, Мексика и другие страны, calls, incoming
+#Китай и остальные страны, calls, incoming
 category = {:name => '_sctcg_mgf_option_around_world_3_calls_incoming', :service_category_rouming_id => _sc_mgf_rouming_in_option_around_world_3, :service_category_calls_id => _calls_in}
-  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 36.0})  
+  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 43.0})  
 
-#США, Канада, Куба, Тунис, Мексика и другие страны, calls, outcoming, to Russia
+#Китай и остальные страны, calls, outcoming, to Russia
 category = {:name => '_sctcg_mgf_option_around_world_3_calls_to_russia', :service_category_rouming_id => _sc_mgf_rouming_in_option_around_world_3, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_russia}
-  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 36.0})  
+  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 43.0})  
 
-#США, Канада, Куба, Тунис, Мексика и другие страны, calls, outcoming, to rouming country
+#Китай и остальные страны, calls, outcoming, to rouming country
 category = {:name => '_sctcg_mgf_option_around_world_3_calls_to_rouming_country', :service_category_rouming_id => _sc_mgf_rouming_in_option_around_world_3, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_rouming_country}
-  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 36.0})  
+  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 43.0})  
 
-#США, Канада, Куба, Тунис, Мексика и другие страны, sms, outcoming
+#Китай и остальные страны, sms, outcoming
 category = {:name => '_sctcg_mgf_option_around_world_3_sms_outcoming', :service_category_rouming_id => _sc_mgf_rouming_in_option_around_world_3, :service_category_calls_id => _sms_out}
-  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_count_volume_item, :price => 16.0})  
+  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_count_volume_item, :price => 14.0})  
 
 
 @tc.add_tarif_class_categories
