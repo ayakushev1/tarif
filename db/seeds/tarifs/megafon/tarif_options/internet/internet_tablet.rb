@@ -29,7 +29,7 @@ scg_mgf_internet_tablet = @tc.add_service_category_group(
        :window_condition => "(320.0 >= sum_volume)", :window_over => 'day',
        :stat_params => {
          :sum_volume => "sum((description->>'volume')::float)",
-         :volume_more_than_20 => "(sum((description->>'volume')::float) - 20.0)"},
+         :volume_more_than_20 => "sum((description->>'volume')::float - 20.0)"},
        :method => "case when volume_more_than_20 > 0.0 then price_formulas.price else 0.0 end",
      }, 
     } )
