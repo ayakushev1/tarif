@@ -1,4 +1,5 @@
 class TarifOptimization::TarifOptimizationSqlBuilder
+  include TarifOptimization::TarifOptimizationSqlBuilder2
   attr_reader :tarif_optimizator, :performance_checker, :options, :user_id, :accounting_period
 
   def initialize(tarif_optimizator, options = {})
@@ -114,12 +115,20 @@ class TarifOptimization::TarifOptimizationSqlBuilder
     result = service_categories_cost_sql_from_service_category_groups(service_id, set_id, price_formula_order, part)
     result += service_categories_cost_sql_from_service_categories(service_id, set_id, price_formula_order, part)
     sql = result.compact.join(' union ')
-    sql = "with united_service_categories_cost_sql as (#{sql} ) select *, all_stat::json as all_stat from united_service_categories_cost_sql" unless sql.blank?
+    sql = "with base_stat_by_part as (#{calculate_base_stat_by_part_sql(part)}), \ 
+      united_service_categories_cost_sql as (#{sql} ) select *, all_stat::json as all_stat from united_service_categories_cost_sql" unless sql.blank?
     
 #    raise(StandardError, sql) if service_id == 330 and part == 'periodic'
 
     check_sql(sql, service_id, set_id, price_formula_order)
     sql
+  end
+  
+  def calculate_base_stat_by_part_sql(part)
+    result = Customer::Call.where(calculation_scope_where_hash(part)).
+      where(:user_id => user_id).where("description->>'accounting_period' = '#{accounting_period}'").to_sql
+#    raise(StandardError, calculation_scope_where_hash(part))   
+    result
   end
   
   def service_categories_cost_sql_from_service_category_groups(service_id, set_id = nil, price_formula_order, part)
@@ -219,10 +228,12 @@ class TarifOptimization::TarifOptimizationSqlBuilder
   end
   
   def calculate_base_stat_sql(service_category_tarif_class_ids, part)
-    result = Customer::Call.where(calculation_scope_where_hash(part)).
-      where(:user_id => user_id).where("description->>'accounting_period' = '#{accounting_period}'").
-      where(query_constructor.joined_tarif_classes_category_where_hash(service_category_tarif_class_ids))
-#    raise(StandardError, [accounting_period, result.to_sql])   
+#    result = Customer::Call.where(calculation_scope_where_hash(part)).
+#      where(:user_id => user_id).where("description->>'accounting_period' = '#{accounting_period}'").
+#      where(query_constructor.joined_tarif_classes_category_where_hash(service_category_tarif_class_ids))
+#    raise(StandardError, calculation_scope_where_hash(part))   
+    sql = "(select * from base_stat_by_part customer_calls where #{query_constructor.joined_tarif_classes_category_where_hash(service_category_tarif_class_ids)}) customer_calls"
+    result = Customer::Call.from(sql)
     result
   end
   

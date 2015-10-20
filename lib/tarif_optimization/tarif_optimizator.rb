@@ -99,7 +99,7 @@ class TarifOptimization::TarifOptimizator
   end 
   
   def init_calls_count_by_parts(operator)
-    calls_stat_calculator.calculate_calculation_scope(query_constructor, selected_service_categories) if calculate_with_limited_scope
+    calls_stat_calculator.calculate_calculation_scope(query_constructor, selected_service_categories) if true #calculate_with_limited_scope
     @calls_count_by_parts = calls_stat_calculator.calculate_calls_count_by_parts(query_constructor, 
       tarif_list_generator.uniq_parts_by_operator[operator], tarif_list_generator.uniq_parts_criteria_by_operator[operator])    
   end
@@ -153,8 +153,12 @@ class TarifOptimization::TarifOptimizator
   
   def calculate_one_tarif(operator, tarif)
     init_input_for_one_tarif_calculation(operator, tarif)  
-    [tarif_list_generator.tarif_options_slices, tarif_list_generator.tarifs_slices].each do |service_slice| 
-      calculate_tarif_results(operator, service_slice)
+    if true #false
+      [tarif_list_generator.tarif_options_slices, tarif_list_generator.tarifs_slices].each do |service_slice| 
+        calculate_tarif_results(operator, service_slice)
+      end
+    else
+      calculate_tarif_results_for_tarif_sets(operator, tarif_list_generator.tarif_sets[tarif])
     end
     
     current_tarif_optimization_results.update_all_tarif_results_with_missing_prev_results
@@ -348,6 +352,16 @@ class TarifOptimization::TarifOptimizator
     current_tarif_optimization_results.process_tarif_results_batch(executed_tarif_result_batch_sql, price_formula_order)
   end
   
+ 
+  def calculate_tarif_results_for_tarif_sets(operator, tarif_sets_for_tarif)
+    sql = tarif_optimization_sql_builder.calculate_tarif_set_sql_for_tarif_sets(operator, tarif_sets_for_tarif)
+    executed_tarif_result_batch_sql = Customer::Call.find_by_sql(sql) unless sql.blank?       
+    process_tarif_results_for_tarif_set(executed_tarif_result_batch_sql)
+  end
+  
+
+ 
+ 
   def calculate_used_memory(output)
     {
       :output => General::MemoryUsage.analyze(output),
