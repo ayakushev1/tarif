@@ -150,60 +150,60 @@
 #Tarif option Везде как дома Smart
  
 #Переход на тариф
-  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on.merge({:tarif_option_id => _mts_everywhere_as_home_smart, :tarif_option_order => 0}), {}, 
+  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, 
   {:standard_formula_id => _stf_price_by_1_item_if_used, :price => 0.0},
     :tarif_set_must_include_tarif_options => [_mts_everywhere_as_home_smart] )
 
 #Ежемесячная плата
-  @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee.merge({:tarif_option_id => _mts_everywhere_as_home_smart, :tarif_option_order => 0}), {}, 
+  @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, 
   {:standard_formula_id => _stf_price_by_1_month, :price => 100.0},
     :tarif_set_must_include_tarif_options => [_mts_everywhere_as_home_smart] )
 
 #Own country, Calls, incoming
   category = {:name => 'own_country_calls_incoming', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_in}
-  @tc.add_one_service_category_tarif_class(category.merge({:tarif_option_id => _mts_everywhere_as_home_smart, :tarif_option_order => 0}), {}, 
+  @tc.add_one_service_category_tarif_class(category, {}, 
     {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 0.0},
     :tarif_set_must_include_tarif_options => [_mts_everywhere_as_home_smart] )
 
 #Own country, Calls, Outcoming, to_own_and_home_region, to_own_operator
   category = {:name => '_sctcg_own_country_calls_to_own_home_regions_own_operator', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_own_operator}
-  @tc.add_one_service_category_tarif_class(category.merge({:tarif_option_id => _mts_everywhere_as_home_smart, :tarif_option_order => 0}), {}, 
+  @tc.add_one_service_category_tarif_class(category, {}, 
     {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 0.0},
     :tarif_set_must_include_tarif_options => [_mts_everywhere_as_home_smart] )
 
 #Own country, Calls, Outcoming, to_own_and_home_region, to_not_own_operator
   category = {:name => '_sctcg_own_country_calls_to_own_home_regions_not_own_operator', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_not_own_operator}
-  @tc.add_one_service_category_tarif_class(category.merge({:tarif_option_id => _mts_everywhere_as_home_smart, :tarif_option_order => 0}), {}, 
+  @tc.add_one_service_category_tarif_class(category, {}, 
     {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 1.5},
     :tarif_set_must_include_tarif_options => [_mts_everywhere_as_home_smart] )
 
 #Own country, Calls, Outcoming, to_own_country, to_own_operator
   category = {:name => '_sctcg_own_country_calls_to_own_country_own_operator', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country, :service_category_partner_type_id => _service_to_own_operator}
-  @tc.add_grouped_service_category_tarif_class(category.merge({:tarif_option_id => _mts_everywhere_as_home_smart, :tarif_option_order => 0}), 
+  @tc.add_grouped_service_category_tarif_class(category, 
      scg_mts_smart_mini_included_in_tarif_calls[:id],
     :tarif_set_must_include_tarif_options => [_mts_everywhere_as_home_smart] )
-  @tc.add_one_service_category_tarif_class(category.merge({:tarif_option_id => _mts_everywhere_as_home_smart, :tarif_option_order => 0}), {}, 
+  @tc.add_one_service_category_tarif_class(category, {}, 
     {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 1.5},
     :tarif_set_must_include_tarif_options => [_mts_everywhere_as_home_smart] )
 
 #Own country, sms, Outcoming, to_own_home_regions
   category = {:name => '_sctcg_own_country_sms_to_own_home_regions', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_own_and_home_regions}
-  @tc.add_grouped_service_category_tarif_class(category.merge({:tarif_option_id => _mts_everywhere_as_home_smart, :tarif_option_order => 0}), 
+  @tc.add_grouped_service_category_tarif_class(category, 
      scg_mts_smart_mini_included_in_tarif_sms[:id],
     :tarif_set_must_include_tarif_options => [_mts_everywhere_as_home_smart] )
-  @tc.add_one_service_category_tarif_class(category.merge({:tarif_option_id => _mts_everywhere_as_home_smart, :tarif_option_order => 0}), {}, 
+  @tc.add_one_service_category_tarif_class(category, {}, 
     {:calculation_order => 1,:standard_formula_id => _stf_price_by_count_volume_item, :price => 1.0},
     :tarif_set_must_include_tarif_options => [_mts_everywhere_as_home_smart] )
 
 #Own country, sms, Outcoming, to_own_country
   category = {:name => '_sctcg_own_country_sms_to_own_country', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_own_country}
-  @tc.add_one_service_category_tarif_class(category.merge({:tarif_option_id => _mts_everywhere_as_home_smart, :tarif_option_order => 0}), {}, 
+  @tc.add_one_service_category_tarif_class(category, {}, 
     {:calculation_order => 1,:standard_formula_id => _stf_price_by_count_volume_item, :price => 3.8},
     :tarif_set_must_include_tarif_options => [_mts_everywhere_as_home_smart] )
 
 #Own country, Internet
   category = {:name => '_sctcg_own_country_internet', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _internet}
-  @tc.add_grouped_service_category_tarif_class(category.merge({:tarif_option_id => _mts_everywhere_as_home_smart, :tarif_option_order => 0}), 
+  @tc.add_grouped_service_category_tarif_class(category, 
      scg_mts_smart_mini_included_in_tarif_internet[:id],
     :tarif_set_must_include_tarif_options => [_mts_everywhere_as_home_smart] )
   

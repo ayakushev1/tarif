@@ -22,7 +22,8 @@
 #  tarif_option_id                    :integer
 #  tarif_option_order                 :integer
 #
- 
+
+#should be deleted -  as_tarif_class_service_category_id, tarif_option_id, tarif_option_order, tarif_class_service_categories, standard_category_groups
 class Service::CategoryTarifClass < ActiveRecord::Base
   include WhereHelper
   belongs_to :service_category_rouming, :class_name =>'Service::Category', :foreign_key => :service_category_rouming_id
@@ -34,7 +35,7 @@ class Service::CategoryTarifClass < ActiveRecord::Base
   belongs_to :as_standard_category_group, :class_name =>'Service::CategoryGroup', :foreign_key => :as_standard_category_group_id
   belongs_to :tarif_class, :class_name =>'TarifClass', :foreign_key => :tarif_class_id
   has_many :price_list, :class_name => '::PriceList', :foreign_key => :service_category_tarif_class_id
-  belongs_to :tarif_option, :class_name =>'TarifClass', :foreign_key => :tarif_option_id
+#  belongs_to :tarif_option, :class_name =>'TarifClass', :foreign_key => :tarif_option_id
 
   def self.active; where(:is_active => true); end
   
@@ -75,10 +76,6 @@ class Service::CategoryTarifClass < ActiveRecord::Base
     group_id ? where("as_standard_category_group_id = ?", group_id.to_i) : self 
   end
   
-  def self.with_standard_category_groups(group_id)
-    group_id ? where("array[standard_category_groups] @> array[#{group_id.to_i}] ") : self 
-  end
-
   def self.find_ids_by_tarif_class_ids(tarif_class_ids)
     where(:tarif_class_id => tarif_class_ids).pluck(:id).uniq
   end

@@ -149,8 +149,8 @@ class TarifOptimization::StatFunctionCollector
       "select tarif_class_id, service_category_group_id, stat_params::json, price_formula_id, price_formula_calculation_order, price_lists_id,",
       "array_agg((service_category_tarif_class_id)::integer) as service_category_tarif_class_ids, parts",
       "from collect_stat_for_both_service_category_groups_sql",
-      "group by tarif_class_id, tarif_option_order, service_category_group_id, stat_params, price_formula_id, price_formula_calculation_order, price_lists_id, parts",
-      "order by tarif_option_order, price_formula_calculation_order",      
+      "group by tarif_class_id, service_category_group_id, stat_params, price_formula_id, price_formula_calculation_order, price_lists_id, parts",
+      "order by price_formula_calculation_order",      
     ].join(' ')
     
   end
@@ -162,7 +162,6 @@ class TarifOptimization::StatFunctionCollector
       joins("left outer join price_standard_formulas ON price_standard_formulas.id = price_formulas.standard_formula_id").
       joins(service_category_group: :service_category_tarif_classes).
       select("service_category_tarif_classes.tarif_class_id as tarif_class_id",
-            "tarif_option_order", 
             "price_lists.service_category_group_id", 
             "service_category_tarif_classes.id as service_category_tarif_class_id",
             "coalesce((price_formulas.formula->>'stat_params'), (price_standard_formulas.formula->>'stat_params'))::text as stat_params",
@@ -184,7 +183,7 @@ class TarifOptimization::StatFunctionCollector
       "(",
       "(#{collect_stat_for_service_category_tarif_classes_sql})",
       ")",
-      "select tarif_class_id, tarif_option_order, service_category_group_id, stat_params::json, price_formula_id, price_formula_calculation_order, price_lists_id,",
+      "select tarif_class_id, service_category_group_id, stat_params::json, price_formula_id, price_formula_calculation_order, price_lists_id,",
       "service_category_tarif_class_ids, parts",
       "from collect_stat_for_service_category_tarif_classes_sql",
 #      "group by tarif_class_id, service_category_group_id, stat_params, price_formula_id, price_formula_calculation_order, price_lists_id",
@@ -198,7 +197,6 @@ class TarifOptimization::StatFunctionCollector
     joins("left outer join price_standard_formulas ON price_standard_formulas.id = price_formulas.standard_formula_id").
     joins(:service_category_tarif_class).
     select("service_category_tarif_classes.tarif_class_id",
-          "service_category_tarif_classes.tarif_option_order",
           "price_lists.service_category_group_id", 
           "array_agg((price_lists.service_category_tarif_class_id)::integer) as service_category_tarif_class_ids",
           "coalesce((price_formulas.formula->>'stat_params'), (price_standard_formulas.formula->>'stat_params'))::text as stat_params",
@@ -211,7 +209,6 @@ class TarifOptimization::StatFunctionCollector
     where(price_lists: {:tarif_list_id => nil}).
     where.not(price_lists: {:service_category_tarif_class_id => nil}).
     group("service_category_tarif_classes.tarif_class_id", 
-          "service_category_tarif_classes.tarif_option_order",
           "price_lists.service_category_group_id", 
           "price_lists.service_category_tarif_class_id", 
           "price_formulas.id", 
