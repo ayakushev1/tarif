@@ -58,28 +58,6 @@ class TarifCreator #ServiceHelper::TarifCreator
     tarif_category
   end
   
-  def add_as_other_service_category_tarif_class(service_category_tarif_class_field_values, as_other_service_category_tarif_class_field_values, condition_when_apply_sctc = {})
-    other_items = Service::CategoryTarifClass.where(:tarif_class_id => tarif_class_id).where(as_other_service_category_tarif_class_field_values)
-    raise(StandardError, 'id should not be nil') if other_items.blank?
-    
-    other_items.each do |other_item|
-      begin
-        tarif_category = Service::CategoryTarifClass.create( 
-          {:tarif_class_id => tarif_class_id, :as_tarif_class_service_category_id => other_item[:id], :is_active => true}.
-          merge(service_category_tarif_class_field_values)  )
-
-        classified_service_parts = classify_service_parts(service_category_full_paths(service_category_tarif_class_field_values)) 
-        parts = classified_service_parts[0]
-        parts_criteria = classified_service_parts[1] 
-        conditions = {:parts => parts, :parts_criteria => parts_criteria}.merge(condition_when_apply_sctc)
-
-        tarif_category = Service::CategoryTarifClass.update(tarif_category[:id], {:conditions => conditions}) 
-      rescue ActiveRecord::RecordNotUnique
-        retry
-      end    
-    end
-  end
-  
   def add_grouped_service_category_tarif_class(service_category_tarif_class_field_values, standard_category_group_id, condition_when_apply_sctc = {})
       tarif_category = Service::CategoryTarifClass.create( 
         {:tarif_class_id => tarif_class_id, :as_standard_category_group_id => standard_category_group_id, :is_active => true}.

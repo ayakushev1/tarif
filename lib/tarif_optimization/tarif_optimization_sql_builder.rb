@@ -252,9 +252,7 @@ class TarifOptimization::TarifOptimizationSqlBuilder
     fields = if service_category_group_id > -1
       ["sctc_2.tarif_class_id", "price_lists.service_category_group_id", "-1 as service_category_tarif_class_id", "service_category_groups.name as service_category_name"]
     else
-      ["sctc_1.tarif_class_id", "-1 as service_category_group_id", 
-        "case when sctc_1.id = #{ service_category_tarif_class_id} then sctc_1.id else sctc_3.id end as service_category_tarif_class_id",
-        "case when sctc_1.id = #{ service_category_tarif_class_id} then sctc_1.name else sctc_3.name end as service_category_name",]
+      ["sctc_1.tarif_class_id", "-1 as service_category_group_id", "sctc_1.id as service_category_tarif_class_id", "sctc_1.name as service_category_name",]
     end
       
     fields = (fields + [       
@@ -287,8 +285,6 @@ class TarifOptimization::TarifOptimizationSqlBuilder
       "LEFT OUTER JOIN price_lists ON price_lists.id = price_formulas.price_list_id",
       "LEFT OUTER JOIN service_category_tarif_classes sctc_1 ON sctc_1.id = price_lists.service_category_tarif_class_id",
 
-      "LEFT OUTER JOIN service_category_tarif_classes sctc_3 ON sctc_3.as_tarif_class_service_category_id = sctc_1.id",
-
       "LEFT OUTER JOIN service_category_groups ON service_category_groups.id = price_lists.service_category_group_id",
       "LEFT OUTER JOIN service_category_tarif_classes sctc_2 ON sctc_2.as_standard_category_group_id = service_category_groups.id",
 
@@ -298,8 +294,7 @@ class TarifOptimization::TarifOptimizationSqlBuilder
       "price_lists.tarif_list_id is null and",
       "(",
       "(sctc_2.tarif_class_id = #{service_id} and sctc_2.as_standard_category_group_id = #{ service_category_group_id } ) or",      
-      "(sctc_1.tarif_class_id = #{service_id} and sctc_2.as_standard_category_group_id is null and sctc_1.id = #{ service_category_tarif_class_id || -1} ) or ",
-      "(sctc_3.tarif_class_id = #{service_id} and sctc_2.as_standard_category_group_id is null and sctc_3.id = #{ service_category_tarif_class_id || -1} )",
+      "(sctc_1.tarif_class_id = #{service_id} and sctc_2.as_standard_category_group_id is null and sctc_1.id = #{ service_category_tarif_class_id || -1} )",
       ")",# limit 1",  
     ].join(' ')
     sql = "(#{sql})"
