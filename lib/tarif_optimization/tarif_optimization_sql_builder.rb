@@ -300,11 +300,11 @@ class TarifOptimization::TarifOptimizationSqlBuilder
       "(sctc_2.tarif_class_id = #{service_id} and sctc_2.as_standard_category_group_id = #{ service_category_group_id } ) or",      
       "(sctc_1.tarif_class_id = #{service_id} and sctc_2.as_standard_category_group_id is null and sctc_1.id = #{ service_category_tarif_class_id || -1} ) or ",
       "(sctc_3.tarif_class_id = #{service_id} and sctc_2.as_standard_category_group_id is null and sctc_3.id = #{ service_category_tarif_class_id || -1} )",
-      ")",  
+      ")",# limit 1",  
     ].join(' ')
     sql = "(#{sql})"
 
-#    raise(StandardError, sql) if service_category_tarif_class_id == 117377 #service_id == 322 and part == 'periodic'
+#    raise(StandardError, sql) if  service_id == 681 #service_id == 322 and part == 'periodic'
 
     check_sql(sql, service_id, service_category_tarif_class_id, service_category_group_id, price_formula_id, service_id, set_id,
       part, prev_group_call_ids, prev_stat_values_string)

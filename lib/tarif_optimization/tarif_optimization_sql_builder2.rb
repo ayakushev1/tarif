@@ -29,7 +29,9 @@ end
    end
  end
  
- 
- 
+
+
+SELECT a AS array, s AS subscript, a[s] AS value
+FROM (SELECT generate_subscripts(a, 1) AS s, a FROM arrays) fo
   
 =end
