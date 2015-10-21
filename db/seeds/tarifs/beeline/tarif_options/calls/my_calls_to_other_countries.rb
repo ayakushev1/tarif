@@ -7,7 +7,7 @@
     :general_priority => _gp_tarif_option_without_limits,
     :other_tarif_priority => {:lower => [], :higher => []},
     :prerequisites => [],
-    :forbidden_tarifs => {:to_switch_on => [_bln_all_for_600, _bln_all_for_1200, _bln_all_for_2700, _bln_all_for_600_post, _bln_all_for_1200_post, _bln_all_for_2700_post], :to_serve => []},
+    :forbidden_tarifs => {:to_switch_on => [_bln_all_for_600, _bln_all_for_1500, _bln_all_for_2700, _bln_all_for_600_post, _bln_all_for_1500_post, _bln_all_for_2700_post], :to_serve => []},
     :multiple_use => false
   } } )
 

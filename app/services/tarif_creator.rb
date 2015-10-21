@@ -197,7 +197,8 @@ class TarifCreator #ServiceHelper::TarifCreator
   
   def classify_service_category_rouming(rouming_service_category_full_path)    
     case 
-    when (rouming_service_category_full_path & [_all_russia_rouming, _intra_net_rouming, _sc_national_rouming]).count > 0
+    when ((rouming_service_category_full_path & [_all_russia_rouming, _intra_net_rouming, _sc_national_rouming]).count > 0 and 
+          !rouming_service_category_full_path.include?(_all_world_rouming))
       [:'own-country-rouming', {:service_category_rouming_id => _all_russia_rouming}]
     when rouming_service_category_full_path.include?(_all_world_rouming)
       [:'all-world-rouming', {:service_category_rouming_id => _all_world_rouming}]
