@@ -14,10 +14,10 @@ table.init do |t|
   	 ((f['calls'] || '') + (f['fix'] || '')),
   	 f['geo'],
   	 f['partner'],
-#  	 (f['call_id_count'].round(0) if f['call_id_count']),    
      f['calls_volume'],
      f['sms_volume'],
      f['internet_volume'],
+  	 (f['calls'].size if f['calls'] and false),    
 #     f['service_category_description'],
 #	 model_keys,    
   	] 

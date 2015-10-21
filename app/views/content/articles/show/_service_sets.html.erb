@@ -36,7 +36,7 @@ table.init do |t|
      f['tarif_cost'],      
      f['operator_name'],     
   	 link_to_if(f['tarif_http'], f['tarif_name'], f['tarif_http']),    
-#     f['service_set_count'],   
+     (f['service_set_count'] if false),   
      common_services,   
      tarif_options,
      identical_services,
