@@ -145,8 +145,6 @@ class TarifOptimization::StatFunctionCollector
       "with collect_stat_for_both_service_category_groups_sql as",
       "(",
       "(#{collect_stat_for_service_category_groups_sql})",
-      "union",
-      "(#{collect_stat_for_as_service_category_tarif_classes_for_service_groups_sql})",
       ")",
       "select tarif_class_id, service_category_group_id, stat_params::json, price_formula_id, price_formula_calculation_order, price_lists_id,",
       "array_agg((service_category_tarif_class_id)::integer) as service_category_tarif_class_ids, parts",
@@ -180,36 +178,11 @@ class TarifOptimization::StatFunctionCollector
       order("price_formulas.calculation_order").to_sql
   end
   
-  def collect_stat_for_as_service_category_tarif_classes_for_service_groups_sql
-#    @service_stat = []
-    sql = PriceList.
-      joins("inner join price_formulas ON price_formulas.price_list_id = price_lists.id").
-      joins("left outer join price_standard_formulas ON price_standard_formulas.id = price_formulas.standard_formula_id").
-      joins(service_category_group: {service_category_tarif_classes: :as_service_categories}).
-      select("as_service_categories_service_category_tarif_classes.tarif_class_id as tarif_class_id", 
-            "as_service_categories_service_category_tarif_classes.tarif_option_order as tarif_option_order", 
-            "price_lists.service_category_group_id as service_category_group_id", 
-            "as_service_categories_service_category_tarif_classes.id as service_category_tarif_class_id",
-            "coalesce((price_formulas.formula->>'stat_params'), (price_standard_formulas.formula->>'stat_params'))::text as stat_params",
-            "price_formulas.id as price_formula_id", 
-            "price_formulas.calculation_order as price_formula_calculation_order",
-            "price_lists.id as price_lists_id",
-            "(service_category_groups.conditions->>'parts') as parts",
-        ).
-      where(:as_service_categories_service_category_tarif_classes =>{:tarif_class_id => tarif_class_ids}).
-      where(:price_lists => {:tarif_list_id => nil}).
-      where.not(:price_lists =>{:service_category_group_id => nil}).
-      where(:price_lists => {:service_category_tarif_class_id => nil}).
-      order("price_formulas.calculation_order").to_sql
-  end
-  
   def collect_stat_for_both_service_category_tarif_classes_sql
     [
       "with collect_stat_for_service_category_tarif_classes_sql as",
       "(",
       "(#{collect_stat_for_service_category_tarif_classes_sql})",
-      "union",
-      "(#{collect_stat_for_as_service_category_tarif_classes_sql})",
       ")",
       "select tarif_class_id, tarif_option_order, service_category_group_id, stat_params::json, price_formula_id, price_formula_calculation_order, price_lists_id,",
       "service_category_tarif_class_ids, parts",
@@ -241,37 +214,6 @@ class TarifOptimization::StatFunctionCollector
           "service_category_tarif_classes.tarif_option_order",
           "price_lists.service_category_group_id", 
           "price_lists.service_category_tarif_class_id", 
-          "price_formulas.id", 
-          "price_lists.id",
-          "(price_formulas.formula->>'stat_params')::text",
-          "(price_standard_formulas.formula->>'stat_params')::text",
-          "(service_category_tarif_classes.conditions->>'parts')",
-          ).
-    order("price_formulas.calculation_order").to_sql
-  end
-  
-  def collect_stat_for_as_service_category_tarif_classes_sql
-    PriceList.
-    joins("inner join price_formulas ON price_formulas.price_list_id = price_lists.id").
-    joins("left outer join price_standard_formulas ON price_standard_formulas.id = price_formulas.standard_formula_id").
-    joins(service_category_tarif_class: :as_service_categories).
-    select("as_service_categories_service_category_tarif_classes.tarif_class_id",
-          "as_service_categories_service_category_tarif_classes.tarif_option_order", 
-          "price_lists.service_category_group_id", 
-          "array_agg((as_service_categories_service_category_tarif_classes.id)::integer) as service_category_tarif_class_ids",
-          "coalesce((price_formulas.formula->>'stat_params'), (price_standard_formulas.formula->>'stat_params'))::text as stat_params",
-          "price_formulas.id as price_formula_id",
-          "price_formulas.calculation_order as price_formula_calculation_order",
-          "price_lists.id as price_lists_id",
-          "(service_category_tarif_classes.conditions->>'parts') as parts",
-      ).
-    where(:as_service_categories_service_category_tarif_classes => {:tarif_class_id => tarif_class_ids}).
-    where(price_lists: {:tarif_list_id => nil}).
-    where.not(price_lists: {:service_category_tarif_class_id => nil}).
-    group("as_service_categories_service_category_tarif_classes.tarif_class_id", 
-          "as_service_categories_service_category_tarif_classes.tarif_option_order", 
-          "price_lists.service_category_group_id", 
-          "as_service_categories_service_category_tarif_classes.id", 
           "price_formulas.id", 
           "price_lists.id",
           "(price_formulas.formula->>'stat_params')::text",

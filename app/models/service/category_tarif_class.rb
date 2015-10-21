@@ -22,7 +22,7 @@
 #  tarif_option_id                    :integer
 #  tarif_option_order                 :integer
 #
-
+ 
 class Service::CategoryTarifClass < ActiveRecord::Base
   include WhereHelper
   belongs_to :service_category_rouming, :class_name =>'Service::Category', :foreign_key => :service_category_rouming_id
@@ -32,14 +32,11 @@ class Service::CategoryTarifClass < ActiveRecord::Base
   belongs_to :service_category_one_time, :class_name =>'Service::Category', :foreign_key => :service_category_one_time_id
   belongs_to :service_category_periodic, :class_name =>'Service::Category', :foreign_key => :service_category_periodic_id
   belongs_to :as_standard_category_group, :class_name =>'Service::CategoryGroup', :foreign_key => :as_standard_category_group_id
-  belongs_to :as_service_category, :class_name =>'Service::CategoryTarifClass', :foreign_key => :as_tarif_class_service_category_id
   belongs_to :tarif_class, :class_name =>'TarifClass', :foreign_key => :tarif_class_id
   has_many :price_list, :class_name => '::PriceList', :foreign_key => :service_category_tarif_class_id
-  has_many :as_service_categories, :class_name =>'Service::CategoryTarifClass', :foreign_key => :as_tarif_class_service_category_id
   belongs_to :tarif_option, :class_name =>'TarifClass', :foreign_key => :tarif_option_id
 
   def self.active; where(:is_active => true); end
-  def self.original; where('as_standard_category_group_id is null and as_tarif_class_service_category_id is null'); end
   
   def calls_count(context)
 #    "select * from customer_calls where #{where_hash(context)}"
