@@ -1,5 +1,5 @@
 require 'roo'
-require 'spreadsheet'
+#require 'spreadsheet'
 
 class Calls::HistoryParser::FileProcessor::Xls
   attr_reader :call_history_file
@@ -7,7 +7,12 @@ class Calls::HistoryParser::FileProcessor::Xls
 
   def initialize(call_history_file)
     @call_history_file = call_history_file
-    @doc = Roo::Spreadsheet.open(@call_history_file.path, extension: :xls)
+    @doc = case file_type(@call_history_file)
+    when 'xls'
+      Roo::Spreadsheet.open(@call_history_file.path, extension: :xls)
+    else
+      Roo::Spreadsheet.open(@call_history_file.path)
+    end
   end
 
   def table_body(table_filtrs = {}) #doc_sheet
@@ -38,5 +43,11 @@ class Calls::HistoryParser::FileProcessor::Xls
     @table_heads_row 
   end
   
+  def file_type(file)
+#    raise(StandardError, file_type)    
+    file_name_as_array = (file.public_methods.include?(:original_filename) ? file.original_filename.to_s.split('.') : file.path.to_s.split('.'))
+    file_type = file_name_as_array[file_name_as_array.size - 1] if file_name_as_array
+    file_type = file_type.downcase if file_type
+  end
   
 end

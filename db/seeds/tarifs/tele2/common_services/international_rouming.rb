@@ -1,7 +1,7 @@
 @tc = TarifCreator.new(_tele_2)
 @tc.create_tarif_class({
   :id => _tele_international_rouming, :name => 'Путешествия по миру', :operator_id => _tele_2, :privacy_id => _person, :standard_service_id => _common_service,
-  :features => {:http => 'http://spb.tele2.ru/roaming/abroad/'},
+  :features => {:http => 'http://msk.tele2.ru/roaming/abroad/'},
   :dependency => {
     :categories => [_tcgsc_calls, _tcgsc_sms],
     :incompatibility => {}, #{group_name => [tarif_class_ids]}
@@ -14,23 +14,23 @@
 
 #SIC, calls, incoming
   category = {:name => '_sctcg_SIC_calls_incoming', :service_category_rouming_id => _sc_tele_sic_rouming, :service_category_calls_id => _calls_in}
-  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 9.45})  
+  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 15.00})  
 
 #SIC, calls, outcoming, to Russia, to all operators
   category = {:name => '_sctcg_SIC_calls_to_all_own_country_regions', :service_category_rouming_id => _sc_tele_sic_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country}
-  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 9.45})  
+  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 15.00})  
 
 #SIC, calls, outcoming, to rouming country
   category = {:name => '_sctcg_SIC_calls_to_rouming_country', :service_category_rouming_id => _sc_tele_sic_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_rouming_country}
-  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 9.45})  
+  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 15.00})  
 
 #SIC, calls, outcoming, to sic
   category = {:name => '_sctcg_SIC_calls_to_sic', :service_category_rouming_id => _sc_tele_sic_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_tele_international_1}
-  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 9.45})  
+  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 15.00})  
 
 #SIC, calls, outcoming, to Europe
   category = {:name => '_sctcg_SIC_calls_to_europe', :service_category_rouming_id => _sc_tele_sic_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_tele_international_2}
-  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 9.45})  
+  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 15.00})  
 
 #SIC, calls, outcoming, to Asia, Africa, Australia
   category = {:name => '_sctcg_SIC_calls_to_asia_afr_austr', :service_category_rouming_id => _sc_tele_sic_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_tele_international_5}
@@ -47,7 +47,7 @@
 
 #SIC, sms, outcoming
   category = {:name => '_sctcg_SIC_sms_outcoming', :service_category_rouming_id => _sc_tele_sic_rouming, :service_category_calls_id => _sms_out}
-  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_count_volume_item, :price => 5.00})  
+  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_count_volume_item, :price => 6.00})  
 
 
 #SIC, mms, incoming
@@ -56,7 +56,7 @@
 
 #SIC, mms, outcoming
   category = {:name => '_sctcg_SIC_mms_outcoming', :service_category_rouming_id => _sc_tele_sic_rouming, :service_category_calls_id => _mms_out}
-  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_count_volume_item, :price => 5.00})  
+  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_count_volume_item, :price => 6.00})  
 
 #SIC, Internet
   category = {:name => '_sctcg_SIC_internet', :service_category_rouming_id => _sc_tele_sic_rouming, :service_category_calls_id => _internet}
@@ -67,23 +67,23 @@
 
 #Europe, calls, incoming
   category = {:name => '_sctcg_europe_calls_incoming', :service_category_rouming_id => _sc_tele_europe_rouming, :service_category_calls_id => _calls_in}
-  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 9.45})  
+  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 15.00})  
 
 #Europe, calls, outcoming, to Russia, to all operators
   category = {:name => '_sctcg_europe_calls_to_all_own_country_regions', :service_category_rouming_id => _sc_tele_europe_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country}
-  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 9.45})  
+  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 15.00})  
 
 #Europe, calls, outcoming, to rouming country
   category = {:name => '_sctcg_europe_calls_to_rouming_country', :service_category_rouming_id => _sc_tele_europe_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_rouming_country}
-  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 9.45})  
+  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 15.00})  
 
 #Europe, calls, outcoming, to sic
   category = {:name => '_sctcg_europe_calls_to_sic', :service_category_rouming_id => _sc_tele_europe_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_tele_international_1}
-  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 9.45})  
+  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 15.00})  
 
 #Europe, calls, outcoming, to Europe
   category = {:name => '_sctcg_europe_calls_to_europe', :service_category_rouming_id => _sc_tele_europe_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_tele_international_2}
-  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 9.45})  
+  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 15.00})  
 
 #Europe, calls, outcoming, to Asia, Africa, Australia
   category = {:name => '_sctcg_europe_calls_to_asia_afr_austr', :service_category_rouming_id => _sc_tele_europe_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_tele_international_5}
@@ -100,7 +100,7 @@
 
 #Europe, sms, outcoming
   category = {:name => '_sctcg_europe_sms_outcoming', :service_category_rouming_id => _sc_tele_europe_rouming, :service_category_calls_id => _sms_out}
-  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_count_volume_item, :price => 5.00})  
+  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_count_volume_item, :price => 6.00})  
 
 
 #Europe, mms, incoming
@@ -109,7 +109,7 @@
 
 #Europe, mms, outcoming
   category = {:name => '_sctcg_europe_mms_outcoming', :service_category_rouming_id => _sc_tele_europe_rouming, :service_category_calls_id => _mms_out}
-  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_count_volume_item, :price => 5.00})  
+  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_count_volume_item, :price => 6.00})  
 
 #Europe, Internet
   category = {:name => '_sctcg_europe_internet', :service_category_rouming_id => _sc_tele_europe_rouming, :service_category_calls_id => _internet}

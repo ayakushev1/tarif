@@ -253,6 +253,9 @@ _tele_service_to_tele_international_6 = _noth_america_countries + _south_america
 _tele_service_to_sic_1 = [_uzbekistan, _tajikistan]
 _tele_service_to_sic_2 = [_azerbaijan, _belarus, _moldova]
 _tele_service_to_sic_3 = _mts_sic_countries - _tele_service_to_sic_1 - _tele_service_to_sic_2
+
+_tele_service_to_uzbekistan = [_uzbekistan,]
+_tele_service_to_sic_not_uzbekistan = _mts_sic_countries - [_uzbekistan,]
   
   local_variables.each do |symbol|
     send(:define_method, symbol) do

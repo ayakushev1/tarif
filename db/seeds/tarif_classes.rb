@@ -268,6 +268,8 @@ TarifClass.create(id: _tele_orange, operator_id: _tele_2, privacy_id: 2, standar
 TarifClass.create(id: _tele_yellow, operator_id: _tele_2, privacy_id: 2, standard_service_id: 40, name: 'Желтый')
 TarifClass.create(id: _tele_green, operator_id: _tele_2, privacy_id: 2, standard_service_id: 40, name: 'Зеленый')
 
+TarifClass.create(id: _tele_most_black, operator_id: _tele_2, privacy_id: 2, standard_service_id: 40, name: 'Самый черный')
+
 #Теле, роуминг
 TarifClass.create(id: _tele_country_rouming , operator_id: _tele_2, privacy_id: 2, standard_service_id: 41, name: 'Путешествия по России')
 TarifClass.create(id: _tele_international_rouming , operator_id: _tele_2, privacy_id: 2, standard_service_id: 41, name: 'Путешествия по миру')
@@ -280,3 +282,11 @@ TarifClass.create(id: _tele_paket_interneta , operator_id: _tele_2, privacy_id: 
 TarifClass.create(id: _tele_portfel_interneta , operator_id: _tele_2, privacy_id: 2, standard_service_id: 42, name: 'Портфель интернета')
 TarifClass.create(id: _tele_day_in_net , operator_id: _tele_2, privacy_id: 2, standard_service_id: 42, name: 'День в сети')
 TarifClass.create(id: _tele_zero_everywhere , operator_id: _tele_2, privacy_id: 2, standard_service_id: 42, name: 'Везде ноль')
+
+TarifClass.create(id: _tele_internet_abroad , operator_id: _tele_2, privacy_id: 2, standard_service_id: 42, name: 'Интернет за рубежом')
+TarifClass.create(id: _tele_talks_without_limits , operator_id: _tele_2, privacy_id: 2, standard_service_id: 42, name: 'Разговоры без границ')
+TarifClass.create(id: _tele_simple_geography , operator_id: _tele_2, privacy_id: 2, standard_service_id: 42, name: 'Простая география')
+TarifClass.create(id: _tele_day_sms , operator_id: _tele_2, privacy_id: 2, standard_service_id: 42, name: 'День СМС')
+TarifClass.create(id: _tele_add_speed_100mb , operator_id: _tele_2, privacy_id: 2, standard_service_id: 42, name: 'Добавить скорости 100Mb')
+TarifClass.create(id: _tele_add_speed_3gb , operator_id: _tele_2, privacy_id: 2, standard_service_id: 42, name: 'Добавить скорости 3Gb')
+TarifClass.create(id: _tele_chemodan_interneta , operator_id: _tele_2, privacy_id: 2, standard_service_id: 42, name: 'Чемодан интернета')

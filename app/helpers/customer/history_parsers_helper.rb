@@ -96,16 +96,31 @@ module Customer::HistoryParsersHelper
 
 #    raise(StandardError, user_params[:operator_id])    
     message = "Не выбран оператор. Выберите вашего оператора"
-    result = {:file_is_good => false, 'message' => message} if user_params[:operator_id].blank? or user_params[:operator_id] == 0
+    return result = {:file_is_good => false, 'message' => message} if user_params[:operator_id].blank? or user_params[:operator_id] == 0
 
     file_size = (call_history_file.size / 1000000.0).round(2) if call_history_file
     message = "Файл слишком большой: #{file_size}Mb. Он должен быть не больше #{parsing_params[:file_upload_max_size]}Mb"
-    result = {:file_is_good => false, 'message' => message} if file_size > parsing_params[:file_upload_max_size]
+    return result = {:file_is_good => false, 'message' => message} if file_size > parsing_params[:file_upload_max_size]
 
     file_type = file_type(call_history_file)
     message = "Файл неправильного типа #{file_type}. Он должен быть один из #{parsing_params[:allowed_call_history_file_types]}"
-    result = {:file_is_good => false, 'message' => message} if !parsing_params[:allowed_call_history_file_types].include?(file_type)
+    return result = {:file_is_good => false, 'message' => message} if !parsing_params[:allowed_call_history_file_types].include?(file_type)
+    
+    message = "Тип файла не совпадает с разрешенным типом файла для оператора: МТС и Мегафон - html, Билайн - xls или xlsx"
+    return result = {:file_is_good => false, 'message' => message} if !check_if_file_type_match_with_operator(file_type)
+
     result
+  end
+  
+  def check_if_file_type_match_with_operator(file_type)
+    case file_type
+    when 'html'
+      [1030, 1028].include?(user_params[:operator_id]) ? true : false
+    when 'xls', 'xlsx'
+      [1025].include?(user_params[:operator_id]) ? true : false
+    else
+      false
+    end
   end
   
   def file_type(file)
@@ -147,7 +162,7 @@ module Customer::HistoryParsersHelper
       :file_upload_turbolink_mode => (parsing_params_filtr_session_filtr_params['file_upload_turbolink_mode'] == 'true' ? true : false),
       :file_upload_max_size => parsing_params_filtr_session_filtr_params['file_upload_max_size'].to_f,
       :call_history_max_line_to_process => parsing_params_filtr_session_filtr_params['call_history_max_line_to_process'].to_f,
-      :allowed_call_history_file_types => parsing_params_filtr_session_filtr_params['allowed_call_history_file_types'],
+      :allowed_call_history_file_types => ['html', 'xls', 'xlsx'], #parsing_params_filtr_session_filtr_params['allowed_call_history_file_types'],
       :background_update_frequency => parsing_params_filtr_session_filtr_params['background_update_frequency'].to_i,
       :file_upload_form_method => parsing_params_filtr_session_filtr_params['file_upload_form_method'],
       :sleep_after_file_uploading => parsing_params_filtr_session_filtr_params['sleep_after_file_uploading'].to_f,

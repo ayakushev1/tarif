@@ -1,7 +1,7 @@
 @tc = TarifCreator.new(_tele_2)
 @tc.create_tarif_class({
-  :id => _tele_paket_interneta, :name => 'Пакет интернета', :operator_id => _tele_2, :privacy_id => _person, :standard_service_id => _special_service,
-  :features => {:http => 'http://msk.tele2.ru/internet/dlya-telefonov/paket-interneta-3g4g/'},
+  :id => _tele_chemodan_interneta, :name => 'Чемодан интернета', :operator_id => _tele_2, :privacy_id => _person, :standard_service_id => _special_service,
+  :features => {:http => 'http://msk.tele2.ru/internet/dlya-telefonov/chemodan-interneta-3g4g/'},
   :dependency => {
     :incompatibility => {
       :internet_options => [_tele_internet_from_phone, _tele_paket_interneta, _tele_portfel_interneta, _tele_chemodan_interneta, _tele_day_in_net]
@@ -13,13 +13,13 @@
     :multiple_use => false
   } } )
 
-#sms included in tarif
-scg_tele_paket_interneta = @tc.add_service_category_group(
-    {:name => 'scg_tele_paket_interneta' }, 
-    {:name => "price for scg_tele_paket_interneta"}, 
-    {:calculation_order => 0, :price => 299.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_tele_paket_interneta', :description => '', 
+#internet included in tarif
+scg_tele_chemodan_interneta = @tc.add_service_category_group(
+    {:name => 'scg_tele_chemodan_interneta' }, 
+    {:name => "price for scg_tele_chemodan_interneta"}, 
+    {:calculation_order => 0, :price => 899.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_tele_chemodan_interneta', :description => '', 
      :formula => {
-       :window_condition => "(7000.0 >= sum_volume)", :window_over => 'month',
+       :window_condition => "(30000.0 >= sum_volume)", :window_over => 'month',
        :stat_params => {:sum_volume => "sum((description->>'volume')::float)"},
        :method => "price_formulas.price",
        
@@ -27,7 +27,7 @@ scg_tele_paket_interneta = @tc.add_service_category_group(
 #         :group_by => 'month',
 #         :stat_params => {
 #           :sum_volume => "sum((description->>'volume')::float)",
-#           :count_of_usage_of_500 => "ceil((sum((description->>'volume')::float) - 5000.0) / 500.0)"},
+#           :count_of_usage_of_500 => "ceil((sum((description->>'volume')::float) - 10000.0) / 500.0)"},
 #       :method => "price_formulas.price + case when count_of_usage_of_500 > 1.0 then count_of_usage_of_500 * 30.0 else 0.0 end",
 #       }
      }, 
@@ -38,10 +38,10 @@ scg_tele_paket_interneta = @tc.add_service_category_group(
 
 #Own and home regions, Internet
   category = {:name => '_sctcg_own_home_regions_internet', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _internet}
-  @tc.add_grouped_service_category_tarif_class(category, scg_tele_paket_interneta[:id])
+  @tc.add_grouped_service_category_tarif_class(category, scg_tele_chemodan_interneta[:id])
 
 #Own country, Internet
   category = {:name => 'own_country_internet', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _internet}
-  @tc.add_grouped_service_category_tarif_class(category, scg_tele_paket_interneta[:id])
+  @tc.add_grouped_service_category_tarif_class(category, scg_tele_chemodan_interneta[:id])
 
 @tc.add_tarif_class_categories

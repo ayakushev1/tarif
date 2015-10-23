@@ -7,7 +7,9 @@ gem 'rails', "4.2.1"
 
 gem 'pg'
 gem 'nokogiri'
-gem 'roo'
+#gem 'roo', '1.13.2'
+gem 'roo', '~> 2.1.0'
+gem 'roo-xls'
 
 # Gems used only for assets and not required
 # in production environments by default.

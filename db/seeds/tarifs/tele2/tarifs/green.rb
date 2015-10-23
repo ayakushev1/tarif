@@ -1,13 +1,14 @@
 @tc = TarifCreator.new(_tele_2)
 @tc.create_tarif_class({
   :id => _tele_green, :name => 'Зеленый', :operator_id => _tele_2, :privacy_id => _person, :standard_service_id => _tarif,
-  :features => {:http => 'http://spb.tele2.ru/tariff/green/'},
+  :features => {:http => 'http://msk.tele2.ru/tariff/green/'},
   :dependency => {
     :incompatibility => {},
     :general_priority => _gp_tarif_without_limits,
     :other_tarif_priority => {:lower => [], :higher => []},
     :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},
     :prerequisites => [],
+    :is_archived => true,
     :multiple_use => false
   } } )
   

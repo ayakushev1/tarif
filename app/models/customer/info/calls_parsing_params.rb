@@ -31,7 +31,7 @@ class Customer::Info::CallsParsingParams < ActiveType::Record[Customer::Info]
       'file_upload_form_method' => 'post',
       'file_upload_max_size' => 1,
       'call_history_max_line_to_process' => 5000,
-      'allowed_call_history_file_types' => ['html', 'xls'],
+#      'allowed_call_history_file_types' => ['html', 'xls', 'xlsx'],
       'background_update_frequency' => 100,
     }
   end

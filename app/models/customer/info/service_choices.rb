@@ -84,7 +84,7 @@ class Customer::Info::ServiceChoices < ActiveType::Record[Customer::Info]
 
   def self.tarifs
     {
-      1023 => [800, 801, 802, 803, 804],
+      1023 => [800, 801, 802, 805], #, 803, 804
       1025 => [600, 601, 602, 603, 604, 605, 610, 611, 612, 613, 621, 622, 623, 624], #620, 626
       1028 => [100, 101, 102, 103, 104, 105, 106, 107, 109, 110, 113], #108, 112,  
       1030 => [200, 201, 202, 203, 204, 205, 206, 207, 208, 210, 212, 213, 214],
@@ -123,12 +123,12 @@ class Customer::Info::ServiceChoices < ActiveType::Record[Customer::Info]
   def self.tarif_options_by_type
     {
       1023 => {
-        :international_rouming => [],
+        :international_rouming => [890, 895],
         :country_rouming => [840],  
         :mms => [],  
-        :sms => [860],  
-        :calls => [],  
-        :internet => [880, 881, 882, 883],  
+        :sms => [860, 861],  
+        :calls => [850],  
+        :internet => [880, 881, 882, 883, 884, 885, 886],  
       },
       1025 => {
         :international_rouming => [660, 661, 662, 663],

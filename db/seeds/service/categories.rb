@@ -862,6 +862,14 @@ cat << {:id => _sc_service_to_tele_sic_3, :name => 'Теле 2, СНГ, в ос�
   crit << {:id => _sc_service_to_tele_sic_3 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
            :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_tele_sic_3})", :service_category_id => _sc_service_to_tele_sic_3}
 
+cat << {:id => _sc_tele_service_to_uzbekistan, :name => 'Теле 2, Простая география, звонки в Узбекистан', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_tele_service_to_uzbekistan * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value => _tele_service_to_uzbekistan, :service_category_id => _sc_tele_service_to_uzbekistan}
+
+cat << {:id => _sc_tele_service_to_sic_not_uzbekistan, :name => 'Теле 2, Простая география, звонки в остальные страны СНГ', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_tele_service_to_sic_not_uzbekistan * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value => _tele_service_to_sic_not_uzbekistan, :service_category_id => _sc_tele_service_to_sic_not_uzbekistan}
+
 
 
 #оператор второй стороны

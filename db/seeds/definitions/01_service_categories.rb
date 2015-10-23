@@ -109,6 +109,7 @@ def access_methods_to_constant_service_categories
   _sc_service_to_tele_international_5 = 454; _sc_service_to_tele_international_6 = 455;
   
   _sc_service_to_tele_sic_1 = 460; _sc_service_to_tele_sic_2 = 461; _sc_service_to_tele_sic_3 = 462;
+  _sc_tele_service_to_uzbekistan = 463; _sc_tele_service_to_sic_not_uzbekistan = 464;
   
   #partner type
   _partner_operator_services = 190;

@@ -160,21 +160,30 @@ _bln_internet_on_day_100_mb = 735; _bln_internet_on_day_500_mb = 736;
 #Tele2
 #tarifs
 _tele_black = 800; _tele_very_black = 801; _tele_orange = 802; _tele_yellow = 803; _tele_green = 804;
+_tele_most_black = 805;   #new from 11.10.2015
 
 #common_services
 _tele_country_rouming = 830; _tele_international_rouming = 831;  _tele_intra_countries_services = 832;
+
+#calls abroad
+_tele_simple_geography = 850;   #new from 11.10.2015
 
 #calls
 _tele_zero_everywhere = 840;
 
 #sms
 _tele_sms_svoboda = 860; 
+_tele_day_sms = 861;  #new from 11.10.2015
 
 #internet
 _tele_internet_from_phone = 880; _tele_paket_interneta = 881; _tele_portfel_interneta = 882; _tele_day_in_net = 883;
+_tele_add_speed_3gb = 884; _tele_add_speed_100mb = 885; _tele_chemodan_interneta = 886;   #new from 11.10.2015
 
+#international rouming, internet
+_tele_internet_abroad = 890;   #new from 11.10.2015
 
-
+#international rouming, calls
+_tele_talks_without_limits = 895;   #new from 11.10.2015
 
   local_variables.each do |symbol|
     send(:define_method, symbol) do

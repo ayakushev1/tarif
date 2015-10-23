@@ -4,7 +4,7 @@ class Calls::HistoryParser::ClassLoader
     case file_type(file)
     when 'html'
       Calls::HistoryParser::FileProcessor::Html #Calls::HistoryParser::MtsHtml#.new(file, user_params, parsing_params)
-    when 'xls'
+    when 'xls', 'xlsx'
       Calls::HistoryParser::FileProcessor::Xls#.new(file, user_params, parsing_params)
     else
       raise(StandardError, "Wrong file type: #{file_type}")
@@ -22,8 +22,15 @@ class Calls::HistoryParser::ClassLoader
       else #MTS
         Calls::HistoryParser::OperatorProcessor::Mts #Calls::HistoryParser::MtsHtml#.new(file, user_params, parsing_params)
       end
-    when 'xls'
-      Calls::HistoryParser::OperatorProcessor::Bln#.new(file, user_params, parsing_params)
+    when 'xls', 'xlsx'
+      case operator_id
+      when 1025 #Beeline
+        Calls::HistoryParser::OperatorProcessor::Bln#.new(file, user_params, parsing_params)
+#      when 1030 #MTS
+#        Calls::HistoryParser::OperatorProcessor::Mts #Calls::HistoryParser::MtsHtml#.new(file, user_params, parsing_params)
+      else 
+        Calls::HistoryParser::OperatorProcessor::Bln#.new(file, user_params, parsing_params)
+      end
     else
       raise(StandardError, "Wrong file type: #{file_type}")
     end      
