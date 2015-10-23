@@ -83,7 +83,7 @@ module Customer::HistoryParsersHelper
     message = {:file_is_good => true, 'message' => "Обработано #{parser.processed_percent}%"} if !message
     call_history_to_save = parser.parse_result.merge({'message' => message})
     call_history_saver.save({:result => call_history_to_save})
-
+#    raise(StandardError)
     call_history_to_save
   end
   

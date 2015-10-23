@@ -92,10 +92,10 @@ class Calls::HistoryParser::OperatorProcessor::Megafon < Calls::HistoryParser::O
   def base_subservice_criteria
     {
       _inbound => [
-        {:service => /с мобильных номеров|Входящий|Входящее SMS|С МегаФон|С номеров МегаФон|С номеров Единой сети МегаФон|sms i|ct|mpty|mms i/i}
+        {:service => /с мобильных номеров|Входящий|Входящее SMS|С МегаФон|С номеров МегаФон|С номеров Единой сети МегаФон/i}
       ],
       _outbound => [
-        {:service => /на мобильные номера|Исходящий|Исходящее SMS|На МегаФон|На номера МегаФон|На номера Единой сети МегаФон|Исх\.|sms o|mms o/i}
+        {:service => /на мобильные номера|Исходящий|Исходящее SMS|На МегаФон|На номера МегаФон|На номера Единой сети МегаФон|Исх\./i}
       ],
       _unspecified_direction => [
         {:service => /Мобильный интернет|Данные|HSDPA \(3G\)|gprs|4G/i}
