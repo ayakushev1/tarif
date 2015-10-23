@@ -12,21 +12,21 @@ table.init do |t|
   
   t.set_fields do |f|
     services = f['services'].map do |item|
-        link_to_if(item['service_http'], item['service_name'], item['service_http'])	
+        link_to_if(item['service_http'], item['service_name'], item['service_http'], {:target => "_blank"})	
     end.join(', ').html_safe if f['services']
 
     common_services = f['common_services'].map do |item|
-        link_to_if(item['service_http'], item['service_name'], item['service_http'])	
+        link_to_if(item['service_http'], item['service_name'], item['service_http'], {:target => "_blank"})	
     end.join(', ').html_safe if f['common_services']
 
     tarif_options = f['tarif_options'].map do |item|
-        link_to_if(item['service_http'], item['service_name'], item['service_http'])	
+        link_to_if(item['service_http'], item['service_name'], item['service_http'], {:target => "_blank"})	
     end.join(', ').html_safe if f['tarif_options']
 
     identical_services = f['identical_services'].map do |identical_service_group|
     	identical_services_for_one_group = identical_service_group.map do |item|     	
     		item.map do |service_id|
-    			link_to_if(service_id['service_http'], service_id['service_name'], service_id['service_http'])
+    			link_to_if(service_id['service_http'], service_id['service_name'], service_id['service_http'], {:target => "_blank"})
     		end.join(' + ') if item	    	      	 
 	    end.join(' или ') if identical_service_group
         "[ #{identical_services_for_one_group} ]"
@@ -35,8 +35,8 @@ table.init do |t|
   	[
      f['tarif_cost'],      
      f['operator_name'],     
-  	 link_to_if(f['tarif_http'], f['tarif_name'], f['tarif_http']),    
-     (f['service_set_count'] if false),   
+  	 link_to_if(f['tarif_http'], f['tarif_name'], f['tarif_http'], {:target => "_blank"}),    
+#     (f['service_set_count'] if true),   
      common_services,   
      tarif_options,
      identical_services,

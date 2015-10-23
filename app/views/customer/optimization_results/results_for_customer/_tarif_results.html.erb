@@ -12,7 +12,7 @@ table.init do |t|
   t.set_fields do |f| 
   	[
      f['service_cost'],      
-  	 link_to_if(f['service_http'], f['service_name'], f['service_http']),    
+  	 link_to_if(f['service_http'], f['service_name'], f['service_http'], {:target => "_blank"}),    
      f['service_count'],      
      f['calls_volume'],
      f['sms_volume'],
