@@ -16,7 +16,7 @@ class Calls::HistoryParser::FileProcessor::Xls
   end
 
   def table_body(table_filtrs = {}) #doc_sheet
-    @table_body ||= doc.sheet(table_filtrs[:body])
+    @table_body ||= doc.sheet(table_filtrs[:xls][:body])
   end
   
   def table_heads(table_filtrs)

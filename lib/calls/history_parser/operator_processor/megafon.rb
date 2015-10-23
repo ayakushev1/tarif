@@ -152,10 +152,12 @@ class Calls::HistoryParser::OperatorProcessor::Megafon < Calls::HistoryParser::O
   
   def table_filtrs
     {
-      :head => "body table [style='height:56px']",
-      :head_column => 'td',
-      :body => 'body table tr',
-      :body_column => 'td',
+      :html => {
+        :head => "body table [style='height:56px']",
+        :head_column => 'td',
+        :body => 'body table tr',
+        :body_column => 'td',
+      },
     }    
   end
 

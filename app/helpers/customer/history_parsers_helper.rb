@@ -106,7 +106,7 @@ module Customer::HistoryParsersHelper
     message = "Файл неправильного типа #{file_type}. Он должен быть один из #{parsing_params[:allowed_call_history_file_types]}"
     return result = {:file_is_good => false, 'message' => message} if !parsing_params[:allowed_call_history_file_types].include?(file_type)
     
-    message = "Тип файла не совпадает с разрешенным типом файла для оператора: МТС и Мегафон - html, Билайн - xls или xlsx"
+    message = "Тип файла не совпадает с разрешенным типом файла для оператора: МТС и Мегафон - html, МТС и Билайн - xls или xlsx"
     return result = {:file_is_good => false, 'message' => message} if !check_if_file_type_match_with_operator(file_type)
 
     result
@@ -117,7 +117,7 @@ module Customer::HistoryParsersHelper
     when 'html'
       [1030, 1028].include?(user_params[:operator_id]) ? true : false
     when 'xls', 'xlsx'
-      [1025].include?(user_params[:operator_id]) ? true : false
+      [1025, 1030].include?(user_params[:operator_id]) ? true : false
     else
       false
     end

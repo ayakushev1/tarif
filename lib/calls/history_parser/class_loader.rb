@@ -26,8 +26,8 @@ class Calls::HistoryParser::ClassLoader
       case operator_id
       when 1025 #Beeline
         Calls::HistoryParser::OperatorProcessor::Bln#.new(file, user_params, parsing_params)
-#      when 1030 #MTS
-#        Calls::HistoryParser::OperatorProcessor::Mts #Calls::HistoryParser::MtsHtml#.new(file, user_params, parsing_params)
+      when 1030 #MTS
+        Calls::HistoryParser::OperatorProcessor::Mts #Calls::HistoryParser::MtsHtml#.new(file, user_params, parsing_params)
       else 
         Calls::HistoryParser::OperatorProcessor::Bln#.new(file, user_params, parsing_params)
       end

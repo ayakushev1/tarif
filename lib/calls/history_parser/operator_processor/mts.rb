@@ -126,10 +126,18 @@ class Calls::HistoryParser::OperatorProcessor::Mts < Calls::HistoryParser::Opera
   
   def table_filtrs
     {
-      :head => 'table table thead tr',
-      :head_column => 'th',
-      :body => 'table table tbody tr',
-      :body_column => 'td',
+      :html => {
+        :head => 'table table thead tr',
+        :head_column => 'th',
+        :body => 'table table tbody tr',
+        :body_column => 'td',
+      },
+      :xls => {
+        :head => 'table table thead tr',
+        :head_column => 'th',
+        :body => 0,
+        :body_column => 'td',
+      },
     }    
   end
 
