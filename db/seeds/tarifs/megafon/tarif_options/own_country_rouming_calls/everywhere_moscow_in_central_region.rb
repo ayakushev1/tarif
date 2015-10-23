@@ -26,16 +26,16 @@
 #  @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => _stf_fixed_price_if_used_in_1_day_duration, :price => 5.0})
 
 #Central regions RF except for Own and home regions, Calls
-category = {:name => 'sctcg_cenral_regions_not_own_and_home_region_calls', :service_category_rouming_id => _sc_mgf_cenral_regions_not_own_and_home_region, :service_category_calls_id => _calls_in}
-  @tc.add_only_service_category_tarif_class(category)  
+#category = {:name => 'sctcg_cenral_regions_not_own_and_home_region_calls', :service_category_rouming_id => _sc_mgf_cenral_regions_not_own_and_home_region, :service_category_calls_id => _calls_in}
+#  @tc.add_only_service_category_tarif_class(category)  
 
 #Central regions RF except for Own and home regions, sms
-category = {:name => '_sctcg_cenral_regions_not_own_and_home_region_sms', :service_category_rouming_id => _sc_mgf_cenral_regions_not_own_and_home_region, :service_category_calls_id => _sms_out}
-  @tc.add_only_service_category_tarif_class(category)  
+#category = {:name => '_sctcg_cenral_regions_not_own_and_home_region_sms', :service_category_rouming_id => _sc_mgf_cenral_regions_not_own_and_home_region, :service_category_calls_id => _sms_out}
+#  @tc.add_only_service_category_tarif_class(category)  
 
 #Central regions RF except for Own and home regions, mms
-category = {:name => 'sctcg_cenral_regions_not_own_and_home_region_mms', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _mms_in}
-  @tc.add_only_service_category_tarif_class(category)  
+#category = {:name => 'sctcg_cenral_regions_not_own_and_home_region_mms', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _mms_in}
+#  @tc.add_only_service_category_tarif_class(category)  
 
 
 

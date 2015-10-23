@@ -151,7 +151,7 @@
     :tarif_set_must_include_tarif_options => [_mts_mms_discount_50_percent] )
 
 #Intranet rouming, mms, outcoming, to all own country regions, to own operator
-  category = { :name => '_sctcg_intranet_rouming_mms_to_own_country_own_operator', :service_category_rouming_id => _intra_net_rouming, :service_category_calls_id => _mms_out, :service_category_geo_id => _service_to_all_own_country_regions, :service_category_partner_type_id => _service_to_own_operator}
+  category = { :name => '_sctcg_all_russia_rouming_mms_to_own_country_own_operator', :service_category_rouming_id => _all_russia_rouming, :service_category_calls_id => _mms_out, :service_category_geo_id => _service_to_all_own_country_regions, :service_category_partner_type_id => _service_to_own_operator}
   @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_count_volume_item, :price => 3.25},
     :tarif_set_must_include_tarif_options => [_mts_mms_discount_50_percent] )
 

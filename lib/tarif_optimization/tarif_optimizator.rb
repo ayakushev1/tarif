@@ -92,10 +92,17 @@ class TarifOptimization::TarifOptimizator
   def calculate_one_operator(operator)
     init_input_for_one_operator_calculation(operator)                    
     init_calls_count_by_parts(operator)
+    
+    @calcutate_with_tarif_slices = true
+    if !@calcutate_with_tarif_slices
+      init_input_for_one_tarif_calculation(operator)  
+      tarif_optimization_sql_builder.calculate_tarif_results_through_categories(operator)
+    end
 
     tarif_list_generator.tarifs[operator].each do |tarif|
       calculate_one_tarif(operator, tarif)
     end        
+
   end 
   
   def init_calls_count_by_parts(operator)
@@ -152,13 +159,11 @@ class TarifOptimization::TarifOptimizator
   end
   
   def calculate_one_tarif(operator, tarif)
-    init_input_for_one_tarif_calculation(operator, tarif)  
-    if true #false
+    if @calcutate_with_tarif_slices
+      init_input_for_one_tarif_calculation(operator, tarif)  
       [tarif_list_generator.tarif_options_slices, tarif_list_generator.tarifs_slices].each do |service_slice| 
         calculate_tarif_results(operator, service_slice)
       end
-    else
-      calculate_tarif_results_for_tarif_sets(operator, tarif_list_generator.tarif_sets[tarif])
     end
     
     current_tarif_optimization_results.update_all_tarif_results_with_missing_prev_results
@@ -204,7 +209,7 @@ class TarifOptimization::TarifOptimizator
   end
   
   def init_input_for_one_tarif_calculation(operator, tarif = nil)
-    tarif_list_generator.set_parts(calls_stat_calculator.calculation_scope[:parts]) if calculate_with_limited_scope
+    tarif_list_generator.set_parts(calls_stat_calculator.calculation_scope[:parts]) if true #calculate_with_limited_scope
     tarif_list_generator.calculate_tarif_sets_and_slices(operator, tarif)
     @current_tarif_optimization_results = TarifOptimization::CurrentTarifOptimizationResults.new(self)
   end

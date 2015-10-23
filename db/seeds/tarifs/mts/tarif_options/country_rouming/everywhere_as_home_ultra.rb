@@ -15,9 +15,9 @@
   } } )
 #Добавление новых service_category_group
   #calls included in tarif
-  scg_mts_ultra_included_in_tarif_calls = @tc.add_service_category_group(
-    {:name => 'scg_mts_ultra_included_in_tarif_calls' }, 
-    {:name => "price for scg_mts_ultra_included_in_tarif_calls"}, 
+  scg_mts_everywhere_as_home_Ultra_calls = @tc.add_service_category_group(
+    {:name => 'scg_mts_everywhere_as_home_Ultra_calls' }, 
+    {:name => "price for scg_mts_everywhere_as_home_Ultra_calls"}, 
     {:calculation_order => 0, :standard_formula_id => _stf_price_by_sum_duration_minute, 
       :formula => {:window_condition => "(5000.0 >= sum_duration_minute)", :window_over => 'month'}, :price => 0.0, :description => '' }
     )
@@ -39,17 +39,17 @@ _sctcg_own_country_calls_to_own_home_regions_not_own_operator = {:name => '_sctc
     {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 0.0000000000})
 
 #Own country, Calls, Outcoming, to_own_home_regions, to_own_operator
-  @tc.add_grouped_service_category_tarif_class(_sctcg_own_country_calls_to_own_country_own_operator, scg_mts_ultra_included_in_tarif_calls[:id])
+  @tc.add_grouped_service_category_tarif_class(_sctcg_own_country_calls_to_own_country_own_operator, scg_mts_everywhere_as_home_Ultra_calls[:id])
   @tc.add_one_service_category_tarif_class(_sctcg_own_country_calls_to_own_home_regions_own_operator, {}, 
     {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 0.0000000000})
 
 #Own country, Calls, Outcoming, to_own_home_regions, to_other_operator
-  @tc.add_grouped_service_category_tarif_class(_sctcg_own_country_calls_to_own_home_regions_not_own_operator, scg_mts_ultra_included_in_tarif_calls[:id])
+  @tc.add_grouped_service_category_tarif_class(_sctcg_own_country_calls_to_own_home_regions_not_own_operator, scg_mts_everywhere_as_home_Ultra_calls[:id])
   @tc.add_one_service_category_tarif_class(_sctcg_own_country_calls_to_own_home_regions_not_own_operator, {}, 
     {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 2.0000000000})
 
 #Own country, Calls, Outcoming, to_own_country, to_own_operator
-  @tc.add_grouped_service_category_tarif_class(_sctcg_own_country_calls_to_own_country_own_operator, scg_mts_ultra_included_in_tarif_calls[:id])
+  @tc.add_grouped_service_category_tarif_class(_sctcg_own_country_calls_to_own_country_own_operator, scg_mts_everywhere_as_home_Ultra_calls[:id])
   @tc.add_one_service_category_tarif_class(_sctcg_own_country_calls_to_own_country_own_operator, {}, 
     {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 0.0000000000})
 

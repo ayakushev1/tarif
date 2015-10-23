@@ -10,7 +10,7 @@
       :internet_smart => [_mts_mts_planshet, _mts_additional_internet_500_mb, _mts_additional_internet_1_gb, _mts_super_bit],
     :general_priority => _gp_tarif_option_without_limits,#_gp_tarif_option_with_limits,
     :other_tarif_priority => {:lower => [_mts_mini_bit, _mts_unlimited_internet_on_day], :higher => []},
-    :prerequisites => [],
+    :prerequisites => [_mts_mts_connect_4],
     :forbidden_tarifs => {:to_switch_on => [_mts_smart, _mts_smart_mini, _mts_smart_plus, _mts_ultra, _mts_mts_connect_4, _mts_smart_top, _mts_smart_nonstop], :to_serve => []},
     :multiple_use => false
   } } )
@@ -21,8 +21,7 @@
   @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => _stf_price_by_1_month, :price => 450.0})
 
 #Ежемесячная плата - скидка за подключение опции к тарифу Коннект
-  @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => _stf_price_by_1_month, :price => -50.0},
-    :tarif_set_must_include_tarif_options => [_mts_mts_connect_4] )
+  @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => _stf_price_by_1_month, :price => -50.0})
 
 #All Russia rouming, internet, with turbo-buttons
   category = {:name => '_sctcg_all_russia_rouming_internet', :service_category_rouming_id => _all_russia_rouming, :service_category_calls_id => _internet}

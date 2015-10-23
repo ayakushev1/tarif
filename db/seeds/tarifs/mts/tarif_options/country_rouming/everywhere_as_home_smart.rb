@@ -44,22 +44,22 @@
 #  @tc.add_only_service_category_tarif_class(_sctcg_one_time_tarif_switch_on)  
 
 #Ежемесячная плата
-  @tc.add_only_service_category_tarif_class(_sctcg_periodic_monthly_fee)  
+#  @tc.add_only_service_category_tarif_class(_sctcg_periodic_monthly_fee)  
  
 #Own country, Calls, Outcoming, to_own_home_regions, to_own_operator
-  category = {:name => '_sctcg_own_country_calls_to_own_home_regions_own_operator', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_own_operator}
-  @tc.add_only_service_category_tarif_class(category)  
+#  category = {:name => '_sctcg_own_country_calls_to_own_home_regions_own_operator', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_own_operator}
+#  @tc.add_only_service_category_tarif_class(category)  
 
 #Own country, Calls, Outcoming, to_own_home_regions, to_not_own_operator
-  category = {:name => '_sctcg_own_country_calls_to_own_home_regions_not_own_operator', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_not_own_operator}
-  @tc.add_only_service_category_tarif_class(category)  
+#  category = {:name => '_sctcg_own_country_calls_to_own_home_regions_not_own_operator', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_not_own_operator}
+#  @tc.add_only_service_category_tarif_class(category)  
 
 #Own country, Calls, Outcoming, to_own_country, to_own_operator
-  category = {:name => '_sctcg_own_country_calls_to_own_country_own_operator', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country, :service_category_partner_type_id => _service_to_own_operator}
-  @tc.add_only_service_category_tarif_class(category)  
+#  category = {:name => '_sctcg_own_country_calls_to_own_country_own_operator', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country, :service_category_partner_type_id => _service_to_own_operator}
+#  @tc.add_only_service_category_tarif_class(category)  
 
 #Own country, Internet
-  category = {:name => '_sctcg_own_home_regions_internet', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _internet}
-  @tc.add_only_service_category_tarif_class(category)  
+#  category = {:name => '_sctcg_own_home_regions_internet', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _internet}
+#  @tc.add_only_service_category_tarif_class(category)  
 
 @tc.add_tarif_class_categories

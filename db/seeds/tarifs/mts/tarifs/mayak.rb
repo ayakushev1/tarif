@@ -122,8 +122,6 @@
 
 #Tarif option MMS+ (discount 50%)
 #Другие mms категории должны иметь мешьший приоритет, или не пересекаться с опцией
-_sctcg_own_home_regions_mms_to_own_country_own_operator = { :name => '_sctcg_own_home_regions_mms_to_own_country_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _mms_out, :service_category_geo_id => _service_to_all_own_country_regions, :service_category_partner_type_id => _service_to_own_operator}
-_sctcg_intranet_rouming_mms_to_own_country_own_operator = { :name => '_sctcg_own_home_regions_mms_to_own_country_own_operator', :service_category_rouming_id => _intra_net_rouming, :service_category_calls_id => _mms_out, :service_category_geo_id => _service_to_all_own_country_regions, :service_category_partner_type_id => _service_to_own_operator}
 
 #Переход на тариф
   @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item_if_used, :price => 34.0},
@@ -134,11 +132,13 @@ _sctcg_intranet_rouming_mms_to_own_country_own_operator = { :name => '_sctcg_own
     :tarif_set_must_include_tarif_options => [_mts_mms_discount_50_percent] )
 
 #Own and home regions, mms, outcoming, to all own country regions, to own operator
-  @tc.add_one_service_category_tarif_class(_sctcg_own_home_regions_mms_to_own_country_own_operator, {}, {:standard_formula_id => _stf_price_by_count_volume_item, :price => 3.25},
+  category = { :name => '_sctcg_own_home_regions_mms_to_own_country_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _mms_out, :service_category_geo_id => _service_to_all_own_country_regions, :service_category_partner_type_id => _service_to_own_operator}
+  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_count_volume_item, :price => 3.25},
     :tarif_set_must_include_tarif_options => [_mts_mms_discount_50_percent] )
 
 #Intranet rouming, mms, outcoming, to all own country regions, to own operator
-  @tc.add_one_service_category_tarif_class(_sctcg_intranet_rouming_mms_to_own_country_own_operator, {}, {:standard_formula_id => _stf_price_by_count_volume_item, :price => 3.25},
+  category = { :name => '_sctcg_all_russia_rouming_mms_to_own_country_own_operator', :service_category_rouming_id => _all_russia_rouming, :service_category_calls_id => _mms_out, :service_category_geo_id => _service_to_all_own_country_regions, :service_category_partner_type_id => _service_to_own_operator}
+  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_count_volume_item, :price => 3.25},
     :tarif_set_must_include_tarif_options => [_mts_mms_discount_50_percent] )
 
 #enf_of MMS+

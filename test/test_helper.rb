@@ -5,7 +5,7 @@ require 'rails/test_help'
 #Dir[Rails.root.join("test/helpers/**/*.rb")].each { |f| require f }
 #Dir[Rails.root.join("lib/pages/**/*.rb")].each { |f| require f }
 #Rails.application.routes.eval_block( Proc.new { resources :tests } )  
-Dir[Rails.root.join("lib/calls/**/*.rb")].each { |f| require f }
+#Dir[Rails.root.join("lib/calls/**/*.rb")].each { |f| require f }
 Dir[Rails.root.join("db/seeds/definitions/*.rb")].sort.each { |f| require f }
 
 class ActionController::TestCase
@@ -24,7 +24,7 @@ class ActiveSupport::TestCase
       raise(StandardError, [a, string_to_eval])
     end
   end
-  include Devise::TestHelpers
+#  include Devise::TestHelpers
 #  include Warden::Test::Helpers
 #  Warden.test_mode!
 #  fixtures :all

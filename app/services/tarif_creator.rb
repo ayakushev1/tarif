@@ -143,13 +143,13 @@ class TarifCreator #ServiceHelper::TarifCreator
       "array_append(onetime.path, onetime.id) as category_onetime_ids",
       "array_append(periodic.path, periodic.id) as category_periodic_ids",
       ].join(', ')
-    Service::CategoryTarifClass.where(where_condition).
+    Service::CategoryTarifClass.select(fields).where(where_condition).
     joins('left outer join service_categories rouming on rouming.id =service_category_tarif_classes.service_category_rouming_id').
     joins('left outer join service_categories calls on calls.id =service_category_tarif_classes.service_category_calls_id').
     joins('left outer join service_categories onetime on onetime.id =service_category_tarif_classes.service_category_one_time_id').
     joins('left outer join service_categories periodic on periodic.id =service_category_tarif_classes.service_category_periodic_id').
 #    select(fields).distinct.to_sql
-    select(fields).distinct.all#pluck(fields)
+    distinct.all#pluck(fields)
   end
   
   def classify_service_parts(service_category_full_paths)
@@ -159,6 +159,7 @@ class TarifCreator #ServiceHelper::TarifCreator
       parts << classified_service_category[0].compact.join('/')
       parts_criteria << classified_service_category[1].compact
     end
+#    raise(StandardError, service_category_full_paths) #if classified_service_category[0].compact.join('/') == "own-country-rouming/mms"
 #    raise(StandardError, [parts.uniq, parts_criteria.uniq])
     [parts.uniq, parts_criteria.uniq]
   end    
@@ -170,13 +171,12 @@ class TarifCreator #ServiceHelper::TarifCreator
     classified_service_category_onetime = classify_service_category_onetime(service_category_full_path['category_onetime_ids'])
     classified_service_category_periodic = classify_service_category_periodic(service_category_full_path['category_periodic_ids'])
 
-    if classified_service_category_calls[0] != :'mms'
+#    if classified_service_category_calls[0] != :'mms'
       service_parts << classified_service_category_rouming[0]; service_parts_criteria = classified_service_category_rouming[1]
-    end 
+#    end 
     service_parts << classified_service_category_calls[0]; service_parts_criteria.merge!(classified_service_category_calls[1])
     service_parts << classified_service_category_onetime[0]; service_parts_criteria.merge!(classified_service_category_onetime[1]) 
     service_parts << classified_service_category_periodic[0]; service_parts_criteria.merge!(classified_service_category_periodic[1]) 
-
     [service_parts, service_parts_criteria]
   end
   
@@ -203,6 +203,7 @@ class TarifCreator #ServiceHelper::TarifCreator
     when rouming_service_category_full_path.include?(_all_world_rouming)
       [:'all-world-rouming', {:service_category_rouming_id => _all_world_rouming}]
     else
+#      [:'all-world-rouming', {:service_category_rouming_id => _all_world_rouming}]
       [nil, {}]
     end
   end

@@ -15,10 +15,10 @@
   
 #Добавление новых service_category_group
   #internet included in tarif
-scg_mts_additional_internet_5_gb_for_smart = @tc.add_service_category_group(
-    {:name => 'scg_mts_additional_internet_5_gb_for_smart' }, 
-    {:name => "price for scg_mts_additional_internet_5_gb_for_smart"}, 
-    {:calculation_order => 0, :price => 450.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_mts_additional_internet_5_gb_for_smart', :description => '', 
+scg_mts_turbo_button_5_gb_for_smart = @tc.add_service_category_group(
+    {:name => 'scg_mts_turbo_button_5_gb_for_smart' }, 
+    {:name => "price for scg_mts_turbo_button_5_gb_for_smart"}, 
+    {:calculation_order => 0, :price => 450.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_mts_turbo_button_5_gb_for_smart', :description => '', 
      :formula => {
        :window_condition => "(5000.0 >= sum_volume)", :window_over => 'month',
        :stat_params => {:sum_volume => "sum((description->>'volume')::float)"},
@@ -34,11 +34,11 @@ scg_mts_additional_internet_5_gb_for_smart = @tc.add_service_category_group(
 
 #Own and home regions, Internet
   category = {:name => '_sctcg_own_home_regions_internet', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _internet}
-  @tc.add_grouped_service_category_tarif_class(category, scg_mts_additional_internet_5_gb_for_smart[:id])
+  @tc.add_grouped_service_category_tarif_class(category, scg_mts_turbo_button_5_gb_for_smart[:id])
 
 #Own country, Internet
   category = {:name => 'own_country_internet', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _internet}
-  @tc.add_grouped_service_category_tarif_class(category, scg_mts_additional_internet_5_gb_for_smart[:id], 
+  @tc.add_grouped_service_category_tarif_class(category, scg_mts_turbo_button_5_gb_for_smart[:id], 
     :tarif_set_must_include_tarif_options => [_mts_everywhere_as_home_smart] )
 @tc.add_tarif_class_categories
 

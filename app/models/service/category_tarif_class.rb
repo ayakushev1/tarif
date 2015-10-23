@@ -35,6 +35,7 @@ class Service::CategoryTarifClass < ActiveRecord::Base
   belongs_to :as_standard_category_group, :class_name =>'Service::CategoryGroup', :foreign_key => :as_standard_category_group_id
   belongs_to :tarif_class, :class_name =>'TarifClass', :foreign_key => :tarif_class_id
   has_many :price_list, :class_name => '::PriceList', :foreign_key => :service_category_tarif_class_id
+  has_many :group_price_list, :class_name => '::PriceList', :foreign_key => :as_tarif_class_service_category_id
 #  belongs_to :tarif_option, :class_name =>'TarifClass', :foreign_key => :tarif_option_id
 
   def self.active; where(:is_active => true); end

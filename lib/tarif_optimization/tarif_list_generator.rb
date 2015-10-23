@@ -156,8 +156,8 @@ class TarifOptimization::TarifListGenerator
       @uniq_parts_by_operator[operator] ||= []; @uniq_parts_criteria_by_operator[operator] ||= []
       services.each do |service|
 #TODO убрать дублирование по parts_criteria в calls_stat_calculator
-        @uniq_parts_by_operator[operator] += (dependencies[service]['parts'] & all_parts) - @uniq_parts_by_operator[operator]; 
-        @uniq_parts_criteria_by_operator[operator] += dependencies[service]['parts_criteria'] - @uniq_parts_criteria_by_operator[operator]
+        @uniq_parts_by_operator[operator] += ((dependencies[service] || {})['parts'] & all_parts) - @uniq_parts_by_operator[operator]; 
+        @uniq_parts_criteria_by_operator[operator] += (dependencies[service] || {})['parts_criteria'] - @uniq_parts_criteria_by_operator[operator]
       end
     end
   end

@@ -1,7 +1,7 @@
 class TarifSeedTester
   attr_reader :tarif_optimizator
   def initialize(options = {})
-    @tarif_optimizator = TarifOptimization::TarifOptimizator.new(options)
+    @tarif_optimizator = ::TarifOptimization::TarifOptimizator.new(options)
   end
   
   def load_tarif(tarif_file_name)
