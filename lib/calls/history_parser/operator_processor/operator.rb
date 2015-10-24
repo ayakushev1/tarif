@@ -192,9 +192,10 @@ class Calls::HistoryParser::OperatorProcessor::Operator
     end
   end
   
-  def check_if_table_correct(table_heads)
-    return false if table_heads != correct_table_heads
-    return  false if row_column_index(table_heads).values.include?(nil)
+  def check_if_table_correct(table_heads, file_processor_type)
+    return false if table_heads != correct_table_heads[file_processor_type]
+    return  false if row_column_index(table_heads, file_processor_type).values.include?(nil)
+#    raise(StandardError)
     true 
   end
   

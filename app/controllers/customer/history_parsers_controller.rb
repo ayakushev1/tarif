@@ -31,6 +31,7 @@ class Customer::HistoryParsersController < ApplicationController
   def upload
     message = upload_file(params[:call_history])
     if message[:file_is_good] == true
+#      raise(StandardError, message)
       background_parser_processor(:parse_uploaded_file, params[:call_history])
     else
       redirect_to( {:action => :prepare_for_upload}, {:alert => message})  

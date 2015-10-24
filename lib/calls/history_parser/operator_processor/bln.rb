@@ -131,33 +131,52 @@ class Calls::HistoryParser::OperatorProcessor::Bln < Calls::HistoryParser::Opera
     begin
       result = row[row_column_index[:date]].to_datetime if row[row_column_index[:date]]
       result = "invalid_date" if !result
-    rescue ArgumentError
+    rescue StandardError
       result = "invalid_date"
     end    
     result
   end
   
   def correct_table_heads
-    ["Дата и время", "Исходящий номер", "Входящий номер", "Услуга", 
-      "Описание услуги", "Тип услуги", "Длительность, мин сек", "Стоимость. руб", "Размер сессии. МБ"]
-  end
-  
-  def row_column_index(table_heads = [])
-    @row_column_index ||= {
-      :date => table_heads.index("Дата и время"),
-      :time => table_heads.index("Дата и время"),
-#      :gmt => table_heads.index("GMT*"),
-      :number_init => table_heads.index("Исходящий номер"),
-      :number_called => table_heads.index("Входящий номер"),
-      :service => table_heads.index("Тип услуги"),
-      :call_type => table_heads.index("Описание услуги"),
-      :cost => table_heads.index("Стоимость. руб"),
-      :duration => table_heads.index("Длительность, мин сек"),
-      :volume => table_heads.index("Размер сессии. МБ"),      
-#      :bs_number => table_heads.index("Номер БС"),
+    {
+      :html => ["Дата и время", "Исходящий номер", "Входящий номер", "Услуга", "Описание услуги", "Тип услуги", "Длительность, мин сек", "Стоимость. руб", "Размер сессии. МБ"],
+      :xls => ["Дата и время", "Исходящий номер", "Входящий номер", "Услуга", "Описание услуги", "Тип услуги", "Длительность, мин сек", "Стоимость. руб", "Размер сессии. МБ"]
     }
   end
   
+  def row_column_index(table_heads = [], file_processor_type = nil)
+    @row_column_index ||= case file_processor_type
+    when :xls
+      {
+        :date => table_heads.index("Дата и время"),
+        :time => table_heads.index("Дата и время"),
+  #      :gmt => table_heads.index("GMT*"),
+        :number_init => table_heads.index("Исходящий номер"),
+        :number_called => table_heads.index("Входящий номер"),
+        :service => table_heads.index("Тип услуги"),
+        :call_type => table_heads.index("Описание услуги"),
+        :cost => table_heads.index("Стоимость. руб"),
+        :duration => table_heads.index("Длительность, мин сек"),
+        :volume => table_heads.index("Размер сессии. МБ"),      
+  #      :bs_number => table_heads.index("Номер БС"),
+      }
+    else # :html
+      {
+        :date => table_heads.index("Дата и время"),
+        :time => table_heads.index("Дата и время"),
+  #      :gmt => table_heads.index("GMT*"),
+        :number_init => table_heads.index("Исходящий номер"),
+        :number_called => table_heads.index("Входящий номер"),
+        :service => table_heads.index("Тип услуги"),
+        :call_type => table_heads.index("Описание услуги"),
+        :cost => table_heads.index("Стоимость. руб"),
+        :duration => table_heads.index("Длительность, мин сек"),
+        :volume => table_heads.index("Размер сессии. МБ"),      
+  #      :bs_number => table_heads.index("Номер БС"),
+       }
+     end
+  end
+
   def table_filtrs
     {
       :xls => {

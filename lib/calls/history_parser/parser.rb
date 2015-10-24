@@ -12,7 +12,7 @@ class Calls::HistoryParser::Parser
     @background_process_informer = parsing_params[:background_process_informer] || Customer::BackgroundStat::Informer.new('parsing_uploaded_file', user_params[:user_id])
   end
   
-  def parse
+  def check_if_file_is_good
     @message = {:file_is_good => false, 'message' => "Не загружен файл"}
     return message unless call_history_file
 
@@ -21,9 +21,18 @@ class Calls::HistoryParser::Parser
     return message if table_heads_row == -2
 
     table_heads = file_processer.table_heads(operator_processer.table_filtrs)
-    @message = {:file_is_good => false, 'message' => "Неправильный формат выписки"}
-#    raise(StandardError, operator_processer.check_if_table_correct(table_heads))
-    return message unless operator_processer.check_if_table_correct(table_heads)
+    @message = {:file_is_good => false, 'message' => "Неправильный формат выписки 2"}
+    return message unless operator_processer.check_if_table_correct(table_heads, file_processer.processor_type)
+        
+    @message = {:file_is_good => true, 'message' => nil}
+    return message 
+  end
+  
+  def parse
+#    check_if_file_is_good
+    table_heads_row = file_processer.table_heads_row(operator_processer.table_filtrs, operator_processer.correct_table_heads)
+    table_heads = file_processer.table_heads(operator_processer.table_filtrs)
+    operator_processer.check_if_table_correct(table_heads, file_processer.processor_type)
     
     max_row_number = parsing_params[:call_history_max_line_to_process]
     background_process_informer.init(0.0, max_row_number) if background_process_informer

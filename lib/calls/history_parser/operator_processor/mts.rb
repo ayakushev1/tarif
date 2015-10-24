@@ -39,9 +39,9 @@ class Calls::HistoryParser::OperatorProcessor::Mts < Calls::HistoryParser::Opera
   def rouming_criteria(rouming, row, region_id, home_region_id)
     case rouming
     when :own_region
-      row[row_column_index[:rouming]].blank?      
+      row[row_column_index[:rouming]].blank? 
     when :home_region
-      row[row_column_index[:rouming]] =~ /Домашний/
+      row[row_column_index[:rouming]] =~ /Домашний|Москва - Область|Города Подмосковья/
     when :own_country
       (region_id and (region_id != home_region_id))
     when :international
@@ -102,26 +102,52 @@ class Calls::HistoryParser::OperatorProcessor::Mts < Calls::HistoryParser::Opera
   
   def row_date(row)
 #    raise(StandardError)
-    "#{row[row_column_index[:date]]} #{row[row_column_index[:time]]} #{row[row_column_index[:gmt]]}".to_datetime
+    result = nil
+    begin
+      result = "#{row[row_column_index[:date]]} #{row[row_column_index[:time]]} #{row[row_column_index[:gmt]]}".to_datetime
+      result = "invalid_date" if !result
+    rescue StandardError
+      result = "invalid_date"
+    end    
+    result    
   end
   
   def correct_table_heads
-    ["", "Дата", "Время", "GMT*", "Номер", "Зона вызова", "Зона направления вызова/номер сессии", "Услуга", " ", "Длительность/Объем (мин.:сек.)/(Kb)", "Стоимость руб.", ""]
+    {
+      :html => ["", "Дата", "Время", "GMT*", "Номер", "Зона вызова", "Зона направления вызова/номер сессии", "Услуга", " ", "Длительность/Объем (мин.:сек.)/(Kb)", "Стоимость руб.", ""],
+      :xls => ["Дата", "Время", "GMT*", "Номер", "Зона вызова", "Зона направления вызова/номер сессии", "Услуга", "", "Длительность", "Стоимость без НДС"]
+    }    
   end
   
-  def row_column_index(table_heads = [])
-    @row_column_index ||= {
-      :date => table_heads.index("Дата"),
-      :time => table_heads.index("Время"),
-      :gmt => table_heads.index("GMT*"),
-      :number => table_heads.index("Номер"),
-      :rouming => table_heads.index("Зона вызова"),
-      :partner => table_heads.index("Зона направления вызова/номер сессии"),
-      :service => table_heads.index("Услуга"),
-      :special => table_heads.index(" "),
-      :duration => table_heads.index("Длительность/Объем (мин.:сек.)/(Kb)"),
-      :cost => table_heads.index("Стоимость руб."),
-    }
+  def row_column_index(table_heads = [], file_processor_type = nil)
+    @row_column_index ||= case file_processor_type
+    when :html
+      {
+        :date => table_heads.index("Дата"),
+        :time => table_heads.index("Время"),
+        :gmt => table_heads.index("GMT*"),
+        :number => table_heads.index("Номер"),
+        :rouming => table_heads.index("Зона вызова"),
+        :partner => table_heads.index("Зона направления вызова/номер сессии"),
+        :service => table_heads.index("Услуга"),
+        :special => table_heads.index(" "),
+        :duration => table_heads.index("Длительность/Объем (мин.:сек.)/(Kb)"),
+        :cost => table_heads.index("Стоимость руб."),
+      }
+    else # :xls
+      {
+        :date => table_heads.index("Дата"),
+        :time => table_heads.index("Время"),
+        :gmt => table_heads.index("GMT*"),
+        :number => table_heads.index("Номер"),
+        :rouming => table_heads.index("Зона вызова"),
+        :partner => table_heads.index("Зона направления вызова/номер сессии"),
+        :service => table_heads.index("Услуга"),
+        :special => table_heads.index(""),
+        :duration => table_heads.index("Длительность"),
+        :cost => table_heads.index("Стоимость без НДС"),
+       }
+     end
   end
   
   def table_filtrs

@@ -4,9 +4,11 @@ require 'roo'
 class Calls::HistoryParser::FileProcessor::Xls
   attr_reader :call_history_file
   attr_reader :doc, :table_heads
+  attr_reader :processor_type
 
   def initialize(call_history_file)
     @call_history_file = call_history_file
+    @processor_type = :xls
     @doc = case file_type(@call_history_file)
     when 'xls'
       Roo::Spreadsheet.open(@call_history_file.path, extension: :xls)
@@ -16,7 +18,7 @@ class Calls::HistoryParser::FileProcessor::Xls
   end
 
   def table_body(table_filtrs = {}) #doc_sheet
-    @table_body ||= doc.sheet(table_filtrs[:xls][:body])
+    @table_body ||= doc.sheet(table_filtrs[processor_type][:body])
   end
   
   def table_heads(table_filtrs)
@@ -34,12 +36,13 @@ class Calls::HistoryParser::FileProcessor::Xls
     max_search_row = 10
     i = table_body(table_filtrs).first_row
     while (i < max_search_row)
-      if table_body(table_filtrs).row(i) == correct_table_heads
+      if table_body(table_filtrs).row(i) == correct_table_heads[processor_type]
         @table_heads_row = i
         break
       end
       i += 1
     end
+#    raise(StandardError)
     @table_heads_row 
   end
   

@@ -78,7 +78,7 @@ class Calls::HistoryParser::OperatorProcessor::Megafon < Calls::HistoryParser::O
         {:service => /Исходящее SMS|Входящее SMS/i},
       ],
       _mms => [
-        {:service => /mms/i},
+        {:service => /Исходящее MMS|Входящее MMS|mms/i},
       ],
       _3g => [
         {:service => /Мобильный интернет|Данные|HSDPA \(3G\)|gprs|4G/i},
@@ -92,10 +92,10 @@ class Calls::HistoryParser::OperatorProcessor::Megafon < Calls::HistoryParser::O
   def base_subservice_criteria
     {
       _inbound => [
-        {:service => /с мобильных номеров|Входящий|Входящее SMS|С МегаФон|С номеров МегаФон|С номеров Единой сети МегаФон/i}
+        {:service => /с мобильных номеров|Входящий|Входящее SMS|Входящее MMS|С МегаФон|С номеров МегаФон|С номеров Единой сети МегаФон/i}
       ],
       _outbound => [
-        {:service => /на мобильные номера|Исходящий|Исходящее SMS|На МегаФон|На номера МегаФон|На номера Единой сети МегаФон|Исх\./i}
+        {:service => /на мобильные номера|Исходящий|Исходящее SMS|Исходящее MMS|На МегаФон|На номера МегаФон|На номера Единой сети МегаФон|Исх\./i}
       ],
       _unspecified_direction => [
         {:service => /Мобильный интернет|Данные|HSDPA \(3G\)|gprs|4G/i}
@@ -125,7 +125,7 @@ class Calls::HistoryParser::OperatorProcessor::Megafon < Calls::HistoryParser::O
 #      date += 2000 if date.year < 1000
       result = "#{date} #{row[row_column_index[:time]]}}".to_datetime
       result = "invalid_date" if !result
-    rescue ArgumentError
+    rescue StandardError
       result = "invalid_date"
     end    
     result
@@ -133,12 +133,17 @@ class Calls::HistoryParser::OperatorProcessor::Megafon < Calls::HistoryParser::O
   end
 
   def correct_table_heads
-    ["Дата", "Время", "Абонентский номер, адрес электронной почты, точка доступа", "Прод/ Объем", "Единица тарификации (мин, сек, шт, Kb, Mb)",
-      "Вид услуги",  "Место вызова",  "Стоимость (с НДС),  руб."]
+    {
+      :html => ["Дата", "Время", "Абонентский номер, адрес электронной почты, точка доступа", "Прод/ Объем", "Единица тарификации (мин, сек, шт, Kb, Mb)", "Вид услуги",  "Место вызова",  "Стоимость (с НДС),  руб."],
+      :xls => ["Дата", "Время", "Абонентский номер, адрес электронной почты, точка доступа", "Прод/ Объем", "Единица тарификации (мин, сек, шт, Kb, Mb)", "Вид услуги",  "Место вызова",  "Стоимость (с НДС),  руб."]
+    }    
   end
   
-  def row_column_index(table_heads = [])
-    @row_column_index ||= {
+
+  def row_column_index(table_heads = [], file_processor_type = nil)
+    @row_column_index ||= case file_processor_type
+    when :html
+      {
       :date => table_heads.index("Дата"),
       :time => table_heads.index("Время"),
       :number => table_heads.index("Абонентский номер, адрес электронной почты, точка доступа"),
@@ -147,9 +152,21 @@ class Calls::HistoryParser::OperatorProcessor::Megafon < Calls::HistoryParser::O
       :duration => table_heads.index("Прод/ Объем"),
       :tarification_unit => table_heads.index("Единица тарификации (мин, сек, шт, Kb, Mb)"),
       :cost => table_heads.index("Стоимость (с НДС),  руб."),
-    }
+      }
+    else # :xls
+      {
+      :date => table_heads.index("Дата"),
+      :time => table_heads.index("Время"),
+      :number => table_heads.index("Абонентский номер, адрес электронной почты, точка доступа"),
+      :rouming => table_heads.index("Место вызова"),
+      :service => table_heads.index("Вид услуги"),
+      :duration => table_heads.index("Прод/ Объем"),
+      :tarification_unit => table_heads.index("Единица тарификации (мин, сек, шт, Kb, Mb)"),
+      :cost => table_heads.index("Стоимость (с НДС),  руб."),
+       }
+     end
   end
-  
+
   def table_filtrs
     {
       :html => {

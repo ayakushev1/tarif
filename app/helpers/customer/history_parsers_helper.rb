@@ -77,6 +77,7 @@ module Customer::HistoryParsersHelper
   end
   
   def parse_file(file)
+    file.rewind if file.eof?
     parser = Calls::HistoryParser::Parser.new(file, user_params, parsing_params)
     message = parser.parse
 
@@ -88,6 +89,7 @@ module Customer::HistoryParsersHelper
   end
   
   def upload_file(uploaded_call_history_file)
+#    raise(StandardError, check_uploaded_call_history_file(uploaded_call_history_file))
     uploaded_call_history_file ? check_uploaded_call_history_file(uploaded_call_history_file) : {:file_is_good => false, 'message' => "Вы не выбрали файл для загрузки"}
   end
   
@@ -108,7 +110,11 @@ module Customer::HistoryParsersHelper
     
     message = "Тип файла не совпадает с разрешенным типом файла для оператора: МТС и Мегафон - html, МТС и Билайн - xls или xlsx"
     return result = {:file_is_good => false, 'message' => message} if !check_if_file_type_match_with_operator(file_type)
-
+    
+    call_history_file.rewind if call_history_file.eof?
+    result = Calls::HistoryParser::Parser.new(call_history_file, user_params, parsing_params).check_if_file_is_good
+#    result = {:file_is_good => false, 'message' => message}
+    
     result
   end
   
