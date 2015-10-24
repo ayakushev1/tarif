@@ -17,7 +17,7 @@
   @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 15.00})  
 
 #SIC, calls, outcoming, to Russia, to all operators
-  category = {:name => '_sctcg_SIC_calls_to_all_own_country_regions', :service_category_rouming_id => _sc_tele_sic_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country}
+  category = {:name => '_sctcg_SIC_calls_to_all_own_country_regions', :service_category_rouming_id => _sc_tele_sic_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_russia}
   @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 15.00})  
 
 #SIC, calls, outcoming, to rouming country
@@ -70,7 +70,7 @@
   @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 15.00})  
 
 #Europe, calls, outcoming, to Russia, to all operators
-  category = {:name => '_sctcg_europe_calls_to_all_own_country_regions', :service_category_rouming_id => _sc_tele_europe_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country}
+  category = {:name => '_sctcg_europe_calls_to_all_own_country_regions', :service_category_rouming_id => _sc_tele_europe_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_russia}
   @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 15.00})  
 
 #Europe, calls, outcoming, to rouming country
@@ -123,7 +123,7 @@
   @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 35.0})  
 
 #Asia, Africa and Australia, calls, outcoming, to Russia, to all operators
-  category = {:name => '_sctcg_asia_afr_aust_calls_to_all_own_country_regions', :service_category_rouming_id => _sc_tele_asia_afr_aust_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country}
+  category = {:name => '_sctcg_asia_afr_aust_calls_to_all_own_country_regions', :service_category_rouming_id => _sc_tele_asia_afr_aust_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_russia}
   @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 35.0})  
 
 #Asia, Africa and Australia, calls, outcoming, to rouming country
@@ -175,7 +175,7 @@
   @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 65.0})  
 
 #South and North America, calls, outcoming, to Russia, to all operators
-  category = {:name => '_sctcg_americas_calls_to_all_own_country_regions', :service_category_rouming_id => _sc_tele_americas_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country}
+  category = {:name => '_sctcg_americas_calls_to_all_own_country_regions', :service_category_rouming_id => _sc_tele_americas_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_russia}
   @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 65.0})  
 
 #South and North America, calls, outcoming, to rouming country
