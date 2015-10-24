@@ -6,6 +6,6 @@
 
 <%= render :partial => 'customer/optimization_results/results_for_customer/service_sets', :layout => 'application/layouts/model_table', :locals => {:table => customer_service_sets}%>
 
-<%= render :partial => 'customer/optimization_results/results_for_customer/results_for_customer_tab', :layout => 'application/layouts/tabs', 
-      :locals => {:name => 'results_for_customer_tab', :active => session[:current_tabs_page]['results_for_customer_tab'].to_i} %>
+<%= render :partial => 'customer/optimization_results/results_for_customer/results_for_customer', :layout => 'application/layouts/tabs', 
+      :locals => {:name => 'results_for_customer', :active => session[:current_tabs_page]['results_for_customer'].to_i} %>
       
