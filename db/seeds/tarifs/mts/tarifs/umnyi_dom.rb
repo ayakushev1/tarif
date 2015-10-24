@@ -8,7 +8,6 @@
     :incompatibility => {}, #{group_name => [tarif_class_ids]}
     :general_priority => _gp_tarif_with_limits,
     :other_tarif_priority => {:lower => [], :higher => []},
-    :is_archived => true,
     :prerequisites => [],
     :is_archived => true,
     :multiple_use => false
