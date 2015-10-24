@@ -15,11 +15,11 @@ class Customer::Info::CallsParsingParams < ActiveType::Record[Customer::Info]
   end
 
   def self.info(user_id)
-    where(:user_id => user_id).first.info
+    where(:user_id => user_id).first_or_create(:info => default_values).info
   end
   
   def self.update_info(user_id, values)
-    where(:user_id => user_id).first.update(:info => values)
+    where(:user_id => user_id).first_or_create(:info => default_values).update(:info => values)
   end
   
   def self.default_values

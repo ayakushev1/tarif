@@ -14,15 +14,15 @@ class Customer::Info::ServicesUsed < ActiveType::Record[Customer::Info]
     where(:info_type_id => 3)
   end
   
-  def self.info(user_id)
-    where(:user_id => user_id).first.info
+  def self.info(user_id) 
+    where(:user_id => user_id).first_or_create(:info => default_values).info
   end
 
   def self.update_free_trials_by_cash_amount(user_id, cash)
     update_amount = (cash / 95).to_i
     existing_info = info(user_id)
     
-    where(:user_id => user_id).first.update(:info => {
+    where(:user_id => user_id).first_or_create(:info => default_values).update(:info => {
       'calls_modelling_count' => (existing_info['calls_modelling_count'] || 0) + update_amount * values_for_payment['calls_modelling_count'], 
       'calls_parsing_count' => (existing_info['calls_parsing_count'] || 0) + update_amount * values_for_payment['calls_parsing_count'], 
       'tarif_optimization_count' => (existing_info['tarif_optimization_count'] || 0) + update_amount * values_for_payment['tarif_optimization_count'],

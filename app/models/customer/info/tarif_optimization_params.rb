@@ -15,11 +15,11 @@ class Customer::Info::TarifOptimizationParams < ActiveType::Record[Customer::Inf
   end
 
   def self.info(user_id)
-    where(:user_id => user_id).first.info
+    where(:user_id => user_id).first_or_create(:info => default_values).info
   end
   
   def self.update_info(user_id, values)
-    where(:user_id => user_id).first.update(:info => values)
+    where(:user_id => user_id).first_or_create(:info => default_values).update(:info => values)
   end
   
   def self.default_values
@@ -34,7 +34,7 @@ class Customer::Info::TarifOptimizationParams < ActiveType::Record[Customer::Inf
       'analyze_query_constructor_performance' => 'false',
       'save_interim_results_after_calculating_tarif_results' => 'false',
   #        'save_interim_results_after_calculating_final_tarif_sets' => 'false',
-      'service_ids_batch_size' => 10,
+      'service_ids_batch_size' => 5,
       'use_short_tarif_set_name' => 'true',
       'show_zero_tarif_result_by_parts' => 'false',
       'if_update_tarif_sets_to_calculate_from_with_cons_tarif_results' => 'true',
