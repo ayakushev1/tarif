@@ -64,7 +64,7 @@ category = {:name => '_sctcg_own_home_regions_calls_to_own_country_own_operator'
 #Own and home regions, Calls, Outcoming, to_own_country, to_not_own_operator
 category = {:name => '_sctcg_own_home_regions_calls_to_own_country_not_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country, :service_category_partner_type_id => _service_to_not_own_operator}
   @tc.add_grouped_service_category_tarif_class(category, scg_tele_most_black_calls[:id])
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 1.5 })
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 1.5 })
 
 #Own and home regions, sms, incoming
 category = {:name => '_sctcg_own_home_regions_sms_incoming', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _sms_in}
@@ -78,7 +78,7 @@ category = {:name => '_sctcg_own_home_regions_sms_to_own_home_regions', :service
 #Own and home regions, sms, Outcoming, to_own country
 category = {:name => '_sctcg_own_home_regions_sms_to_own_country', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_own_country}
   @tc.add_grouped_service_category_tarif_class(category, scg_tele_most_black_sms[:id])
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_count_volume_item, :price => 2.5})
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_count_volume_item, :price => 2.5})
 
 
 #Own and home regions, mms, incoming
