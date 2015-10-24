@@ -33,13 +33,14 @@ class Calls::HistoryParser::Parser
     table_heads_row = file_processer.table_heads_row(operator_processer.table_filtrs, operator_processer.correct_table_heads)
     table_heads = file_processer.table_heads(operator_processer.table_filtrs)
     operator_processer.check_if_table_correct(table_heads, file_processer.processor_type)
+    call_details_doc = file_processer.table_body(operator_processer.table_filtrs)
     
-    max_row_number = parsing_params[:call_history_max_line_to_process]
+    max_row_number = [parsing_params[:call_history_max_line_to_process],  file_processer.table_body_size].min
+#    raise(StandardError, max_row_number)
     background_process_informer.init(0.0, max_row_number) if background_process_informer
     update_step = [parsing_params[:background_update_frequency], 1].max
     
-    call_details_doc = file_processer.table_body(operator_processer.table_filtrs)
-    
+
     i = 0; doc_i = table_heads_row + 1
     
     while call_details_doc and i < max_row_number

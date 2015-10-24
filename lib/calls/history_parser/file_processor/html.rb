@@ -14,12 +14,12 @@ class Calls::HistoryParser::FileProcessor::Html
     end    
   end
   
-  def table_body(table_filtrs)
+  def table_body(table_filtrs = {})
     @table_body ||= doc.css(table_filtrs[processor_type][:body])
   end
-  
-  def table_body_size(table_filtrs)
-    @table_body_size ||= table_body(table_filtrs).size
+
+  def table_body_size
+    table_body.size
   end
   
   def table_heads(table_filtrs)
@@ -46,7 +46,7 @@ class Calls::HistoryParser::FileProcessor::Html
     result
   end
 
-  def table_heads_row(table_filtrs, correct_table_heads = nil)
+  def table_heads_row(table_filtrs = {}, correct_table_heads = nil)
     -1
   end  
 end
