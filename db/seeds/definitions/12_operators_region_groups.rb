@@ -45,7 +45,7 @@ _tele_own_country_rouming_1 = [_altai_region, _barnaul, _amur_region, _blagovesh
     _penza_region, _permsk_region, _primorsk_region, _altai_republik, _bashkorostan_region, _buryatia_region, _dagestan_region, _ingushetia_region, 
     _kalmykia_region, _maryi_el_region, _mordovia_region, _yakutia_region, _yuznaya_osetia_region, _tatarstan_region, _tyva_tuva_region, 
     _hakasia_region, _samara_region, _saratov_region, _sverdlovsk_region, _stavropol_region, _tumen_region, _ulyanovsk_region, _habarovsk_region, 
-    _hanty_mansiisk_region, _chechen_region, _chuvashia_region, _yaroslav_region]
+    _hanty_mansiisk_region, _chechen_region, _chuvashia_region, _yaroslav_region, _piter, _piter_region]
 
 _tele_own_country_rouming_2 = [_arhangelsk_region, _arhangelsk, _belgorod_region, _bryansk_region, _vladimir_region, _vologda_region, _voroneg_region, 
     _birobidgan_region, _kaliningrad_region, _kaluga_region, _kamhatsky_region, _kemerovo_region, _kirov_region, _kostroma_region, _krasnodar_region,

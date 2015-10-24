@@ -22,6 +22,13 @@ rln << {:id => 2003, :type_id => _operator_home_regions, :owner_id => _mts, :par
 rln << {:id => 2004, :type_id => _operator_home_regions, :owner_id => _mts, :parent_id => _ekaterin, :children => [_ekaterin_region],:name => 'MTS, Ekaterinburg home regions'}
 rln << {:id => 2005, :type_id => _operator_home_regions, :owner_id => _mts, :parent_id => _ekaterin_region, :children => [_ekaterin],:name => 'MTS, Ekaterinburg region home regions'}
 
+rln << {:id => 3000, :type_id => _operator_home_regions, :owner_id => _tele_2, :parent_id => _moscow, :children => [_moscow_region],:name => 'Теле2, Moscow home regions'}
+rln << {:id => 3001, :type_id => _operator_home_regions, :owner_id => _tele_2, :parent_id => _moscow_region, :children => [_moscow],:name => 'Теле2, Moscow region home regions'}
+rln << {:id => 3002, :type_id => _operator_home_regions, :owner_id => _tele_2, :parent_id => _piter, :children => [_piter_region],:name => 'Теле2, Piter home regions'}
+rln << {:id => 3003, :type_id => _operator_home_regions, :owner_id => _tele_2, :parent_id => _piter_region, :children => [_piter],:name => 'Теле2, Piter region home regions'}
+rln << {:id => 3004, :type_id => _operator_home_regions, :owner_id => _tele_2, :parent_id => _ekaterin, :children => [_ekaterin_region],:name => 'Теле2, Ekaterinburg home regions'}
+rln << {:id => 3005, :type_id => _operator_home_regions, :owner_id => _tele_2, :parent_id => _ekaterin_region, :children => [_ekaterin],:name => 'Теле2, Ekaterinburg region home regions'}
+
 rln << {:id => 9000, :type_id => _operator_country_groups, :owner_id => nil, :parent_id => _world, :children => _world_countries_without_russia,:name => 'World'}
 rln << {:id => 9001, :type_id => _operator_country_groups, :owner_id => nil, :parent_id => _europe, :children => _europe_countries_without_russia,:name => 'Europe'}
 rln << {:id => 9002, :type_id => _operator_country_groups, :owner_id => nil, :parent_id => _asia, :children => _asia_countries,:name => 'Asia'}

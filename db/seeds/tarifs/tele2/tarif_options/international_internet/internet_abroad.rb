@@ -1,7 +1,7 @@
 #Свободное путешествие
 @tc = TarifCreator.new(_tele_2)
 @tc.create_tarif_class({
-  :id => _tele_internet_abroad, :name => 'Интернет за рубежом', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _special_service,
+  :id => _tele_internet_abroad, :name => 'Интернет за рубежом', :operator_id => _tele_2, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://msk.tele2.ru/roaming/skidki/internet-za-rubezhom/'},
   :dependency => {
     :categories => [_tcgsc_calls],
@@ -15,7 +15,7 @@
 
 
 #SIC
-  category = {:name => '_sctcg_tele_internet_abroad', :service_category_rouming_id => _sc_tele_sic_rouming, :service_category_calls_id => _calls_in}
+  category = {:name => '_sctcg_tele_internet_abroad', :service_category_rouming_id => _sc_tele_sic_rouming, :service_category_calls_id => _internet}
   @tc.add_one_service_category_tarif_class(category, {}, 
     {:calculation_order => 0, :price => 10.00, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => '_stf_bit_abrod_1_rouming_internet', :description => '', 
      :formula => {
@@ -29,7 +29,7 @@
          :method => "price_formulas.price * tarif_option_count_of_usage" } } } )
 
 #Europe
-  category = {:name => '_sctcg_tele_internet_abroad', :service_category_rouming_id => _sc_tele_europe_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_russia}
+  category = {:name => '_sctcg_tele_internet_abroad', :service_category_rouming_id => _sc_tele_europe_rouming, :service_category_calls_id => _internet}
   @tc.add_one_service_category_tarif_class(category, {}, 
     {:calculation_order => 0, :price => 10.00, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => '_stf_bit_abrod_1_rouming_internet', :description => '', 
      :formula => {
@@ -43,7 +43,7 @@
          :method => "price_formulas.price * tarif_option_count_of_usage" } } } )
 
 #Asia, Africa and Australia
-  category = {:name => '_sctcg_tele_internet_abroad', :service_category_rouming_id => _sc_tele_asia_afr_aust_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_russia}
+  category = {:name => '_sctcg_tele_internet_abroad', :service_category_rouming_id => _sc_tele_asia_afr_aust_rouming, :service_category_calls_id => _internet}
   @tc.add_one_service_category_tarif_class(category, {}, 
     {:calculation_order => 0, :price => 30.00, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => '_stf_bit_abrod_1_rouming_internet', :description => '', 
      :formula => {
@@ -57,7 +57,7 @@
          :method => "price_formulas.price * tarif_option_count_of_usage" } } } )
 
 #South and North America
-  category = {:name => '_sctcg_tele_internet_abroad', :service_category_rouming_id => _sc_tele_americas_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_russia}
+  category = {:name => '_sctcg_tele_internet_abroad', :service_category_rouming_id => _sc_tele_americas_rouming, :service_category_calls_id => _internet}
   @tc.add_one_service_category_tarif_class(category, {}, 
     {:calculation_order => 0, :price => 30.00, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => '_stf_bit_abrod_1_rouming_internet', :description => '', 
      :formula => {
