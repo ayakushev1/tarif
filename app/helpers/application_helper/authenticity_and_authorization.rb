@@ -134,7 +134,7 @@ module ApplicationHelper::AuthenticityAndAuthorization
       ((controller_path == 'customer/history_parsers') and ['prepare_for_upload', 'upload', 'calculation_status'].include?(action_name)) or
       ((controller_path == 'customer/optimization_steps') and ['choose_load_calls_options', 'check_loaded_calls', 'choose_optimization_options', 'optimize_tarifs', 'show_optimized_tarifs'].include?(action_name)) or
       ((controller_path == 'customer/tarif_optimizators') and ['index', 'recalculate', 'calculation_status', 'select_services'].include?(action_name)) or
-      ((controller_path == 'customer/optimization_results') and ['show_customer_results'].include?(action_name)) or
+      ((controller_path == 'customer/optimization_results') and ['show_customer_results', 'show_customer_detailed_results'].include?(action_name)) or
       ((controller_path == 'customer/demands') and ['index', 'create', 'new'].include?(action_name))
     end
 

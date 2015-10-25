@@ -1,0 +1,21 @@
+<%
+form_item.init do |f|
+#  f.caption = "Choice of service"	
+  f.set_fields do |filtr_name|
+	input_html = {:filtr_name => form_item.filtr_name, :class => "updatable form-control ", :action_name => customer_optimization_results_show_customer_detailed_results_path}
+	label_html = {:class => "control-label "}
+    html_options = {:action_name => customer_optimization_results_show_customer_detailed_results_path }
+    s = session_filtr_params(f)
+    #raise(StandardError, select(filtr_name, "rouming", [["show", true], ["not show", false]], {:selected => s["rouming"]}, html_options ))
+	
+  [
+  	[
+     label(filtr_name, "if_show", "Показывать агрегированные результаты?", label_html),
+ 	 check_box(filtr_name, "if_show", ((s["if_show_aggregate_customer_results"].blank? or s["if_show"] == 'true') ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
+# 	 select(filtr_name, "if_show_aggregate_customer_results", [["show", true], ["not show", false]], {:selected => s["if_show_aggregate_customer_results"]}, input_html ),
+  	],
+  ]
+	    
+  end
+end
+%>

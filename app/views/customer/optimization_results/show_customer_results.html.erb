@@ -1,11 +1,6 @@
-<% content_for :title, "Результаты подбора тарифа" %>
+<% content_for :title, "Список лучших тарифов и тарифных опций" %>
 
-<p>Для получения детальной информации по тарифу (верхняя таблица) или отдельной услуге (вторая таблица) выберите (кликните) нужную строку.
-	Но при этом постарайтесь не попасть на ссылку, так как при нажатии на ссылку вы перейдете на описание тарифа или тарифной опции.  
-</p>
+<p></p>
 
 <%= render :partial => 'customer/optimization_results/results_for_customer/service_sets', :layout => 'application/layouts/model_table', :locals => {:table => customer_service_sets}%>
-
-<%= render :partial => 'customer/optimization_results/results_for_customer/results_for_customer', :layout => 'application/layouts/tabs', 
-      :locals => {:name => 'results_for_customer', :active => session[:current_tabs_page]['results_for_customer'].to_i} %>
       

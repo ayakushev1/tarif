@@ -1,7 +1,7 @@
 <%
 #raise(StandadError)
 table.init do |t|
-  t.caption = 'Список лучших тарифов и тарифных опций'
+#  t.caption = 'Список лучших тарифов и тарифных опций'
 #  t.base_name = 'service_sets'
 #  t.current_id_name = 'service_sets_id'
 #  t.pagination_per_page = 5
@@ -40,6 +40,8 @@ table.init do |t|
      common_services,   
      tarif_options,
      identical_services,
+     link_to( content_tag(:span, image_tag("left_menu_5.png", :alt => 'Подробное описание')), 
+       customer_optimization_results_show_customer_detailed_results_path, {:remote => false}),
      (f['service_set_count'] if current_user_admin?),   
 #     f['calls_volume'],
 #     f['sms_volume'],
@@ -47,7 +49,7 @@ table.init do |t|
 #     f['stat_results']
 #     f['operator_description'],     
 #	 model_keys,    
-  	] 
+  	].compact 
   	
   end
 end

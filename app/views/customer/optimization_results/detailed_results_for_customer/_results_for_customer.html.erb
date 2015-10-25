@@ -1,0 +1,21 @@
+<%
+
+content_in :tabs do |user| 
+  [
+    ([
+     'Затраты в разрезе тарифа, опций и мобильных услуг', 
+     render(:partial => 'customer/optimization_results/detailed_results_for_customer/tarif_results', :layout => 'application/layouts/model_table', :locals => {:table => customer_tarif_results}) +
+     render(:partial => 'customer/optimization_results/detailed_results_for_customer/tarif_results_details', :layout => 'application/layouts/model_table', :locals => {:table => customer_tarif_detail_results}) 
+    ] if session[:filtr] and session[:filtr]['if_show_aggregate_customer_results_filtr'] and session[:filtr]['if_show_aggregate_customer_results_filtr']['if_show'] == 'false'),
+    ([
+     'Затраты в разрезе только мобильных услуг', 
+     render(:partial => 'customer/optimization_results/detailed_results_for_customer/aggregated_tarif_results_details', :layout => 'application/layouts/model_table', :locals => {:table => controller.aggregated_customer_tarif_detail_results})    
+    ] if session[:filtr] and session[:filtr]['if_show_aggregate_customer_results_filtr'] and session[:filtr]['if_show_aggregate_customer_results_filtr']['if_show'] == 'true'),
+    [
+     'Статистика услуг', 
+     render(:partial => 'customer/optimization_results/detailed_results_for_customer/call_stat/calls_stat_options', :layout => 'application/layouts/filtr_form', :locals => {:form_item => controller.calls_stat_options, :html => {:class => "form-inline"}} ) +
+     render(:partial => 'customer/optimization_results/detailed_results_for_customer/call_stat/calls_stat', :layout => 'application/layouts/model_table', :locals => {:table => controller.calls_stat})	
+    ], 
+  ].compact 
+end
+%>
