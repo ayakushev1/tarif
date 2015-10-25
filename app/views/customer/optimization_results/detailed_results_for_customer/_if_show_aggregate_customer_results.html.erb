@@ -10,8 +10,8 @@ form_item.init do |f|
 	
   [
   	[
-     label(filtr_name, "if_show", "Показывать агрегированные результаты?", label_html),
- 	 check_box(filtr_name, "if_show", ((s["if_show_aggregate_customer_results"].blank? or s["if_show"] == 'true') ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
+     label(filtr_name, "if_show", session['filtr'], label_html),
+ 	 check_box(filtr_name, "if_show", ((s["if_show"].blank? or s["if_show"] == 'true') ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
 # 	 select(filtr_name, "if_show_aggregate_customer_results", [["show", true], ["not show", false]], {:selected => s["if_show_aggregate_customer_results"]}, input_html ),
   	],
   ]

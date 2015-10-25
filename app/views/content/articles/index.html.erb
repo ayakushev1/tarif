@@ -1,6 +1,7 @@
-<% content_for :title, "Выбор рекомендации по тарифам и опциям " %>
+<% content_for :title, "Список рекомендации по тарифам и опциям " %>
 
-<p style="font-size: small">Для выбора нескольких значений удерживайте клавишу Ctrl</p>
+
+<p style="font-size: normal">Для выбора нескольких значений удерживайте клавишу Ctrl</p>
 
 <%= render(:partial => 'content/articles/index/params', :layout => 'application/layouts/filtr_form_2_columns', 
     :locals => {:form_item => controller.recommendation_select_params}) %>
