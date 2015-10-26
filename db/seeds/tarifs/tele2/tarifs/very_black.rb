@@ -131,6 +131,10 @@ category = {:name => '_sctcg_own_country_mms_to_own_home_regions', :service_cate
 category = {:name => '_sctcg_own_country_mms_to_own_country', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _mms_out, :service_category_geo_id => _service_to_own_country}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_count_volume_item, :price => 6.5})
 
+#Own country, mms, outcoming, to not Russia
+  category = {:name => '_sctcg_own_country_mms_outcoming', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _mms_out, :service_category_geo_id => _service_to_not_own_country}
+  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_count_volume_item, :price => 6.5})  
+
 ##Own country, Internet
   category = {:name => 'own_and_home_regions_internet', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _internet}
   @tc.add_grouped_service_category_tarif_class(category, scg_tele_very_black_internet[:id])
