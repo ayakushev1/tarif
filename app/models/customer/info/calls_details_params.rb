@@ -29,7 +29,7 @@ class Customer::Info::CallsDetailsParams < ActiveType::Record[Customer::Info]
      'region_id' => 1238, 
      'country_id' => 1100,
 #     'accounting_period_month' => 1,
-#     'accounting_period_year' => 2014,
+#     'accounting_period_year' => 2015,
     }
   end
 

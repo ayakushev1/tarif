@@ -58,6 +58,7 @@ class Customer::TarifOptimizatorsController < ApplicationController
   end 
   
   def check_inputs_for_recalculate     
+#      raise(StandardError, session_filtr_params(service_choices)['accounting_period'])
     if session_filtr_params(service_choices)['accounting_period'].blank?
       redirect_to({:action => :index}, {:alert => "Выберите период для расчета"}) and return
     end
