@@ -19,7 +19,7 @@ module SavableInSession::Formable
     def initialize(model, model_name = "base_name")
       @model = model
       @base_name = model.class.name.underscore.gsub(/\//, "_").to_sym || model_name # || controller.model_name || controller.controller_path.gsub(/\//, "_").underscore.singularize.to_sym
-      @form_name = "#{@base_name}_form"
+      @form_name = "#{@base_name}"
     end
   end
 end

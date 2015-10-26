@@ -31,10 +31,10 @@ class Calls::HistoryParser::OperatorProcessor::Bln < Calls::HistoryParser::Opera
   def find_partner_operator_and_type_by_criteria(row, country_id)
     case
     when row[row_column_index[:call_type]] =~ /городской/i
-      [_fixed_line_operator, _fixed_line]
+      [Category::Operator::Const::FixedlineOperator, _fixed_line]
 
     when row[row_column_index[:call_type]] =~ /рег\. моб\. бл|билайн (.*)|на рег\. билайн|мобильный|(.*)билайн/i
-      [_beeline, _mobile]
+      [Category::Operator::Const::Beeline, _mobile]
 
     when row[row_column_index[:call_type]] =~ /(вх\.|исх\.)\/(.*)/i
       operator_id, operator_index = find_operator(partner_items(row))

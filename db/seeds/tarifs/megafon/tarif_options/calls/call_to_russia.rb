@@ -1,6 +1,6 @@
-@tc = TarifCreator.new(_megafon)
+@tc = TarifCreator.new(Category::Operator::Const::Megafon)
 @tc.create_tarif_class({
-  :id => _mgf_call_to_russia, :name => 'Звони по России', :operator_id => _megafon, :privacy_id => _person, :standard_service_id => _special_service,
+  :id => _mgf_call_to_russia, :name => 'Звони по России', :operator_id => Category::Operator::Const::Megafon, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://moscow.megafon.ru/tariffs/options/far_calls/call_on_russia.html'},
   :dependency => {
     :incompatibility => {:_mgf_call_to_russia => [_mgf_call_to_russia, _mgf_option_city_connection]}, 

@@ -1,6 +1,6 @@
-@tc = TarifCreator.new(_megafon)
+@tc = TarifCreator.new(Category::Operator::Const::Megafon)
 @tc.create_tarif_class({
-  :id => _mgf_mms_24, :name => 'MMS 24', :operator_id => _megafon, :privacy_id => _person, :standard_service_id => _special_service,
+  :id => _mgf_mms_24, :name => 'MMS 24', :operator_id => Category::Operator::Const::Megafon, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://moscow.megafon.ru/tariffs/options/sms_mms/mms-marafon.html'},
   :dependency => {
     :incompatibility => {:mms_pakets => [_mgf_paket_mms_10, _mgf_paket_mms_50, _mgf_mms_24]}, 

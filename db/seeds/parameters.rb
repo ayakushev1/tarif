@@ -17,7 +17,7 @@ pars << { :id => _call_own_phone_number, :source_type_id => _call_data, :nick_na
 
 pars << { :id => _call_own_phone_operator_id, :source_type_id => _call_data, :nick_name => 'own_phone_operator_id', :name => 'own phone operator_id', :description => '', 
           :source => { :table => 'customer_calls',:query => '', :class => 'Customer::Call', :field => 'own_phone', :sub_field => 'operator_id', :field_type_id => _json, :sub_field_type_id => _reference},          
-          :display => {:display_type_id => _string, :list => '', :table => '', :string => 'Category.russian_operators', :query => '', :class => 'Category',:id_field => 'id',:name_field => 'name'},
+          :display => {:display_type_id => _string, :list => '', :table => '', :string => 'Category::Operator.russian_operators', :query => '', :class => 'Category',:id_field => 'id',:name_field => 'name'},
           :unit => {:unit_id => nil, :field_name => '', :sub_field_name => ''} }
 
 pars << { :id => _call_own_phone_region_id, :source_type_id => _call_data, :nick_name => 'own_phone_region_id', :name => 'own phone region_id', :description => '', 
@@ -37,7 +37,7 @@ pars << { :id => _call_partner_phone_number, :source_type_id => _call_data, :nic
 
 pars << { :id => _call_partner_phone_operator_id, :source_type_id => _call_data, :nick_name => 'partner_phone_operator_id', :name => 'partner phone operator_id', :description => '', 
           :source => { :table => 'customer_calls',:query => '', :class => 'Customer::Call', :field => 'partner_phone', :sub_field => 'operator_id', :field_type_id => _json, :sub_field_type_id => _reference},          
-          :display => {:display_type_id => _string, :list => '', :table => '', :string => 'Category.operators', :query => '', :class => 'Category',:id_field => 'id', :name_field => 'name'},
+          :display => {:display_type_id => _string, :list => '', :table => '', :string => 'Category::Operator.operators', :query => '', :class => 'Category',:id_field => 'id', :name_field => 'name'},
           :unit => {:unit_id => nil, :field_name => '', :sub_field_name => ''} }
 
 pars << { :id => _call_partner_phone_operator_type_id, :source_type_id => _call_data, :nick_name => 'partner_phone_operator_type_id', :name => 'partner phone operator_type_id', :description => '', 
@@ -57,7 +57,7 @@ pars << { :id => _call_partner_phone_country_id, :source_type_id => _call_data, 
 
 pars << { :id => _call_connect_operator_id, :source_type_id => _call_data, :nick_name => 'connect_operator_id', :name => 'connect operator_id', :description => '', 
           :source => { :table => 'customer_calls',:query => '', :class => 'Customer::Call', :field => 'connect', :sub_field => 'operator_id', :field_type_id => _json, :sub_field_type_id => _reference},          
-          :display => {:display_type_id => _string, :list => '', :table => '', :string => 'Category.operators', :query => '', :class => 'Category',:id_field => 'id', :name_field => 'name'},
+          :display => {:display_type_id => _string, :list => '', :table => '', :string => 'Category::Operator.operators', :query => '', :class => 'Category',:id_field => 'id', :name_field => 'name'},
           :unit => {:unit_id => nil, :field_name => '', :sub_field_name => ''} }
 
 pars << { :id => _call_connect_region_id, :source_type_id => _call_data, :nick_name => 'connect_region_id', :name => 'connect region_id', :description => '', 

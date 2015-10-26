@@ -1,6 +1,6 @@
-@tc = TarifCreator.new(_tele_2)
+@tc = TarifCreator.new(Category::Operator::Const::Tele2)
 @tc.create_tarif_class({
-  :id => _tele_very_black, :name => 'Очень черный', :operator_id => _tele_2, :privacy_id => _person, :standard_service_id => _tarif,
+  :id => _tele_very_black, :name => 'Очень черный', :operator_id => Category::Operator::Const::Tele2, :privacy_id => _person, :standard_service_id => _tarif,
   :features => {:http => 'http://msk.tele2.ru/tariff/blacker/'},
   :dependency => {
     :incompatibility => {},

@@ -1,7 +1,7 @@
 #TODO убрать несовместимость между _mgf_50_discount_on_all_incoming_calls и _mgf_50_discount_on_calls_to_russia
-@tc = TarifCreator.new(_megafon)
+@tc = TarifCreator.new(Category::Operator::Const::Megafon)
 @tc.create_tarif_class({
-  :id => _mgf_50_discount_on_calls_to_russia, :name => 'Скидка 50% на исходящие вызовы в Россию', :operator_id => _megafon, :privacy_id => _person, :standard_service_id => _special_service,
+  :id => _mgf_50_discount_on_calls_to_russia, :name => 'Скидка 50% на исходящие вызовы в Россию', :operator_id => Category::Operator::Const::Megafon, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://moscow.megafon.ru/roaming/world/50disc.html'},
   :dependency => {
     :incompatibility => {

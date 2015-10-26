@@ -1,7 +1,7 @@
 <%
 table.init do |t|
 #  t.caption = 'Tarif classes'
-  t.heads = ['Name', 'Operator', 'Privacy', 'Standrd service', '']
+  t.heads = ['Name', 'Operator', 'Privacy', 'Standrd service', '', '']
   t.set_fields do |tarif_class| 
   [
 #    tarif_class.id, 
@@ -11,8 +11,8 @@ table.init do |t|
     (tarif_class.standard_service.name if tarif_class.standard_service), 
 #    (tarif_class.created_at.to_formatted_s(:short) if  tarif_class.created_at), 
 #    (tarif_class.updated_at.to_formatted_s(:short) if tarif_class.updated_at), 
-    link_to( 'Show', tarif_class), 
-#    link_to( 'Edit', edit_tarif_class_path(tarif_class)), 
+    link_to( 'Show', tarif_class, :remote => true), 
+    link_to( 'Edit', edit_tarif_class_path(tarif_class), :remote => true), 
 #    link_to( 'Destroy', tarif_class, method: :delete, data: { confirm: 'Are you sure?' } )
   ] 
   end

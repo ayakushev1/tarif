@@ -28,7 +28,7 @@ describe 'Service::Criterium' do
        )
 
       @crit = Service::Criterium.find(10)
-      @fq_tarif_operator_id = _beeline
+      @fq_tarif_operator_id = Category::Operator::Const::Beeline
       @fq_tarif_region_id = _moscow
     end
 

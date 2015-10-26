@@ -22,6 +22,8 @@ form_item.init do |fi|
   	 end
   	
 	[
+      [link_to('Back', tarif_classes_path, {:class => "btn btn-primary", :type =>"button", :remote => true}), 
+       link_to('Edit', edit_tarif_class_path(tarif_class), {:class => "btn btn-primary", :type =>"button", :remote => true})],  
 #	  ['Id', tarif_class.id], 
 #	  ['Name', tarif_class.name], 
 	  ['Оператор', (tarif_class.operator.name if tarif_class.operator) ], 
@@ -39,7 +41,6 @@ form_item.init do |fi|
 	  ['Является архивным?', ((tarif_class.dependency['is_archived'] || false) if tarif_class.dependency) ], 
 #	  ['Created', (tarif_class.created_at.to_formatted_s(:short) if  tarif_class.created_at) ], 
 #	  ['Updated', (tarif_class.updated_at.to_formatted_s(:short) if tarif_class.updated_at) ],
-#      [link_to('Edit', edit_tarif_class_path(tarif_class) ), link_to( 'Back', tarif_classes_path)],  
 	] 
   end
 end	

@@ -1,21 +1,12 @@
 <%
-style_table = [
-	[/label/, {:class => "control-label"}],
-	[/(input|select|textarea)/, {:filtr_name => form_item.form_name}],
-	[/(?=.*(input|select))(?!.*(password))(.+)/, {:class => "updatabl"}],
-	[/input.*?type.*?submit/, {:class => "btn "}],
-	[/a.*?href.*?\/a/, {:class => "btn ", :'data-remote' => true}], #, :turbolinks => true
-]
 
-#form_html_options = {:class => "form-horizontal", :turbolinks => true, :as => form_item.form_name}
 form_html_options = {:id =>form_item.form_name, :class => "form-horizontal", :turbolinks => true, :as => form_item.form_name}
 form_html_options = form_html_options.merge(html) if local_assigns[:html]
 
-form_options = {:authenticity_token => true, :remote => false, :include_id => true}
-#form_options = {:action => form_item.action_on_submit, :method => 'post', :authenticity_token => true, :remote => false, :include_id => true}
+form_options = {:authenticity_token => true, :include_id => true}
 
 form_options = form_options.merge(options) if local_assigns[:options]
-form_options = form_options.merge(form_html_options)
+form_options = form_options.merge(:html => form_html_options)
 form_options.merge!({:url => url, :as => as}) if local_assigns[:url] and url
 
 %>
@@ -38,16 +29,16 @@ form_options.merge!({:url => url, :as => as}) if local_assigns[:url] and url
 <%= form_for(form_item.model, form_options) do |form|%>
 	<% if form_options[:class] =~ /form-inline/ %>
 	  <% form_item.fields(form) do |label, field| %>
-	      <%= add_css(label, style_table ) %>
-	      <%= add_css(field, style_table) %>
+	      <%= label %>
+	      <%= field %>
 	  <% end %>
 	<% else %>
 		<fieldset>
 		  <% form_item.fields(form) do |label, field| %>
-		    <div class="control-group">
-		      <%= add_css(label, style_table ) %>
-		      <div class="controls"><%= add_css(field, style_table) %></div>
-		    </div>
+		  <div class="row">
+		      <p class="col-xs-3"><strong><%= label %></strong></p>
+		      <p class="col-xs-3"><%= field %></p>
+		  </div>
 		  <% end %>
 		</fieldset>
 	<% end %>

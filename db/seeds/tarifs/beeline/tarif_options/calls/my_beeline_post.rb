@@ -1,6 +1,6 @@
-@tc = TarifCreator.new(_beeline)
+@tc = TarifCreator.new(Category::Operator::Const::Beeline)
 @tc.create_tarif_class({
-  :id => _bln_my_beeline_post, :name => 'Мой Билайн (постоплатная)', :operator_id => _beeline, :privacy_id => _person, :standard_service_id => _special_service,
+  :id => _bln_my_beeline_post, :name => 'Мой Билайн (постоплатная)', :operator_id => Category::Operator::Const::Beeline, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://moskva.beeline.ru/customers/products/mobile/services/details/moy-beeline/'},
   :dependency => {
     :incompatibility => {:sms_options => [_bln_sms_without_borders, _bln_my_sms, _bln_my_sms_post]}, 

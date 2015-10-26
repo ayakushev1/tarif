@@ -1,6 +1,6 @@
-@tc = TarifCreator.new(_megafon)
+@tc = TarifCreator.new(Category::Operator::Const::Megafon)
 @tc.create_tarif_class({
-  :id => _mgf_minute_packs_25_world, :name => 'Пакеты минут 25 Мир', :operator_id => _megafon, :privacy_id => _person, :standard_service_id => _special_service,
+  :id => _mgf_minute_packs_25_world, :name => 'Пакеты минут 25 Мир', :operator_id => Category::Operator::Const::Megafon, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://moscow.megafon.ru/roaming/world/minute_packs.html'},
   :dependency => {
     :incompatibility => {

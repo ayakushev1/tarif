@@ -1,8 +1,8 @@
 #TODO добавить 50 руб в день в роуминге по России
 #Интернет-Maxi
-@tc = TarifCreator.new(_mts)
+@tc = TarifCreator.new(Category::Operator::Const::Mts)
 @tc.create_tarif_class({
-  :id => _mts_internet_maxi, :name => 'Интернет-Maxi', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _special_service,
+  :id => _mts_internet_maxi, :name => 'Интернет-Maxi', :operator_id => Category::Operator::Const::Mts, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://www.mts.ru/mobil_inet_and_tv/internet_phone/additionally_services/unlim_options/'},
   :dependency => {
     :categories => [_tcgsc_internet],

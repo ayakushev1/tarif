@@ -30,7 +30,7 @@ form_item.init do |f|
   	],   
   	
   	[label(filtr_name, "operator_id", "Ваш оператор", label_html),
-  	 collection_select(filtr_name, "operator_id", Category.russian_operators, :id, :name, {:include_blank => true, :selected => s_filtr["operator_id"] }, input_html ),   
+  	 collection_select(filtr_name, "operator_id", Category::Operator.russian_operators, :id, :name, {:include_blank => true, :selected => s_filtr["operator_id"] }, input_html ),   
   	
   	 label(filtr_name, "privacy_id", "Физическое или юридическое лицо", label_html),
   	 collection_select(filtr_name, "privacy_id", Category.privacy, :id, :name, 

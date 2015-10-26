@@ -1,5 +1,5 @@
 <% content_for :title, "Описание тарифа или опции" %>
 
-<%= render :partial => 'tarif_class', :layout => 'application/layouts/model_show', :locals => {:form_item => controller.tarif_class_form} %>
+<%= render :partial => 'tarif_class', :layout => 'application/layouts/model_show', :locals => {:form_item => tarif_class_form} %>
 
 <%= render :partial => 'tarif_class_description_tabs', :layout => 'application/layouts/tabs', :locals => {:name => 'tarif_class_description_tabs', :active => session[:current_tabs_page]['tarif_class_description_tabs'].to_i} %>

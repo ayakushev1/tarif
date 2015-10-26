@@ -2,7 +2,7 @@ require 'test_helper'
 
 describe TarifCreator do
   before do
-    @operator_id = _mts
+    @operator_id = Category::Operator::Const::Mts
     @tc = TarifCreator.new(@operator_id)
   end
   

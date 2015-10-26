@@ -28,7 +28,7 @@ describe TarifClassesController do
       end
       
       it "must filter tarif classes records" do
-        get :index, 'tarif_class_filtr' => {'operator_id' => _beeline }
+        get :index, 'tarif_class_filtr' => {'operator_id' => Category::Operator::Const::Beeline }
         assert_response :success 
         @controller.tarif_classes.model.count.must_be :==, 40
 

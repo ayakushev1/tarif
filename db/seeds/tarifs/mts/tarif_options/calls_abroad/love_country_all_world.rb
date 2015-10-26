@@ -1,7 +1,7 @@
 #Любимая страна. Весь мир
-@tc = TarifCreator.new(_mts)
+@tc = TarifCreator.new(Category::Operator::Const::Mts)
 @tc.create_tarif_class({
-  :id => _mts_love_country_all_world, :name => 'Любимая страна. Весь мир', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _special_service,
+  :id => _mts_love_country_all_world, :name => 'Любимая страна. Весь мир', :operator_id => Category::Operator::Const::Mts, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://www.mts.ru/mob_connect/roaming/calls_across_russia/discounts/favorite_country/'},
   :dependency => {
     :categories => [_tcgsc_calls],

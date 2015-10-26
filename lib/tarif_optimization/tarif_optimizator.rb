@@ -66,7 +66,7 @@ class TarifOptimization::TarifOptimizator
       @background_process_informer_tarifs = options[:background_process_informer_tarifs] || Customer::BackgroundStat::Informer.new('tarifs_optimization', user_id)
       @background_process_informer_tarif = options[:background_process_informer_tarif] || Customer::BackgroundStat::Informer.new('tarif_optimization', user_id)
     end
-    @operator_description = {}; Category.operators.all.each {|r| @operator_description[r['id'].to_s] = r}
+    @operator_description = {}; Category::Operator.operators.all.each {|r| @operator_description[r['id'].to_s] = r}
   end
   
   def init_optimization_params

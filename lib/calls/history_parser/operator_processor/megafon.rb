@@ -31,10 +31,10 @@ class Calls::HistoryParser::OperatorProcessor::Megafon < Calls::HistoryParser::O
   def find_partner_operator_and_type_by_criteria(row, country_id)
     case
     when row[row_column_index[:service]] =~ /городской/i
-      [_fixed_line_operator, _fixed_line]
+      [Category::Operator::Const::FixedlineOperator, _fixed_line]
 
     when row[row_column_index[:service]] =~ /С МегаФон|С номеров МегаФон|С номеров Единой сети МегаФон|На МегаФон|На номера МегаФон|На номера Единой сети МегаФон/i
-      [_megafon, _mobile]
+      [Category::Operator::Const::Megafon, _mobile]
 
     when row[row_column_index[:service]] =~ /(на мобильные номера|с мобильных номеров|вх\.|исх\.)\/(.*)/i
       operator_id, operator_index = find_operator(partner_items(row))

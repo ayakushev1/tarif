@@ -11,7 +11,7 @@ form_item.init do |f|
   [
   	[
   	 label(filtr_name, "operator_id", "Оператор", label_html),
-  	 collection_select(filtr_name, "operator_id", Category.russian_operators.where(:id => [1023, 1025, 1028, 1030]), :id, :name, 
+  	 collection_select(filtr_name, "operator_id", Category::Operator.operators_for_optimization, :id, :name, 
   	   {:include_blank => "Выберите оператора", :selected => s["operator_id"] }, 
   	 	input_html ),   
 

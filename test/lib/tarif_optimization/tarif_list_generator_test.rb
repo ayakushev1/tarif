@@ -8,10 +8,10 @@ describe TarifOptimization::TarifListGenerator do
   before do
 =begin
     @trg = TarifOptimization::TarifListGenerator.new({
-      :operators => [_beeline, _megafon, _mts],
-      :tarifs => {_beeline => [], _megafon => [], _mts => [_mts_red_energy, _mts_ultra, _mts_smart_plus, _mts_mts_connect_4]},      
-      :common_services => {_beeline => [], _megafon => [], _mts => [_mts_own_country_rouming, _mts_international_rouming, _mts_own_country_rouming_internet]},
-      :tarif_options => {_beeline => [], _megafon => [], _mts => [
+      :operators => Category::Operator::Const::OperatorsForOptimization,
+      :tarifs => {Category::Operator::Const::Beeline => [], Category::Operator::Const::Megafon => [], Category::Operator::Const::Mts => [_mts_red_energy, _mts_ultra, _mts_smart_plus, _mts_mts_connect_4]},      
+      :common_services => {Category::Operator::Const::Beeline => [], Category::Operator::Const::Megafon => [], Category::Operator::Const::Mts => [_mts_own_country_rouming, _mts_international_rouming, _mts_own_country_rouming_internet]},
+      :tarif_options => {Category::Operator::Const::Beeline => [], Category::Operator::Const::Megafon => [], Category::Operator::Const::Mts => [
         _mts_region, _mts_95_cop_in_moscow_region, _mts_unlimited_calls, _mts_call_free_to_mts_russia_100, _mts_zero_to_mts, #calls
         _mts_love_country, _mts_love_country_all_world, _mts_outcoming_calls_from_11_9_rur, #calls_abroad
         _mts_everywhere_as_home, _mts_everywhere_as_home_Ultra, _mts_everywhere_as_home_smart, _mts_incoming_travelling_in_russia, #country_rouming
@@ -34,7 +34,7 @@ describe TarifOptimization::TarifListGenerator do
 =end
       @@service_helper_tarif_list_generator_for_test ||= TarifOptimization::TarifListGenerator.new({:use_short_tarif_set_name => 'true'})
       @empty_trg = @@service_helper_tarif_list_generator_for_test
-      #raise(StandardError, [@empty_trg.final_tarif_sets[_mts], @empty_trg.final_tarif_sets[_mts].size])
+      #raise(StandardError, [@empty_trg.final_tarif_sets[Category::Operator::Const::Mts], @empty_trg.final_tarif_sets[Category::Operator::Const::Mts].size])
 
   end
   
@@ -54,7 +54,7 @@ describe TarifOptimization::TarifListGenerator do
 #      @trg.dependencies[_mts_region].must_be :==, {"categories"=>[330], "incompatibility"=>{"home_region_rouming_calls"=>[328, 329]}, "general_priority"=>320, "other_tarif_priority"=>{"lower"=>[], "higher"=>[330]}, "forbidden_tarifs"=>{"to_switch_on"=>[], "to_serve"=>[]}, "prerequisites"=>[-1], "multiple_use"=>false, "parts"=>["own-country-rouming/calls", "periodic", "onetime"]}
 #      @trg.dependencies[_mts_region]['parts'].must_be_kind_of(Array)
 
-#      @trg.service_description[_mts_region][:operator_id].must_be :==, _mts
+#      @trg.service_description[_mts_region][:operator_id].must_be :==, Category::Operator::Const::Mts
 
 #      @empty_trg.dependencies.must_be :==, 1
     end
@@ -167,12 +167,12 @@ describe TarifOptimization::TarifListGenerator do
 
   describe 'calculate_tarif_options_slices' do
     it 'must return' do
-#      @trg.tarif_options_slices[_mts][0].must_be :==, {:ids=>[329, 281, 309, 329, 281, 309, 329, 282, 282, 282, 283, 283, 321, 322, 283, 321, 322, 283, 321, 322, 330, 330], :prev_ids=>[[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []], :set_ids=>["329", "281", "309", "329", "281", "309", "329", "282", "282", "282", "283", "283", "321", "322", "283", "321", "322", "283", "321", "322", "330", "330"], :prev_set_ids=>["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""], :uniq_set_ids=>{"329::own-country-rouming/calls"=>"329::own-country-rouming/calls", "281::own-country-rouming/calls"=>"281::own-country-rouming/calls", "309::own-country-rouming/calls"=>"309::own-country-rouming/calls", "329::periodic"=>"329::periodic", "281::periodic"=>"281::periodic", "309::periodic"=>"309::periodic", "329::onetime"=>"329::onetime", "282::own-country-rouming/calls"=>"282::own-country-rouming/calls", "282::periodic"=>"282::periodic", "282::onetime"=>"282::onetime", "283::own-country-rouming/mobile-connection"=>"283::own-country-rouming/mobile-connection", "283::own-country-rouming/calls"=>"283::own-country-rouming/calls", "321::own-country-rouming/calls"=>"321::own-country-rouming/calls", "322::own-country-rouming/calls"=>"322::own-country-rouming/calls", "283::periodic"=>"283::periodic", "321::periodic"=>"321::periodic", "322::periodic"=>"322::periodic", "283::onetime"=>"283::onetime", "321::onetime"=>"321::onetime", "322::onetime"=>"322::onetime", "330::own-country-rouming/calls"=>"330::own-country-rouming/calls", "330::periodic"=>"330::periodic"}, :parts=>["own-country-rouming/calls", "own-country-rouming/calls", "own-country-rouming/calls", "periodic", "periodic", "periodic", "onetime", "own-country-rouming/calls", "periodic", "onetime", "own-country-rouming/mobile-connection", "own-country-rouming/calls", "own-country-rouming/calls", "own-country-rouming/calls", "periodic", "periodic", "periodic", "onetime", "onetime", "onetime", "own-country-rouming/calls", "periodic"]}    
-#      @trg.tarif_options_slices[_mts][1][:uniq_set_ids].keys.must_be :==, 1  
-#      @trg.tarif_options_slices[_mts].must_be :==, 2  
+#      @trg.tarif_options_slices[Category::Operator::Const::Mts][0].must_be :==, {:ids=>[329, 281, 309, 329, 281, 309, 329, 282, 282, 282, 283, 283, 321, 322, 283, 321, 322, 283, 321, 322, 330, 330], :prev_ids=>[[], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], [], []], :set_ids=>["329", "281", "309", "329", "281", "309", "329", "282", "282", "282", "283", "283", "321", "322", "283", "321", "322", "283", "321", "322", "330", "330"], :prev_set_ids=>["", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", "", ""], :uniq_set_ids=>{"329::own-country-rouming/calls"=>"329::own-country-rouming/calls", "281::own-country-rouming/calls"=>"281::own-country-rouming/calls", "309::own-country-rouming/calls"=>"309::own-country-rouming/calls", "329::periodic"=>"329::periodic", "281::periodic"=>"281::periodic", "309::periodic"=>"309::periodic", "329::onetime"=>"329::onetime", "282::own-country-rouming/calls"=>"282::own-country-rouming/calls", "282::periodic"=>"282::periodic", "282::onetime"=>"282::onetime", "283::own-country-rouming/mobile-connection"=>"283::own-country-rouming/mobile-connection", "283::own-country-rouming/calls"=>"283::own-country-rouming/calls", "321::own-country-rouming/calls"=>"321::own-country-rouming/calls", "322::own-country-rouming/calls"=>"322::own-country-rouming/calls", "283::periodic"=>"283::periodic", "321::periodic"=>"321::periodic", "322::periodic"=>"322::periodic", "283::onetime"=>"283::onetime", "321::onetime"=>"321::onetime", "322::onetime"=>"322::onetime", "330::own-country-rouming/calls"=>"330::own-country-rouming/calls", "330::periodic"=>"330::periodic"}, :parts=>["own-country-rouming/calls", "own-country-rouming/calls", "own-country-rouming/calls", "periodic", "periodic", "periodic", "onetime", "own-country-rouming/calls", "periodic", "onetime", "own-country-rouming/mobile-connection", "own-country-rouming/calls", "own-country-rouming/calls", "own-country-rouming/calls", "periodic", "periodic", "periodic", "onetime", "onetime", "onetime", "own-country-rouming/calls", "periodic"]}    
+#      @trg.tarif_options_slices[Category::Operator::Const::Mts][1][:uniq_set_ids].keys.must_be :==, 1  
+#      @trg.tarif_options_slices[Category::Operator::Const::Mts].must_be :==, 2  
 
-      @empty_trg.tarif_options_slices[_mts].must_be :==, 1 
-      @empty_trg.tarif_options_slices[_mts].must_be :==, [{:ids=>[281, 309, 281, 309], :prev_ids=>[[], [], [], []], :set_ids=>["281", "309", "281", "309"], :prev_set_ids=>["", "", "", ""], :uniq_set_ids=>{"281::own-country-rouming/calls"=>"281::own-country-rouming/calls", "309::own-country-rouming/calls"=>"309::own-country-rouming/calls", "281::periodic"=>"281::periodic", "309::periodic"=>"309::periodic"}, :parts=>["own-country-rouming/calls", "own-country-rouming/calls", "periodic", "periodic"]}] 
+      @empty_trg.tarif_options_slices[Category::Operator::Const::Mts].must_be :==, 1 
+      @empty_trg.tarif_options_slices[Category::Operator::Const::Mts].must_be :==, [{:ids=>[281, 309, 281, 309], :prev_ids=>[[], [], [], []], :set_ids=>["281", "309", "281", "309"], :prev_set_ids=>["", "", "", ""], :uniq_set_ids=>{"281::own-country-rouming/calls"=>"281::own-country-rouming/calls", "309::own-country-rouming/calls"=>"309::own-country-rouming/calls", "281::periodic"=>"281::periodic", "309::periodic"=>"309::periodic"}, :parts=>["own-country-rouming/calls", "own-country-rouming/calls", "periodic", "periodic"]}] 
     end
   end
 
@@ -188,10 +188,10 @@ describe TarifOptimization::TarifListGenerator do
 
   describe 'calculate_tarifs_slices' do
     it 'must return' do
-      @empty_trg.tarifs_slices[_mts].must_be :==, 1   
-#      @trg.tarifs_slices[_mts][1][:uniq_set_ids].keys.must_be :==, 1  
+      @empty_trg.tarifs_slices[Category::Operator::Const::Mts].must_be :==, 1   
+#      @trg.tarifs_slices[Category::Operator::Const::Mts][1][:uniq_set_ids].keys.must_be :==, 1  
       result = []
-      @empty_trg.tarifs_slices[_mts].each do |s|
+      @empty_trg.tarifs_slices[Category::Operator::Const::Mts].each do |s|
         temp = {} 
         s[:parts].each_index do |i|
           s.keys.each do |key|
@@ -202,7 +202,7 @@ describe TarifOptimization::TarifListGenerator do
         result << temp
       end
       result.must_be :==, 1 
-      @empty_trg.tarifs_slices[_mts].must_be :==, [{:ids=>[200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200], :prev_ids=>[[], [], [], [], [281], [309], [], [], [281], [309], [], []], :set_ids=>["200", "200", "200", "200", "200_281", "200_309", "200", "200", "200_281", "200_309", "200", "200"], :prev_set_ids=>["", "", "", "", "281", "309", "", "", "281", "309", "", ""], :uniq_set_ids=>{"200::all-world-rouming/sms"=>"200::all-world-rouming/sms", "200::own-country-rouming/sms"=>"200::own-country-rouming/sms", "200::own-country-rouming/mms"=>"200::own-country-rouming/mms", "200::all-world-rouming/mms"=>"200::all-world-rouming/mms", "200::own-country-rouming/calls_281::own-country-rouming/calls"=>"200::own-country-rouming/calls_281::own-country-rouming/calls", "200::own-country-rouming/calls_309::own-country-rouming/calls"=>"200::own-country-rouming/calls_309::own-country-rouming/calls", "200::own-country-rouming/calls"=>"200::own-country-rouming/calls", "200::own-country-rouming/mobile-connection"=>"200::own-country-rouming/mobile-connection", "200::periodic_281::periodic"=>"200::periodic_281::periodic", "200::periodic_309::periodic"=>"200::periodic_309::periodic", "200::periodic"=>"200::periodic", "200::onetime"=>"200::onetime"}, :parts=>["all-world-rouming/sms", "own-country-rouming/sms", "own-country-rouming/mms", "all-world-rouming/mms", "own-country-rouming/calls", "own-country-rouming/calls", "own-country-rouming/calls", "own-country-rouming/mobile-connection", "periodic", "periodic", "periodic", "onetime"]}]
+      @empty_trg.tarifs_slices[Category::Operator::Const::Mts].must_be :==, [{:ids=>[200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200, 200], :prev_ids=>[[], [], [], [], [281], [309], [], [], [281], [309], [], []], :set_ids=>["200", "200", "200", "200", "200_281", "200_309", "200", "200", "200_281", "200_309", "200", "200"], :prev_set_ids=>["", "", "", "", "281", "309", "", "", "281", "309", "", ""], :uniq_set_ids=>{"200::all-world-rouming/sms"=>"200::all-world-rouming/sms", "200::own-country-rouming/sms"=>"200::own-country-rouming/sms", "200::own-country-rouming/mms"=>"200::own-country-rouming/mms", "200::all-world-rouming/mms"=>"200::all-world-rouming/mms", "200::own-country-rouming/calls_281::own-country-rouming/calls"=>"200::own-country-rouming/calls_281::own-country-rouming/calls", "200::own-country-rouming/calls_309::own-country-rouming/calls"=>"200::own-country-rouming/calls_309::own-country-rouming/calls", "200::own-country-rouming/calls"=>"200::own-country-rouming/calls", "200::own-country-rouming/mobile-connection"=>"200::own-country-rouming/mobile-connection", "200::periodic_281::periodic"=>"200::periodic_281::periodic", "200::periodic_309::periodic"=>"200::periodic_309::periodic", "200::periodic"=>"200::periodic", "200::onetime"=>"200::onetime"}, :parts=>["all-world-rouming/sms", "own-country-rouming/sms", "own-country-rouming/mms", "all-world-rouming/mms", "own-country-rouming/calls", "own-country-rouming/calls", "own-country-rouming/calls", "own-country-rouming/mobile-connection", "periodic", "periodic", "periodic", "onetime"]}]
     end
   end
 

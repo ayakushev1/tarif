@@ -1,6 +1,14 @@
-<%= render :partial => 'form', :layout => 'application/layouts/model_form_for', :locals => {:form_item => controller.tarif_class_form} %>
+<% 	content_for :title, tarif_class_form.model.id ? 'Edit TarifClass' : 'New TarifClass' %>
 
-<%= link_to 'Show', controller.tarif_class %> |
-<%= link_to 'Back', tarif_classes_path %>
+<%= render :partial => 'form', :layout => 'application/layouts/model_form_for', :locals => {:form_item => tarif_class_form} %>
+
+<div class="row">
+    <p class="col-xs-3"><strong>
+		<%= link_to 'Show', controller.tarif_class, {:class => "btn btn-primary", :type =>"button", :remote => true} %>
+    </strong></p>
+    <p class="col-xs-3">
+		<%= link_to 'Back', tarif_classes_path, {:class => "btn btn-primary", :type =>"button", :remote => true} %>
+    </p>
+</div>
 
 

@@ -5,14 +5,14 @@ describe TarifOptimization::TarifListGenerator do
 #=begin    
     @trg = TarifOptimization::TarifListGenerator.new({
       :use_short_tarif_set_name => 'true',
-      :operators => [_beeline, _megafon, _mts],
-      :tarifs => {_beeline => [], _megafon => [], _mts => [
+      :operators => Category::Operator::Const::OperatorsForOptimization,
+      :tarifs => {Category::Operator::Const::Beeline => [], Category::Operator::Const::Megafon => [], Category::Operator::Const::Mts => [
         200, 203,#_mts_red_energy, #_mts_ultra, _mts_smart_plus, _mts_mts_connect_4
         ]},      
-      :common_services => {_beeline => [], _megafon => [], _mts => [
+      :common_services => {Category::Operator::Const::Beeline => [], Category::Operator::Const::Megafon => [], Category::Operator::Const::Mts => [
         _mts_own_country_rouming, _mts_international_rouming, _mts_own_country_rouming_internet
         ]},
-      :tarif_options => {_beeline => [], _megafon => [], _mts => [
+      :tarif_options => {Category::Operator::Const::Beeline => [], Category::Operator::Const::Megafon => [], Category::Operator::Const::Mts => [
         _mts_region, _mts_95_cop_in_moscow_region, _mts_unlimited_calls, _mts_call_free_to_mts_russia_100, _mts_zero_to_mts, #calls
         _mts_love_country, _mts_love_country_all_world, _mts_outcoming_calls_from_11_9_rur, #calls_abroad
         _mts_everywhere_as_home, _mts_everywhere_as_home_Ultra, _mts_everywhere_as_home_smart, _mts_incoming_travelling_in_russia, #country_rouming

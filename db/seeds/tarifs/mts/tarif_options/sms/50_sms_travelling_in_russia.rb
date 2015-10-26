@@ -1,7 +1,7 @@
 #50 SMS в поездках по России
-@tc = TarifCreator.new(_mts)
+@tc = TarifCreator.new(Category::Operator::Const::Mts)
 @tc.create_tarif_class({
-  :id => _mts_50_sms_travelling_in_russia, :name => '50 SMS в поездках по России', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _special_service,
+  :id => _mts_50_sms_travelling_in_russia, :name => '50 SMS в поездках по России', :operator_id => Category::Operator::Const::Mts, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://www.mts.ru/mob_connect/roaming/n_roaming/discounts/sms_paket/'},
   :dependency => {
     :categories => [_tcgsc_sms],

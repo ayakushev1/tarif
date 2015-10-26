@@ -1,6 +1,6 @@
-@tc = TarifCreator.new(_beeline)
+@tc = TarifCreator.new(Category::Operator::Const::Beeline)
 @tc.create_tarif_class({
-  :id => _bln_highway_7, :name => 'Хайвей 7 Гб', :operator_id => _beeline, :privacy_id => _person, :standard_service_id => _special_service,
+  :id => _bln_highway_7, :name => 'Хайвей 7 Гб', :operator_id => Category::Operator::Const::Beeline, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://moskva.beeline.ru/customers/products/mobile/services/details/highway-7gb/'},
   :dependency => {
     :incompatibility => {:internet_options => [_bln_highway_1, _bln_highway_3, _bln_highway_7, _bln_highway_15, _bln_highway_30, _bln_internet_on_day_100_mb, _bln_internet_on_day_500_mb]}, 

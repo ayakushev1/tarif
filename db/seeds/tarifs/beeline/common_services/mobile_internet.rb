@@ -1,8 +1,8 @@
 #TODO Добавить расширенный международный роуминг (новую категорию стран)
 #International rouming
-@tc = TarifCreator.new(_beeline)
+@tc = TarifCreator.new(Category::Operator::Const::Beeline)
 @tc.create_tarif_class({
-  :id => _bln_mobile_internet, :name => 'Мобильный интернет', :operator_id => _beeline, :privacy_id => _person, :standard_service_id => _common_service,
+  :id => _bln_mobile_internet, :name => 'Мобильный интернет', :operator_id => Category::Operator::Const::Beeline, :privacy_id => _person, :standard_service_id => _common_service,
   :features => {:http => 'http://beeline.ru'},
   :dependency => {
     :incompatibility => {}, 

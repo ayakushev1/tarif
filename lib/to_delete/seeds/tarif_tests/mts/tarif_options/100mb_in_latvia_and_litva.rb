@@ -7,7 +7,7 @@ home_region_id = Relation.home_regions(own_operator_id, _moscow)[0];
 rouming_country_id_1 = _latvia; rouming_country_operator_id_1 = Relation.country_operator(rouming_country_id_1); raise(StandardError) unless rouming_country_operator_id_1 
 rouming_country_id_2 = _lithuania; rouming_country_operator_id_2 = Relation.country_operator(rouming_country_id_2); raise(StandardError) unless rouming_country_operator_id_2 
 
-p_phone = ''; service_to_operator_id = _beeline; fixed_line_id = _fixed_line_operator; russia_service_to_region_id = _piter; 
+p_phone = ''; service_to_operator_id = Category::Operator::Const::Beeline; fixed_line_id = _fixed_line_operator; russia_service_to_region_id = _piter; 
 service_to_country_country_id = _ukraiun; service_to_country_operator_id = Relation.country_operator(service_to_country_country_id);
 
 start_date = DateTime.civil_from_format(:local, 2014, 1, 1);  

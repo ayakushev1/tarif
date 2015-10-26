@@ -25,6 +25,6 @@ module Tarif
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}')]
     config.i18n.default_locale = :ru
     
-    config.action_controller.include_all_helpers = true    
+#    config.action_controller.include_all_helpers = false    
   end
 end

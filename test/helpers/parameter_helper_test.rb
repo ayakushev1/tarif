@@ -18,7 +18,7 @@ describe ParameterHelper do
 
       @par_with_json_with_id =Parameter.new( { 'id' => 3, 'source_type_id' => _call_data, 'nick_name' => 'own_phone_operator_id', 'name' => 'own phone operator_id', 'description' => '', 
                 'source' => { 'table' => 'customer_calls', 'query' => 'select own_phone from customer_calls', 'class' => 'Customer::Call', 'field' => 'own_phone', 'sub_field' => 'operator_id', 'field_type_id' => _json, 'sub_field_type_id' => _reference},          
-                'display' => {'display_type_id' => _value, 'list' => '', 'table' => 'categories', 'query' => 'select * from categories where type_id = 2', 'string' => 'Category.operators', 'class' => 'Category', 'id_field' => 'id', 'name_field' => 'name'},
+                'display' => {'display_type_id' => _value, 'list' => '', 'table' => 'categories', 'query' => 'select * from categories where type_id = 2', 'string' => 'Category::Operator.operators', 'class' => 'Category', 'id_field' => 'id', 'name_field' => 'name'},
                 'unit' => {'unit_id' => nil, 'field_name' => ''} } )
                 
                 

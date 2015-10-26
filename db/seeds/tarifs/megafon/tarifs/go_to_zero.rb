@@ -1,6 +1,6 @@
-@tc = TarifCreator.new(_megafon)
+@tc = TarifCreator.new(Category::Operator::Const::Megafon)
 @tc.create_tarif_class({
-  :id => _mgf_go_to_zero, :name => 'Переходи на ноль', :operator_id => _megafon, :privacy_id => _person, :standard_service_id => _tarif,
+  :id => _mgf_go_to_zero, :name => 'Переходи на ноль', :operator_id => Category::Operator::Const::Megafon, :privacy_id => _person, :standard_service_id => _tarif,
   :features => {:http => 'http://moscow.megafon.ru/tariffs/alltariffs/megafon/perehodi_na_nol/perehodi_na_nol.html'},
   :dependency => {
     :incompatibility => {},

@@ -1,6 +1,6 @@
-@tc = TarifCreator.new(_beeline)
+@tc = TarifCreator.new(Category::Operator::Const::Beeline)
 @tc.create_tarif_class({
-  :id => _bln_planet_of_internet_post, :name => 'Планета Интернета (постоплата)', :operator_id => _beeline, :privacy_id => _person, :standard_service_id => _special_service,
+  :id => _bln_planet_of_internet_post, :name => 'Планета Интернета (постоплата)', :operator_id => Category::Operator::Const::Beeline, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://moskva.beeline.ru/customers/products/mobile/services/details/planeta-interneta/'},
   :dependency => {
     :incompatibility => {:internet_international_rouming => [_bln_planet_of_internet_post, _bln_the_best_internet_in_rouming]}, 

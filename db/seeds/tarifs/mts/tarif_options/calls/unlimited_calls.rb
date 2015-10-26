@@ -1,7 +1,7 @@
 #Безлимитные звонки
-@tc = TarifCreator.new(_mts)
+@tc = TarifCreator.new(Category::Operator::Const::Mts)
 @tc.create_tarif_class({
-  :id => _mts_unlimited_calls, :name => 'Безлимитные звонки', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _special_service,
+  :id => _mts_unlimited_calls, :name => 'Безлимитные звонки', :operator_id => Category::Operator::Const::Mts, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://www.mts.ru/mob_connect/tariffs/discounts/discounts_in_region/calls_on_number_mts/unlim_call/'},
   :dependency => {
     :categories => [_tcgsc_calls],

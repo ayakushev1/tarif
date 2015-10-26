@@ -1,7 +1,7 @@
 #Единая страна
-@tc = TarifCreator.new(_mts)
+@tc = TarifCreator.new(Category::Operator::Const::Mts)
 @tc.create_tarif_class({
-  :id => _mts_single_country, :name => 'Единая страна', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _common_service,
+  :id => _mts_single_country, :name => 'Единая страна', :operator_id => Category::Operator::Const::Mts, :privacy_id => _person, :standard_service_id => _common_service,
   :features => {:http => 'http://www.mts.ru/mob_connect/roaming/n_roaming/discounts/all_country/'},
   :dependency => {
     :categories => [_tcgsc_calls, _tcgsc_sms],

@@ -105,7 +105,7 @@ class Calls::Generator
       "number_of_days_in_call_list" => 30,
       "max_duration_of_call" => 60.0, 
       "others_phone_number" => '9999999999',
-      "fixed_operator_id" => _fixed_line_operator, 
+      "fixed_operator_id" => Category::Operator::Const::FixedlineOperator, 
       "partner_operator_ids" => set_partner_operator_ids(customer_generation_params[:general]["operator_id"].to_i),
       "user_id" =>  user_params["user_id"],
       "own_phone_number" => user_params["own_phone_number"], 
@@ -121,16 +121,16 @@ class Calls::Generator
   def set_partner_operator_ids(own_operator_id)
     result = []
     case own_operator_id.to_i
-    when _beeline
-      result = [_megafon, _mts, _tele_2]
-    when _megafon
-      result = [_mts, _tele_2, _beeline]
-    when _mts
-      result = [_tele_2, _beeline, _megafon]
-    when _tele_2
-      result = [_beeline, _megafon, _mts]
+    when Category::Operator::Const::Beeline
+      result = [Category::Operator::Const::Megafon, Category::Operator::Const::Mts, Category::Operator::Const::Tele2]
+    when Category::Operator::Const::Megafon
+      result = [Category::Operator::Const::Mts, Category::Operator::Const::Tele2, Category::Operator::Const::Beeline]
+    when Category::Operator::Const::Mts
+      result = [Category::Operator::Const::Tele2, Category::Operator::Const::Beeline, Category::Operator::Const::Megafon]
+    when Category::Operator::Const::Tele2
+      result = [Category::Operator::Const::Beeline, Category::Operator::Const::Megafon, Category::Operator::Const::Mts]
     else
-      result = [_beeline, _megafon, _mts, _tele_2]
+      result = [Category::Operator::Const::Beeline, Category::Operator::Const::Megafon, Category::Operator::Const::Mts, Category::Operator::Const::Tele2]
     end
     result       
   end
@@ -532,7 +532,7 @@ class Calls::Generator
         'phone_usage_type_id' => ((usage_pattern_id and usage_pattern_id.to_i != 0) ? usage_pattern_id.to_i : _general_home_sitter),
         'country_id' => _russia,
         'region_id' => _moscow, 
-        'operator_id' => _mts,
+        'operator_id' => Category::Operator::Const::Mts,
         'privacy_id' => _person,
          }.merge(usage_pattern(usage_pattern_id || _general_home_sitter) )
        }
@@ -543,7 +543,7 @@ class Calls::Generator
         'phone_usage_type_id' => ((usage_pattern_id and usage_pattern_id.to_i != 0) ? usage_pattern_id.to_i : _own_region_active_caller),
         'country_id' => _russia,
         'region_id' => _moscow, 
-        'operator_id' => _mts,
+        'operator_id' => Category::Operator::Const::Mts,
         'privacy_id' => _person,
         'region_for_region_calls_ids' => _piter,
         'country_for_international_calls_ids' => _great_britain,

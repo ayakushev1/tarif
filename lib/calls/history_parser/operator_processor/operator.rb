@@ -110,7 +110,7 @@ class Calls::HistoryParser::OperatorProcessor::Operator
   def find_partner_operator_and_type(row, country_id)
     operator_id, operator_index = find_operator(partner_items(row))
     operator_id = find_operator_by_country(country_id) if country_id and !operator_id  
-    operator_type_id = (operator_id and operator_id == _fixed_line_operator) ? _fixed_line : _mobile
+    operator_type_id = (operator_id and operator_id == Category::Operator::Const::FixedlineOperator) ? _fixed_line : _mobile
     [operator_id, operator_type_id]
   end
 

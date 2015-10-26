@@ -5,7 +5,7 @@ form_item.init do |fi|
   fi.set_fields do |filtr_name|
   	action = {:action_name => service_category_groups_path} 
     [
-      ["", collection_select(filtr_name, "operator_id", Category.russian_operators , :id, :name, 
+      ["", collection_select(filtr_name, "operator_id", Category::Operator.russian_operators , :id, :name, 
 	  	{:include_blank => "operator", :selected => s["operator_id"] }, action )
 	  ],
 

@@ -1,3 +1,5 @@
-<%= render :partial => 'form', :layout => 'application/layouts/model_form_for', :locals => {:form_item => controller.tarif_class_form} %>
+<% 	content_for :title, tarif_class_form.model.id ? 'Edit TarifClass' : 'New TarifClass' %>
+
+<%= render :partial => 'form', :layout => 'application/layouts/model_form_for', :locals => {:form_item =>.tarif_class_form} %>
 
 <%= link_to 'Back', tarif_classes_path %>

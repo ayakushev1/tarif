@@ -1,7 +1,7 @@
 #Интернет во внутресетевом роуминге 
-@tc = TarifCreator.new(_mts)
+@tc = TarifCreator.new(Category::Operator::Const::Mts)
 @tc.create_tarif_class({
-  :id => _mts_own_country_rouming_internet, :name => 'Интернет во внутресетевом роуминге', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _common_service,
+  :id => _mts_own_country_rouming_internet, :name => 'Интернет во внутресетевом роуминге', :operator_id => Category::Operator::Const::Mts, :privacy_id => _person, :standard_service_id => _common_service,
   :features => {:http => 'http://www.mts.ru/mob_connect/roaming/i_roaming/inet_roaming/'},
   :dependency => {
     :categories => [_tcgsc_internet],

@@ -1,7 +1,7 @@
 #Smart mini
-@tc = TarifCreator.new(_mts)
+@tc = TarifCreator.new(Category::Operator::Const::Mts)
 @tc.create_tarif_class({
-  :id => _mts_smart_mini, :name => 'Smart mini', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _tarif,
+  :id => _mts_smart_mini, :name => 'Smart mini', :operator_id => Category::Operator::Const::Mts, :privacy_id => _person, :standard_service_id => _tarif,
   :features => {:http => 'http://www.mts.ru/mob_connect/tariffs/tariffs/smart_mini/'},
   :dependency => {
     :categories => [_tcgsc_calls, _tcgsc_sms, _tcgsc_mms, _tcgsc_internet],

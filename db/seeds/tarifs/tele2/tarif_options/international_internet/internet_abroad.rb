@@ -1,7 +1,7 @@
 #Свободное путешествие
-@tc = TarifCreator.new(_tele_2)
+@tc = TarifCreator.new(Category::Operator::Const::Tele2)
 @tc.create_tarif_class({
-  :id => _tele_internet_abroad, :name => 'Интернет за рубежом', :operator_id => _tele_2, :privacy_id => _person, :standard_service_id => _special_service,
+  :id => _tele_internet_abroad, :name => 'Интернет за рубежом', :operator_id => Category::Operator::Const::Tele2, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://msk.tele2.ru/roaming/skidki/internet-za-rubezhom/'},
   :dependency => {
     :categories => [_tcgsc_calls],

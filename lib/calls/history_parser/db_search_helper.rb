@@ -8,7 +8,7 @@ module Calls::HistoryParser::DbSearchHelper
     @regions = {:ids => region_set.map{|rs| rs[0].to_i}, :names => region_set.map{|rs| rs[1].mb_chars.downcase.to_s}, :country_ids => region_set.map{|rs| rs[2]}}
     country_set = Category.countries.pluck(:id, :name)
     @countries = {:ids => country_set.map{|rs| rs[0].to_i}, :names => country_set.map{|rs| rs[1].mb_chars.downcase.to_s}}
-    operator_set = Category.operators.pluck(:id, :name)
+    operator_set = Category::Operator.operators.pluck(:id, :name)
     @operators = {:ids => operator_set.map{|rs| rs[0].to_i}, :names => operator_set.map{|rs| rs[1].mb_chars.downcase.to_s}}
     @operators_by_country = Relation.operators_by_country.pluck(:owner_id, :children)
     @home_region_by_operator = Relation.home_regions(user_params[:operator_id], user_params[:country_id])[0]

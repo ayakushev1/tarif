@@ -1,8 +1,8 @@
 #TODO Добавить расширенный международный роуминг (новую категорию стран)
 #International rouming
-@tc = TarifCreator.new(_megafon)
+@tc = TarifCreator.new(Category::Operator::Const::Megafon)
 @tc.create_tarif_class({
-  :id => _mgf_mobile_internet, :name => 'Мобильный интернет', :operator_id => _megafon, :privacy_id => _person, :standard_service_id => _common_service,
+  :id => _mgf_mobile_internet, :name => 'Мобильный интернет', :operator_id => Category::Operator::Const::Megafon, :privacy_id => _person, :standard_service_id => _common_service,
   :features => {:http => 'http://moscow.megafon.ru/internet/services/prochie_uslugi/mobile_internet.htm'},
   :dependency => {
     :incompatibility => {}, 

@@ -1,7 +1,7 @@
 #Own country rouming
-@tc = TarifCreator.new(_tele_2)
+@tc = TarifCreator.new(Category::Operator::Const::Tele2)
 @tc.create_tarif_class({
-  :id => _tele_simple_geography, :name => 'Простая география', :operator_id => _tele_2, :privacy_id => _person, :standard_service_id => _special_service,
+  :id => _tele_simple_geography, :name => 'Простая география', :operator_id => Category::Operator::Const::Tele2, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://msk.tele2.ru/tariff/prostaya-geografiya/'},
   :dependency => {
     :categories => [_tcgsc_calls],

@@ -1,6 +1,6 @@
-@tc = TarifCreator.new(_megafon)
+@tc = TarifCreator.new(Category::Operator::Const::Megafon)
 @tc.create_tarif_class({
-  :id => _mgf_25_discount_on_calls_to_russia_and_all_incoming, :name => 'Скидка 25% на исходящие вызовы в Россию и все входящие', :operator_id => _megafon, :privacy_id => _person, :standard_service_id => _special_service,
+  :id => _mgf_25_discount_on_calls_to_russia_and_all_incoming, :name => 'Скидка 25% на исходящие вызовы в Россию и все входящие', :operator_id => Category::Operator::Const::Megafon, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://moscow.megafon.ru/roaming/world/25disc.html'},
   :dependency => {
     :incompatibility => {

@@ -1,7 +1,7 @@
 #MMS+
-@tc = TarifCreator.new(_mts)
+@tc = TarifCreator.new(Category::Operator::Const::Mts)
 @tc.create_tarif_class({
-  :id => _mts_mms_discount_50_percent, :name => 'MMS+', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _special_service,
+  :id => _mts_mms_discount_50_percent, :name => 'MMS+', :operator_id => Category::Operator::Const::Mts, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://www.mts.ru/mob_connect/messaging/mms/discount2_mms/mms_plus/'},
   :dependency => {
     :categories => [_tcgsc_mms],

@@ -1,7 +1,7 @@
 #Пакет 500 SMS (monthly)
-@tc = TarifCreator.new(_mts)
+@tc = TarifCreator.new(Category::Operator::Const::Mts)
 @tc.create_tarif_class({
-  :id => _mts_monthly_sms_packet_500, :name => 'Пакет 500 SMS', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _special_service,
+  :id => _mts_monthly_sms_packet_500, :name => 'Пакет 500 SMS', :operator_id => Category::Operator::Const::Mts, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://www.mts.ru/mob_connect/messaging/sms/discount2/sms/'},
   :dependency => {
     :categories => [_tcgsc_sms],

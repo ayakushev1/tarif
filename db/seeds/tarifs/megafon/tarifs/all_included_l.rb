@@ -1,6 +1,6 @@
-@tc = TarifCreator.new(_megafon)
+@tc = TarifCreator.new(Category::Operator::Const::Megafon)
 @tc.create_tarif_class({
-  :id => _mgf_all_included_l, :name => 'Мегафон все включено L', :operator_id => _megafon, :privacy_id => _person, :standard_service_id => _tarif,
+  :id => _mgf_all_included_l, :name => 'Мегафон все включено L', :operator_id => Category::Operator::Const::Megafon, :privacy_id => _person, :standard_service_id => _tarif,
   :features => {:http => 'http://moscow.megafon.ru/tariffs/alltariffs/all_inclusive/all_inclusive_l/l.html'},
   :dependency => {
     :incompatibility => {},

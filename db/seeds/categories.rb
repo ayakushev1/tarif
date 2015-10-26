@@ -227,25 +227,25 @@ Category.create(id: 350, type_id: 29, level_id: nil, parent_id: nil, name: "По
 Category.create(id: 351, type_id: 29, level_id: nil, parent_id: nil, name: "В работе")
 Category.create(id: 352, type_id: 29, level_id: nil, parent_id: nil, name: "Обработано")
 
-Category.create(id: _russian_operators, type_id: 2, level_id: nil, parent_id: nil, name: "Russian operators")
-Category.create(id: _foreign_operators, type_id: 2, level_id: nil, parent_id: nil, name: "Foreign operators")
-Category.create(id: 1020, type_id: 2, level_id: nil, parent_id: _russian_operators, name: "Djuice")
-Category.create(id: 1021, type_id: 2, level_id: nil, parent_id: _russian_operators, name: "life:)")
-Category.create(id: 1022, type_id: 2, level_id: nil, parent_id: _russian_operators, name: "PEOPLEnet")
-Category.create(id: _tele_2, type_id: 2, level_id: nil, parent_id: _russian_operators, name: "TELE2")
-Category.create(id: 1024, type_id: 2, level_id: nil, parent_id: _russian_operators, name: "Utel")
-Category.create(id: _beeline, type_id: 2, level_id: nil, parent_id: _russian_operators, name: "Билайн")
-Category.create(id: 1026, type_id: 2, level_id: nil, parent_id: _russian_operators, name: "Енисейтелеком")
-Category.create(id: _kiev_star, type_id: 2, level_id: nil, parent_id: _russian_operators, name: "КиевСтар")
-Category.create(id: _megafon, type_id: 2, level_id: nil, parent_id: _russian_operators, name: "Мегафон")
-Category.create(id: 1029, type_id: 2, level_id: nil, parent_id: _russian_operators, name: "Мотив")
-Category.create(id: _mts, type_id: 2, level_id: nil, parent_id: _russian_operators, name: "МТС")
-Category.create(id: _mts_ukrain, type_id: 2, level_id: nil, parent_id: _foreign_operators, name: "МТС-Украина")
-Category.create(id: 1032, type_id: 2, level_id: nil, parent_id: _russian_operators, name: "Скайлинк")
-Category.create(id: 1033, type_id: 2, level_id: nil, parent_id: _russian_operators, name: "СМАРТС")
-Category.create(id: _fixed_line_operator, type_id: 2, level_id: nil, parent_id: _russian_operators, name: "Ростелеком")
-Category.create(id: _other_rusian_operator, type_id: 2, level_id: nil, parent_id: _russian_operators, name: "Разный Русский оператор")
-Category.create(id: 1036, type_id: 2, level_id: nil, parent_id: _foreign_operators, name: "Astelit")
+Category.create(id: Category::Operator::Const::Russian_operators, type_id: 2, level_id: nil, parent_id: nil, name: "Russian operators")
+Category.create(id: Category::Operator::Const::Foreign_operators, type_id: 2, level_id: nil, parent_id: nil, name: "Foreign operators")
+Category.create(id: 1020, type_id: 2, level_id: nil, parent_id: Category::Operator::Const::Russian_operators, name: "Djuice")
+Category.create(id: 1021, type_id: 2, level_id: nil, parent_id: Category::Operator::Const::Russian_operators, name: "life:)")
+Category.create(id: 1022, type_id: 2, level_id: nil, parent_id: Category::Operator::Const::Russian_operators, name: "PEOPLEnet")
+Category.create(id: Category::Operator::Const::Tele2, type_id: 2, level_id: nil, parent_id: Category::Operator::Const::Russian_operators, name: "TELE2")
+Category.create(id: 1024, type_id: 2, level_id: nil, parent_id: Category::Operator::Const::Russian_operators, name: "Utel")
+Category.create(id: Category::Operator::Const::Beeline, type_id: 2, level_id: nil, parent_id: Category::Operator::Const::Russian_operators, name: "Билайн")
+Category.create(id: 1026, type_id: 2, level_id: nil, parent_id: Category::Operator::Const::Russian_operators, name: "Енисейтелеком")
+Category.create(id: Category::Operator::Const::KievStar, type_id: 2, level_id: nil, parent_id: Category::Operator::Const::Russian_operators, name: "КиевСтар")
+Category.create(id: Category::Operator::Const::Megafon, type_id: 2, level_id: nil, parent_id: Category::Operator::Const::Russian_operators, name: "Мегафон")
+Category.create(id: 1029, type_id: 2, level_id: nil, parent_id: Category::Operator::Const::Russian_operators, name: "Мотив")
+Category.create(id: Category::Operator::Const::Mts, type_id: 2, level_id: nil, parent_id: Category::Operator::Const::Russian_operators, name: "МТС")
+Category.create(id: Category::Operator::Const::MtsUkrain, type_id: 2, level_id: nil, parent_id: Category::Operator::Const::Foreign_operators, name: "МТС-Украина")
+Category.create(id: 1032, type_id: 2, level_id: nil, parent_id: Category::Operator::Const::Russian_operators, name: "Скайлинк")
+Category.create(id: 1033, type_id: 2, level_id: nil, parent_id: Category::Operator::Const::Russian_operators, name: "СМАРТС")
+Category.create(id: Category::Operator::Const::FixedlineOperator, type_id: 2, level_id: nil, parent_id: Category::Operator::Const::Russian_operators, name: "Ростелеком")
+Category.create(id: Category::Operator::Const::OtherRusianOperator, type_id: 2, level_id: nil, parent_id: Category::Operator::Const::Russian_operators, name: "Разный Русский оператор")
+Category.create(id: 1036, type_id: 2, level_id: nil, parent_id: Category::Operator::Const::Foreign_operators, name: "Astelit")
 
 
 Category.create(id: _altai_region, type_id: 0, level_id: 3, parent_id: _russia, name: "Алтайский край") #Барнаул
@@ -448,7 +448,7 @@ end
 
 i = _first_country_operator_id
 _all_country_list_in_string.each do |country_name|
-  ctr << {:id => i, :type_id => 2, :level_id => nil, :parent_id => _foreign_operators, :name => "operator#{country_name}"}
+  ctr << {:id => i, :type_id => 2, :level_id => nil, :parent_id => Category::Operator::Const::Foreign_operators, :name => "operator#{country_name}"}
   i += 1
 end
 

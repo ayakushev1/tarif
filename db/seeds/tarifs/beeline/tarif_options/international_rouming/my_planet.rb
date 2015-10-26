@@ -1,6 +1,6 @@
-@tc = TarifCreator.new(_beeline)
+@tc = TarifCreator.new(Category::Operator::Const::Beeline)
 @tc.create_tarif_class({
-  :id => _bln_my_planet, :name => 'Моя планета', :operator_id => _beeline, :privacy_id => _person, :standard_service_id => _special_service,
+  :id => _bln_my_planet, :name => 'Моя планета', :operator_id => Category::Operator::Const::Beeline, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://moskva.beeline.ru/customers/products/mobile/services/details/moya-planeta/'},
   :dependency => {
     :incompatibility => {:international_calls => [_bln_my_planet, _bln_planeta_zero]}, 

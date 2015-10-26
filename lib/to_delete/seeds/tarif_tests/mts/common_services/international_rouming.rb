@@ -1,11 +1,16 @@
-#Own_country_rouming
+#International_rouming
 user = 2; 
 own_phone_id = ''; own_operator_id = _mts; own_region_id = _moscow; own_country_id = _russia;
 
 home_region_id = Relation.home_regions(own_operator_id, _moscow)[0]; 
-rouming_region_id = _piter; rouming_country_id = _ukraiun; rouming_country_operator_id = Relation.country_operator(rouming_country_id); raise(StandardError) unless rouming_country_operator_id 
+rouming_region_id = _piter; 
+europe_country_id = _great_britain; europe_country_operator_id = Relation.country_operator(europe_country_id); raise(StandardError) unless europe_country_operator_id 
+sic_1_country_id = _ukraiun; sic_1_country_operator_id = Relation.country_operator(sic_1_country_id); raise(StandardError) unless sic_1_country_operator_id 
+sic_2_country_id = _abkhazia; sic_2_country_operator_id = Relation.country_operator(sic_2_country_id); raise(StandardError) unless sic_2_country_operator_id 
+sic_3_country_id = _south_ossetia; sic_3_country_operator_id = Relation.country_operator(sic_3_country_id); raise(StandardError) unless sic_3_country_operator_id 
+other_country_id = _usa; other_country_operator_id = Relation.country_operator(other_country_id); raise(StandardError) unless other_country_operator_id 
 
-p_phone = ''; service_to_operator_id = _beeline; fixed_line_id = _fixed_line_operator; russia_service_to_region_id = _piter; 
+p_phone = ''; service_to_operator_id = Category::Operator::Const::Beeline; fixed_line_id = _fixed_line_operator; russia_service_to_region_id = _piter; 
 service_to_country_country_id = _ukraiun; service_to_country_operator_id = Relation.country_operator(service_to_country_country_id);
 
 start_date = DateTime.civil_from_format(:local, 2014, 1, 1); total_steps = 100; 
@@ -22,11 +27,17 @@ p[:p_home_region_fixed_line] = {:operator_id => fixed_line_id, :region_id => hom
 p[:p_own_country_own_operator] = {:operator_id => own_operator_id, :region_id => russia_service_to_region_id, :country_id =>  own_country_id, :operator_type_id => _mobile, :number => p_phone}
 p[:p_own_country_other_operator] = {:operator_id => service_to_operator_id, :region_id => russia_service_to_region_id, :country_id =>  own_country_id, :operator_type_id => _mobile, :number => p_phone}
 p[:p_own_country_fixed_line] = {:operator_id => fixed_line_id, :region_id => russia_service_to_region_id, :country_id =>  own_country_id, :operator_type_id => _fixed_line, :number => p_phone}
-p[:p_ukraine] = {:operator_id => Relation.country_operator(_ukraiun), :country_id =>  _ukraiun, :operator_type_id => _mobile, :number => p_phone}
-p[:p_europe] = {:operator_id => Relation.country_operator(_germany), :country_id =>  _germany, :operator_type_id => _mobile, :number => p_phone}
-p[:p_usa] = {:operator_id => Relation.country_operator(_usa), :country_id =>  _usa, :operator_type_id => _mobile, :number => p_phone}
+p[:p_europe] = {:operator_id => Relation.country_operator(europe_country_id), :country_id =>  europe_country_id, :operator_type_id => _mobile, :number => p_phone}
+p[:p_sic_1] = {:operator_id => Relation.country_operator(sic_1_country_id), :country_id =>  sic_1_country_id, :operator_type_id => _mobile, :number => p_phone}
+p[:p_sic_2] = {:operator_id => Relation.country_operator(sic_2_country_id), :country_id =>  sic_2_country_id, :operator_type_id => _mobile, :number => p_phone}
+p[:p_sic_3] = {:operator_id => Relation.country_operator(sic_3_country_id), :country_id =>  sic_3_country_id, :operator_type_id => _mobile, :number => p_phone}
+p[:p_other_country] = {:operator_id => Relation.country_operator(other_country_id), :country_id =>  other_country_id, :operator_type_id => _mobile, :number => p_phone}
 
-c[:c_rouming_region_own_operator] = {:operator_id => own_operator_id, :region_id => rouming_region_id, :country_id =>  own_country_id}
+c[:c_europe_country] = {:operator_id => europe_country_operator_id, :region_id => nil, :country_id =>  europe_country_id}
+c[:c_sic_1_country] = {:operator_id => sic_1_country_operator_id, :region_id => nil, :country_id =>  sic_1_country_id}
+c[:c_sic_2_country] = {:operator_id => sic_2_country_operator_id, :region_id => nil, :country_id =>  sic_2_country_id}
+c[:c_sic_3_country] = {:operator_id => sic_3_country_operator_id, :region_id => nil, :country_id =>  sic_3_country_id}
+c[:c_other_country] = {:operator_id => other_country_operator_id, :region_id => nil, :country_id =>  other_country_id}
 
 def set_date_time(start_date, step, total_steps )
   i = step; n = total_steps
@@ -41,11 +52,24 @@ end
 
 Customer::Call.delete_all
 calls = []; i = 0
-total_steps =  (1 * 3 * 2 * p.size * c.size) + (1 * 1 * 1 * c.size) + 1
+total_steps =  (1 * 1 * 2 * p.size * c.size) + (1 * 1 * 1 * p.size * c.size) + (1 * 1 * 1 * c.size) + 1
 
 1.times do |iii|
-  [_calls, _sms, _mms].each do |service_id|
+  [_calls].each do |service_id|
     [_inbound, _outbound].each do |direction_id|
+      p.each do |partner_key, partner|
+        c.each do |connect_key, connect|
+          calls << {:base_service_id => service_id, :base_subservice_id => direction_id, :partner_phone => partner, :connect => connect, :description => {:time => set_date_time(start_date, i, total_steps), :duration => call_duration, :volume => sms_count}, :user_id => user, :own_phone => own_phone}
+          i += 1; 
+        end
+      end
+    end
+  end
+end
+
+1.times do |iii|
+  [_sms].each do |service_id|
+    [_outbound].each do |direction_id|
       p.each do |partner_key, partner|
         c.each do |connect_key, connect|
           calls << {:base_service_id => service_id, :base_subservice_id => direction_id, :partner_phone => partner, :connect => connect, :description => {:time => set_date_time(start_date, i, total_steps), :duration => call_duration, :volume => sms_count}, :user_id => user, :own_phone => own_phone}
@@ -60,6 +84,7 @@ end
   [_3g].each do |service_id|
     [_unspecified_direction].each do |direction_id|
       c.each do |connect_key, connect|
+        next if connect_key == :c_sic_3_country
         calls << {:base_service_id => service_id, :base_subservice_id => direction_id, :partner_phone => nil, :connect => connect, :description => {:time => set_date_time(start_date, i, total_steps), :duration => call_duration, :volume => internet_duration}, :user_id => user, :own_phone => own_phone}
         i += 1; 
       end

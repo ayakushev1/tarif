@@ -5,11 +5,11 @@ describe TarifOptimization::TarifOptimizator do
     @tarif_optimizator = TarifOptimization::TarifOptimizator.new({:services_by_operator => 
       {:use_short_tarif_set_name => 'true',
        :if_update_tarif_sets_to_calculate_from_with_cons_tarif_results => 'true',
-       :tarifs => {_beeline => [], _megafon => [], _mts => []},
+       :tarifs => {Category::Operator::Const::Beeline => [], Category::Operator::Const::Megafon => [], Category::Operator::Const::Mts => []},
         }})
 #    @tarif_optimizator = TarifOptimization::TarifOptimizator.new({:services_by_operator => {:operators => [1030], :tarifs => {1030 => []} } } )
 #    @tarif_optimizator = TarifOptimization::TarifOptimizator.new({:services_by_operator => {:operators => [1030], :tarifs => {1030 => [200]} } } )
-    @tarif_optimizator.calculate_all_operator_tarifs #calculate_one_operator_tarifs(_mts)
+    @tarif_optimizator.calculate_all_operator_tarifs #calculate_one_operator_tarifs(Category::Operator::Const::Mts)
 #    @tarif_results = @tarif_optimizator.tarif_option_stat_results
   end
   

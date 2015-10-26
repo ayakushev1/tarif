@@ -9,7 +9,7 @@ Content::Article.create(id: 1, author_id: 0, type_id: _cntt_demo_results, status
     body: "Основной причиной такой рекомендации является то, что выбирая такой тариф и опции вы сможете получить экономию порядка полторы тысячи рублей",
   },
   key: {
-    operators: [_mts, _beeline, _megafon],
+    operators: Category::Operator::Const::OperatorsWithTarifs,
     roumings: [_cntkr_own_region, _cntkr_home_region, _cntkr_own_country, _cntkr_abroad],
     services: [_cntks_calls, _cntks_sms, _cntks_mms, _cntks_internet],
     destinations: [_cntkd_to_own_home_regions, _cntkd_to_russia, _cntkd_to_abroad],
@@ -26,7 +26,7 @@ Content::Article.create(id: 2, author_id: 0, type_id: _cntt_demo_results, status
     body: "Интересно, что три самых экономичных тарифа это тарифы Билайн. А тариф, Добро пожаловать, в полтора раза экономичнее ближайших конкурентов.",
   },
   key: {
-    operators: [_mts, _beeline, _megafon],
+    operators: Category::Operator::Const::OperatorsWithTarifs,
     roumings: [_cntkr_own_region, _cntkr_home_region],
     services: [_cntks_calls, _cntks_sms],
     destinations: [_cntkd_to_own_home_regions],
@@ -43,7 +43,7 @@ Content::Article.create(id: 3, author_id: 0, type_id: _cntt_demo_results, status
     body: "Основной причиной такой рекомендации является то, что выбирая такой тариф и опции вы сможете получить экономию порядка двух тысяч рублей",
   },
   key: {
-    operators: [_mts, _beeline, _megafon],
+    operators: Category::Operator::Const::OperatorsWithTarifs,
     roumings: [_cntkr_own_region, _cntkr_home_region, _cntkr_own_country, _cntkr_abroad],
     services: [_cntks_calls, _cntks_sms, _cntks_mms, _cntks_internet],
     destinations: [_cntkd_to_own_home_regions, _cntkd_to_russia, _cntkd_to_abroad],

@@ -919,15 +919,15 @@ cat << {:id => _service_to_other_operators, :name => 'Операторы дру�
 
 cat << {:id => _service_to_beeline, :name => 'Билайн', :type_id => _common, :parent_id => _partner_operator_services, :level => 1, :path => [_partner_operator_services]}
   crit << {:id => _service_to_beeline * 10, :criteria_param_id => _call_partner_phone_operator_id, :comparison_operator_id => _equal, :value_choose_option_id => _single_value, 
-           :value_param_id => _fq_tarif_operator_id, :value => {:integer => _beeline}, :service_category_id => _service_to_beeline}
+           :value_param_id => _fq_tarif_operator_id, :value => {:integer => Category::Operator::Const::Beeline}, :service_category_id => _service_to_beeline}
 
 cat << {:id => _service_to_megafon, :name => 'Мегафон', :type_id => _common, :parent_id => _partner_operator_services, :level => 1, :path => [_partner_operator_services]}
   crit << {:id => _service_to_megafon * 10, :criteria_param_id => _call_partner_phone_operator_id, :comparison_operator_id => _equal, :value_choose_option_id => _single_value, 
-           :value_param_id => _fq_tarif_operator_id, :value => {:integer => _megafon}, :service_category_id => _service_to_megafon}
+           :value_param_id => _fq_tarif_operator_id, :value => {:integer => Category::Operator::Const::Megafon}, :service_category_id => _service_to_megafon}
 
 cat << {:id => _service_to_mts, :name => 'МТС', :type_id => _common, :parent_id => _partner_operator_services, :level => 1, :path => [_partner_operator_services]}
   crit << {:id => _service_to_mts * 10, :criteria_param_id => _call_partner_phone_operator_id, :comparison_operator_id => _equal, :value_choose_option_id => _single_value, 
-           :value_param_id => _fq_tarif_operator_id, :value => {:integer => _mts}, :service_category_id => _service_to_mts}
+           :value_param_id => _fq_tarif_operator_id, :value => {:integer => Category::Operator::Const::OperatorsWithTarifs}, :service_category_id => _service_to_mts}
 
 
 #виды услуг

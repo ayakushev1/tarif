@@ -1,7 +1,7 @@
 #Везде как дома Smart (for smart only)
-@tc = TarifCreator.new(_mts)
+@tc = TarifCreator.new(Category::Operator::Const::Mts)
 @tc.create_tarif_class({
-  :id => _mts_everywhere_as_home_smart, :name => 'Везде как дома SMART', :operator_id => _mts, :privacy_id => _person, :standard_service_id => _special_service,
+  :id => _mts_everywhere_as_home_smart, :name => 'Везде как дома SMART', :operator_id => Category::Operator::Const::Mts, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://www.mts.ru/mob_connect/roaming/calls_across_russia/discounts/vkd_smart/'},
   :dependency => {
     :categories => [_tcgsc_calls, _tcgsc_sms, _tcgsc_internet],

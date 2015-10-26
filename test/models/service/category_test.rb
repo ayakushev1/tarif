@@ -22,7 +22,7 @@ describe 'Service::Category' do
      )
 
     @cat = Service::Category.find(0)
-    @fq_tarif_operator_id = _beeline
+    @fq_tarif_operator_id = Category::Operator::Const::Beeline
     @fq_tarif_region_id = _moscow
   end
 

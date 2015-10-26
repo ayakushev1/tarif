@@ -1,6 +1,6 @@
-@tc = TarifCreator.new(_tele_2)
+@tc = TarifCreator.new(Category::Operator::Const::Tele2)
 @tc.create_tarif_class({
-  :id => _tele_international_rouming, :name => 'Путешествия по миру', :operator_id => _tele_2, :privacy_id => _person, :standard_service_id => _common_service,
+  :id => _tele_international_rouming, :name => 'Путешествия по миру', :operator_id => Category::Operator::Const::Tele2, :privacy_id => _person, :standard_service_id => _common_service,
   :features => {:http => 'http://msk.tele2.ru/roaming/abroad/'},
   :dependency => {
     :categories => [_tcgsc_calls, _tcgsc_sms],

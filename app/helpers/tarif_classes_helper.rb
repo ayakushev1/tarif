@@ -1,4 +1,6 @@
 module TarifClassesHelper
+  include SavableInSession::Filtrable, SavableInSession::Formable, SavableInSession::ArrayOfHashable, 
+    SavableInSession::Tableable, SavableInSession::SessionInitializers
 
   def tarif_class_filtr
     create_filtrable("tarif_class")

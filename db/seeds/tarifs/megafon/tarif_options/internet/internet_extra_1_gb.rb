@@ -1,6 +1,6 @@
-@tc = TarifCreator.new(_megafon)
+@tc = TarifCreator.new(Category::Operator::Const::Megafon)
 @tc.create_tarif_class({
-  :id => _mgf_internet_extra_1_gb, :name => 'Интернет-экстра 1 ГБ', :operator_id => _megafon, :privacy_id => _person, :standard_service_id => _special_service,
+  :id => _mgf_internet_extra_1_gb, :name => 'Интернет-экстра 1 ГБ', :operator_id => Category::Operator::Const::Megafon, :privacy_id => _person, :standard_service_id => _special_service,
   :features => {:http => 'http://moscow.megafon.ru/internet/options/internet-ekstra_1_gb.html'},
   :dependency => {
     :incompatibility => {}, 

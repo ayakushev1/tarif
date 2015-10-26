@@ -1,27 +1,43 @@
 <%
 form_item.init do |fi|
   fi.set_fields do |f|
-    fi.caption = f.object.id ? 'Edit tarif class' : 'New tarif class' 
   	action_path = f.object.id ? edit_tarif_class_path(f.object) : new_tarif_class_path
-    action = {:action_name => action_path }
+	input_html = {:filtr_name => form_item.form_name, :class => "updatable form-control ", :action_name => action_path}
+	label_html = {:class => "form-label "}
+	s = session_model_params(fi)
+    
     [ 
-	   [f.label(:name), f.text_field(:name, action)],
+	   [f.label(:name, 'Название тарифа', label_html), 
+	   	f.text_field(:name, input_html)],
 
-	   [f.label("operator_id", "Operator"),
-     	f.collection_select("operator_id", Category.russian_operators.all, :id, :name, 
-	  	  {:include_blank => true, :selected => session_model_params(fi)["operator_id"] }, action )   ],	
+	   [f.label("operator_id", "Operator", label_html),
+     	f.collection_select("operator_id", Category::Operator.operators_with_tarifs.all, :id, :name, 
+	  	  {:include_blank => true, :selected => s["operator_id"] }, input_html )   ],	
 
-	   [f.label("privacy_id", "Privacy"),
+	   [f.label("privacy_id", "Privacy", label_html),
      	f.collection_select("privacy_id", Category.privacy.all, :id, :name, 
-	  	  {:include_blank => true, :selected => session_model_params(fi)["privacy_id"] }, action )   ],	
+	  	  {:include_blank => true, :selected => s["privacy_id"] }, input_html )   ],	
 
-	   [f.label("standard_service_id", "Standard service"),
+	   [f.label("standard_service_id", "Standard service", label_html),
      	f.collection_select("standard_service_id", Category.standard_services.all, :id, :name, 
-	  	  {:include_blank => true, :selected => session_model_params(fi)["standard_service_id"] }, action )   ],	
+	  	  {:include_blank => true, :selected => s["standard_service_id"] }, input_html )   ],	
 
-	   [f.label(" "), f.submit]
+	   ['', f.submit(:class => "btn btn-primary", :type =>"button", :remote => true)]
 	]
   end
 end
 %>
-
+	  ['Оператор', (tarif_class.operator.name if tarif_class.operator) ], 
+	  ['Для физических или юридических лиц', (tarif_class.privacy.name if tarif_class.privacy) ], 
+	  ['Тариф или опция', (tarif_class.standard_service.name if tarif_class.standard_service) ], 
+	  ['Адрес в интернете', link_to_if(tarif_class.features, tarif_class.features['http'], tarif_class.features['http'], :target => "_blank") ], 
+	  ['Автоматически подобранные категории', (tarif_class.dependency['parts'] if tarif_class.dependency) ], 
+#	  ['Категории введенные вручную', (tarif_class.dependency['categories'] if tarif_class.dependency) ], 
+	  ['Несовместимость', incompatibility], 
+	  ['Общий приоритет', general_priority ], 
+	  ['Тарифы с меньшим приоритетом', lower_tarif_priority], 
+	  ['Тарифы с большим приоритетом', higher_tarif_priority], 
+	  ['Требуемые тарифы или опции', prerequisites], 
+	  ['Возможность использовать несколько раз', (tarif_class.dependency['multiple_use'] if tarif_class.dependency) ], 
+	  ['Является архивным?', ((tarif_class.dependency['is_archived'] || false) if tarif_class.dependency) ], 
+#
