@@ -4072,6 +4072,7 @@ select {
 }
 .calls_form label {
   display: block;
+  font-weight: normal;
 }
 .calls_form label span {
   display: block;
@@ -4079,6 +4080,7 @@ select {
 .calls_form select{
   box-shadow: 5px 5px 10px -14px rgba(0,0,0,0.5);
   padding: 5px 10px;
+  font-weight: normal;
 }
 select:focus  {
   border-color: #417dea !important; 
