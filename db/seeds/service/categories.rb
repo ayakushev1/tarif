@@ -37,6 +37,23 @@ cat << {:id => _sc_mgf_cenral_regions_not_own_and_home_region, :name => 'Мег�
   crit << {:id => _sc_mgf_cenral_regions_not_own_and_home_region * 10 +1 , :criteria_param_id => _call_connect_region_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
            :eval_string => "Relation.operator_region_groups_by_group_id(#{_relation_mgf_central_region})", :service_category_id => _sc_mgf_cenral_regions_not_own_and_home_region}
 
+cat << {:id => _sc_rouming_bln_cenral_regions_not_moscow_regions, :name => 'Билайн, Центральный регион, кроме домашнего', :type_id => _common, :parent_id => _intra_net_rouming, :level => 2, :path => [_category_rouming, _intra_net_rouming]}
+  crit << {:id => _sc_rouming_bln_cenral_regions_not_moscow_regions * 10 , :criteria_param_id => _call_connect_region_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value => _bln_cenral_regions_not_moscow_regions, :service_category_id => _sc_rouming_bln_cenral_regions_not_moscow_regions}
+
+cat << {:id => _sc_rouming_bln_exept_for_cenral_regions_not_moscow_regions, :name => 'Билайн, Регионы за исключением Центрального и домашнего регионов', :type_id => _common, :parent_id => _intra_net_rouming, :level => 2, :path => [_category_rouming, _intra_net_rouming]}
+  crit << {:id => _sc_rouming_bln_exept_for_cenral_regions_not_moscow_regions * 10 , :criteria_param_id => _call_connect_region_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value => _bln_exept_for_cenral_regions_not_moscow_regions, :service_category_id => _sc_rouming_bln_exept_for_cenral_regions_not_moscow_regions}
+
+cat << {:id => _sc_rouming_bln_bad_internet_regions, :name => 'Билайн, Регионы с ограниченным интернетом', :type_id => _common, :parent_id => _intra_net_rouming, :level => 2, :path => [_category_rouming, _intra_net_rouming]}
+  crit << {:id => _sc_rouming_bln_bad_internet_regions * 10  , :criteria_param_id => _call_connect_region_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value => _bln_bad_internet_regions, :service_category_id => _sc_rouming_bln_bad_internet_regions}
+
+cat << {:id => _sc_rouming_bln_all_russia_except_some_regions_for_internet, :name => 'Билайн, Все регионы  кроме регионов с ограниченным интернетом', :type_id => _common, :parent_id => _intra_net_rouming, :level => 2, :path => [_category_rouming, _intra_net_rouming]}
+  crit << {:id => _sc_rouming_bln_all_russia_except_some_regions_for_internet * 10  , :criteria_param_id => _call_connect_region_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value => _bln_all_russia_except_some_regions_for_internet, :service_category_id => _sc_rouming_bln_all_russia_except_some_regions_for_internet}
+
+
 cat << {:id => _sc_tele_own_country_rouming_1, :name => 'Теле 2, Регионы 1', :type_id => _common, :parent_id => _intra_net_rouming, :level => 2, :path => [_category_rouming, _intra_net_rouming]}
   crit << {:id => _sc_tele_own_country_rouming_1 * 10 , :criteria_param_id => _call_connect_region_id, :comparison_operator_id => _not_in_array, :value_choose_option_id => _field, 
            :value_param_id => _fq_tarif_own_and_home_region_ids, :value => nil, :service_category_id => _sc_tele_own_country_rouming_1}
@@ -782,47 +799,59 @@ cat << {:id => _sc_service_to_bln_international_13, :name => 'Билайн, ус
 
 cat << {:id => _sc_service_to_bln_welcome_1, :name => 'Билайн, услуги по тарифу Добро пожаловать, Таджикистан', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
   crit << {:id => _sc_service_to_bln_welcome_1 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
-           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_bln_welcome_1})", :service_category_id => _sc_service_to_bln_welcome_1}
+           :value => _bln_welcome_1, :service_category_id => _sc_service_to_bln_welcome_1}
 
 cat << {:id => _sc_service_to_bln_welcome_2, :name => 'Билайн, услуги по тарифу Добро пожаловать, Армения', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
   crit << {:id => _sc_service_to_bln_welcome_2 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
-           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_bln_welcome_2})", :service_category_id => _sc_service_to_bln_welcome_2}
+           :value => _bln_welcome_2, :service_category_id => _sc_service_to_bln_welcome_2}
 
-cat << {:id => _sc_service_to_bln_welcome_3, :name => 'Билайн, услуги по тарифу Добро пожаловать, Украина', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+cat << {:id => _sc_service_to_bln_welcome_3, :name => 'Билайн, услуги по тарифу Добро пожаловать, Казахстан, Украина', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
   crit << {:id => _sc_service_to_bln_welcome_3 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
-           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_bln_welcome_3})", :service_category_id => _sc_service_to_bln_welcome_3}
+           :value => _bln_welcome_3, :service_category_id => _sc_service_to_bln_welcome_3}
 
-cat << {:id => _sc_service_to_bln_welcome_4, :name => 'Билайн, услуги по тарифу Добро пожаловать, Грузия, Казахстан, Кыргызстан, Узбекистан', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+cat << {:id => _sc_service_to_bln_welcome_4, :name => 'Билайн, услуги по тарифу Добро пожаловать, Узбекистан', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
   crit << {:id => _sc_service_to_bln_welcome_4 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
-           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_bln_welcome_4})", :service_category_id => _sc_service_to_bln_welcome_4}
+           :value => _bln_welcome_4, :service_category_id => _sc_service_to_bln_welcome_4}
 
-cat << {:id => _sc_service_to_bln_welcome_5, :name => 'Билайн, услуги по тарифу Добро пожаловать, Туркменистан, Абхазия, Южная Осетия', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+cat << {:id => _sc_service_to_bln_welcome_5, :name => 'Билайн, услуги по тарифу Добро пожаловать, Туркменистан', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
   crit << {:id => _sc_service_to_bln_welcome_5 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
-           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_bln_welcome_5})", :service_category_id => _sc_service_to_bln_welcome_5}
+           :value => _bln_welcome_5, :service_category_id => _sc_service_to_bln_welcome_5}
 
 cat << {:id => _sc_service_to_bln_welcome_6, :name => 'Билайн, услуги по тарифу Добро пожаловать, Молдова', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
   crit << {:id => _sc_service_to_bln_welcome_6 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
-           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_bln_welcome_6})", :service_category_id => _sc_service_to_bln_welcome_6}
+           :value => _bln_welcome_6, :service_category_id => _sc_service_to_bln_welcome_6}
 
 cat << {:id => _sc_service_to_bln_welcome_7, :name => 'Билайн, услуги по тарифу Добро пожаловать, Беларусь, Азербайджан', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
   crit << {:id => _sc_service_to_bln_welcome_7 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
-           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_bln_welcome_7})", :service_category_id => _sc_service_to_bln_welcome_7}
+           :value => _bln_welcome_7, :service_category_id => _sc_service_to_bln_welcome_7}
 
 cat << {:id => _sc_service_to_bln_welcome_8, :name => 'Билайн, услуги по тарифу Добро пожаловать, Вьетнам', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
   crit << {:id => _sc_service_to_bln_welcome_8 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
-           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_bln_welcome_8})", :service_category_id => _sc_service_to_bln_welcome_8}
+           :value => _bln_welcome_8, :service_category_id => _sc_service_to_bln_welcome_8}
 
 cat << {:id => _sc_service_to_bln_welcome_9, :name => 'Билайн, услуги по тарифу Добро пожаловать, Китай', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
   crit << {:id => _sc_service_to_bln_welcome_9 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
-           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_bln_welcome_9})", :service_category_id => _sc_service_to_bln_welcome_9}
+           :value => _bln_welcome_9, :service_category_id => _sc_service_to_bln_welcome_9}
 
 cat << {:id => _sc_service_to_bln_welcome_10, :name => 'Билайн, услуги по тарифу Добро пожаловать, Индия, Южная Корея', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
   crit << {:id => _sc_service_to_bln_welcome_10 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
-           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_bln_welcome_10})", :service_category_id => _sc_service_to_bln_welcome_10}
+           :value => _bln_welcome_10, :service_category_id => _sc_service_to_bln_welcome_10}
 
 cat << {:id => _sc_service_to_bln_welcome_11, :name => 'Билайн, услуги по тарифу Добро пожаловать, Турция', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
   crit << {:id => _sc_service_to_bln_welcome_11 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
-           :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_bln_welcome_11})", :service_category_id => _sc_service_to_bln_welcome_11}
+           :value => _bln_welcome_11, :service_category_id => _sc_service_to_bln_welcome_11}
+
+cat << {:id => _sc_service_to_bln_welcome_12, :name => 'Билайн, услуги по тарифу Добро пожаловать, Кыргызстан', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_bln_welcome_12 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value => _bln_welcome_12, :service_category_id => _sc_service_to_bln_welcome_12}
+
+cat << {:id => _sc_service_to_bln_welcome_13, :name => 'Билайн, услуги по тарифу Добро пожаловать, Грузия', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_bln_welcome_13 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value => _bln_welcome_13, :service_category_id => _sc_service_to_bln_welcome_13}
+
+cat << {:id => _sc_service_to_bln_welcome_14, :name => 'Билайн, услуги по тарифу Добро пожаловать, Абхазия, Южная Осетия', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_bln_welcome_14 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value => _bln_welcome_14, :service_category_id => _sc_service_to_bln_welcome_14}
 
 
 cat << {:id => _sc_service_to_tele_international_1, :name => 'Теле 2, СНГ', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}

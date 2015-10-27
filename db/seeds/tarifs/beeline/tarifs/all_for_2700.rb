@@ -17,14 +17,14 @@
     {:name => 'scg_bln_all_for_2700_calls' }, 
     {:name => "price for scg_bln_all_for_2700_calls"}, 
     {:calculation_order => 0, :standard_formula_id => _stf_price_by_sum_duration_minute, 
-      :formula => {:window_condition => "(2400.0 >= sum_duration_minute)", :window_over => 'month'}, :price => 0.0, :description => '' }
+      :formula => {:window_condition => "(4000.0 >= sum_duration_minute)", :window_over => 'month'}, :price => 0.0, :description => '' }
     )
   #sms included in tarif
   scg_bln_all_for_2700_sms = @tc.add_service_category_group(
     {:name => 'scg_bln_all_for_2700_sms' }, 
     {:name => "price for scg_bln_all_for_2700_sms"}, 
     {:calculation_order => 0, :standard_formula_id => _stf_zero_count_volume_item, 
-      :formula => {:window_condition => "(600 >= count_volume)", :window_over => 'day'}, :price => 0.0, :description => '' }
+      :formula => {:window_condition => "(3000 >= count_volume)", :window_over => 'day'}, :price => 0.0, :description => '' }
     )
 
   #internet included in tarif
@@ -48,51 +48,53 @@ category = {:name => '_sctcg_own_home_regions_calls_incoming', :service_category
 
 #Own and home regions, Calls, Outcoming, to_own_and_home_regions, to_own_operator
 category = {:name => '_sctcg_own_home_regions_calls_to_own_and_home_regions_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_own_operator}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 0.0})
+  @tc.add_grouped_service_category_tarif_class(category, scg_bln_all_for_2700_calls[:id])
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 0.0})
 
 #Own and home regions, Calls, Outcoming, to_own_and_home_regions, to_not_own_operator
 category = {:name => '_sctcg_own_home_regions_calls_to_own_home_regions_not_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_not_own_operator}
   @tc.add_grouped_service_category_tarif_class(category, scg_bln_all_for_2700_calls[:id])
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 2.0})
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 1.6})
 
 #Own and home regions, Calls, Outcoming, to_own_country, to_own_operator
 category = {:name => '_sctcg_own_home_regions_calls_to_own_country_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country, :service_category_partner_type_id => _service_to_own_operator}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 0.0 })
+  @tc.add_grouped_service_category_tarif_class(category, scg_bln_all_for_2700_calls[:id])
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 0.0 })
 
 #Own and home regions, Calls, Outcoming, to_own_country, to_not_own_operator
 category = {:name => '_sctcg_own_home_regions_calls_to_own_country_not_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country, :service_category_partner_type_id => _service_to_not_own_operator}
   @tc.add_grouped_service_category_tarif_class(category, scg_bln_all_for_2700_calls[:id])
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 2.9 })
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 3.0 })
 
 
 #Own and home regions, Calls, Outcoming, to_bln_international_1 (СНГ, Грузия), телефоны Билайн
 category = {:name => '_sctcg_own_home_regions_calls_to_bln_international_1', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_international_1, :service_category_partner_type_id =>  _service_to_bln_partner_operator}
   @tc.add_one_service_category_tarif_class(category, {}, 
-  {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 3.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
+  {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 12.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
    :formula => {:window_condition => "(10.0 >= sum_duration_minute)", :window_over => 'day'} } )
 
 #Own and home regions, Calls, Outcoming, to_bln_international_2 (на другие телефоны стран СНГ, Грузии, Абхазии, Южной Осетии)
 category = {:name => '_sctcg_own_home_regions_calls_to_bln_international_2', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_international_2}
   @tc.add_one_service_category_tarif_class(category, {}, 
-  {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 3.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
+  {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 24.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
    :formula => {:window_condition => "(10.0 >= sum_duration_minute)", :window_over => 'day'} } )
 
 #Own and home regions, Calls, Outcoming, to_bln_international_3 (в Европу, США, Канаду)
 category = {:name => '_sctcg_own_home_regions_calls_to_bln_international_3', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_international_3}
   @tc.add_one_service_category_tarif_class(category, {}, 
-  {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 5.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
+  {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 35.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
    :formula => {:window_condition => "(10.0 >= sum_duration_minute)", :window_over => 'day'} } )
 
 #Own and home regions, Calls, Outcoming, to_bln_international_10 (в Северную и Центральную Америку (кроме стран США, Канада, Куба, Багамские острова, Барбадос))
 category = {:name => '_sctcg_own_home_regions_calls_to_bln_international_10', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_international_10}
   @tc.add_one_service_category_tarif_class(category, {}, 
-  {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 7.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
+  {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 40.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
    :formula => {:window_condition => "(10.0 >= sum_duration_minute)", :window_over => 'day'} } )
 
 #Own and home regions, Calls, Outcoming, to_bln_international_11 (в остальные страны (кроме стран Мальдивы, Мадагаскар, Бурунди, КНДР, Папуа-Новая Гвинея, Сейшельские острова, Сомали, Токелау, Тунис)
 category = {:name => '_sctcg_own_home_regions_calls_to_bln_international_11', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_international_11}
   @tc.add_one_service_category_tarif_class(category, {}, 
-  {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 7.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
+  {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 55.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
    :formula => {:window_condition => "(10.0 >= sum_duration_minute)", :window_over => 'day'} } )
 
 
@@ -103,13 +105,16 @@ category = {:name => '_sctcg_own_home_regions_sms_incoming', :service_category_r
 #Own and home regions, sms, Outcoming, to_own_home_regions
 category = {:name => '_sctcg_own_home_regions_sms_to_own_home_regions', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_own_and_home_regions}
   @tc.add_grouped_service_category_tarif_class(category, scg_bln_all_for_2700_sms[:id])
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_count_volume_item, :price => 2.95})
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_count_volume_item, :price => 2.00})
 
 #Own and home regions, sms, Outcoming, to_own country
 category = {:name => '_sctcg_own_home_regions_sms_to_own_country', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_own_country}
   @tc.add_grouped_service_category_tarif_class(category, scg_bln_all_for_2700_sms[:id])
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_count_volume_item, :price => 3.95})
 
+#Own and home regions, sms, Outcoming, to_not_own_country
+category = {:name => '_sctcg_own_home_regions_sms_to_not_own_country', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_not_own_country}
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_count_volume_item, :price => 3.95})
 
 #Own and home regions, mms, incoming
 category = {:name => '_sctcg_own_home_regions_mms_incoming', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _mms_in}
@@ -126,17 +131,7 @@ category = {:name => '_sctcg_own_home_regions_mms_to_own_country', :service_cate
 #Own and home regions, Internet
   category = {:name => 'own_and_home_regions_internet', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _internet}
   @tc.add_grouped_service_category_tarif_class(category, scg_bln_all_for_2700_internet[:id])
-  @tc.add_one_service_category_tarif_class(category, {}, 
-    {:calculation_order => 1, :price => 20.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'own_and_home_regions_internet_above_included_in_tarif', :description => '', 
-     :formula => {
-       :multiple_use_of_tarif_option => {
-         :group_by => 'month',
-         :stat_params => {:tarif_option_count_of_usage => "ceil(sum((description->>'volume')::float) / 200.0)", :sum_volume => "sum((description->>'volume')::float)"},
-         :method => "price_formulas.price * tarif_option_count_of_usage", 
-       }
-     }, 
-    } )
-
+  
 
 #Own country, Calls, Incoming
 category = {:name => '_sctcg_own_country_calls_incoming', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_in}
@@ -144,27 +139,39 @@ category = {:name => '_sctcg_own_country_calls_incoming', :service_category_roum
 
 #Own country, Calls, Outcoming, to_own_and_home_regions, to_own_operator
 category = {:name => '_sctcg_own_country_calls_to_own_and_home_regions_own_operator', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_own_operator}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 0.0})
+  @tc.add_grouped_service_category_tarif_class(category, scg_bln_all_for_2700_calls[:id])
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 0.0})
 
 #Own country, Calls, Outcoming, to_own_and_home_regions, to_not_own_operator
 category = {:name => '_sctcg_own_country_calls_to_own_home_regions_not_own_operator', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_not_own_operator}
   @tc.add_grouped_service_category_tarif_class(category, scg_bln_all_for_2700_calls[:id])
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 1.6})
 
 #Own country, Calls, Outcoming, to_own_country, to_own_operator
 category = {:name => '_sctcg_own_country_calls_to_own_country_own_operator', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country, :service_category_partner_type_id => _service_to_own_operator}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 0.0 })
+  @tc.add_grouped_service_category_tarif_class(category, scg_bln_all_for_2700_calls[:id])
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 0.0 })
 
 #Own country, Calls, Outcoming, to_own_country, to_not_own_operator
 category = {:name => '_sctcg_own_country_calls_to_own_country_not_own_operator', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country, :service_category_partner_type_id => _service_to_not_own_operator}
   @tc.add_grouped_service_category_tarif_class(category, scg_bln_all_for_2700_calls[:id])
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 3.0})
 
 #Own country, sms, Outcoming, to_own_home_regions
 category = {:name => '_sctcg_own_country_sms_to_own_home_regions', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_own_and_home_regions}
   @tc.add_grouped_service_category_tarif_class(category, scg_bln_all_for_2700_sms[:id])
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_count_volume_item, :price => 2.00})
 
 #Own country, sms, Outcoming, to_own country
 category = {:name => '_sctcg_own_country_sms_to_own_country', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_own_country}
   @tc.add_grouped_service_category_tarif_class(category, scg_bln_all_for_2700_sms[:id])
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_count_volume_item, :price => 3.95})
+
+#Own country, sms, Outcoming, to_not_own country
+category = {:name => '_sctcg_own_country_sms_to_not_own_country', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_not_own_country}
+  @tc.add_grouped_service_category_tarif_class(category, scg_bln_all_for_2700_sms[:id])
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_count_volume_item, :price => 3.95})
+
 
 #Own country, mms, incoming
 category = {:name => '_sctcg_own_country_mms_incoming', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _mms_in}
@@ -178,19 +185,14 @@ category = {:name => '_sctcg_own_country_mms_to_own_home_regions', :service_cate
 category = {:name => '_sctcg_own_country_mms_to_own_country', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _mms_out, :service_category_geo_id => _service_to_own_country}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_count_volume_item, :price => 7.95})
 
-#Own country, Internet
-  category = {:name => 'own_and_home_regions_internet', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _internet}
+#_sc_rouming_bln_cenral_regions_not_moscow_regions, Internet
+  category = {:name => 'own_country_internet', :service_category_rouming_id => _sc_rouming_bln_cenral_regions_not_moscow_regions, :service_category_calls_id => _internet}
   @tc.add_grouped_service_category_tarif_class(category, scg_bln_all_for_2700_internet[:id])
-  @tc.add_one_service_category_tarif_class(category, {}, 
-    {:calculation_order => 1, :price => 20.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'own_and_home_regions_internet_above_included_in_tarif', :description => '', 
-     :formula => {
-       :multiple_use_of_tarif_option => {
-         :group_by => 'month',
-         :stat_params => {:tarif_option_count_of_usage => "ceil(sum((description->>'volume')::float) / 200.0)", :sum_volume => "sum((description->>'volume')::float)"},
-         :method => "price_formulas.price * tarif_option_count_of_usage", 
-       }
-     }, 
-    } )
+
+#_sc_rouming_bln_exept_for_cenral_regions_not_moscow_regions, Internet
+  category = {:name => 'own_country_internet', :service_category_rouming_id => _sc_rouming_bln_exept_for_cenral_regions_not_moscow_regions, :service_category_calls_id => _internet}
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => _stf_price_by_sum_volume_m_byte, :price => 9.95})  
+
 
 
 #all_world_rouming, Calls, incoming

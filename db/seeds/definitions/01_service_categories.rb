@@ -50,7 +50,10 @@ def access_methods_to_constant_service_categories
   _sc_rouming_mts_other_countries_60_60_60_60 = 502; _sc_rouming_mts_other_countries_65_65_65_135 = 503; _sc_rouming_mts_other_countries_99_99_99_155 = 504;
   _sc_rouming_mts_other_countries_200_200_200_200 = 505; _sc_rouming_mts_other_countries_250_250_250_250 =  506; _sc_rouming_mts_other_countries_155_155_155_155 = 507; 
 
-  #география услуг
+  _sc_rouming_bln_all_russia_except_some_regions_for_internet = 510; _sc_rouming_bln_bad_internet_regions = 511;
+  _sc_rouming_bln_cenral_regions_not_moscow_regions = 512; _sc_rouming_bln_exept_for_cenral_regions_not_moscow_regions = 513;
+  
+ #география услуг
   _geography_services = 100;
   _service_to_own_region = 101; _service_to_home_region = 102; _service_to_own_country = 103; _service_to_group_of_countries = 104;
   _service_to_not_own_country = 105; 
@@ -110,6 +113,9 @@ def access_methods_to_constant_service_categories
   
   _sc_service_to_tele_sic_1 = 460; _sc_service_to_tele_sic_2 = 461; _sc_service_to_tele_sic_3 = 462;
   _sc_tele_service_to_uzbekistan = 463; _sc_tele_service_to_sic_not_uzbekistan = 464;
+
+  _sc_service_to_bln_welcome_12 = 465; _sc_service_to_bln_welcome_13 = 466; _sc_service_to_bln_welcome_14 = 467;
+  
   
   #partner type
   _partner_operator_services = 190;

@@ -220,15 +220,20 @@ end
 
   _bln_welcome_1 = [_tajikistan]
   _bln_welcome_2 = [_armenia]
-  _bln_welcome_3 = [_ukraiun]
-  _bln_welcome_4 = [_georgia, _kazakhstan, _kyrgyzstan, _uzbekistan]
-  _bln_welcome_5 = [_turkmenistan, _abkhazia, _south_ossetia]
+  _bln_welcome_3 = [_kazakhstan, _ukraiun]
+  _bln_welcome_4 = [_uzbekistan]
+  _bln_welcome_5 = [_turkmenistan, ]
   _bln_welcome_6 = [_moldova]
   _bln_welcome_7 = [_belarus, _azerbaijan]
   _bln_welcome_8 = [_vietnam]
   _bln_welcome_9 = [_china]
   _bln_welcome_10 = [_india, _south_korea]
   _bln_welcome_11 = [_turkey]
+  
+  _bln_welcome_12 = [_kyrgyzstan, ] #3,5 9
+  _bln_welcome_13 = [_georgia, ] #8 12
+  _bln_welcome_14 = [_abkhazia, _south_ossetia] #12
+  
   
   _bln_my_planet_groups_popular_countries_1 = [_egypt, _china, _usa, _tailand, _turkey]
   _bln_my_planet_groups_1 = _mts_sic_countries + _mts_europe_countries + _bln_my_planet_groups_popular_countries_1

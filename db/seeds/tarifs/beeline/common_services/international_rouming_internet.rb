@@ -13,7 +13,7 @@
     :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},
     :multiple_use => false
   } } )
-
+ 
 #SIC, Internet
 category = {:name => '_sctcg_bln_sic_internet', :service_category_rouming_id => _sc_bln_sic, :service_category_calls_id => _internet}
   @tc.add_one_service_category_tarif_class(category, {}, 

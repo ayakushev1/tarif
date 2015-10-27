@@ -126,7 +126,7 @@ _mgf_internet_tablet = 488;  #new from 11.10.2015
 _bln_all_for_200 = 600; _bln_all_for_400 = 601; _bln_all_for_600 = 602; _bln_all_for_900 = 603; _bln_all_for_1500 = 604; _bln_all_for_2700 = 605;
 _bln_all_for_600_post = 610; _bln_all_for_900_post = 611; _bln_all_for_1500_post = 612; _bln_all_for_2700_post = 613;  
 _bln_total_all_post = 620; _bln_go = 621; _bln_welcome = 622; _bln_mobile_pencioner = 623; _bln_zero_doubts = 624; #_bln_first_child = 625; 
-_bln_co_communication = 626; 
+_bln_co_communication = 626; _bln_by_second = 627
 
 #    :prerequisites => [_bln_all_for_200, _bln_all_for_400, _bln_all_for_600, _bln_all_for_900, _bln_all_for_1500, _bln_all_for_2700,
 #                       _bln_all_for_600_post, _bln_all_for_900_post, _bln_all_for_1500_post, _bln_all_for_2700_post, _bln_total_all_post,

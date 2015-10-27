@@ -75,7 +75,7 @@ category = {:name => '_sctcg_bln_other_countries_mms_incoming', :service_categor
 
 #other_countries, mms, outcoming
 category = {:name => '_sctcg_bln_other_countries_mms_outcoming', :service_category_rouming_id => _sc_bln_other_world, :service_category_calls_id => _mms_out}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => _stf_price_by_count_volume_item, :price => 14.95})  
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => _stf_price_by_count_volume_item, :price => 14.95})   
 
 
 @tc.add_tarif_class_categories

@@ -17,6 +17,8 @@ TarifClass.create(id: _bln_mobile_pencioner, operator_id: 1025, privacy_id: 2, s
 TarifClass.create(id: _bln_zero_doubts, operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Ноль сомнений')
 #TarifClass.create(id: _bln_first_child, operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Первый детский*')
 TarifClass.create(id: _bln_co_communication, operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Со-общение')
+
+TarifClass.create(id: _bln_by_second, operator_id: 1025, privacy_id: 2, standard_service_id: 40, name: 'Посекундный')
 #Билайн, корпоративные, тарифы
 
 #Билайн, роуминг

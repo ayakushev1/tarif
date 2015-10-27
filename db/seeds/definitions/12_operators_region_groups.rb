@@ -28,7 +28,17 @@ def access_methods_to_constant_operator_country_groups
   _zabaikalsk_region = 1181; _krum = 1182;
 
 #all
-  _regions = [_moscow, _moscow_region, _piter, _piter_region, _ekaterin, _ekaterin_region]
+  _regions = [_altai_region, _barnaul, _amur_region, _blagoveshensk, _astrahan_region, _volgograd_region, _zabaikalsk_region, _ivanov_region,
+    _irkutsk_region, _kabardino_balkaria_region, _karachaevo_cherchesia_region, _krasnoyarsk_region, _kurgansk_region, _moscow_region, _orenburg_region,
+    _penza_region, _permsk_region, _primorsk_region, _altai_republik, _bashkorostan_region, _buryatia_region, _dagestan_region, _ingushetia_region, 
+    _kalmykia_region, _maryi_el_region, _mordovia_region, _yakutia_region, _yuznaya_osetia_region, _tatarstan_region, _tyva_tuva_region, 
+    _hakasia_region, _samara_region, _saratov_region, _sverdlovsk_region, _stavropol_region, _tumen_region, _ulyanovsk_region, _habarovsk_region, 
+    _hanty_mansiisk_region, _chechen_region, _chuvashia_region, _yaroslav_region, _piter, _piter_region,
+    _arhangelsk_region, _arhangelsk, _belgorod_region, _bryansk_region, _vladimir_region, _vologda_region, _voroneg_region, 
+    _birobidgan_region, _kaliningrad_region, _kaluga_region, _kamhatsky_region, _kemerovo_region, _kirov_region, _kostroma_region, _krasnodar_region,
+    adygea_region, _kursk_region, _lipetsk_region, _magadan_region, _murmansk_region, _yamalo_nenetsk_region, _nigegorod_region, _novgorod_region,
+    _novosibirsk_region, _omsk_region, _orel_region, _pskovsk_region, _karelia_region, _komi_region, _rostov_region, _rezyan_region, _sahalin_region,
+    _smolensk_region, _tambov_region, _tver_region, _tomsk_region, _tula_region, _udmurtia_region, _chelyabinsk_region, _chukotka_region]
 
 #megafon
 _mgf_central_region = 
@@ -37,7 +47,15 @@ _mgf_central_region =
    _rezyan_region, _smolensk_region, _tver_region, _tula_region, _yaroslav_region]
 
 #beeline
-_bln_all_russia_except_some_regions_for_internet = [] 
+_bln_cenral_regions_not_moscow_regions = 
+  [_bryansk, _vladimir, _ivanovo, _kaluga, _kostroma, _rezyan, _smolensk, _tver, _tula, _yaroslav] + 
+  [_bryansk_region, _vladimir_region, _ivanov_region, _kaluga_region, _kostroma_region,
+   _rezyan_region, _smolensk_region, _tver_region, _tula_region, _yaroslav_region]
+_bln_exept_for_cenral_regions_not_moscow_regions = _regions - _bln_cenral_regions_not_moscow_regions
+
+_bln_bad_internet_regions = [ _amur_region, _birobidgan_region, _zabaikalsk_region, _irkutsk_region, _kamhatsky_region, _magadan_region, 
+    _primorsk_region, _buryatia_region, _yakutia_region, _sahalin_region, _habarovsk_region, _chukotka_region]
+_bln_all_russia_except_some_regions_for_internet = _regions - _bln_bad_internet_regions
 
 #tele_2
 _tele_own_country_rouming_1 = [_altai_region, _barnaul, _amur_region, _blagoveshensk, _astrahan_region, _volgograd_region, _zabaikalsk_region, _ivanov_region,
