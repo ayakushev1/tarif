@@ -9,6 +9,7 @@ Bundler.require(*Rails.groups(assets: %w(development test)))
 
 module Tarif
   class Application < Rails::Application
+    config.middleware.use Rack::Deflater
     config.autoload_paths << "#{Rails.root}/lib"
     
 #    config.i18n.enforce_available_locales = false
