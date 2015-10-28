@@ -4168,11 +4168,18 @@ input[type="checkbox"] {
 #loading-indicator {
   position: fixed; 
   left: 50%;
-  top: 50%;
+  top: 30%;
+  z-index: 100000000;   
 }
 #loading-indicator-ajax {
   position: fixed; 
   left: 50%;
-  top: 50%;
+  top: 30%;
+  z-index: 1000000;   
 }
+html.turbolinks-progress-bar::before {
+  background-color: red !important;
+  height: 10px !important;
+}
+
 /* END USER CODE */

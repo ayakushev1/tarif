@@ -3,19 +3,19 @@
 <head>
   <title><%= yield(:title) || 'Подбор оптимального тарифа' %></title>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-  
 </head>
 <body>
   <%= controller_name if false%>
   <%= render '/layouts/demo_layout' %>
 
 </body>
+	<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>	
+  	<%= csrf_meta_tags %>
+    <%= favicon_link_tag "favicon.ico" %>
 
-  <img src=<%= image_path("ajax-loader-big.gif") %> id='loading-indicator' style="display:none;"/>
-  <img src=<%= image_path("ajax-loader-big.gif") %> id='loading-indicator-ajax' style="display:none;"/>
-  <%= favicon_link_tag "favicon.ico" %>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>	
+	<img src=<%= image_path("ajax-loader-big.gif") %> id='loading-indicator-ajax' style="display:none;"/>
+	<img src=<%= image_path("ajax-loader-big.gif") %> id='loading-indicator' style="display:none;"/>
+
 
 </html>
 <!--

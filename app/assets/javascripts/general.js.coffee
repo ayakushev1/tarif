@@ -90,7 +90,7 @@ $(document).on 'click', "tr[id*=row]", ->
 
   $.ajax
     url: row_url, 
-    async: false,
+#    async: false,
     data: filtr,
     dataType: "script",
     headers: referer: row_url
