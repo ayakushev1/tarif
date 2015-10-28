@@ -5,7 +5,7 @@ $(document).on 'ready page:load', ->
 	$("#loading-indicator").hide()
 
 
-$(document).on 'ajaxSend', ->
+$(document).on 'ajax:before ajaxStart', ->
 	$("#loading-indicator-ajax").show()
 
 $(document).on 'ajaxComplete', ->
