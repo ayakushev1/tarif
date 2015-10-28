@@ -12,7 +12,8 @@
   <%= render '/layouts/demo_layout' %>
 
 </body>
-  <img src="/assets/ajax-loader-big.gif" id='loading-indicator' style="display:none;"/>
+
+  <img src=<%= image_path("ajax-loader-big.gif") %> id='loading-indicator' style="display:none;"/>
   <%= favicon_link_tag "favicon.ico" %>
 
 </html>
