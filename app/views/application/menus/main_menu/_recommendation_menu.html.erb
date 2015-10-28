@@ -1,7 +1,7 @@
 <ul class="nav nav-pills nav-stacked left_menu" role="tablist">
-	<li><%= link_to content_tag(:span, image_tag("left_menu_1.png", :alt => 'Главная страница')) + 'Главная страница', root_path, remote: false %></li>
+	<li><%= link_to content_tag(:span, image_tag("left_menu_1.png", :alt => 'Главная страница')) + 'Главная страница', root_path, remote: true %></li>
 	
-	<li><%= link_to content_tag(:span, image_tag("left_menu_2.png", :alt => 'Выбор рекомендации')) + 'Выбор рекомендации', content_articles_index_path, remote: false %></li>
+	<li><%= link_to content_tag(:span, image_tag("left_menu_2.png", :alt => 'Выбор рекомендации')) + 'Выбор рекомендации', content_articles_index_path, remote: true %></li>
 
 	<li><%= link_to content_tag(:span, image_tag("left_menu_3.png", :alt => 'Просмотр рекомендации')) + 'Просмотр рекомендации', content_articles_show_path %></li>
 
