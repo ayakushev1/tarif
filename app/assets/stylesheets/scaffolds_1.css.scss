@@ -4165,4 +4165,9 @@ input[type="checkbox"] {
 .current_table_row {
   background: #D7EAFF;
 }
+#loading-indicator {
+  position: fixed; 
+  left: 50%;
+  top: 50%;
+}
 /* END USER CODE */
