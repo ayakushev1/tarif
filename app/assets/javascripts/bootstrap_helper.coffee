@@ -42,9 +42,9 @@ load_datepicker =  ->
       
 do_on_load =  ->
 #  load_tabs()
-  load_datepicker()
+#  load_datepicker()
 #  load_accordion()
     
-$(document).on 'ready page:load ajaxComplete', -> 
-  do_on_load()
+#$(document).on 'ready page:load ajaxComplete', -> 
+#  do_on_load()
       
