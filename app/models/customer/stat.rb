@@ -34,14 +34,18 @@ class Customer::Stat < ActiveRecord::Base
     results = {}
 #    raise(StandardError, init_result_model(model_init_data))
     result_model.each do |result_item|
-      result_item.attributes[model_init_data[:result_name]].each do |result_type, result_value|
-        if result_value.is_a?(Hash)
-          results[result_type] ||= {}
-          results[result_type].merge!(result_value)
-        else
-          results[result_type] = result_value
-        end
-      end if result_item and result_item.attributes and model_init_data and model_init_data[:result_name] and result_item.attributes[model_init_data[:result_name]]
+#      begin
+        result_item.attributes[model_init_data[:result_name]].each do |result_type, result_value|
+          if result_value.is_a?(Hash)
+            results[result_type] ||= {}
+            results[result_type].merge!(result_value)
+          else
+            results[result_type] = result_value
+          end
+        end if result_item and result_item.attributes and model_init_data and model_init_data[:result_name] and result_item.attributes[model_init_data[:result_name]]
+ #     rescue ArgumentError
+ #       raise(StandardError, result_item.inspect)
+ #     end 
     end if result_model
 #      raise(StandardError, results) if results.blank?
     results
