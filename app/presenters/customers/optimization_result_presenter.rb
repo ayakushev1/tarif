@@ -1,4 +1,6 @@
 class Customers::OptimizationResultPresenter #ServiceHelper::OptimizationResultPresenter
+#  CALL_ID_COUNT = 'call_id_count'.freeze
+
   attr_reader :user_id
   attr_reader :service_set_based_on_tarif_sets_or_tarif_results, :level_to_show_tarif_result_by_parts, :use_price_comparison_in_current_tarif_set_calculation,
               :max_tarif_set_count_per_tarif

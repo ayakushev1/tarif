@@ -1,10 +1,12 @@
 class Customers::FinalTarifResultsPresenter #ServiceHelper::FinalTarifResultsPresenter
+  include Customers::FinalTarifResultsPresenterConst
   attr_reader :user_id, :demo_result_id, :level_to_show_tarif_result_by_parts
   
   def initialize(options = {})
     @user_id = options[:user_id] || 0
     @demo_result_id = options[:demo_result_id]
     @level_to_show_tarif_result_by_parts = options[:show_zero_tarif_result_by_parts] == 'true' ? -1.0 : 0.0
+#    raise(StandardError)
   end
   
   def results
@@ -85,7 +87,7 @@ class Customers::FinalTarifResultsPresenter #ServiceHelper::FinalTarifResultsPre
     result = []
     prepared_tarif_results_1 = prepared_tarif_results(tarif_id)
     prepared_tarif_results_1[service_set_id].each do |service_id, prepared_tarif_result|       
-      if prepared_tarif_result['call_id_count'].to_i > level_to_show_tarif_result_by_parts or prepared_tarif_result['price_value'].to_f > level_to_show_tarif_result_by_parts
+      if prepared_tarif_result[CALL_ID_COUNT].to_i > level_to_show_tarif_result_by_parts or prepared_tarif_result['price_value'].to_f > level_to_show_tarif_result_by_parts
         result << {'service_id' => service_id}.merge(prepared_tarif_result)
       end
     end if prepared_tarif_results_1 and prepared_tarif_results_1[service_set_id]
@@ -99,7 +101,7 @@ class Customers::FinalTarifResultsPresenter #ServiceHelper::FinalTarifResultsPre
       additions['service_name'] = (f['service_description'][service_id]['name'] if f and service_id and f['service_description'] and f['service_description'][service_id])
       additions['service_http'] = (f['service_description'][service_id]['http'] if f and service_id and f['service_description'] and f['service_description'][service_id])
       additions['service_cost'] = (f['price_value'].to_f.round(0) if f and f['price_value'])
-      additions['service_count'] = (f['call_id_count'].to_i if f and f['call_id_count'])
+      additions['service_count'] = (f[CALL_ID_COUNT].to_i if f and f[CALL_ID_COUNT])
   
       if f and f['stat_results']
         additions['calls_volume'] = f['stat_results']['sum_duration_minute'].round(0) if f['stat_results']['sum_duration_minute']
@@ -145,7 +147,7 @@ class Customers::FinalTarifResultsPresenter #ServiceHelper::FinalTarifResultsPre
     result = []
     prepared_tarif_detail_results_1 = prepared_tarif_detail_results(tarif_id)
     prepared_tarif_detail_results_1[service_set_id][service_id].each do |service_category_name, prepared_tarif_detail_result|       
-      if prepared_tarif_detail_result['call_id_count'].to_i > level_to_show_tarif_result_by_parts or prepared_tarif_detail_result['price_value'].to_f > level_to_show_tarif_result_by_parts
+      if prepared_tarif_detail_result[CALL_ID_COUNT].to_i > level_to_show_tarif_result_by_parts or prepared_tarif_detail_result['price_value'].to_f > level_to_show_tarif_result_by_parts
         result << {'service_category_name' => service_category_name}.merge(prepared_tarif_detail_result)
       end
     end if prepared_tarif_detail_results_1 and prepared_tarif_detail_results_1[service_set_id] and prepared_tarif_detail_results_1[service_set_id][service_id]
@@ -209,7 +211,7 @@ class Customers::FinalTarifResultsPresenter #ServiceHelper::FinalTarifResultsPre
     prepared_tarif_detail_results_1 = prepared_tarif_detail_results(tarif_id)
     prepared_tarif_detail_results_1[service_set_id].each do |service_id, prepared_tarif_detail_results_by_service_set|
       prepared_tarif_detail_results_by_service_set.each do |service_category_name, prepared_tarif_detail_result|       
-        if prepared_tarif_detail_result['call_id_count'].to_i > level_to_show_tarif_result_by_parts or prepared_tarif_detail_result['price_value'].to_f > level_to_show_tarif_result_by_parts
+        if prepared_tarif_detail_result[CALL_ID_COUNT].to_i > level_to_show_tarif_result_by_parts or prepared_tarif_detail_result['price_value'].to_f > level_to_show_tarif_result_by_parts
           if result[service_category_name]
             result[service_category_name] << prepared_tarif_detail_result
           else

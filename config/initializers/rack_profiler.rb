@@ -3,8 +3,8 @@ if ['development', 'production'].include?(Rails.env)
 
   # initialization is skipped so trigger it
   Rack::MiniProfilerRails.initialize!(Rails.application)
-  Rails.application.middleware.delete(Rack::MiniProfiler)
-  Rails.application.middleware.insert_after(Rack::Deflater, Rack::MiniProfiler)
+#  Rails.application.middleware.delete(Rack::MiniProfiler)
+#  Rails.application.middleware.insert_after(Rack::Deflater, Rack::MiniProfiler)
   
   Rack::MiniProfiler.config.position = 'right'
   Rack::MiniProfiler.config.start_hidden = false
