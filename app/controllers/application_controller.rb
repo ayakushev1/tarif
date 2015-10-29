@@ -24,7 +24,7 @@ class ApplicationController < ActionController::Base
   def check_rack_mini_profiler
 #    raise(StandardError)
     # for example - if current_user.admin?
-    if false or (params[:rmp] and current_user_admin?)
+    if false or (current_user_admin?)
       Rack::MiniProfiler.authorize_request
     end
   end  

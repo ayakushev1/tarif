@@ -31,6 +31,6 @@ test:
 #
 production:
 #  <<: *default #use for rack-mini-profiller
-#  database: tarif_development #use for rack-mini-profiller
+#  database: tarif_development
   url: <%= ENV["DATABASE_URL"] %>
 
