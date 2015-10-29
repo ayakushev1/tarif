@@ -70,8 +70,15 @@ group :development do
   gem 'binding_of_caller'
   gem 'annotate'
 #  gem 'localtunnel'
-  gem 'spring'
+  gem 'spring'  
 end
+
+gem 'derailed'  #for Benchmarking rails apps
+gem 'stackprof' #profiling methods
+gem 'rack-mini-profiler', require: false
+gem 'flamegraph'
+gem 'memory_profiler'
+
 
 group :test do
   gem 'minitest-spec-rails'
