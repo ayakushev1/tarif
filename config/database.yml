@@ -33,10 +33,10 @@ production:
 #  <<: *default #use for rack-mini-profiller
 #  database: tarif_development
 #  url: <%= ENV["DATABASE_URL"] %>
-<% if ENV["DATABASE_URL"] %>
+#<% if ENV["DATABASE_URL"] %>
   url: ENV["DATABASE_URL"]
-<% else %>
-  <<: *default #use for rack-mini-profiller
-  database: 'tarif_development' 
- <% end %>  
+#<% else %>
+#  <<: *default #use for rack-mini-profiller
+#  database: 'tarif_development' 
+# <% end %>  
 
