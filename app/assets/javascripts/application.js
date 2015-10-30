@@ -28,3 +28,4 @@
 //= require_tree .
 
 Turbolinks.pagesCached(0);
+Turbolinks.ProgressBar.disable();

@@ -10,7 +10,7 @@ $(document).on 'ajaxComplete', ->
 $(document).on 'page:fetch', ->  
   $("#loading-indicator").show()
 
-$(document).on 'ready page:load', ->
+$(document).on 'page:load', -> #ready
   $("#loading-indicator").hide()
 
 
