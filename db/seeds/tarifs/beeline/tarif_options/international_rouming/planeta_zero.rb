@@ -17,19 +17,49 @@
 #Периодическая плата
   @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => _stf_price_by_1_month, :price => 0.0})
 
-#all_world_rouming, calls, incoming
-category = {:name => '_sctcg_bln_all_world_rouming_calls_incoming', :service_category_rouming_id => _all_world_rouming, :service_category_calls_id => _calls_in}
+#bln_my_planet_groups_1 (Европа, СНГ и популярные страны), calls, incoming
+category = {:name => '_sctcg_bln_all_world_rouming_calls_incoming', :service_category_rouming_id => _sc_bln_my_planet_groups_1, :service_category_calls_id => _calls_in}
   @tc.add_one_service_category_tarif_class(category, {},  
-  {:calculation_order => 0, :price => 19.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
-   :formula => {
-     :stat_params => {:sum_duration_minute_more_10 => "sum(case when ((description->>'duration')::float) > 600.0 then ((description->>'duration')::float) - 10.0 else 0.0 end)",
-                      :count_calls => "count(((description->>'duration')::float) > 0.0)",                      
-                      :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
-     :method => 'price_formulas.price * (count_calls + sum_duration_minute_more_10)'}, } )
+  {:calculation_order => 0, :price => 60.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
+   :formula => { 
+     :window_condition => "(20.0 >= sum_duration_minute)", :window_over => 'day', 
+     :stat_params => {
+           :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"}, 
+     :method => "case when sum_duration_minute > 0.0 then price_formulas.price else 0.0 end"     
+     }
+   } )
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 10.0})
 
-#all_world_rouming, sms, outcoming
-category = {:name => '_sctcg_bln_all_world_rouming_sms_outcoming', :service_category_rouming_id => _all_world_rouming, :service_category_calls_id => _sms_out}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => _stf_price_by_count_volume_item, :price => 10.0})  
+#bln_my_planet_groups_1 (Европа, СНГ и популярные страны), calls, outcoming, 
+category = {:name => '_sctcg_bln_planeta_zero_groups_1_calls', :service_category_rouming_id => _sc_bln_my_planet_groups_1, :service_category_calls_id => _calls_out}
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => _stf_price_by_sum_duration_minute, :price => 20.0})  
+
+#bln_my_planet_groups_1 (Европа, СНГ и популярные страны), sms, outcoming
+category = {:name => '_sctcg_bln_planeta_zero_groups_1_sms_outcoming', :service_category_rouming_id => _sc_bln_my_planet_groups_1, :service_category_calls_id => _sms_out}
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => _stf_price_by_count_volume_item, :price => 7.0})  
+
+
+#bln_my_planet_groups_2 (остальные страны), calls, incoming
+category = {:name => '_sctcg_bln_all_world_rouming_calls_incoming', :service_category_rouming_id => _sc_bln_my_planet_groups_2, :service_category_calls_id => _calls_in}
+  @tc.add_one_service_category_tarif_class(category, {},  
+  {:calculation_order => 0, :price => 100.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
+   :formula => { 
+     :window_condition => "(20.0 >= sum_duration_minute)", :window_over => 'day', 
+     :stat_params => {
+           :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"}, 
+     :method => "case when sum_duration_minute > 0.0 then price_formulas.price else 0.0 end"     
+     }
+    } )
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 15.0})
+
+#bln_my_planet_groups_2 (остальные страны), calls, outcoming, 
+category = {:name => '_sctcg_bln_planeta_zero_groups_2_calls', :service_category_rouming_id => _sc_bln_my_planet_groups_2, :service_category_calls_id => _calls_out}
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => _stf_price_by_sum_duration_minute, :price => 45.0})  
+
+#bln_my_planet_groups_2 (остальные страны), sms, outcoming
+category = {:name => '_sctcg_bln_planeta_zero_groups_2_sms_outcoming', :service_category_rouming_id => _sc_bln_my_planet_groups_2, :service_category_calls_id => _sms_out}
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => _stf_price_by_count_volume_item, :price => 9.0})  
+
 
 
 

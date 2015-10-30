@@ -116,6 +116,7 @@ def access_methods_to_constant_service_categories
 
   _sc_service_to_bln_welcome_12 = 465; _sc_service_to_bln_welcome_13 = 466; _sc_service_to_bln_welcome_14 = 467;
   
+  _sc_service_to_bln_my_abroad_countries_1 = 468; _sc_service_to_bln_my_abroad_countries_2 = 469; _sc_service_to_bln_my_abroad_countries_3 = 470;  
   
   #partner type
   _partner_operator_services = 190;

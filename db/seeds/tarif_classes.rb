@@ -48,13 +48,21 @@ TarifClass.create(id: _bln_sms_without_borders, operator_id: 1025, privacy_id: 2
 TarifClass.create(id: _bln_mms, operator_id: 1025, privacy_id: 2, standard_service_id: 42, name: 'MMS')# SMS и MMS сообщения
 
 TarifClass.create(id: _bln_highway_1, operator_id: 1025, privacy_id: 2, standard_service_id: 42, name: 'Хайвей 1 Гб')# интернет
-TarifClass.create(id: _bln_highway_3, operator_id: 1025, privacy_id: 2, standard_service_id: 42, name: 'Хайвей 3 Гб')# интернет
-TarifClass.create(id: _bln_highway_7, operator_id: 1025, privacy_id: 2, standard_service_id: 42, name: 'Хайвей 7 Гб')# интернет
-TarifClass.create(id: _bln_highway_15, operator_id: 1025, privacy_id: 2, standard_service_id: 42, name: 'Хайвей 15 Гб')# интернет
-TarifClass.create(id: _bln_highway_30, operator_id: 1025, privacy_id: 2, standard_service_id: 42, name: 'Хайвей 30 Гб')# интернет
+TarifClass.create(id: _bln_highway_4, operator_id: 1025, privacy_id: 2, standard_service_id: 42, name: 'Хайвей 4 Гб')# интернет
+TarifClass.create(id: _bln_highway_8, operator_id: 1025, privacy_id: 2, standard_service_id: 42, name: 'Хайвей 8 Гб')# интернет
+TarifClass.create(id: _bln_highway_12, operator_id: 1025, privacy_id: 2, standard_service_id: 42, name: 'Хайвей 12 Гб')# интернет
+TarifClass.create(id: _bln_highway_20, operator_id: 1025, privacy_id: 2, standard_service_id: 42, name: 'Хайвей 20 Гб')# интернет
 
 TarifClass.create(id: _bln_internet_on_day_100_mb, operator_id: 1025, privacy_id: 2, standard_service_id: 42, name: 'Интернет на день 100 Мб')# интернет
 TarifClass.create(id: _bln_internet_on_day_500_mb, operator_id: 1025, privacy_id: 2, standard_service_id: 42, name: 'Интернет на день 500 Мб')# интернет
+
+TarifClass.create(id: _bln_7_days_of_internet_for_russia_rouming, operator_id: 1025, privacy_id: 2, standard_service_id: 42, name: '7 дней интернета для путешествий по России')# интернет
+TarifClass.create(id: _bln_30_days_of_internet_for_russia_rouming, operator_id: 1025, privacy_id: 2, standard_service_id: 42, name: '30 дней интернета для путешествий по России')# интернет
+TarifClass.create(id: _bln_welcome_to_all_tarifs, operator_id: 1025, privacy_id: 2, standard_service_id: 42, name: 'Добро пожаловать на ВСЕ')# интернет
+TarifClass.create(id: _bln_my_abroad_countries, operator_id: 1025, privacy_id: 2, standard_service_id: 42, name: 'Моё зарубежье')# интернет
+TarifClass.create(id: _bln_add_speed_1gb, operator_id: 1025, privacy_id: 2, standard_service_id: 42, name: 'Продли скорость 1 Гб')# интернет
+TarifClass.create(id: _bln_add_speed_3gb, operator_id: 1025, privacy_id: 2, standard_service_id: 42, name: 'Продли скорость 3 Гб')# интернет
+TarifClass.create(id: _bln_auto_add_speed, operator_id: 1025, privacy_id: 2, standard_service_id: 42, name: 'Автопродление скорости')# интернет
 
 #Мегафон, частные, тарифы
 TarifClass.create(id: _mgf_around_world, operator_id: 1028, privacy_id: 2, standard_service_id: 40, name: 'Вокруг света')#

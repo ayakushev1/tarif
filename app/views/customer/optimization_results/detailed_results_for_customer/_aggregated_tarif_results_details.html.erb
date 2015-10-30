@@ -6,7 +6,8 @@ table.init do |t|
 #  t.pagination_per_page = 100
 #  t.id_name = 'service_category_name'#'service_category_tarif_class_id'
   model_keys = t.model.collect {|row| row.keys }.flatten.uniq.collect{|key| key unless [].include?(key)}.compact  
-  t.heads = ['Стоимость в месяц, руб', 'Тип роуминга', 'Услуга', 'География услуги', 'Тип принимающего оператор', 'Кол-во минут', 'Кол-во смс и ммс', 'Объем интернета, Мб']
+  t.heads = ['Стоимость в месяц, руб', 'Тип роуминга', 'Услуга', 'География услуги', 'Тип принимающего оператор', 'Кол-во минут', 
+  	'Кол-во смс и ммс', 'Объем интернета, Мб', ('Кол-во обработанных записей'  if current_user_admin?)].compact
   t.set_fields do |f| 
   	geo = !f['geo_details'].blank? ? content_tag(:a, f['geo'] , {:href => '#', :'data-toggle' =>'tooltip', :title => f['geo_details']}).html_safe : f['geo'] 
   	rouming = !f['rouming_details'].blank? ? content_tag(:a, f['rouming'] , {:href => '#', :'data-toggle' =>'tooltip', :title => f['rouming_details']}).html_safe : f['rouming'] 
@@ -21,7 +22,7 @@ table.init do |t|
      f['calls_volume'],
      f['sms_volume'],
      f['internet_volume'],
-  	 (f['calls'].size if f['calls'] and false),    
+  	 (f['calls'].size if f['calls'] and current_user_admin?),    
 #     f['service_category_description'],
 #	 model_keys,    
   	] 

@@ -8,15 +8,15 @@ table.init do |t|
   model_keys = t.model.collect {|row| row.keys }.flatten.uniq.collect{|key| key unless ['service category description ', 
   	'calls_volume', 'sms_volume', 'internet_volume',
   	].include?(key)}.compact  
-  t.heads = ['Стоимость в месяц, руб', 'Тариф или опция', 'Кол-во обработанных записей', 'Кол-во минут', 'Кол-во смс и ммс', 'Объем интернета, Мб']
+  t.heads = ['Стоимость в месяц, руб', 'Тариф или опция', 'Кол-во минут', 'Кол-во смс и ммс', 'Объем интернета, Мб', ('Кол-во обработанных записей'  if current_user_admin?)].compact
   t.set_fields do |f| 
   	[
      (f['service_cost'].round(0).to_s(:delimited, precision: 0) if f['service_cost']),      
   	 link_to_if(f['service_http'], f['service_name'], f['service_http'], {:target => "_blank"}),    
-     f['service_count'],      
      f['calls_volume'],
      f['sms_volume'],
      f['internet_volume'],
+     (f['service_count'] if current_user_admin?),      
 #     f['stat_results'],
 #	 model_keys,    
   	] 

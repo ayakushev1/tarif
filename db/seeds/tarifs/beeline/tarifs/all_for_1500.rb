@@ -35,6 +35,69 @@
       :formula => {:window_condition => "(10000.0 >= sum_volume)", :window_over => 'month'}, :price => 0.0, :description => '' }
     )
 
+  #internet for add_speed_1gb option
+  scg_bln_add_speed_1gb = @tc.add_service_category_group(
+    {:name => 'scg_bln_add_speed_1gb' }, 
+    {:name => "price for scg_bln_add_speed_1gb"}, 
+    {:calculation_order => 1, :price => 100.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'scf_bln_add_speed_1gb', :description => '', 
+     :formula => {
+       :window_condition => "(1000.0 >= sum_volume)", :window_over => 'month',
+       :stat_params => {:sum_volume => "sum((description->>'volume')::float)"},
+       :method => "price_formulas.price",
+       
+       :auto_turbo_buttons  => {
+         :group_by => 'month',
+         :stat_params => {
+           :sum_volume => "sum((description->>'volume')::float)",
+           :count_of_usage_of_1000 => "ceil((sum((description->>'volume')::float) - 1000.0) / 1000.0)"},
+       :method => "price_formulas.price * count_of_usage_of_1000",
+       }
+     },
+     } 
+    )
+
+  #internet for add_speed_3gb option
+  scg_bln_add_speed_3gb = @tc.add_service_category_group(
+    {:name => 'scg_bln_add_speed_3gb' }, 
+    {:name => "price for scg_bln_add_speed_3gb"}, 
+    {:calculation_order => 2, :price => 200.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'scf_bln_add_speed_3gb', :description => '', 
+     :formula => {
+       :window_condition => "(3000.0 >= sum_volume)", :window_over => 'month',
+       :stat_params => {:sum_volume => "sum((description->>'volume')::float)"},
+       :method => "price_formulas.price",
+       
+       :auto_turbo_buttons  => {
+         :group_by => 'month',
+         :stat_params => {
+           :sum_volume => "sum((description->>'volume')::float)",
+           :count_of_usage_of_3000 => "ceil((sum((description->>'volume')::float) - 3000.0) / 3000.0)"},
+       :method => "price_formulas.price * count_of_usage_of_3000",
+       }
+     },
+     } 
+    )
+
+#internet for auto_add_speed option
+  scg_bln_auto_add_speed = @tc.add_service_category_group(
+    {:name => 'scg_bln_auto_add_speed' }, 
+    {:name => "price for scg_bln_auto_add_speed"}, 
+    {:calculation_order => 2, :price => 20.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'scf_bln_auto_add_speed', :description => '', 
+     :formula => {
+       :window_condition => "(150.0 >= sum_volume)", :window_over => 'month',
+       :stat_params => {:sum_volume => "sum((description->>'volume')::float)"},
+       :method => "price_formulas.price",
+       
+       :auto_turbo_buttons  => {
+         :group_by => 'month',
+         :stat_params => {
+           :sum_volume => "sum((description->>'volume')::float)",
+           :count_of_usage_of_150 => "ceil((sum((description->>'volume')::float) - 150.0) / 150.0)"},
+       :method => "price_formulas.price * count_of_usage_of_150",
+       }
+     },
+     } 
+    )
+
 #Переход на тариф
 #  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item, :price => 0.0})  
 
@@ -120,6 +183,9 @@ category = {:name => '_sctcg_own_home_regions_mms_to_own_country', :service_cate
 #Own and home regions, Internet
   category = {:name => 'own_and_home_regions_internet', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _internet}
   @tc.add_grouped_service_category_tarif_class(category, scg_bln_all_for_1500_internet[:id])
+  @tc.add_grouped_service_category_tarif_class(category, scg_bln_add_speed_1gb[:id], :tarif_set_must_include_tarif_options => [_bln_add_speed_1gb] )
+  @tc.add_grouped_service_category_tarif_class(category, scg_bln_add_speed_3gb[:id], :tarif_set_must_include_tarif_options => [_bln_add_speed_3gb] )
+  @tc.add_grouped_service_category_tarif_class(category, scg_bln_auto_add_speed[:id], :tarif_set_must_include_tarif_options => [_bln_auto_add_speed] )
 
 
 #Own country, Calls, Incoming
@@ -175,6 +241,9 @@ category = {:name => '_sctcg_own_country_mms_to_own_country', :service_category_
 #_sc_rouming_bln_cenral_regions_not_moscow_regions, Internet
   category = {:name => 'own_country_internet', :service_category_rouming_id => _sc_rouming_bln_cenral_regions_not_moscow_regions, :service_category_calls_id => _internet}
   @tc.add_grouped_service_category_tarif_class(category, scg_bln_all_for_1500_internet[:id])
+  @tc.add_grouped_service_category_tarif_class(category, scg_bln_add_speed_1gb[:id], :tarif_set_must_include_tarif_options => [_bln_add_speed_1gb] )
+  @tc.add_grouped_service_category_tarif_class(category, scg_bln_add_speed_3gb[:id], :tarif_set_must_include_tarif_options => [_bln_add_speed_3gb] )
+  @tc.add_grouped_service_category_tarif_class(category, scg_bln_auto_add_speed[:id], :tarif_set_must_include_tarif_options => [_bln_auto_add_speed] )
 
 #_sc_rouming_bln_exept_for_cenral_regions_not_moscow_regions, Internet
   category = {:name => 'own_country_internet', :service_category_rouming_id => _sc_rouming_bln_exept_for_cenral_regions_not_moscow_regions, :service_category_calls_id => _internet}

@@ -128,11 +128,6 @@ _bln_all_for_600_post = 610; _bln_all_for_900_post = 611; _bln_all_for_1500_post
 _bln_total_all_post = 620; _bln_go = 621; _bln_welcome = 622; _bln_mobile_pencioner = 623; _bln_zero_doubts = 624; #_bln_first_child = 625; 
 _bln_co_communication = 626; _bln_by_second = 627
 
-#    :prerequisites => [_bln_all_for_200, _bln_all_for_400, _bln_all_for_600, _bln_all_for_900, _bln_all_for_1500, _bln_all_for_2700,
-#                       _bln_all_for_600_post, _bln_all_for_900_post, _bln_all_for_1500_post, _bln_all_for_2700_post, _bln_total_all_post,
-#                       _bln_go, _bln_welcome, _bln_mobile_pencioner, _bln_zero_doubts, _bln_co_communication, #_bln_first_child, 
-#                       ],
-
 #common_services
 _bln_own_country_rouming = 650; _bln_international_rouming = 651; _bln_international_rouming_internet = 652; _bln_international_rouming_internet_post = 653; 
 _bln_intra_countries_services = 654; _bln_mobile_internet = 655;
@@ -143,6 +138,8 @@ _bln_planeta_zero = 660; ; _bln_my_planet = 661; _bln_the_best_internet_in_roumi
 
 #country rouming
 _bln_my_country = 670; 
+_bln_7_days_of_internet_for_russia_rouming = 671; _bln_30_days_of_internet_for_russia_rouming = 672;   #new from 11.10.2015
+_bln_welcome_to_all_tarifs = 673; _bln_my_abroad_countries = 674;   #new from 11.10.2015
 
 #calls
 _bln_my_intracity = 680; _bln_my_beeline = 681; _bln_my_beeline_post = 682; _bln_my_calls_to_other_countries = 683; #_bln_my_ukraine = 687; 
@@ -154,8 +151,9 @@ _bln_my_sms = 700; _bln_my_sms_post = 701; _bln_sms_without_borders = 702;
 _bln_mms = 720;
 
 #internet 
-_bln_highway_1 = 730; _bln_highway_3 = 731; _bln_highway_7 = 732; _bln_highway_15 = 733; _bln_highway_30 = 734;
+_bln_highway_1 = 730; _bln_highway_4 = 731; _bln_highway_8 = 732; _bln_highway_12 = 733; _bln_highway_20 = 734;
 _bln_internet_on_day_100_mb = 735; _bln_internet_on_day_500_mb = 736;
+_bln_add_speed_1gb = 737; _bln_add_speed_3gb = 738;  _bln_auto_add_speed = 739;  #new from 11.10.2015
 
 #Tele2
 #tarifs

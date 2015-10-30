@@ -248,6 +248,10 @@ end
   _bln_the_best_internet_in_rouming_groups_1 = _mts_sic_countries + _mts_europe_countries + _bln_my_planet_groups_popular_countries_2
   _bln_the_best_internet_in_rouming_groups_2 = _world_countries_without_russia - _bln_the_best_internet_in_rouming_groups_1 - [_abkhazia, _andorra, _cuba]
 
+  _bln_my_abroad_countries_1 =  [ _usa, _canada, _china, _vietnam, _india, _south_korea]
+  _bln_my_abroad_countries_2 = _mts_europe_countries + [_turkey]
+  _bln_my_abroad_countries_3 = _world_countries_without_russia - _mts_sic_countries - _bln_my_abroad_countries_1 - _bln_my_abroad_countries_2
+
 _tele_service_to_tele_international_1 = _mts_sic_countries
 _tele_service_to_tele_international_2 = _mts_europe_countries
 _tele_service_to_tele_international_3 = [_usa, _canada]

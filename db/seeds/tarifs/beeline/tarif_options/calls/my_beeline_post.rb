@@ -6,10 +6,9 @@
     :incompatibility => {:sms_options => [_bln_sms_without_borders, _bln_my_sms, _bln_my_sms_post]}, 
     :general_priority => _gp_tarif_option_without_limits,#_gp_tarif_option_with_limits,
     :other_tarif_priority => {:lower => [_bln_my_intracity], :higher => []},
-    :prerequisites => [_bln_all_for_900_post, _bln_total_all_post],
-    :forbidden_tarifs => {
-      :to_switch_on => [], 
-      :to_serve => []},
+    :prerequisites => [],
+    :forbidden_tarifs => {:to_switch_on => [_bln_all_for_600, _bln_all_for_900, _bln_all_for_1500, _bln_all_for_2700,
+      _bln_all_for_600_post, _bln_all_for_900_post, _bln_all_for_1500_post, _bln_all_for_2700_post, _bln_total_all_post], :to_serve => []},
     :multiple_use => false
   } } )
 
@@ -19,7 +18,7 @@
     {:name => 'scg_bln_my_beeline_post_calls' }, 
     {:name => "price for scg_bln_my_beeline_post_calls"}, 
     {:calculation_order => 0, :standard_formula_id => _stf_price_by_sum_duration_minute, 
-      :formula => {:window_condition => "(100.0 >= sum_duration_minute)", :window_over => 'day'}, :price => 0.0, :description => '' }
+      :formula => {:window_condition => "(3000.0 >= sum_duration_minute)", :window_over => 'month'}, :price => 0.0, :description => '' }
     )
 
 #Подключение
@@ -32,12 +31,12 @@
 #Own and home regions, Calls, Outcoming, to_own_and_home_regions, to_own_operator
 category = {:name => '_sctcg_own_home_regions_calls_to_own_and_home_regions_to_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_own_operator}
   @tc.add_grouped_service_category_tarif_class(category, scg_bln_my_beeline_post_calls[:id])
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 2.0})
+#  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 2.0})
 
 #Own and home regions, Calls, Outcoming, to_own_country, to_own_operator
 category = {:name => '_sctcg_own_home_regions_calls_to_own_country_to_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country, :service_category_partner_type_id => _service_to_own_operator}
   @tc.add_grouped_service_category_tarif_class(category, scg_bln_my_beeline_post_calls[:id])
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 2.0})
+#  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 2.0})
 
 
 

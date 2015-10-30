@@ -6,8 +6,10 @@
     :incompatibility => {:sms_options => [_bln_sms_without_borders, _bln_my_sms, _bln_my_sms_post]}, 
     :general_priority => _gp_tarif_option_without_limits,#_gp_tarif_option_with_limits,
     :other_tarif_priority => {:lower => [_bln_my_intracity], :higher => []},
-    :prerequisites => [_bln_go, _bln_welcome, _bln_mobile_pencioner, _bln_zero_doubts, _bln_co_communication],
-    :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},
+    :prerequisites => [_bln_go, _bln_welcome, _bln_mobile_pencioner, _bln_zero_doubts, _bln_co_communication,
+      ],
+    :forbidden_tarifs => {:to_switch_on => [_bln_all_for_600, _bln_all_for_900, _bln_all_for_1500, _bln_all_for_2700,
+      _bln_all_for_600_post, _bln_all_for_900_post, _bln_all_for_1500_post, _bln_all_for_2700_post, _bln_total_all_post], :to_serve => []},
     :multiple_use => false
   } } )
 
@@ -17,14 +19,14 @@
     {:name => 'scg_bln_my_beeline_calls' }, 
     {:name => "price for scg_bln_my_beeline_calls"}, 
     {:calculation_order => 0, :standard_formula_id => _stf_price_by_sum_duration_minute, 
-      :formula => {:window_condition => "(3000.0 >= sum_duration_minute)", :window_over => 'month'}, :price => 0.0, :description => '' }
+      :formula => {:window_condition => "(100.0 >= sum_duration_minute)", :window_over => 'day'}, :price => 0.0, :description => '' }
     )
 
 #Подключение
 #  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item, :price => 0.0})  
 
 #Периодическая плата
-  @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => _stf_price_by_1_month, :price => 210.0})
+  @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => _stf_price_by_1_month, :price => 150.0})
 
 
 #Own and home regions, Calls, Outcoming, to_own_and_home_regions, to_own_operator

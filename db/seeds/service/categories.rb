@@ -854,6 +854,19 @@ cat << {:id => _sc_service_to_bln_welcome_14, :name => 'Билайн, услуг
            :value => _bln_welcome_14, :service_category_id => _sc_service_to_bln_welcome_14}
 
 
+cat << {:id => _sc_service_to_bln_my_abroad_countries_1, :name => 'Билайн, услуги по тарифу Моё зарубежье, в США, Канаду, Китай, Вьетнам, Индию, Южную Корею', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_bln_my_abroad_countries_1 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value => _bln_my_abroad_countries_1, :service_category_id => _sc_service_to_bln_my_abroad_countries_1}
+
+cat << {:id => _sc_service_to_bln_my_abroad_countries_2, :name => 'Билайн, услуги по тарифу Моё зарубежье, в Европу, Турцию', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_bln_my_abroad_countries_2 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value => _bln_my_abroad_countries_2, :service_category_id => _sc_service_to_bln_my_abroad_countries_2}
+
+cat << {:id => _sc_service_to_bln_my_abroad_countries_3, :name => 'Билайн, услуги по тарифу Моё зарубежье, в прочие страны (не включает страны СНГ)', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
+  crit << {:id => _sc_service_to_bln_my_abroad_countries_3 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
+           :value => _bln_my_abroad_countries_3, :service_category_id => _sc_service_to_bln_my_abroad_countries_3}
+
+
 cat << {:id => _sc_service_to_tele_international_1, :name => 'Теле 2, СНГ', :type_id => _common, :parent_id => _service_to_group_of_countries, :level => 2, :path => [_geography_services, _service_to_group_of_countries]}
   crit << {:id => _sc_service_to_tele_international_1 * 10 , :criteria_param_id => _call_partner_phone_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
            :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_service_to_tele_international_1})", :service_category_id => _sc_service_to_tele_international_1}

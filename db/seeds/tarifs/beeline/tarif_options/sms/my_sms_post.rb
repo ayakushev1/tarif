@@ -6,8 +6,8 @@
     :incompatibility => {:sms_options => [_bln_sms_without_borders, _bln_my_sms, _bln_my_sms_post]}, 
     :general_priority => _gp_tarif_option_without_limits,#_gp_tarif_option_with_limits,
     :other_tarif_priority => {:lower => [], :higher => []},
-    :prerequisites => [_bln_all_for_600_post, _bln_all_for_900_post, _bln_total_all_post,],
-    :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},
+    :prerequisites => [],
+    :forbidden_tarifs => {:to_switch_on => [_bln_all_for_600_post, _bln_all_for_900_post, _bln_all_for_1500_post, _bln_total_all_post, _bln_all_for_2700_post, _bln_total_all_post], :to_serve => []},
     :multiple_use => false
   } } )
 
@@ -22,7 +22,7 @@
 category = {:name => '_sctcg_own_home_regions_sms_to_own_home_regions', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_own_and_home_regions}
   @tc.add_one_service_category_tarif_class(category, {}, 
   {:calculation_order => 0,:standard_formula_id => _stf_price_by_count_volume_item, :price => 0.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _item,
-   :formula => {:window_condition => "(100.0 >= count_volume)", :window_over => 'day'} } )
+   :formula => {:window_condition => "(3000.0 >= count_volume)", :window_over => 'month'} } )
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_count_volume_item, :price => 1.0})
 
 
