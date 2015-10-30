@@ -22,7 +22,7 @@ table.init do |t|
      f['calls_volume'],
      f['sms_volume'],
      f['internet_volume'],
-  	 (f['calls'].size if f['calls'] and current_user_admin?),    
+  	 (f['call_id_count'].round(0).to_s(:delimited, precision: 0) if f['call_id_count'] and current_user_admin?),    
 #     f['service_category_description'],
 #	 model_keys,    
   	] 

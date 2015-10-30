@@ -158,15 +158,16 @@ class Customers::FinalTarifResultsPresenter #ServiceHelper::FinalTarifResultsPre
   def aggregated_customer_tarif_detail_results_array(tarif_id, service_set_id)
     aggregated_prepared_tarif_detail_results = aggregate_prepared_tarif_detail_results(tarif_id, service_set_id)
     result = []
+    additions = {}
     aggregated_prepared_tarif_detail_results.each do |service_category_name, aggregated_prepared_tarif_detail_result|
-      additions = {}
       aggregated_prepared_tarif_detail_result.each do |f|
-        if !additions[service_category_name]
-        additions[service_category_name] = {
-          'price_value' => 0.0,
-          'calls_volume' => 0.0, 'sms_volume' => 0, 'internet_volume' => 0.0, 'call_ids' => [],
-          'rouming' => [], 'rouming_details' => [], 'geo' => [], 'geo_details' => [], 'partner' => [], 'calls' => [], 'fix' => []
-        } 
+#        raise(StandardError, f['stat_results'].keys)
+        if additions[service_category_name].blank?
+          additions[service_category_name] = {
+            'price_value' => 0.0,
+            'calls_volume' => 0.0, 'sms_volume' => 0, 'internet_volume' => 0.0, 'call_ids' => [], 'call_id_count' => 0.0,
+            'rouming' => [], 'rouming_details' => [], 'geo' => [], 'geo_details' => [], 'partner' => [], 'calls' => [], 'fix' => []
+          } 
         end
         
         additions[service_category_name]['price_value'] += f['price_value'].round(0) if f['price_value']
@@ -176,6 +177,7 @@ class Customers::FinalTarifResultsPresenter #ServiceHelper::FinalTarifResultsPre
           additions[service_category_name]['sms_volume'] += f['stat_results']['count_volume'].round(0) if f['stat_results']['count_volume']
           additions[service_category_name]['internet_volume'] += f['stat_results']['sum_volume'].round(0) if f['stat_results']['sum_volume']
           additions[service_category_name]['call_ids'] += f['stat_results']['call_ids'] if f['stat_results']['call_ids']
+          additions[service_category_name]['call_id_count'] += f['stat_results']['call_id_count'] if f['stat_results']['call_id_count']
         end
         
         if f and f['service_category_description']
