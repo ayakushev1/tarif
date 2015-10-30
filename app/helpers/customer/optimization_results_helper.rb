@@ -26,18 +26,24 @@ module Customer::OptimizationResultsHelper
   end
   
   def aggregated_customer_tarif_detail_results
+#    raise(StandardError, [session[:current_id]['service_sets_id'], (customer_service_sets.model.index{|m| m['service_sets_id'] == session[:current_id]['service_sets_id']} || 0)])
     options = {:base_name => 'aggregated_tarif_detail_results', :current_id_name => 'aggregated_service_category_name', :id_name => 'aggregated_service_category_name', :pagination_per_page => 100}
     create_array_of_hashable(final_tarif_results_presenter.aggregated_customer_tarif_detail_results_array(customer_service_set_tarif_id, service_sets_id), options)
 #    raise(StandardError)
   end
 
   def customer_service_set_tarif_id
-    service_sets_index = (customer_service_sets.model.index{|m| m['service_sets_id'] == session[:current_id]['service_sets_id']} || 0)
-    @customer_service_set_tarif_id ||= customer_service_sets.model[service_sets_index]['tarif'].to_i if customer_service_sets.model[service_sets_index] and customer_service_sets.model[service_sets_index]['tarif']
+    service_ids = (session[:current_id]['service_sets_id'].dup || "").split("_")
+    @customer_service_set_tarif_id ||= TarifClass.tarifs.where(:id => service_ids).pluck(:id)[0]
+#    raise(StandardError, [service_ids, @customer_service_set_tarif_id])
+#    service_sets_index = (customer_service_sets.model.index{|m| m['service_sets_id'] == session[:current_id]['service_sets_id']} || 0)
+#    @customer_service_set_tarif_id ||= customer_service_sets.model[service_sets_index]['tarif'].to_i if customer_service_sets.model[service_sets_index] and customer_service_sets.model[service_sets_index]['tarif']
   end
   
   def service_sets_id
-    customer_service_sets.model_size == 0 ? -1 : session[:current_id]['service_sets_id']
+#    raise(StandardError)
+    session[:current_id]['service_sets_id']
+#    customer_service_sets.model_size == 0 ? -1 : session[:current_id]['service_sets_id']
   end
   
   def service_sets
