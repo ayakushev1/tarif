@@ -21,6 +21,7 @@ class Calls::HistoryParser::OperatorProcessor::Operator
     return nil if !roming
     partner = row_partner(row)
     return nil if !partner
+#    raise(StandardError) if row[row_column_index[:time]] =~ /14:42:46/
     processed << {
       :base_service_id => service[:base_service], 
       :base_subservice_id => (service[:subservice] || number[:subservice]), 
@@ -193,9 +194,10 @@ class Calls::HistoryParser::OperatorProcessor::Operator
   end
   
   def check_if_table_correct(table_heads, file_processor_type)
-    return false if table_heads != correct_table_heads[file_processor_type]
-    return  false if row_column_index(table_heads, file_processor_type).values.include?(nil)
 #    raise(StandardError)
+    return false if (table_heads != correct_table_heads[file_processor_type]) and 
+      !correct_table_heads[file_processor_type].include?(table_heads)
+    return  false if row_column_index(table_heads, file_processor_type).values.include?(nil)
     true 
   end
   
@@ -207,15 +209,15 @@ class Calls::HistoryParser::OperatorProcessor::Operator
   
   def row_parser(row, field_criteria, field_name, column_name)
     condition = false    
-#    raise(StandardError) if row[row_column_index[:time]] =~ /19:26:01/ and field_criteria.size == 3 
+#    raise(StandardError) # if row[row_column_index[:time]] =~ /19:26:01/ and field_criteria.size == 3 
     field_criteria.each do |base_service, base_service_criteria_array|
       base_service_criteria_array.each do |service_criteria|
         condition = false
         service_criteria.each do |row_name, criteria|
           condition = true if criteria and row[row_column_index[row_name]] =~ criteria
-#          raise(StandardError) if condition and row[row_column_index[:time]] =~ /19:26:01/ and field_criteria.size == 3 and base_service == 71
           break if condition
         end
+#        raise(StandardError) if (condition and row[row_column_index[:time]] =~ /18:22:33/ and column_name == :subservice) #and field_criteria.size == 3 and base_service == 71
         return base_service if condition
       end
     end

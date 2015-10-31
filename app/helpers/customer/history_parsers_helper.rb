@@ -124,6 +124,8 @@ module Customer::HistoryParsersHelper
       [1030, 1028].include?(user_params[:operator_id]) ? true : false
     when 'xls', 'xlsx'
       [1025, 1030].include?(user_params[:operator_id]) ? true : false
+    when 'pdf'
+      [1023].include?(user_params[:operator_id]) ? true : false
     else
       false
     end
@@ -168,7 +170,7 @@ module Customer::HistoryParsersHelper
       :file_upload_turbolink_mode => (parsing_params_filtr_session_filtr_params['file_upload_turbolink_mode'] == 'true' ? true : false),
       :file_upload_max_size => parsing_params_filtr_session_filtr_params['file_upload_max_size'].to_f,
       :call_history_max_line_to_process => parsing_params_filtr_session_filtr_params['call_history_max_line_to_process'].to_f,
-      :allowed_call_history_file_types => ['html', 'xls', 'xlsx'], #parsing_params_filtr_session_filtr_params['allowed_call_history_file_types'],
+      :allowed_call_history_file_types => ['html', 'xls', 'xlsx', 'pdf'], #parsing_params_filtr_session_filtr_params['allowed_call_history_file_types'],
       :background_update_frequency => parsing_params_filtr_session_filtr_params['background_update_frequency'].to_i,
       :file_upload_form_method => parsing_params_filtr_session_filtr_params['file_upload_form_method'],
       :sleep_after_file_uploading => parsing_params_filtr_session_filtr_params['sleep_after_file_uploading'].to_f,

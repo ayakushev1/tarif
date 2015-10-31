@@ -2,7 +2,7 @@ module Category::Operator::Const
   Category::Operator::Const::Russian_operators = 3001
   Category::Operator::Const::Foreign_operators = 3002
   Category::Operator::Const::OperatorsWithTarifs = [1023, 1025, 1028, 1030]
-  Category::Operator::Const::OperatorsWithParsing = [1025, 1028, 1030]
+  Category::Operator::Const::OperatorsWithParsing = [1023, 1025, 1028, 1030]
   Category::Operator::Const::OperatorsForOptimization = [1023, 1025, 1028, 1030]
   Category::Operator::Const::Tele2 = 1023
   Category::Operator::Const::Beeline = 1025

@@ -3,9 +3,11 @@ class Calls::HistoryParser::ClassLoader
   def self.file_processer(file)
     case file_type(file)
     when 'html'
-      Calls::HistoryParser::FileProcessor::Html #Calls::HistoryParser::MtsHtml#.new(file, user_params, parsing_params)
+      Calls::HistoryParser::FileProcessor::Html
     when 'xls', 'xlsx'
-      Calls::HistoryParser::FileProcessor::Xls#.new(file, user_params, parsing_params)
+      Calls::HistoryParser::FileProcessor::Xls
+    when 'pdf'
+      Calls::HistoryParser::FileProcessor::Pdf
     else
       raise(StandardError, "Wrong file type: #{file_type}")
     end      
@@ -16,20 +18,27 @@ class Calls::HistoryParser::ClassLoader
     when 'html'
       case operator_id
       when 1028 #Megafonn
-        Calls::HistoryParser::OperatorProcessor::Megafon #Calls::HistoryParser::Html#.new(file, user_params, parsing_params)
+        Calls::HistoryParser::OperatorProcessor::Megafon
       when 1030 #MTS
-        Calls::HistoryParser::OperatorProcessor::Mts #Calls::HistoryParser::MtsHtml#.new(file, user_params, parsing_params)
+        Calls::HistoryParser::OperatorProcessor::Mts
       else #MTS
-        Calls::HistoryParser::OperatorProcessor::Mts #Calls::HistoryParser::MtsHtml#.new(file, user_params, parsing_params)
+        Calls::HistoryParser::OperatorProcessor::Mts
       end
     when 'xls', 'xlsx'
       case operator_id
       when 1025 #Beeline
-        Calls::HistoryParser::OperatorProcessor::Bln#.new(file, user_params, parsing_params)
+        Calls::HistoryParser::OperatorProcessor::Bln
       when 1030 #MTS
-        Calls::HistoryParser::OperatorProcessor::Mts #Calls::HistoryParser::MtsHtml#.new(file, user_params, parsing_params)
+        Calls::HistoryParser::OperatorProcessor::Mts
       else 
-        Calls::HistoryParser::OperatorProcessor::Bln#.new(file, user_params, parsing_params)
+        Calls::HistoryParser::OperatorProcessor::Bln
+      end
+    when 'pdf'
+      case operator_id
+      when 1023 #Tele2
+        Calls::HistoryParser::OperatorProcessor::Tele
+      else 
+        Calls::HistoryParser::OperatorProcessor::Tele
       end
     else
       raise(StandardError, "Wrong file type: #{file_type}")

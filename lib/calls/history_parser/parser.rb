@@ -22,6 +22,7 @@ class Calls::HistoryParser::Parser
 
     table_heads = file_processer.table_heads(operator_processer.table_filtrs)
     @message = {:file_is_good => false, 'message' => "Неправильный формат выписки 2"}
+#    raise(StandardError)
     return message unless operator_processer.check_if_table_correct(table_heads, file_processer.processor_type)
         
     @message = {:file_is_good => true, 'message' => nil}
