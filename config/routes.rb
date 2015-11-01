@@ -25,6 +25,8 @@ Rails.application.routes.draw do
   controller :home do
     get 'home/short_description' => :short_description
     get 'home/detailed_description' => :detailed_description
+    get 'home/update_tabs' => :update_tabs
+    
   end
 
   namespace :content do
