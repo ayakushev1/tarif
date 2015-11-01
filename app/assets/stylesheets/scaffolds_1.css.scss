@@ -4181,5 +4181,10 @@ html.turbolinks-progress-bar::before {
   background-color: red !important;
   height: 10px !important;
 }
+#vk_groups,
+#vk_groups iframe
+ {
+  width: 100% !important;
+}
 
 /* END USER CODE */
