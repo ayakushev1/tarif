@@ -10,8 +10,8 @@ class ApplicationController < ActionController::Base
 
   
   before_action :run_gc
-  protect_from_forgery with: :exception
-  skip_before_filter :verify_authenticity_token, if: -> { allowed_request_origin }
+  protect_from_forgery #with: :exception
+  skip_before_filter :verify_authenticity_token, if: :allowed_request_origin
 #  skip_before_filter :track_ahoy_visit
   before_action :set_current_session#, :authorize
   before_action :check_rack_mini_profiler
