@@ -97,36 +97,21 @@ module ApplicationHelper::AuthenticityAndAuthorization
     
     def allow_skip_authenticate_user
 #      raise(StandardError, [controller_name, action_name])
-      (user_is_registering or root_page? or allowed_request_origin or controller_has_free_public_url? or external_api_processing)
+      (user_is_registering or root_page? or allowed_request_origin or controller_has_public_url? or external_api_processing)
     end
 
-    def external_api_processing
-#      raise(StandardError, request.headers.to_h["action_dispatch.request.content_type"])#, request.headers["REQUEST_METHOD"], controller_name, action_name])
-      #(request.headers.to_h["action_dispatch.request.content_type"]== "application/x-www-form-urlencoded" and 
-      (request.headers["REQUEST_METHOD"].downcase == 'post' and
-      controller_name = 'payments' and action_name = 'process_payment' )
-    end
-    
     def allowed_request_origin
       #raise(StandardError, [controller_name, action_name, allowed_user_agents.include?(request.headers["HTTP_USER_AGENT"]), controller_has_free_public_url?])
-      (allowed_user_agents.include?(request.headers["HTTP_USER_AGENT"]) and controller_has_free_public_url?) or external_api_processing
+#      (allowed_user_agents.include?(request.headers["HTTP_USER_AGENT"]) and controller_has_free_public_url?) or external_api_processing
+      allowed_content_type or external_api_processing
     end
     
-    def allowed_user_agents
-      [
-#        "Mozilla/5.0 (compatible; YandexBot/3.0; +http://yandex.com/bots)",
-#        "Mozilla/5.0 (compatible; YandexWebmaster/2.0; +http://yandex.com/bots)",
-#        "Mozilla/5.0 (compatible; YandexMetrika/2.0; +http://yandex.com/bots)",      
-      ]      
+    def allowed_content_type
+      ['*/*'].include?(request.headers["CONTENT_TYPE"])
     end
     
     def controller_has_public_url?
-      ((self.class.name =~ /Demo/) or controller_has_free_public_url?) ? true : false
-    end
-
-    def controller_has_free_public_url?
-#      raise(StandardError, [controller_name, action_name])
-      ((controller_name == 'home') and ['index', 'short_description', 'detailed_description'].include?(action_name)) or
+      ((controller_name == 'home') and ['index', 'short_description', 'detailed_description', 'update_tabs'].include?(action_name)) or
       ((controller_path == 'content/articles') and ['show', 'index', 'call_statistic', 'detailed_results'].include?(action_name)) or
       ((controller_path == 'customer/calls') and ['index', 'set_calls_generation_params', 'set_default_calls_generation_params', 'generate_calls'].include?(action_name)) or
       ((controller_path == 'customer/payments') and ['create', 'new', 'edit', 'show', 'update', 'wait_for_payment_being_processed', 'process_payment'].include?(action_name)) or
@@ -138,4 +123,11 @@ module ApplicationHelper::AuthenticityAndAuthorization
       ((controller_path == 'customer/demands') and ['index', 'create', 'new'].include?(action_name))
     end
 
+    def external_api_processing
+#      raise(StandardError, request.headers.to_h["action_dispatch.request.content_type"])#, request.headers["REQUEST_METHOD"], controller_name, action_name])
+      #(request.headers.to_h["action_dispatch.request.content_type"]== "application/x-www-form-urlencoded" and 
+      (request.headers["REQUEST_METHOD"].downcase == 'post' and
+      controller_name = 'payments' and action_name = 'process_payment' )
+    end
+    
 end
