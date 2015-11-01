@@ -15,7 +15,7 @@
 <div id="container" class="container-fluid">
 	<div class="row">
 		<div class="col-xs-12">
-			<% render('/application/menus/main_top_menu') %> 
+			<%= render('/application/menus/main_top_menu') %> 
 			<div class="col-xs-3">
 				<h2><%= yield(:menu).blank? ? 'Меню' : yield(:menu) %></h2>
 			</div>

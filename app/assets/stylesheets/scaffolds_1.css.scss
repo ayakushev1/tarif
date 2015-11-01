@@ -4186,5 +4186,30 @@ html.turbolinks-progress-bar::before {
  {
   width: 100% !important;
 }
-
+.top_menu {
+    border: 0px solid #d9d9d9;
+}
+.top_menu li {
+    margin: 0 !important;
+}
+.top_menu li a{
+    background: none;
+    color: #3f4551;
+    border: 0;
+    -webkit-border-radius: 0 !important;
+    -moz-webkit-border-radius: 0 !important;
+    -ms-webkit-border-radius: 0 !important;
+    -o-webkit-border-radius: 0 !important;
+    border-radius: 0 !important;
+    font-family: calibri;
+    font-weight: 100;
+    font-size: 18px;    
+}
+.top_menu li a:hover {
+    background: #ededed;
+}
+.top_menu li a span {
+    float: left;
+    margin-right: 20px;
+}
 /* END USER CODE */

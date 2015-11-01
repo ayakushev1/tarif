@@ -1,0 +1,27 @@
+<%
+
+content_in :tabs do |user| 
+  ([
+    [
+     'Рекомендации', 
+     render('/application/menus/main_top_menu/recommendation')    
+    ], 
+    [
+     'Загрузка звонков', 
+     render('/application/menus/main_top_menu/calls')    
+    ], 
+    [
+     'Подбор тарифов и опций', 
+     render('/application/menus/main_top_menu/optimization')    
+    ], 
+    [
+     'Описание возможностей', 
+     render('/application/menus/main_top_menu/service_description')    
+    ], 
+    ([
+     'Для администратора', 
+     render('/application/menus/main_top_menu/admin')    
+    ] if current_user_admin?), 
+  ]).compact 
+end
+%>
