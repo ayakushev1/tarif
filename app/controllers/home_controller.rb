@@ -3,6 +3,9 @@ class HomeController < ApplicationController
   after_action :track_demo_results, only: :demo_results
   after_action :track_index, only: :index
 
+  def update_tabs
+    render :nothing => true
+  end
 
   private
   
