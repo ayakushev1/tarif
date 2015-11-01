@@ -107,7 +107,7 @@ module ApplicationHelper::AuthenticityAndAuthorization
     end
     
     def allowed_content_type
-      ['*/*'].include?(request.headers["CONTENT_TYPE"])
+      ['*/*', 'ANY_FORMAT'].include?(request.headers["CONTENT_TYPE"])
     end
     
     def controller_has_public_url?
