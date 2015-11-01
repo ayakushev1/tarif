@@ -14,24 +14,26 @@ get_accordion_current_page = ->
 #      alert(filtr[accordion_name])
   filtr  
 
+$(document).on 'click', "[data-toggle*=collapse]", ->
+  row_url = '/home/update_tabs'
+  if $(this).hasClass("my_accordion")
+    accordion_name = $(this).attr("accord_name") 
+    accordion_id = $(this).attr("accord_id") 
+  
+  filtr = {}
+  filtr["current_accordion_page"] = {} 
+  filtr["current_accordion_page"][accordion_name] = accordion_id
 
-get_tabs_current_page = ->
-  filtr={}
-  $("[class*=tabbable]").each (index, tabs) ->
-    tabs_name = $(tabs).attr("name")
-    filtr[tabs_name] = -1
-    i = 0
-    $(tabs).children("[class*=tab-pane]").each (index, element) ->
-      body_tab_id = $(element).attr("id")
-      if $(element).hasClass("active")
-        filtr[tabs_name] = i 
-      i += 1
-  filtr  
+  $.ajax
+    url: row_url, 
+#    async: false,
+    data: filtr,
+    dataType: "script",
 
 #change history for browser to correctly replay on refresh and back button after ajax
-#$(document).on 'click', 'a', (e) ->
+$(document).on 'click', 'a', (e) ->
 #  e.preventDefault
-#  history.pushState {page: this.href}, '', this.href
+  history.pushState {page: this.href}, '', this.href
 
 
 $(document).on 'change', "[type=checkbox]", ->
@@ -64,8 +66,7 @@ $(document).on 'change', ".updatable", ->
         filtr[$(element).attr("name")]= sub_2_filtr["date[hour]"] + ":" + sub_2_filtr["date[minute]"]         
   
   filtr[filtr_name] = sub_filtr
-  filtr["current_tabs_page"] = get_tabs_current_page()
-  filtr["current_accordion_page"] = get_accordion_current_page()
+#  filtr["current_accordion_page"] = get_accordion_current_page()
 
 #  unless $.isEmptyObject(filtr_url)
   $.ajax
@@ -85,8 +86,7 @@ $(document).on 'click', "tr[id*=row]", ->
   filtr = {}
   filtr["current_id"] = {}
   filtr["current_id"][row_id_name] = $(this).attr("value")
-  filtr["current_tabs_page"] = get_tabs_current_page()
-  filtr["current_accordion_page"] = get_accordion_current_page()
+#  filtr["current_accordion_page"] = get_accordion_current_page()
 
   $.ajax
     url: row_url, 

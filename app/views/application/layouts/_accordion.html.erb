@@ -11,7 +11,8 @@
     <div class="panel panel-default">
       <div class="panel-heading" role="tab"  id="<%= heading %>">
       	<h4 class="panel-title">
-	        <a data-toggle="collapse" data-parent="#<%= name %>" href="#<%= collapse %>" aria-expanded="<%= (i==active) ? 'true' : 'false' %>"" aria-controls="<%= collapse %>">
+	        <a class = "my_accordion" accord_name = "<%= name %>" accord_id = <%= i.to_s %>
+	        	data-toggle="collapse" data-parent="#<%= name %>" href="#<%= collapse %>" aria-expanded="<%= (i==active) ? 'true' : 'false' %>"" aria-controls="<%= collapse %>">
 	          <%= caption %>
 	        </a>
 	    </h4>

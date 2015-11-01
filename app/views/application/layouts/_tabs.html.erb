@@ -13,7 +13,7 @@ end
 
 %>
 
-<ul class="nav nav-tabs">
+<ul class="nav nav-tabs ">
 	<% @content_from_tabs.each do |caption, body| %>
     	<li class="<%= (i==active) ? 'active' : '' %>"><a href="#<%= name + "_" + i.to_s %>" data-toggle="tab"><%= caption %></a></li>
     	<% i += 1 %>
