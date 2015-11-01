@@ -103,7 +103,7 @@ module ApplicationHelper::AuthenticityAndAuthorization
     def allowed_request_origin
       #raise(StandardError, [controller_name, action_name, allowed_user_agents.include?(request.headers["HTTP_USER_AGENT"]), controller_has_free_public_url?])
 #      (allowed_user_agents.include?(request.headers["HTTP_USER_AGENT"]) and controller_has_free_public_url?) or external_api_processing
-      allowed_content_type or external_api_processing
+      allowed_content_type or external_api_processing or controller_has_public_url?
     end
     
     def allowed_content_type
@@ -111,16 +111,26 @@ module ApplicationHelper::AuthenticityAndAuthorization
     end
     
     def controller_has_public_url?
-      ((controller_name == 'home') and ['index', 'short_description', 'detailed_description', 'update_tabs'].include?(action_name)) or
-      ((controller_path == 'content/articles') and ['show', 'index', 'call_statistic', 'detailed_results'].include?(action_name)) or
-      ((controller_path == 'customer/calls') and ['index', 'set_calls_generation_params', 'set_default_calls_generation_params', 'generate_calls'].include?(action_name)) or
-      ((controller_path == 'customer/payments') and ['create', 'new', 'edit', 'show', 'update', 'wait_for_payment_being_processed', 'process_payment'].include?(action_name)) or
-      ((controller_path == 'home') and ['short_description', 'detailed_description'].include?(action_name)) or
-      ((controller_path == 'customer/history_parsers') and ['prepare_for_upload', 'upload', 'calculation_status'].include?(action_name)) or
-      ((controller_path == 'customer/optimization_steps') and ['choose_load_calls_options', 'check_loaded_calls', 'choose_optimization_options', 'optimize_tarifs', 'show_optimized_tarifs'].include?(action_name)) or
-      ((controller_path == 'customer/tarif_optimizators') and ['index', 'recalculate', 'calculation_status', 'select_services'].include?(action_name)) or
-      ((controller_path == 'customer/optimization_results') and ['show_customer_results', 'show_customer_detailed_results'].include?(action_name)) or
-      ((controller_path == 'customer/demands') and ['index', 'create', 'new'].include?(action_name))
+      public_url.each do |allowed_controller_path, allowed_action_names|
+        return true if (
+          (controller_path == allowed_controller_path) and allowed_action_names.include?(action_name)
+        )
+      end
+      false
+    end
+    
+    def public_url
+      {
+        'home' => ['index', 'short_description', 'detailed_description', 'update_tabs'],
+        'content/articles' => ['show', 'index', 'call_statistic', 'detailed_results'],
+        'customer/calls' =>['index', 'set_calls_generation_params', 'set_default_calls_generation_params', 'generate_calls'],
+        'customer/payments' => ['create', 'new', 'edit', 'show', 'update', 'wait_for_payment_being_processed', 'process_payment'],
+        'customer/history_parsers' => ['prepare_for_upload', 'upload', 'calculation_status'],
+        'customer/optimization_steps' => ['choose_load_calls_options', 'check_loaded_calls', 'choose_optimization_options', 'optimize_tarifs', 'show_optimized_tarifs'],
+        'customer/tarif_optimizators' => ['index', 'recalculate', 'calculation_status', 'select_services'],
+        'customer/optimization_results' => ['show_customer_results', 'show_customer_detailed_results'],
+        'customer/demands' => ['index', 'create', 'new'],
+      }
     end
 
     def external_api_processing
