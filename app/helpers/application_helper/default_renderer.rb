@@ -4,14 +4,9 @@ module ApplicationHelper::DefaultRenderer
 #    raise(StandardError, [controller_name, action_name, params])
     
     respond_to do |format|
-      if params.keys.include?('_escaped_fragment_')
-        format.html #{render( @_action_name, turbolinks: false) }
-#        raise(StandardError)
-      else
-        format.js {render_js(view_context.default_view_id_name)}
-        format.html
-        format.json
-      end
+      format.js {render_js(view_context.default_view_id_name)}
+      format.html
+      format.json
     end
   end
 
