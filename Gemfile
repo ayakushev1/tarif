@@ -96,7 +96,7 @@ end
 group :production do
   gem 'rails_12factor'
   gem 'rack-timeout'
-
+  gem 'heroku-deflater'
 end
 
 gem 'spawnling', '~>2.1' #background processing
