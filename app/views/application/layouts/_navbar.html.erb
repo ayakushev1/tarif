@@ -13,7 +13,7 @@ end
 
 %>
 
-<nav class="navbar top_menu ">
+<nav class="navbar navbar-default ">
 	<div class="container-fluid">
 
 	    <div class="navbar-header">
@@ -27,7 +27,7 @@ end
 	    
 		<% i = 0 %>
 		
-	   <div class="collapse navbar-collapse" id="#<%= "#{name}_#{i.to_s}" %>">
+	   <div class="collapse navbar-collapse collapsed" id="#<%= "#{name}_#{i.to_s}" %>">
 			<ul class="nav navbar-nav">
 				<% @content_from_tabs.each do |caption, body, type| %>
 					<% case type %>
