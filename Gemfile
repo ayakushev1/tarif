@@ -127,7 +127,10 @@ gem 'ahoy_matey' #to track visits and events
 
 gem 'aspector' # allows to use aspect oriented programming with Ruby
 
-
+gem 'rack-cache'
+gem 'dalli'
+gem 'kgio'
+gem "memcachier"
 
 # Use unicorn as the app server
 # gem 'unicorn'
