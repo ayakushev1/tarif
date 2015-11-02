@@ -30,6 +30,7 @@ Rails.application.routes.draw do
     get 'home/short_description' => :short_description
     get 'home/detailed_description' => :detailed_description
     get 'home/update_tabs' => :update_tabs
+    get 'home/news' => :news
     
   end
 
