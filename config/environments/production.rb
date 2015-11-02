@@ -67,7 +67,7 @@ Rails.application.configure do
   config.action_dispatch.rack_cache = {
     :verbose => true,
     :metastore    => client,
-#    :entitystore  => client
+    :entitystore  => client
   }
 
   config.static_cache_control = "public, max-age=2592000"
