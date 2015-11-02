@@ -131,6 +131,7 @@ gem 'rack-cache'
 gem 'dalli'
 gem 'kgio'
 gem "memcachier"
+gem 'connection_pool'
 
 # Use unicorn as the app server
 # gem 'unicorn'

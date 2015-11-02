@@ -97,6 +97,7 @@ GEM
       coffee-script-source
       execjs
     coffee-script-source (1.9.1.1)
+    connection_pool (2.2.0)
     daemons (1.2.3)
     dalli (2.7.4)
     database_cleaner (1.5.1)
@@ -313,6 +314,7 @@ DEPENDENCIES
   bootstrap-will_paginate
   bootswatch-rails
   coffee-rails (~> 4.0.0)
+  connection_pool
   daemons
   dalli
   database_cleaner

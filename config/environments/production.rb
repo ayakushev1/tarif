@@ -60,6 +60,7 @@ Rails.application.configure do
                              :failover => true,
                              :socket_timeout => 1.5,
                              :socket_failure_delay => 0.2,
+                             :pool_size => 5,
                              :value_max_bytes => 10485760)
   config.action_dispatch.rack_cache = {
     :metastore    => client,
