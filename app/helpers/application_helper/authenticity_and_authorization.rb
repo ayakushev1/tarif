@@ -130,6 +130,7 @@ module ApplicationHelper::AuthenticityAndAuthorization
         'customer/tarif_optimizators' => ['index', 'recalculate', 'calculation_status', 'select_services'],
         'customer/optimization_results' => ['show_customer_results', 'show_customer_detailed_results'],
         'customer/demands' => ['index', 'create', 'new'],
+        'errors' => ['error404', 'error422', 'error500'],
       }
     end
 

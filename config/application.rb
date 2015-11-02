@@ -27,5 +27,7 @@ module Tarif
     config.i18n.default_locale = :ru
     
 #    config.action_controller.include_all_helpers = false    
+    require Rails.root.join("lib/general/custom_public_exceptions")
+    config.exceptions_app = General::CustomPublicExceptions.new(Rails.public_path)
   end
 end
