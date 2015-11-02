@@ -53,8 +53,8 @@ Rails.application.configure do
 
   # Use a different cache store in production.
   #config.cache_store = :dalli_store, #:mem_cache_store
-  config.cache_store = :dalli_store
-  client = Dalli::Client.new((ENV["MEMCACHIER_SERVERS"] || "").split(","),
+  config.cache_store = :dalli_store,
+                      (ENV["MEMCACHIER_SERVERS"] || "").split(","),
                       {:username => ENV["MEMCACHIER_USERNAME"],
                        :password => ENV["MEMCACHIER_PASSWORD"],
                        :failover => true,
@@ -62,13 +62,13 @@ Rails.application.configure do
                        :socket_failure_delay => 0.2,
                        :pool_size => 5,
                        :value_max_bytes => 10485760
-                      } )
+                      } 
 
-  config.action_dispatch.rack_cache = {
-    :verbose => true,
-    :metastore    => client,
-    :entitystore  => client
-  }
+config.action_dispatch.rack_cache = {
+  :verbose      => true,
+  :metastore => "memcached://#{ENV['MEMCACHE_SERVERS']}",
+  :entitystore => "memcached://#{ENV['MEMCACHE_SERVERS']}"#,
+}
 
   config.static_cache_control = "public, max-age=2592000"
 
