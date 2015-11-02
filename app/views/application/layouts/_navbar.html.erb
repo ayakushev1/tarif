@@ -3,37 +3,51 @@
 
 <%
 name ||= 'tabs' 
-active ||= 0 
+active ||= -1 
 i = 0
 
 @content_from_tabs = []
-content_from :tabs do |caption, body| 
-  @content_from_tabs << [caption, body]
+content_from :tabs do |caption, body, type| 
+  @content_from_tabs << [caption, body, type]
 end 
 
 %>
 
-<nav class="navbar top_menu">
+<nav class="navbar top_menu ">
 	<div class="container-fluid">
 
-		<ul class="nav nav-tabs ">
+	    <div class="navbar-header">
+	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#<%= "#{name}_#{i.to_s}" %>" aria-expanded="false">
 			<% @content_from_tabs.each do |caption, body| %>
-		    	<li class="<%= (i==active) ? 'active' : '' %>"><a href="#<%= name + "_" + i.to_s %>" data-toggle="tab"><%= caption %></a></li>
+		    	<span class="sr-only"><%= caption %></span>
 		    	<% i += 1 %>
 		    <% end %>
-		</ul>
-		<div class="tab-content tabbable"  name=<%= name %> >
-		  	<% i = 0 %>
-		  	<% @content_from_tabs.each do |caption, body| %>
-			    <div class="tab-pane fade <%= (i==active) ? 'in active' : '' %>" id="<%= name + "_" + i.to_s %>">
-			    	<div class="row">
-				    	<div class="col-xs-12">	    		
-				    		<%= body %>
-			    		</div>
-			    	</div>
-			    </div>
-		  	<% i += 1 %>
-		    <% end %>
+	      </button>
+	    </div>
+	    
+		<% i = 0 %>
+		
+	   <div class="collapse navbar-collapse" id="#<%= "#{name}_#{i.to_s}" %>">
+			<ul class="nav navbar-nav">
+				<% @content_from_tabs.each do |caption, body, type| %>
+					<% case type %>
+					<% when 'dropdown-menu' %>
+				    	<li class="dropdown <%= (i==active) ? 'active' : '' %>">
+				    		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">			    			
+				    				<%= caption %>
+				    			<span class="caret"></span>
+				    		</a>
+			    			<%= body %>
+				    	</li>
+					<% when 'link' %>
+						<li><%= body %></li>						
+					<% else %>
+						<%= body %>
+					<% end %>
+					
+			    	<% i += 1 %>
+			    <% end %>
+			</ul>
 		</div>		
 	</div>
 </nav>

@@ -1,13 +1,9 @@
-<ul class="nav top_menu nav-pills " role="tablist">
-	<li><%= link_to content_tag(:span, image_tag("left_menu_1.png", :alt => 'Главная страница')) + 'Главная страница', root_path, remote: true %></li>
-	
-	<li><%= link_to content_tag(:span, image_tag("left_menu_2.png", :alt => 'Выбор рекомендации')) + 'Выбор рекомендации', content_articles_index_path, remote: true %></li>
+<ul class="dropdown-menu">
+	<li><%= link_to 'Выбор рекомендации', content_articles_index_path, remote: true %></li>
 
-	<li><%= link_to content_tag(:span, image_tag("left_menu_3.png", :alt => 'Просмотр рекомендации')) + 'Просмотр рекомендации', content_articles_show_path %></li>
+	<li><%= link_to 'Просмотр рекомендации', content_articles_show_path %></li>
 
-	<li><%= link_to content_tag(:span, image_tag("left_menu_4.png", :alt => 'Статистика услуг')) + 'Статистика услуг', content_articles_call_statistic_path %></li>
+	<li><%= link_to  'Статистика услуг', content_articles_call_statistic_path %></li>
 
-	<li><%= link_to content_tag(:span, image_tag("left_menu_5.png", :alt => 'Подробное описание')) + 'Подробное описание', content_articles_detailed_results_path %></li>
-		 
 </ul>
 

@@ -1,28 +1,11 @@
-<ul class="nav nav-pills top_menu" role="tablist">
-	<li><%= link_to content_tag(:span, image_tag("left_menu_1.png", :alt => 'Главная страница')) + 'Главная страница', root_path %></li>
-	
-	<%if controller.customer_has_free_calls_modelling_trials? %>
-		<li><%= link_to content_tag(:span, image_tag("left_menu_2.png", :alt => 'Моделирование звонков')) + 'Моделирование звонков', customer_calls_set_calls_generation_params_path%></li>
-	<% end %>
-		 
-	<%if controller.customer_has_free_history_parsing_trials? %>
-		<li><%= link_to content_tag(:span, image_tag("left_menu_3.png", :alt => 'Загрузка истории звонков')) + 'Загрузка истории звонков', customer_history_parsers_prepare_for_upload_path %></li>
-	<% end %>
-		 
-	<%if controller.customer_has_calls_loaded? %>
-		<li><%= link_to content_tag(:span, image_tag("left_menu_4.png", :alt => 'Звонки')) + 'Звонки', customer_calls_path %></li>
-	<% end %>
-		 
+<ul class="dropdown-menu">
 	<%if controller.customer_has_free_tarif_optimization_trials? or controller.customer_has_free_tarif_recalculation_trials? %>
-		<li><%= link_to content_tag(:span, image_tag("left_menu_5.png", :alt => 'Подбор тарифа')) + 'Подбор тарифа', customer_tarif_optimizators_index_path %></li>
+		<li><%= link_to  'Подбор тарифа', customer_tarif_optimizators_index_path %></li>
 	<% end %>
 		 
 	<%if controller.customer_has_tarif_optimized? %>
-		<li><%= link_to content_tag(:span, image_tag("left_menu_6.png", :alt => 'Результаты подбора тарифа')) + 'Результаты подбора тарифа', customer_optimization_results_show_customer_results_path %></li>
+		<li><%= link_to  'Результаты подбора тарифа', customer_optimization_results_show_customer_results_path %></li>
 	<% end %>
 			 
-		<li><%= link_to content_tag(:span, image_tag("left_menu_7.png", :alt => 'Перевод средств')) + 'Перевод средств', new_customer_payments_path %></li>
-
-		<li><%= link_to content_tag(:span, '', {:class => "glyphicon glyphicon-question-sign", :'aria-hidden' => true}) + 'Описание услуг', home_detailed_description_path %></li>
 </ul>
 

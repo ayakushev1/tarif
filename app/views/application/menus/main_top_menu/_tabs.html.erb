@@ -3,24 +3,34 @@
 content_in :tabs do |user| 
   ([
     [
-     'Рекомендации', 
-     render('/application/menus/main_top_menu/recommendation')    
+     '', 
+     link_to( 'Главная страница', root_path, remote: true),
+     'link' 
+    ], 
+    [
+     'Готовые рекомендации', 
+     render('/application/menus/main_top_menu/recommendation'),
+     'dropdown-menu' 
     ], 
     [
      'Загрузка звонков', 
-     render('/application/menus/main_top_menu/calls')    
+     render('/application/menus/main_top_menu/calls'),
+     'dropdown-menu'     
     ], 
     [
      'Подбор тарифов и опций', 
-     render('/application/menus/main_top_menu/optimization')    
+     render('/application/menus/main_top_menu/optimization'),
+     'dropdown-menu'     
     ], 
     [
      'Описание возможностей', 
-     render('/application/menus/main_top_menu/service_description')    
+     render('/application/menus/main_top_menu/service_description'),
+     'dropdown-menu'     
     ], 
     ([
      'Для администратора', 
-     render('/application/menus/main_top_menu/admin')    
+     render('/application/menus/main_top_menu/admin'),
+     'dropdown-menu'     
     ] if current_user_admin?), 
   ]).compact 
 end
