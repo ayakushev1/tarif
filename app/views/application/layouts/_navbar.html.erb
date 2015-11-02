@@ -17,25 +17,26 @@ end
 	<div class="container-fluid">
 
 	    <div class="navbar-header">
-	      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#<%= "#{name}_#{i.to_s}" %>" aria-expanded="false">
+	      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#<%= name %>" aria-expanded="false">
+	    	<span class="sr-only">dddd</span>
 			<% @content_from_tabs.each do |caption, body| %>
-		    	<span class="sr-only"><%= caption %></span>
+		    	<span class="icon-bar"></span>
 		    	<% i += 1 %>
 		    <% end %>
 	      </button>
+	      <a class="navbar-brand visible-xs-block" href="#"><%= brand_name %></a>
 	    </div>
 	    
 		<% i = 0 %>
 		
-	   <div class="collapse navbar-collapse collapsed" id="#<%= "#{name}_#{i.to_s}" %>">
+	   <div class="collapse navbar-collapse" id="<%= name %>">
 			<ul class="nav navbar-nav">
 				<% @content_from_tabs.each do |caption, body, type| %>
 					<% case type %>
 					<% when 'dropdown-menu' %>
 				    	<li class="dropdown <%= (i==active) ? 'active' : '' %>">
 				    		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">			    			
-				    				<%= caption %>
-				    			<span class="caret"></span>
+				    				<%= caption %>				    			
 				    		</a>
 			    			<%= body %>
 				    	</li>

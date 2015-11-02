@@ -1,11 +1,11 @@
 <div id="container" class="container-fluid">
 	<div class="row">
-		<div class="col-xs-12 col-sm-12 col-md-12">
+		<div class="col-sm-12">
 			<div class="navbar navbar-inverse" role="navigation">
 				<%= render 'users/sessions/current_user_info'%>
 			</div>
 			
-			<div class="navbar navbar-default" role="navigation">
+			<div class="navbar navbar-default hidden-xs" role="navigation">
 		  		<%= render('/application/menus/operator_menu') %>
 			</div>
 			<div>
@@ -14,7 +14,7 @@
 		</div>	
 	</div>
 	<div class="row">
-        <div class="col-xs-12 col-sm-12 col-md-12">
+        <div class="col-sm-12">
         	
 			<ol class="breadcrumb">
 			  <li><%= yield(:title).blank? ? 'Title' : yield(:title) %></li>
@@ -27,12 +27,11 @@
 					  <%= yield %>
 				</div>	  
         	</div>
+        	<br />
+	        <div>
+				<%= render('/application/shared/yandex_metrika_informet') if ENV["RAILS_ENV"] == "production" %>
+	        </div>
         </div>
 	</div>
-
-	</div>
-		<%= render('/application/shared/yandex_metrika_informet') if ENV["RAILS_ENV"] == "production" %>
-	<div>
-	
 </div>
 
