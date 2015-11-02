@@ -2,6 +2,16 @@
 $body-bg: #ffffff;
 */
 
+/*
+$screen-xs-min: 4800px;
+$screen-sm-min: 7680px;
+$screen-md-min: 9920px;
+$screen-lg-min: 12000px;
+
+$screen-sm: 7680px;
+$screen-sm-min: $screen-sm;
+$screen-tablet: $screen-sm-min;
+*/
 @import "bootstrap-sprockets";
 @import "bootstrap";
 

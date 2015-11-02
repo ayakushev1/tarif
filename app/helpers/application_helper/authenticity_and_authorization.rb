@@ -8,10 +8,6 @@ module ApplicationHelper::AuthenticityAndAuthorization
     
   protected
 
-  def main_layout
-    current_user_admin? ? 'application' : 'demo_application'
-  end
-
   def configure_permitted_parameters
     devise_parameter_sanitizer.for(:sign_in) << :name #{ |u| u.permit(:name, :email, :password, :password_confirmation) }
     devise_parameter_sanitizer.for(:sign_up)  << :name #{ |u| u.permit(:name, :email, :password, :password_confirmation) }
@@ -121,7 +117,7 @@ module ApplicationHelper::AuthenticityAndAuthorization
     
     def public_url
       {
-        'home' => ['index', 'short_description', 'detailed_description', 'update_tabs'],
+        'home' => ['index', 'short_description', 'detailed_description', 'update_tabs', 'news'],
         'content/articles' => ['show', 'index', 'call_statistic', 'detailed_results'],
         'customer/calls' =>['index', 'set_calls_generation_params', 'set_default_calls_generation_params', 'generate_calls'],
         'customer/payments' => ['create', 'new', 'edit', 'show', 'update', 'wait_for_payment_being_processed', 'process_payment'],

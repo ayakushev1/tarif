@@ -9,7 +9,6 @@ class ApplicationController < ActionController::Base
   helper_method :session_filtr_params, :session_model_params
 
   
-  before_action :run_gc
   protect_from_forgery with: :exception
   skip_before_action :verify_authenticity_token, if: :allowed_request_origin
 #  skip_before_filter :track_ahoy_visit
@@ -32,18 +31,5 @@ class ApplicationController < ActionController::Base
     end
   end  
 
-  layout :main_layout
-
-  protected
-
-  def main_layout
-    current_user_admin? ? 'demo_application' : 'demo_application'
-  end
-
-  private
-  
-  def run_gc
-#    GC.start
-  end
 
 end

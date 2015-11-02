@@ -1,0 +1,43 @@
+<div id="container" class="container-fluid">
+	<div class="row">
+		<div class="col-xs-12">
+			<div class="navbar navbar-inverse nav-top" role="navigation">
+				<%= render 'users/sessions/current_user_info'%>
+			</div>
+			
+			<div class="navbar navbar-default nav-bottom" role="navigation">
+		  		<%= render('/application/menus/operator_menu') %>
+			</div>
+			<div class="col-sm-4 col-md-12">
+				<%= render('/application/menus/main_top_menu') if ENV["RAILS_ENV"] != "production" or current_user_admin? %> 
+			</div>	
+		</div>	
+	</div>
+</div>
+<div id="container" class="container-fluid">
+	<div class="row">
+		<div class="col-xs-3">
+			<h3><%= yield(:menu).blank? ? 'Меню' : yield(:menu) %></h3>
+			<%= render('/application/menus/main_menu') %>
+			<br />
+			<%= render('/application/shared/vk_community_vidget') %>
+		</div>					
+
+        <div class="col-xs-9">
+			<h3><%= yield(:title).blank? ? 'Title' : yield(:title) %></h3>
+        	<div id="main_block_top_row_4" class="content">
+				<%= render('/application/shared/alerts') %>
+				
+				<div id=<%= view_id_name %> >
+					  <%= yield %>
+				</div>	  
+        	</div>
+        </div>
+	</div>
+
+	</div>
+		<%= render('/application/shared/yandex_metrika_informet') if ENV["RAILS_ENV"] == "production" %>
+	<div>
+	
+</div>
+
