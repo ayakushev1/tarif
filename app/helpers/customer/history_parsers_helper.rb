@@ -154,7 +154,7 @@ module Customer::HistoryParsersHelper
       :own_phone_number => user_params_filtr_session_filtr_params['own_phone_number'],
       :operator_id => user_params_filtr_session_filtr_params['operator_id'].to_i,
       :region_id => user_params_filtr_session_filtr_params['region_id'].to_i,
-      :country_id => user_params_filtr_session_filtr_params['country_id'].to_i,
+      :country_id => (user_params_filtr_session_filtr_params['country_id'].to_i || 1100), #Russia
       :accounting_period_month => user_params_filtr_session_filtr_params['accounting_period_month'],
       :accounting_period_year => user_params_filtr_session_filtr_params['accounting_period_year'],
     }
