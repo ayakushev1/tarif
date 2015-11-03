@@ -1,5 +1,10 @@
 <% content_for :title, "Задание параметров моделирования звонков" %>
 
+<div class="alert alert-info" role="alert">	
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	Рекомендуем начать с выбора варианта использования связи. Мы установим начальные значения, которые вы потом можете откорректировать	
+</div>
+
 <%= link_to('Сгенерировать историю звонков', customer_calls_generate_calls_path, {:class => "btn btn-primary", :type =>"button"}) %>
 <br />
 <br />

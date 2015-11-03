@@ -53,7 +53,7 @@ form_item.init do |f|
   	 collection_select(filtr_name, "partner_phone[country_id]", Category.where(:id => user_calls_query.query_from_filtr(s, "partner_phone[country_id]").collect { |q| q.partner_phone['country_id'] }.uniq ) , :id, :name, 
   	   {:include_blank => "Страна 2-й стороны", :selected => (s["partner_phone"]["country_id"] if s["partner_phone"] )}, input_html )
   	],  
-  	[' ', label(filtr_name, "", "Роуминг (откуда звоните)", label_html)], 
+  	[' ', label(filtr_name, "", "Роуминг (где находитесь)", label_html)], 
   	[label(filtr_name, "connect[operator_id]", "Оператор", label_html), 
   	 collection_select(filtr_name, "connect[operator_id]", Category.where(:id => user_calls_query.query_from_filtr(s, "connect[operator_id]").collect { |q| q.connect['operator_id'] }.uniq ) , :id, :name, 
   	   {:include_blank => "Оператор подключения", :selected => (s["connect"]["operator_id"] if s["connect"] )}, input_html )
