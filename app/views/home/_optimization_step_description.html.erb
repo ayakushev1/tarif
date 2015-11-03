@@ -27,12 +27,7 @@
 <p>С подробным описанием можете ознакомиться <%= link_to 'здесь', home_detailed_description_path %>
 </p>
 
-<div class="row">
-	<div class="col-xs-3">
-		<%= link_to('Приступить к подбору тарифа', customer_tarif_optimizators_index_path, {:class => "btn btn-success", :type =>"button"}) %>
-	</div>
-	
-	<div class="col-xs-8">
-		<%= link_to('Если Вы использовали вашу пробную попытку, то можете внести деньги', new_customer_payments_path, {:class => "btn btn-primary", :type =>"button"}) %>
-	</div>
-</div>
+<p>
+	<%= link_to('Приступить к подбору тарифа', customer_tarif_optimizators_index_path, {:class => "btn btn-success", :type =>"button"}) %>
+	<%= link_to('Если Вы использовали вашу пробную попытку, то можете внести деньги', new_customer_payments_path, {:class => "btn btn-primary", :type =>"button"}) %>
+</p>

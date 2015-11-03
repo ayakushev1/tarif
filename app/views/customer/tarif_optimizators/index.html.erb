@@ -1,10 +1,9 @@
 <% content_for :title, "Задание параметров подбора тарифа" %>
 
-<%= link_to('Подобрать тариф', customer_tarif_optimizators_recalculate_path, {:class => "btn btn-primary", :type =>"button"}) %>
-
-<%= link_to('Посмотреть результаты подбора тарифов', customer_optimization_results_show_customer_results_path, {:class => "btn btn-primary", :type =>"button"}) %>
-<br />
-<br />
+<p>
+	<%= link_to('Подобрать тариф', customer_tarif_optimizators_recalculate_path, {:class => "btn btn-primary", :type =>"button"}) %>
+	<%= link_to('Посмотреть результаты подбора тарифов', customer_optimization_results_show_customer_results_path, {:class => "btn btn-primary", :type =>"button"}) %>
+</p>
 
 <div class="alert alert-info" role="alert">	
 	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>

@@ -4,15 +4,10 @@
 	<%= render(:partial => 'content/articles/description', :locals => {:demo_result_description => controller.demo_result_description}) %>
 </div>
 
-<div class="row">
-	<div class="col-xs-3">
-		<%= link_to('Зарегистрироваться', new_user_registration_path, {:class => "btn btn-success", :type =>"button"}) %> 
-	</div>
-	<div class="col-xs-2">
-		<%= link_to('Войти', login_path, {:class => "btn btn-primary", :type =>"button"}) %> 
-	</div>
-</div>
-<br/>
+<p>
+	<%= link_to('Зарегистрироваться', new_user_registration_path, {:class => "btn btn-success", :type =>"button"}) %> 
+	<%= link_to('Войти', login_path, {:class => "btn btn-primary", :type =>"button"}) %> 
+</p>
 
 <%= render :partial => 'content/articles/show/service_sets', :layout => 'application/layouts/model_table', :locals => {:table => controller.customer_service_sets}%>
 

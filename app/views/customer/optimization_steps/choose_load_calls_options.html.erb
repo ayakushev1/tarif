@@ -1,17 +1,18 @@
 <% content_for :title, "Выбор моделирования или загрузки детализации звонков" %>
 
-<%= link_to('Моделировать историю звонков', customer_calls_set_calls_generation_params_path, 
-  {:class => "btn btn-primary", :type =>"button"}) if controller.customer_has_free_trials?('calls')%>
-  
-<%= link_to('Загрузить историю звонков', customer_history_parsers_prepare_for_upload_path, 
-  {:class => "btn btn-primary", :type =>"button"}) if controller.customer_has_free_trials?('history_parsers') %>
-  
-<%= link_to('Подобрать тариф', customer_tarif_optimizators_index_path, 
-  {:class => "btn btn-primary", :type =>"button"}) if controller.customer_has_free_trials?('tarif_optimizators') and 
-   Customer::Call.where(:user_id => current_user.id).exists? %>
-
-<%= link_to('Результаты подбора тарифа', customer_optimization_results_show_customer_results_path, 
-  {:class => "btn btn-primary", :type =>"button"}) %>
-  
+<p>	
+	<%= link_to('Моделировать историю звонков', customer_calls_set_calls_generation_params_path, 
+	  {:class => "btn btn-primary", :type =>"button"}) if controller.customer_has_free_trials?('calls')%>
+	  
+	<%= link_to('Загрузить историю звонков', customer_history_parsers_prepare_for_upload_path, 
+	  {:class => "btn btn-primary", :type =>"button"}) if controller.customer_has_free_trials?('history_parsers') %>
+	  
+	<%= link_to('Подобрать тариф', customer_tarif_optimizators_index_path, 
+	  {:class => "btn btn-primary", :type =>"button"}) if controller.customer_has_free_trials?('tarif_optimizators') and 
+	   Customer::Call.where(:user_id => current_user.id).exists? %>
+	
+	<%= link_to('Результаты подбора тарифа', customer_optimization_results_show_customer_results_path, 
+	  {:class => "btn btn-primary", :type =>"button"}) %>
+</p>  
 
 

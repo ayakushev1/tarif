@@ -13,17 +13,11 @@
    подбора тарифов разных пользователей, уведомлять Вас о завершении расчетов. Вы  сможете сообщить нам, если у вас что-то не получается, 
    или у вас есть предложения по улучшению наших севрисов, или вы хотите сообщить о нашей ошибке. 
 </p>
-<div class="row">
-	<div class="col-xs-3">
-		<%= link_to('Зарегистрироваться', new_user_registration_path, {:class => "btn btn-success", :type =>"button"}) %> 
-	</div>
-	<div class="col-xs-2">
-		<%= link_to('Войти', login_path, {:class => "btn btn-primary", :type =>"button"}) %> 
-	</div>
-</div>
 
-<br />
-
+<p>
+	<%= link_to('Зарегистрироваться', new_user_registration_path, {:class => "btn btn-success", :type =>"button"}) %> 
+	<%= link_to('Войти', login_path, {:class => "btn btn-primary", :type =>"button"}) %> 
+</p>
 
 <!--
 <p>	

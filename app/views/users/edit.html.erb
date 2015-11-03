@@ -1,10 +1,13 @@
 <% content_for :title, "Редактирование профиля" %>
 
-<%	link_to_html = {:class => "btn btn-link", :type => 'button'} %>
+<p>
+	<%	link_to_html = {:class => "btn btn-link", :type => 'button'} %>
+</p>
 
 <%= render :partial => 'form', :layout => 'application/layouts/model_form_for', :locals => {:form_item => controller.user_form } %>
 
-<%= link_to 'Профиль', user_path(controller.user), link_to_html %> |
-<%= link_to 'На главную страницу', root_path, link_to_html %>
-
+<p>
+	<%= link_to 'Профиль', user_path(controller.user), link_to_html %> |
+	<%= link_to 'На главную страницу', root_path, link_to_html %>
+</p>
 
