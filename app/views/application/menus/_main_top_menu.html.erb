@@ -2,7 +2,7 @@
 	:partial => '/application/menus/main_top_menu/tabs', 
 	:layout => 'application/layouts/navbar',
 	:locals => {
-		:brand_name => link_to( image_tag("logo.png", :alt => 'Brand'), root_path, {:class => "nav navbar-brand"} ), 
+		:brand_name => link_to( image_tag("logo.png", :alt => 'Brand'), root_path, {:class => "nav navbar-brand visible-xs-block"} ), 
 		:name => 'main_top_menu_tabs', 
 		:active => session[:current_tabs_page]['main_top_menu_tabs'].to_i
 		}
