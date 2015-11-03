@@ -1,8 +1,8 @@
 <div class="navbar-collapse">
 	<div class="container-fluid">
 	  <ul class="nav navbar-nav navbar-right">
-	  	<% if controller.current_user %>
-		    <li><%= link_to(new_customer_demand_path) do %>
+	  	<% if true or controller.current_user %>
+		    <li><%= link_to(new_customer_demand_path, {:class => "hidden-xs"}) do %>
 		    	<span class="icon_menu_img"><%= image_tag("envelope_img.png") %></span>Письмо администратору
 		        <% end %>
 		    </li>
@@ -23,6 +23,7 @@
 					<li><%= link_to 'Профиль', user_path(controller.current_user) %></li>
 					<li><%= link_to 'Выйти', logout_path %></li>
 				<% end %>
+				    <li><%= link_to('Письмо администратору', new_customer_demand_path, {:class => "visible-xs-block"}) %></li>
 	        </ul>
 	    </li>	    
 	  </ul>
