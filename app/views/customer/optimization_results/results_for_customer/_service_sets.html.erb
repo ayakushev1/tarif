@@ -41,7 +41,7 @@ table.init do |t|
      tarif_options,
      identical_services,
      link_to( content_tag(:span, image_tag("left_menu_5.png", :alt => 'Подробное описание')), 
-       customer_optimization_results_show_customer_detailed_results_path, {:remote => false}),
+       customer_optimization_results_show_customer_detailed_results_path, {:remote => true}),
      (f['service_set_count'] if current_user_admin?),   
 #     f['calls_volume'],
 #     f['sms_volume'],

@@ -1,11 +1,11 @@
 <% content_for :title, "Загрузка детализации звонков" %>
 
-<p>	<strong>Внимание!</strong>
-</p>
-<p>
-	Обращаем внимание, что на данный момент можно загрузить детализации звонков для МТС в формате HTML, XLS или XLSX, 
-	Мегафон в формате HTML, Билайн в формате XLS или XLSX, Теле2 в формате PDF.
-</p>
+<div class="alert alert-info" role="alert">	
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	<strong>Внимание!</strong>
+	Можно загрузить детализации звонков для МТС в формате HTML, XLS или XLSX, 
+	Мегафон в формате HTML, Билайн в формате XLS или XLSX, Теле2 в формате PDF.	
+</div>
 
 <%= render(:partial => 'customer/history_parsers/user_params', 
       :layout => 'application/layouts/filtr_form_2_columns', 
