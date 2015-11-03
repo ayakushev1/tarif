@@ -8,7 +8,7 @@
 			<div class="navbar navbar-default" role="navigation">
 		  		<%= render('/application/menus/operator_menu') %>
 			</div>
-			<div class="col-sm-4 col-md-12">
+			<div class="col-xs-4">
 				<%= render('/application/menus/main_top_menu') if ENV["RAILS_ENV"] != "production" or current_user_admin? %> 
 			</div>	
 		</div>	
