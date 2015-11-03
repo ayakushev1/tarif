@@ -12,7 +12,7 @@ if ['development', 'production'].include?(Rails.env)
   end 
   
   Rack::MiniProfiler.config.position = 'right'
-  Rack::MiniProfiler.config.start_hidden = true
+  Rack::MiniProfiler.config.start_hidden = false
   Rack::MiniProfiler.config.storage = Rack::MiniProfiler::MemoryStore
   Rack::MiniProfiler.config.disable_caching = false
   
