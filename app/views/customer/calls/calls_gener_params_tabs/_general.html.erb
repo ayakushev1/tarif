@@ -13,12 +13,12 @@ form_item.init do |f|
   f.set_fields do |filtr_name| 
     html_options = {:action_name => customer_calls_set_calls_generation_params_path}
   [
-  	[label(filtr_name, "phone_usage_type_id", 'Выберите вариант использования телефона', label_html),
+  	[label(filtr_name, "phone_usage_type_id", 'Вариант использования связи', label_html),
   	 collection_select(filtr_name, "phone_usage_type_id", Category.phone_usage_types_general, :id, :name,  {:include_blank => false, :selected => s_filtr["phone_usage_type_id"] }, 
   	 input_html ),  	 
 
-#  	 label(filtr_name, " "),
-#  	 submit_tag("Generate calls")
+  	 label(filtr_name, "operator_id", "Ваш оператор", label_html),
+  	 collection_select(filtr_name, "operator_id", Category::Operator.russian_operators, :id, :name, {:include_blank => true, :selected => s_filtr["operator_id"] }, input_html ),   
   	],
   	
   	[label(filtr_name, "country_id", "Ваша страна", label_html),
@@ -29,15 +29,7 @@ form_item.init do |f|
   	   {:include_blank => true, :selected => s_filtr["region_id"] }, input_html )
   	],   
   	
-  	[label(filtr_name, "operator_id", "Ваш оператор", label_html),
-  	 collection_select(filtr_name, "operator_id", Category::Operator.russian_operators, :id, :name, {:include_blank => true, :selected => s_filtr["operator_id"] }, input_html ),   
-  	
-  	 label(filtr_name, "privacy_id", "Физическое или юридическое лицо", label_html),
-  	 collection_select(filtr_name, "privacy_id", Category.privacy, :id, :name, 
-  	   {:include_blank => true, :selected => s_filtr["privacy_id"] }, input_html )
-  	],
-  	
-  	[label(filtr_name, "share_of_time_in_own_region", "Доля прибывания в регионе подключения тарифа, %", label_html),
+  	[label(filtr_name, "share_of_time_in_own_region", "Доля прибывания в регионе подключения тарифа", label_html),
   	 content_tag(:div, {:class => "input-group"}) do
   	 	content_tag(:div, {:class => " "}) do
 		     text_field(filtr_name, "share_of_time_in_own_region", input_html_range.merge(
@@ -46,7 +38,7 @@ form_item.init do |f|
 	  	content_tag(:span, number_to_percentage(s_filtr["share_of_time_in_own_region"].to_f*100.0, :precision => 0), {:class => "input-group-addon"})  
   	 end,
   	 
-  	 label(filtr_name, "share_of_time_in_home_region", "Доля прибывание в домашнем регионе тарифа, %", label_html),
+  	 label(filtr_name, "share_of_time_in_home_region", "Доля прибывание в домашнем регионе тарифа", label_html),
   	 content_tag(:div, {:class => "input-group"}) do
   	 	content_tag(:div, {:class => " "}) do
 		     text_field(filtr_name, "share_of_time_in_home_region", input_html_range.merge(
@@ -56,7 +48,7 @@ form_item.init do |f|
   	 end,
   	],   
   	
-  	[label(filtr_name, "share_of_time_in_own_country", "Доля путешествий по стране, %", label_html),
+  	[label(filtr_name, "share_of_time_in_own_country", "Доля путешествий по стране", label_html),
   	 content_tag(:div, {:class => "input-group"}) do
   	 	content_tag(:div, {:class => " "}) do
 		     text_field(filtr_name, "share_of_time_in_own_country", input_html_range.merge(
@@ -65,7 +57,7 @@ form_item.init do |f|
 	  	content_tag(:span, number_to_percentage(s_filtr["share_of_time_in_own_country"].to_f*100.0, :precision => 0), {:class => "input-group-addon"})  
   	 end,
   	 
-  	 label(filtr_name, "share_of_time_abroad", "Доля путешествий заграницу, %", label_html),
+  	 label(filtr_name, "share_of_time_abroad", "Доля путешествий заграницу", label_html),
   	 content_tag(:div, {:class => "input-group"}) do
   	 	content_tag(:div, {:class => " "}) do
 		     text_field(filtr_name, "share_of_time_abroad", input_html_range.merge(

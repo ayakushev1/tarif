@@ -1,7 +1,7 @@
 class Customer::CallsController < ApplicationController
 #  include Crudable
 #  crudable_actions :index
-  before_action -> {update_usage_pattern(params)}, only: [:set_calls_generation_params]
+  before_action :update_usage_pattern, only: [:set_calls_generation_params]
   before_action :setting_if_nil_default_calls_generation_params, only: [:set_calls_generation_params, :generate_calls]
   after_action -> {update_customer_infos}, only: :generate_calls
 
@@ -48,22 +48,25 @@ class Customer::CallsController < ApplicationController
     end
   end
   
-  def update_usage_pattern(params)
+  def update_usage_pattern
+    unchanged_params = params.dup
     old_usage_type = {}
     ['customer_calls_generation_params_general_filtr', 'customer_calls_generation_params_own_region_filtr', 'customer_calls_generation_params_home_region_filtr', 
       'customer_calls_generation_params_own_country_filtr', 'customer_calls_generation_params_abroad_filtr'].each do |rouming_type|
         old_usage_type[rouming_type] = session[:filtr][rouming_type]['phone_usage_type_id'].to_s if session[:filtr] and session[:filtr][rouming_type]
-      end
+    end
+    #raise(StandardError, [session[:filtr], unchanged_params])
     customer_calls_generation_params_filtr.each do |key, value|
-      if params and params[value.filtr_name] and params[value.filtr_name]['phone_usage_type_id'] != old_usage_type[value.filtr_name]
-        raise(StandardError, [old_usage_type[value.filtr_name], params[value.filtr_name]['phone_usage_type_id'], value.filtr_name, 
+      if unchanged_params and unchanged_params[value.filtr_name] and unchanged_params[value.filtr_name]['phone_usage_type_id'] != old_usage_type[value.filtr_name]
+        
+        raise(StandardError, [old_usage_type[value.filtr_name], unchanged_params[value.filtr_name]['phone_usage_type_id'], value.filtr_name, 
           session[:filtr][value.filtr_name]['phone_usage_type_id']]) if false
+          
         usage_pattern_id = session[:filtr][value.filtr_name]['phone_usage_type_id']
         session[:filtr][value.filtr_name] = Calls::Generator.default_calls_generation_params(key, usage_pattern_id)[key]  
          if key == :general
-           new_usage_types = Calls::Generator.update_all_usage_patterns_based_on_general_usage_type(params[value.filtr_name]['phone_usage_type_id'])
-           session[:filtr].merge!(new_usage_types)
-#           raise(StandardError, [session[:filtr], new_usage_types])
+           new_usage_types = Calls::Generator.update_all_usage_patterns_based_on_general_usage_type(unchanged_params[value.filtr_name]['phone_usage_type_id'])
+           session[:filtr].merge!(new_usage_types)           
            setting_default_calls_generation_params   
          end        
       end 

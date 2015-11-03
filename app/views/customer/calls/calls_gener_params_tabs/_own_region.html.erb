@@ -13,7 +13,7 @@ form_item.init do |f|
   f.set_fields do |filtr_name| 
     html_options = {:action_name => customer_calls_set_calls_generation_params_path}
   [
-  	[label(filtr_name, "phone_usage_type_id", 'Выберите вариант использования телефона', label_html),
+  	[label(filtr_name, "phone_usage_type_id", 'Вариант использования связи', label_html),
   	 collection_select(filtr_name, "phone_usage_type_id", Category.phone_usage_types_own_region, :id, :name,  {:include_blank => false, :selected => s_filtr["phone_usage_type_id"] }, 
   	 	input_html ),  	 
 
@@ -42,7 +42,7 @@ form_item.init do |f|
   	 end,
   	],   
   	
-  	[label(filtr_name, "share_of_incoming_calls", "Доля входящих звонков, %", label_html),
+  	[label(filtr_name, "share_of_incoming_calls", "Доля входящих звонков", label_html),
   	 content_tag(:div, {:class => "input-group"}) do
   	 	content_tag(:div, {:class => " "}) do
 		     text_field(filtr_name, "share_of_incoming_calls", input_html_range.merge(
@@ -51,7 +51,7 @@ form_item.init do |f|
 	  	content_tag(:span, number_to_percentage(s_filtr["share_of_incoming_calls"].to_f*100.0, :precision => 0), {:class => "input-group-addon"})  
   	 end,
   	 
-  	 label(filtr_name, "share_of_incoming_calls_from_own_mobile", "Из них со своего оператора, %", label_html),
+  	 label(filtr_name, "share_of_incoming_calls_from_own_mobile", "Из них со своего оператора", label_html),
   	 content_tag(:div, {:class => "input-group"}) do
   	 	content_tag(:div, {:class => " "}) do
 		     text_field(filtr_name, "share_of_incoming_calls_from_own_mobile", input_html_range.merge(
@@ -61,7 +61,7 @@ form_item.init do |f|
   	 end,
   	],   
   	
-  	[label(filtr_name, "share_of_calls_to_other_mobile", "Доля звонков к другим операторам, %", label_html),
+  	[label(filtr_name, "share_of_calls_to_other_mobile", "Доля звонков к другим операторам", label_html),
   	 content_tag(:div, {:class => "input-group"}) do
   	 	content_tag(:div, {:class => " "}) do
 		     text_field(filtr_name, "share_of_calls_to_other_mobile", input_html_range.merge(
@@ -70,7 +70,7 @@ form_item.init do |f|
 	  	content_tag(:span, number_to_percentage(s_filtr["share_of_calls_to_other_mobile"].to_f*100.0, :precision => 0), {:class => "input-group-addon"})  
   	 end,
   	 
-  	 label(filtr_name, "share_of_calls_to_fix_line", "Доля звонков на фиксированную линию, %", label_html),
+  	 label(filtr_name, "share_of_calls_to_fix_line", "Доля звонков на фиксированную линию", label_html),
   	 content_tag(:div, {:class => "input-group"}) do
   	 	content_tag(:div, {:class => " "}) do
 		     text_field(filtr_name, "share_of_calls_to_fix_line", input_html_range.merge(
@@ -80,7 +80,7 @@ form_item.init do |f|
   	 end,
   	],   
   	
-  	[label(filtr_name, "share_of_regional_calls", "Доля междугородних звонков, %", label_html),
+  	[label(filtr_name, "share_of_regional_calls", "Доля междугородних звонков", label_html),
   	 content_tag(:div, {:class => "input-group"}) do
   	 	content_tag(:div, {:class => " "}) do
 		     text_field(filtr_name, "share_of_regional_calls", input_html_range.merge(
@@ -89,13 +89,13 @@ form_item.init do |f|
 	  	content_tag(:span, number_to_percentage(s_filtr["share_of_regional_calls"].to_f*100.0, :precision => 0), {:class => "input-group-addon"})  
   	 end,
   	 
-  	 label(filtr_name, "region_for_region_calls_ids", "Регионы куда звоните", label_html),
+  	 label(filtr_name, "region_for_region_calls_ids", "Регион куда звоните", label_html),
   	 collection_select(filtr_name, "region_for_region_calls_ids", Category.regions.where(:parent_id => s_filtr["country_id"]), :id, :name, 
   	   {:include_blank => true, :selected => s_filtr["region_for_region_calls_ids"] }, input_html )
   	],   
   	
   	[
-  	 label(filtr_name, "share_of_international_calls", "Доля международных звонков, %", label_html),
+  	 label(filtr_name, "share_of_international_calls", "Доля международных звонков", label_html),
   	 content_tag(:div, {:class => "input-group"}) do
   	 	content_tag(:div, {:class => " "}) do
 		     text_field(filtr_name, "share_of_international_calls", input_html_range.merge(
@@ -104,7 +104,7 @@ form_item.init do |f|
 	  	content_tag(:span, number_to_percentage(s_filtr["share_of_international_calls"].to_f*100.0, :precision => 0), {:class => "input-group-addon"})  
   	 end,
 
-     label(filtr_name, "country_for_international_calls_ids", "Cтраны куда звоните", label_html),
+     label(filtr_name, "country_for_international_calls_ids", "Cтрана куда звоните", label_html),
   	 collection_select(filtr_name, "country_for_international_calls_ids", Category.where(:type_id=>0, :level_id=>2).where("id > ?", 1605), :id, :name,  {:include_blank => false, :selected => s_filtr["country_for_international_calls_ids"] }, input_html )
   	],   
   	
