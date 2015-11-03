@@ -4,7 +4,7 @@ if ['development', 'production'].include?(Rails.env)
   # initialization is skipped so trigger it
   Rack::MiniProfilerRails.initialize!(Rails.application)
   
-  if ['development', 'production'].include?(Rails.env)
+  if ['production'].include?(Rails.env)
     Rails.application.middleware.delete(Rack::MiniProfiler)
 #    Rails.application.middleware.insert_after(Rack::Deflater, Rack::MiniProfiler)
 #    Rails.application.middleware.insert_after(HerokuDeflater::SkipBinary, Rack::MiniProfiler)
