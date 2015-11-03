@@ -2,6 +2,26 @@
 
 content_in :tabs do |user| 
   [
+    [
+     'Выбор параметров расчета',
+     (
+	  render(:partial => 'customer/tarif_optimizators/input/service_choices', :layout => 'application/layouts/filtr_form_group', 
+	    :locals => {:form_item => service_choices} )
+		
+     )          
+    ], 
+
+    ([
+     'Выбор услуг оператора',
+      render(:partial => 'customer/tarif_optimizators/input/service_categories_select', :layout => 'application/layouts/filtr_form_4_columns', 
+        :locals => {:form_item => service_categories_select} )
+    ] if show_service_categories_select_tab), 
+    ([
+     'Выбор тарифа и набора опций для расчета',
+	  render(:partial => 'customer/tarif_optimizators/input/services_for_calculation_select', :layout => 'application/layouts/filtr_form_3_columns', 
+	    :locals => {:form_item => services_for_calculation_select} )
+    ] if show_services_for_calculation_select_tab), 
+
     ([
      'Optimization params',
      (
@@ -26,25 +46,6 @@ content_in :tabs do |user|
         :locals => {:form_item => services_select} )
     ] if current_user_admin?), 
 
-    [
-     'Выбор параметров расчета',
-     (
-	  render(:partial => 'customer/tarif_optimizators/input/service_choices', :layout => 'application/layouts/filtr_form_3_columns', 
-	    :locals => {:form_item => service_choices} )
-		
-     )          
-    ], 
-
-    [
-     'Выбор услуг оператора',
-      render(:partial => 'customer/tarif_optimizators/input/service_categories_select', :layout => 'application/layouts/filtr_form_4_columns', 
-        :locals => {:form_item => service_categories_select} )
-    ], 
-    [
-     'Выбор тарифа и набора опций для расчета',
-	  render(:partial => 'customer/tarif_optimizators/input/services_for_calculation_select', :layout => 'application/layouts/filtr_form_3_columns', 
-	    :locals => {:form_item => services_for_calculation_select} )
-    ], 
   ].compact 
 end
 %>

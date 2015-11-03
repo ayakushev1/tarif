@@ -1,0 +1,29 @@
+<%
+form_html_options = {:id =>form_item.filtr_name, :class => "", :turbolinks => true}
+form_html_options = form_html_options.merge(html) if local_assigns[:html]
+
+form_options = {:method => 'get', :remote => true, :authenticity_token => true}
+
+form_options = form_options.merge(options) if local_assigns[:options]
+form_options = form_options.merge(form_html_options)
+
+%>
+
+<% show_debug = false %>
+<%= params['customer_calls_generation_params_filtr'] if show_debug %>
+<%= session[:filtr]["calls_stat_options_filtr"] if false %>
+
+<% if form_item.caption %> 
+  <legend><%= form_item.caption %></legend>
+<% end %>
+
+
+<%= form_tag(form_item.action_on_submit, form_options) do |label, field|%>
+      <% form_item.fields(form_item.filtr_name) do |label, field|%>
+      	<div class="form_group">
+  			<%= label %>
+  			<%= field %>
+		</div>
+		<br />
+	  <% end %>
+<% end %>

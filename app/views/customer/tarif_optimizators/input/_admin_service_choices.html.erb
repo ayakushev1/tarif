@@ -69,7 +69,7 @@ form_item.init do |f|
      '',
      text_area(filtr_name, "tarif_options_mts", input_html.merge({:type => 'textarea', :value => s["tarif_options_mts"], :rows => 2  }) ),     		        
   	],
-
+=begin
   	[
      label(filtr_name, "calculate_only_chosen_services", "Считать только выбранные тариф и опции?", label_html),
  	 select(filtr_name, "calculate_only_chosen_services", [["Да", true], ["Считать все варианты", false]], {:selected => s["calculate_only_chosen_services"]}, input_html ),
@@ -82,7 +82,7 @@ form_item.init do |f|
   	   accounting_periods, 
   	   :accounting_period, :accounting_period, {:include_blank => "выберите период расчета", :selected => s["accounting_period"]}, input_html ),
   	],
-  	
+=end  	
   ]
 	    
   end

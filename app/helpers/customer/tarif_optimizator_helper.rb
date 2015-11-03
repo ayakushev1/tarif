@@ -299,5 +299,12 @@ module Customer::TarifOptimizatorHelper
     Customer::Info::ServiceCategoriesSelect.service_categories_from_selected_services(selected_services)
   end
   
+  def show_service_categories_select_tab
+    session_filtr_params(service_choices)['calculate_with_limited_scope'] == 'true' ? true : false
+  end
+  
+  def show_services_for_calculation_select_tab
+    session_filtr_params(service_choices)['calculate_with_fixed_services'] == 'true' ? true : false
+  end
 
 end
