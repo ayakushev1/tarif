@@ -7,7 +7,8 @@ if ['development', 'production'].include?(Rails.env)
   if ['development', 'production'].include?(Rails.env)
     Rails.application.middleware.delete(Rack::MiniProfiler)
 #    Rails.application.middleware.insert_after(Rack::Deflater, Rack::MiniProfiler)
-    Rails.application.middleware.insert_after(HerokuDeflater::SkipBinary, Rack::MiniProfiler)
+#    Rails.application.middleware.insert_after(HerokuDeflater::SkipBinary, Rack::MiniProfiler)
+    Rails.application.middleware.insert_after(Rack::Cache, Rack::MiniProfiler)
   end 
   
   Rack::MiniProfiler.config.position = 'right'

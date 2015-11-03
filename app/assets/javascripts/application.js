@@ -27,5 +27,5 @@
 //= require turbolinks
 //= require_tree .
 
-Turbolinks.pagesCached(2);
+// Turbolinks.pagesCached(2);
 Turbolinks.ProgressBar.disable();
