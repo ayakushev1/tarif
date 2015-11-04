@@ -101,6 +101,14 @@ class Customer::CallsController < ApplicationController
   end
   
   def customer_calls_generation_params_filtr
+    return {
+      :general => create_filtrable("customer_calls_generation_params_general"),
+      :own_region => create_filtrable("customer_calls_generation_params_own_region"),
+      :home_region => create_filtrable("customer_calls_generation_params_home_region"),
+      :own_country => create_filtrable("customer_calls_generation_params_own_country"),
+      :abroad => create_filtrable("customer_calls_generation_params_abroad"),
+    }      
+=begin
     return @customer_calls_generation_params_filtr if @customer_calls_generation_params_filtr
     @customer_calls_generation_params_filtr ||= {}
     if @customer_calls_generation_params_filtr.blank?
@@ -110,7 +118,8 @@ class Customer::CallsController < ApplicationController
       @customer_calls_generation_params_filtr[:own_country] = create_filtrable("customer_calls_generation_params_own_country")
       @customer_calls_generation_params_filtr[:abroad] = create_filtrable("customer_calls_generation_params_abroad")
     end
-    @customer_calls_generation_params_filtr      
+    @customer_calls_generation_params_filtr
+=end          
   end
   
   def update_location_data(params)

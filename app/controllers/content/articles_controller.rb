@@ -49,7 +49,8 @@ class Content::ArticlesController < ApplicationController
     options = {:base_name => 'service_sets', :current_id_name => 'service_sets_id', :id_name => 'service_sets_id', :pagination_per_page => 12}
 #    return @customer_service_sets if @customer_service_sets
 #    @customer_service_sets = 
-    @customer_service_sets ||= create_array_of_hashable(final_tarif_results_presenter.
+#    @customer_service_sets ||= 
+    create_array_of_hashable(final_tarif_results_presenter.
       customer_service_sets_array((session_filtr_params(recommendation_select_params)['operator_ids'] || []) - ['']), options)
   end
   

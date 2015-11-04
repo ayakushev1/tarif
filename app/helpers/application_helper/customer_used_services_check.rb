@@ -69,7 +69,8 @@ module ApplicationHelper::CustomerUsedServicesCheck
   protected
   
   def customer_info
-    @customer_info ||= Customer::Info::ServicesUsed.info(current_user.id)
+#    @customer_info ||= 
+    Customer::Info::ServicesUsed.info(current_user.id)
   end
   
   def fobidden_to_visit_customer_with_no_free_trials(controller_name_1 = controller_name)

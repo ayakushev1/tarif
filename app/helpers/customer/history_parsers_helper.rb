@@ -48,7 +48,8 @@ module Customer::HistoryParsersHelper
       background_process_informer.init(0, 100)
       message = send(parser_starter, call_history_file)
       update_customer_infos
-      @background_process_informer.finish
+#      @background_process_informer.finish
+      background_process_informer.finish
       message
     end     
   end
@@ -139,11 +140,13 @@ module Customer::HistoryParsersHelper
   end
   
   def background_process_informer
-    @background_process_informer ||= Customer::BackgroundStat::Informer.new('parsing_uploaded_file', current_user_id)
+#    @background_process_informer ||= 
+    Customer::BackgroundStat::Informer.new('parsing_uploaded_file', current_user_id)
   end
   
   def init_background_process_informer
-    @background_process_informer ||= Customer::BackgroundStat::Informer.new('parsing_uploaded_file', current_user_id)
+#    @background_process_informer ||= 
+    Customer::BackgroundStat::Informer.new('parsing_uploaded_file', current_user_id)
   end
   
   def user_params

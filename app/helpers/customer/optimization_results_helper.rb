@@ -7,7 +7,8 @@ module Customer::OptimizationResultsHelper
   
   def customer_service_sets
     options = {:base_name => 'service_sets', :current_id_name => 'service_sets_id', :id_name => 'service_sets_id', :pagination_per_page => 5}
-    @customer_service_sets ||= create_array_of_hashable(final_tarif_results_presenter.customer_service_sets_array, options)
+#    @customer_service_sets ||= 
+    create_array_of_hashable(final_tarif_results_presenter.customer_service_sets_array, options)
 #    raise(StandardError, @service_sets)
   end
   
@@ -34,7 +35,8 @@ module Customer::OptimizationResultsHelper
 
   def customer_service_set_tarif_id
     service_ids = (session[:current_id]['service_sets_id'].dup || "").split("_")
-    @customer_service_set_tarif_id ||= TarifClass.tarifs.where(:id => service_ids).pluck(:id)[0]
+#    @customer_service_set_tarif_id ||= 
+    TarifClass.tarifs.where(:id => service_ids).pluck(:id)[0]
 #    raise(StandardError, [service_ids, @customer_service_set_tarif_id])
 #    service_sets_index = (customer_service_sets.model.index{|m| m['service_sets_id'] == session[:current_id]['service_sets_id']} || 0)
 #    @customer_service_set_tarif_id ||= customer_service_sets.model[service_sets_index]['tarif'].to_i if customer_service_sets.model[service_sets_index] and customer_service_sets.model[service_sets_index]['tarif']
@@ -48,7 +50,8 @@ module Customer::OptimizationResultsHelper
   
   def service_sets
     options = {:base_name => 'service_sets', :current_id_name => 'service_sets_id', :id_name => 'service_sets_id', :pagination_per_page => 12}
-    @service_sets ||= create_array_of_hashable(optimization_result_presenter.service_sets_array, options)
+#    @service_sets ||= 
+    create_array_of_hashable(optimization_result_presenter.service_sets_array, options)
   end
   
   def tarif_results
@@ -111,7 +114,8 @@ module Customer::OptimizationResultsHelper
       :use_price_comparison_in_current_tarif_set_calculation => optimization_params_session_filtr_params['use_price_comparison_in_current_tarif_set_calculation'],
       :max_tarif_set_count_per_tarif => optimization_params_session_filtr_params['max_tarif_set_count_per_tarif'],
       }
-    @optimization_result_presenter ||= Customers::OptimizationResultPresenter.new(options)
+#    @optimization_result_presenter ||= 
+    Customers::OptimizationResultPresenter.new(options)
   end
   
   def final_tarif_results_presenter
@@ -119,11 +123,13 @@ module Customer::OptimizationResultsHelper
       :user_id=> current_user_id,
       :show_zero_tarif_result_by_parts => (optimization_params_session_info['show_zero_tarif_result_by_parts'] || 'false'),
       }
-    @optimization_result_presenter ||= Customers::FinalTarifResultsPresenter.new(options)
+#    @optimization_result_presenter ||= 
+    Customers::FinalTarifResultsPresenter.new(options)
   end
   
   def minor_result_presenter
-    @minor_result_presenter ||= Customers::AdditionalOptimizationInfoPresenter.new({:user_id=> current_user_id })
+#    @minor_result_presenter ||= 
+    Customers::AdditionalOptimizationInfoPresenter.new({:user_id=> current_user_id })
   end   
   
   def optimization_params_session_info
