@@ -7,7 +7,10 @@
 
 <div class="alert alert-info" role="alert">	
 	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	Рекомендуем начать с выбора варианта использования связи. Мы установим начальные значения, которые вы потом можете откорректировать	
+	Доступно три варианта подбора тарифов: <br/> 
+	Базовый вариант использует все действующие тарифы и опции доступные для подключения, для всех возможных услуг. <br/>
+	Указав "Считать только выбранные услуги" и выбрав их на вкладке с услугами, можно оптимизировать затраты, если у вас несколько сим-карт.<br/>
+	Указав "Считать только выбранный тариф и опции" и выбрав их на соответстующей вкладке, можно быстро оценить затраты для выбранной комбинации.	
 </div>
 
 <%= render :partial => 'customer/tarif_optimizators/input/input', :layout => 'application/layouts/tabs', :locals => {:name => 'customer_tarif_optimization_tabs', :active => session[:current_tabs_page]['customer_tarif_optimization_tabs'].to_i} %>

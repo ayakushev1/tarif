@@ -18,7 +18,7 @@ content_in :tabs do |user|
     ] if show_service_categories_select_tab), 
     ([
      'Выбор тарифа и набора опций для расчета',
-	  render(:partial => 'customer/tarif_optimizators/input/services_for_calculation_select', :layout => 'application/layouts/filtr_form_3_columns', 
+	  render(:partial => 'customer/tarif_optimizators/input/services_for_calculation_select', :layout => 'application/layouts/filtr_form_group', 
 	    :locals => {:form_item => services_for_calculation_select} )
     ] if show_services_for_calculation_select_tab), 
 

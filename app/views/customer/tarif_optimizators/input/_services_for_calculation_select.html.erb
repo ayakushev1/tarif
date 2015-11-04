@@ -14,13 +14,15 @@ form_item.init do |f|
   	 collection_select(filtr_name, "operator_id", Category::Operator.operators_for_optimization, :id, :name, 
   	   {:include_blank => "Выберите оператора", :selected => s["operator_id"] }, 
   	 	input_html ),   
-
+	],
+	[
   	 label(filtr_name, "tarif_to_calculate", "Тариф для расчета стоимости", label_html),
   	 collection_select(filtr_name, "tarif_to_calculate", 
   	   query_for_tarif, :id, :name, 
   	   {:include_blank => "Выберите тариф", :selected => s["tarif_to_calculate"]}, 
   	   input_html ),
-
+	],
+	[
   	 label(filtr_name, "tarif_options_to_calculate", "Тарифные опции для оптимизации", label_html),
   	 collection_select(filtr_name, "tarif_options_to_calculate", 
   	   query_for_tarif_options, :id, :name, 
