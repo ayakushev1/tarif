@@ -6,7 +6,7 @@ module Customer::OptimizationResultsHelper
   end
   
   def customer_service_sets
-    options = {:base_name => 'service_sets', :current_id_name => 'service_sets_id', :id_name => 'service_sets_id', :pagination_per_page => 10}
+    options = {:base_name => 'service_sets', :current_id_name => 'service_sets_id', :id_name => 'service_sets_id', :pagination_per_page => 5}
     @customer_service_sets ||= create_array_of_hashable(final_tarif_results_presenter.customer_service_sets_array, options)
 #    raise(StandardError, @service_sets)
   end

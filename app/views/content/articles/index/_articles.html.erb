@@ -6,12 +6,14 @@ table.init do |t|
 #  t.id_name = 'id'#'service_category_tarif_class_id'
   
 #  t.heads = ['id', 'author_id', 'title', 'content', 'type_id', 'status_id', 'key', '']
-  t.heads = ['Название рекомендации', 'Пользовательская модель', '']
+  t.heads = [ '', 'Название рекомендации', 'Пользовательская модель',]
   
   t.set_fields do |f| 
   	[
 #  	 f['id'],
 #  	 f['author_id'],
+     link_to( content_tag(:span, image_tag("left_menu_5.png", :alt => 'Подробное описание')), 
+       content_articles_show_path, {:remote => true}),
   	 f['title'],
   	 (f['content']['usage_model'] if f['content']),
 #  	 (f['content']['summary'] if f['content']),
@@ -19,8 +21,6 @@ table.init do |t|
 #     f['type_id'],
 #     f['status_id'],
 #     f['key'],
-     link_to( content_tag(:span, image_tag("left_menu_5.png", :alt => 'Подробное описание')), 
-       content_articles_show_path, {:remote => true}),
   	] 
   end
 end

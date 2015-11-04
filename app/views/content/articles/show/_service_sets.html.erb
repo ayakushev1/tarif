@@ -7,8 +7,8 @@ table.init do |t|
 #  t.pagination_per_page = 12
 #  t.id_name = 'service_sets_id'
   model_keys = t.model.collect {|row| row.keys }.flatten.uniq.collect{|key| key }.compact  
-  t.heads = ['Стоимость в месяц, руб', 'Оператор', 'Тариф', 'Общие услуги', 'Тарифные опции', 
-  	'Взаимозаменяемые опции', '']#, 'Кол-во минут', 'Кол-во смс и ммс', 'Объем интернета, Мб']
+  t.heads = ['', 'Стоимость в месяц, руб', 'Оператор', 'Тариф', 'Общие услуги', 'Тарифные опции', 
+  	'Взаимозаменяемые опции']#, 'Кол-во минут', 'Кол-во смс и ммс', 'Объем интернета, Мб']
   
   t.set_fields do |f|
     services = f['services'].map do |item|
@@ -33,6 +33,8 @@ table.init do |t|
     end.join(', ').html_safe if f['identical_services']
     
   	[
+     link_to( content_tag(:span, image_tag("left_menu_5.png", :alt => 'Подробное описание')), 
+       content_articles_detailed_results_path, {:remote => true}),
   	 (f['tarif_cost'].round(0).to_s(:delimited, precision: 0) if f['tarif_cost']),    
      f['operator_name'],     
   	 link_to_if(f['tarif_http'], f['tarif_name'], f['tarif_http'], {:target => "_blank"}),    
@@ -40,8 +42,6 @@ table.init do |t|
      common_services,   
      tarif_options,
      identical_services,
-     link_to( content_tag(:span, image_tag("left_menu_5.png", :alt => 'Подробное описание')), 
-       content_articles_detailed_results_path, {:remote => true}),
 #     f['calls_volume'],
 #     f['sms_volume'],
 #     f['internet_volume'],
