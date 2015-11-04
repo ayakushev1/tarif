@@ -73,7 +73,7 @@ class Content::ArticlesController < ApplicationController
   
   def final_tarif_results_presenter
     options = {
-      :user_id=> (current_user ? current_user.id : 0),
+      :user_id=> 0, #(current_user ? current_user.id : 0),
       :show_zero_tarif_result_by_parts => 'false',
       :demo_result_id => demo_result_id 
       }
