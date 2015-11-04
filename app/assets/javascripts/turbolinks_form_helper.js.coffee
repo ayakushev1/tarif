@@ -1,5 +1,5 @@
 submit_form_with_turbolinks = (form, event) ->
-  event.preventDefault()
+#  event.preventDefault() 
   Turbolinks.visit form.action + '?' + $(form).serialize()
    
 $(document).on 'submit_', "form[turbolinks=true]", (event) ->
