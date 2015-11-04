@@ -24,7 +24,7 @@ table_html_options = table_html_options.collect { |key, value| "#{key.to_s}=\"#{
 	
 	<div class="row">
 		<div class="col-xs-12 text-center">
-			<%= will_paginate(table.model, :class=>'pagination text-center pagin_border', :remote => true, :turbolinks => true, :param_name => table.pagination_param_name) %>
+			<%= will_paginate(table.model, :class=>'pagination text-center pagin_border', :remote => true, :param_name => table.pagination_param_name) %>
 		</div>
 	</div>	
 	<div class="row">

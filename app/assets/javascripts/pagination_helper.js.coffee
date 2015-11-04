@@ -14,7 +14,7 @@ getUrlVars = (string1) ->
 
 #$(document).on 'ready page:load ajaxComplete', -> 
 #$(document).on 'ajaxComplete', -> 
-$(document).on 'click', '[class*=__pagination] a', ->
+$(document).on 'click', '[class*=pagination] a', ->
   a = $(this).attr('href')
   unless $.isEmptyObject(a)
     b = getUrlMain(a)
