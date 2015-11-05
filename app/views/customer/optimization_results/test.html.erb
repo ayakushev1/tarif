@@ -1,6 +1,7 @@
-<%= render :partial => 'customer/optimization_results/results_for_customer/service_sets', :layout => 'application/layouts/model_table', :locals => {:table => customer_service_sets}%>
+<%=
 
-<%= render(:partial => 'customer/optimization_results/detailed_results_for_customer/tarif_results', :layout => 'application/layouts/model_table', :locals => {:table => customer_tarif_results}) %>
+Customers::FinalTarifResultsPresenter.new(:user_id => current_user.id).customer_service_sets_array
 
-<%= render(:partial => 'customer/optimization_results/detailed_results_for_customer/tarif_results_details', :layout => 'application/layouts/model_table', :locals => {:table => customer_tarif_detail_results}) %>
+%>
+
 
