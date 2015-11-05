@@ -66,6 +66,7 @@ Rails.application.routes.draw do
       get 'optimization_results/show_customer_results' => :show_customer_results
       get 'optimization_results/show_additional_info' => :show_additional_info
       get 'optimization_results/show_customer_detailed_results' => :show_customer_detailed_results
+      get 'optimization_results/test' => :test
     end
     
     controller :optimization_result_movers do

@@ -22,11 +22,10 @@ table_html_options = table_html_options.collect { |key, value| "#{key.to_s}=\"#{
 	  <legend><%= table.caption %></legend>
 	<% end %>
 	
-	<div class="row">
-		<div class="col-xs-12 text-center">
+	<div class="text-center">
 			<%= will_paginate(table.model, :class=>'pagination text-center pagin_border', :remote => true, :param_name => table.pagination_param_name) %>
-		</div>
 	</div>	
+
 	<div class="row">
 		<div class="col-xs-12 text-center">
 			<table <%= table_html_options %> >
