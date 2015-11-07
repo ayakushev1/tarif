@@ -7,7 +7,8 @@ module Result::RunsHelper
   end
   
   def run_id
-    Result::Run.where(:user_id => current_user.id, :run => 1).first[:id]
+    run = Result::Run.where(:user_id => current_user.id, :run => 1).first
+    run ? run[:id] : -1
   end
   
   def service_set_id
