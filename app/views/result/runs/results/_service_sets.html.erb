@@ -1,0 +1,51 @@
+<%
+#raise(StandadError)
+table.init do |t|
+#  model_keys = t.model.collect {|row| row.keys }.flatten.uniq.collect{|key| key }.compact  
+  t.heads = ['', 'Стоимость в месяц, руб', 'Оператор', 'Тариф', 'Общие услуги', 'Тарифные опции', 'Взаимозаменяемые опции']
+  
+  s_desc = service_description(all_service_ids)
+  t.set_fields do |f|
+#  	raise(StandardError, [f.service_ids, s_desc])
+    services = f.service_ids.map do |id|
+        link_to_if(s_desc[id]['service_http'], s_desc[id]['service_name'], s_desc[id]['service_http'], {:target => "_blank"})	
+    end.join(', ').html_safe if f.service_ids
+
+    common_services = f.common_services.map do |id|
+        link_to_if(s_desc[id]['service_http'], s_desc[id]['service_name'], s_desc[id]['service_http'], {:target => "_blank"})	
+    end.join(', ').html_safe if f.common_services
+
+    tarif_options = f.tarif_options.map do |id|
+        link_to_if(s_desc[id]['service_http'], s_desc[id]['service_name'], s_desc[id]['service_http'], {:target => "_blank"})	
+    end.join(', ').html_safe if f.tarif_options
+
+    identical_services = f.identical_services.map do |identical_service_group|
+    	identical_services_for_one_group = identical_service_group.map do |item|     	
+    		item.map do |id|
+    			link_to_if(s_desc[id]['service_http'], s_desc[id]['service_name'], s_desc[id]['service_http'], {:target => "_blank"})
+    		end.join(' + ') if item	    	      	 
+	    end.join(' или ') if identical_service_group
+        "[ #{identical_services_for_one_group} ]"
+    end.join(', ').html_safe if f.identical_services
+    
+  	[
+     link_to( content_tag(:span, image_tag("left_menu_5.png", :alt => 'Подробное описание')), 
+       result_runs_detailed_results_path, {:remote => true}),
+  	 (f.price.round(0).to_s(:delimited, precision: 0) if f.price),    
+     (f.operator.name if f.operator),     
+  	 link_to_if(s_desc[f.tarif_id]['service_http'], s_desc[f.tarif_id]['service_name'], s_desc[f.tarif_id]['service_http'], {:target => "_blank"}),    
+     common_services,   
+     tarif_options,
+     identical_services,
+     (f.call_id_count if current_user_admin?),   
+#     f['calls_volume'],
+#     f['sms_volume'],
+#     f['internet_volume'],
+#     f['stat_results']
+#     f['operator_description'],     
+#	 model_keys,    
+  	].compact 
+  	
+  end
+end
+%>

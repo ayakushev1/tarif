@@ -1,3 +1,14 @@
+# == Schema Information
+#
+# Table name: categories
+#
+#  id        :integer          not null, primary key
+#  name      :string
+#  type_id   :integer
+#  level_id  :integer
+#  parent_id :integer
+#
+
 class Category::Operator < ActiveType::Record[Category]
   include Category::Operator::Const
   

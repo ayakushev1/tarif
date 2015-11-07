@@ -43,6 +43,14 @@ Rails.application.routes.draw do
     end
   end
   
+  namespace :result do
+    controller :runs do
+      get 'runs/results' => :results
+      get 'runs/detailed_results' => :detailed_results
+      get 'runs/test' => :test
+    end
+  end
+  
   namespace :customer do
     resources :demands, only: [:index, :new, :create]    
 

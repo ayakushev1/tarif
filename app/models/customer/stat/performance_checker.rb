@@ -30,6 +30,7 @@ class Customer::Stat::PerformanceChecker < Aspector::Base #ServiceHelper::Perfor
     {:method => :calculate_and_save_final_tarif_sets_by_tarif, :name => 'calculate_and_save_final_tarif_sets_by_tarif', :level => 4},
     {:method => :prepare_and_save_final_tarif_results_by_tarif_for_presenatation, :name => 'prepare_and_save_final_tarif_results_by_tarif_for_presenatation', :level => 4},
     {:method => :calculate_tarif_results, :name => 'calculate_tarif_results', :level => 4},
+    {:method => :new_preparator_and_saver, :name => 'new_preparator_and_saver', :level => 5},
     {:method => :calculate_tarif_results_batches, :name => 'calculate_tarif_results_batches', :level => 5},
     {:method => :calculate_tarif_results_batch, :name => 'calculate_tarif_results_batch', :level => 6},
     {:method => :calculate_service_part_sql, :name => 'calculate_service_part_sql', :level => 7},

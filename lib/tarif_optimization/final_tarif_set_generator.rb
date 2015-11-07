@@ -185,11 +185,10 @@ class TarifOptimization::FinalTarifSetGenerator
 #    raise(StandardError)
       if !uniq_service_set[:fobidden]
         if !use_short_tarif_set_name and (final_tarif_sets[short_service_set_id] and (uniq_service_set_id != final_tarif_sets[short_service_set_id][:full_set_name]))
-          final_tarif_sets[uniq_service_set_id] = uniq_service_set.merge(:full_set_name => uniq_service_set_id)
+          final_tarif_sets[uniq_service_set_id] = uniq_service_set.merge(:full_set_name => uniq_service_set_id, :common_services => common_services)
         else
-          final_tarif_sets[short_service_set_id] = uniq_service_set.merge(:full_set_name => uniq_service_set_id)  
-        end
-         
+          final_tarif_sets[short_service_set_id] = uniq_service_set.merge(:full_set_name => uniq_service_set_id, :common_services => common_services)  
+        end         
       end
     end
   end

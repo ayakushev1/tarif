@@ -79,6 +79,7 @@ class TarifOptimization::TarifOptimizator
 
   def calculate_all_operator_tarifs(if_clean_output_results = true)
     clean_output_results if if_clean_output_results
+    clean_new_results
     tarif_list_generator.operators.each do |operator| 
       calculate_one_operator(operator) if !tarif_list_generator.tarifs[operator].blank?
     end
@@ -189,7 +190,8 @@ class TarifOptimization::TarifOptimizator
         :common_services => tarif_list_generator.common_services,  
       }.stringify_keys)
     end
-#      raise(StandardError)
+
+=begin
     if save_interim_results_after_calculating_tarif_results #and save_interim_results_after_calculating_final_tarif_sets
       prepare_and_save_final_tarif_results_by_tarif_for_presenatation(operator, tarif, accounting_period)
     else
@@ -205,6 +207,7 @@ class TarifOptimization::TarifOptimizator
         :tarif_class_categories_by_category_group => query_constructor.tarif_class_categories_by_category_group,
       }.stringify_keys)
     end      
+=end
     
   end
   
@@ -270,6 +273,9 @@ class TarifOptimization::TarifOptimizator
     saved_results = nil
     
     final_tarif_set_generator.calculate_final_tarif_sets(operator, tarif, background_process_informer_tarif)
+    
+    new_preparator_and_saver(operator, tarif.to_i, final_tarif_set_generator.final_tarif_sets,
+        final_tarif_set_generator.groupped_identical_services,  final_tarif_set_generator.tarif_results)
 
     final_tarif_sets_saver.override(
       {:operator_id => operator.to_i, :tarif_id => tarif.to_i, :accounting_period => accounting_period, :result => {
@@ -310,7 +316,7 @@ class TarifOptimization::TarifOptimizator
     prepared_final_tarif_results_saver.override({:operator_id => operator.to_i, :tarif_id => tarif.to_i, :accounting_period => accounting_period, :result => prepared_final_tarif_results})
     result = {}  
   end
-    
+  
   def calculate_tarif_results(operator, service_slice)
     service_slice_id = 0    
     begin
@@ -364,30 +370,49 @@ class TarifOptimization::TarifOptimizator
     process_tarif_results_for_tarif_set(executed_tarif_result_batch_sql)
   end
   
+  def clean_new_results
+    result_run = Result::Run.where(:user_id => user_id, :run => 1).first
+    if result_run
+      run_id =  result_run[:id]      
+      Result::Run.where(:id => run_id).delete_all
+      Result::Tarif.where(:run_id => run_id).delete_all
+      Result::ServiceSet.where(:run_id => run_id).delete_all
+      Result::Service.where(:run_id => run_id).delete_all
+      Result::Agregate.where(:run_id => run_id).delete_all
+      Result::ServiceCategory.where(:run_id => run_id).delete_all
+    end
 
- 
- 
+  end
+  
+  def new_preparator_and_saver(operator, tarif_id, final_tarif_sets, groupped_identical_services, tarif_results)
+    run_id = Result::Run.first_or_create(:user_id => user_id, :run => 1)[:id]
+    result_tarif_id = Result::Tarif.first_or_create(:run_id => run_id, :tarif_id => tarif_id)[:id]
+    
+    service_sets_array, services_array, categories_array, agregates_array = TarifOptimization::FinalTarifResultPreparator2.prepare_service_sets({
+      :run_id => run_id, 
+      :tarif_id => tarif_id, 
+      :final_tarif_sets => final_tarif_sets, 
+      :groupped_identical_services => groupped_identical_services, 
+      :tarif_results => tarif_results, 
+      :operator => operator,
+      :categories => query_constructor.categories_as_hash.stringify_keys,
+      :tarif_categories => query_constructor.tarif_class_categories.stringify_keys,
+      :tarif_category_groups => query_constructor.category_groups.stringify_keys,
+      :tarif_class_categories_by_category_group => query_constructor.tarif_class_categories_by_category_group.stringify_keys,
+      })
+
+#    raise(StandardError, Result::ServiceSet.create(service_sets_array).to_sql)
+      
+#    Result::ServiceSet.batch_save(service_sets_array, {})
+    Result::ServiceSet.create(service_sets_array)
+    Result::Service.create(services_array)
+    Result::ServiceCategory.create(categories_array)
+    Result::Agregate.create(agregates_array)
+    
+  end
+
   def calculate_used_memory(output)
-    {
-      :output => General::MemoryUsage.analyze(output),
-      :cons_tarif_results => General::MemoryUsage.analyze(current_tarif_optimization_results.cons_tarif_results),
-      :cons_tarif_results_by_parts => General::MemoryUsage.analyze(current_tarif_optimization_results.cons_tarif_results_by_parts),
-      :prev_service_call_ids_by_parts => General::MemoryUsage.analyze(current_tarif_optimization_results.prev_service_call_ids_by_parts),
-      :prev_service_group_call_ids => General::MemoryUsage.analyze(current_tarif_optimization_results.prev_service_group_call_ids),
-      :optimization_result_saver => General::MemoryUsage.analyze(@optimization_result_saver),
-      :minor_result_saver => General::MemoryUsage.analyze(@minor_result_saver),
-      :calls_stat_calculator => General::MemoryUsage.analyze(@calls_stat_calculator),
-      :tarif_optimization_sql_builder => General::MemoryUsage.analyze(@tarif_optimization_sql_builder),
-      :current_tarif_optimization_results => General::MemoryUsage.analyze(@current_tarif_optimization_results),
-      :stat_function_collector => General::MemoryUsage.analyze(@stat_function_collector),
-      :query_constructor => General::MemoryUsage.analyze(@query_constructor),
-      :max_formula_order_collector => General::MemoryUsage.analyze(@max_formula_order_collector),
-      :tarif_list_generator => General::MemoryUsage.analyze(@tarif_list_generator),
-      :performance_checker => General::MemoryUsage.analyze(@performance_checker),
-      :background_process_informer_operators => General::MemoryUsage.analyze(@background_process_informer_operators),
-      :background_process_informer_tarifs => General::MemoryUsage.analyze(@background_process_informer_tarifs),
-      :background_process_informer_tarif => General::MemoryUsage.analyze(@background_process_informer_tarif),
-    }
+    {}
   end
   
   module Helper

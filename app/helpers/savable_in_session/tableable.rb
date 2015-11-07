@@ -30,7 +30,7 @@ module SavableInSession::Tableable
       @model_size =model.count
       @base_name = options[:base_name] || model.table_name.singularize
       @table_name = "#{@base_name}_table"
-      @id_name = :id
+      @id_name = options[:id_name] || :id 
       @pagination_per_page =options[:pagination_per_page] || 10
     end
     
@@ -56,7 +56,7 @@ module SavableInSession::Tableable
     end
   
     def current_id_name
-      @current_id_name || "#{@base_name}_id"
+      @current_id_name || options[:current_id_name] || "#{@base_name}_id"
     end
     
     def current_row_class

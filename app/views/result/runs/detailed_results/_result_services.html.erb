@@ -1,0 +1,17 @@
+<%
+table.init do |t|
+  t.heads = ['Стоимость в месяц, руб', 'Тариф или опция', 'Кол-во минут', 'Кол-во смс и ммс', 'Объем интернета, Мб', ('Кол-во обработанных записей'  if current_user_admin?)].compact
+  s_desc = service_description(all_service_ids)
+  t.set_fields do |f| 
+  	[
+     (f.price.round(0).to_s(:delimited, precision: 0) if f.price),      
+  	 link_to_if(s_desc[f.service_id]['service_http'], s_desc[f.service_id]['service_name'], s_desc[f.service_id]['service_http'], {:target => "_blank"}),    
+     f.sum_duration_minute,
+     f.count_volume,
+     f.sum_volume,
+     (f.call_id_count if current_user_admin?),      
+  	] 
+  end	
+end
+%>
+

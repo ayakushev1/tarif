@@ -79,5 +79,16 @@ class Customer::Stat < ActiveRecord::Base
 
   end
   
+  def self.result_model(model_init_data =  { #можно удалить 
+        :result_type => 'optimization_results',
+        :result_name => 'prepared_final_tarif_results',
+        :user_id => 1, #current_user.id,
+        :demo_result_id => nil,
+    })
+    sql = init_result_model(model_init_data)
+    find_by_sql(sql)
+  end
+  
+  
 
 end
