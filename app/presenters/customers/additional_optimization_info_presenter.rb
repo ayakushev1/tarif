@@ -98,6 +98,7 @@ class Customers::AdditionalOptimizationInfoPresenter #ServiceHelper::AdditionalO
       :demo_result_id => demo_result_id,
       :user_id => user_id,
     }, 'calls_stat')     
+#    raise(StandardError, result)
     result
   end
 

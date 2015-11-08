@@ -32,29 +32,22 @@ class Customer::Stat < ActiveRecord::Base
   def self.get_results(model_init_data = {})
     result_model = init_result_model(model_init_data)
     results = {}
-#    raise(StandardError, init_result_model(model_init_data))
     result_model.each do |result_item|
-#      begin
-        result_item.attributes[model_init_data[:result_name]].each do |result_type, result_value|
+        result_item[model_init_data[:result_name]].each do |result_type, result_value|
           if result_value.is_a?(Hash)
             results[result_type] ||= {}
             results[result_type].merge!(result_value)
           else
             results[result_type] = result_value
           end
-        end if result_item and result_item.attributes and model_init_data and model_init_data[:result_name] and result_item.attributes[model_init_data[:result_name]]
- #     rescue ArgumentError
- #       raise(StandardError, result_item.inspect)
- #     end 
+        end if result_item and result_item.attributes and model_init_data and model_init_data[:result_name] and result_item[model_init_data[:result_name]]
     end if result_model
-#      raise(StandardError, results) if results.blank?
     results
   end
 
   def self.init_result_model(model_init_data = {})
     result = init_result_model_without_select(model_init_data).
     select("result as #{model_init_data[:result_name]}")
-#    raise(StandardError, result.to_sql)
     result
   end
   
