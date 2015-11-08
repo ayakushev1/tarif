@@ -1,0 +1,56 @@
+<%
+style_table = [
+#	[/a.*?href/, {:'data-remote' => true, :turbolinks => true}],
+]
+
+table_html_options = {:id =>table.table_name, :class => 'table table-bordered table-hover table-condensed'}
+table_html_options = form_html_options.merge(html) if local_assigns[:html]
+table_html_options = table_html_options.collect { |key, value| "#{key.to_s}=\"#{value.to_s}\""}.join(" ").html_safe
+
+%>
+<div class="table-responsive">
+
+	<% show_debug = false %>
+	
+	<%= table.model if false %>
+	<%= params if false %>
+	<%= session[:filtr] if false %>
+	<%= session[:current_id] if false %>
+	<%=session[:pagination]if false %>
+	
+	<% if table.caption %> 
+	  <legend><%= table.caption %></legend>
+	<% end %>
+	
+	<div class="text-center">
+			<%= will_paginate(table.model, :class=>'pagination text-center pagin_border', :remote => true, :param_name => table.pagination_param_name) %>
+	</div>	
+
+	<div class="row">
+		<div class="col-xs-12 text-center">
+			<table <%= table_html_options %> >
+			  <thead>
+			    <tr>
+			      <% table.heads.each do |head| %>
+			        <th>
+			        	<%= head %>
+			        </th>
+			      <% end %>
+			    </tr>
+			  </thead>
+			
+			  <tbody>
+			    <% table.model.each do |item| %>
+			    <tr <%= table.row_details(item) %> >
+			      <% table.fields(item) do |field| %>
+			        <td>
+			        	<%= add_css(field, style_table) %>
+			        </td>
+			      <% end %>
+			    <% '</tr>' %> 
+			    <% end %>  	
+			  </tbody>
+			</table>
+		</div>
+	</div>	
+</div>

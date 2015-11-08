@@ -16,3 +16,23 @@ foreman run rake db:seed
 
 testing
 foreman run bin/spring rake test test/models/customer/payment_instruction_to_yandex_test.rb
+
+
+run production locally:
+		include production db in database.yml
+		assets:precompile
+		??? run in new window: memcached -v
+		add it to public_url
+		add  to application_controller
+				 def current_user
+				    User.find(1)
+				  end
+Is my app leaking memory?
+	USE_SERVER=puma PATH_TO_HIT=/result/runs/results TEST_COUNT=1000 bundle exec derailed exec perf:mem_over_time				  
+	USE_SERVER=puma PATH_TO_HIT=/customer/optimization_results/show_customer_results TEST_COUNT=1000 bundle exec derailed exec perf:mem_over_time
+Dissecting a Memory Leak
+	USE_SERVER=puma PATH_TO_HIT=/result/runs/results TEST_COUNT=10 bundle exec derailed exec perf:objects				  
+	USE_SERVER=puma PATH_TO_HIT=/customer/optimization_results/show_customer_results TEST_COUNT=10 bundle exec derailed exec perf:objects				  
+Heap Dump					 
+	PATH_TO_HIT=/result/runs/results bundle exec derailed exec perf:heap
+	PATH_TO_HIT=/customer/optimization_results/show_customer_results bundle exec derailed exec perf:heap

@@ -44,7 +44,9 @@ module Result::RunsHelper
   end
     
   def result_service_sets
+#    return @result_service_sets if @result_service_sets
     options = {:base_name => 'service_sets', :current_id_name => 'service_set_id', :id_name => 'service_set_id', :pagination_per_page => 5}
+#    @result_service_sets = 
     create_tableable(Result::ServiceSet.includes(:operator, :tarif).where(:run_id => run_id).order(:price), options)
   end
   
