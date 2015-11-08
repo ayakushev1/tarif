@@ -92,6 +92,12 @@ form_item.init do |f|
   	[
      label(filtr_name, "max_number_of_tarif_optimization_workers", "max number of tarif optimization workers", label_html),
      text_field(filtr_name, "max_number_of_tarif_optimization_workers", input_html.merge({:type => 'text', :value => s["max_number_of_tarif_optimization_workers"] }) ),
+
+     label(filtr_name, "calculate_old_final_tarif_preparator", "calculate_old_final_tarif_preparator?", label_html),
+ 	 select(filtr_name, "calculate_old_final_tarif_preparator", [["Yes", true], ["No", false]], {:selected => s["calculate_old_final_tarif_preparator"]}, input_html ),
+
+     label(filtr_name, "save_new_final_tarif_results_in_my_batches", "save_new_final_tarif_results_in_my_batches?", label_html),
+ 	 select(filtr_name, "save_new_final_tarif_results_in_my_batches", [["Yes", true], ["No", false]], {:selected => s["save_new_final_tarif_results_in_my_batches"]}, input_html ),
   		
   	]
   	

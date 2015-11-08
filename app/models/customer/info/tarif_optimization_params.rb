@@ -46,6 +46,8 @@ class Customer::Info::TarifOptimizationParams < ActiveType::Record[Customer::Inf
       'what_format_of_results' => 'results_for_customer',     
       'calculate_background_with_spawnling' => 'false',
       'max_number_of_tarif_optimization_workers' => 3,
+      'calculate_old_final_tarif_preparator' => 'false',
+      'save_new_final_tarif_results_in_my_batches' => 'false'
     }
   end
 

@@ -32,6 +32,8 @@
 #
 
 class Result::Agregate < ActiveRecord::Base
+  extend BatchInsert
+
   belongs_to :run, :class_name =>'Result::Run', :foreign_key => :run_id
 
 end

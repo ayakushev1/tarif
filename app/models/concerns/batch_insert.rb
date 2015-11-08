@@ -13,7 +13,7 @@ module BatchInsert
           when value.is_a?(Hash)
             "'#{value.stringify_keys}'".gsub(/nil/, 'null').gsub(/=>/, ':') 
           when value.is_a?(Array)
-            "'{#{value.join(', ')}}'"
+            "'{#{value.compact.join(', ')}}'"
           when !value
             'null'
           when value.is_a?(String)

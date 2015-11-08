@@ -77,6 +77,7 @@ module Customer::TarifOptimizatorHelper
       update_customer_infos
       
       TarifOptimization::TarifOptimizator.new(options).clean_output_results
+      TarifOptimization::TarifOptimizator.new(options).clean_new_results
       
       is_send_email = false
       number_of_workers_to_add = 0
@@ -153,7 +154,10 @@ module Customer::TarifOptimizatorHelper
   def options
     optimization_params_session_filtr_params = session_filtr_params(optimization_params)
     service_choices_session_filtr_params = session_filtr_params(service_choices)
-    {:operator => operator,
+    {:new_run_id => new_run_id,
+     :calculate_old_final_tarif_preparator => optimization_params_session_filtr_params['calculate_old_final_tarif_preparator'],
+     :save_new_final_tarif_results_in_my_batches => optimization_params_session_filtr_params['save_new_final_tarif_results_in_my_batches'],
+     :operator => operator,
      :user_id => current_user_id,
      :user_region_id => nil,  
   #   :background_process_informer_operators => @background_process_informer_operators,        
@@ -187,6 +191,10 @@ module Customer::TarifOptimizatorHelper
         :part_sort_criteria_in_price_optimization => optimization_params_session_filtr_params['part_sort_criteria_in_price_optimization'],
         } 
      }   
+  end
+  
+  def new_run_id
+    Result::Run.first_or_create(:user_id => current_user_id, :run => 1)[:id]
   end
 
   def operator

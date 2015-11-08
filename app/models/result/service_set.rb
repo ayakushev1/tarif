@@ -19,6 +19,7 @@
 #
 
 class Result::ServiceSet < ActiveRecord::Base
+  extend BatchInsert
   belongs_to :run, :class_name =>'Result::Run', :foreign_key => :run_id
 
   belongs_to :tarif, :class_name =>'TarifClass', :foreign_key => :tarif_id
