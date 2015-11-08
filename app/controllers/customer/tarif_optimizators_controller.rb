@@ -58,10 +58,11 @@ class Customer::TarifOptimizatorsController < ApplicationController
   end 
   
   def check_inputs_for_recalculate     
-#      raise(StandardError, session_filtr_params(service_choices)['accounting_period'])
-    if session_filtr_params(service_choices)['accounting_period'].blank?
+    if session_filtr_params(service_choices)['accounting_period'].blank? or
+        !accounting_periods.include?(session_filtr_params(service_choices)['accounting_period'])
       redirect_to({:action => :index}, {:alert => "Выберите период для расчета"}) and return
     end
+#      raise(StandardError, session_filtr_params(service_choices)['accounting_period'])
 
     if session_filtr_params(service_choices)['calculate_with_fixed_services'] == 'true'
       if session_filtr_params(services_for_calculation_select)["operator_id"].blank?
