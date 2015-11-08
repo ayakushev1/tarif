@@ -19,6 +19,10 @@ module Result::RunsHelper
     session[:current_id]['service_id']
   end
   
+  def identical_services
+    Result::ServiceSet.where(:run_id => run_id).pluck(:identical_services).flatten(2).uniq
+  end
+  
   def all_service_ids
     Result::ServiceSet.where(:run_id => run_id).pluck(:service_ids).flatten.uniq
   end

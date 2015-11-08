@@ -4,7 +4,7 @@ table.init do |t|
 #  model_keys = t.model.collect {|row| row.keys }.flatten.uniq.collect{|key| key }.compact  
   t.heads = ['', 'Стоимость в месяц, руб', 'Оператор', 'Тариф', 'Общие услуги', 'Тарифные опции', 'Взаимозаменяемые опции']
   
-  s_desc = service_description(all_service_ids)
+  s_desc = service_description(all_service_ids + identical_services)
   t.set_fields do |f|
 #  	raise(StandardError, [f.service_ids, s_desc])
     services = f.service_ids.map do |id|
@@ -21,7 +21,8 @@ table.init do |t|
 
     identical_services = f.identical_services.map do |identical_service_group|
     	identical_services_for_one_group = identical_service_group.map do |item|     	
-    		item.map do |id|
+    		changed_item = item.is_a?(Array) ? item : [item]
+    		changed_item.map do |id|
     			link_to_if(s_desc[id]['service_http'], s_desc[id]['service_name'], s_desc[id]['service_http'], {:target => "_blank"})
     		end.join(' + ') if item	    	      	 
 	    end.join(' или ') if identical_service_group
