@@ -3,7 +3,7 @@ ruby "2.2.1"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 #TODO обновить до 4.1.0
-gem 'rails', "4.2.1"
+gem 'rails', "4.2.2"
 
 gem 'pg'
 gem 'nokogiri'
@@ -133,6 +133,9 @@ gem 'kgio'
 gem "memcachier"
 gem 'connection_pool'
 
+
+
+gem 'bulk_insert' #array of hashes to sql
 # Use unicorn as the app server
 # gem 'unicorn'
 

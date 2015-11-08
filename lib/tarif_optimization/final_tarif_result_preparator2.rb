@@ -19,7 +19,7 @@ class TarifOptimization::FinalTarifResultPreparator2
       common_services = final_tarif_set['common_services'][input_data[:operator].to_s] & service_ids
       tarif_options = service_ids - common_services - [tarif_id]
       
-      service_set_result[service_set_id] = {
+      service_set_result[service_set_id] ||= {
         'run_id' => input_data[:run_id], 'operator_id' => input_data[:operator], 'tarif_id' => tarif_id, 'service_set_id' => service_set_id,
         'service_ids' => service_ids, 'identical_services' => [], 'common_services' => common_services, 'tarif_options' => tarif_options,
         'price' => 0.0, 'call_id_count' => 0, 'stat_results' => {}}
@@ -108,7 +108,7 @@ class TarifOptimization::FinalTarifResultPreparator2
       end if price_value_detail['all_stat']
     end
     
-    groupped_identical_services = input_data[:groupped_identical_services]
+    groupped_identical_services = input_data[:groupped_identical_services].dup
     
     service_set_result[service_set_id]['identical_services'] << 
       groupped_identical_services[tarif_set_by_part_id].stringify_keys['identical_services'] if groupped_identical_services and groupped_identical_services[tarif_set_by_part_id]
@@ -117,9 +117,10 @@ class TarifOptimization::FinalTarifResultPreparator2
     service_set_result[service_set_id]['price'] += (tarif_result_for_service_set_and_part['price_value'] || 0.0).to_f
     service_set_result[service_set_id]['call_id_count'] += (tarif_result_for_service_set_and_part['call_id_count'] || 0).to_i
     
-    identical_service_ids = service_set_result[service_set_id]['identical_services'].flatten.map do |identical_service_name|
-      identical_service_name.split('_')
-    end.flatten.uniq
+#    raise(StandardError, service_set_result[service_set_id]['identical_services']) if groupped_identical_services and groupped_identical_services[tarif_set_by_part_id]
+#    identical_service_ids = service_set_result[service_set_id]['identical_services'].flatten.map do |identical_service_name|
+#      identical_service_name.split('_')
+#    end.flatten.uniq
 
   end
   

@@ -408,10 +408,15 @@ class TarifOptimization::TarifOptimizator
       
 #    Result::ServiceSet.batch_save(service_sets_array, {})
     if save_new_final_tarif_results_in_my_batches
-      Result::ServiceSet.batch_save(service_sets_array, {:id => -1})
-      Result::Service.batch_save(services_array, {:id => -1})
-      Result::ServiceCategory.batch_save(categories_array, {:id => -1})
-      Result::Agregate.batch_save(agregates_array, {:id => -1})
+      Result::ServiceSet.bulk_insert values: service_sets_array
+      Result::Service.bulk_insert values: services_array
+      Result::ServiceCategory.bulk_insert values: categories_array
+      Result::Agregate.bulk_insert values: agregates_array
+      
+#      Result::ServiceSet.batch_save(service_sets_array, {:id => -1})
+#      Result::Service.batch_save(services_array, {:id => -1})
+#      Result::ServiceCategory.batch_save(categories_array, {:id => -1})
+#      Result::Agregate.batch_save(agregates_array, {:id => -1})
     else
       Result::ServiceSet.create(service_sets_array)
       Result::Service.create(services_array)
