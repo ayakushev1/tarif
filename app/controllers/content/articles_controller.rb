@@ -16,8 +16,7 @@ class Content::ArticlesController < ApplicationController
     choosen_services = ((s_filtr["services"] || []) -['']).map(&:to_i)
     choosen_destinations = ((s_filtr["destinations"] || []) -['']).map(&:to_i)
     
-    recommendation_query = Content::Article.demo_results.published
-    recommendation_query = recommendation_query.
+    recommendation_query = Content::Article.demo_results.published.
       where("(key->>'operators')::jsonb @> '#{choosen_operators}'::jsonb").
       where("(key->>'roumings')::jsonb @> '#{choosen_roumings}'::jsonb").
       where("(key->>'services')::jsonb @> '#{choosen_services}'::jsonb").

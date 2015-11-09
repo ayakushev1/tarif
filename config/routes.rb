@@ -13,8 +13,10 @@ Rails.application.routes.draw do
     put "users/:id" => "devise/registrations#update"
     delete "users/:id" => "devise/registrations#destroy"
 
-#    get "users/sign_out" => "devise/sessions#destroy"
-    
+    get "users/sign_out" => "devise/sessions#destroy"
+  end
+  
+  devise_scope :user do  
     get "login" => "users/sessions#new"
     post "submit_login" => "users/sessions#create"
     get "logout" => "users/sessions#destroy"

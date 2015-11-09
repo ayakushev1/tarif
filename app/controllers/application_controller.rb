@@ -19,10 +19,6 @@ class ApplicationController < ActionController::Base
   before_action :configure_permitted_parameters, if: :devise_controller?
   before_action :redirect_to_make_payment_invitation_page_if_no_free_trials_left
 
-  def default_url_options(options = {})
-    options#.merge(:anchor => '!')
-  end
-  
   def check_rack_mini_profiler
 #    raise(StandardError)
     # for example - if current_user.admin?

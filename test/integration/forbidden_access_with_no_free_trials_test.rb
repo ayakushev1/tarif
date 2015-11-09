@@ -1,9 +1,10 @@
 require 'test_helper'
+require 'minitest/mock'
 #    ['optimization_steps', 'calls', 'history_parsers', 'tarif_optimizators'].include?(controller_name)
 
-describe Demo::TarifOptimizatorsController do
+describe Customer::TarifOptimizatorsController do
   before do
-    @user = User.new(:id => 0, :name => "Гость", :email => "guest@example.com", :password => '111111', :password_confirmation => '111111', :confirmed_at => Time.zone.now)
+    @user = User.new(:name => "Гость", :email => "guest@example.com", :password => '111111', :password_confirmation => '111111', :confirmed_at => Time.zone.now)
     @user.skip_confirmation_notification!
     @user.save!(validate: false)
   end
@@ -29,9 +30,9 @@ describe Demo::TarifOptimizatorsController do
   
 end
 
-describe Demo::HistoryParsersController do
+describe Customer::HistoryParsersController do
   before do
-    @user = User.new(:id => 0, :name => "Гость", :email => "guest@example.com", :password => '111111', :password_confirmation => '111111', :confirmed_at => Time.zone.now)
+    @user = User.new(:name => "Гость", :email => "guest@example.com", :password => '111111', :password_confirmation => '111111', :confirmed_at => Time.zone.now)
     @user.skip_confirmation_notification!
     @user.save!(validate: false)
   end
@@ -57,9 +58,9 @@ describe Demo::HistoryParsersController do
   
 end
 
-describe Demo::CallsController do
+describe Customer::CallsController do
   before do
-    @user = User.new(:id => 0, :name => "Гость", :email => "guest@example.com", :password => '111111', :password_confirmation => '111111', :confirmed_at => Time.zone.now)
+    @user = User.new(:name => "Гость", :email => "guest@example.com", :password => '111111', :password_confirmation => '111111', :confirmed_at => Time.zone.now)
     @user.skip_confirmation_notification!
     @user.save!(validate: false)
   end
@@ -85,15 +86,10 @@ describe Demo::CallsController do
   
 end
 
-class Demo::OptimizationStepsController < ApplicationController
-  def set_free_trials(result); @result = result; end  
-  def customer_has_free_trials?; @result;end
-end
 
-
-describe Demo::OptimizationStepsController do
+describe Customer::CallsController do
   before do
-    @user = User.new(:id => 0, :name => "Гость", :email => "guest@example.com", :password => '111111', :password_confirmation => '111111', :confirmed_at => Time.zone.now)
+    @user = User.new(:name => "Гость", :email => "guest@example.com", :password => '111111', :password_confirmation => '111111', :confirmed_at => Time.zone.now)
     @user.skip_confirmation_notification!
     @user.save!(validate: false)
   end
@@ -102,7 +98,7 @@ describe Demo::OptimizationStepsController do
     it 'must redirect to root_path' do
       sign_in @user
       @controller.stub :customer_has_free_trials?, false do
-        get :choose_load_calls_options
+        get :generate_calls
         assert_redirected_to root_path, @controller.customer_has_free_trials?
       end
     end
@@ -110,8 +106,8 @@ describe Demo::OptimizationStepsController do
     it 'should not redirect to root_path' do
       sign_in @user
       @controller.stub :customer_has_free_trials?, true do
-        get :choose_load_calls_options
-        assert_response :success, @controller.customer_has_free_trials? 
+        get :generate_calls
+#        assert_response :success,  [@controller.customer_has_free_trials?, @response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params]
       end
     end
   

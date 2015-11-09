@@ -52,7 +52,7 @@ module ApplicationHelper::AuthenticityAndAuthorization
         params[:id] and current_user and current_user.id.to_i == params[:id].to_i
       when 'update'
 #        raise(StandardError)
-        params[:user] and current_user and current_user.valid_password?(params[:user][:password])
+        params[:user] and current_user and current_user.valid_password?(params[:user][:current_password])
       else
         false
       end
