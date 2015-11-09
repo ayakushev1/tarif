@@ -1,0 +1,34 @@
+<%
+
+table_html_options = {:id => yield(:table_name), :class => 'table table-bordered table-hover table-condensed'}
+table_html_options = form_html_options.merge(html) if local_assigns[:html]
+table_html_options = table_html_options.collect { |key, value| "#{key.to_s}=\"#{value.to_s}\""}.join(" ").html_safe
+
+%>
+<div class="table-responsive">
+	<% if yield :caption %> 
+	  <legend><% yield :caption %></legend>
+	<% end %>
+	
+	<div class="text-center">
+			<% yield :pagination %>
+	</div>	
+
+	<div class="row">
+		<div class="col-xs-12 text-center">
+			<table <%= table_html_options %> >
+			  <thead>
+			    <tr>
+			        <th>
+			        	<%= @heads %>
+			        </th>
+			    </tr>
+			  </thead>
+			
+			  <tbody>
+			    <%= yield %>
+			  </tbody>
+			</table>
+		</div>
+	</div>	
+</div>
