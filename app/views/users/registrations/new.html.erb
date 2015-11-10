@@ -1,20 +1,11 @@
-<% def field_temp(show_body = true) %>
-	<% if show_body %>
-	  <div class="row">
-	  	  <div class="col-xs-4"></div>
-		  <div class="col-xs-4 center-block">
-			  	<% yield %>
-	  	  </div>
-	  	  <div class="col-xs-4"></div>
-	  </div>
-	<% end %>
-<% end %>
+<% render :partial => 'users/layouts/field_temp' %>
 
 <%
 	input_html = {:class => "form-control  "}
 	link_to_html = {:class => "btn btn-link", :type => 'button'}
 	submit_html = {:class => "btn btn-primary"}
 	label_html = {:class => "control-label "}
+	
 	s = session[:filtr]['registration_option_filtr'] || {}
 	checkbox_html  = {:class => "form-control updatable ", :action_name => '/users/new', :filtr_name => "registration_option_filtr"}.
 		merge(s["register"] == 'true' ? {:checked => 'checked'} : {} )
@@ -38,19 +29,19 @@
 	</div>
   <% end %>
   <%= session[:filtr] if false %>
-  <% field_temp [true,  false][step] do %>
+  <% field_temp [true,  true][step] do %>
 	  	<%= f.label 'register', ["Хотите зарегистрироваться?", "Отказаться от регистрации"][step], label_html %>
   		<%= check_box("registration_option_filtr", "register", checkbox_html, true, false ) %>
   <% end %>
 
   <% field_temp [false, true][step] do %>
 	  	<%= f.label :name, label_html %>
-  		<%= f.text_field( :name, {autofocus: true }.merge(input_html) ) %>
+  		<%= f.text_field( :name, {}.merge(input_html) ) %>
   <% end %>
 
   <% field_temp [true, true][step] do %>
 	  	<%= f.label :email, label_html %>
-  		<%= f.email_field( :email, {}.merge(input_html) ) %>
+  		<%= f.email_field( :email, {autofocus: true }.merge(input_html) ) %>
   <% end %>
 
   <% field_temp [false, true][step] do %>

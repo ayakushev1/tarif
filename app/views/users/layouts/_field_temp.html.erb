@@ -1,0 +1,11 @@
+<% def field_temp(show_body = true) %>
+	<% if show_body %>
+	  <div class="row">
+	  	  <div class="col-xs-4"></div>
+		  <div class="col-xs-4 center-block">
+			  	<% yield %>
+	  	  </div>
+	  	  <div class="col-xs-4"></div>
+	  </div>
+	<% end %>
+<% end %>

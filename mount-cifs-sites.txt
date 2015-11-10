@@ -20,9 +20,9 @@ foreman run bin/spring rake test test/models/customer/payment_instruction_to_yan
 
 run production locally:
 		include production db in database.yml
-		assets:precompile
+		foreman run rake assets:precompile
 		??? run in new window: memcached -v
-		add it to public_url
+		add PATH_TO_HIT to public_url
 		add  to application_controller
 				 def current_user
 				    User.find(1)
@@ -30,6 +30,7 @@ run production locally:
 Is my app leaking memory?
 	USE_SERVER=puma PATH_TO_HIT=/result/runs/results TEST_COUNT=1000 bundle exec derailed exec perf:mem_over_time				  
 	USE_SERVER=puma PATH_TO_HIT=/customer/optimization_results/show_customer_results TEST_COUNT=1000 bundle exec derailed exec perf:mem_over_time
+	USE_SERVER=puma PATH_TO_HIT=/content/articles/detailed_results TEST_COUNT=1000 bundle exec derailed exec perf:mem_over_time				  
 Dissecting a Memory Leak
 	USE_SERVER=puma PATH_TO_HIT=/result/runs/results TEST_COUNT=10 bundle exec derailed exec perf:objects				  
 	USE_SERVER=puma PATH_TO_HIT=/customer/optimization_results/show_customer_results TEST_COUNT=10 bundle exec derailed exec perf:objects				  

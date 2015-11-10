@@ -3,20 +3,21 @@ Rails.application.routes.draw do
   match "/422" => "errors#error422", via: [ :get, :post, :patch, :delete ]
   match "/500" => "errors#error500", via: [ :get, :post, :patch, :delete ]
   
-  devise_for :users, controllers: { sessions: "users/sessions" }
+  devise_for :users, 
+    controllers: { sessions: "users/sessions", registrations: "users/registrations", confirmations: "users/confirmations"},
+    path_names: { sign_in: 'login', sign_out: 'logout'}
 
   devise_scope :user do
-    get "users/new" => "devise/registrations#new"
-    post "users/create" => "devise/registrations#create"
-    get "users/:id/edit" => "devise/registrations#edit"
-    patch "users/:id" => "devise/registrations#update"
-    put "users/:id" => "devise/registrations#update"
-    delete "users/:id" => "devise/registrations#destroy"
+#    get "users/new" => "users/registrations#new"
+#    post "users/create" => "users/registrations#create"
+#    get "users/:id/edit" => "users/registrations#edit"
+#    patch "users/:id" => "users/registrations#update"
+#    put "users/:id" => "users/registrations#update"
+#    delete "users/:id" => "users/registrations#destroy"
+#    get "users/sign_out" => "users/sessions#destroy"
+    
+    patch "/confirm" => "confirmations#confirm"
 
-    get "users/sign_out" => "devise/sessions#destroy"
-  end
-  
-  devise_scope :user do  
     get "login" => "users/sessions#new"
     post "submit_login" => "users/sessions#create"
     get "logout" => "users/sessions#destroy"

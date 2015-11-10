@@ -1,0 +1,42 @@
+<% content_for :title, "Запрос на инструкции по подтверждению электронной почты" %>
+
+<%
+	input_html = {:class => "form-control  "}
+	link_to_html = {:class => "btn btn-link", :type => 'button'}
+	submit_html = {:class => "btn btn-primary"}
+	label_html = {:class => "control-label "}
+%>
+
+
+<%= form_for(resource, as: resource_name, url: confirmation_path(resource_name), html: { method: :post, :class => "edit_form" }) do |f| %>
+  <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) if current_user %>
+
+   <% if !devise_error_messages!.blank? %>
+	<div class="alert alert-warning alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert">
+			<span aria-hidden="true">&times;</span>
+			<span class="sr-only">Close</span>
+		</button>
+		<%= devise_error_messages! %>
+	</div>
+  <% end %>
+
+  <div class="row">
+  	  <div class="col-xs-4"></div>
+	  <div class="col-xs-4">
+	  	<%= f.label :email, label_html %>
+  		<%= f.email_field( :email, {autofocus: true}.merge(input_html) ) %>
+  	  </div>
+  	  <div class="col-xs-4"></div>
+  </div>
+
+  <div class="row">
+  	  <div class="col-xs-4"></div>
+	  <div class="col-xs-4">
+  		<%= f.submit "Повторно выслать подтверждающие инструкции", submit_html %>
+  	  </div>
+  	  <div class="col-xs-4"></div>
+  </div>
+<% end %>
+
+<%= render "devise/shared/links" %>

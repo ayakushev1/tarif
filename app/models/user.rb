@@ -51,19 +51,19 @@ class User < ActiveRecord::Base
   has_one :customer_infos_tarif_optimization_minor_results, -> {where(:info_type_id => 12)}, :class_name =>'::Customer::Info', :foreign_key => :user_id, :dependent => :delete
   has_one :customer_infos_tarif_optimization_process_status, -> {where(:info_type_id => 13)}, :class_name =>'::Customer::Info', :foreign_key => :user_id, :dependent => :delete
 
-  has_many :customer_transactions_general, -> {where(:info_type_id => 1)}, :class_name =>'Customer::Transaction', :foreign_key => :user_id, :dependent => :delete_all
-  has_many :customer_transactions_cash, -> {where(:info_type_id => 2)}, :class_name =>'Customer::Transaction', :foreign_key => :user_id, :dependent => :delete_all
-  has_many :customer_transactions_services_used, -> {where(:info_type_id => 3)}, :class_name =>'Customer::Transaction', :foreign_key => :user_id, :dependent => :delete_all
-  has_many :customer_transactions_calls_generation_params, -> {where(:info_type_id => 4)}, :class_name =>'Customer::Transaction', :foreign_key => :user_id, :dependent => :delete_all
-  has_many :customer_transactions_calls_details_params, -> {where(:info_type_id => 5)}, :class_name =>'Customer::Transaction', :foreign_key => :user_id, :dependent => :delete_all
-  has_many :customer_transactions_calls_parsing_params, -> {where(:info_type_id => 6)}, :class_name =>'Customer::Transaction', :foreign_key => :user_id, :dependent => :delete_all
-  has_many :customer_transactions_tarif_optimization_params, -> {where(:info_type_id => 7)}, :class_name =>'Customer::Transaction', :foreign_key => :user_id, :dependent => :delete_all
-  has_many :customer_transactions_service_choices, -> {where(:info_type_id => 8)}, :class_name =>'Customer::Transaction', :foreign_key => :user_id, :dependent => :delete_all
-  has_many :customer_transactions_services_select, -> {where(:info_type_id => 9)}, :class_name =>'Customer::Transaction', :foreign_key => :user_id, :dependent => :delete_all
-  has_many :customer_transactions_service_categories_select, -> {where(:info_type_id => 10)}, :class_name =>'Customer::Transaction', :foreign_key => :user_id, :dependent => :delete_all
-  has_many :customer_transactions_tarif_optimization_final_results, -> {where(:info_type_id => 11)}, :class_name =>'Customer::Transaction', :foreign_key => :user_id, :dependent => :delete_all
-  has_many :customer_transactions_tarif_optimization_minor_results, -> {where(:info_type_id => 12)}, :class_name =>'Customer::Transaction', :foreign_key => :user_id, :dependent => :delete_all
-  has_many :customer_transactions_tarif_optimization_process_status, -> {where(:info_type_id => 13)}, :class_name =>'Customer::Transaction', :foreign_key => :user_id, :dependent => :delete_all
+#  has_many :customer_transactions_general, -> {where(:info_type_id => 1)}, :class_name =>'Customer::Transaction', :foreign_key => :user_id, :dependent => :delete_all
+#  has_many :customer_transactions_cash, -> {where(:info_type_id => 2)}, :class_name =>'Customer::Transaction', :foreign_key => :user_id, :dependent => :delete_all
+#  has_many :customer_transactions_services_used, -> {where(:info_type_id => 3)}, :class_name =>'Customer::Transaction', :foreign_key => :user_id, :dependent => :delete_all
+#  has_many :customer_transactions_calls_generation_params, -> {where(:info_type_id => 4)}, :class_name =>'Customer::Transaction', :foreign_key => :user_id, :dependent => :delete_all
+#  has_many :customer_transactions_calls_details_params, -> {where(:info_type_id => 5)}, :class_name =>'Customer::Transaction', :foreign_key => :user_id, :dependent => :delete_all
+#  has_many :customer_transactions_calls_parsing_params, -> {where(:info_type_id => 6)}, :class_name =>'Customer::Transaction', :foreign_key => :user_id, :dependent => :delete_all
+#  has_many :customer_transactions_tarif_optimization_params, -> {where(:info_type_id => 7)}, :class_name =>'Customer::Transaction', :foreign_key => :user_id, :dependent => :delete_all
+#  has_many :customer_transactions_service_choices, -> {where(:info_type_id => 8)}, :class_name =>'Customer::Transaction', :foreign_key => :user_id, :dependent => :delete_all
+#  has_many :customer_transactions_services_select, -> {where(:info_type_id => 9)}, :class_name =>'Customer::Transaction', :foreign_key => :user_id, :dependent => :delete_all
+#  has_many :customer_transactions_service_categories_select, -> {where(:info_type_id => 10)}, :class_name =>'Customer::Transaction', :foreign_key => :user_id, :dependent => :delete_all
+#  has_many :customer_transactions_tarif_optimization_final_results, -> {where(:info_type_id => 11)}, :class_name =>'Customer::Transaction', :foreign_key => :user_id, :dependent => :delete_all
+#  has_many :customer_transactions_tarif_optimization_minor_results, -> {where(:info_type_id => 12)}, :class_name =>'Customer::Transaction', :foreign_key => :user_id, :dependent => :delete_all
+#  has_many :customer_transactions_tarif_optimization_process_status, -> {where(:info_type_id => 13)}, :class_name =>'Customer::Transaction', :foreign_key => :user_id, :dependent => :delete_all
 
 #  validates :name, presence: true, uniqueness: true, :length => {:within => 3..40}
 #  validates :password, presence: true, :confirmation => true, :length => {:within => 3..40}
@@ -71,7 +71,18 @@ class User < ActiveRecord::Base
 #  validates_confirmation_of :password_digest, message: 'should match confirmation'
 #  validates_length_of :name, :password_digest, within: 3..20, too_long: 'pick a shorter name', too_short: 'pick a longer name'
 #  has_secure_password
-  after_save :create_customer_infos_services_used_if_it_not_exists
+#  after_save :create_customer_infos_services_used_if_it_not_exists
+  
+  def password_required?
+    super if confirmed?
+  end
+
+  def password_match?
+    self.errors[:password] << "can't be blank" if password.blank?
+    self.errors[:password_confirmation] << "can't be blank" if password_confirmation.blank?
+    self.errors[:password_confirmation] << "does not match password" if password != password_confirmation
+    password == password_confirmation && !password.blank?
+  end
   
   private
   

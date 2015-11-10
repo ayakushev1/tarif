@@ -12,8 +12,8 @@
 
 class Customer::Transaction < ActiveRecord::Base
   include PgJsonHelper, WhereHelper, PgCreateHelper
-  belongs_to :user, :class_name =>'User', :foreign_key => :user_id
-  belongs_to :info_type, :class_name =>'Customer::Category', :foreign_key => :info_type_id
+#  belongs_to :user, :class_name =>'User', :foreign_key => :user_id
+#  belongs_to :info_type, :class_name =>'Customer::Category', :foreign_key => :info_type_id
 
   scope :general, -> {where(:info_type_id => 1)}
   scope :cash, -> {where(:info_type_id => 2)}

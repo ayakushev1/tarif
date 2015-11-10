@@ -1,0 +1,46 @@
+<% render :partial => 'users/layouts/field_temp' %>
+
+<%
+	input_html = {:class => "form-control  "}
+	link_to_html = {:class => "btn btn-link", :type => 'button'}
+	submit_html = {:class => "btn btn-primary"}
+	label_html = {:class => "control-label "}
+	
+%>
+
+<% content_for :title, "Предлагаем создать пароль для защиты ваших данных" %>
+
+<%= form_for(resource, as: resource_name, url: confirm_path(resource_name), html: {:class => "edit_form", :method => 'patch' }) do |f| %>
+  <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) if current_user %>
+
+   <% if !devise_error_messages!.blank? %>
+	<div class="alert alert-warning alert-dismissible" role="alert">
+		<button type="button" class="close" data-dismiss="alert">
+			<span aria-hidden="true">&times;</span>
+			<span class="sr-only">Close</span>
+		</button>
+		<%= devise_error_messages! %>
+	</div>
+  <% end %>
+
+  <% field_temp do %>
+	  	<%= f.label :password, "Новый пароль", label_html %>
+	  	<% if @validatable %><i>(<%= @minimum_password_length %> знаков минимум)</i><% end %>
+	    <%= f.password_field :password, {autocomplete: "off"}.merge(input_html) %>
+  <% end %>
+
+  <% field_temp do %>
+	  	<%= f.label :password_confirmation, "Подтверждение нового пароля", label_html %>
+	    <%= f.password_field :password_confirmation, {autocomplete: "off"}.merge(input_html) %>
+  <% end %>
+
+  <% field_temp do %>
+	  	<%= f.label :confirmation_token, "confirmation_token", label_html %>
+	    <%= f.password_field :confirmation_token, {autocomplete: "off", hidden: true, value: @original_token}.merge(input_html) %>
+  <% end %>
+
+  <% field_temp do %>
+  		<%= f.submit "Создать пароль", submit_html %>
+  <% end %>
+
+<% end %>
