@@ -1,5 +1,7 @@
 ru:
   activerecord:
+    models:
+      user: 'Пользователь'
     attributes:
       user:
         name: Имя
@@ -11,14 +13,14 @@ ru:
         confirmation_token: Ключ подтверждения
     errors:
       models:
-        user:
+        user: 
           attributes:
             email:
-              taken: Такой электронный адрес уже существует
-              blank: Электронный адрес не может быть пустым
+              taken: уже существует
+              blank: не может быть пустым
             password:
-              blank: Пароль не может быть пустым
-              too_short: Пароль слишком короткий
+              blank: не может быть пустым
+              too_short: слишком короткий
             password_confirmation:
               confirmation: Не совпадают пароли        
             confirmation_token:
