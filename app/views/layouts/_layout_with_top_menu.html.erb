@@ -19,9 +19,16 @@
 			<ol class="breadcrumb">
 			  <li><%= yield(:title).blank? ? 'Title' : yield(:title) %></li>
 			</ol>        	
-			
+
         	<div id="main_block_top_row_4" class="content">
-				<%= render('/application/shared/alerts') %>
+				<%= render('/application/shared/alerts') if false %>
+				<%= "user_signed_in? #{user_signed_in?}" if false %>
+				<%= "current_user #{current_user}" if false %>
+				<%= "user_session #{user_session}" if false %>
+				<%= "current_or_guest_user #{current_or_guest_user}" if false %>
+				<%= "session[:guest_user_id] #{session[:guest_user_id]}" if false %>
+
+				<%= render :partial => 'application/shared/alerts' %>
 				
 				<div id=<%= view_id_name %> >
 					  <%= yield %>
