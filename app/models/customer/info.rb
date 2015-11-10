@@ -28,7 +28,7 @@ class Customer::Info < ActiveRecord::Base
   scope :tarif_optimization_minor_results, -> {where(:info_type_id => 12)}
   scope :tarif_optimization_process_status, -> {where(:info_type_id => 13)}
   
-  after_save :create_customer_transaction
+#  after_save :create_customer_transaction
   
   private
   
