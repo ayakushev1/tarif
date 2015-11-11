@@ -19,6 +19,8 @@
 <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: {:class => "edit_form" }) do |f| %>
   <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) if current_user %>
 
+  <%= tag(:input, :name => "registration_type", :type => "hidden", :value => [:only_email, :full_registration][step] ) %>
+
    <% if !devise_error_messages!.blank? %>
 	<div class="alert alert-warning alert-dismissible" role="alert">
 		<button type="button" class="close" data-dismiss="alert">
@@ -28,7 +30,7 @@
 		<%= devise_error_messages! %>
 	</div>
   <% end %>
-  <%= session[:filtr] if false %>
+
   <% field_temp [true,  true][step] do %>
 	  	<%= f.label 'register', ["Хотите зарегистрироваться?", "Отказаться от регистрации"][step], label_html %>
   		<%= check_box("registration_option_filtr", "register", checkbox_html, true, false ) %>
