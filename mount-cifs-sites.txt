@@ -16,6 +16,7 @@ foreman run rake db:seed
 
 testing
 foreman run bin/spring rake test test/models/customer/payment_instruction_to_yandex_test.rb
+foreman run spring rake test:integration
 
 
 run production locally:
