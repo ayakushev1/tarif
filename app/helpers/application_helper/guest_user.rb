@@ -1,5 +1,18 @@
 module ApplicationHelper::GuestUser
 
+  def user_type
+    case
+    when session[:guest_user_id]
+      :guest
+    when (current_user and current_user.email == ENV["TARIF_ADMIN_USERNAME"])
+      :admin
+    when (current_user and current_user.encrypted_password.blank?)
+      :trial
+    else
+      :user
+    end
+  end
+  
   def guest_user?
     !current_user or (session[:guest_user_id] && session[:guest_user_id] == current_user.id)
   end
@@ -11,8 +24,10 @@ module ApplicationHelper::GuestUser
         guest_user(with_retry = false).try(:destroy)
         session[:guest_user_id] = nil
       end
+      session[:user_type] =       
       current_user
     else
+      session[:user_type] = :guest
       guest_user
     end
   end
