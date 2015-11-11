@@ -2,7 +2,8 @@
 Warden::Strategies.add(:trial_user) do
   def valid?    
     if params and params[:user]
-      User.where(:email => params[:user][:email]).first[:password_digest].blank?
+      u = User.where(:email => params[:user][:email]).first
+      u and u[:password_digest].blank?
     else
       false
     end 
