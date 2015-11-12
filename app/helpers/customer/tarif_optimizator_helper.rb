@@ -227,6 +227,7 @@ module Customer::TarifOptimizatorHelper
   
   def tarifs
     service_choices_session_filtr_params = session_filtr_params(service_choices)
+    calculation_choices_session_filtr_params = session_filtr_params(calculation_choices)
     services_for_calculation_select_session_filtr_params = session_filtr_params(services_for_calculation_select)
     
     if calculation_choices_session_filtr_params['calculate_with_fixed_services'] == 'true'
