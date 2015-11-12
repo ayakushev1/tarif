@@ -21,6 +21,7 @@
 			</ol>        	
 
         	<div id="main_block_top_row_4" class="content">
+				<%= user_type if true %>
 				<%= render('/application/shared/alerts') if false %>
 				<%= "user_signed_in? #{user_signed_in?}" if false %>
 				<%= "current_user #{current_user}" if false %>

@@ -40,7 +40,8 @@ module ApplicationHelper::Authorization
   end
   
   def allowed_request_origin
-    (user_type == :bot and match_with_lists([:root_url, :public_url])) or
+#    (user_type == :bot and match_with_lists([:root_url, :public_url])) or
+    (match_with_lists([:root_url, :public_url])) or
     match_with_lists([:external_api_processing]) 
   end
   
