@@ -7,23 +7,18 @@ describe HomeController do
   before do
     @request.env["devise.mapping"] = Devise.mappings[:user]
     @user = @controller.current_or_guest_user #User.find_or_create_by(:name => "Гость", :email => "guest@example.com", :confirmed_at => Time.zone.now)
-    @user.save!(:validate => false)
+#    @user.save!(:validate => false)
   end
 
   it 'unsigned user must have access to root' do
     get :index  
-    assert_response :success    
-  end
-     
-  it 'unsigned user should be redirected to root' do
-#    get :full_demo_results  
-#    assert_redirected_to new_user_session_path    
+    assert_response :success, [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params, @controller.user_type]
   end
      
   it 'signed user must be granted access' do
     sign_in @user
-#    get :full_demo_results  
-#    assert_response :success    
+    get :short_description  
+    assert_response :success, [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params, @controller.user_type]    
   end
      
 end
@@ -32,8 +27,8 @@ describe Users::SessionsController do
   before do
     @request.env["devise.mapping"] = Devise.mappings[:user]
     @user = @controller.current_or_guest_user #User.find_or_create_by(:name => "Гость", :email => "guest@example.com", :confirmed_at => Time.zone.now)
-    @user.skip_confirmation!
-    @user.save!(:validate => false)
+#    @user.skip_confirmation!
+#    @user.save!(:validate => false)
   end
   
   after do
@@ -42,13 +37,13 @@ describe Users::SessionsController do
 
   it 'unsigned user must be able to login' do
     get :new#, :id => 0  
-    assert_response :success    #( :success, [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params])
+    assert_response :success    #( :success, [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params, @controller.user_type])
   end
 
   it 'signed user must be able to logout' do
     sign_in @user
     get :destroy#, :id => 0  
-    assert_redirected_to root_path    #( :success, [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params])
+    assert_redirected_to root_path    #( :success, [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params, @controller.user_type])
     @controller.current_user.must_be_nil
   end
 end
@@ -62,17 +57,17 @@ describe UsersController do
 
   it 'new action must not be allowed for unsigned user' do
     get :new
-    assert_redirected_to new_user_session_path, [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params]
+    assert_redirected_to new_user_session_path, [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params, @controller.user_type]
   end
 
   it 'create action must not be allowed for unsigned user' do
     post :create
-    assert_redirected_to new_user_session_path, [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params]
+    assert_redirected_to new_user_session_path, [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params, @controller.user_type]
   end
 
   it 'show action must not be allowed for unsigned user' do
     get :edit, :id => @user.id
-    assert_redirected_to new_user_session_path, [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params]
+    assert_redirected_to new_user_session_path, [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params, @controller.user_type]
   end
 end
 
@@ -86,17 +81,17 @@ describe Users::RegistrationsController do
 
   it 'new action must be allowed for unsigned user' do
     get :new
-    assert_response :success, [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params]
+    assert_response :success, [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params, @controller.user_type]
   end
 
   it 'create action must be allowed for unsigned user' do
     post :create
-    assert_response :success, [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params]
+    assert_response :success, [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params, @controller.user_type]
   end
 
   it 'show action must not be allowed for unsigned user' do
     get :edit, :id => @user.id
-    assert_redirected_to new_user_session_path, [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params]
+    assert_redirected_to new_user_session_path, [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params, @controller.user_type]
   end
 end
 
@@ -123,38 +118,38 @@ describe Users::RegistrationsController do
   end
 
   it 'unsigned user must have access to new and create actions' do
-    @request.env["devise.mapping"] = Devise.mappings[:user]
+    sign_out @controller.current_or_guest_user
+#    sign_in @controller.current_or_guest_user
     get :new  
-#    raise(StandardError, @controller.send(:allow_skip_authenticate_user))
-    assert_response( :success, [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params])
+    assert_response( :success, [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params, @controller.user_type, @controller.current_or_guest_user.id])
   end
      
   it 'unsigned user should not have access to edit and update actions' do
     sign_out @user
     get :edit, :id => 3  
-    assert_redirected_to new_user_session_path, [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params]
+    assert_redirected_to new_user_session_path, [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params, @controller.user_type]
     post :update, :id => 3  
-    assert_redirected_to new_user_session_path    , [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params]
+    assert_redirected_to new_user_session_path    , [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params, @controller.user_type]
     delete :destroy, :id => 3  
-    assert_redirected_to new_user_session_path , [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params]   
+    assert_redirected_to new_user_session_path , [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params, @controller.user_type]   
   end
 
   it 'signed user must have access to edit and update actions of his account' do
     sign_in @user
     get :edit, :id => @user.id  
-    assert_response( :success, [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params])
+    assert_response( :success, [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params, @controller.user_type])
     post :update, :id => @user.id , :user => {:id => @user.id, :password => 'ddddddddd', :current_password => @user.password}  
-    assert_response( :success, [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params])
+    assert_response( :success, [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params, @controller.user_type])
   end
      
   it 'signed user should not have access to edit and update actions of other user account' do
     sign_in @user
     get :edit, :id => 20  
-    assert_redirected_to root_path,    [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params]
+    assert_redirected_to root_path,    [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params, @controller.user_type]
     post :update, :id => 20  
-    assert_redirected_to root_path , [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params]   
+    assert_redirected_to root_path , [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params, @controller.user_type]   
     delete :destroy, :id => 20  
-    assert_redirected_to root_path, [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params]    
+    assert_redirected_to root_path, [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params, @controller.user_type]    
   end
 end
      
@@ -167,7 +162,7 @@ describe Customer::PaymentsController do
   it 'must accept yandex post request' do
     @request.headers["CONTENT_TYPE"] = "application/x-www-form-urlencoded"
     post :process_payment
-    assert_response :success, [@request.headers, @response.redirect_url, @response.message, @controller.params]
+    assert_response :success, [@request.headers, @response.redirect_url, @response.message, @controller.params, @controller.user_type]
   end
 
 

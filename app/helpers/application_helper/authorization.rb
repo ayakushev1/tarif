@@ -25,12 +25,14 @@ module ApplicationHelper::Authorization
   end
 
   def my_skip_authenticate
-    match_with_lists([:external_api_processing]) or user_type == :bot or match_with_lists([:external_api_processing]) or 
-    match_with_lists([:public_url]) or match_with_lists([:new_user_actions_with_devise])
+    match_with_lists([:external_api_processing]) or 
+    (user_type == :bot and match_with_lists([:public_url])) or 
+    (user_type == :guest and match_with_lists([:root_url, :public_url, :new_user_actions_with_devise]))
   end
   
   def allowed_request_origin
-    user_type == :bot or match_with_lists([:external_api_processing]) or match_with_lists([:public_url])
+    (user_type == :bot and match_with_lists([:public_url])) or
+    match_with_lists([:external_api_processing]) 
   end
   
   def match_param_user_with_signed_user
@@ -122,10 +124,10 @@ module ApplicationHelper::Authorization
 
   def user_type
     case
-    when session[:guest_user_id]
-      :guest
     when ['*/*', 'ANY_FORMAT'].include?(request.headers["CONTENT_TYPE"])
       :bot
+    when session[:guest_user_id]
+      :guest
     when (current_user and current_user.email == ENV["TARIF_ADMIN_USERNAME"])
       :admin
     when (current_user and current_user.encrypted_password.blank?)
