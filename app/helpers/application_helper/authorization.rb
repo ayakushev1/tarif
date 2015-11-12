@@ -15,12 +15,13 @@ module ApplicationHelper::Authorization
   def authenticate_and_authorise
     skip_authencate = my_skip_authenticate
     authenticate_user! unless skip_authencate
-#    raise(StandardError)
+
     case
     when user_type == :admin
-    when skip_authencate
-    when match_with_lists([:root_url])
+    when match_with_lists([:root_url, :external_api_processing])
     when match_with_lists([:public_url])
+    when (match_with_lists([:call_generation_and_parsing]) and [:guest, :trial, :user].include?(user_type))
+    when (match_with_lists([:tarif_optimization]) and [:guest, :trial, :user].include?(user_type))
     when match_with_lists([:any_user_actions_with_devise])
     when (match_with_lists([:new_user_actions_with_devise]) and user_type == :guest)
     when match_with_lists([:signed_user_actions_with_devise]) 
@@ -30,16 +31,16 @@ module ApplicationHelper::Authorization
     else 
       redirect_to(root_path, alert: "Доступ к разделу сайта #{controller_path}/#{action_name} ограничен")
     end
-  end
+  end 
 
   def my_skip_authenticate
     match_with_lists([:root_url, :external_api_processing]) or 
-    (user_type == :bot and match_with_lists([:public_url])) or 
-    (user_type == :guest and match_with_lists([:public_url, :new_user_actions_with_devise]))
+    (user_type == :bot and match_with_lists([:root_url, :public_url])) or 
+    (user_type == :guest and match_with_lists([:root_url, :public_url, :new_user_actions_with_devise, :call_generation_and_parsing, :tarif_optimization]))
   end
   
   def allowed_request_origin
-    (user_type == :bot and match_with_lists([:public_url])) or
+    (user_type == :bot and match_with_lists([:root_url, :public_url])) or
     match_with_lists([:external_api_processing]) 
   end
   
@@ -89,14 +90,22 @@ module ApplicationHelper::Authorization
         :methods => ['get'], :actions => {
           'home' => ['index', 'short_description', 'detailed_description', 'update_tabs', 'news'],
           'content/articles' => ['show', 'index', 'call_statistic', 'detailed_results'],
-          'customer/calls' =>['index', 'set_calls_generation_params', 'set_default_calls_generation_params', 'generate_calls'],
           'customer/payments' => ['create', 'new', 'edit', 'show', 'update', 'wait_for_payment_being_processed', 'process_payment'],
-          'customer/history_parsers' => ['prepare_for_upload', 'upload', 'calculation_status'],
           'customer/optimization_steps' => ['choose_load_calls_options', 'check_loaded_calls', 'choose_optimization_options', 'optimize_tarifs', 'show_optimized_tarifs'],
-          'customer/tarif_optimizators' => ['index', 'recalculate', 'calculation_status', 'select_services'],
           'customer/optimization_results' => ['show_customer_results', 'show_customer_detailed_results'],
           'customer/demands' => ['index', 'create', 'new'],
           'errors' => ['error404', 'error422', 'error500'],
+        }
+      },
+      :call_generation_and_parsing => {
+        :methods => [], :actions => {
+          'customer/calls' =>['index', 'set_calls_generation_params', 'set_default_calls_generation_params', 'generate_calls'],
+          'customer/history_parsers' => ['prepare_for_upload', 'upload', 'calculation_status'],
+        }
+      },
+      :tarif_optimization => {
+        :methods => [], :actions => {
+          'customer/tarif_optimizators' => ['index', 'recalculate', 'calculation_status', 'select_services'],
         }
       },
       :any_user_actions_with_devise => {
