@@ -131,7 +131,7 @@ module ApplicationHelper::Authorization
         }
       },
       :password_user_actions_with_devise => {
-        :methods => ['post', 'put', 'putch'], :actions => {
+        :methods => ['post', 'put', 'patch'], :actions => {
           'users' => ['update'],
           'users/registrations' => ['update'],
         }
