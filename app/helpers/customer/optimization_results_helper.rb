@@ -104,7 +104,7 @@ module Customer::OptimizationResultsHelper
   def optimization_result_presenter
     optimization_params_session_filtr_params = session_filtr_params(optimization_params)
     options = {
-      :user_id=> current_user_id,
+      :user_id=> current_or_guest_user_id,
       :service_set_based_on_tarif_sets_or_tarif_results => optimization_params_session_filtr_params['service_set_based_on_tarif_sets_or_tarif_results'],
       :show_zero_tarif_result_by_parts => optimization_params_session_filtr_params['show_zero_tarif_result_by_parts'],
       :use_price_comparison_in_current_tarif_set_calculation => optimization_params_session_filtr_params['use_price_comparison_in_current_tarif_set_calculation'],
@@ -116,7 +116,7 @@ module Customer::OptimizationResultsHelper
   
   def final_tarif_results_presenter
     options = {
-      :user_id=> current_user_id,
+      :user_id=> current_or_guest_user_id,
       :show_zero_tarif_result_by_parts => (optimization_params_session_info['show_zero_tarif_result_by_parts'] || 'false'),
       }
 #    @optimization_result_presenter ||= 
@@ -125,7 +125,7 @@ module Customer::OptimizationResultsHelper
   
   def minor_result_presenter
 #    @minor_result_presenter ||= 
-    Customers::AdditionalOptimizationInfoPresenter.new({:user_id=> current_user_id })
+    Customers::AdditionalOptimizationInfoPresenter.new({:user_id=> current_or_guest_user_id })
   end   
   
   def optimization_params_session_info

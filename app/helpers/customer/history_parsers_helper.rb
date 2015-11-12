@@ -2,7 +2,7 @@ module Customer::HistoryParsersHelper
   include SavableInSession::Filtrable, SavableInSession::ArrayOfHashable, SavableInSession::ProgressBarable, SavableInSession::SessionInitializers
 
   def call_history_saver
-    Customer::Stat::OptimizationResult.new('call_history', 'call_history', current_user_id)
+    Customer::Stat::OptimizationResult.new('call_history', 'call_history', current_or_guest_user_id)
   end
   
   def call_history_results
@@ -40,7 +40,7 @@ module Customer::HistoryParsersHelper
 
   def recalculate_on_back_ground(parser_starter, call_history_file)
     prepare_background_process_informer
-    Spawnling.new(:argv => "parsing call history file for #{current_user_id}") do
+    Spawnling.new(:argv => "parsing call history file for #{current_or_guest_user_id}") do
       background_process_informer.init(0, 100)
       message = send(parser_starter, call_history_file)
       update_customer_infos
@@ -62,14 +62,14 @@ module Customer::HistoryParsersHelper
   end
   
   def update_customer_infos
-    Customer::Info::CallsDetailsParams.update_info(current_user_id, session_filtr_params(user_params_filtr))
-    Customer::Info::CallsParsingParams.update_info(current_user_id, session_filtr_params(parsing_params_filtr))
-    Customer::Info::ServicesUsed.decrease_one_free_trials_by_one(current_user_id, 'calls_parsing_count')    
+    Customer::Info::CallsDetailsParams.update_info(current_or_guest_user_id, session_filtr_params(user_params_filtr))
+    Customer::Info::CallsParsingParams.update_info(current_or_guest_user_id, session_filtr_params(parsing_params_filtr))
+    Customer::Info::ServicesUsed.decrease_one_free_trials_by_one(current_or_guest_user_id, 'calls_parsing_count')    
   end
   
   def parse_uploaded_file(uploaded_call_history_file)
     call_history_to_save = parse_file(uploaded_call_history_file)
-    Customer::Call.batch_save(call_history_to_save['processed'], {:user_id => current_user_id})
+    Customer::Call.batch_save(call_history_to_save['processed'], {:user_id => current_or_guest_user_id})
     call_history_to_save['message']
   end
   
@@ -137,18 +137,18 @@ module Customer::HistoryParsersHelper
   
   def background_process_informer
 #    @background_process_informer ||= 
-    Customer::BackgroundStat::Informer.new('parsing_uploaded_file', current_user_id)
+    Customer::BackgroundStat::Informer.new('parsing_uploaded_file', current_or_guest_user_id)
   end
   
   def init_background_process_informer
 #    @background_process_informer ||= 
-    Customer::BackgroundStat::Informer.new('parsing_uploaded_file', current_user_id)
+    Customer::BackgroundStat::Informer.new('parsing_uploaded_file', current_or_guest_user_id)
   end
   
   def user_params
     user_params_filtr_session_filtr_params = session_filtr_params(user_params_filtr)
     {
-      :user_id => current_user_id,
+      :user_id => current_or_guest_user_id,
 
       :own_phone_number => user_params_filtr_session_filtr_params['own_phone_number'],
       :operator_id => user_params_filtr_session_filtr_params['operator_id'].to_i,
@@ -180,12 +180,12 @@ module Customer::HistoryParsersHelper
     session[:filtr] ||= {}
     if session[:filtr]['user_params_filtr'].blank?
       session[:filtr]['user_params_filtr'] ||= {}
-      session[:filtr]['user_params_filtr'] = Customer::Info::CallsDetailsParams.info(current_user_id)
+      session[:filtr]['user_params_filtr'] = Customer::Info::CallsDetailsParams.info(current_or_guest_user_id)
     end
 
     if session[:filtr]['parsing_params_filtr'].blank?
       session[:filtr]['parsing_params_filtr'] ||= {}
-      session[:filtr]['parsing_params_filtr'] = Customer::Info::CallsParsingParams.info(current_user_id)
+      session[:filtr]['parsing_params_filtr'] = Customer::Info::CallsParsingParams.info(current_or_guest_user_id)
     end
   end
 

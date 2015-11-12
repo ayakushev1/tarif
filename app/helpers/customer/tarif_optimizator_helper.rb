@@ -43,15 +43,15 @@ module Customer::TarifOptimizatorHelper
   end
 
   def update_customer_infos
-    Customer::Info::ServicesSelect.update_info(current_user_id, session_filtr_params(services_select))
-    Customer::Info::ServiceChoices.update_info(current_user_id, session_filtr_params(service_choices))
-    Customer::Info::ServiceCategoriesSelect.update_info(current_user_id, session_filtr_params(service_categories_select))
-    Customer::Info::TarifOptimizationParams.update_info(current_user_id, session_filtr_params(optimization_params)) if user_type == :admin
+    Customer::Info::ServicesSelect.update_info(current_or_guest_user_id, session_filtr_params(services_select))
+    Customer::Info::ServiceChoices.update_info(current_or_guest_user_id, session_filtr_params(service_choices))
+    Customer::Info::ServiceCategoriesSelect.update_info(current_or_guest_user_id, session_filtr_params(service_categories_select))
+    Customer::Info::TarifOptimizationParams.update_info(current_or_guest_user_id, session_filtr_params(optimization_params)) if user_type == :admin
 
     if session_filtr_params(service_choices)['calculate_with_fixed_services'] == 'true'
-      Customer::Info::ServicesUsed.decrease_one_free_trials_by_one(current_user_id, 'tarif_recalculation_count')
+      Customer::Info::ServicesUsed.decrease_one_free_trials_by_one(current_or_guest_user_id, 'tarif_recalculation_count')
     else
-      Customer::Info::ServicesUsed.decrease_one_free_trials_by_one(current_user_id, 'tarif_optimization_count')      
+      Customer::Info::ServicesUsed.decrease_one_free_trials_by_one(current_or_guest_user_id, 'tarif_optimization_count')      
     end
   end
   
@@ -61,15 +61,15 @@ module Customer::TarifOptimizatorHelper
     if (session_filtr_params(optimization_params)['calculate_background_with_spawnling'] == 'true') or 
       session_filtr_params(service_choices)['calculate_with_fixed_services'] == 'true'
 
-      Spawnling.new(:argv => "optimize for #{current_user_id}") do
+      Spawnling.new(:argv => "optimize for #{current_or_guest_user_id}") do
         calculate(options.merge({:use_background_process_informers => true}))
 
-        UserMailer.tarif_optimization_complete(current_user_id).deliver
+        UserMailer.tarif_optimization_complete(current_or_guest_user_id).deliver
       end
     else      
-      raise(StandardError) if (Customer::Info::ServicesUsed.info(current_user_id)['paid_trials']).is_a?(String)
+      raise(StandardError) if (Customer::Info::ServicesUsed.info(current_or_guest_user_id)['paid_trials']).is_a?(String)
       
-      priority = Customer::Info::ServicesUsed.info(current_user_id)['paid_trials'] = true ? 10 : 20
+      priority = Customer::Info::ServicesUsed.info(current_or_guest_user_id)['paid_trials'] = true ? 10 : 20
       update_customer_infos
       
       TarifOptimization::TarifOptimizator.new(options).clean_output_results
@@ -97,7 +97,7 @@ module Customer::TarifOptimizatorHelper
 #      delay(:queue => 'tarif_optimization', :priority => priority).start_calculate_all_operator_tarifs(options)
       
       base_worker_add_number = (session_filtr_params(optimization_params)['max_number_of_tarif_optimization_workers'] || 3).to_i
-      base_worker_add_number = current_user_id == 1 ? base_worker_add_number : 1
+      base_worker_add_number = current_or_guest_user_id == 1 ? base_worker_add_number : 1
       number_of_workers_to_add = [
         base_worker_add_number - Background::WorkerManager::Manager.worker_quantity('tarif_optimization'),
         number_of_workers_to_add
@@ -109,7 +109,7 @@ module Customer::TarifOptimizatorHelper
     
   def recalculate_direct
     calculate(options.merge({:use_background_process_informers => false}))
-#    UserMailer.tarif_optimization_complete(current_user_id).deliver
+#    UserMailer.tarif_optimization_complete(current_or_guest_user_id).deliver
   end
   
   def calculate(options)
@@ -142,9 +142,9 @@ module Customer::TarifOptimizatorHelper
   
   def init_background_process_informer
 #    GC.start
-    @background_process_informer_operators ||= Customer::BackgroundStat::Informer.new('operators_optimization', current_user_id)
-    @background_process_informer_tarifs ||= Customer::BackgroundStat::Informer.new('tarifs_optimization', current_user_id)
-    @background_process_informer_tarif ||= Customer::BackgroundStat::Informer.new('tarif_optimization', current_user_id)
+    @background_process_informer_operators ||= Customer::BackgroundStat::Informer.new('operators_optimization', current_or_guest_user_id)
+    @background_process_informer_tarifs ||= Customer::BackgroundStat::Informer.new('tarifs_optimization', current_or_guest_user_id)
+    @background_process_informer_tarif ||= Customer::BackgroundStat::Informer.new('tarif_optimization', current_or_guest_user_id)
   end
    
   def options
@@ -154,7 +154,7 @@ module Customer::TarifOptimizatorHelper
      :calculate_old_final_tarif_preparator => optimization_params_session_filtr_params['calculate_old_final_tarif_preparator'],
      :save_new_final_tarif_results_in_my_batches => optimization_params_session_filtr_params['save_new_final_tarif_results_in_my_batches'],
      :operator => operator,
-     :user_id => current_user_id,
+     :user_id => current_or_guest_user_id,
      :user_region_id => nil,  
   #   :background_process_informer_operators => @background_process_informer_operators,        
   #   :background_process_informer_tarifs => @background_process_informer_tarifs,        
@@ -190,7 +190,7 @@ module Customer::TarifOptimizatorHelper
   end
   
   def new_run_id
-    Result::Run.first_or_create(:user_id => current_user_id, :run => 1)[:id]
+    Result::Run.first_or_create(:user_id => current_or_guest_user_id, :run => 1)[:id]
   end
 
   def operator
@@ -277,24 +277,24 @@ module Customer::TarifOptimizatorHelper
     accounting_period = accounting_periods.blank? ? -1 : accounting_periods[0]['accounting_period']  
     if session[:filtr]['service_choices_filtr'].blank?
       session[:filtr]['service_choices_filtr'] ||= {}
-      session[:filtr]['service_choices_filtr']  = Customer::Info::ServiceChoices.info(current_user_id).merge({'accounting_period' => accounting_period})
+      session[:filtr]['service_choices_filtr']  = Customer::Info::ServiceChoices.info(current_or_guest_user_id).merge({'accounting_period' => accounting_period})
     end
 
     if session[:filtr]['services_select_filtr'].blank?
       session[:filtr]['services_select_filtr'] ||= {}
-      session[:filtr]['services_select_filtr']  = Customer::Info::ServicesSelect.info(current_user_id)
+      session[:filtr]['services_select_filtr']  = Customer::Info::ServicesSelect.info(current_or_guest_user_id)
     end
     
     if !session[:filtr] or session[:filtr]['service_categories_select_filtr'].blank?
       session[:filtr] ||= {}; session[:filtr]['service_categories_select_filtr'] ||= {}
-      session[:filtr]['service_categories_select_filtr']  = Customer::Info::ServiceCategoriesSelect.info(current_user_id)
+      session[:filtr]['service_categories_select_filtr']  = Customer::Info::ServiceCategoriesSelect.info(current_or_guest_user_id)
     end
 #    raise(StandardError)
     
     if session[:filtr]['optimization_params_filtr'].blank?
       session[:filtr]['optimization_params_filtr'] ||= {}
       session[:filtr]['optimization_params_filtr']  = 
-        user_type == :admin ? Customer::Info::TarifOptimizationParams.info(current_user_id) : Customer::Info::TarifOptimizationParams.default_values
+        user_type == :admin ? Customer::Info::TarifOptimizationParams.info(current_or_guest_user_id) : Customer::Info::TarifOptimizationParams.default_values
     end
 #    raise(StandardError, )
   end
