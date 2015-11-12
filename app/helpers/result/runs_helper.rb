@@ -2,10 +2,6 @@ module Result::RunsHelper
   include SavableInSession::Filtrable, SavableInSession::Tableable, SavableInSession::ArrayOfHashable,
   SavableInSession::ProgressBarable, SavableInSession::SessionInitializers
   
-  def current_user_id
-    current_user.id
-  end
-  
   def run_id
     run = Result::Run.where(:user_id => current_user.id, :run => 1).first
     run ? run[:id] : -1

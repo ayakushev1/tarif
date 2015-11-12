@@ -1,5 +1,13 @@
 module ApplicationHelper::Authorization
 
+  def current_user_id
+    current_user.id
+  end
+   
+  def current_or_guest_user_id
+    current_or_guest_user.id
+  end
+  
   def current_user_admin?
     user_type == :admin
   end

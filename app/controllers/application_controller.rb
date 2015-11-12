@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
           ApplicationHelper::SetCurrentSession, ApplicationHelper::CustomerUsedServicesCheck, 
           ApplicationHelper::GuestUser, ApplicationHelper::MiniProfiler
 
-  helper_method :current_user_admin?, :customer_has_free_trials?, :current_or_guest_user, :guest_user?, :user_type
+  helper_method :current_user_admin?, :customer_has_free_trials?, :current_or_guest_user, :guest_user?, :user_type, :current_user_id
 
   include SavableInSession::Filtrable, SavableInSession::ArrayOfHashable, SavableInSession::Tableable, SavableInSession::ProgressBarable,
           SavableInSession::Formable, SavableInSession::SessionInitializers

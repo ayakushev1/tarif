@@ -1,10 +1,6 @@
 module Customer::OptimizationResultsHelper
   include SavableInSession::Filtrable, SavableInSession::ArrayOfHashable, SavableInSession::ProgressBarable, SavableInSession::SessionInitializers
   
-  def current_user_id
-    current_user.id
-  end
-  
   def customer_service_sets
     options = {:base_name => 'service_sets', :current_id_name => 'service_sets_id', :id_name => 'service_sets_id', :pagination_per_page => 5}
 #    @customer_service_sets ||= 

@@ -3,10 +3,6 @@ module Customer::TarifOptimizatorHelper
 
   attr_reader :background_process_informer_operators, :background_process_informer_tarifs, :background_process_informer_tarif
   
-  def current_user_id
-    current_user.id
-  end
-  
   def optimization_params
     create_filtrable("optimization_params")
   end
@@ -50,7 +46,7 @@ module Customer::TarifOptimizatorHelper
     Customer::Info::ServicesSelect.update_info(current_user_id, session_filtr_params(services_select))
     Customer::Info::ServiceChoices.update_info(current_user_id, session_filtr_params(service_choices))
     Customer::Info::ServiceCategoriesSelect.update_info(current_user_id, session_filtr_params(service_categories_select))
-    Customer::Info::TarifOptimizationParams.update_info(current_user_id, session_filtr_params(optimization_params))
+    Customer::Info::TarifOptimizationParams.update_info(current_user_id, session_filtr_params(optimization_params)) if user_type == :admin
 
     if session_filtr_params(service_choices)['calculate_with_fixed_services'] == 'true'
       Customer::Info::ServicesUsed.decrease_one_free_trials_by_one(current_user_id, 'tarif_recalculation_count')
@@ -273,7 +269,7 @@ module Customer::TarifOptimizatorHelper
   end
   
   def accounting_periods
-    @accounting_periods ||= Customer::Call.where(:user_id => current_user_id).select("description->>'accounting_period' as accounting_period").uniq
+    @accounting_periods ||= Customer::Call.where(:user_id => current_or_guest_user_id).select("description->>'accounting_period' as accounting_period").uniq
   end
 
   def check_if_optimization_options_are_in_session
@@ -297,7 +293,8 @@ module Customer::TarifOptimizatorHelper
     
     if session[:filtr]['optimization_params_filtr'].blank?
       session[:filtr]['optimization_params_filtr'] ||= {}
-      session[:filtr]['optimization_params_filtr']  = Customer::Info::TarifOptimizationParams.info(current_user_id)
+      session[:filtr]['optimization_params_filtr']  = 
+        user_type == :admin ? Customer::Info::TarifOptimizationParams.info(current_user_id) : Customer::Info::TarifOptimizationParams.default_values
     end
 #    raise(StandardError, )
   end
