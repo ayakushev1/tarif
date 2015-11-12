@@ -20,8 +20,8 @@ class Customer::CallsController < ApplicationController
   end
   
   def update_customer_infos
-    Customer::Info::CallsGenerationParams.update_info(current_user.id, customer_calls_generation_params)
-    Customer::Info::ServicesUsed.decrease_one_free_trials_by_one(current_user.id, 'calls_modelling_count')
+    Customer::Info::CallsGenerationParams.update_info(current_or_guest_user_id, customer_calls_generation_params)
+    Customer::Info::ServicesUsed.decrease_one_free_trials_by_one(current_or_guest_user_id, 'calls_modelling_count')
   end
   
   def filtr
@@ -31,7 +31,7 @@ class Customer::CallsController < ApplicationController
   
   def customer_calls
 #    @customer_calls ||= 
-    create_tableable(Customer::Call.where(:user_id => current_user.id).query_from_filtr(session_filtr_params(filtr)))
+    create_tableable(Customer::Call.where(:user_id => current_or_guest_user_id).query_from_filtr(session_filtr_params(filtr)))
   end
   
   def calls_gener_params_report
@@ -74,7 +74,7 @@ class Customer::CallsController < ApplicationController
   end
   
   def setting_if_nil_default_calls_generation_params
-    saved_call_generation_param = Customer::Info::CallsGenerationParams.info(current_user.id)
+    saved_call_generation_param = Customer::Info::CallsGenerationParams.info(current_or_guest_user_id)
     customer_calls_generation_params_filtr.each do |key, value|
 #      raise(StandardError, saved_call_generation_param)
       session[:filtr][value.filtr_name] = if saved_call_generation_param.blank?
@@ -96,7 +96,7 @@ class Customer::CallsController < ApplicationController
   
   def user_params
     {
-      "user_id" => current_user.id,
+      "user_id" => current_or_guest_user_id,
     }
   end
   

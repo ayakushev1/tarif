@@ -3,7 +3,7 @@ module Result::RunsHelper
   SavableInSession::ProgressBarable, SavableInSession::SessionInitializers
   
   def run_id
-    run = Result::Run.where(:user_id => current_user.id, :run => 1).first
+    run = Result::Run.where(:user_id => current_or_guest_user_id, :run => 1).first
     run ? run[:id] : -1
   end
   

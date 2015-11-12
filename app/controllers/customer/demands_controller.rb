@@ -18,7 +18,7 @@ class Customer::DemandsController < ApplicationController
   
     def build_demand      
       if params[:customer_demand]
-        @demand = Customer::Demand.new({:customer_id => current_user.id, :status_id => demand_is_received_from_customer}.merge(params[:customer_demand].permit!))
+        @demand = Customer::Demand.new({:customer_id => current_or_guest_user_id, :status_id => demand_is_received_from_customer}.merge(params[:customer_demand].permit!))
       else
         @demand = Customer::Demand.new()
       end
@@ -27,7 +27,7 @@ class Customer::DemandsController < ApplicationController
     
     def check_if_user_spaming_site
       max_unprocessed_customer_demands = 3
-      user_demand_count = Customer::Demand.where({:customer_id => current_user.id, :status_id => demand_is_received_from_customer}).count
+      user_demand_count = Customer::Demand.where({:customer_id => current_or_guest_user_id, :status_id => demand_is_received_from_customer}).count
       if user_demand_count >= max_unprocessed_customer_demands
         redirect_to root_path, {:alert => "Вы слишком часто пишите нам сообщения. Наберитесь терпения - мы рассмотрим ваше обращение"}
       end
