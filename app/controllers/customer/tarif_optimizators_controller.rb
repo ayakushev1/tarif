@@ -38,14 +38,14 @@ class Customer::TarifOptimizatorsController < ApplicationController
   end
   
   def recalculate    
-#    raise(StandardError, [session_filtr_params(service_choices)['calculate_with_fixed_services']])
+#    raise(StandardError, [session_filtr_params(calculation_choices)['calculate_with_fixed_services']])
     if session_filtr_params(optimization_params)['calculate_on_background'] == 'true' and
-      session_filtr_params(service_choices)['calculate_with_fixed_services'] == 'false'
+      session_filtr_params(calculation_choices)['calculate_with_fixed_services'] == 'false'
 #      raise(StandardError)
       recalculate_on_background
 #      sleep 0.2
       if session_filtr_params(optimization_params)['calculate_background_with_spawnling'] == 'true' or 
-        session_filtr_params(service_choices)['calculate_with_fixed_services'] == 'true'
+        session_filtr_params(calculation_choices)['calculate_with_fixed_services'] == 'true'
         redirect_to(:action => :calculation_status)
       else
         redirect_to root_path, {:alert => "Мы сообщим вам электронным письмом об окончании расчетов"}
@@ -58,13 +58,13 @@ class Customer::TarifOptimizatorsController < ApplicationController
   end 
   
   def check_inputs_for_recalculate     
-    if session_filtr_params(service_choices)['accounting_period'].blank? or
-        !accounting_periods.map(&:accounting_period).include?(session_filtr_params(service_choices)['accounting_period'])
-#      raise(StandardError, [session_filtr_params(service_choices)['accounting_period'], accounting_periods.map(&:accounting_period)])
+    if session_filtr_params(calculation_choices)['accounting_period'].blank? or
+        !accounting_periods.map(&:accounting_period).include?(session_filtr_params(calculation_choices)['accounting_period'])
+#      raise(StandardError, [session_filtr_params(calculation_choices)['accounting_period'], accounting_periods.map(&:accounting_period)])
       redirect_to({:action => :index}, {:alert => "Выберите период для расчета"}) and return
     end
 
-    if session_filtr_params(service_choices)['calculate_with_fixed_services'] == 'true'
+    if session_filtr_params(calculation_choices)['calculate_with_fixed_services'] == 'true'
       if session_filtr_params(services_for_calculation_select)["operator_id"].blank?
         message_for_blank_operator = "Вы выбрали расчет для выбранных тарифа и опций. Поэтому выберите оператора на вкладке 'Выбор тарифа и набора опций для расчета'."
         redirect_to({:action => :index}, {:alert => message_for_blank_operator}) and return
@@ -83,7 +83,7 @@ class Customer::TarifOptimizatorsController < ApplicationController
   end
   
   def check_if_customer_has_free_trials
-    if session_filtr_params(service_choices)['calculate_with_fixed_services'] == 'true'
+    if session_filtr_params(calculation_choices)['calculate_with_fixed_services'] == 'true'
       if !customer_has_free_tarif_recalculation_trials?
         redirect_to({:action => :index}, {:alert => "У Вас не осталось свободных попыток для расчета выбранных тарифа и опций, а только для подбора тарифа"}) and return
       end
@@ -101,7 +101,7 @@ class Customer::TarifOptimizatorsController < ApplicationController
 #    ahoy.track("#{controller_name}/#{action_name}", {
 #      'flash' => flash,      
 #      'optimization_params' => optimization_params,
-#      'service_choices' => service_choices,
+#      'calculation_choices' => calculation_choices,
 #      'services_select' => services_select,
 #      'service_categories_select' => service_categories_select,
 #   })

@@ -7,6 +7,10 @@ module Customer::TarifOptimizatorHelper
     create_filtrable("optimization_params")
   end
   
+  def service_choices
+    create_filtrable("service_choices")
+  end
+  
   def calculation_choices
     create_filtrable("calculation_choices")
   end
@@ -49,7 +53,7 @@ module Customer::TarifOptimizatorHelper
     Customer::Info::ServiceCategoriesSelect.update_info(current_or_guest_user_id, session_filtr_params(service_categories_select))
     Customer::Info::TarifOptimizationParams.update_info(current_or_guest_user_id, session_filtr_params(optimization_params)) if user_type == :admin
 
-    if session_filtr_params(service_choices)['calculate_with_fixed_services'] == 'true'
+    if session_filtr_params(calculation_choices)['calculate_with_fixed_services'] == 'true'
       Customer::Info::ServicesUsed.decrease_one_free_trials_by_one(current_or_guest_user_id, 'tarif_recalculation_count')
     else
       Customer::Info::ServicesUsed.decrease_one_free_trials_by_one(current_or_guest_user_id, 'tarif_optimization_count')      
@@ -60,7 +64,7 @@ module Customer::TarifOptimizatorHelper
     prepare_background_process_informer
 #    raise(StandardError)
     if (session_filtr_params(optimization_params)['calculate_background_with_spawnling'] == 'true') or 
-      session_filtr_params(service_choices)['calculate_with_fixed_services'] == 'true'
+      session_filtr_params(calculation_choices)['calculate_with_fixed_services'] == 'true'
 
       Spawnling.new(:argv => "optimize for #{current_or_guest_user_id}") do
         calculate(options.merge({:use_background_process_informers => true}))
@@ -150,6 +154,7 @@ module Customer::TarifOptimizatorHelper
   def options
     optimization_params_session_filtr_params = session_filtr_params(optimization_params)
     service_choices_session_filtr_params = session_filtr_params(service_choices)
+    calculation_choices_session_filtr_params = session_filtr_params(calculation_choices)
     {:new_run_id => new_run_id,
      :calculate_old_final_tarif_preparator => optimization_params_session_filtr_params['calculate_old_final_tarif_preparator'],
      :save_new_final_tarif_results_in_my_batches => optimization_params_session_filtr_params['save_new_final_tarif_results_in_my_batches'],
@@ -167,15 +172,15 @@ module Customer::TarifOptimizatorHelper
   #   :save_interim_results_after_calculating_final_tarif_sets => optimization_params_session_filtr_params['save_interim_results_after_calculating_final_tarif_sets'],   
      :service_ids_batch_size => optimization_params_session_filtr_params['service_ids_batch_size'], 
 
-     :accounting_period => service_choices_session_filtr_params['accounting_period'],
-     :calculate_with_limited_scope => service_choices_session_filtr_params['calculate_with_limited_scope'],
+     :accounting_period => calculation_choices_session_filtr_params['accounting_period'],
+     :calculate_with_limited_scope => calculation_choices_session_filtr_params['calculate_with_limited_scope'],
      :selected_service_categories => selected_service_categories,
      
      :services_by_operator => {
         :operators => operators, :tarifs => tarifs, :tarif_options => tarif_options, 
         :common_services => common_services, 
-        :calculate_only_chosen_services => service_choices_session_filtr_params['calculate_only_chosen_services'],
-        :calculate_with_fixed_services => service_choices_session_filtr_params['calculate_with_fixed_services'],
+        :calculate_only_chosen_services => calculation_choices_session_filtr_params['calculate_only_chosen_services'],
+        :calculate_with_fixed_services => calculation_choices_session_filtr_params['calculate_with_fixed_services'],
         
         :use_short_tarif_set_name => optimization_params_session_filtr_params['use_short_tarif_set_name'], 
         :calculate_with_multiple_use => optimization_params_session_filtr_params['calculate_with_multiple_use'],
@@ -200,11 +205,12 @@ module Customer::TarifOptimizatorHelper
   
   def operators
     service_choices_session_filtr_params = session_filtr_params(service_choices)
+    calculation_choices_session_filtr_params = session_filtr_params(calculation_choices)
     services_select_session_filtr_params = session_filtr_params(services_select)
     services_for_calculation_select_session_filtr_params = session_filtr_params(services_for_calculation_select)
     
 #    raise(StandardError)
-    if service_choices_session_filtr_params['calculate_with_fixed_services'] == 'true'
+    if calculation_choices_session_filtr_params['calculate_with_fixed_services'] == 'true'
       [services_for_calculation_select_session_filtr_params['operator_id'].to_i]
     else
       tel = services_select_session_filtr_params['operator_tel'] == 'true'? 1023 : nil
@@ -223,7 +229,7 @@ module Customer::TarifOptimizatorHelper
     service_choices_session_filtr_params = session_filtr_params(service_choices)
     services_for_calculation_select_session_filtr_params = session_filtr_params(services_for_calculation_select)
     
-    if service_choices_session_filtr_params['calculate_with_fixed_services'] == 'true'
+    if calculation_choices_session_filtr_params['calculate_with_fixed_services'] == 'true'
       {
         services_for_calculation_select_session_filtr_params['operator_id'].to_i => [services_for_calculation_select_session_filtr_params['tarif_to_calculate'].to_i]
       }
@@ -238,10 +244,11 @@ module Customer::TarifOptimizatorHelper
   end
   
   def tarif_options
+    calculation_choices_session_filtr_params = session_filtr_params(calculation_choices)
     service_choices_session_filtr_params = session_filtr_params(service_choices)
     services_for_calculation_select_session_filtr_params = session_filtr_params(services_for_calculation_select)
     
-    if service_choices_session_filtr_params['calculate_with_fixed_services'] == 'true'
+    if calculation_choices_session_filtr_params['calculate_with_fixed_services'] == 'true'
       {
         services_for_calculation_select_session_filtr_params['operator_id'].to_i => services_for_calculation_select_session_filtr_params['tarif_options_to_calculate'].map(&:to_i) - [0]
       }
@@ -311,11 +318,11 @@ module Customer::TarifOptimizatorHelper
   end
   
   def show_service_categories_select_tab
-    session_filtr_params(service_choices)['calculate_with_limited_scope'] == 'true' ? true : false
+    session_filtr_params(calculation_choices)['calculate_with_limited_scope'] == 'true' ? true : false
   end
   
   def show_services_for_calculation_select_tab
-    session_filtr_params(service_choices)['calculate_with_fixed_services'] == 'true' ? true : false
+    session_filtr_params(calculation_choices)['calculate_with_fixed_services'] == 'true' ? true : false
   end
 
 end
