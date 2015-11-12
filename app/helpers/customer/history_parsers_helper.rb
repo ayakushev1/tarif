@@ -63,7 +63,7 @@ module Customer::HistoryParsersHelper
   
   def update_customer_infos
     Customer::Info::CallsDetailsParams.update_info(current_or_guest_user_id, session_filtr_params(user_params_filtr))
-    Customer::Info::CallsParsingParams.update_info(current_or_guest_user_id, session_filtr_params(parsing_params_filtr))
+    Customer::Info::CallsParsingParams.update_info(current_or_guest_user_id, session_filtr_params(parsing_params_filtr)) if user_type == :admin
     Customer::Info::ServicesUsed.decrease_one_free_trials_by_one(current_or_guest_user_id, 'calls_parsing_count')    
   end
   
@@ -183,9 +183,10 @@ module Customer::HistoryParsersHelper
       session[:filtr]['user_params_filtr'] = Customer::Info::CallsDetailsParams.info(current_or_guest_user_id)
     end
 
-    if session[:filtr]['parsing_params_filtr'].blank?
+    if session[:filtr]['parsing_params_filtr'].blank? or user_type != :admin
       session[:filtr]['parsing_params_filtr'] ||= {}
-      session[:filtr]['parsing_params_filtr'] = Customer::Info::CallsParsingParams.info(current_or_guest_user_id)
+      session[:filtr]['parsing_params_filtr'] = 
+        user_type == :admin ? Customer::Info::CallsParsingParams.info(current_or_guest_user_id) : Customer::Info::CallsParsingParams.default_values(user_type)
     end
   end
 

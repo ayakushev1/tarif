@@ -9,11 +9,11 @@
 #  last_update  :datetime
 #
 
-class Customer::Info::CallsDetailsParams < ActiveType::Record[Customer::Info]
+class Customer::Info::CalculationChoices < ActiveType::Record[Customer::Info]
   def self.default_scope
-    where(:info_type_id => 5)
+    where(:info_type_id => 14)
   end
-
+  
   def self.info(user_id)
     where(:user_id => user_id).first_or_create(:info => default_values).info
   end
@@ -24,14 +24,12 @@ class Customer::Info::CallsDetailsParams < ActiveType::Record[Customer::Info]
   
   def self.default_values
     {
-     'own_phone_number' => '100000000', 
-     'operator_id' => 1030, 
-     'region_id' => 1238, 
-     'country_id' => 1100,
-#     'accounting_period_month' => 1,
-#     'accounting_period_year' => 2015,
+      'calculate_only_chosen_services' => 'false',
+      'calculate_with_limited_scope' => 'false',
+      'calculate_with_fixed_services' => 'false'
     }
   end
+  
 
 
 end

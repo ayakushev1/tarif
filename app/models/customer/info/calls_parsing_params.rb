@@ -19,10 +19,11 @@ class Customer::Info::CallsParsingParams < ActiveType::Record[Customer::Info]
   end
   
   def self.update_info(user_id, values)
-    where(:user_id => user_id).first_or_create(:info => default_values).update(:info => values)
+    where(:user_id => user_id).first_or_create.update(:info => values)
   end
   
-  def self.default_values
+  def self.default_values(user_type = :guest)
+    call_history_max_line_to_process = {:guest => 500, :trial => 1000, :user => 5000, :admin => 10000}[user_type]
     {
       'calculate_on_background' => 'true',
       'save_processes_result_to_stat' => 'true',
@@ -30,8 +31,7 @@ class Customer::Info::CallsParsingParams < ActiveType::Record[Customer::Info]
       'file_upload_turbolink_mode' => 'false',
       'file_upload_form_method' => 'post',
       'file_upload_max_size' => 1,
-      'call_history_max_line_to_process' => 5000,
-#      'allowed_call_history_file_types' => ['html', 'xls', 'xlsx'],
+      'call_history_max_line_to_process' => call_history_max_line_to_process,
       'background_update_frequency' => 100,
     }
   end

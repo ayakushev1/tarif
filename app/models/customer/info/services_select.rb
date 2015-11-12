@@ -15,18 +15,32 @@ class Customer::Info::ServicesSelect < ActiveType::Record[Customer::Info]
   end
 
   def self.info(user_id)
-    where(:user_id => user_id).first_or_create(:info => default_values).info
+    where(:user_id => user_id).first_or_create(:info => default_values(:guest)).info
   end
   
   def self.update_info(user_id, values)
-    where(:user_id => user_id).first_or_create(:info => default_values).update(:info => values)
+    where(:user_id => user_id).first_or_create.update(:info => values)
   end
   
-  def self.default_values
+  def self.default_values(user_type)
     {
-       'operator_tel' => 'true','operator_bln' => 'true', 'operator_mgf' => 'true', 'operator_mts' => 'true',
-      'tarifs' => 'true', 'common_services' => 'true', 'all_tarif_options' => 'false'
-    }
+     :guest => {
+         'operator_tel' => 'true','operator_bln' => 'true', 'operator_mgf' => 'true', 'operator_mts' => 'true',
+        'tarifs' => 'true', 'common_services' => 'true', 'all_tarif_options' => 'false'
+      },
+     :trial => {
+         'operator_tel' => 'true','operator_bln' => 'true', 'operator_mgf' => 'true', 'operator_mts' => 'true',
+        'tarifs' => 'true', 'common_services' => 'true', 'all_tarif_options' => 'false', 'calls' => 'true', 'sms' => 'true', 'internet' => 'true'
+      },
+     :user => {
+         'operator_tel' => 'true','operator_bln' => 'true', 'operator_mgf' => 'true', 'operator_mts' => 'true',
+        'tarifs' => 'true', 'common_services' => 'true', 'all_tarif_options' => 'true'
+      },
+     :admin => {
+         'operator_tel' => 'true','operator_bln' => 'true', 'operator_mgf' => 'true', 'operator_mts' => 'true',
+        'tarifs' => 'true', 'common_services' => 'true', 'all_tarif_options' => 'true'
+      },
+    }[user_type]
   end
 
   def self.process_selecting_services(params)

@@ -24,6 +24,7 @@ class Customer::Info < ActiveRecord::Base
   scope :service_choices, -> {where(:info_type_id => 8)}
   scope :services_select, -> {where(:info_type_id => 9)}
   scope :service_categories_select, -> {where(:info_type_id => 10)}
+  scope :calculation_choices, -> {where(:info_type_id => 14)}
   scope :tarif_optimization_final_results, -> {where(:info_type_id => 11)}
   scope :tarif_optimization_minor_results, -> {where(:info_type_id => 12)}
   scope :tarif_optimization_process_status, -> {where(:info_type_id => 13)}

@@ -7,8 +7,8 @@ module Customer::TarifOptimizatorHelper
     create_filtrable("optimization_params")
   end
   
-  def service_choices
-    create_filtrable("service_choices")
+  def calculation_choices
+    create_filtrable("calculation_choices")
   end
   
   def services_select
@@ -43,8 +43,9 @@ module Customer::TarifOptimizatorHelper
   end
 
   def update_customer_infos
-    Customer::Info::ServicesSelect.update_info(current_or_guest_user_id, session_filtr_params(services_select))
-    Customer::Info::ServiceChoices.update_info(current_or_guest_user_id, session_filtr_params(service_choices))
+    Customer::Info::ServicesSelect.update_info(current_or_guest_user_id, session_filtr_params(services_select)) if user_type == :admin
+    Customer::Info::ServiceChoices.update_info(current_or_guest_user_id, session_filtr_params(service_choices)) if user_type == :admin
+    Customer::Info::CalculationChoices.update_info(current_or_guest_user_id, session_filtr_params(calculation_choices))
     Customer::Info::ServiceCategoriesSelect.update_info(current_or_guest_user_id, session_filtr_params(service_categories_select))
     Customer::Info::TarifOptimizationParams.update_info(current_or_guest_user_id, session_filtr_params(optimization_params)) if user_type == :admin
 
@@ -67,7 +68,6 @@ module Customer::TarifOptimizatorHelper
         UserMailer.tarif_optimization_complete(current_or_guest_user_id).deliver
       end
     else      
-      raise(StandardError) if (Customer::Info::ServicesUsed.info(current_or_guest_user_id)['paid_trials']).is_a?(String)
       
       priority = Customer::Info::ServicesUsed.info(current_or_guest_user_id)['paid_trials'] = true ? 10 : 20
       update_customer_infos
@@ -217,8 +217,6 @@ module Customer::TarifOptimizatorHelper
   
   def validate_tarifs
     params['service_choices_filtr'].merge!(Customer::Info::ServiceChoices.validate_tarifs(params['service_choices_filtr'])) if params['service_choices_filtr']
-#    session[:filtr]['service_choices_filtr'].merge!(Customer::Info::ServiceChoices.validate_tarifs(session_filtr_params(service_choices)))
-#    raise(StandardError, params)#session[:filtr]['service_choices_filtr'])
   end
   
   def tarifs
@@ -274,15 +272,23 @@ module Customer::TarifOptimizatorHelper
 
   def check_if_optimization_options_are_in_session
     session[:filtr] ||= {}  
+    
     accounting_period = accounting_periods.blank? ? -1 : accounting_periods[0]['accounting_period']  
-    if session[:filtr]['service_choices_filtr'].blank?
-      session[:filtr]['service_choices_filtr'] ||= {}
-      session[:filtr]['service_choices_filtr']  = Customer::Info::ServiceChoices.info(current_or_guest_user_id).merge({'accounting_period' => accounting_period})
+    if session[:filtr]['calculation_choices_filtr'].blank?
+      session[:filtr]['calculation_choices_filtr'] ||= {}
+      session[:filtr]['calculation_choices_filtr']  = Customer::Info::CalculationChoices.info(current_or_guest_user_id).merge({'accounting_period' => accounting_period})
     end
 
-    if session[:filtr]['services_select_filtr'].blank?
+    if session[:filtr]['service_choices_filtr'].blank? or user_type != :admin
+      session[:filtr]['service_choices_filtr'] ||= {}
+      session[:filtr]['service_choices_filtr']  = 
+        user_type == :admin ? Customer::Info::ServiceChoices.info(current_or_guest_user_id) : Customer::Info::ServiceChoices.default_values(user_type)
+    end
+
+    if session[:filtr]['services_select_filtr'].blank? or user_type != :admin
       session[:filtr]['services_select_filtr'] ||= {}
-      session[:filtr]['services_select_filtr']  = Customer::Info::ServicesSelect.info(current_or_guest_user_id)
+      session[:filtr]['services_select_filtr']  = 
+        user_type == :admin ? Customer::Info::ServicesSelect.info(current_or_guest_user_id) : Customer::Info::ServicesSelect.default_values(user_type)
     end
     
     if !session[:filtr] or session[:filtr]['service_categories_select_filtr'].blank?
@@ -291,7 +297,7 @@ module Customer::TarifOptimizatorHelper
     end
 #    raise(StandardError)
     
-    if session[:filtr]['optimization_params_filtr'].blank?
+    if session[:filtr]['optimization_params_filtr'].blank? or user_type != :admin
       session[:filtr]['optimization_params_filtr'] ||= {}
       session[:filtr]['optimization_params_filtr']  = 
         user_type == :admin ? Customer::Info::TarifOptimizationParams.info(current_or_guest_user_id) : Customer::Info::TarifOptimizationParams.default_values
