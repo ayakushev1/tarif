@@ -20,6 +20,10 @@ module Customer::TarifOptimizatorHelper
   end
   
   def service_categories_select
+    if params['service_categories_select_filtr']
+      selected_services = Customer::Info::ServiceCategoriesSelect.selected_services_from_session_format(params['service_categories_select_filtr'], user_type)
+      params['service_categories_select_filtr']  = Customer::Info::ServiceCategoriesSelect.selected_services_to_session_format(selected_services)
+    end
     create_filtrable("service_categories_select")
   end
   
@@ -302,9 +306,8 @@ module Customer::TarifOptimizatorHelper
     
     if !session[:filtr] or session[:filtr]['service_categories_select_filtr'].blank?
       session[:filtr] ||= {}; session[:filtr]['service_categories_select_filtr'] ||= {}
-      session[:filtr]['service_categories_select_filtr']  = Customer::Info::ServiceCategoriesSelect.info(current_or_guest_user_id)
+      session[:filtr]['service_categories_select_filtr']  = Customer::Info::ServiceCategoriesSelect.info(current_or_guest_user_id, user_type)
     end
-#    raise(StandardError)
     
     if session[:filtr]['optimization_params_filtr'].blank? or user_type != :admin
       session[:filtr]['optimization_params_filtr'] ||= {}
@@ -315,8 +318,8 @@ module Customer::TarifOptimizatorHelper
   end
 
   def selected_service_categories
-    return @selected_service_categories if @selected_service_categories    
-    selected_services = Customer::Info::ServiceCategoriesSelect.selected_services_from_session_format(session_filtr_params(service_categories_select))
+#    return @selected_service_categories if @selected_service_categories    
+    selected_services = Customer::Info::ServiceCategoriesSelect.selected_services_from_session_format(session_filtr_params(service_categories_select), user_type)
     @selected_service_categories = Customer::Info::ServiceCategoriesSelect.service_categories_from_selected_services(selected_services)
   end
   

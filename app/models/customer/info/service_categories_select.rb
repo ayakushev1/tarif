@@ -14,16 +14,16 @@ class Customer::Info::ServiceCategoriesSelect < ActiveType::Record[Customer::Inf
     where(:info_type_id => 10)
   end
 
-  def self.info(user_id)
-    where(:user_id => user_id).first_or_create(:info => default_values).info
+  def self.info(user_id, user_type = :guest)
+    where(:user_id => user_id).first_or_create(:info => default_values(user_type)).info
   end
   
   def self.update_info(user_id, values)
     where(:user_id => user_id).first_or_create.update(:info => values)
   end
   
-  def self.default_values
-    selected_services_to_session_format
+  def self.default_values(user_type = :guest)
+    selected_services_to_session_format(default_selected_categories(user_type))
   end
 
   def self.selected_services_to_session_format(selected_services = default_selected_categories)
@@ -50,16 +50,20 @@ class Customer::Info::ServiceCategoriesSelect < ActiveType::Record[Customer::Inf
     session_selected_services
   end
   
-  def self.selected_services_from_session_format(session_selected_services)
-    selected_services = default_selected_categories 
+  def self.selected_services_from_session_format(session_selected_services, user_type = :guest)
+    selected_services = default_selected_categories(user_type) 
     session_selected_services.each do |rouming_category_name, service_categories|
-      next if rouming_category_name == 'is_chosen'
+#      raise(StandardError, [rouming_category_name, service_categories])
+      next if rouming_category_name == 'is_chosen' and selected_services[rouming_category_name]
       selected_services[rouming_category_name.to_sym] ||= {}
-      selected_services[rouming_category_name.to_sym][:is_chosen] = (service_categories['is_chosen'] == 'true' ? true : false)
+      selected_services[rouming_category_name.to_sym][:is_chosen] = 
+        ((service_categories['is_chosen'] == 'true' and selected_services[rouming_category_name.to_sym][:is_chosen])? true : false)
+
       service_categories.each do |service_category_name, geo_categories|
         next if service_category_name == 'is_chosen'
         selected_services[rouming_category_name.to_sym][service_category_name.to_sym] ||= {}
-        selected_services[rouming_category_name.to_sym][service_category_name.to_sym][:is_chosen] = (geo_categories['is_chosen'] == 'true' ? true : false)
+        selected_services[rouming_category_name.to_sym][service_category_name.to_sym][:is_chosen] = 
+          ((geo_categories['is_chosen'] == 'true' and selected_services[rouming_category_name.to_sym][service_category_name.to_sym][:is_chosen])? true : false)
         geo_categories.each do |geo_category_name, partner_categories|
           next if geo_category_name == 'is_chosen'
           selected_services[rouming_category_name.to_sym][service_category_name.to_sym][geo_category_name.to_sym] ||= {}
@@ -188,7 +192,11 @@ class Customer::Info::ServiceCategoriesSelect < ActiveType::Record[Customer::Inf
     end
   end
     
-  def self.default_selected_categories
+  def self.default_selected_categories(user_type = :guest)
+    country_roming = {:guest => false, :trial => true, :user => true, :admin => true }[user_type]
+    intern_roming = {:guest => false, :trial => false, :user => true, :admin => true }[user_type]
+    mms = {:guest => false, :trial => false, :user => true, :admin => true }[user_type]
+    internet = {:guest => false, :trial => false, :user => true, :admin => true }[user_type]
     {
       :own_and_home_regions_rouming => {
         :is_chosen => true,
@@ -206,17 +214,17 @@ class Customer::Info::ServiceCategoriesSelect < ActiveType::Record[Customer::Inf
           :to_own_country => {:is_chosen => true, :partner_category => nil}, 
           :to_not_own_country => {:is_chosen => true, :partner_category => nil}
           },
-        :mms_in => {:is_chosen => true},
+        :mms_in => {:is_chosen => mms},
         :mms_out => {
-          :is_chosen => true,
+          :is_chosen => mms,
           :to_own_and_home_regions => {:is_chosen => true, :partner_category => nil}, 
           :to_own_country => {:is_chosen => true, :partner_category => nil}, 
           :to_not_own_country => {:is_chosen => true, :partner_category => nil}
           },
-        :internet => {:is_chosen => true},
+        :internet => {:is_chosen => internet},
       },
       :own_country_rouming => {
-        :is_chosen => true,
+        :is_chosen => country_roming,
         :calls_in => {:is_chosen => true},
         :calls_out => {
           :is_chosen => true,
@@ -231,17 +239,17 @@ class Customer::Info::ServiceCategoriesSelect < ActiveType::Record[Customer::Inf
           :to_own_country => {:is_chosen => true, :partner_category => nil}, 
           :to_not_own_country => {:is_chosen => true, :partner_category => nil}
           },
-        :mms_in => {:is_chosen => true},
+        :mms_in => {:is_chosen => mms},
         :mms_out => {
-          :is_chosen => true,
+          :is_chosen => mms,
           :to_own_and_home_regions => {:is_chosen => true, :partner_category => nil}, 
           :to_own_country => {:is_chosen => true, :partner_category => nil}, 
           :to_not_own_country => {:is_chosen => true, :partner_category => nil}
           },
-        :internet => {:is_chosen => true},
+        :internet => {:is_chosen => internet},
       },
       :all_world_rouming => {
-        :is_chosen => true,
+        :is_chosen => intern_roming,
         :calls_in => {:is_chosen => true},
         :calls_out => {
           :is_chosen => true,
@@ -256,14 +264,14 @@ class Customer::Info::ServiceCategoriesSelect < ActiveType::Record[Customer::Inf
           :to_own_country => {:is_chosen => true, :partner_category => nil}, 
           :to_not_own_country => {:is_chosen => true, :partner_category => nil}
           },
-        :mms_in => {:is_chosen => true},
+        :mms_in => {:is_chosen => mms},
         :mms_out => {
-          :is_chosen => true,
+          :is_chosen => mms,
           :to_own_and_home_regions => {:is_chosen => true, :partner_category => nil}, 
           :to_own_country => {:is_chosen => true, :partner_category => nil}, 
           :to_not_own_country => {:is_chosen => true, :partner_category => nil}
           },
-        :internet => {:is_chosen => true},
+        :internet => {:is_chosen => internet},
       }
     }
   end

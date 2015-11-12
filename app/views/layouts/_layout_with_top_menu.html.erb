@@ -26,7 +26,8 @@
 				<%= "current_user #{current_user}" if false %>
 				<%= "user_session #{user_session}" if false %>
 				<%= "current_or_guest_user #{current_or_guest_user}" if false %>
-				<%= User.where(:id => current_or_guest_user.id).first[:password_digest].blank? if false %>
+				<%= "#{controller.options[:services_by_operator].values}" if controller.respond_to?(:options) and false %>
+				<%= "#{controller.options[:selected_service_categories]}" if controller.respond_to?(:options) and false %>
 
 				<%= render :partial => 'application/shared/alerts' %>
 				
