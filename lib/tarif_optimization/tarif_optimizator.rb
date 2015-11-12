@@ -111,6 +111,7 @@ class TarifOptimization::TarifOptimizator
   end 
   
   def init_calls_count_by_parts(operator)
+#    raise(StandardError, selected_service_categories)
     calls_stat_calculator.calculate_calculation_scope(query_constructor, selected_service_categories) if true #calculate_with_limited_scope
     @calls_count_by_parts = calls_stat_calculator.calculate_calls_count_by_parts(query_constructor, 
       tarif_list_generator.uniq_parts_by_operator[operator], tarif_list_generator.uniq_parts_criteria_by_operator[operator])    
@@ -389,8 +390,8 @@ class TarifOptimization::TarifOptimizator
   
   def new_preparator_and_saver(operator, tarif_id, final_tarif_sets, groupped_identical_services, tarif_results)
     run_id = new_run_id
-    result_tarif_id = Result::Tarif.first_or_create(:run_id => run_id, :tarif_id => tarif_id)[:id]
-    
+    result_tarif_id = Result::Tarif.where(:run_id => run_id, :tarif_id => tarif_id).first_or_create()[:id]
+#    raise(StandardError, [result_tarif_id, tarif_id, run_id, Result::Tarif.first_or_create(:run_id => run_id, :tarif_id => tarif_id).attributes])
     service_sets_array, services_array, categories_array, agregates_array = TarifOptimization::FinalTarifResultPreparator2.prepare_service_sets({
       :run_id => run_id, 
       :tarif_id => tarif_id, 

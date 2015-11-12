@@ -10,7 +10,6 @@ class TarifOptimization::FinalTarifResultPreparator2
     service_set_result = {};    
 
     final_tarif_sets.each do |service_set_id, final_tarif_set|    
-#      raise(StandardError, [service_set_id, final_tarif_set])  
       final_tarif_set.stringify_keys!
 
       service_result = {}; agregate_result = {};  category_result = {};

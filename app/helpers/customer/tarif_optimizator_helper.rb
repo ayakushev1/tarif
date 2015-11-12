@@ -194,8 +194,9 @@ module Customer::TarifOptimizatorHelper
      }   
   end
   
-  def new_run_id
-    Result::Run.first_or_create(:user_id => current_or_guest_user_id, :run => 1)[:id]
+  def new_run_id    
+    ddd = Result::Run.where(:user_id => current_or_guest_user_id, :run => 1).first_or_create()[:id]
+#    raise(StandardError, [ddd, current_or_guest_user_id])
   end
 
   def operator
@@ -313,9 +314,10 @@ module Customer::TarifOptimizatorHelper
 #    raise(StandardError, )
   end
 
-  def selected_service_categories    
+  def selected_service_categories
+    return @selected_service_categories if @selected_service_categories    
     selected_services = Customer::Info::ServiceCategoriesSelect.selected_services_from_session_format(session_filtr_params(service_categories_select))
-    Customer::Info::ServiceCategoriesSelect.service_categories_from_selected_services(selected_services)
+    @selected_service_categories = Customer::Info::ServiceCategoriesSelect.service_categories_from_selected_services(selected_services)
   end
   
   def show_service_categories_select_tab

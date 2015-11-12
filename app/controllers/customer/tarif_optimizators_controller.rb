@@ -76,6 +76,11 @@ class Customer::TarifOptimizatorsController < ApplicationController
       end
     end
     
+    if selected_service_categories.blank?
+      message_for_blank_operator = "Список услуг связи не может быть пустым. Выберите услуги на вкладке 'Выбор услуг оператора'"
+      redirect_to({:action => :index}, {:alert => message_for_blank_operator}) and return 
+    end
+    
 #    operator_id = session_filtr_params(services_for_calculation_select)["operator_id"].to_i
 #    tarif_id = session_filtr_params(services_for_calculation_select)["tarif_to_calculate"].to_i
 #    redirect_to({:action => :index}, {:alert => TarifClass.allowed_tarif_option_ids_for_tarif(operator_id, tarif_id)}) and return

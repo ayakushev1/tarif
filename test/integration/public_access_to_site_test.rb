@@ -99,7 +99,7 @@ end
 describe Users::RegistrationsController do
   before do
     @request.env["devise.mapping"] = Devise.mappings[:user]
-    @user = User.first_or_create(:id => 3) do |user|
+    @user = User.where(:id => 3).first_or_create do |user|
       user.name ="Гость111"
       user.email = "guest@example.com"; user.confirmed_at = Time.zone.now
       user.password = 'ddddddddd'
