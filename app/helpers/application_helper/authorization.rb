@@ -25,9 +25,9 @@ module ApplicationHelper::Authorization
   end
 
   def my_skip_authenticate
-    match_with_lists([:external_api_processing]) or 
+    match_with_lists([:root_url, :external_api_processing]) or 
     (user_type == :bot and match_with_lists([:public_url])) or 
-    (user_type == :guest and match_with_lists([:root_url, :public_url, :new_user_actions_with_devise]))
+    (user_type == :guest and match_with_lists([:public_url, :new_user_actions_with_devise]))
   end
   
   def allowed_request_origin
