@@ -14,10 +14,11 @@ module ApplicationHelper::Authorization
     when match_with_lists([:root_url])
     when match_with_lists([:public_url])
     when match_with_lists([:any_user_actions_with_devise])
+    when (match_with_lists([:new_user_actions_with_devise]) and user_type == :guest)
     when match_with_lists([:signed_user_actions_with_devise]) 
       redirect_to(root_path, alert: "Вы пытаетесь получить доступ к чужому счету") if !match_param_user_with_signed_user
     when match_with_lists([:password_user_actions_with_devise]) 
-      redirect_to(root_path, alert: "Вы пытаетесь получить доступ к чужому счету") if !(match_param_user_with_signed_user and match_user_password)
+      redirect_to(root_path, alert: "У вас нет доступа к чужому счету") if !(match_param_user_with_signed_user and match_user_password)
     else 
       redirect_to(root_path, alert: "Доступ к разделу сайта #{controller_path}/#{action_name} ограничен")
     end
@@ -33,7 +34,7 @@ module ApplicationHelper::Authorization
   end
   
   def match_param_user_with_signed_user
-    param_user_id = [params[:id] || params[:user][:id] || -1].to_i
+    param_user_id = (params[:id] || params[:user][:id] || -1).to_i
     signed_user_id = current_or_guest_user ? current_or_guest_user.id.to_i : -2
     param_user_id == signed_user_id
   end
@@ -98,21 +99,21 @@ module ApplicationHelper::Authorization
       },
       :new_user_actions_with_devise => {
         :methods => [], :actions => {
-          'users' => ['new', 'create'],
-          'registrations' => ['new', 'create'],
+#          'users' => ['new', 'create'],
+          'users/registrations' => ['new', 'create'],
         }
       },
       :signed_user_actions_with_devise => {
         :methods => [], :actions => {
           'passwords' => ['edit', 'update'],
           'users' => ['show', 'edit'],
-          'registrations' => ['show', 'edit'],
+          'users/registrations' => ['show', 'edit'],
         }
       },
       :password_user_actions_with_devise => {
         :methods => ['post', 'put', 'putch'], :actions => {
           'users' => ['update'],
-          'registrations' => ['update'],
+          'users/registrations' => ['update'],
         }
       },
     }
