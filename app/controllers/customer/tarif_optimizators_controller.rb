@@ -81,6 +81,12 @@ class Customer::TarifOptimizatorsController < ApplicationController
       redirect_to({:action => :index}, {:alert => message_for_blank_operator}) and return 
     end
     
+    is_user_calculating_now = Delayed::Job.where(:queue => "tarif_optimization", :attempts => 0, :reference_id => current_or_guest_user_id, :reference_type => 'user').present?
+    if is_user_calculating_now
+      message = "Мы для вас сейчас уже подбираем тариф. Подождите до окончания подбора, мы сообщим об этом письмом, если вы предоставили адрес"
+      redirect_to({:action => :index}, {:alert => message}) and return 
+    end
+
 #    operator_id = session_filtr_params(services_for_calculation_select)["operator_id"].to_i
 #    tarif_id = session_filtr_params(services_for_calculation_select)["tarif_to_calculate"].to_i
 #    redirect_to({:action => :index}, {:alert => TarifClass.allowed_tarif_option_ids_for_tarif(operator_id, tarif_id)}) and return
