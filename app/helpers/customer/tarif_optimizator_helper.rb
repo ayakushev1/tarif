@@ -150,9 +150,6 @@ module Customer::TarifOptimizatorHelper
     service_choices_session_filtr_params = session_filtr_params(service_choices)
     calculation_choices_session_filtr_params = session_filtr_params(calculation_choices)
     {
-     :operator => operator,
-
-     
      :tarif_optimizator_input => {
         :save_tarif_results_ord => optimization_params_session_filtr_params['save_tarif_results_ord'], 
         :save_new_final_tarif_results_in_my_batches => optimization_params_session_filtr_params['save_new_final_tarif_results_in_my_batches'],
