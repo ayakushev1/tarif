@@ -34,10 +34,10 @@ module ApplicationHelper::Authorization
   end 
 
   def my_skip_authenticate
-#    match_with_lists([:root_url, :external_api_processing]) or 
-#    ([:bot, :stranger].include?(user_type) and match_with_lists([:root_url, :public_url])) or 
-#    (user_type == :guest and match_with_lists([:root_url, :public_url, :new_user_actions_with_devise, :call_generation_and_parsing, :tarif_optimization]))
-    match_with_lists([:root_url, :public_url, :new_user_actions_with_devise, :call_generation_and_parsing, :tarif_optimization, :external_api_processing])
+    match_with_lists([:root_url, :external_api_processing]) or 
+    ([:bot].include?(user_type) and match_with_lists([:root_url, :public_url])) or 
+    (user_type == :guest and match_with_lists([:root_url, :public_url, :new_user_actions_with_devise, :call_generation_and_parsing, :tarif_optimization]))
+#    match_with_lists([:root_url, :public_url, :new_user_actions_with_devise, :call_generation_and_parsing, :tarif_optimization, :external_api_processing])
   end
   
   def allowed_request_origin

@@ -12,6 +12,7 @@ class ApplicationController < ActionController::Base
   helper_method :session_filtr_params, :session_model_params
 
   
+  before_action :current_or_guest_user
   protect_from_forgery with: :exception
   skip_before_action :verify_authenticity_token, if: :allowed_request_origin
   skip_before_filter :track_ahoy_visit
