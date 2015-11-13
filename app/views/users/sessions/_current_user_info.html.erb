@@ -1,7 +1,7 @@
 <div class="navbar-collapse">
 	<div class="container-fluid">
 	  <ul class="nav navbar-nav navbar-right">
-	  	<% if true or current_user %>
+	  	<% if current_or_guest_user %>
 		    <li><%= link_to(new_customer_demand_path, {:class => "hidden-xs"}) do %>
 		    	<span class="icon_menu_img"><%= image_tag("envelope_img.png") %></span>Письмо администратору
 		        <% end %>

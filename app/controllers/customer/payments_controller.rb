@@ -7,7 +7,7 @@ class Customer::PaymentsController < ApplicationController
 
   def create    
     if @payment_instruction.valid?        
-      redirect_to @payment_instruction.url_to_yandex(current_user)
+      redirect_to @payment_instruction.url_to_yandex(current_or_guest_user)
     else
       render 'new'
     end

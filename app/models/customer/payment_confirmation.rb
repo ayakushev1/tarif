@@ -39,26 +39,26 @@ class Customer::PaymentConfirmation  < ActiveType::Object
   
   def process_payment
     if valid? and check_hash
-      update_customer_info(current_user)
-      UserMailer.payment_confirmation(current_user, self).deliver
+      update_customer_info(current_or_guest_user)
+      UserMailer.payment_confirmation(current_or_guest_user, self).deliver
     else
       UserMailer.send_mail_to_admin_that_something_wrong_with_confirmation(self).deliver
     end
   end
   
-  def update_customer_info(current_user)
+  def update_customer_info(current_or_guest_user)
     User.transaction do
-      Customer::Info::ServicesUsed.update_free_trials_by_cash_amount(current_user.id, (self.amount.to_f / 0.98) )
-#      Customer::Info::ServiceChoices.update_info(current_user.id, Customer::Info::ServiceChoices.default_values_for_paid)
+      Customer::Info::ServicesUsed.update_free_trials_by_cash_amount(current_or_guest_user.id, (self.amount.to_f / 0.98) )
+#      Customer::Info::ServiceChoices.update_info(current_or_guest_user.id, Customer::Info::ServiceChoices.default_values_for_paid)
     end
   end
   
-  def current_user
-    return @current_user if @current_user
+  def current_or_guest_user
+    return @current_or_guest_user if @current_or_guest_user
     
     transaction_id = self.label
     user_id = Customer::Transaction.where(:id => transaction_id).first.user_id if Customer::Transaction.where(:id => transaction_id).exists?
-    @current_user = User.where(:id => user_id).first
+    @current_or_guest_user = User.where(:id => user_id).first
   end
   
   def check_hash

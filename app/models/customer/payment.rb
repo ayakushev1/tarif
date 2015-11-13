@@ -22,10 +22,10 @@ class Customer::Payment < ActiveType::Object
     paymentType = init_values[:paymentType] #if init_values[:paymentType]
   end 
 
-  def url_to_yandex(current_user)
-    transaction_id = current_user.customer_transactions_cash.create(:status => {}, :description => {}, :made_at => Time.zone.now).id
+  def url_to_yandex(current_or_guest_user)
+    transaction_id = current_or_guest_user.customer_transactions_cash.create(:status => {}, :description => {}, :made_at => Time.zone.now).id
     instruction_params = to_yandex_params(:label => transaction_id)
-    current_user.customer_transactions_cash.find(transaction_id).update(:description => instruction_params)
+    current_or_guest_user.customer_transactions_cash.find(transaction_id).update(:description => instruction_params)
     "https://money.yandex.ru/quickpay/confirm.xml?#{instruction_params.to_param}" #ERB::Util.url_encode() 
   end
   
