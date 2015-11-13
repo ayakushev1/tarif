@@ -111,29 +111,4 @@ class Customers::AdditionalOptimizationInfoPresenter #ServiceHelper::AdditionalO
     }, 'service_packs_by_parts') 
   end
   
-  def used_memory_by_output
-    used_memory_output = Customer::Stat.get_named_results({
-      :result_type => 'optimization_results',
-      :result_name => 'minor_results',
-      :demo_result_id => demo_result_id,
-      :user_id => user_id,
-    }, 'used_memory_by_output') 
-
-    if used_memory_output
-      total = {'objects' => 0, 'bytes' => 0, 'loops' => 0}
-      used_memory_output.each do |name, value|
-        total['objects'] += value['objects'] || 0
-        total['bytes'] += value['bytes'] || 0
-        total['loops'] += value['loops'] || 0
-      end      
-      output = []
-      {'total' => total}.merge(used_memory_output).each do |name, value|
-        output << {'name' => name}.merge(value)
-      end
-      output
-    else
-      [{}]
-    end      
-  end
-  
 end

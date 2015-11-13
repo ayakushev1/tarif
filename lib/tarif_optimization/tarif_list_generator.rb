@@ -33,14 +33,14 @@ class TarifOptimization::TarifListGenerator
   end
   
   def set_operators_and_services(options)
-    @operators = (!options[:operators].blank? ? options[:operators] : [1023, 1025, 1028, 1030])
+    @operators = (!options[:services_by_operator][:operators].blank? ? options[:services_by_operator][:operators] : [1023, 1025, 1028, 1030])
     @tarifs = {1023 => [], 1025 => [], 1028 => [], 1030 => []}
     @common_services = {1023 => [], 1025 => [], 1028 => [], 1030 => []}
     @tarif_options = {1023 => [], 1025 => [], 1028 => [], 1030 => []}
     operators.each do |operator|
-      tarifs[operator] = options[:tarifs][operator] if options and options[:tarifs] and options[:tarifs][operator]  
-      common_services[operator] = options[:common_services][operator] if options and options[:common_services] and options[:common_services][operator]  
-      tarif_options[operator] = options[:tarif_options][operator] if options and options[:tarif_options] and options[:tarif_options][operator]  
+      tarifs[operator] = options[:services_by_operator][:tarifs][operator] if options and options[:services_by_operator][:tarifs] and options[:services_by_operator][:tarifs][operator]  
+      common_services[operator] = options[:services_by_operator][:common_services][operator] if options and options[:services_by_operator][:common_services] and options[:services_by_operator][:common_services][operator]  
+      tarif_options[operator] = options[:services_by_operator][:tarif_options][operator] if options and options[:services_by_operator][:tarif_options] and options[:services_by_operator][:tarif_options][operator]  
     end if operators
     all_tarifs_count = tarifs.map{|operator, tarif_by_operator| tarif_by_operator.size }.sum
     if all_tarifs_count == 0
@@ -91,9 +91,9 @@ class TarifOptimization::TarifListGenerator
   end
   
   def set_generation_params(options)
-    @calculate_with_multiple_use = options[:calculate_with_multiple_use] == 'true' ? true : false
-    @calculate_only_chosen_services = options[:calculate_only_chosen_services] == 'true' ? true : false
-    @calculate_with_fixed_services = options[:calculate_with_fixed_services] == 'true' ? true : false
+    @calculate_with_multiple_use = options[:tarif_list_generator_params][:calculate_with_multiple_use] == 'true' ? true : false
+    @calculate_only_chosen_services = options[:tarif_list_generator_params][:calculate_only_chosen_services] == 'true' ? true : false
+    @calculate_with_fixed_services = options[:tarif_list_generator_params][:calculate_with_fixed_services] == 'true' ? true : false
   end
   
   def check_input_from_options    

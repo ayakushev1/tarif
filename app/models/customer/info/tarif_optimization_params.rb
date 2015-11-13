@@ -30,7 +30,6 @@ class Customer::Info::TarifOptimizationParams < ActiveType::Record[Customer::Inf
       'calculate_with_multiple_use' => 'true',
       'simplify_tarif_results' => 'true',
       'save_tarif_results_ord' => 'false',
-      'analyze_memory_used' => 'false',
       'analyze_query_constructor_performance' => 'false',
       'save_interim_results_after_calculating_tarif_results' => 'false',
   #        'save_interim_results_after_calculating_final_tarif_sets' => 'false',

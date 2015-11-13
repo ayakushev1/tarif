@@ -47,9 +47,6 @@ form_item.init do |f|
      label(filtr_name, "save_tarif_results_ord", "Save tarif_results_ord?", label_html),
  	 select(filtr_name, "save_tarif_results_ord", [["Save", true], ["Do not save", false]], {:selected => s["save_tarif_results_ord"]}, input_html ),
 
-     label(filtr_name, "analyze_memory_used", "Analyze memory used?", label_html),
- 	 select(filtr_name, "analyze_memory_used", [["Analyse", true], ["Do not analyse", false]], {:selected => s["analyze_memory_used"]}, input_html ),
-
      label(filtr_name, "analyze_query_constructor_performance", "Analyze query_constructor_performance?", label_html),
  	 select(filtr_name, "analyze_query_constructor_performance", [["Analyse", true], ["Do not analyse", false]], {:selected => s["analyze_query_constructor_performance"]}, input_html ),
   	],

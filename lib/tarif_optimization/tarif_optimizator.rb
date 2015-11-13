@@ -13,7 +13,7 @@ class TarifOptimization::TarifOptimizator
 # параметры оптимизации 
   attr_reader :optimization_params, :check_sql_before_running, :execute_additional_sql, :service_ids_batch_size
 #настройки вывода результатов
-  attr_reader  :simplify_tarif_results, :save_tarif_results_ord, :analyze_memory_used, :output_call_ids_to_tarif_results, :output_call_count_to_tarif_results, 
+  attr_reader  :simplify_tarif_results, :save_tarif_results_ord, :output_call_ids_to_tarif_results, :output_call_count_to_tarif_results, 
                :analyze_query_constructor_performance, :save_interim_results_after_calculating_tarif_results, :analyze_final_tarif_set_generator_performance,
                :calculate_old_final_tarif_preparator, :save_new_final_tarif_results_in_my_batches
                #, :save_interim_results_after_calculating_final_tarif_sets
@@ -24,7 +24,6 @@ class TarifOptimization::TarifOptimizator
   attr_reader :calls_count_by_parts
   
   def initialize(options = {})
-    self.extend Helper
     init_input_data(options)
     init_output_params(options)
     @performance_checker = Customer::Stat::PerformanceChecker.new()
@@ -36,25 +35,23 @@ class TarifOptimization::TarifOptimizator
   def init_input_data(options)
     @options = options
     @use_background_process_informers = options[:use_background_process_informers] != nil ? options[:use_background_process_informers] : true
-    @fq_tarif_region_id = ((options[:user_region_id] and options[:user_region_id] != 0) ? options[:user_region_id] : 1238)
-#raise(StandardError, [@fq_tarif_region_id, options[:user_region_id]])    
-    @user_id = options[:user_id] || 0
-    @new_run_id = options[:new_run_id] || 0
-    @calculate_with_limited_scope = (options[:calculate_with_limited_scope] == 'true' ? true : false)
-    @selected_service_categories = options[:selected_service_categories]
-    @accounting_period = options[:accounting_period] #|| '1_2014'
+    @fq_tarif_region_id = ((options[:user_description][:user_region_id] and options[:user_description][:user_region_id] != 0) ? options[:user_description][:user_region_id] : 1238)
+    @user_id = options[:user_description][:user_id] || 0
+    @new_run_id = options[:user_input][:new_run_id] || 0
+    @calculate_with_limited_scope = (options[:user_input][:calculate_with_limited_scope] == 'true' ? true : false)
+    @selected_service_categories = options[:user_input][:selected_service_categories]
+    @accounting_period = options[:user_input][:accounting_period] #|| '1_2014'
   end
   
   def init_output_params(options)
-    @simplify_tarif_results = (options[:simplify_tarif_results] == 'true' ? true : false) 
-    @save_tarif_results_ord = (options[:save_tarif_results_ord] == 'true' ? true : false) 
-    @analyze_memory_used = (options[:analyze_memory_used] == 'true' ? true : false) 
-    @analyze_query_constructor_performance = (options[:analyze_query_constructor_performance] == 'true' ? true : false) 
+    @simplify_tarif_results = (options[:optimization_params][:simplify_tarif_results] == 'true' ? true : false) 
+    @save_tarif_results_ord = (options[:tarif_optimizator_input][:save_tarif_results_ord] == 'true' ? true : false) 
+    @analyze_query_constructor_performance = (options[:tarif_optimizator_input][:analyze_query_constructor_performance] == 'true' ? true : false) 
     @analyze_final_tarif_set_generator_performance = true
     @output_call_ids_to_tarif_results = false; @output_call_count_to_tarif_results = false
-    @save_interim_results_after_calculating_tarif_results = (options[:save_interim_results_after_calculating_tarif_results] == 'true' ? true : false)
-    @calculate_old_final_tarif_preparator = (options[:calculate_old_final_tarif_preparator] == 'true' ? true : false)
-    @save_new_final_tarif_results_in_my_batches = (options[:save_new_final_tarif_results_in_my_batches] == 'true' ? true : false)
+    @save_interim_results_after_calculating_tarif_results = (options[:tarif_optimizator_input][:save_interim_results_after_calculating_tarif_results] == 'true' ? true : false)
+    @calculate_old_final_tarif_preparator = (options[:tarif_optimizator_input][:calculate_old_final_tarif_preparator] == 'true' ? true : false)
+    @save_new_final_tarif_results_in_my_batches = (options[:tarif_optimizator_input][:save_new_final_tarif_results_in_my_batches] == 'true' ? true : false)
   end
   
   def init_additional_general_classes
@@ -64,7 +61,7 @@ class TarifOptimization::TarifOptimizator
     @calls_stat_calculator = Customer::Call::StatCalculator.new({:user_id => user_id, :accounting_period => accounting_period})
     @tarif_optimization_sql_builder = TarifOptimization::TarifOptimizationSqlBuilder.new(self, {:user_id => user_id, :accounting_period => accounting_period})
     @minor_result_saver = Customer::Stat::OptimizationResult.new('optimization_results', 'minor_results', user_id)
-    @tarif_list_generator = TarifOptimization::TarifListGenerator.new(options[:services_by_operator] || {})
+    @tarif_list_generator = TarifOptimization::TarifListGenerator.new(options || {})
     if use_background_process_informers
       @background_process_informer_operators = options[:background_process_informer_operators] || Customer::BackgroundStat::Informer.new('operators_optimization', user_id)
       @background_process_informer_tarifs = options[:background_process_informer_tarifs] || Customer::BackgroundStat::Informer.new('tarifs_optimization', user_id)
@@ -74,11 +71,10 @@ class TarifOptimization::TarifOptimizator
   end
   
   def init_optimization_params
-    @optimization_params = {:common => ['multiple_use_of_tarif_option', 'auto_turbo_buttons'], :onetime => [], :periodic => [], :calls => [], :sms => [], :internet => ['multiple_use_of_tarif_option']}
-#    @optimization_params = {:common => ['single_use_of_tarif_option'], :onetime => [], :periodic => [], :calls => [], :sms => [], :internet => ['single_use_of_tarif_option']}
+    @optimization_params = {:common => ['multiple_use_of_tarif_option', 'auto_turbo_buttons'], :onetime => [], :periodic => [], :calls => ['multiple_use_of_tarif_option'], :sms => ['multiple_use_of_tarif_option'], :internet => ['multiple_use_of_tarif_option']}
     @check_sql_before_running = false
     @execute_additional_sql = false
-    @service_ids_batch_size = (options[:service_ids_batch_size] ? options[:service_ids_batch_size].to_i : 10)
+    @service_ids_batch_size = (options[:optimization_params][:service_ids_batch_size] ? options[:optimization_params][:service_ids_batch_size].to_i : 10)
   end  
 
   def calculate_all_operator_tarifs(if_clean_output_results = true)
@@ -144,9 +140,6 @@ class TarifOptimization::TarifOptimizator
   def update_minor_results
     tarif_list_generator.calculate_service_packs; tarif_list_generator.calculate_service_packs_by_parts
     
-    used_memory_by_output = {}
-    used_memory_by_output = calculate_used_memory(output) if analyze_memory_used
-  
     start_time = minor_result_saver.results['start_time'].to_datetime if minor_result_saver.results and minor_result_saver.results['start_time']
     start_time = performance_checker.start if !start_time
     
@@ -160,7 +153,6 @@ class TarifOptimization::TarifOptimizator
        :calls_stat => calls_stat_calculator.calculate_calls_stat(query_constructor),
 #         :service_packs_by_parts => tarif_list_generator.tarif_sets, #,будет показывать только последний посчитанный тариф
        :service_packs_by_parts => tarif_list_generator.service_packs_by_parts,
-       :used_memory_by_output => used_memory_by_output,
        }})
   end
   
@@ -240,7 +232,7 @@ class TarifOptimization::TarifOptimizator
   end
   
   def simplify_tarif_resuts_by_tarif(operator, tarif, accounting_period)
-    tarif_result_simlifier = TarifOptimization::TarifResultSimlifier.new(options[:services_by_operator] || {})
+    tarif_result_simlifier = TarifOptimization::TarifResultSimlifier.new(options[:tarif_result_simlifier_params] || {})
     
     tarif_result_simlifier.set_input_data({
       :tarif_sets => tarif_list_generator.tarif_sets,          
@@ -258,7 +250,7 @@ class TarifOptimization::TarifOptimizator
   end
   
   def calculate_and_save_final_tarif_sets_by_tarif(operator, tarif, accounting_period, saved_results = nil)
-    @final_tarif_set_generator = TarifOptimization::FinalTarifSetGenerator.new(options[:services_by_operator] || {})
+    @final_tarif_set_generator = TarifOptimization::FinalTarifSetGenerator.new(options[:final_tarif_set_generator_params] || {})
     
     saved_results ||= optimization_result_saver.results({:operator_id => operator, :tarif_id => tarif, :accounting_period => accounting_period})
     
@@ -425,13 +417,6 @@ class TarifOptimization::TarifOptimizator
       Result::Agregate.create(agregates_array)
     end
     
-  end
-
-  def calculate_used_memory(output)
-    {}
-  end
-  
-  module Helper
   end
 
 end

@@ -8,21 +8,10 @@ class Customer::TarifOptimizatorsController < ApplicationController
   before_action :check_if_customer_has_free_trials, only: :recalculate
   before_action :check_inputs_for_recalculate, only: :recalculate
   before_action :validate_tarifs, only: [:index, :recalculate]
-
   before_action :init_background_process_informer, only: [:tarif_optimization_progress_bar, :calculation_status, :recalculate]
-#  after_action :update_customer_infos, only: :recalculate
 
   after_action :track_recalculate, only: :recalculate
   after_action :track_index, only: :index
-
-#  def index
-#    heroku = Background::WorkerManager::Heroku.new().heroku
-#    Rails.logger.info Background::WorkerManager::Heroku.new().worker_quantity('tarif_optimization')
-#    Rails.logger.info heroku.formation.info(ENV["MY_HEROKU_APP_NAME"], 'tarif_optimization')    
-#    Rails.logger.info heroku.dyno.list(ENV["MY_HEROKU_APP_NAME"])    
-#    Rails.logger.info heroku.formation.list(ENV["MY_HEROKU_APP_NAME"])    
-#    flash[:alert] = 'sssss'
-#  end
 
  def select_services
     session[:filtr]['service_choices_filtr'].merge!(Customer::Info::ServicesSelect.process_selecting_services(params['services_select_filtr']))
@@ -33,25 +22,20 @@ class Customer::TarifOptimizatorsController < ApplicationController
   def calculation_status
     if !background_process_informer_operators.calculating?      
       redirect_to({:action => :index}, :alert => "Расчет закончен")
-#      raise(StandardError, flash[:alert])
     end
   end
   
   def recalculate    
-#    raise(StandardError, [session_filtr_params(calculation_choices)['calculate_with_fixed_services']])
     if session_filtr_params(optimization_params)['calculate_on_background'] == 'true' and
       session_filtr_params(calculation_choices)['calculate_with_fixed_services'] == 'false'
-#      raise(StandardError)
-      recalculate_on_background
-#      sleep 0.2
-      if session_filtr_params(optimization_params)['calculate_background_with_spawnling'] == 'true' or 
-        session_filtr_params(calculation_choices)['calculate_with_fixed_services'] == 'true'
+      if (session_filtr_params(optimization_params)['calculate_background_with_spawnling'] == 'true')
+        recalculate_with_spawling
         redirect_to(:action => :calculation_status)
       else
+        recalculate_with_delayed_job
         redirect_to root_path, {:alert => "Мы сообщим вам электронным письмом об окончании расчетов"}
       end
     else
-#      raise(StandardError)
       recalculate_direct
       redirect_to({:action => :index}, {:alert => "Расчет выполнен. Можете перейти к просмотру результатов"})
     end    
@@ -60,7 +44,6 @@ class Customer::TarifOptimizatorsController < ApplicationController
   def check_inputs_for_recalculate     
     if session_filtr_params(calculation_choices)['accounting_period'].blank? or
         !accounting_periods.map(&:accounting_period).include?(session_filtr_params(calculation_choices)['accounting_period'])
-#      raise(StandardError, [session_filtr_params(calculation_choices)['accounting_period'], accounting_periods.map(&:accounting_period)])
       redirect_to({:action => :index}, {:alert => "Выберите период для расчета"}) and return
     end
 
@@ -86,11 +69,6 @@ class Customer::TarifOptimizatorsController < ApplicationController
       message = "Мы для вас сейчас уже подбираем тариф. Подождите до окончания подбора, мы сообщим об этом письмом, если вы предоставили адрес"
       redirect_to({:action => :index}, {:alert => message}) and return 
     end
-
-#    operator_id = session_filtr_params(services_for_calculation_select)["operator_id"].to_i
-#    tarif_id = session_filtr_params(services_for_calculation_select)["tarif_to_calculate"].to_i
-#    redirect_to({:action => :index}, {:alert => TarifClass.allowed_tarif_option_ids_for_tarif(operator_id, tarif_id)}) and return
-
   end
   
   def check_if_customer_has_free_trials

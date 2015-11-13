@@ -70,11 +70,6 @@ module Customer::OptimizationResultsHelper
     create_array_of_hashable(minor_result_presenter.service_packs_by_parts_array, options)
   end
   
-  def memory_used
-    options = {:base_name => 'memory_used', :current_id_name => 'objects', :id_name => 'objects', :pagination_per_page => 30}
-    create_array_of_hashable(minor_result_presenter.used_memory_by_output, options)
-  end
-  
   def current_tarif_set_calculation_history
     options = {:base_name => 'current_tarif_set_calculation_history', :current_id_name => 'count', :id_name => 'count', :pagination_per_page => 100}
     create_array_of_hashable(minor_result_presenter.current_tarif_set_calculation_history, options)

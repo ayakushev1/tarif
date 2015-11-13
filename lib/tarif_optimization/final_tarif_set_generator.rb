@@ -8,7 +8,7 @@ class TarifOptimization::FinalTarifSetGenerator
   
   attr_reader :use_short_tarif_set_name
          
-  attr_reader :max_tarif_set_count_per_tarif, :eliminate_identical_tarif_sets, :save_current_tarif_set_calculation_history
+  attr_reader :max_tarif_set_count_per_tarif, :save_current_tarif_set_calculation_history
   
   def initialize(options = {} )
     @options = options    
