@@ -99,7 +99,8 @@ module Customer::TarifOptimizatorHelper
           
 #          TarifOptimization::TarifOptimizator.new(options_to_calculate).calculate_all_operator_tarifs(false)
           
-          Delayed::Job.enqueue Background::Job::TarifOptimization.new(options_to_calculate, is_send_email), :priority => priority
+          Delayed::Job.enqueue Background::Job::TarifOptimization.new(options_to_calculate, is_send_email), 
+            :priority => priority, :reference_id => current_or_guest_user_id, :reference_type => 'user'
         end if options[:services_by_operator][:tarifs] and options[:services_by_operator][:tarifs][operator]
       end if options[:services_by_operator] and options[:services_by_operator][:operators]       
 #      delay(:queue => 'tarif_optimization', :priority => priority).start_calculate_all_operator_tarifs(options)
