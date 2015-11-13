@@ -20,8 +20,8 @@ module ApplicationHelper::Authorization
     when user_type == :admin
     when match_with_lists([:root_url, :external_api_processing])
     when match_with_lists([:public_url])
-    when (match_with_lists([:call_generation_and_parsing]) and [:guest, :trial, :user].include?(user_type))
-    when (match_with_lists([:tarif_optimization]) and [:guest, :trial, :user].include?(user_type))
+    when (match_with_lists([:call_generation_and_parsing]) and [:stranger, :guest, :trial, :user].include?(user_type))
+    when (match_with_lists([:tarif_optimization]) and [:stranger, :guest, :trial, :user].include?(user_type))
     when match_with_lists([:any_user_actions_with_devise])
     when (match_with_lists([:new_user_actions_with_devise]) and user_type == :guest)
     when match_with_lists([:signed_user_actions_with_devise]) 
