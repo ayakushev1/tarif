@@ -29,20 +29,19 @@ module ApplicationHelper::Authorization
     when match_with_lists([:password_user_actions_with_devise]) 
       redirect_to(root_path, alert: "У вас нет доступа к чужому счету") if !(match_param_user_with_signed_user and match_user_password)
     else 
-      redirect_to(root_path, alert: "Доступ к разделу сайта #{controller_path}/#{action_name} ограничен")
+      redirect_to(root_path, alert: "Доступ к разделу сайта #{controller_path}/#{action_name} for #{user_type} ограничен")
     end
   end 
 
   def my_skip_authenticate
-    match_with_lists([:root_url, :external_api_processing]) or 
-    (user_type == :bot and match_with_lists([:root_url, :public_url])) or 
-    (user_type == :guest and match_with_lists([:root_url, :public_url, :new_user_actions_with_devise, :call_generation_and_parsing, :tarif_optimization]))
+#    match_with_lists([:root_url, :external_api_processing]) or 
+#    ([:bot, :stranger].include?(user_type) and match_with_lists([:root_url, :public_url])) or 
+#    (user_type == :guest and match_with_lists([:root_url, :public_url, :new_user_actions_with_devise, :call_generation_and_parsing, :tarif_optimization]))
+    match_with_lists([:root_url, :public_url, :new_user_actions_with_devise, :call_generation_and_parsing, :tarif_optimization, :external_api_processing])
   end
   
   def allowed_request_origin
-#    (user_type == :bot and match_with_lists([:root_url, :public_url])) or
-    (match_with_lists([:root_url, :public_url])) or
-    match_with_lists([:external_api_processing]) 
+    match_with_lists([:root_url, :public_url, :call_generation_and_parsing, :tarif_optimization, :external_api_processing])
   end
   
   def match_param_user_with_signed_user
@@ -151,8 +150,10 @@ module ApplicationHelper::Authorization
       :admin
     when (current_user and current_user.encrypted_password.blank?)
       :trial
-    else
+    when current_user
       :user
+    else
+      :stranger
     end
   end
   
