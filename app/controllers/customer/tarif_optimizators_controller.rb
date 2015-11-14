@@ -1,7 +1,7 @@
 require 'platform-api'
 
 class Customer::TarifOptimizatorsController < ApplicationController
-  include Customer::TarifOptimizatorHelper
+  include Customer::TarifOptimizatorHelper, Customer::TarifOptimizatorBackgroundHelper
   
   before_action :check_if_optimization_options_are_in_session, only: [:index]
 

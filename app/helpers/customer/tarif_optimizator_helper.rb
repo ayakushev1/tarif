@@ -1,8 +1,6 @@
 module Customer::TarifOptimizatorHelper
-  include SavableInSession::Filtrable, SavableInSession::ArrayOfHashable, SavableInSession::ProgressBarable, SavableInSession::SessionInitializers
+  include SavableInSession::Filtrable, SavableInSession::ArrayOfHashable, SavableInSession::SessionInitializers
 
-  attr_reader :background_process_informer_operators, :background_process_informer_tarifs, :background_process_informer_tarif
-  
   def optimization_params
     create_filtrable("optimization_params")
   end
@@ -31,25 +29,6 @@ module Customer::TarifOptimizatorHelper
     create_filtrable("services_for_calculation_select")
   end
 
-  def operators_optimization_progress_bar
-    options = {'action_on_update_progress' => customer_tarif_optimizators_calculation_status_path}.merge(
-      background_process_informer_operators.current_values);
-    create_progress_barable('operators_optimization', options)
-  end
-  
-  def tarifs_optimization_progress_bar
-    options = {'action_on_update_progress' => customer_tarif_optimizators_calculation_status_path}.merge(
-      background_process_informer_tarifs.current_values);
-    create_progress_barable('tarifs_optimization', options)
-#    raise(StandardError)
-  end
-  
-  def tarif_optimization_progress_bar
-    options = {'action_on_update_progress' => customer_tarif_optimizators_calculation_status_path}.merge(
-      background_process_informer_tarif.current_values);
-    create_progress_barable('tarif_optimization', options)
-  end
-
   def update_customer_infos
     Customer::Info::ServicesSelect.update_info(current_or_guest_user_id, session_filtr_params(services_select)) if user_type == :admin
     Customer::Info::ServiceChoices.update_info(current_or_guest_user_id, session_filtr_params(service_choices)) if user_type == :admin
@@ -64,21 +43,6 @@ module Customer::TarifOptimizatorHelper
     end
   end
 
-  def prepare_background_process_informer
-    [background_process_informer_operators, background_process_informer_tarifs, background_process_informer_tarif].compact.each do |background_process_informer|
-      background_process_informer.clear_completed_process_info_model
-      background_process_informer.init
-    end
-    
-  end
-  
-  def init_background_process_informer
-#    GC.start
-    @background_process_informer_operators ||= Customer::BackgroundStat::Informer.new('operators_optimization', current_or_guest_user_id)
-    @background_process_informer_tarifs ||= Customer::BackgroundStat::Informer.new('tarifs_optimization', current_or_guest_user_id)
-    @background_process_informer_tarif ||= Customer::BackgroundStat::Informer.new('tarif_optimization', current_or_guest_user_id)
-  end
-  
   def options
     {
       :optimization_params => session_filtr_params(optimization_params),
