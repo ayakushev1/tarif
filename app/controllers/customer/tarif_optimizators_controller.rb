@@ -26,17 +26,19 @@ class Customer::TarifOptimizatorsController < ApplicationController
   end
   
   def recalculate    
+    update_customer_infos
     if session_filtr_params(optimization_params)['calculate_on_background'] == 'true' and
       session_filtr_params(calculation_choices)['calculate_with_fixed_services'] == 'false'
       if (session_filtr_params(optimization_params)['calculate_background_with_spawnling'] == 'true')
-        recalculate_with_spawling
+        prepare_background_process_informer
+        TarifOptimization::TarifOptimizatorRunner.recalculate_with_spawling(options)            
         redirect_to(:action => :calculation_status)
       else
-        recalculate_with_delayed_job
+        TarifOptimization::TarifOptimizatorRunner.recalculate_with_delayed_job(options)
         redirect_to root_path, {:alert => "Мы сообщим вам электронным письмом об окончании расчетов"}
       end
     else
-      recalculate_direct
+      TarifOptimization::TarifOptimizatorRunner.recalculate_direct(options)
       redirect_to({:action => :index}, {:alert => "Расчет выполнен. Можете перейти к просмотру результатов"})
     end    
   end 

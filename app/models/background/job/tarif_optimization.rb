@@ -7,7 +7,8 @@ module Background::Job
     end
     
     def perform
-#      raise(StandardError, priority)
+      ::TarifOptimization::TarifOptimizatorRunner.calculate(options)
+=begin
       tarif_optimizator = ::TarifOptimization::TarifOptimizator.new(options)
 
       ::Customer::Stat::PerformanceChecker.apply(::TarifOptimization::TarifOptimizator)
@@ -17,11 +18,11 @@ module Background::Job
       ::Customer::Stat::PerformanceChecker.apply(::TarifOptimization::CurrentTarifOptimizationResults)
       ::Customer::Stat::PerformanceChecker.apply(::TarifOptimization::CurrentTarifOptimizationResults)
 
-      tarif_optimizator.calculate_all_operator_tarifs(false)
+      tarif_optimizator.calculate_all_operator_tarifs
       tarif_optimizator.update_minor_results
       
-#      ::TarifOptimization::TarifOptimizator.new(options).calculate_all_operator_tarifs(false)
-      UserMailer.tarif_optimization_complete(options[:user_id]).deliver if is_send_email == true
+      UserMailer.tarif_optimization_complete(options[:user_input][:user_id]).deliver if options[:is_send_email] == true
+=end
     end    
 
     def queue_name

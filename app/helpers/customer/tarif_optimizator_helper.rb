@@ -63,73 +63,7 @@ module Customer::TarifOptimizatorHelper
       Customer::Info::ServicesUsed.decrease_one_free_trials_by_one(current_or_guest_user_id, 'tarif_optimization_count')      
     end
   end
-  
-  def recalculate_with_spawling
-    prepare_background_process_informer
-    Spawnling.new(:argv => "optimize for #{current_or_guest_user_id}") do
-      calculate(options.merge({:use_background_process_informers => true}))
-      UserMailer.tarif_optimization_complete(current_or_guest_user_id).deliver
-    end
-  end
-  
-  def recalculate_with_delayed_job
-    priority = Customer::Info::ServicesUsed.info(current_or_guest_user_id)['paid_trials'] = true ? 10 : 20
-    update_customer_infos
-    
-    TarifOptimization::TarifOptimizator.new(options).clean_output_results
-    TarifOptimization::TarifOptimizator.new(options).clean_new_results
-    
-    is_send_email = false
-    number_of_workers_to_add = 0
-    options[:services_by_operator][:operators].each do |operator|
-      options[:services_by_operator][:tarifs][operator].each do |tarif|
-        options_to_calculate = options.merge({:use_background_process_informers => false})
-        options_to_calculate[:services_by_operator][:operators] = [operator]
-        options_to_calculate[:services_by_operator][:tarifs] = {operator => [tarif]}
-        options_to_calculate[:services_by_operator][:tarif_options] = {operator => options[:services_by_operator][:tarif_options][operator]}
-        options_to_calculate[:services_by_operator][:common_services] = {operator => options[:services_by_operator][:common_services][operator]}
-        is_send_email = true if operator == options[:services_by_operator][:operators].last and tarif == options[:services_by_operator][:tarifs][operator].last
-        number_of_workers_to_add += 1
-        
-        Delayed::Job.enqueue Background::Job::TarifOptimization.new(options_to_calculate, is_send_email), 
-          :priority => priority, :reference_id => current_or_guest_user_id, :reference_type => 'user'
-      end if options[:services_by_operator][:tarifs] and options[:services_by_operator][:tarifs][operator]
-    end if options[:services_by_operator] and options[:services_by_operator][:operators]       
-    
-    base_worker_add_number = (session_filtr_params(optimization_params)['max_number_of_tarif_optimization_workers'] || 3).to_i
-    base_worker_add_number = current_or_guest_user_id == 1 ? base_worker_add_number : 1
-    number_of_workers_to_add = [
-      base_worker_add_number - Background::WorkerManager::Manager.worker_quantity('tarif_optimization'),
-      number_of_workers_to_add
-    ].min
-    Background::WorkerManager::Manager.start_number_of_worker('tarif_optimization', number_of_workers_to_add)
-    i = 0
-  end
-    
-  def recalculate_direct
-    calculate(options.merge({:use_background_process_informers => false}))
-  end
-  
-  def calculate(options)
-    tarif_optimizator = TarifOptimization::TarifOptimizator.new(options)   
 
-    Customer::Stat::PerformanceChecker.apply(TarifOptimization::TarifOptimizator)
-    Customer::Stat::PerformanceChecker.apply(TarifOptimization::FinalTarifSetGenerator)
-    Customer::Stat::PerformanceChecker.apply(TarifOptimization::CurrentTarifSet)
-    Customer::Stat::PerformanceChecker.apply(TarifOptimization::QueryConstructor)
-    Customer::Stat::PerformanceChecker.apply(TarifOptimization::CurrentTarifOptimizationResults)
-
-    if options[:use_background_process_informers]
-      Customer::BackgroundStat::Informer.apply(TarifOptimization::TarifOptimizator)
-      Customer::BackgroundStat::Informer.apply(TarifOptimization::FinalTarifSetGenerator)
-    end
-
-    tarif_optimizator.calculate_all_operator_tarifs(true)
-    tarif_optimizator.update_minor_results
-    
-    update_customer_infos
-  end
-  
   def prepare_background_process_informer
     [background_process_informer_operators, background_process_informer_tarifs, background_process_informer_tarif].compact.each do |background_process_informer|
       background_process_informer.clear_completed_process_info_model
@@ -144,55 +78,27 @@ module Customer::TarifOptimizatorHelper
     @background_process_informer_tarifs ||= Customer::BackgroundStat::Informer.new('tarifs_optimization', current_or_guest_user_id)
     @background_process_informer_tarif ||= Customer::BackgroundStat::Informer.new('tarif_optimization', current_or_guest_user_id)
   end
-   
+  
   def options
-    optimization_params_session_filtr_params = session_filtr_params(optimization_params)
-    service_choices_session_filtr_params = session_filtr_params(service_choices)
-    calculation_choices_session_filtr_params = session_filtr_params(calculation_choices)
     {
-     :tarif_optimizator_input => {
-        :save_tarif_results_ord => optimization_params_session_filtr_params['save_tarif_results_ord'], 
-        :save_new_final_tarif_results_in_my_batches => optimization_params_session_filtr_params['save_new_final_tarif_results_in_my_batches'],
-        :calculate_old_final_tarif_preparator => optimization_params_session_filtr_params['calculate_old_final_tarif_preparator'],
-        :save_interim_results_after_calculating_tarif_results => optimization_params_session_filtr_params['save_interim_results_after_calculating_tarif_results'], 
-        :analyze_query_constructor_performance => optimization_params_session_filtr_params['analyze_query_constructor_performance'], 
-       },
-     :optimization_params => {
-        :service_ids_batch_size => optimization_params_session_filtr_params['service_ids_batch_size'], 
-        :simplify_tarif_results => optimization_params_session_filtr_params['simplify_tarif_results'], 
-       },
-     :user_input => {
-        :accounting_period => calculation_choices_session_filtr_params['accounting_period'],
-        :calculate_with_limited_scope => calculation_choices_session_filtr_params['calculate_with_limited_scope'],
-        :selected_service_categories => selected_service_categories,
+      :optimization_params => session_filtr_params(optimization_params),
+      :service_choices => session_filtr_params(service_choices),
+      :calculation_choices => session_filtr_params(calculation_choices),
+      :selected_service_categories => selected_service_categories,
+      :services_by_operator => services_by_operator,
+      :temp_value => {
         :new_run_id => new_run_id,
-       },
-     :user_description => {
         :user_id => current_or_guest_user_id,
-        :user_region_id => nil,                   
-       },
-     :services_by_operator => {
-        :operators => operators, :tarifs => tarifs, :tarif_options => tarif_options, :common_services => common_services,         
-       },
-     :final_tarif_set_generator_params => {
-        :use_short_tarif_set_name => optimization_params_session_filtr_params['use_short_tarif_set_name'], 
-        :max_tarif_set_count_per_tarif => optimization_params_session_filtr_params['max_tarif_set_count_per_tarif'],
-        :save_current_tarif_set_calculation_history => optimization_params_session_filtr_params['save_current_tarif_set_calculation_history'],
-        :use_price_comparison_in_current_tarif_set_calculation => optimization_params_session_filtr_params['use_price_comparison_in_current_tarif_set_calculation'],
-        :part_sort_criteria_in_price_optimization => optimization_params_session_filtr_params['part_sort_criteria_in_price_optimization'],       
-       },
-     :tarif_list_generator_params => {
-        :calculate_with_multiple_use => optimization_params_session_filtr_params['calculate_with_multiple_use'],
-        :calculate_only_chosen_services => calculation_choices_session_filtr_params['calculate_only_chosen_services'],
-        :calculate_with_fixed_services => calculation_choices_session_filtr_params['calculate_with_fixed_services'],       
-       }, 
-     :tarif_result_simlifier_params => {
-        :if_update_tarif_sets_to_calculate_from_with_cons_tarif_results => optimization_params_session_filtr_params['if_update_tarif_sets_to_calculate_from_with_cons_tarif_results'],
-        :eliminate_identical_tarif_sets => optimization_params_session_filtr_params['eliminate_identical_tarif_sets'],       
-       }, 
-     }   
+        :user_region_id => nil,         
+        :user_priority => user_priority,      
+      }
+    }
   end
   
+  def user_priority
+    Customer::Info::ServicesUsed.info(current_or_guest_user_id)['paid_trials'] = true ? 10 : 20
+  end
+
   def new_run_id    
     Result::Run.where(:user_id => current_or_guest_user_id, :run => 1).first_or_create()[:id]
   end
@@ -200,6 +106,10 @@ module Customer::TarifOptimizatorHelper
   def operator
     optimization_params_session_filtr_params = session_filtr_params(optimization_params)
     optimization_params_session_filtr_params['operator_id'].blank? ? 1030 : optimization_params_session_filtr_params['operator_id'].to_i
+  end
+  
+  def services_by_operator
+    {:operators => operators, :tarifs => tarifs, :tarif_options => tarif_options, :common_services => common_services,}
   end
   
   def operators

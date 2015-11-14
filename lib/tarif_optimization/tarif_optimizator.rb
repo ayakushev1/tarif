@@ -35,8 +35,8 @@ class TarifOptimization::TarifOptimizator
   def init_input_data(options)
     @options = options
     @use_background_process_informers = options[:use_background_process_informers] != nil ? options[:use_background_process_informers] : true
-    @fq_tarif_region_id = ((options[:user_description][:user_region_id] and options[:user_description][:user_region_id] != 0) ? options[:user_description][:user_region_id] : 1238)
-    @user_id = options[:user_description][:user_id] || 0
+    @fq_tarif_region_id = ((options[:user_input][:user_region_id] and options[:user_input][:user_region_id] != 0) ? options[:user_input][:user_region_id] : 1238)
+    @user_id = options[:user_input][:user_id] || 0
     @new_run_id = options[:user_input][:new_run_id] || 0
     @calculate_with_limited_scope = (options[:user_input][:calculate_with_limited_scope] == 'true' ? true : false)
     @selected_service_categories = options[:user_input][:selected_service_categories]
@@ -77,9 +77,9 @@ class TarifOptimization::TarifOptimizator
     @service_ids_batch_size = (options[:optimization_params][:service_ids_batch_size] ? options[:optimization_params][:service_ids_batch_size].to_i : 10)
   end  
 
-  def calculate_all_operator_tarifs(if_clean_output_results = true)
-    clean_output_results if if_clean_output_results
-    clean_new_results  if if_clean_output_results
+  def calculate_all_operator_tarifs
+    clean_output_results if options[:if_clean_output_results]
+    clean_new_results  if options[:if_clean_output_results]
     tarif_list_generator.operators.each do |operator| 
       calculate_one_operator(operator) if !tarif_list_generator.tarifs[operator].blank?
     end
