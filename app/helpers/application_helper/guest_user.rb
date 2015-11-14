@@ -30,6 +30,7 @@ module ApplicationHelper::GuestUser
   # called (once) when the user logs in, insert any code your application needs
   # to hand off from guest_user to current_user.
   def logging_in
+    return if (Customer::Info.where(:user_id => current_user.id).present? and Customer::Call.where(:user_id => current_user.id).present?)
     Customer::Call.where(:user_id => session[:guest_user_id]).update_all("user_id = #{current_user.id}")
     Customer::Demand.where(:customer_id => session[:guest_user_id]).update_all("customer_id = #{current_user.id}")
     Customer::Info.where(:user_id => session[:guest_user_id]).update_all("user_id = #{current_user.id}")
