@@ -1,42 +1,23 @@
 require 'platform-api'
 
 class Customer::TarifOptimizatorsController < ApplicationController
-  include Customer::TarifOptimizatorHelper, Customer::TarifOptimizatorBackgroundHelper
+  include Customer::TarifOptimizatorHelper
   
   before_action :check_if_optimization_options_are_in_session, only: [:index]
 
   before_action :check_if_customer_has_free_trials, only: :recalculate
   before_action :check_inputs_for_recalculate, only: :recalculate
-  before_action :validate_tarifs, only: [:index, :recalculate]
-  before_action :init_background_process_informer, only: [:tarif_optimization_progress_bar, :calculation_status, :recalculate]
+#  before_action :validate_tarifs, only: [:index, :recalculate]
+#  before_action :init_background_process_informer, only: [:tarif_optimization_progress_bar, :calculation_status, :recalculate]
 
   after_action :track_recalculate, only: :recalculate
   after_action :track_index, only: :index
 
- def select_services
-    session[:filtr]['service_choices_filtr'].merge!(Customer::Info::ServicesSelect.process_selecting_services(params['services_select_filtr']))
-    session_filtr_params(services_select)
-    redirect_to(:action => :index)
-  end
-  
-  def calculation_status
-    if !background_process_informer_operators.calculating?      
-      redirect_to({:action => :index}, :alert => "Расчет закончен")
-    end
-  end
-  
   def recalculate    
     update_customer_infos
-    if session_filtr_params_optimization_params['calculate_on_background'] == 'true' and
-      session_filtr_params(calculation_choices)['calculate_with_fixed_services'] == 'false'
-      if (session_filtr_params_optimization_params['calculate_background_with_spawnling'] == 'true')
-        prepare_background_process_informer
-        TarifOptimization::TarifOptimizatorRunner.recalculate_with_spawling(options)            
-        redirect_to(:action => :calculation_status)
-      else
-        TarifOptimization::TarifOptimizatorRunner.recalculate_with_delayed_job(options)
-        redirect_to root_path, {:alert => "Мы сообщим вам электронным письмом об окончании расчетов"}
-      end
+    if session_filtr_params(calculation_choices)['calculate_with_fixed_services'] == 'false'
+      TarifOptimization::TarifOptimizatorRunner.recalculate_with_delayed_job(options)
+      redirect_to root_path, {:alert => "Мы сообщим вам электронным письмом об окончании расчетов"}
     else
       TarifOptimization::TarifOptimizatorRunner.recalculate_direct(options)
       redirect_to({:action => :index}, {:alert => "Расчет выполнен. Можете перейти к просмотру результатов"})

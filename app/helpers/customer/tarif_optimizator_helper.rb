@@ -1,14 +1,6 @@
 module Customer::TarifOptimizatorHelper
-  include SavableInSession::Filtrable, SavableInSession::ArrayOfHashable, SavableInSession::SessionInitializers
+  include SavableInSession::Filtrable, SavableInSession::SessionInitializers
 
-  def optimization_params
-    create_filtrable("optimization_params")
-  end
-  
-  def service_choices
-    create_filtrable("service_choices")
-  end
-  
   def calculation_choices
     create_filtrable("calculation_choices")
   end
@@ -30,10 +22,6 @@ module Customer::TarifOptimizatorHelper
   end
 
   def update_customer_infos
-    Customer::Info::ServicesSelect.update_info(current_or_guest_user_id, session_filtr_params(services_select)) if user_type == :admin
-    Customer::Info::ServiceChoices.update_info(current_or_guest_user_id, session_filtr_params(service_choices)) if user_type == :admin
-    Customer::Info::TarifOptimizationParams.update_info(current_or_guest_user_id, session_filtr_params(optimization_params)) if user_type == :admin
-
     Customer::Info::CalculationChoices.update_info(current_or_guest_user_id, session_filtr_params(calculation_choices))
     Customer::Info::ServiceCategoriesSelect.update_info(current_or_guest_user_id, session_filtr_params(service_categories_select))
 
@@ -45,10 +33,10 @@ module Customer::TarifOptimizatorHelper
   end
 
   def options
-    session_filtr_params_services_select = user_type == :admin ? session_filtr_params(services_select) : Customer::Info::ServicesSelect.default_values(user_type) #just in case for future
+    session_filtr_params_services_select = Customer::Info::ServicesSelect.default_values(user_type) #just in case for future
     {
-      :optimization_params => session_filtr_params_optimization_params,
-      :service_choices => session_filtr_params(service_choices),
+      :optimization_params => Customer::Info::TarifOptimizationParams.default_values,
+#      :service_choices => session_filtr_params(service_choices),
       :calculation_choices => session_filtr_params(calculation_choices),
       :selected_service_categories => selected_service_categories,
       :services_by_operator => services_by_operator,
@@ -73,17 +61,9 @@ module Customer::TarifOptimizatorHelper
     @accounting_periods ||= Customer::Call.where(:user_id => current_or_guest_user_id).select("description->>'accounting_period' as accounting_period").uniq
   end
 
-#  def operator
-#    optimization_params_session_filtr_params = session_filtr_params(optimization_params)
-#    optimization_params_session_filtr_params['operator_id'].blank? ? 1030 : optimization_params_session_filtr_params['operator_id'].to_i
-#  end
-  
-  def session_filtr_params_optimization_params
-    user_type == :admin ? session_filtr_params(optimization_params) : Customer::Info::TarifOptimizationParams.default_values
-  end
-
   def services_by_operator
-    session_filtr_params(calculation_choices)['calculate_with_fixed_services'] == 'true' ? services_by_operator_for_calculate_with_fixed_services :  services_by_operator_for_calculate_with_all_services
+    session_filtr_params(calculation_choices)['calculate_with_fixed_services'] == 'true' ? services_by_operator_for_calculate_with_fixed_services :  
+      Customer::Info::ServiceChoices.services_from_session_to_optimization_format(Customer::Info::ServiceChoices.default_values(user_type))
   end
   
   def services_by_operator_for_calculate_with_fixed_services
@@ -97,31 +77,7 @@ module Customer::TarifOptimizatorHelper
      }
   end
   
-  def services_by_operator_for_calculate_with_all_services
-    service_choices_session_filtr_params = user_type == :admin ? session_filtr_params(service_choices) : Customer::Info::ServiceChoices.default_values(user_type)
-    Customer::Info::ServiceChoices.services_from_session_to_optimization_format(service_choices_session_filtr_params)
-  end
-
-  def validate_tarifs
-    params['service_choices_filtr'].merge!(Customer::Info::ServiceChoices.validate_tarifs(params['service_choices_filtr'])) if params['service_choices_filtr']
-  end
-  
   def check_if_optimization_options_are_in_session
-    if session[:filtr]['service_choices_filtr'].blank? and user_type == :admin
-      session[:filtr]['service_choices_filtr'] ||= {}
-      session[:filtr]['service_choices_filtr']  = Customer::Info::ServiceChoices.info(current_or_guest_user_id)
-    end
-
-    if session[:filtr]['services_select_filtr'].blank? and user_type == :admin
-      session[:filtr]['services_select_filtr'] ||= {}
-      session[:filtr]['services_select_filtr']  = Customer::Info::ServicesSelect.info(current_or_guest_user_id)
-    end
-    
-    if session[:filtr]['optimization_params_filtr'].blank? and user_type == :admin
-      session[:filtr]['optimization_params_filtr'] ||= {}
-      session[:filtr]['optimization_params_filtr']  = Customer::Info::TarifOptimizationParams.info(current_or_guest_user_id)
-    end
-    
     accounting_period = accounting_periods.blank? ? -1 : accounting_periods[0]['accounting_period']  
     if session[:filtr]['calculation_choices_filtr'].blank?
       session[:filtr]['calculation_choices_filtr'] ||= {}

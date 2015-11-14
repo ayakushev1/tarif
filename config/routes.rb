@@ -68,8 +68,6 @@ Rails.application.routes.draw do
     controller :tarif_optimizators do
       get 'tarif_optimizators/index' => :index
       get 'tarif_optimizators/recalculate' => :recalculate
-      get 'tarif_optimizators/calculation_status' => :calculation_status
-      get 'tarif_optimizators/select_services' => :select_services
     end   
 
     controller :admin_tarif_optimizators do

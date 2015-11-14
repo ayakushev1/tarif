@@ -48,7 +48,7 @@ module Customer::AdminTarifOptimizatorHelper
     session_filtr_params_services_select = user_type == :admin ? session_filtr_params(services_select) : Customer::Info::ServicesSelect.default_values(user_type) #just in case for future
     {
       :optimization_params => session_filtr_params_optimization_params,
-      :service_choices => session_filtr_params(service_choices),
+#      :service_choices => session_filtr_params(service_choices),
       :calculation_choices => session_filtr_params(calculation_choices),
       :selected_service_categories => selected_service_categories,
       :services_by_operator => services_by_operator,

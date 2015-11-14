@@ -72,7 +72,6 @@ class TarifOptimization::TarifOptimizatorRunner
   
   def self.optimization_params(options = {})
     optimization_params = options[:optimization_params]
-    service_choices = options[:service_choices]
     calculation_choices = options[:calculation_choices]
     selected_service_categories = options[:selected_service_categories]
     services_by_operator = options[:services_by_operator]
