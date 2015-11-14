@@ -52,7 +52,7 @@ class Customer::Info::ServicesUsed < ActiveType::Record[Customer::Info]
     {
       'calls_modelling_count' => 10,
       'calls_parsing_count' => 10,
-      'tarif_optimization_count' => 3,
+      'tarif_optimization_count' => 5,
       'tarif_recalculation_count' => 10,
       'has_calls_loaded' => false,
       'has_tarif_optimized' => false,

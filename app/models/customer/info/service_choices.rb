@@ -22,45 +22,57 @@ class Customer::Info::ServiceChoices < ActiveType::Record[Customer::Info]
     where(:user_id => user_id).first_or_create.update(:info => values)
   end
   
+  def self.services_from_session_to_optimization_format(services_chosen)
+    result = {:operators => [], :tarifs => {}, :tarif_options => {}, :common_services => {}, }
+    
+     {'tel' => 1023, 'bln' => 1025, 'mgf' => 1028, 'mts' => 1030}.each do |operator_name, operator_id|
+       result[:operators] << operator_id if !services_chosen['tarifs'][operator_name].blank? 
+       result[:tarifs][operator_id] = (services_chosen['tarifs'][operator_name] || []).map(&:to_i)
+       result[:tarif_options][operator_id] = (services_chosen['tarif_options'][operator_name] || []).map(&:to_i)
+       result[:common_services][operator_id] = (services_chosen['common_services'][operator_name] || []).map(&:to_i)
+     end
+    result 
+  end
+
   def self.validate_tarifs(to_validate)
-    validated_result = {}
+    validated_result = {'tarifs' => {}, 'tarif_options' => {}, 'common_services' => {}}
     operator = 1023
-    validated_result['tarifs_tel'] = to_validate['tarifs_tel'].to_s.scan(/\d+/).map(&:to_i) & tarifs[operator] 
-    validated_result['tarif_options_tel'] = to_validate['tarif_options_tel'].to_s.scan(/\d+/).map(&:to_i) & tarif_options[operator] 
-    validated_result['common_services_tel'] = to_validate['common_services_tel'].to_s.scan(/\d+/).map(&:to_i) & common_services[operator] 
+#    raise(StandardError, to_validate)
+    validated_result['tarifs']['tel'] = to_validate['tarifs']['tel'].to_s.scan(/\d+/).map(&:to_i) & tarifs[operator] 
+    validated_result['tarif_options']['tel'] = to_validate['tarif_options']['tel'].to_s.scan(/\d+/).map(&:to_i) & tarif_options[operator] 
+    validated_result['common_services']['tel'] = to_validate['common_services']['tel'].to_s.scan(/\d+/).map(&:to_i) & common_services[operator] 
 
     operator = 1025
-    validated_result['tarifs_bln'] = to_validate['tarifs_bln'].to_s.scan(/\d+/).map(&:to_i) & tarifs[operator] 
-    validated_result['tarif_options_bln'] = to_validate['tarif_options_bln'].to_s.scan(/\d+/).map(&:to_i) & tarif_options[operator] 
-    validated_result['common_services_bln'] = to_validate['common_services_bln'].to_s.scan(/\d+/).map(&:to_i) & common_services[operator] 
+    validated_result['tarifs']['bln'] = to_validate['tarifs']['bln'].to_s.scan(/\d+/).map(&:to_i) & tarifs[operator] 
+    validated_result['tarif_options']['bln'] = to_validate['tarif_options']['bln'].to_s.scan(/\d+/).map(&:to_i) & tarif_options[operator] 
+    validated_result['common_services']['bln'] = to_validate['common_services']['bln'].to_s.scan(/\d+/).map(&:to_i) & common_services[operator] 
 
     operator = 1028
-    validated_result['tarifs_mgf'] = to_validate['tarifs_mgf'].to_s.scan(/\d+/).map(&:to_i) & tarifs[operator] 
-    validated_result['tarif_options_mgf'] = to_validate['tarif_options_mgf'].to_s.scan(/\d+/).map(&:to_i) & tarif_options[operator] 
-    validated_result['common_services_mgf'] = to_validate['common_services_mgf'].to_s.scan(/\d+/).map(&:to_i) & common_services[operator] 
+    validated_result['tarifs']['mgf'] = to_validate['tarifs']['mgf'].to_s.scan(/\d+/).map(&:to_i) & tarifs[operator] 
+    validated_result['tarif_options']['mgf'] = to_validate['tarif_options']['mgf'].to_s.scan(/\d+/).map(&:to_i) & tarif_options[operator] 
+    validated_result['common_services']['mgf'] = to_validate['common_services']['mgf'].to_s.scan(/\d+/).map(&:to_i) & common_services[operator] 
 
     operator = 1030
-    validated_result['tarifs_mts'] = to_validate['tarifs_mts'].to_s.scan(/\d+/).map(&:to_i) & tarifs[operator] 
-    validated_result['tarif_options_mts'] = to_validate['tarif_options_mts'].to_s.scan(/\d+/).map(&:to_i) & tarif_options[operator] 
-    validated_result['common_services_mts'] = to_validate['common_services_mts'].to_s.scan(/\d+/).map(&:to_i) & common_services[operator]
+    validated_result['tarifs']['mts'] = to_validate['tarifs']['mts'].to_s.scan(/\d+/).map(&:to_i) & tarifs[operator] 
+    validated_result['tarif_options']['mts'] = to_validate['tarif_options']['mts'].to_s.scan(/\d+/).map(&:to_i) & tarif_options[operator] 
+    validated_result['common_services']['mts'] = to_validate['common_services']['mts'].to_s.scan(/\d+/).map(&:to_i) & common_services[operator]
     validated_result 
   end
   
   def self.default_values(user_type = :guest)
     {
-      'tarifs_tel' => tarifs[1023], 'tarifs_bln' => tarifs[1025], 'tarifs_mgf' => tarifs[1028], 'tarifs_mts' => tarifs[1030],
-      'common_services_tel' => common_services[1023], 'common_services_bln' => common_services[1025],
-      'common_services_mgf' => common_services[1028], 'common_services_mts' => common_services[1030], 
-      'tarif_options_tel' => tarif_options_for_demo(user_type)[1023], 'tarif_options_bln' => tarif_options_for_demo(user_type)[1025], 
-      'tarif_options_mgf' => tarif_options_for_demo(user_type)[1028], 'tarif_options_mts' => tarif_options_for_demo(user_type)[1030], 
+      'tarifs' => {'tel' => tarifs[1023], 'bln' => tarifs[1025], 'mgf' => tarifs[1028], 'mts' => tarifs[1030]},
+      'common_services' => {'tel' => common_services[1023], 'bln' => common_services[1025], 'mgf' => common_services[1028], 'mts' => common_services[1030]}, 
+      'tarif_options' => {'tel' => tarif_options_for_demo(user_type)[1023], 'bln' => tarif_options_for_demo(user_type)[1025], 
+                          'mgf' => tarif_options_for_demo(user_type)[1028], 'mts' => tarif_options_for_demo(user_type)[1030]}, 
     }
   end
   
   def self.default_values_for_paid
     {
-      'tarifs_tel' => tarifs[1023], 'tarifs_bln' => tarifs[1025], 'tarifs_mgf' => tarifs[1028], 'tarifs_mts' => tarifs[1030],
-      'common_services_tel' => common_services[1023], 'common_services_bln' => common_services[1025], 'common_services_mgf' => common_services[1028], 'common_services_mts' => common_services[1030], 
-      'tarif_options_tel' => tarif_options[1023], 'tarif_options_bln' => tarif_options[1025], 'tarif_options_mgf' => tarif_options[1028], 'tarif_options_mts' => tarif_options[1030], 
+      'tarifs' => {'tel' => tarifs[1023], 'bln' => tarifs[1025], 'mgf' => tarifs[1028], 'mts' => tarifs[1030]},
+      'common_services' => {'tel' => common_services[1023], 'bln' => common_services[1025], 'mgf' => common_services[1028], 'mts' => common_services[1030]}, 
+      'tarif_options' => {'tel' => tarif_options[1023], 'bln' => tarif_options[1025], 'mgf' => tarif_options[1028], 'mts' => tarif_options[1030]}, 
     }
   end
   

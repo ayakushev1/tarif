@@ -1,6 +1,6 @@
 <%
 form_item.init do |f|
-  input_html = {:filtr_name => form_item.filtr_name, :class => "updatable form-control ", :action_name => customer_tarif_optimizators_index_path}
+  input_html = {:filtr_name => form_item.filtr_name, :class => "updatable form-control ", :action_name => customer_admin_tarif_optimizators_index_path}
   label_html = {:class => "control-label "}
   f.set_fields do |filtr_name|
     s = session_filtr_params(f)

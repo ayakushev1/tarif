@@ -1,4 +1,4 @@
-module Customer::TarifOptimizatorHelper
+module Customer::AdminTarifOptimizatorHelper
   include SavableInSession::Filtrable, SavableInSession::ArrayOfHashable, SavableInSession::SessionInitializers
 
   def optimization_params
