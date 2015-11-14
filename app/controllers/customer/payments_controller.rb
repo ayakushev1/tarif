@@ -15,7 +15,7 @@ class Customer::PaymentsController < ApplicationController
   
   def wait_for_payment_being_processed
     if customer_has_free_trials?('optimization_steps')
-      redirect_to customer_tarif_optimizators_index_path
+      redirect_to tarif_optimizators_main_index_path
     end
   end
   

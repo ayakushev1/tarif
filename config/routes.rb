@@ -54,6 +54,37 @@ Rails.application.routes.draw do
     end
   end
   
+  namespace :tarif_optimizators do
+    controller :main do
+      get 'main/index' => :index
+      get 'main/recalculate' => :recalculate
+    end   
+
+    controller :fixed_operators do
+      get 'fixed_operators/index' => :index
+      get 'fixed_operators/recalculate' => :recalculate
+      get 'fixed_operators/select_services' => :select_services
+    end   
+
+    controller :fixed_services do
+      get 'fixed_services/index' => :index
+      get 'fixed_services/recalculate' => :recalculate
+    end   
+
+    controller :limited_scope do
+      get 'limited_scope/index' => :index
+      get 'limited_scope/recalculate' => :recalculate
+    end   
+
+    controller :admin do
+      get 'admin/index' => :index
+      get 'admin/recalculate' => :recalculate
+      get 'admin/calculation_status' => :calculation_status
+      get 'admin/select_services' => :select_services
+    end   
+
+  end
+  
   namespace :customer do
     resources :demands, only: [:index, :new, :create]    
 
@@ -64,19 +95,6 @@ Rails.application.routes.draw do
 #      get 'optimization_steps/optimize_tarifs' => :optimize_tarifs
 #      get 'optimization_steps/show_optimized_tarifs' => :show_optimized_tarifs
 #    end
-    
-    controller :tarif_optimizators do
-      get 'tarif_optimizators/index' => :index
-      get 'tarif_optimizators/recalculate' => :recalculate
-    end   
-
-    controller :admin_tarif_optimizators do
-      get 'admin_tarif_optimizators/index' => :index
-      get 'admin_tarif_optimizators/recalculate' => :recalculate
-      get 'admin_tarif_optimizators/calculation_status' => :calculation_status
-      get 'admin_tarif_optimizators/select_services' => :select_services
-    end   
-
     controller :optimization_results do
       get 'optimization_results/show_results' => :show_results
       get 'optimization_results/show_customer_results' => :show_customer_results

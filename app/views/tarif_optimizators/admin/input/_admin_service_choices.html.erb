@@ -1,0 +1,76 @@
+<%
+form_item.init do |f|
+  input_html = {:filtr_name => form_item.filtr_name, :class => "updatable form-control ", :action_name => tarif_optimizators_admin_index_path}
+  label_html = {:class => "control-label "}
+  f.set_fields do |filtr_name|
+    s = session_filtr_params(f)
+	
+  [
+  	[
+  	 '', '',
+  	 	
+     '',
+     label(filtr_name, "", "Теле2", label_html),
+
+     '',
+     label(filtr_name, "", "Билайн", label_html),
+
+     '',
+     label(filtr_name, "", "Мегафон", label_html),
+
+     '',
+     label(filtr_name, "", "МТС"), label_html,
+  	],
+  	
+  	[
+     label(filtr_name, "tarifs[bln]", "Тарифы для оптимизации", label_html), '',
+     
+     '',
+     text_area(filtr_name, "tarifs[tel]", input_html.merge({:type => 'textarea', :value => (s["tarifs"] || {})["tel"], :rows => 1 }) ),
+
+     '',
+     text_area(filtr_name, "tarifs[bln]", input_html.merge({:type => 'textarea', :value => (s["tarifs"] || {})["bln"], :rows => 1 }) ),
+
+     '',
+     text_area(filtr_name, "tarifs[mgf]", input_html.merge({:type => 'textarea', :value => (s["tarifs"] || {})["mgf"], :rows => 1 }) ),
+
+     '',
+     text_area(filtr_name, "tarifs[mts]", input_html.merge({:type => 'textarea', :value => (s["tarifs"] || {})["mts"], :rows => 1  }) ),   
+  	],
+  	[
+     label(filtr_name, "common_services[bln]", "Общие сервисы", label_html),'',
+     
+     '',
+     text_area(filtr_name, "common_services[tel]", input_html.merge({:type => 'textarea', :value => (s["common_services"] || {})["tel"], :rows => 1  }) ),     		
+
+     '',
+     text_area(filtr_name, "common_services[bln]", input_html.merge({:type => 'textarea', :value => (s["common_services"] || {})["bln"], :rows => 1  }) ),     		
+
+     '',
+     text_area(filtr_name, "common_services[mgf]", input_html.merge({:type => 'textarea', :value => (s["common_services"] || {})["mgf"], :rows => 1  }) ),     		
+
+     '',
+     text_area(filtr_name, "common_services[mts]", input_html.merge({:type => 'textarea', :value => (s["common_services"] || {})["mts"], :rows => 1  }) ),     		        
+  	],
+  	
+  	[
+     label(filtr_name, "tarif_options[bln]", "Тарифные опции", label_html),'',
+     
+     '',
+     text_area(filtr_name, "tarif_options[tel]", input_html.merge({:type => 'textarea', :value => (s["tarif_options"] || {})["tel"], :rows => 2  }) ),     		
+
+     '',
+     text_area(filtr_name, "tarif_options[bln]", input_html.merge({:type => 'textarea', :value => (s["tarif_options"] || {})["bln"], :rows => 2  }) ),     		
+
+     '',
+     text_area(filtr_name, "tarif_options[mgf]", input_html.merge({:type => 'textarea', :value => (s["tarif_options"] || {})["mgf"], :rows => 2  }) ),     		
+
+     '',
+     text_area(filtr_name, "tarif_options[mts]", input_html.merge({:type => 'textarea', :value => (s["tarif_options"] || {})["mts"], :rows => 2  }) ),     		        
+  	],
+
+  ]
+	    
+  end
+end
+%>

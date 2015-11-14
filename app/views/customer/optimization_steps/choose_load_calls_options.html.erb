@@ -7,7 +7,7 @@
 	<%= link_to('Загрузить историю звонков', customer_history_parsers_prepare_for_upload_path, 
 	  {:class => "btn btn-primary", :type =>"button"}) if controller.customer_has_free_trials?('history_parsers') %>
 	  
-	<%= link_to('Подобрать тариф', customer_tarif_optimizators_index_path, 
+	<%= link_to('Подобрать тариф', tarif_optimizators_main_index_path, 
 	  {:class => "btn btn-primary", :type =>"button"}) if controller.customer_has_free_trials?('tarif_optimizators') and 
 	   Customer::Call.where(:user_id => current_or_guest_user_id).exists? %>
 	

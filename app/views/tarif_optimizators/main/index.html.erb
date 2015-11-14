@@ -1,0 +1,25 @@
+<% content_for :title, "Задание параметров подбора тарифа" %>
+
+<p>
+	<%= link_to('Подобрать тариф', tarif_optimizators_main_recalculate_path, {:class => "btn btn-primary", :type =>"button"}) %>
+	<%= link_to('Посмотреть результаты подбора тарифов', result_runs_results_path, {:class => "btn btn-primary", :type =>"button"}) %>
+</p>
+
+<div class="alert alert-info" role="alert">	
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	Доступно три варианта подбора тарифов: <br/> 
+	Базовый вариант использует все действующие тарифы и опции доступные для подключения, для всех возможных услуг. <br/>
+</div>
+
+<div class="alert alert-info" role="alert">	
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	Указав "Считать только выбранные услуги" и выбрав их на вкладке с услугами, можно оптимизировать затраты, если у вас несколько сим-карт.<br/>
+
+</div>
+
+<div class="alert alert-info" role="alert">	
+	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+	Указав "Считать только выбранный тариф и опции" и выбрав их на соответстующей вкладке, можно быстро оценить затраты для выбранной комбинации.	
+</div>
+
+<%= render :partial => 'tarif_optimizators/main/input/input', :layout => 'application/layouts/tabs', :locals => {:name => 'tarif_optimization_main_tabs', :active => session[:current_tabs_page]['tarif_optimization_main_tabs'].to_i} %>

@@ -106,7 +106,10 @@ module ApplicationHelper::Authorization
       },
       :tarif_optimization => {
         :methods => [], :actions => {
-          'customer/tarif_optimizators' => ['index', 'recalculate', 'select_services'],
+          'tarif_optimizators/main' => ['index', 'recalculate', 'select_services'],
+          'tarif_optimizators/fixed_services' => ['index', 'recalculate', 'select_services'],
+          'tarif_optimizators/limited_scope' => ['index', 'recalculate', 'select_services'],
+          'tarif_optimizators/fixed_operators' => ['index', 'recalculate', 'select_services'],
         }
       },
       :any_user_actions_with_devise => {

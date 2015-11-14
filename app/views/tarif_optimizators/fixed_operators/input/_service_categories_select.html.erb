@@ -1,0 +1,83 @@
+<%
+form_item.init do |f|
+#  f.caption = "Service categories select"	
+  f.set_fields do |filtr_name|
+	input_html = {:filtr_name => form_item.filtr_name, :class => "updatable form-control ", :action_name => tarif_optimizators_fixed_operators_index_path}
+	label_html = {:class => "control-label "}
+    html_options = {:action_name => tarif_optimizators_fixed_operators_index_path }
+    s = session_filtr_params(f)
+	
+  [
+  	[
+  	 label(filtr_name, "", "Параметр услуги", label_html), "",
+     label(filtr_name, "own_and_home_regions_rouming[is_chosen]", "Домашний регион", label_html), "",
+     label(filtr_name, "own_country_rouming[is_chosen]", "Путешествуя по России", label_html), "",
+     label(filtr_name, "all_world_rouming[is_chosen]", "Путешествуя по миру", label_html), "",
+  	],
+  	[
+  	 label(filtr_name, "", "Выбор роуминга", label_html), "", 
+     "", check_box(filtr_name, "own_and_home_regions_rouming[is_chosen]", (s["own_and_home_regions_rouming"]['is_chosen'] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
+ 	 "", check_box(filtr_name, "own_country_rouming[is_chosen]", (s["own_country_rouming"]['is_chosen'] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
+ 	 "", check_box(filtr_name, "all_world_rouming[is_chosen]", (s["all_world_rouming"]['is_chosen'] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
+  	],
+  	[
+     label(filtr_name, "own_and_home_regions_rouming[sms_out][is_chosen]", "Исходящие СМС", label_html), "",
+ 	 "", check_box(filtr_name, "own_and_home_regions_rouming[sms_out][is_chosen]", (s["own_and_home_regions_rouming"]["sms_out"]['is_chosen'] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
+     '', check_box(filtr_name, "own_country_rouming[sms_out][is_chosen]", (s["own_country_rouming"]["sms_out"]['is_chosen'] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
+     '', check_box(filtr_name, "all_world_rouming[sms_out][is_chosen]", (s["all_world_rouming"]["sms_out"]['is_chosen'] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
+  	],
+  	[
+     label(filtr_name, "own_and_home_regions_rouming[mms_out][is_chosen]", "Исходящие ММС", label_html), "",
+ 	 "", check_box(filtr_name, "own_and_home_regions_rouming[mms_out][is_chosen]", (s["own_and_home_regions_rouming"]["mms_out"]['is_chosen'] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
+     '', check_box(filtr_name, "own_country_rouming[mms_out][is_chosen]", (s["own_country_rouming"]["mms_out"]['is_chosen'] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
+     '', check_box(filtr_name, "all_world_rouming[mms_out][is_chosen]", (s["all_world_rouming"]["mms_out"]['is_chosen'] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
+  	],
+  	[
+     label(filtr_name, "own_and_home_regions_rouming[internet][is_chosen]", "Интернет", label_html), "",
+ 	 "", check_box(filtr_name, "own_and_home_regions_rouming[internet][is_chosen]", (s["own_and_home_regions_rouming"]["internet"]['is_chosen'] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
+     '', check_box(filtr_name, "own_country_rouming[internet][is_chosen]", (s["own_country_rouming"]["internet"]['is_chosen'] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
+     '', check_box(filtr_name, "all_world_rouming[internet][is_chosen]", (s["all_world_rouming"]["internet"]['is_chosen'] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
+  	],
+  	[
+     label(filtr_name, "own_and_home_regions_rouming[calls_in][is_chosen]", "Входящие звонки", label_html), "",
+ 	 "", check_box(filtr_name, "own_and_home_regions_rouming[calls_in][is_chosen]", (s["own_and_home_regions_rouming"]["calls_in"]['is_chosen'] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
+     '', check_box(filtr_name, "own_country_rouming[calls_in][is_chosen]", (s["own_country_rouming"]["calls_in"]['is_chosen'] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
+     '', check_box(filtr_name, "all_world_rouming[calls_in][is_chosen]", (s["all_world_rouming"]["calls_in"]['is_chosen'] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
+  	],
+  	[
+     label(filtr_name, "own_and_home_regions_rouming[calls_out][is_chosen]", "Исходящие звонки", label_html), "",
+ 	 "", check_box(filtr_name, "own_and_home_regions_rouming[calls_out][is_chosen]", (s["own_and_home_regions_rouming"]["calls_out"]['is_chosen'] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
+     '', check_box(filtr_name, "own_country_rouming[calls_out][is_chosen]", (s["own_country_rouming"]["calls_out"]['is_chosen'] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
+     '', check_box(filtr_name, "all_world_rouming[calls_out][is_chosen]", (s["all_world_rouming"]["calls_out"]['is_chosen'] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
+  	],
+  	[
+  	 label(filtr_name, "", "В том числе", label_html), "",	
+  	],
+  	[
+     label(filtr_name, "own_and_home_regions_rouming[calls_out][to_own_and_home_regions][is_chosen]", "В домашний регион", label_html), "",
+ 	 "", check_box(filtr_name, "own_and_home_regions_rouming[calls_out][to_own_and_home_regions][is_chosen]", (s["own_and_home_regions_rouming"]["calls_out"]["to_own_and_home_regions"]['is_chosen'] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
+     '', check_box(filtr_name, "own_country_rouming[calls_out][to_own_and_home_regions][is_chosen]", (s["own_country_rouming"]["calls_out"]["to_own_and_home_regions"]['is_chosen'] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
+     '', check_box(filtr_name, "all_world_rouming[calls_out][to_own_and_home_regions][is_chosen]", (s["all_world_rouming"]["calls_out"]["to_own_and_home_regions"]['is_chosen'] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
+  	],
+  	[
+     label(filtr_name, "own_and_home_regions_rouming[calls_out][to_own_and_home_regions][partner_category]", "На выбранного оператора в домашнем регионе", label_html), "",
+ 	 select(filtr_name, "own_and_home_regions_rouming[calls_out][to_own_and_home_regions][partner_category]", [["Билайн", 230], ["Мегафон", 231], ["МТС", 232], ["TELE2", 233]], {:include_blank => "выберите оператора", 
+ 	  :selected => s["own_and_home_regions_rouming"]["calls_out"]["to_own_and_home_regions"]['partner_category']}, input_html ),
+  	],
+  	[
+     label(filtr_name, "own_and_home_regions_rouming[calls_out][to_own_country][is_chosen]", "За пределы домашнего региона", label_html), "",
+ 	 "", check_box(filtr_name, "own_and_home_regions_rouming[calls_out][to_own_country][is_chosen]", (s["own_and_home_regions_rouming"]["calls_out"]["to_own_country"]['is_chosen'] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
+     '', check_box(filtr_name, "own_country_rouming[calls_out][to_own_country][is_chosen]", (s["own_country_rouming"]["calls_out"]["to_own_country"]['is_chosen'] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
+     '', check_box(filtr_name, "all_world_rouming[calls_out][to_own_country][is_chosen]", (s["all_world_rouming"]["calls_out"]["to_own_country"]['is_chosen'] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
+  	],
+  	[
+     label(filtr_name, "own_and_home_regions_rouming[calls_out][to_not_own_country][is_chosen]", "За границу", label_html), "",
+ 	 "", check_box(filtr_name, "own_and_home_regions_rouming[calls_out][to_not_own_country][is_chosen]", (s["own_and_home_regions_rouming"]["calls_out"]["to_not_own_country"]['is_chosen'] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
+     '', check_box(filtr_name, "own_country_rouming[calls_out][to_not_own_country][is_chosen]", (s["own_country_rouming"]["calls_out"]["to_not_own_country"]['is_chosen'] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
+     '', check_box(filtr_name, "all_world_rouming[calls_out][to_not_own_country][is_chosen]", (s["all_world_rouming"]["calls_out"]["to_not_own_country"]['is_chosen'] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
+  	],
+  ]
+	    
+  end
+end
+%>
