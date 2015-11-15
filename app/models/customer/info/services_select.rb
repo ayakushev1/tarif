@@ -44,32 +44,35 @@ class Customer::Info::ServicesSelect < ActiveType::Record[Customer::Info]
   end
 
   def self.process_selecting_services(params)
-#    raise(StandardError)
-    service_choices_filtr = {}
+#    raise(StandardError, params)
+    service_choices_filtr ||= {}
+    service_choices_filtr['tarifs'] ||= {}
+    service_choices_filtr['common_services'] ||= {}
+    service_choices_filtr['tarif_options'] ||= {}
     if params
       if params['operator_tel'] == 'true'
         input = selected_services(1023, params)
-        service_choices_filtr['tarifs_tel'] = input['tarifs']
-        service_choices_filtr['common_services_tel'] = input['common_services']
-        service_choices_filtr['tarif_options_tel'] = input['tarif_options']
+        service_choices_filtr['tarifs']['tel'] = input['tarifs']
+        service_choices_filtr['common_services']['tel'] = input['common_services']
+        service_choices_filtr['tarif_options']['tel'] = input['tarif_options']
       end
       if params['operator_bln'] == 'true'
         input = selected_services(1025, params)
-        service_choices_filtr['tarifs_bln'] = input['tarifs']
-        service_choices_filtr['common_services_bln'] = input['common_services']
-        service_choices_filtr['tarif_options_bln'] = input['tarif_options']
+        service_choices_filtr['tarifs']['bln'] = input['tarifs']
+        service_choices_filtr['common_services']['bln'] = input['common_services']
+        service_choices_filtr['tarif_options']['bln'] = input['tarif_options']
       end
       if params['operator_mgf'] == 'true'
         input = selected_services(1028, params)
-        service_choices_filtr['tarifs_mgf'] = input['tarifs']
-        service_choices_filtr['common_services_mgf'] = input['common_services']
-        service_choices_filtr['tarif_options_mgf'] = input['tarif_options']
+        service_choices_filtr['tarifs']['mgf'] = input['tarifs']
+        service_choices_filtr['common_services']['mgf'] = input['common_services']
+        service_choices_filtr['tarif_options']['mgf'] = input['tarif_options']
       end
       if params['operator_mts'] == 'true'
         input = selected_services(1030, params)
-        service_choices_filtr['tarifs_mts'] = input['tarifs']
-        service_choices_filtr['common_services_mts'] = input['common_services']
-        service_choices_filtr['tarif_options_mts'] = input['tarif_options']
+        service_choices_filtr['tarifs']['mts'] = input['tarifs']
+        service_choices_filtr['common_services']['mts'] = input['common_services']
+        service_choices_filtr['tarif_options']['mts'] = input['tarif_options']
       end
     end
     service_choices_filtr
