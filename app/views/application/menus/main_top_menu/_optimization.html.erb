@@ -4,6 +4,7 @@
 		<li><%= link_to  'Проверка стоимости', tarif_optimizators_fixed_services_index_path %></li>
 		<li><%= link_to  'С ограничением услуг', tarif_optimizators_limited_scope_index_path %></li>
 		<li><%= link_to  'Для одного оператора', tarif_optimizators_fixed_operators_index_path %></li>
+		<li><%= link_to  'Все возможности', tarif_optimizators_all_options_index_path if false and [:user, :admin, :bot, :stranger].include?(user_type) %></li>
 	<% end %>
 		 
 	<%if controller.customer_has_tarif_optimized? %>

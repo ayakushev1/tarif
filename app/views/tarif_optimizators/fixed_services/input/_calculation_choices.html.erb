@@ -9,21 +9,11 @@ form_item.init do |f|
 	
   [
   	[
-  	 label(filtr_name, "accounting_period", "Период за который проводить расчет тарифов", label_html),
+  	 label(filtr_name, "accounting_period", "Период, за который проводить расчет тарифов", label_html),
   	 collection_select(filtr_name, "accounting_period", 
   	   accounting_periods, 
   	   :accounting_period, :accounting_period, {:include_blank => "выберите период расчета", :selected => s["accounting_period"]}, input_html ),
   	 ],  
-	[
-     label(filtr_name, "calculate_with_limited_scope", "Считать только выбранные услуги связи?", label_html),
- 	 select(filtr_name, "calculate_with_limited_scope", 
- 	   [["Считать только выбранные услуги связи", true], ["Считать все услуги связи", false]], {:selected => s["calculate_with_limited_scope"]}, input_html ),
-	],
-	[
-     label(filtr_name, "calculate_with_fixed_services", "Считать только выбранный тариф и опции?", label_html),
- 	 select(filtr_name, "calculate_with_fixed_services", 
- 	   [["Считать только выбранный тариф и опции", true], ["Считать все тарифы и опции", false]], {:selected => s["calculate_with_fixed_services"]}, input_html ),
-  	],
   ]
 	    
   end

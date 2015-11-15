@@ -5,21 +5,14 @@ class TarifOptimizators::FixedServicesController < ApplicationController
 
   before_action :check_if_customer_has_free_trials, only: :recalculate
   before_action :check_inputs_for_recalculate, only: :recalculate
-#  before_action :validate_tarifs, only: [:index, :recalculate]
-#  before_action :init_background_process_informer, only: [:tarif_optimization_progress_bar, :calculation_status, :recalculate]
 
   after_action :track_recalculate, only: :recalculate
   after_action :track_index, only: :index
 
   def recalculate    
     update_customer_infos
-    if session_filtr_params(calculation_choices)['calculate_with_fixed_services'] == 'false'
-      TarifOptimization::TarifOptimizatorRunner.recalculate_with_delayed_job(options)
-      redirect_to root_path, {:alert => "Мы сообщим вам электронным письмом об окончании расчетов"}
-    else
-      TarifOptimization::TarifOptimizatorRunner.recalculate_direct(options)
-      redirect_to({:action => :index}, {:alert => "Расчет выполнен. Можете перейти к просмотру результатов"})
-    end    
+    TarifOptimization::TarifOptimizatorRunner.recalculate_direct(options)
+    redirect_to({:action => :index}, {:alert => "Расчет выполнен. Можете перейти к просмотру результатов"})
   end 
   
   def check_inputs_for_recalculate     
@@ -40,11 +33,6 @@ class TarifOptimizators::FixedServicesController < ApplicationController
       end
     end
     
-    if selected_service_categories.blank?
-      message_for_blank_operator = "Список услуг связи не может быть пустым. Выберите услуги на вкладке 'Выбор услуг оператора'"
-      redirect_to({:action => :index}, {:alert => message_for_blank_operator}) and return 
-    end
-    
     is_user_calculating_now = Delayed::Job.where(:queue => "tarif_optimization", :attempts => 0, :reference_id => current_or_guest_user_id, :reference_type => 'user').present?
     if is_user_calculating_now
       message = "Мы для вас сейчас уже подбираем тариф. Подождите до окончания подбора, мы сообщим об этом письмом, если вы предоставили адрес"
@@ -56,10 +44,6 @@ class TarifOptimizators::FixedServicesController < ApplicationController
     if session_filtr_params(calculation_choices)['calculate_with_fixed_services'] == 'true'
       if !customer_has_free_tarif_recalculation_trials?
         redirect_to({:action => :index}, {:alert => "У Вас не осталось свободных попыток для расчета выбранных тарифа и опций, а только для подбора тарифа"}) and return
-      end
-    else
-      if !customer_has_free_tarif_optimization_trials?
-        redirect_to({:action => :index}, {:alert => "У Вас не осталось свободных попыток для подбора тарифа, только для расчета выбранных тарифа и опций"}) and return
       end
     end
   end

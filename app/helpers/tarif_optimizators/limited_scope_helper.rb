@@ -5,31 +5,10 @@ module TarifOptimizators::LimitedScopeHelper
     create_filtrable("calculation_choices")
   end
   
-  def services_select
-    create_filtrable("services_select")
-  end
-  
-  def services_for_calculation_select
-    create_filtrable("services_for_calculation_select")
-  end
-
-  def show_service_categories_select_tab
-    session_filtr_params(calculation_choices)['calculate_with_limited_scope'] == 'true' ? true : false
-  end
-  
-  def show_services_for_calculation_select_tab
-    session_filtr_params(calculation_choices)['calculate_with_fixed_services'] == 'true' ? true : false
-  end
-
   def update_customer_infos
     Customer::Info::CalculationChoices.update_info(current_or_guest_user_id, session_filtr_params(calculation_choices))
     Customer::Info::ServiceCategoriesSelect.update_info(current_or_guest_user_id, session_filtr_params(service_categories_select))
-
-    if session_filtr_params(calculation_choices)['calculate_with_fixed_services'] == 'true'
-      Customer::Info::ServicesUsed.decrease_one_free_trials_by_one(current_or_guest_user_id, 'tarif_recalculation_count')
-    else
-      Customer::Info::ServicesUsed.decrease_one_free_trials_by_one(current_or_guest_user_id, 'tarif_optimization_count')      
-    end
+    Customer::Info::ServicesUsed.decrease_one_free_trials_by_one(current_or_guest_user_id, 'tarif_optimization_count')      
   end
 
   def options
@@ -62,19 +41,7 @@ module TarifOptimizators::LimitedScopeHelper
   end
 
   def services_by_operator
-    session_filtr_params(calculation_choices)['calculate_with_fixed_services'] == 'true' ? services_by_operator_for_calculate_with_fixed_services :  
-      Customer::Info::ServiceChoices.services_from_session_to_optimization_format(Customer::Info::ServiceChoices.default_values(user_type))
-  end
-  
-  def services_by_operator_for_calculate_with_fixed_services
-    services_for_calculation_select_session_filtr_params = session_filtr_params(services_for_calculation_select)
-    operator_id = services_for_calculation_select_session_filtr_params['operator_id'].to_i
-    {
-      :operators => [operator_id], 
-      :tarifs => {services_for_calculation_select_session_filtr_params['operator_id'].to_i => [services_for_calculation_select_session_filtr_params['tarif_to_calculate'].to_i]}, 
-      :tarif_options => {services_for_calculation_select_session_filtr_params['operator_id'].to_i => services_for_calculation_select_session_filtr_params['tarif_options_to_calculate'].map(&:to_i) - [0]}, 
-      :common_services => Customer::Info::ServiceChoices.common_services[operator_id],
-     }
+    Customer::Info::ServiceChoices.services_from_session_to_optimization_format(Customer::Info::ServiceChoices.default_values(user_type))
   end
   
   def check_if_optimization_options_are_in_session

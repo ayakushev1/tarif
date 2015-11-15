@@ -1,5 +1,5 @@
-class TarifOptimizators::MainController < ApplicationController
-  include TarifOptimizators::MainHelper
+class TarifOptimizators::AllOptionsController < ApplicationController
+  include TarifOptimizators::AllOptionsHelper
   
   before_action :check_if_optimization_options_are_in_session, only: [:index]
 
@@ -13,8 +13,13 @@ class TarifOptimizators::MainController < ApplicationController
 
   def recalculate    
     update_customer_infos
-    TarifOptimization::TarifOptimizatorRunner.recalculate_with_delayed_job(options)
-    redirect_to root_path, {:alert => "Мы сообщим вам электронным письмом об окончании расчетов"}
+    if session_filtr_params(calculation_choices)['calculate_with_fixed_services'] == 'false'
+      TarifOptimization::TarifOptimizatorRunner.recalculate_with_delayed_job(options)
+      redirect_to root_path, {:alert => "Мы сообщим вам электронным письмом об окончании расчетов"}
+    else
+      TarifOptimization::TarifOptimizatorRunner.recalculate_direct(options)
+      redirect_to({:action => :index}, {:alert => "Расчет выполнен. Можете перейти к просмотру результатов"})
+    end    
   end 
   
   def check_inputs_for_recalculate     
@@ -23,6 +28,23 @@ class TarifOptimizators::MainController < ApplicationController
       redirect_to({:action => :index}, {:alert => "Выберите период для расчета"}) and return
     end
 
+    if session_filtr_params(calculation_choices)['calculate_with_fixed_services'] == 'true'
+      if session_filtr_params(services_for_calculation_select)["operator_id"].blank?
+        message_for_blank_operator = "Вы выбрали расчет для выбранных тарифа и опций. Поэтому выберите оператора на вкладке 'Выбор тарифа и набора опций для расчета'."
+        redirect_to({:action => :index}, {:alert => message_for_blank_operator}) and return
+      end
+
+      if session_filtr_params(services_for_calculation_select)["tarif_to_calculate"].blank?
+        message_for_blank_operator = "Вы выбрали расчет для выбранных тарифа и опций. Поэтому выберите тариф на вкладке 'Выбор тарифа и набора опций для расчета'."
+        redirect_to({:action => :index}, {:alert => message_for_blank_operator}) and return 
+      end
+    end
+    
+    if selected_service_categories.blank?
+      message_for_blank_operator = "Список услуг связи не может быть пустым. Выберите услуги на вкладке 'Выбор услуг оператора'"
+      redirect_to({:action => :index}, {:alert => message_for_blank_operator}) and return 
+    end
+    
     is_user_calculating_now = Delayed::Job.where(:queue => "tarif_optimization", :attempts => 0, :reference_id => current_or_guest_user_id, :reference_type => 'user').present?
     if is_user_calculating_now
       message = "Мы для вас сейчас уже подбираем тариф. Подождите до окончания подбора, мы сообщим об этом письмом, если вы предоставили адрес"

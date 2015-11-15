@@ -1,6 +1,6 @@
 <%
 form_item.init do |f|
-#  f.caption = "Service categories select"	
+#  f.caption = "Выбор услуг оператора"	
   f.set_fields do |filtr_name|
 	input_html = {:filtr_name => form_item.filtr_name, :class => "updatable form-control ", :action_name => tarif_optimizators_limited_scope_index_path}
 	label_html = {:class => "control-label "}
@@ -9,7 +9,7 @@ form_item.init do |f|
 	
   [
   	[
-  	 label(filtr_name, "", "Параметр услуги", label_html), "",
+  	 label(filtr_name, "", "Название услуги", label_html), "",
      label(filtr_name, "own_and_home_regions_rouming[is_chosen]", "Домашний регион", label_html), "",
      label(filtr_name, "own_country_rouming[is_chosen]", "Путешествуя по России", label_html), "",
      label(filtr_name, "all_world_rouming[is_chosen]", "Путешествуя по миру", label_html), "",

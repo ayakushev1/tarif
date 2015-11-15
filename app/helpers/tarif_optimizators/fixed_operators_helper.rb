@@ -9,27 +9,10 @@ module TarifOptimizators::FixedOperatorsHelper
     create_filtrable("services_select")
   end
   
-  def services_for_calculation_select
-    create_filtrable("services_for_calculation_select")
-  end
-
-  def show_service_categories_select_tab
-    session_filtr_params(calculation_choices)['calculate_with_limited_scope'] == 'true' ? true : false
-  end
-  
-  def show_services_for_calculation_select_tab
-    session_filtr_params(calculation_choices)['calculate_with_fixed_services'] == 'true' ? true : false
-  end
-
   def update_customer_infos
     Customer::Info::CalculationChoices.update_info(current_or_guest_user_id, session_filtr_params(calculation_choices))
-    Customer::Info::ServiceCategoriesSelect.update_info(current_or_guest_user_id, session_filtr_params(service_categories_select))
 
-    if session_filtr_params(calculation_choices)['calculate_with_fixed_services'] == 'true'
-      Customer::Info::ServicesUsed.decrease_one_free_trials_by_one(current_or_guest_user_id, 'tarif_recalculation_count')
-    else
-      Customer::Info::ServicesUsed.decrease_one_free_trials_by_one(current_or_guest_user_id, 'tarif_optimization_count')      
-    end
+    Customer::Info::ServicesUsed.decrease_one_free_trials_by_one(current_or_guest_user_id, 'tarif_optimization_count')      
   end
 
   def options
@@ -62,21 +45,22 @@ module TarifOptimizators::FixedOperatorsHelper
   end
 
   def services_by_operator
-    session_filtr_params(calculation_choices)['calculate_with_fixed_services'] == 'true' ? services_by_operator_for_calculate_with_fixed_services :  
-      Customer::Info::ServiceChoices.services_from_session_to_optimization_format(Customer::Info::ServiceChoices.default_values(user_type))
+    result = Customer::Info::ServiceChoices.
+      services_from_session_to_optimization_format(Customer::Info::ServiceChoices.default_values(user_type))
+    result[:operators] = operators_from_services_select
+    result
   end
-  
-  def services_by_operator_for_calculate_with_fixed_services
-    services_for_calculation_select_session_filtr_params = session_filtr_params(services_for_calculation_select)
-    operator_id = services_for_calculation_select_session_filtr_params['operator_id'].to_i
-    {
-      :operators => [operator_id], 
-      :tarifs => {services_for_calculation_select_session_filtr_params['operator_id'].to_i => [services_for_calculation_select_session_filtr_params['tarif_to_calculate'].to_i]}, 
-      :tarif_options => {services_for_calculation_select_session_filtr_params['operator_id'].to_i => services_for_calculation_select_session_filtr_params['tarif_options_to_calculate'].map(&:to_i) - [0]}, 
-      :common_services => Customer::Info::ServiceChoices.common_services[operator_id],
-     }
+ 
+   def operators_from_services_select
+     session_filtr_params_services_select = session_filtr_params(services_select)
+     result = []    
+     {'tel' => 1023, 'bln' => 1025, 'mgf' => 1028, 'mts' => 1030}.each do |operator_name, operator_id|
+       result << operator_id if session_filtr_params_services_select[operator_name] ==  "true"
+     end
+#    raise(StandardError, [session_filtr_params_services_select, result])
+    result 
   end
-  
+ 
   def check_if_optimization_options_are_in_session
     accounting_period = accounting_periods.blank? ? -1 : accounting_periods[0]['accounting_period']  
     if session[:filtr]['calculation_choices_filtr'].blank?
@@ -84,25 +68,16 @@ module TarifOptimizators::FixedOperatorsHelper
       session[:filtr]['calculation_choices_filtr']  = Customer::Info::CalculationChoices.info(current_or_guest_user_id).merge({'accounting_period' => accounting_period})
     end
 
-    if !session[:filtr] or session[:filtr]['service_categories_select_filtr'].blank?
-      session[:filtr] ||= {}; session[:filtr]['service_categories_select_filtr'] ||= {}
-      session[:filtr]['service_categories_select_filtr']  = Customer::Info::ServiceCategoriesSelect.info(current_or_guest_user_id, user_type)
+    if session[:filtr]['services_select_filtr'].blank?
+      session[:filtr]['services_select_filtr'] ||= {}
+      session[:filtr]['services_select_filtr']  = {'tel' => false, 'bln' => false, 'mgf' => false, 'mts' => false}
     end
-    
-#    raise(StandardError, )
+
   end
 
-  def service_categories_select
-    if params['service_categories_select_filtr']
-      selected_services = Customer::Info::ServiceCategoriesSelect.selected_services_from_session_format(params['service_categories_select_filtr'], user_type)
-      params['service_categories_select_filtr']  = Customer::Info::ServiceCategoriesSelect.selected_services_to_session_format(selected_services)
-    end
-    create_filtrable("service_categories_select")
-  end
-  
   def selected_service_categories
 #    return @selected_service_categories if @selected_service_categories    
-    selected_services = Customer::Info::ServiceCategoriesSelect.selected_services_from_session_format(session_filtr_params(service_categories_select), user_type)
+    selected_services = Customer::Info::ServiceCategoriesSelect.default_selected_categories(user_type)
     @selected_service_categories = Customer::Info::ServiceCategoriesSelect.service_categories_from_selected_services(selected_services)
   end
   

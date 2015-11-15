@@ -1,0 +1,22 @@
+<% 
+	@templ = 
+	content_tag(:div, {:class => "popover", :role => "tooltip", :style=>"max-width: 70%;"}) do
+		content_tag(:div, "", :class => "arrow") +
+		content_tag(:h3, "", :class => "popover-title") +
+		content_tag(:div, "", :class => "popover-content")
+	end
+%>
+
+<a 
+	tabindex="0" 
+	class="<%= @button_class%>" 
+	role="button" 
+	data-toggle="popover" 
+	data-trigger="focus" 
+	data-placement="top"
+	title="<%= @title %>" 
+	data-content="<%= @content %>"
+	data-template='<%= @templ %>' >
+	<%= @button_name %>
+</a>
+

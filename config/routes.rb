@@ -63,7 +63,6 @@ Rails.application.routes.draw do
     controller :fixed_operators do
       get 'fixed_operators/index' => :index
       get 'fixed_operators/recalculate' => :recalculate
-      get 'fixed_operators/select_services' => :select_services
     end   
 
     controller :fixed_services do
@@ -74,6 +73,11 @@ Rails.application.routes.draw do
     controller :limited_scope do
       get 'limited_scope/index' => :index
       get 'limited_scope/recalculate' => :recalculate
+    end   
+
+    controller :all_options do
+      get 'all_options/index' => :index
+      get 'all_options/recalculate' => :recalculate
     end   
 
     controller :admin do
