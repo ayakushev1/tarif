@@ -1,16 +1,18 @@
 <% content_for :title, "Подбор тарифа > Базовый вариант > Задание параметров " %>
 
+<p>
 <%= render :partial => 'tarif_optimizators/main/input/information' %>
 <%= render :partial => 'tarif_optimizators/shared/how_tarif_option_counted_for_user_types' %>
 <%= render :partial => 'tarif_optimizators/shared/how_service_scope_counted_for_user_types' %>
 <%= render :partial => 'tarif_optimizators/main/input/help' %>
-
-
+</p>
 <p>
+<%= link_to('Подобрать тариф', tarif_optimizators_main_recalculate_path, {:class => "btn btn-primary", :type =>"button"}) %>
+<%= link_to('Посмотреть результаты подбора тарифов', result_runs_results_path, {:class => "btn btn-primary", :type =>"button"}) %>
+</p>
+
 
 <%= render(:partial => 'tarif_optimizators/main/input/calculation_choices', :layout => 'application/layouts/filtr_form_group', 
 	    :locals => {:form_item => calculation_choices} ) %>
-	<%= link_to('Подобрать тариф', tarif_optimizators_main_recalculate_path, {:class => "btn btn-primary", :type =>"button"}) %>
-	<%= link_to('Посмотреть результаты подбора тарифов', result_runs_results_path, {:class => "btn btn-primary", :type =>"button"}) %>
-</p>
+
 
