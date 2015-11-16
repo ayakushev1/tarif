@@ -100,7 +100,7 @@ module Crudable
       @model.destroy
       respond_to do |format|
 #        redirect_to "/#{controller_name}" 
-        format.html { redirect_to "/#{controller_name}" }
+        format.html { redirect_to "/#{controller_path}" }
         format.js { render_js(view_context.default_view_id_name, :index) }
         format.json { head :no_content }
       end
