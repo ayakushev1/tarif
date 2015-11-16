@@ -1,11 +1,22 @@
 <% content_for :title, "Задание параметров моделирования звонков" %>
 
-<div class="alert alert-info" role="alert">	
-	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	Рекомендуем начать с выбора варианта использования связи. Мы установим начальные значения, которые вы потом можете откорректировать	
-</div>
 
-<%= link_to('Сгенерировать историю звонков', customer_calls_generate_calls_path, {:class => "btn btn-primary", :type =>"button"}) %>
+<form class="form-inline">
+  <div class="form-group">
+  	<p>
+		<%= render :partial => 'call_run_choice' %>
+
+		<%= link_to('Редактировать описание моделирования', customer_call_runs_path, {:class => "btn btn-primary", :type =>"button"}) %>
+		
+		<%= link_to('Сгенерировать историю звонков', customer_calls_generate_calls_path, {:class => "btn btn-primary", :type =>"button"}) %>
+
+		<%= render :partial => 'information' %>
+	</p>
+  </div>
+</form>  	   
 <br />
-<br />
+
+
 <%= render :partial => 'calls_gener_params_tabs', :layout => 'application/layouts/tabs', :locals => {:name => 'calls_gener_params_tabs', :active => session[:current_tabs_page]['calls_gener_params_tabs'].to_i} %>
+
+

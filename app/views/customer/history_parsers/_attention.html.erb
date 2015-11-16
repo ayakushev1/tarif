@@ -1,0 +1,14 @@
+<%
+popover = {
+#:title => "Обратите внимание!",
+:content => "Можно загрузить детализации звонков для МТС в формате HTML, XLS или XLSX, \
+			Мегафон в формате HTML, Билайн в формате XLS или XLSX, Теле2 в формате PDF.",
+	
+:button_name => "Обратите внимание!",
+:button_class => "btn btn-danger",
+:button_symbol => content_tag(:span, "", {:class => "glyphicon glyphicon-info-sign", :'aria-hidden' =>true}),
+}
+%>
+
+<%= render :partial => "application/layouts/popover", :locals => {:popover => popover} %>
+

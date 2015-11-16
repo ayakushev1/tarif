@@ -1,6 +1,7 @@
 class Customer::CallsController < ApplicationController
 #  include Crudable
 #  crudable_actions :index
+  before_action :create_call_run_if_not_exists, only: [:set_calls_generation_params]
   before_action :update_usage_pattern, only: [:set_calls_generation_params]
   before_action :setting_if_nil_default_calls_generation_params, only: [:set_calls_generation_params, :generate_calls]
   after_action -> {update_customer_infos}, only: :generate_calls
@@ -22,6 +23,10 @@ class Customer::CallsController < ApplicationController
   def update_customer_infos
     Customer::Info::CallsGenerationParams.update_info(current_or_guest_user_id, customer_calls_generation_params)
     Customer::Info::ServicesUsed.decrease_one_free_trials_by_one(current_or_guest_user_id, 'calls_modelling_count')
+  end
+  
+  def call_run_choice
+    create_filtrable("call_run_choice")
   end
   
   def filtr
@@ -132,4 +137,8 @@ class Customer::CallsController < ApplicationController
     end
   end
   
+  def create_call_run_if_not_exists
+    Customer::CallRun.create(:name => "Моделирование звонков", :source => 0, :description => "", :user_id => current_or_guest_user_id) if
+      !Customer::CallRun.where(:user_id => current_or_guest_user_id).present?
+  end
 end

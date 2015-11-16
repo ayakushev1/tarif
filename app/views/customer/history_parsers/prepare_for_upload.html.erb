@@ -1,24 +1,22 @@
 <% content_for :title, "Загрузка детализации звонков" %>
 
-<div class="alert alert-warning" role="alert">	
-	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	<strong>Внимание!</strong>
-	Можно загрузить детализации звонков для МТС в формате HTML, XLS или XLSX, 
-	Мегафон в формате HTML, Билайн в формате XLS или XLSX, Теле2 в формате PDF.	
-</div>
 
-<div class="alert alert-info" role="alert">	
-	<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-	Не забудьте выбрать начальный год и месяц с которого надо начинать анализ детализации звонков.	
-</div>
+<%= render :partial => 'information' %>
+<%= render :partial => 'attention' %>
 
-<%= render(:partial => 'customer/history_parsers/user_params', 
-      :layout => 'application/layouts/filtr_form_2_columns', 
-      :locals => {:form_item => user_params_filtr}) %>
+<form class="form-inline">
+  <div class="form-group">
+  	<p>
+		<%= render :partial => 'call_run_choice' %>
+		<%= link_to('Редактировать описание моделирования', customer_call_runs_path, {:class => "btn btn-primary", :type =>"button"}) %>		
+	</p>
+  </div>
+</form>  	   
+<br />
+
+<%= render(:partial => 'customer/history_parsers/user_params', :layout => 'application/layouts/filtr_form_2_columns', :locals => {:form_item => user_params_filtr}) %>
 
 <%= render :partial => 'upload_form' %>
-
-<br />
 
 <h3>Результаты анализа детализации звонков</h3>
 

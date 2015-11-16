@@ -1,0 +1,13 @@
+<%
+  	controller.call_run_choice
+  	filtr_name = 'call_run_choice_filtr'
+    s = session[:filtr][filtr_name] || {}
+	input_html = {:filtr_name => filtr_name, :class => "updatable form-control ", :style => "margin-top: 10px;", 
+		:action_name => customer_calls_set_calls_generation_params_path}
+   	label_html = {:class => "control-label ", :style => "margin-top: 10px;"}
+%>
+
+<%= label(filtr_name, "customer_call_run_id", "Выбор описания моделирования", label_html) %>
+
+<%= collection_select(filtr_name, "customer_call_run_id", Customer::CallRun.where(:user_id => current_or_guest_user_id), :id, :name, 
+  	   {:selected => s["customer_call_run_id"] }, input_html ) %>
