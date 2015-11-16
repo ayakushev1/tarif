@@ -101,6 +101,7 @@ module ApplicationHelper::Authorization
       :call_generation_and_parsing => {
         :methods => [], :actions => {
           'customer/calls' =>['index', 'set_calls_generation_params', 'set_default_calls_generation_params', 'generate_calls'],
+          'customer/call_runs' =>[],
           'customer/history_parsers' => ['prepare_for_upload', 'upload', 'calculation_status'],
         }
       },
