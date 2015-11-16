@@ -9,6 +9,11 @@ form_item.init do |f|
     query = Customer::Call.where(:user_id => current_or_guest_user_id).query_hash_from_filtr_with_all_keys_excluded(session[:filtr][filtr_name])
     user_calls_query = Customer::Call.where(:user_id => current_or_guest_user_id)
   [
+  	[
+	label(filtr_name, "customer_call_run_id", "Выбор описания моделирования", label_html),	
+	collection_select(filtr_name, "customer_call_run_id", Customer::CallRun.where(:id => user_calls_query.query_from_filtr(s, "customer_call_run_id").pluck(:call_run_id).uniq ), :id, :name, 
+	  	   {:selected => s["customer_call_run_id"] }, input_html )
+	],
   	[label(filtr_name, "base_service_id", "Услуга", label_html),
   	 collection_select(filtr_name, "base_service_id", Category.where(:id => user_calls_query.query_from_filtr(s, "base_service_id").pluck(:base_service_id).uniq ), :id, :name, 
   	   {:include_blank => "Услуга", :selected => s["base_service_id"] }, input_html )
@@ -17,7 +22,6 @@ form_item.init do |f|
   	 collection_select(filtr_name, "base_subservice_id", Category.where(:id => user_calls_query.query_from_filtr(s, "base_subservice_id").pluck(:base_subservice_id).uniq ), :id, :name, 
   	   {:include_blank => "Направление услуги", :selected => s["base_subservice_id"] }, input_html )
   	],
-  	[' ',' '],
   	[' ',' '],
 #  	["", collection_select(filtr_name, "user_id", User.where(:id => user_calls_query.query_from_filtr(s, "user_id").pluck(:user_id).uniq ), :id, :name, 
 #  	   {:include_blank => "Пользователь", :selected => s["user_id"] }, input_html )
