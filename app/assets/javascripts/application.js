@@ -18,7 +18,7 @@
 // require jquery.ui.draggable
 // require jquery.ui.resizable
 // require jquery.ui.effect-blind
-// require jquery_ujs
+//= require jquery_ujs
 //= require jquery.remotipart
 // Loads all Bootstrap javascripts
 //= require bootstrap
