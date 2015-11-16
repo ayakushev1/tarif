@@ -5,7 +5,7 @@ table.init do |t|
   t.set_fields do |call_run| 
   [
     call_run.name,
-    (['Моделирование', 'Загрузка детализации'][call_run.source] if call_run.source),
+    call_run.source_name,
     call_run.description,
 #    call_run.id, 
     (call_run.user.name if call_run.user and user_type == :admin), 

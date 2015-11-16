@@ -13,6 +13,12 @@ class Customer::CallRun < ActiveRecord::Base
   belongs_to :user, :class_name =>'User', :foreign_key => :user_id
   has_many :calls, :class_name =>'Customer::Call', :foreign_key => :call_run_id
 
-
+  def full_name
+    "#{name} #{source_name}"
+  end
+  
+  def source_name
+    ['Моделирование', 'Загрузка детализации'][source] if source
+  end
 end
 
