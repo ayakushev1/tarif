@@ -1,12 +1,13 @@
 <%
-@title = "Описание"
-@content = "В данном расчете вы можете выбрать ограничить набор мобильных операторов, для которых подбирается тариф. \
-			Этот вариант подходит, например, когда вы не планируете менять вашего оператора."
+popover = {
+:title => "Описание",
+:content => "В данном расчете вы можете ограничить набор мобильных операторов, для которых подбирается тариф. \
+			Этот вариант подходит, например, когда вы не планируете менять вашего оператора.",
 	
-@button_name = "Информация о расчетах"
-@button_class = "btn btn-success"
+#:button_name => "Информация о расчетах",
+:button_class => "btn btn-success",
+:button_symbol => content_tag(:span, "", {:class => "glyphicon glyphicon-info-sign", :'aria-hidden' =>true}),
+}
 %>
 
-<%= render :partial => "application/layouts/popover" %>
-
-
+<%= render :partial => "application/layouts/popover", :locals => {:popover => popover} %>

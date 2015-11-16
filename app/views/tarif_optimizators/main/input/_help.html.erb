@@ -1,12 +1,15 @@
 <%
-@title = "Возможные затруднения"
-@content = "Выберите период, за который проводить расчеты, и нажмите на \"Подобрать тариф\". \
-			Если не можете выбрать период, то вам сначала надо смоделировать или загрузить звонки."
+popover = {
+:title => "Возможные затруднения",
+:content => "Выберите период, за который проводить расчеты, и нажмите на \"Подобрать тариф\". \
+			Если не можете выбрать период, то вам сначала надо смоделировать или загрузить звонки.",
 	
-@button_name = "Помощь"
-@button_class = "btn btn-success"
+#:button_name => "Помощь",
+:button_class => "btn btn-success ",
+:button_symbol => content_tag(:span, "", {:class => "glyphicon glyphicon-question-sign ", :'aria-hidden' => true}),
+}
 %>
 
-<%= render :partial => "application/layouts/popover" %>
+<%= render :partial => "application/layouts/popover", :locals => {:popover => popover}   %>
 
 

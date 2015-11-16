@@ -1,12 +1,13 @@
 <%
-@title = "Описание"
-@content = "В данном варианте рассчитываются затраты для выбранного тарифа и опций.  \
-			Это можно использовать, когда вы планируете подключить или отключить опцию."
+popover = {
+:title => "Описание",
+:content => "В данном варианте рассчитываются затраты для выбранного тарифа и опций.  \
+			Это можно использовать, когда вы планируете подключить или отключить опцию.",
 	
-@button_name = "Информация о расчетах"
-@button_class = "btn btn-success"
+#:button_name => "Информация о расчетах",
+:button_class => "btn btn-success",
+:button_symbol => content_tag(:span, "", {:class => "glyphicon glyphicon-info-sign", :'aria-hidden' =>true}),
+}
 %>
 
-<%= render :partial => "application/layouts/popover" %>
-
-
+<%= render :partial => "application/layouts/popover", :locals => {:popover => popover} %>

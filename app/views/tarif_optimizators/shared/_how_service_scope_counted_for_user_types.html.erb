@@ -1,6 +1,7 @@
 <%
-@title = "Услуги операторов учитываются в зависимости от регистрации пользователя на сайте:"
-@content = 
+popover = {
+:title => "Услуги операторов учитываются в зависимости от регистрации пользователя на сайте:",
+:content => (
 	case user_type
 	when :guest
 		"Для гостей учитывается роуминг только в домашнем регионе, без услуг ммс и интернета."
@@ -10,12 +11,14 @@
 		"Для зарегистрированных пользователей во внимание принимаются все услуги, включая международный роуминг."	
 	else
 		"Для гострей учитывается роуминг только в домашнем регионе, без услуг ммс и интернета."
-	end
+	end),
 	
-@button_name = "Учитываемые услуги оператора"
-@button_class = "btn btn-success"
+:button_name => "Учитываемые услуги оператора",
+:button_class => "btn btn-success",
+:button_symbol => content_tag(:span, "", {:class => "glyphicon glyphicon-info-sign", :'aria-hidden' =>true}),
+}
 %>
 
-<%= render :partial => "application/layouts/popover" %>
+<%= render :partial => "application/layouts/popover", :locals => {:popover => popover}  %>
 
 
