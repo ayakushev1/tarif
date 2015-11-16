@@ -1,0 +1,8 @@
+<% content_for :title, "Список описаний моделирования или детализации звонков" %>
+
+<p>
+<%= link_to 'Создать новое описание', new_customer_call_run_path, {:class => "btn btn-success", :type => 'button'} %>
+</p>
+
+<%= render :partial => 'call_runs', :layout => 'application/layouts/model_table', :locals => {:table => controller.customer_call_runs}%>
+

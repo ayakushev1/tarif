@@ -1,0 +1,22 @@
+<%
+form_item.init do |fi|
+#  fi.caption =  'Профиль'
+	link_to_html = {:class => "btn btn-primary", :type =>"button", :remote => true}
+
+  fi.set_fields do  |call_run| 
+    [
+      ['Название', call_run.name], 
+      ['Источник данных', 
+      	(['Моделирование', 'Загрузка детализации'][call_run.source] if call_run.source)
+      ], 
+      ['Описание', call_run.description], 
+      (['Пользователь', (call_run.user.name if call_run.user)] if user_type == :admin), 
+      [
+		link_to( 'Редактировать описание', edit_customer_call_run_path(call_run), link_to_html),
+		link_to( 'Список описаний', customer_call_runs_path, link_to_html)
+      	
+      ],
+    ].compact 
+  end  
+end
+%>

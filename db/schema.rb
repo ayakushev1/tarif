@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151113043527) do
+ActiveRecord::Schema.define(version: 20151115181820) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -98,18 +98,34 @@ ActiveRecord::Schema.define(version: 20151113043527) do
   add_index "customer_background_stats", ["result_type"], name: "index_customer_background_stats_on_result_type", using: :btree
   add_index "customer_background_stats", ["user_id"], name: "index_customer_background_stats_on_user_id", using: :btree
 
+  create_table "customer_call_runs", force: :cascade do |t|
+    t.integer "user_id"
+    t.string  "name"
+    t.integer "source"
+    t.text    "description"
+  end
+
+  add_index "customer_call_runs", ["source"], name: "index_customer_call_runs_on_source", using: :btree
+  add_index "customer_call_runs", ["user_id"], name: "index_customer_call_runs_on_user_id", using: :btree
+
   create_table "customer_calls", force: :cascade do |t|
     t.integer "base_service_id"
     t.integer "base_subservice_id"
     t.integer "user_id"
-    t.json    "own_phone"
-    t.json    "partner_phone"
-    t.json    "connect"
-    t.json    "description"
+    t.jsonb   "own_phone"
+    t.jsonb   "partner_phone"
+    t.jsonb   "connect"
+    t.jsonb   "description"
+    t.integer "call_run_id"
   end
 
   add_index "customer_calls", ["base_service_id"], name: "index_customer_calls_on_base_service_id", using: :btree
   add_index "customer_calls", ["base_subservice_id"], name: "index_customer_calls_on_base_subservice_id", using: :btree
+  add_index "customer_calls", ["call_run_id"], name: "index_customer_calls_on_call_run_id", using: :btree
+  add_index "customer_calls", ["connect"], name: "index_customer_calls_on_connect", using: :gin
+  add_index "customer_calls", ["description"], name: "index_customer_calls_on_description", using: :gin
+  add_index "customer_calls", ["own_phone"], name: "index_customer_calls_on_own_phone", using: :gin
+  add_index "customer_calls", ["partner_phone"], name: "index_customer_calls_on_partner_phone", using: :gin
   add_index "customer_calls", ["user_id"], name: "index_customer_calls_on_user_id", using: :btree
 
   create_table "customer_categories", force: :cascade do |t|

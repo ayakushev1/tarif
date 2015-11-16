@@ -115,6 +115,8 @@ Rails.application.routes.draw do
     resources :services, only: [:index] do
       get 'calculate_statistic', on: :collection
     end   
+    
+    resources :call_runs
 
     controller :calls do
       get 'calls/' => :index

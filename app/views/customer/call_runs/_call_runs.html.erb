@@ -1,0 +1,18 @@
+<%
+table.init do |t|
+#  t.caption = 'Listing users'
+  t.heads = ['Название', 'Источник данные', 'Описание', ("Пользователь" if user_type == :admin), '', '', ''].compact
+  t.set_fields do |call_run| 
+  [
+    call_run.name,
+    (['Моделирование', 'Загрузка детализации'][call_run.source] if call_run.source),
+    call_run.description,
+#    call_run.id, 
+    (call_run.user.name if call_run.user and user_type == :admin), 
+    link_to( 'Просмотр', customer_call_run_path(call_run), ), 
+    link_to( 'Редактировать', edit_customer_call_run_path(call_run)), 
+    link_to( 'Удалить', call_run, method: :delete, data: { confirm: 'Are you sure?'	 })
+  ].compact 
+  end
+end
+%>

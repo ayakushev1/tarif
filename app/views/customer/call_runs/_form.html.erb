@@ -1,0 +1,38 @@
+<%
+
+form_item.init do |fi|
+	action_path = fi.model.id ? edit_customer_call_run_path(fi.model) : new_customer_call_run_path	
+	input_html = {:filtr_name => form_item.form_name, :class => "updatable form-control ", :action_name => action_path}
+	label_html = {:class => "form-label "}
+	s = session_model_params(fi)
+
+  fi.set_fields do |f|
+
+ 	  [
+	   [
+	   	f.label( :name, 'Название', label_html), 
+	   	f.text_field( :name, input_html.merge({:value =>(s['name'] || "новое описание")}))
+	   ], 
+	   [
+	   	f.label( :description, 'Описание', label_html), 
+	   	f.text_area( :description, input_html.merge({:value => (s['description'] || "новое детальное описание")}))
+	   ], 
+	   [
+	   	f.label( :source, 'Источник данных', label_html), 
+	 	f.select(:source, [
+	 	 	["Моделирование", 0], 
+	 	 	["Загрузка детализации", 1]], {}, input_html)
+	   	], 
+	   [
+	   	f.label( " "), 
+	   	f.submit(:class => "btn btn-primary", :type =>"submit", :remote => true)
+	   ],
+	   [
+	   	'', 
+	   	f.text_field( :user_id, {:hidden => true, :value => current_or_guest_user_id })
+	   ],
+	  ]
+  end
+end
+%>
+

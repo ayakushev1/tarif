@@ -22,7 +22,7 @@ form_item.init do |fi|
      	f.collection_select("standard_service_id", Category.standard_services.all, :id, :name, 
 	  	  {:include_blank => true, :selected => s["standard_service_id"] }, input_html )   ],	
 
-	   ['', f.submit(:class => "btn btn-primary", :type =>"button", :remote => true)]
+	   ['', f.submit(:class => "btn btn-primary", :type =>"submit", :remote => true)]
 	]
   end
 end

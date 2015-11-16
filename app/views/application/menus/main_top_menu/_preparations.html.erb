@@ -1,4 +1,6 @@
 <ul class="dropdown-menu">
+		<li><%= link_to  'Список загрузок звонков', customer_call_runs_path %></li>
+
 	<%if controller.customer_has_free_calls_modelling_trials? %>
 		<li><%= link_to  'Моделирование звонков', customer_calls_set_calls_generation_params_path%></li>
 	<% end %>
