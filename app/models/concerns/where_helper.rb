@@ -22,7 +22,7 @@ module WhereHelper
       columns.each{|c| col[c.name] = c.type}
       if col.keys.include?(key.to_s)
         case
-        when col[key] == :json          
+        when [:json, :jsonb].include?(col[key])          
           value.each do |v|
             result = result.where("#{key.to_s}->>'#{v[0]}' = ? ", v[1]) unless v[1].blank?
           end if value  
