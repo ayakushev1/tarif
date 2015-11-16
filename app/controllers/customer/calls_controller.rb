@@ -102,6 +102,7 @@ class Customer::CallsController < ApplicationController
   def user_params
     {
       "user_id" => current_or_guest_user_id,
+      "call_run_id" => customer_call_run_id
     }
   end
   
@@ -135,6 +136,12 @@ class Customer::CallsController < ApplicationController
       user_session["region_id"] = params['customer_calls_generation_params_general_filtr']['region_id']
       user_session["region_name"] = !user_session["region_id"].blank? ? ::Category.find(user_session["region_id"] ).name : nil
     end
+  end
+  
+  def customer_call_run_id
+    session_filtr_params(call_run_choice)['customer_call_run_id'] ||
+    Customer::CallRun.where(:user_id => current_or_guest_user_id).
+      first_or_create(:name => "Моделирование звонков", :source => 0, :description => "", :user_id => current_or_guest_user_id).id  
   end
   
   def create_call_run_if_not_exists

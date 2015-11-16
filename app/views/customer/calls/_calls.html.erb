@@ -4,7 +4,8 @@ table.init do |t|
 #  t.base_name = 'customer_calls'
 #  t.pagination_per_page = 10
   t.heads = 
-  ['Услуга', 'Направление', 'Пользователь', 'Параметры пользователя', 'Параметры 2-й стороны', 'Параметры подключения', 'Описание']
+  ['Услуга', 'Направление', 'Пользователь', 'Параметры пользователя', 'Параметры 2-й стороны', 'Параметры подключения', 
+  	'Описание', ('call_run' if user_type == :admin)]
   t.set_fields do |call| 
   	own_phone = [call.own_phone["number"], call.own_phone["operator"], call.own_phone["region"], call.own_phone["country"]].compact.join(", ")
   	partner_phone = [call.partner_phone["number"], call.partner_phone["operator"], call.partner_phone["operator_type"], call.partner_phone["region"], call.partner_phone["country"]].compact.join(", ")
@@ -18,11 +19,12 @@ table.init do |t|
    	 partner_phone,
    	 connect,
   	 call.description,
+  	 (call.call_run.name if user_type == :admin and call.call_run),
 #  	 call.own_phone,
 #  	 call.partner_phone,
 #  	 call.connect,
 #  	 call.description,
-    ] 
+    ].compact
   end
 end
 %>

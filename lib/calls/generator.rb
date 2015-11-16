@@ -39,7 +39,7 @@ class Calls::Generator
             next if ( partner_operator_type_id == _fixed_line ) and [_sms, _mms].include?(base_service_id)
  
             call_item = {
-              :base_service_id => base_service_id, :base_subservice_id => choose_call_direction(rouming), :user_id => common_params["user_id"],
+              :base_service_id => base_service_id, :base_subservice_id => choose_call_direction(rouming), :user_id => common_params["user_id"], :call_run_id => common_params["call_run_id"],
             :own_phone => {
               :number => common_params["own_phone_number"], :operator_id => common_params["own_operator_id"],
               :region_id => common_params["own_region_id"], :country_id => common_params["own_country_id"],
@@ -86,7 +86,7 @@ class Calls::Generator
       end
     end
     
-    Customer::Call.batch_save(calls, {:user_id => user_params["user_id"]})
+    Customer::Call.batch_save(calls, {:user_id => user_params["user_id"], :call_run_id => user_params["call_run_id"]})
 
   end
 
@@ -94,6 +94,7 @@ class Calls::Generator
     {
       "user_id" => ( ( user_params["user_id"] if user_params ) || 2 ).to_i, 
       "own_phone_number" => ( ( user_params["own_phone_number"] if user_params ) || '7000000000' ), 
+      'call_run_id' => user_params["call_run_id"]
     }
   end
   
@@ -108,6 +109,7 @@ class Calls::Generator
       "fixed_operator_id" => Category::Operator::Const::FixedlineOperator, 
       "partner_operator_ids" => set_partner_operator_ids(customer_generation_params[:general]["operator_id"].to_i),
       "user_id" =>  user_params["user_id"],
+      "call_run_id" =>  user_params["call_run_id"],
       "own_phone_number" => user_params["own_phone_number"], 
       "own_operator_id" => customer_generation_params[:general]["operator_id"].to_i, 
       "own_region_id" => customer_generation_params[:general]["region_id"].to_i, 

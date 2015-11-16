@@ -26,6 +26,7 @@ class Calls::HistoryParser::OperatorProcessor::Operator
       :base_service_id => service[:base_service], 
       :base_subservice_id => (service[:subservice] || number[:subservice]), 
       :user_id => user_params[:user_id],
+      :call_run_id => user_params[:call_run_id],
       :own_phone => {
         :number => user_params[:own_phone_number], 
         :operator_id => user_params[:operator_id],

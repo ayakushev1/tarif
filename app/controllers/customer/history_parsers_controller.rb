@@ -40,15 +40,6 @@ class Customer::HistoryParsersController < ApplicationController
     end    
   end
   
-  def call_run_choice
-    create_filtrable("call_run_choice")
-  end
-
-  def create_call_run_if_not_exists
-    Customer::CallRun.create(:name => "Моделирование звонков", :source => 0, :description => "", :user_id => current_or_guest_user_id) if
-      !Customer::CallRun.where(:user_id => current_or_guest_user_id).present?
-  end
-   
   def background_parser_processor(parser_starter, call_history_file)  
     call_history_saver.clean_output_results         
      

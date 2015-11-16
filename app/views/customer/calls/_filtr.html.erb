@@ -10,9 +10,9 @@ form_item.init do |f|
     user_calls_query = Customer::Call.where(:user_id => current_or_guest_user_id)
   [
   	[
-	label(filtr_name, "customer_call_run_id", "Выбор описания моделирования", label_html),	
-	collection_select(filtr_name, "customer_call_run_id", Customer::CallRun.where(:id => user_calls_query.query_from_filtr(s, "customer_call_run_id").pluck(:call_run_id).uniq ), :id, :name, 
-	  	   {:selected => s["customer_call_run_id"] }, input_html )
+	label(filtr_name, "call_run_id", "Выбор описания моделирования", label_html),	
+	collection_select(filtr_name, "call_run_id", Customer::CallRun.where(:id => user_calls_query.query_from_filtr(s, "call_run_id").pluck(:call_run_id).uniq ), :id, :name, 
+	  	   {:include_blank => "Описание моделирования", :selected => s["call_run_id"] }, input_html )
 	],
   	[label(filtr_name, "base_service_id", "Услуга", label_html),
   	 collection_select(filtr_name, "base_service_id", Category.where(:id => user_calls_query.query_from_filtr(s, "base_service_id").pluck(:base_service_id).uniq ), :id, :name, 

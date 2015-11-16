@@ -69,7 +69,8 @@ module Customer::HistoryParsersHelper
   
   def parse_uploaded_file(uploaded_call_history_file)
     call_history_to_save = parse_file(uploaded_call_history_file)
-    Customer::Call.batch_save(call_history_to_save['processed'], {:user_id => current_or_guest_user_id})
+    Customer::Call.batch_save(call_history_to_save['processed'], 
+      {:user_id => current_or_guest_user_id, :call_run_id => customer_call_run_id})
     call_history_to_save['message']
   end
   
@@ -135,6 +136,21 @@ module Customer::HistoryParsersHelper
     file_type = file_type.downcase if file_type
   end
   
+  def call_run_choice
+    create_filtrable("call_run_choice")
+  end
+
+  def customer_call_run_id
+    session_filtr_params(call_run_choice)['customer_call_run_id'] ||
+    Customer::CallRun.where(:user_id => current_or_guest_user_id).
+      first_or_create(:name => "Моделирование звонков", :source => 1, :description => "", :user_id => current_or_guest_user_id).id
+  end
+  
+  def create_call_run_if_not_exists
+    Customer::CallRun.create(:name => "Моделирование звонков", :source => 1, :description => "", :user_id => current_or_guest_user_id) if
+      !Customer::CallRun.where(:user_id => current_or_guest_user_id).present?
+  end
+   
   def background_process_informer
 #    @background_process_informer ||= 
     Customer::BackgroundStat::Informer.new('parsing_uploaded_file', current_or_guest_user_id)
@@ -149,6 +165,7 @@ module Customer::HistoryParsersHelper
     user_params_filtr_session_filtr_params = session_filtr_params(user_params_filtr)
     {
       :user_id => current_or_guest_user_id,
+      :call_run_id => customer_call_run_id,
 
       :own_phone_number => user_params_filtr_session_filtr_params['own_phone_number'],
       :operator_id => user_params_filtr_session_filtr_params['operator_id'].to_i,
