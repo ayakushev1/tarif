@@ -23,8 +23,9 @@ class TarifOptimizators::AllOptionsController < ApplicationController
   end 
   
   def check_inputs_for_recalculate     
+    call_run_id = session_filtr_params(calculation_choices)['call_run_id']
     if session_filtr_params(calculation_choices)['accounting_period'].blank? or
-        !accounting_periods.map(&:accounting_period).include?(session_filtr_params(calculation_choices)['accounting_period'])
+        !accounting_periods(call_run_id).map(&:accounting_period).include?(session_filtr_params(calculation_choices)['accounting_period'])
       redirect_to({:action => :index}, {:alert => "Выберите период для расчета"}) and return
     end
 
