@@ -107,6 +107,7 @@ module ApplicationHelper::Authorization
       },
       :tarif_optimization => {
         :methods => [], :actions => {
+          'result/runs' => [],
           'tarif_optimizators/main' => ['index', 'recalculate', 'select_services'],
           'tarif_optimizators/fixed_services' => ['index', 'recalculate', 'select_services'],
           'tarif_optimizators/limited_scope' => ['index', 'recalculate', 'select_services'],

@@ -362,18 +362,37 @@ ActiveRecord::Schema.define(version: 20151117034322) do
   add_index "result_agregates", ["tarif_id"], name: "index_result_agregates_on_tarif_id", using: :btree
 
   create_table "result_runs", force: :cascade do |t|
-    t.integer "user_id"
-    t.integer "run"
     t.string  "name"
     t.text    "description"
+    t.integer "user_id"
+    t.integer "call_run_id"
+    t.string  "accounting_period"
+    t.integer "optimization_type_id"
+    t.integer "run"
     t.jsonb   "optimization_params"
+    t.jsonb   "calculation_choices"
+    t.jsonb   "selected_service_categories"
+    t.jsonb   "services_by_operator"
+    t.jsonb   "temp_value"
     t.jsonb   "service_choices"
     t.jsonb   "services_select"
-    t.jsonb   "service_categories_select"
     t.jsonb   "services_for_calculation_select"
+    t.jsonb   "service_categories_select"
   end
 
+  add_index "result_runs", ["accounting_period"], name: "index_result_runs_on_accounting_period", using: :btree
+  add_index "result_runs", ["calculation_choices"], name: "index_result_runs_on_calculation_choices", using: :btree
+  add_index "result_runs", ["call_run_id"], name: "index_result_runs_on_call_run_id", using: :btree
+  add_index "result_runs", ["optimization_params"], name: "index_result_runs_on_optimization_params", using: :btree
+  add_index "result_runs", ["optimization_type_id"], name: "index_result_runs_on_optimization_type_id", using: :btree
   add_index "result_runs", ["run"], name: "index_result_runs_on_run", using: :btree
+  add_index "result_runs", ["selected_service_categories"], name: "index_result_runs_on_selected_service_categories", using: :btree
+  add_index "result_runs", ["service_categories_select"], name: "index_result_runs_on_service_categories_select", using: :btree
+  add_index "result_runs", ["service_choices"], name: "index_result_runs_on_service_choices", using: :btree
+  add_index "result_runs", ["services_by_operator"], name: "index_result_runs_on_services_by_operator", using: :btree
+  add_index "result_runs", ["services_for_calculation_select"], name: "index_result_runs_on_services_for_calculation_select", using: :btree
+  add_index "result_runs", ["services_select"], name: "index_result_runs_on_services_select", using: :btree
+  add_index "result_runs", ["temp_value"], name: "index_result_runs_on_temp_value", using: :btree
   add_index "result_runs", ["user_id"], name: "index_result_runs_on_user_id", using: :btree
 
   create_table "result_service_categories", force: :cascade do |t|

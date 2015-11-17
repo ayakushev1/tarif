@@ -47,6 +47,7 @@ Rails.application.routes.draw do
   end
   
   namespace :result do
+    resources :runs
     controller :runs do
       get 'runs/results' => :results
       get 'runs/detailed_results' => :detailed_results

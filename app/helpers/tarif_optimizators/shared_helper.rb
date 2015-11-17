@@ -25,7 +25,19 @@ module TarifOptimizators::SharedHelper
       select("description->>'accounting_period' as accounting_period").uniq
   end
   
+  def result_run_choice
+    create_filtrable("result_run_choice")
+  end
+  
+  def result_run_id
+    session_filtr_params(result_run_choice)['result_run_id'] ||
+    Result::Run.where(:user_id => current_or_guest_user_id).
+      first_or_create(:name => "Подбор тарифа", :description => "", :user_id => current_or_guest_user_id, :run => 1).id  
+  end
+  
+  def create_result_run_if_not_exists
+    Result::Run.create(:name => "Подбор тарифа", :description => "", :user_id => current_or_guest_user_id, :run => 1) if
+      !Result::Run.where(:user_id => current_or_guest_user_id).present?
+  end
+  
 end
-
-      
-        

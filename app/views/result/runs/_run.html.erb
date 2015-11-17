@@ -1,0 +1,33 @@
+<%
+form_item.init do |fi|
+#  fi.caption =  'Профиль'
+	link_to_html = {:class => "btn btn-primary", :type =>"button", :remote => true}
+
+  fi.set_fields do  |run| 
+    [
+      ['Название', run.name], 
+      ['Описание подбора тарифа', run.description], 
+      ['Описание звонков', (run.call_run.name if run.call_run)], 
+      ['Календарный период', run.accounting_period], 
+      ['Тип подбора тарифа', run.optimization_type],
+      ['Номер подбра', run.run], 
+      [
+		link_to( 'Редактировать описание', edit_result_run_path(run), link_to_html),
+		link_to( 'Список описаний', result_runs_path, link_to_html)      	
+      ],
+	] + (user_type != :admin ? [] : [
+	  	['ID', run.id],
+	  	['Пользователь', (run.user.name if run.user)],
+	  	['optimization_params', run.optimization_params],
+	  	['calculation_choices', run.calculation_choices],
+	  	['selected_service_categories', run.selected_service_categories],
+	  	['services_by_operator', run.services_by_operator],
+	  	['temp_value', run.temp_value],
+	  	['service_choices', run.service_choices],
+	  	['services_select', run.services_select],
+	  	['services_for_calculation_select', run.services_for_calculation_select],
+	  	['service_categories_select', run.service_categories_select],
+	])
+  end  
+end
+%>

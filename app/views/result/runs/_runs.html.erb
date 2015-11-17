@@ -1,0 +1,24 @@
+<%
+table.init do |t|
+#  t.caption = 'Listing users'
+  t.heads = if user_type == :admin
+  	['Название', 'Описание', 'Описание звонков', 'Календарный период','Тип подбора','Номер подбра','ID','Пользователь','', '', '']
+  else
+  	['Название', 'Описание', 'Описание звонков', 'Календарный период','Тип подбора','Номер подбра','', '', '']
+  end 
+  
+  t.set_fields do |run| 
+  [
+    run.name,
+    run.description,
+    (run.call_run.name if run.call_run), 
+    run.accounting_period,
+    run.optimization_type,
+    run.run,
+    link_to( 'Просмотр', result_run_path(run)), 
+    link_to( 'Редактировать', edit_result_run_path(run)), 
+    link_to( 'Удалить', run, method: :delete, data: { confirm: 'Are you sure?'})
+  ] + (user_type != :admin ? [] : [run.id, (run.user.name if run.user)])
+  end
+end
+%>
