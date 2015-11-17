@@ -7,11 +7,11 @@ content_in :tabs do |user|
      link_to( 'Главная страница', root_path, remote: true, turbolinks: true),
      'link' 
     ], 
-    [
+    ([
      'Рекомендации', 
      render('/application/menus/main_top_menu/recommendation'),
      'dropdown-menu' 
-    ], 
+    ] if current_user_admin?), 
     [
      'Загрузка звонков', 
      render('/application/menus/main_top_menu/preparations'),
