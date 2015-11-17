@@ -15,23 +15,22 @@ class TarifOptimizators::FixedServicesController < ApplicationController
     redirect_to({:action => :index}, {:alert => "Расчет выполнен. Можете перейти к просмотру результатов"})
   end 
   
-  def check_inputs_for_recalculate     
+  def check_inputs_for_recalculate    
+#    raise(StandardError)
     call_run_id = session_filtr_params(calculation_choices)['call_run_id']
     if session_filtr_params(calculation_choices)['accounting_period'].blank? or
         !accounting_periods(call_run_id).map(&:accounting_period).include?(session_filtr_params(calculation_choices)['accounting_period'])
       redirect_to({:action => :index}, {:alert => "Выберите период для расчета"}) and return
     end
 
-    if session_filtr_params(calculation_choices)['calculate_with_fixed_services'] == 'true'
-      if session_filtr_params(services_for_calculation_select)["operator_id"].blank?
-        message_for_blank_operator = "Вы выбрали расчет для выбранных тарифа и опций. Поэтому выберите оператора на вкладке 'Выбор тарифа и набора опций для расчета'."
-        redirect_to({:action => :index}, {:alert => message_for_blank_operator}) and return
-      end
+    if session_filtr_params(services_for_calculation_select)["operator_id"].blank?
+      message_for_blank_operator = "Вы выбрали расчет для выбранных тарифа и опций. Поэтому выберите оператора на вкладке 'Выбор тарифа и набора опций для расчета'."
+      redirect_to({:action => :index}, {:alert => message_for_blank_operator}) and return
+    end
 
-      if session_filtr_params(services_for_calculation_select)["tarif_to_calculate"].blank?
-        message_for_blank_operator = "Вы выбрали расчет для выбранных тарифа и опций. Поэтому выберите тариф на вкладке 'Выбор тарифа и набора опций для расчета'."
-        redirect_to({:action => :index}, {:alert => message_for_blank_operator}) and return 
-      end
+    if session_filtr_params(services_for_calculation_select)["tarif_to_calculate"].blank?
+      message_for_blank_operator = "Вы выбрали расчет для выбранных тарифа и опций. Поэтому выберите тариф на вкладке 'Выбор тарифа и набора опций для расчета'."
+      redirect_to({:action => :index}, {:alert => message_for_blank_operator}) and return 
     end
     
     is_user_calculating_now = Delayed::Job.where(:queue => "tarif_optimization", :attempts => 0, :reference_id => current_or_guest_user_id, :reference_type => 'user').present?
