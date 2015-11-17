@@ -111,10 +111,10 @@ module TarifOptimizators::AdminHelper
       session[:filtr]['optimization_params_filtr']  = Customer::Info::TarifOptimizationParams.info(current_or_guest_user_id)
     end
     
-    accounting_period = accounting_periods.blank? ? -1 : accounting_periods[0]['accounting_period']  
     if session[:filtr]['calculation_choices_filtr'].blank?
       session[:filtr]['calculation_choices_filtr'] ||= {}
-      session[:filtr]['calculation_choices_filtr']  = Customer::Info::CalculationChoices.info(current_or_guest_user_id).merge({'accounting_period' => accounting_period})
+      session[:filtr]['calculation_choices_filtr']  = Customer::Info::CalculationChoices.info(current_or_guest_user_id).
+        merge({'call_run_id' => customer_call_run_id, 'accounting_period' => accounting_period})
     end
 
     if !session[:filtr] or session[:filtr]['service_categories_select_filtr'].blank?

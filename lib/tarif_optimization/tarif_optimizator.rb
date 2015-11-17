@@ -19,7 +19,7 @@ class TarifOptimization::TarifOptimizator
                #, :save_interim_results_after_calculating_final_tarif_sets
                
 #user input
-  attr_reader :user_id, :fq_tarif_region_id, :accounting_period, :selected_service_categories, :calculate_with_limited_scope, :new_run_id
+  attr_reader :user_id, :fq_tarif_region_id, :accounting_period, :call_run_id, :selected_service_categories, :calculate_with_limited_scope, :new_run_id
 #local
   attr_reader :calls_count_by_parts
   
@@ -41,6 +41,7 @@ class TarifOptimization::TarifOptimizator
     @calculate_with_limited_scope = (options[:user_input][:calculate_with_limited_scope] == 'true' ? true : false)
     @selected_service_categories = options[:user_input][:selected_service_categories]
     @accounting_period = options[:user_input][:accounting_period] #|| '1_2014'
+    @call_run_id = options[:user_input][:call_run_id] 
   end
   
   def init_output_params(options)
@@ -58,8 +59,10 @@ class TarifOptimization::TarifOptimizator
     @optimization_result_saver = Customer::Stat::OptimizationResult.new('optimization_results', nil, user_id)
     @final_tarif_sets_saver = Customer::Stat::OptimizationResult.new('optimization_results', 'final_tarif_sets', user_id)
     @prepared_final_tarif_results_saver = Customer::Stat::OptimizationResult.new('optimization_results', 'prepared_final_tarif_results', user_id)
-    @calls_stat_calculator = Customer::Call::StatCalculator.new({:user_id => user_id, :accounting_period => accounting_period})
-    @tarif_optimization_sql_builder = TarifOptimization::TarifOptimizationSqlBuilder.new(self, {:user_id => user_id, :accounting_period => accounting_period})
+    @calls_stat_calculator = Customer::Call::StatCalculator.new(
+      {:user_id => user_id, :accounting_period => accounting_period, :call_run_id => call_run_id})
+    @tarif_optimization_sql_builder = TarifOptimization::TarifOptimizationSqlBuilder.new(self, 
+      {:user_id => user_id, :accounting_period => accounting_period, :call_run_id => call_run_id})
     @minor_result_saver = Customer::Stat::OptimizationResult.new('optimization_results', 'minor_results', user_id)
     @tarif_list_generator = TarifOptimization::TarifListGenerator.new(options || {})
     if use_background_process_informers

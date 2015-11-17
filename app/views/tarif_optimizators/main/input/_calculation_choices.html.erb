@@ -9,9 +9,14 @@ form_item.init do |f|
 	
   [
   	[
+	label(filtr_name, "call_run_id", "Выбор описания моделирования или загрузки звонков", label_html),
+	collection_select(filtr_name, "call_run_id", customer_call_runs, :id, :full_name, 
+	  	   {:include_blank => "выберите описание", :selected => s["call_run_id"] }, input_html )
+  	],
+  	[
   	 label(filtr_name, "accounting_period", "Период, за который проводить расчет тарифов", label_html),
   	 collection_select(filtr_name, "accounting_period", 
-  	   accounting_periods, 
+  	   accounting_periods(s["call_run_id"]), 
   	   :accounting_period, :accounting_period, {:include_blank => "выберите период расчета", :selected => s["accounting_period"]}, input_html ),
   	 ],  
   ]

@@ -1,11 +1,12 @@
 Dir[Rails.root.join("db/seeds/definitions/01_service_categories.rb")].sort.each { |f| require f }
 
 class Customer::Call::StatCalculator
-  attr_reader :user_id, :accounting_period, :calculation_scope, :calculation_scope_where_hash
+  attr_reader :user_id, :accounting_period, :call_run_id, :calculation_scope, :calculation_scope_where_hash
   
   def initialize(options = {})
     @user_id = options[:user_id] || 0
     @accounting_period = options[:accounting_period]
+    @call_run_id = options[:call_run_id]
     @calculation_scope = {:where_hash => {}}
     @calculation_scope_where_hash = 'true'
   end
@@ -54,7 +55,7 @@ class Customer::Call::StatCalculator
         "'[#{call_types}]' as call_types",
         "#{calls_stat_functions_string(calls_stat_category_criteria[:stat_functions])}",
       ]
-      calls_stat_category_sql << Customer::Call.where(:user_id => user_id).where(calculation_scope_where_hash).
+      calls_stat_category_sql << Customer::Call.where(:call_run_id => call_run_id).where(calculation_scope_where_hash).
         where("description->>'accounting_period' = '#{accounting_period}'").
         select(fields.join(', ')).where(where_condition.join(' and ')).to_sql
     end

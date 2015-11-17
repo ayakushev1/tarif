@@ -91,6 +91,7 @@ class TarifOptimization::TarifOptimizatorRunner
        },
      :user_input => {
         :accounting_period => calculation_choices['accounting_period'],
+        :call_run_id => calculation_choices['call_run_id'],
         :calculate_with_limited_scope => calculation_choices['calculate_with_limited_scope'],
         :selected_service_categories => selected_service_categories,
         :new_run_id => temp_value[:new_run_id],
