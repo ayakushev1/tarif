@@ -14,6 +14,12 @@ form_item.init do |f|
 	collection_select(filtr_name, "call_run_id", Customer::CallRun.where(:id => user_calls_query.query_from_filtr(s, "call_run_id").pluck(:call_run_id).uniq ), :id, :name, 
 	  	   {:include_blank => "Описание моделирования", :selected => s["call_run_id"] }, input_html )
 	],
+	[
+  	 label(filtr_name, "description[accounting_period]", "Период, за который проводить расчет тарифов", label_html),
+  	 collection_select(filtr_name, "description[accounting_period]", 
+  	   accounting_periods(s["call_run_id"]), 
+  	   :accounting_period, :accounting_period, {:include_blank => "выберите период расчета", :selected => (s["description"]["accounting_period"] if s["description"] )}, input_html ),
+	],
   	[label(filtr_name, "base_service_id", "Услуга", label_html),
   	 collection_select(filtr_name, "base_service_id", Category.where(:id => user_calls_query.query_from_filtr(s, "base_service_id").pluck(:base_service_id).uniq ), :id, :name, 
   	   {:include_blank => "Услуга", :selected => s["base_service_id"] }, input_html )
@@ -22,7 +28,6 @@ form_item.init do |f|
   	 collection_select(filtr_name, "base_subservice_id", Category.where(:id => user_calls_query.query_from_filtr(s, "base_subservice_id").pluck(:base_subservice_id).uniq ), :id, :name, 
   	   {:include_blank => "Направление услуги", :selected => s["base_subservice_id"] }, input_html )
   	],
-  	[' ',' '],
 #  	["", collection_select(filtr_name, "user_id", User.where(:id => user_calls_query.query_from_filtr(s, "user_id").pluck(:user_id).uniq ), :id, :name, 
 #  	   {:include_blank => "Пользователь", :selected => s["user_id"] }, input_html )
 #  	],
