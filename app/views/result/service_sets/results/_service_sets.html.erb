@@ -31,7 +31,7 @@ table.init do |t|
     
   	[
      link_to( content_tag(:span, image_tag("left_menu_5.png", :alt => 'Подробное описание')), 
-       result_runs_detailed_results_path, {:remote => true}),
+       result_service_sets_detailed_results_path, {:remote => true}),
   	 (f.price.round(0).to_s(:delimited, precision: 0) if f.price),    
      (f.operator.name if f.operator),     
   	 link_to_if(s_desc[f.tarif_id]['service_http'], s_desc[f.tarif_id]['service_name'], s_desc[f.tarif_id]['service_http'], {:target => "_blank"}),    

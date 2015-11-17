@@ -9,7 +9,7 @@
 
 <p>
 <%= link_to('Подобрать тариф', tarif_optimizators_fixed_operators_recalculate_path, {:class => "btn btn-primary", :type =>"button"}) %>
-<%= link_to('Посмотреть результаты подбора тарифов', result_runs_results_path, {:class => "btn btn-primary", :type =>"button"}) %>
+<%= link_to('Посмотреть результаты подбора тарифов', result_path(result_run_id), {:class => "btn btn-primary", :type =>"button"}) %>
 </p>
 
 <%= render(:partial => 'tarif_optimizators/fixed_operators/input/calculation_choices', :layout => 'application/layouts/filtr_form_group', 

@@ -5,5 +5,5 @@
 	{:class => "btn btn-success", :type => 'button'})  if controller.is_allowed_new_result_run? %>
 </p>
 
-<%= render :partial => 'runs', :layout => 'application/layouts/model_table', :locals => {:table => controller.result_runs}%>
+<%= render :partial => 'runs', :layout => 'application/layouts/model_table', :locals => {:table => controller.result_runs_table}%>
 

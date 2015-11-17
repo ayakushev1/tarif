@@ -10,7 +10,7 @@ form_item.init do |f|
   [
   	[
 	label(filtr_name, "result_run_id", "Выбор описания подбора тарифа", label_html),
-	collection_select(filtr_name, "result_run_id", result_runs, :id, :full_name, 
+	collection_select(filtr_name, "result_run_id", result_runs_for_current_or_guest_user, :id, :full_name, 
 	  	   {:include_blank => "выберите описание", :selected => s["result_run_id"] }, input_html )
   	],
   	[

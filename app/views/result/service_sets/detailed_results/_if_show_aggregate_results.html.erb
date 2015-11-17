@@ -2,9 +2,9 @@
 form_item.init do |f|
 #  f.caption = "Choice of service"	
   f.set_fields do |filtr_name|
-	input_html = {:filtr_name => form_item.filtr_name, :class => "updatable form-control ", :action_name => result_runs_detailed_results_path}
+	input_html = {:filtr_name => form_item.filtr_name, :class => "updatable form-control ", :action_name => result_service_sets_detailed_results_path}
 	label_html = {:class => "control-label "}
-    html_options = {:action_name => result_runs_detailed_results_path }
+    html_options = {:action_name => result_service_sets_detailed_results_path }
     s = session_filtr_params(f)
     #raise(StandardError, select(filtr_name, "rouming", [["show", true], ["not show", false]], {:selected => s["rouming"]}, html_options ))
 	

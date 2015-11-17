@@ -29,7 +29,7 @@ module TarifOptimizators::SharedHelper
       select("description->>'accounting_period' as accounting_period").uniq
   end
   
-  def result_runs
+  def result_runs_for_current_or_guest_user
     Result::Run.where(:user_id => current_or_guest_user_id)
   end
 

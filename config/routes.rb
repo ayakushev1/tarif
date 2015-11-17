@@ -48,10 +48,12 @@ Rails.application.routes.draw do
   
   namespace :result do
     resources :runs
-    controller :runs do
-      get 'runs/results' => :results
-      get 'runs/detailed_results' => :detailed_results
-      get 'runs/test' => :test
+
+    controller :service_sets do
+      get 'service_sets/results' => :results
+      get 'service_sets/results/:result_run_id' => :result
+      get 'service_sets/detailed_results' => :detailed_results
+      get 'service_sets/test' => :test
     end
   end
   
