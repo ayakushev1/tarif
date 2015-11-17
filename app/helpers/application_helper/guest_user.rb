@@ -32,6 +32,7 @@ module ApplicationHelper::GuestUser
   def logging_in
     return if (Customer::Info.where(:user_id => current_user.id).present? or Customer::Call.where(:user_id => current_user.id).present?)
     Customer::Call.where(:user_id => session[:guest_user_id]).update_all("user_id = #{current_user.id}")
+    Customer::CallRun.where(:user_id => session[:guest_user_id]).update_all("user_id = #{current_user.id}")
     Customer::Demand.where(:customer_id => session[:guest_user_id]).update_all("customer_id = #{current_user.id}")
     Customer::Info.where(:user_id => session[:guest_user_id]).update_all("user_id = #{current_user.id}")
     Customer::Info::ServicesUsed.update_free_trials_by_cash_amount(current_user.id, (100.0 / 0.98), false)

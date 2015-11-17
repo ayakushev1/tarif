@@ -2,11 +2,8 @@ module TarifOptimizators::MainHelper
   include TarifOptimizators::SharedHelper
   include SavableInSession::Filtrable, SavableInSession::SessionInitializers
 
-  def calculation_choices
-    create_filtrable("calculation_choices")
-  end
-  
   def update_customer_infos
+    update_result_run_on_calculation(options)
     Customer::Info::CalculationChoices.update_info(current_or_guest_user_id, session_filtr_params(calculation_choices))
     Customer::Info::ServicesUsed.decrease_one_free_trials_by_one(current_or_guest_user_id, 'tarif_optimization_count')      
   end
@@ -20,7 +17,6 @@ module TarifOptimizators::MainHelper
       :selected_service_categories => selected_service_categories,
       :services_by_operator => services_by_operator,
       :temp_value => {
-        :new_run_id => new_run_id,
         :user_id => current_or_guest_user_id,
         :user_region_id => nil,         
         :user_priority => user_priority,      

@@ -10,10 +10,6 @@ module TarifOptimizators::AdminHelper
     create_filtrable("service_choices")
   end
   
-  def calculation_choices
-    create_filtrable("calculation_choices")
-  end
-  
   def services_select
     create_filtrable("services_select")
   end
@@ -31,6 +27,7 @@ module TarifOptimizators::AdminHelper
   end
 
   def update_customer_infos
+    update_result_run_on_calculation(options)
     Customer::Info::ServicesSelect.update_info(current_or_guest_user_id, session_filtr_params(services_select)) if user_type == :admin
     Customer::Info::ServiceChoices.update_info(current_or_guest_user_id, session_filtr_params(service_choices)) if user_type == :admin
     Customer::Info::TarifOptimizationParams.update_info(current_or_guest_user_id, session_filtr_params(optimization_params)) if user_type == :admin
@@ -54,7 +51,6 @@ module TarifOptimizators::AdminHelper
       :selected_service_categories => selected_service_categories,
       :services_by_operator => services_by_operator,
       :temp_value => {
-        :new_run_id => new_run_id,
         :user_id => current_or_guest_user_id,
         :user_region_id => nil,         
         :user_priority => user_priority,      

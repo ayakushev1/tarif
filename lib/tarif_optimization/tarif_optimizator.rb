@@ -19,7 +19,7 @@ class TarifOptimization::TarifOptimizator
                #, :save_interim_results_after_calculating_final_tarif_sets
                
 #user input
-  attr_reader :user_id, :fq_tarif_region_id, :accounting_period, :call_run_id, :selected_service_categories, :calculate_with_limited_scope, :new_run_id
+  attr_reader :user_id, :fq_tarif_region_id, :accounting_period, :call_run_id, :selected_service_categories, :calculate_with_limited_scope, :result_run_id
 #local
   attr_reader :calls_count_by_parts
   
@@ -37,7 +37,7 @@ class TarifOptimization::TarifOptimizator
     @use_background_process_informers = options[:use_background_process_informers] != nil ? options[:use_background_process_informers] : true
     @fq_tarif_region_id = ((options[:user_input][:user_region_id] and options[:user_input][:user_region_id] != 0) ? options[:user_input][:user_region_id] : 1238)
     @user_id = options[:user_input][:user_id] || 0
-    @new_run_id = options[:user_input][:new_run_id] || 0
+    @result_run_id = options[:user_input][:result_run_id] || 0
     @calculate_with_limited_scope = (options[:user_input][:calculate_with_limited_scope] == 'true' ? true : false)
     @selected_service_categories = options[:user_input][:selected_service_categories]
     @accounting_period = options[:user_input][:accounting_period] #|| '1_2014'
@@ -372,19 +372,19 @@ class TarifOptimization::TarifOptimizator
   
   def clean_new_results
 #    result_run = Result::Run.where(:id => user_id, :run => 1).first
-    if new_run_id
-#      Result::Run.where(:id => new_run_id).delete_all
-      Result::Tarif.where(:run_id => new_run_id).delete_all
-      Result::ServiceSet.where(:run_id => new_run_id).delete_all
-      Result::Service.where(:run_id => new_run_id).delete_all
-      Result::Agregate.where(:run_id => new_run_id).delete_all
-      Result::ServiceCategory.where(:run_id => new_run_id).delete_all
+    if result_run_id
+#      Result::Run.where(:id => result_run_id).delete_all
+      Result::Tarif.where(:run_id => result_run_id).delete_all
+      Result::ServiceSet.where(:run_id => result_run_id).delete_all
+      Result::Service.where(:run_id => result_run_id).delete_all
+      Result::Agregate.where(:run_id => result_run_id).delete_all
+      Result::ServiceCategory.where(:run_id => result_run_id).delete_all
     end
 
   end
   
   def new_preparator_and_saver(operator, tarif_id, final_tarif_sets, groupped_identical_services, tarif_results)
-    run_id = new_run_id
+    run_id = result_run_id
     result_tarif_id = Result::Tarif.where(:run_id => run_id, :tarif_id => tarif_id).first_or_create()[:id]
 #    raise(StandardError, [result_tarif_id, tarif_id, run_id, Result::Tarif.first_or_create(:run_id => run_id, :tarif_id => tarif_id).attributes])
     service_sets_array, services_array, categories_array, agregates_array = TarifOptimization::FinalTarifResultPreparator2.prepare_service_sets({

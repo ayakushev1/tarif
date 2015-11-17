@@ -2,10 +2,6 @@ module TarifOptimizators::AllOptionsHelper
   include TarifOptimizators::SharedHelper
   include SavableInSession::Filtrable, SavableInSession::SessionInitializers
 
-  def calculation_choices
-    create_filtrable("calculation_choices")
-  end
-  
   def services_select
     create_filtrable("services_select")
   end
@@ -23,6 +19,7 @@ module TarifOptimizators::AllOptionsHelper
   end
 
   def update_customer_infos
+    update_result_run_on_calculation(options)
     Customer::Info::CalculationChoices.update_info(current_or_guest_user_id, session_filtr_params(calculation_choices))
     Customer::Info::ServiceCategoriesSelect.update_info(current_or_guest_user_id, session_filtr_params(service_categories_select))
 

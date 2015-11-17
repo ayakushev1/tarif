@@ -2,6 +2,7 @@ class TarifOptimizators::FixedServicesController < ApplicationController
   include TarifOptimizators::FixedServicesHelper
   
   before_action :create_result_run_if_not_exists, only: [:index]
+  before_action :update_call_run_on_result_run_change, only: [:index]
   before_action :check_if_optimization_options_are_in_session, only: [:index]
 
   before_action :check_if_customer_has_free_trials, only: :recalculate
@@ -17,6 +18,10 @@ class TarifOptimizators::FixedServicesController < ApplicationController
   end 
   
   def check_inputs_for_recalculate    
+    if session_filtr_params(calculation_choices)['result_run_id'].blank?
+      redirect_to({:action => :index}, {:alert => "Выберите описание подбора тарифа"}) and return
+    end
+
 #    raise(StandardError)
     call_run_id = session_filtr_params(calculation_choices)['call_run_id']
     if session_filtr_params(calculation_choices)['accounting_period'].blank? or
