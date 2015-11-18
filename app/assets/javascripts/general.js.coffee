@@ -43,7 +43,8 @@ $(document).on 'change', ".updatable", ->
     data: filtr,
     dataType: "script"
     success: ->
-      $(":input")[element_before_ajax_index + 1].focus() 
+      if $(":input")[element_before_ajax_index + 1]
+      	$(":input")[element_before_ajax_index + 1].focus() 
         
 $(document).on 'click', "tr[id*=row]", ->
   row_name = $(this).attr("row_name")
