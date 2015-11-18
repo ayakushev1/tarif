@@ -42,8 +42,8 @@ class UserMailer < ActionMailer::Base
     mail(to: user.email, subject: "Подтверждение перевода денежных средств")
   end
 
-  def tarif_optimization_complete(user_id)
-    @url  = result_runs_path #'http://www.mytarifs.ru/'
+  def tarif_optimization_complete(user_id, result_run_id)
+    @url  = result_path(result_run_id) #'http://www.mytarifs.ru/'
     @user = User.where(:id => user_id).first
     mail(to: @user.email, subject: "Подтверждение завершение подбора тарифа")
   end
