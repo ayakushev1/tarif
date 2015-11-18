@@ -18,9 +18,11 @@
 
 <%= render :partial => 'upload_form' %>
 
+<!--
 <h3>Результаты анализа детализации звонков</h3>
+-->
 
-<%= render :partial => 'call_history_tabs', :layout => 'application/layouts/tabs', 
-      :locals => {:name => 'call_history_tabs', :active => session[:current_tabs_page]['call_history_tabs'].to_i} %>
+<%= render( :partial => 'call_history_tabs', :layout => 'application/layouts/tabs', 
+      :locals => {:name => 'call_history_tabs', :active => session[:current_tabs_page]['call_history_tabs'].to_i}) if user_type == :admin %>
       
 
