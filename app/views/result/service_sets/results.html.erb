@@ -1,5 +1,7 @@
 <% content_for :title, "Список вариантов подбора лучших тарифов и тарифных опций" %>
 
+<%= render :partial => 'result/service_sets/results/attention' %>
+
 <%= render(:partial => 'result/service_sets/results_select', :layout => 'application/layouts/filtr_form_group', 
 	    :locals => {:form_item => results_select} ) %>
 

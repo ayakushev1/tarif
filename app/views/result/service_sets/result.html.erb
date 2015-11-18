@@ -1,4 +1,6 @@
 <% content_for :title, "Список лучших тарифов и тарифных опций" %>
 
+<%= render :partial => 'result/service_sets/results/attention' %>
+
 <%= render :partial => 'result/service_sets/results/service_sets', :layout => 'application/layouts/model_table', :locals => {:table => result_service_sets} %>
 
