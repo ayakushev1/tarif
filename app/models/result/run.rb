@@ -42,5 +42,14 @@ class Result::Run < ActiveRecord::Base
     ['Основной', 'Проверка стоимости', 'С ограничением услуг', 'Для одного оператора', 'Со всеми опциями', 'Для администратора'][optimization_type_id] if optimization_type_id
   end
 
+  def self.allowed_new_result_run(user_type = :guest)
+    {:guest => 4, :trial => 10, :user => 20, :admin => 100000}[user_type]
+  end
+  
+  def self.allowed_min_result_run(user_type = :guest)
+    {:guest => 4, :trial => 5, :user => 5, :admin => 5}[user_type]
+  end
+  
+
 end
 

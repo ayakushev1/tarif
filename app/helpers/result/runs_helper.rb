@@ -12,7 +12,7 @@ module Result::RunsHelper
   
   def check_if_allowed_delete_result_run
     message = "Нельзя удалять единственное описание"
-    redirect_to( result_runs_path, alert: message) if result_runs_count < 2
+    redirect_to( result_runs_path, alert: message) if result_runs_count < (Result::Run.allowed_min_result_run(user_type) + 1)
   end
   
   def is_allowed_new_result_run?
@@ -24,7 +24,7 @@ module Result::RunsHelper
   end
   
   def allowed_new_result_run(user_type = :guest)
-    {:guest => 4, :trial => 10, :user => 20, :admin => 100000}[user_type]
+    Result::Run.allowed_new_result_run(user_type)
   end
   
   def accounting_periods(call_run_id = nil)

@@ -41,10 +41,12 @@ module TarifOptimizators::SharedHelper
   end
   
   def create_result_run_if_not_exists
-    Result::Run.create(:name => "Подбор тарифа", :description => "", :user_id => current_or_guest_user_id, :run => 1, 
-      :optimization_type_id => optimization_type_from_controller_name) if !Result::Run.where(:user_id => current_or_guest_user_id).present?
+    Result::Run.allowed_min_result_run(user_type).times.each do |i|
+      Result::Run.create(:name => "Подбор тарифа №#{i}", :description => "", :user_id => current_or_guest_user_id, :run => 1, 
+        :optimization_type_id => optimization_type_from_controller_name)
+    end if !Result::Run.where(:user_id => current_or_guest_user_id).present?
   end
-  
+    
   def update_call_run_on_result_run_change
     session_filtr_params_calculation_choices = session[:filtr]['calculation_choices_filtr']
     if params[:calculation_choices_filtr] and !params[:calculation_choices_filtr][:result_run_id].blank? and
