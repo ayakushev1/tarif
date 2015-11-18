@@ -16,9 +16,10 @@ form_item.init do |f|
 	],
 	[
   	 label(filtr_name, "description[accounting_period]", "Календарный период", label_html),
-  	 collection_select(filtr_name, "description[accounting_period]", 
-  	   accounting_periods(s["call_run_id"]), 
-  	   :accounting_period, :accounting_period, {:include_blank => "выберите календарный период", :selected => (s["description"]["accounting_period"] if s["description"] )}, input_html ),
+  	 select(filtr_name, "description[accounting_period]", 
+	  	 user_calls_query.query_from_filtr(s, "description[accounting_period]").collect { |q| q.description['accounting_period'] }.uniq,
+#  		 accounting_periods(s["call_run_id"]), 
+  	 	 {:include_blank => "выберите календарный период", :selected => (s["description"]["accounting_period"] if s["description"] )}, input_html ),
 	],
   	[label(filtr_name, "base_service_id", "Услуга", label_html),
   	 collection_select(filtr_name, "base_service_id", Category.where(:id => user_calls_query.query_from_filtr(s, "base_service_id").pluck(:base_service_id).uniq ), :id, :name, 
