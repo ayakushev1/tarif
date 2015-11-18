@@ -7,7 +7,8 @@ module Result::ServiceSetsHelper
   end
 
   def run_id
-    session_filtr_params(results_select)['result_run_id'] = params[:result_run_id] if params[:result_run_id]
+    session[:filtr]['results_select_filtr'] ||= {}
+    session[:filtr]['results_select_filtr']['result_run_id'] = params[:result_run_id] if params[:result_run_id]
     params[:result_run_id] || (session_filtr_params(results_select)['result_run_id'] || -1).to_i
 #    run = Result::Run.where(:user_id => current_or_guest_user_id, :run => 1).first
 #    run ? run[:id] : -1

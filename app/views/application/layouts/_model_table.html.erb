@@ -16,6 +16,10 @@ table_html_options = table_html_options.collect { |key, value| "#{key.to_s}=\"#{
 	<%= params if false %>
 	<%= session[:filtr] if false %>
 	<%= session[:current_id] if false %>
+	<%= [controller.service_set_id, controller.run_id, 
+		controller.session_filtr_params(results_select)['result_run_id'], params[:result_run_id], 
+		session[:filtr][:results_select_filtr]['result_run_id'],
+		session[:filtr]['results_select_filtr']['result_run_id']] if false %>
 	<%=session[:pagination]if false %>
 	
 	<% if table.caption %> 
