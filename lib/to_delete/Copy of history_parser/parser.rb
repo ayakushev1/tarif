@@ -13,29 +13,49 @@ class Calls::HistoryParser::Parser
   end
   
   def check_if_file_is_good
+#    @message = {:file_is_good => false, 'message' => "Не загружен файл"}
+#    return message unless call_history_file
 
-    column_indexes = operator_processer.find_column_indexes(file_processer.table_rows(operator_processer.table_filtrs))
+    table_heads_row = file_processer.table_heads_row(operator_processer.table_filtrs, operator_processer.correct_table_heads)    
+    @message = {:file_is_good => false, 'message' => "Неправильный формат выписки"}
+    return message if table_heads_row == -2
 
-    return {:file_is_good => false, 'message' => "Неправильный формат выписки"} if !column_indexes
-
-    {:file_is_good => true, 'message' => nil}
+    table_heads = file_processer.table_heads(operator_processer.table_filtrs)
+    @message = {:file_is_good => false, 'message' => "Неправильный формат выписки 2"}
+#    raise(StandardError)
+    return message unless operator_processer.check_if_table_correct(table_heads, file_processer.processor_type)
+        
+    @message = {:file_is_good => true, 'message' => nil}
+    return message 
   end
   
   def parse
-    call_detail_rows = file_processer.table_rows(operator_processer.table_filtrs)
+#    check_if_file_is_good
+    table_heads_row = file_processer.table_heads_row(operator_processer.table_filtrs, operator_processer.correct_table_heads)
+    table_heads = file_processer.table_heads(operator_processer.table_filtrs)
+    operator_processer.check_if_table_correct(table_heads, file_processer.processor_type)
+    call_details_doc = file_processer.table_body(operator_processer.table_filtrs)
     
     max_row_number = [parsing_params[:call_history_max_line_to_process],  file_processer.table_body_size].min
-
+#    raise(StandardError, max_row_number)
     background_process_informer.init(0.0, max_row_number) if background_process_informer
-
     update_step = [parsing_params[:background_update_frequency], 1].max
     
-    i = 0
+
+    i = 0; doc_i = table_heads_row + 1
     
-    while i < max_row_number
-      row = call_detail_rows[i]
+    while call_details_doc and i < max_row_number
+      row = file_processer.table_row(doc_i, operator_processer.table_filtrs)
+      if !row
+        doc_i += 1
+        i += 1
+        next
+      end
+      
       date = operator_processer.row_date(row)
+#      raise(StandardError) if doc_i == 20
       if date == "invalid_date"
+        doc_i += 1
         i += 1
         next
       end
@@ -45,7 +65,9 @@ class Calls::HistoryParser::Parser
         i += 1
       end 
       
-      background_process_informer.increase_current_value(update_step) if background_process_informer and (i + 1).divmod(update_step)[1] == 0
+      background_process_informer.increase_current_value(update_step) if background_process_informer and (doc_i + 1).divmod(update_step)[1] == 0
+      
+      doc_i += 1
     end 
     nil
   end

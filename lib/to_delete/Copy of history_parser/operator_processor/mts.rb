@@ -101,6 +101,7 @@ class Calls::HistoryParser::OperatorProcessor::Mts < Calls::HistoryParser::Opera
   end
   
   def row_date(row)
+#    raise(StandardError)
     result = nil
     begin
       result = "#{row[row_column_index[:date]]} #{row[row_column_index[:time]]} #{row[row_column_index[:gmt]]}".to_datetime
@@ -112,10 +113,41 @@ class Calls::HistoryParser::OperatorProcessor::Mts < Calls::HistoryParser::Opera
   end
   
   def correct_table_heads
-    [
-      {date:"Дата", time: "Время", gmt: "GMT*", number: "Номер", rouming: "Зона вызова", partner: "Зона направления вызова/номер сессии", service: "Услуга", duration: "Длительность", cost: "Стоимость без НДС"},
-      {date:"Дата", time: "Время", gmt: "GMT*", number: "Номер", rouming: "Зона вызова", partner: "Зона направления вызова/номер сессии", service: "Услуга", duration: "Длительность/Объем (мин.:сек.)/(Kb)", cost: "Стоимость руб."},
-    ]
+    {
+      :html => ["", "Дата", "Время", "GMT*", "Номер", "Зона вызова", "Зона направления вызова/номер сессии", "Услуга", " ", "Длительность/Объем (мин.:сек.)/(Kb)", "Стоимость руб.", ""],
+      :xls => ["Дата", "Время", "GMT*", "Номер", "Зона вызова", "Зона направления вызова/номер сессии", "Услуга", "", "Длительность", "Стоимость без НДС"]
+    }    
+  end
+  
+  def row_column_index(table_heads = [], file_processor_type = nil)
+    @row_column_index ||= case file_processor_type
+    when :html
+      {
+        :date => table_heads.index("Дата"),
+        :time => table_heads.index("Время"),
+        :gmt => table_heads.index("GMT*"),
+        :number => table_heads.index("Номер"),
+        :rouming => table_heads.index("Зона вызова"),
+        :partner => table_heads.index("Зона направления вызова/номер сессии"),
+        :service => table_heads.index("Услуга"),
+        :special => table_heads.index(" "),
+        :duration => table_heads.index("Длительность/Объем (мин.:сек.)/(Kb)"),
+        :cost => table_heads.index("Стоимость руб."),
+      }
+    else # :xls
+      {
+        :date => table_heads.index("Дата"),
+        :time => table_heads.index("Время"),
+        :gmt => table_heads.index("GMT*"),
+        :number => table_heads.index("Номер"),
+        :rouming => table_heads.index("Зона вызова"),
+        :partner => table_heads.index("Зона направления вызова/номер сессии"),
+        :service => table_heads.index("Услуга"),
+        :special => table_heads.index(""),
+        :duration => table_heads.index("Длительность"),
+        :cost => table_heads.index("Стоимость без НДС"),
+       }
+     end
   end
   
   def table_filtrs
@@ -127,7 +159,10 @@ class Calls::HistoryParser::OperatorProcessor::Mts < Calls::HistoryParser::Opera
         :body_column => 'td',
       },
       :xls => {
+        :head => 'table table thead tr',
+        :head_column => 'th',
         :body => 0,
+        :body_column => 'td',
       },
     }    
   end

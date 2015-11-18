@@ -3,13 +3,13 @@ class Calls::HistoryParser::OperatorProcessor::Operator
   include Calls::HistoryParser::DbSearchHelper
 
   attr_reader :user_params
-  attr_reader :unprocessed, :processed, :ignorred, :row_column_index
+  attr_reader :unprocessed, :processed, :ignorred
   
   def initialize(user_params)
     @user_params = user_params
     @operator_phone_numbers = Calls::OperatorPhoneNumbers.new()
     @unprocessed = []; @processed = []; @ignorred = []
-    @row_column_index = {}
+    
     load_db_data
   end
   
@@ -194,6 +194,14 @@ class Calls::HistoryParser::OperatorProcessor::Operator
     end
   end
   
+  def check_if_table_correct(table_heads, file_processor_type)
+#    raise(StandardError)
+    return false if (table_heads != correct_table_heads[file_processor_type]) and 
+      !correct_table_heads[file_processor_type].include?(table_heads)
+    return  false if row_column_index(table_heads, file_processor_type).values.include?(nil)
+    true 
+  end
+  
   def row_service(row) 
     service = row_parser(row, base_service_criteria, :service, :service)
     subservice = row_parser(row, base_subservice_criteria, :service, :subservice)
@@ -217,23 +225,6 @@ class Calls::HistoryParser::OperatorProcessor::Operator
 #    raise(StandardError) if column_name == :subservice
     unprocessed << {:unprocessed_column => column_name, :value => row[row_column_index[field_name]], :row => row} #if !condition    
 #    ignorred << {:ignorred_column => column_name, :value => row[row_column_index[field_name]], :row => row} if field_name == :service
-    nil
-  end
-  
-  def find_column_indexes(table_heads_1)
-    max_row_seach = 100
-    table_heads = table_heads_1[0].is_a?(Array) ? table_heads_1 : [table_heads_1]
-    table_heads[0..max_row_seach].each do |table_head|
-      @row_column_index = {} 
-      correct_table_heads.each do |correct_table_head|
-        correct_table_head.each do |local_name, out_name|
-          @row_column_index[local_name] = table_head.index(out_name)
-          break if !@row_column_index[local_name]
-        end
-        check = @row_column_index.values.compact.size == correct_table_head.keys.size
-        return @row_column_index if check
-      end
-    end
     nil
   end
   

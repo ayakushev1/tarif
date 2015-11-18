@@ -133,9 +133,38 @@ class Calls::HistoryParser::OperatorProcessor::Megafon < Calls::HistoryParser::O
   end
 
   def correct_table_heads
-    [
-      {date: "Дата", time: "Время", number: "Абонентский номер, адрес электронной почты, точка доступа", duration: "Прод/ Объем", tarification_unit: "Единица тарификации (мин, сек, шт, Kb, Mb)", service: "Вид услуги", rouming: "Место вызова", cost: "Стоимость (с НДС),  руб."},
-    ]
+    {
+      :html => ["Дата", "Время", "Абонентский номер, адрес электронной почты, точка доступа", "Прод/ Объем", "Единица тарификации (мин, сек, шт, Kb, Mb)", "Вид услуги",  "Место вызова",  "Стоимость (с НДС),  руб."],
+      :xls => ["Дата", "Время", "Абонентский номер, адрес электронной почты, точка доступа", "Прод/ Объем", "Единица тарификации (мин, сек, шт, Kb, Mb)", "Вид услуги",  "Место вызова",  "Стоимость (с НДС),  руб."]
+    }    
+  end
+  
+
+  def row_column_index(table_heads = [], file_processor_type = nil)
+    @row_column_index ||= case file_processor_type
+    when :html
+      {
+      :date => table_heads.index("Дата"),
+      :time => table_heads.index("Время"),
+      :number => table_heads.index("Абонентский номер, адрес электронной почты, точка доступа"),
+      :rouming => table_heads.index("Место вызова"),
+      :service => table_heads.index("Вид услуги"),
+      :duration => table_heads.index("Прод/ Объем"),
+      :tarification_unit => table_heads.index("Единица тарификации (мин, сек, шт, Kb, Mb)"),
+      :cost => table_heads.index("Стоимость (с НДС),  руб."),
+      }
+    else # :xls
+      {
+      :date => table_heads.index("Дата"),
+      :time => table_heads.index("Время"),
+      :number => table_heads.index("Абонентский номер, адрес электронной почты, точка доступа"),
+      :rouming => table_heads.index("Место вызова"),
+      :service => table_heads.index("Вид услуги"),
+      :duration => table_heads.index("Прод/ Объем"),
+      :tarification_unit => table_heads.index("Единица тарификации (мин, сек, шт, Kb, Mb)"),
+      :cost => table_heads.index("Стоимость (с НДС),  руб."),
+       }
+     end
   end
 
   def table_filtrs

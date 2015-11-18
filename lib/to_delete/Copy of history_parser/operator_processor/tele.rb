@@ -138,34 +138,42 @@ class Calls::HistoryParser::OperatorProcessor::Tele < Calls::HistoryParser::Oper
   end
   
   def correct_table_heads
-      [
+    {
+      :pdf => [
         [["Дата", "и", "время", "план", "Типсоединения", "Номер", "в", "секундах", "в", "минутах", "стоимость", "по", "оплате"], ["тарифу"]],
         ]
-#    [
-#      {date: "date:", time: "time:", tarif_name: "tarif_name:", service: "service:", number_called: "number_called:", duration: "duration:", duration_min: "duration_min", 
-#        tarif_price: "tarif_price", cost: "cost"},
-#    ]
-    
-  end
-
-  def find_column_indexes(table_heads)
-    if local_check_of_heads(table_heads)
-      @row_column_index = {
-          :date => 0,
-          :time => 1,
-          :tarif_name => 2,
-          :service => 3,
-          :number_called => 4,
-          :duration => 5,
-          :duration_min => 6,
-          :tarif_price => 7,
-          :cost => 8,
-        }
-    else
-      nil
-    end
+    }
   end
   
+  def row_column_index(table_heads = [], file_processor_type = nil)
+    @row_column_index ||= case file_processor_type
+    when :pdf
+      {
+        :date => 0,
+        :time => 1,
+        :tarif_name => 2,
+        :service => 3,
+        :number_called => 4,
+        :duration => 5,
+        :duration_min => 6,
+        :tarif_price => 7,
+        :cost => 8,
+      }
+    else # :html
+      {
+        :date => 0,
+        :time => 1,
+        :tarif_name => 2,
+        :service => 3,
+        :number_called => 4,
+        :duration => 5,
+        :duration_min => 6,
+        :tarif_price => 7,
+        :cost => 8,
+       }
+     end
+  end
+
   def table_filtrs
     {
       :pdf => {
@@ -176,17 +184,5 @@ class Calls::HistoryParser::OperatorProcessor::Tele < Calls::HistoryParser::Oper
       },
     }    
   end
-
-  def local_check_of_heads(table_heads)
-    max_search_row = [100, table_heads.size].min
-    i = 0
-    while (i < max_search_row)
-      if correct_table_heads.include?(table_heads[i...i + 2]) 
-        return true
-      end
-      i += 1
-    end
-  end
-  
 
 end

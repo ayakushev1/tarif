@@ -21,12 +21,6 @@ class Calls::HistoryParser::FileProcessor::Html
   def table_body_size
     table_body.size
   end
-
-  def table_rows(table_filtrs = {})
-    table_heads(table_filtrs) + body_rows(table_filtrs)
-
-  end
-  
   
   def table_heads(table_filtrs)
     return @table_heads if @table_heads
@@ -39,7 +33,11 @@ class Calls::HistoryParser::FileProcessor::Html
     @table_heads
   end
   
-  def body_rows(table_filtrs, max_row_number = 10000)
+  def table_row(row_index, table_filtrs)
+    table_body(table_filtrs)[row_index].css(table_filtrs[processor_type][:body_column]).to_a.map{|column| column.text} if table_body(table_filtrs)[row_index]
+  end
+  
+  def table_rows(table_filtrs, max_row_number = 100)
     result = []
     table_body(table_filtrs)[0, max_row_number].each do |row|
       (result << row.css(table_filtrs[processor_type][:body_column]).to_a.map{|column| column.text}) if row
@@ -48,14 +46,7 @@ class Calls::HistoryParser::FileProcessor::Html
     result
   end
 
-
-
-
-  def table_row11(row_index, table_filtrs)
-    table_body(table_filtrs)[row_index].css(table_filtrs[processor_type][:body_column]).to_a.map{|column| column.text} if table_body(table_filtrs)[row_index]
-  end
-  
-  def table_heads_row11(table_filtrs = {}, correct_table_heads = nil)
+  def table_heads_row(table_filtrs = {}, correct_table_heads = nil)
     -1
   end  
 end

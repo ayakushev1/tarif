@@ -22,12 +22,32 @@ class Calls::HistoryParser::FileProcessor::Xls
   end
   
   def table_body_size
-    table_body.last_row # - table_heads_row
+    table_body.last_row - table_heads_row
   end
   
-  def table_rows(table_filtrs = {})
-    table_body(table_filtrs)
-    (1..table_body.last_row).collect{|i| table_body(table_filtrs).row(i)}    
+  def table_heads(table_filtrs)
+    @table_heads ||= table_body(table_filtrs).row(table_heads_row(table_filtrs))
+  end
+
+  def table_row(row_index, table_filtrs = {})
+    table_body(table_filtrs).row(row_index) #doc_sheet.row(doc_i) doc.sheet(0)
+  end
+  
+  def table_heads_row(table_filtrs = {}, correct_table_heads = nil)
+    return @table_heads_row if @table_heads_row
+    @table_heads_row = -1
+#    return @table_heads_row if !doc.sheets.include?('Sheet0')
+    max_search_row = 20
+    i = table_body(table_filtrs).first_row
+    while (i < max_search_row)
+      if table_body(table_filtrs).row(i) == correct_table_heads[processor_type]
+        @table_heads_row = i
+        break
+      end
+      i += 1
+    end
+#    raise(StandardError)
+    @table_heads_row 
   end
   
   def file_type(file)

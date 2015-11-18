@@ -138,15 +138,52 @@ class Calls::HistoryParser::OperatorProcessor::Bln < Calls::HistoryParser::Opera
   end
   
   def correct_table_heads
-    [
-      {date: "Дата и время", number_init: "Исходящий номер", number_called: "Входящий номер",  call_type: "Описание услуги", service: "Тип услуги", duration: "Длительность, мин сек",  cost:  "Стоимость. руб", volume: "Размер сессии. МБ"},
-    ]
+    {
+      :html => ["Дата и время", "Исходящий номер", "Входящий номер", "Услуга", "Описание услуги", "Тип услуги", "Длительность, мин сек", "Стоимость. руб", "Размер сессии. МБ"],
+      :xls => ["Дата и время", "Исходящий номер", "Входящий номер", "Услуга", "Описание услуги", "Тип услуги", "Длительность, мин сек", "Стоимость. руб", "Размер сессии. МБ"]
+    }
   end
   
+  def row_column_index(table_heads = [], file_processor_type = nil)
+    @row_column_index ||= case file_processor_type
+    when :xls
+      {
+        :date => table_heads.index("Дата и время"),
+        :time => table_heads.index("Дата и время"),
+  #      :gmt => table_heads.index("GMT*"),
+        :number_init => table_heads.index("Исходящий номер"),
+        :number_called => table_heads.index("Входящий номер"),
+        :service => table_heads.index("Тип услуги"),
+        :call_type => table_heads.index("Описание услуги"),
+        :cost => table_heads.index("Стоимость. руб"),
+        :duration => table_heads.index("Длительность, мин сек"),
+        :volume => table_heads.index("Размер сессии. МБ"),      
+  #      :bs_number => table_heads.index("Номер БС"),
+      }
+    else # :html
+      {
+        :date => table_heads.index("Дата и время"),
+        :time => table_heads.index("Дата и время"),
+  #      :gmt => table_heads.index("GMT*"),
+        :number_init => table_heads.index("Исходящий номер"),
+        :number_called => table_heads.index("Входящий номер"),
+        :service => table_heads.index("Тип услуги"),
+        :call_type => table_heads.index("Описание услуги"),
+        :cost => table_heads.index("Стоимость. руб"),
+        :duration => table_heads.index("Длительность, мин сек"),
+        :volume => table_heads.index("Размер сессии. МБ"),      
+  #      :bs_number => table_heads.index("Номер БС"),
+       }
+     end
+  end
+
   def table_filtrs
     {
       :xls => {
+        :head => 'table table thead tr',
+        :head_column => 'th',
         :body => 0,
+        :body_column => 'td',
       },
     }    
   end

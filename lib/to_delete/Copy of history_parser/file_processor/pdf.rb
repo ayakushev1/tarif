@@ -26,10 +26,29 @@ class Calls::HistoryParser::FileProcessor::Pdf
     table_body.count
   end
   
-  def table_rows(table_filtrs = {})
-    table_body(table_filtrs)
+  def table_heads(table_filtrs)
+    @table_heads ||= table_body.slice(table_heads_row(table_filtrs),table_filtrs[processor_type][:head_count] )
+#    raise(StandardError)
   end
 
+  def table_row(row_index, table_filtrs = {})
+    table_body(table_filtrs)[row_index] #doc_sheet.row(doc_i) doc.sheet(0)
+  end
+  
+  def table_heads_row(table_filtrs = {}, correct_table_heads = nil)
+    return @table_heads_row if @table_heads_row
+    @table_heads_row = -1
+    max_search_row = [100, table_body_size - table_filtrs[processor_type][:head_count]].min
+    i = 0
+    while (i < max_search_row)
+      if correct_table_heads[processor_type].include?(table_body[i...i + table_filtrs[processor_type][:head_count]]) 
+        @table_heads_row = i 
+        break
+      end
+      i += 1
+    end
+    @table_heads_row 
+  end
   
   def file_type(file)
 #    raise(StandardError, file_type)    
