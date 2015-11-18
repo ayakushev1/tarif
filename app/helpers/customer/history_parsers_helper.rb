@@ -114,7 +114,10 @@ module Customer::HistoryParsersHelper
   end
   
   def parsing_params
-    parsing_params_filtr_session_filtr_params = session_filtr_params(parsing_params_filtr)
+    parsing_params_filtr_session_filtr_params = 
+    user_type == :admin ? session_filtr_params(parsing_params_filtr) : 
+    Customer::Info::CallsParsingParams.default_values(user_type)
+    
     {
 #      :background_process_informer => background_process_informer,
       :calculate_on_background => (parsing_params_filtr_session_filtr_params['calculate_on_background'] == 'true' ? true : false),
