@@ -28,28 +28,28 @@ class AddJsonbIndexesToCustomerCall < ActiveRecord::Migration
 
   def down
     execute <<-SQL
-      DROP INDEX index_customer_calls_on_own_phone_number;
-      DROP INDEX index_customer_calls_on_own_phone_operator_id;
-      DROP INDEX index_customer_calls_on_own_phone_region_id;
-      DROP INDEX index_customer_calls_on_partner_phone_number;
-      DROP INDEX index_customer_calls_on_partner_phone_operator_id;
-      DROP INDEX index_customer_calls_on_partner_phone_country_id;
-      DROP INDEX index_customer_calls_on_partner_phone_region_id;
-      DROP INDEX index_customer_calls_on_partner_phone_operator_type_id;
-      DROP INDEX index_customer_calls_on_connect_country_id;
-      DROP INDEX index_customer_calls_on_connect_operator_id;
-      DROP INDEX index_customer_calls_on_connect_region_id;
-      DROP INDEX index_customer_calls_on_description_time;
-      DROP INDEX index_customer_calls_on_description_duration;
-      DROP INDEX index_customer_calls_on_description_volume;
-      DROP INDEX index_customer_calls_on_description_volume_unit_id;
-      DROP INDEX index_customer_calls_on_description_year;
-      DROP INDEX index_customer_calls_on_description_month;
-      DROP INDEX index_customer_calls_on_description_day;
-      DROP INDEX index_customer_calls_on_description_cost;
-      DROP INDEX index_customer_calls_on_description_date;
-      DROP INDEX index_customer_calls_on_description_date_number;
-      DROP INDEX index_customer_calls_on_description_accounting_period;
+      DROP INDEX IF EXISTS index_customer_calls_on_own_phone_number;
+      DROP INDEX IF EXISTS index_customer_calls_on_own_phone_operator_id;
+      DROP INDEX IF EXISTS index_customer_calls_on_own_phone_region_id;
+      DROP INDEX IF EXISTS index_customer_calls_on_partner_phone_number;
+      DROP INDEX IF EXISTS index_customer_calls_on_partner_phone_operator_id;
+      DROP INDEX IF EXISTS index_customer_calls_on_partner_phone_country_id;
+      DROP INDEX IF EXISTS index_customer_calls_on_partner_phone_region_id;
+      DROP INDEX IF EXISTS index_customer_calls_on_partner_phone_operator_type_id;
+      DROP INDEX IF EXISTS index_customer_calls_on_connect_country_id;
+      DROP INDEX IF EXISTS index_customer_calls_on_connect_operator_id;
+      DROP INDEX IF EXISTS index_customer_calls_on_connect_region_id;
+      DROP INDEX IF EXISTS index_customer_calls_on_description_time;
+      DROP INDEX IF EXISTS index_customer_calls_on_description_duration;
+      DROP INDEX IF EXISTS index_customer_calls_on_description_volume;
+      DROP INDEX IF EXISTS index_customer_calls_on_description_volume_unit_id;
+      DROP INDEX IF EXISTS index_customer_calls_on_description_year;
+      DROP INDEX IF EXISTS index_customer_calls_on_description_month;
+      DROP INDEX IF EXISTS index_customer_calls_on_description_day;
+      DROP INDEX IF EXISTS index_customer_calls_on_description_cost;
+      DROP INDEX IF EXISTS index_customer_calls_on_description_date;
+      DROP INDEX IF EXISTS index_customer_calls_on_description_date_number;
+      DROP INDEX IF EXISTS index_customer_calls_on_description_accounting_period;
     SQL
   end
 end
