@@ -1,8 +1,12 @@
 module Customer::HistoryParsersHelper
-  include SavableInSession::Filtrable, SavableInSession::ArrayOfHashable, SavableInSession::ProgressBarable, SavableInSession::SessionInitializers
+  include SavableInSession::Filtrable, SavableInSession::ArrayOfHashable, SavableInSession::SessionInitializers
 
   def call_history_saver
     Customer::Stat::OptimizationResult.new('call_history', 'call_history', current_or_guest_user_id)
+  end
+  
+  def call_history_saver_clean_output_results
+    call_history_saver.clean_output_results
   end
   
   def call_history_results
@@ -32,63 +36,10 @@ module Customer::HistoryParsersHelper
     create_filtrable("user_params")
   end
 
-  def call_history_parsing_progress_bar
-    options = {'action_on_update_progress' => customer_history_parsers_calculation_status_path}.merge(
-      background_process_informer.current_values)
-    create_progress_barable('call_history_parsing', options)
-  end
-
-  def recalculate_on_back_ground(parser_starter, call_history_file)
-    prepare_background_process_informer
-    Spawnling.new(:argv => "parsing call history file for #{current_or_guest_user_id}") do
-      background_process_informer.init(0, 100)
-      message = send(parser_starter, call_history_file)
-      update_customer_infos
-#      @background_process_informer.finish
-      background_process_informer.finish
-      message
-    end     
-  end
-  
-  def recalculate_direct(parser_starter, call_history_file)
-    message = send(parser_starter, call_history_file)
-    update_customer_infos
-    message
-  end
-
-  def prepare_background_process_informer
-    background_process_informer.clear_completed_process_info_model
-    background_process_informer.init(0, 100)
-  end
-  
   def update_customer_infos
     Customer::Info::CallsDetailsParams.update_info(current_or_guest_user_id, session_filtr_params(user_params_filtr))
     Customer::Info::CallsParsingParams.update_info(current_or_guest_user_id, session_filtr_params(parsing_params_filtr)) if user_type == :admin
     Customer::Info::ServicesUsed.decrease_one_free_trials_by_one(current_or_guest_user_id, 'calls_parsing_count')    
-  end
-  
-  def parse_uploaded_file(uploaded_call_history_file)
-    call_history_to_save = parse_file(uploaded_call_history_file)
-    Customer::Call.batch_save(call_history_to_save['processed'], 
-      {:user_id => current_or_guest_user_id, :call_run_id => customer_call_run_id})
-    call_history_to_save['message']
-  end
-  
-  def parse_file(file)
-    file.rewind if file.eof?
-    parser = Calls::HistoryParser::Parser.new(file, user_params, parsing_params)
-    message = parser.parse
-
-    message = {:file_is_good => true, 'message' => "Обработано #{parser.processed_percent}%"} if !message
-    call_history_to_save = parser.parse_result.merge({'message' => message})
-    call_history_saver.save({:result => call_history_to_save})
-#    raise(StandardError)
-    call_history_to_save
-  end
-  
-  def upload_file(uploaded_call_history_file)
-#    raise(StandardError, check_uploaded_call_history_file(uploaded_call_history_file))
-    uploaded_call_history_file ? check_uploaded_call_history_file(uploaded_call_history_file) : {:file_is_good => false, 'message' => "Вы не выбрали файл для загрузки"}
   end
   
   def check_uploaded_call_history_file(call_history_file)
@@ -108,10 +59,6 @@ module Customer::HistoryParsersHelper
     
     message = "Тип файла не совпадает с разрешенным типом файла для оператора"
     return result = {:file_is_good => false, 'message' => message} if !check_if_file_type_match_with_operator(file_type)
-    
-    call_history_file.rewind if call_history_file.eof?
-    result = Calls::HistoryParser::Parser.new(call_history_file, user_params, parsing_params).check_if_file_is_good
-#    result = {:file_is_good => false, 'message' => message}
     
     result
   end
@@ -151,16 +98,6 @@ module Customer::HistoryParsersHelper
       !Customer::CallRun.where(:user_id => current_or_guest_user_id).present?
   end
    
-  def background_process_informer
-#    @background_process_informer ||= 
-    Customer::BackgroundStat::Informer.new('parsing_uploaded_file', current_or_guest_user_id)
-  end
-  
-  def init_background_process_informer
-#    @background_process_informer ||= 
-    Customer::BackgroundStat::Informer.new('parsing_uploaded_file', current_or_guest_user_id)
-  end
-  
   def user_params
     user_params_filtr_session_filtr_params = session_filtr_params(user_params_filtr)
     {
@@ -200,10 +137,10 @@ module Customer::HistoryParsersHelper
       session[:filtr]['user_params_filtr'] = Customer::Info::CallsDetailsParams.info(current_or_guest_user_id)
     end
 
-    if session[:filtr]['parsing_params_filtr'].blank? or user_type != :admin
+    if session[:filtr]['parsing_params_filtr'].blank? and user_type == :admin
       session[:filtr]['parsing_params_filtr'] ||= {}
-      session[:filtr]['parsing_params_filtr'] = 
-        user_type == :admin ? Customer::Info::CallsParsingParams.info(current_or_guest_user_id) : Customer::Info::CallsParsingParams.default_values(user_type)
+      session[:filtr]['parsing_params_filtr'] = Customer::Info::CallsParsingParams.info(current_or_guest_user_id)
+      #Customer::Info::CallsParsingParams.default_values(user_type)
     end
   end
 

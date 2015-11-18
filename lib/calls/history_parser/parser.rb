@@ -13,8 +13,8 @@ class Calls::HistoryParser::Parser
   end
   
   def check_if_file_is_good
-    @message = {:file_is_good => false, 'message' => "Не загружен файл"}
-    return message unless call_history_file
+#    @message = {:file_is_good => false, 'message' => "Не загружен файл"}
+#    return message unless call_history_file
 
     table_heads_row = file_processer.table_heads_row(operator_processer.table_filtrs, operator_processer.correct_table_heads)    
     @message = {:file_is_good => false, 'message' => "Неправильный формат выписки"}
