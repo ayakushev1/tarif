@@ -21,5 +21,14 @@ class Customer::CallRun < ActiveRecord::Base
   def source_name
     ['Моделирование', 'Загрузка детализации'][source] if source
   end
+  
+  def self.allowed_new_call_run(user_type = :guest)
+    {:guest => 3, :trial => 5, :user => 10, :admin => 100000}[user_type]
+  end
+
+  def self.min_new_call_run(user_type = :guest)
+    {:guest => 3, :trial => 5, :user => 5, :admin => 5}[user_type]
+  end
+  
 end
 

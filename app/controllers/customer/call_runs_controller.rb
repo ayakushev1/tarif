@@ -17,7 +17,7 @@ class Customer::CallRunsController < ApplicationController
   
   def check_if_allowed_delete_call_run
     message = "Нельзя удалять последнее описание"
-    redirect_to( customer_call_runs_path, alert: message) if customer_call_runs_count < 2
+    redirect_to( customer_call_runs_path, alert: message) if customer_call_runs_count < (Customer::CallRun.min_new_call_run(user_type) + 1)
   end
   
   def is_allowed_new_call_run?
@@ -29,7 +29,7 @@ class Customer::CallRunsController < ApplicationController
   end
   
   def allowed_new_call_run(user_type = :guest)
-    {:guest => 2, :trial => 5, :user => 10, :admin => 100000}[user_type]
+    Customer::CallRun.allowed_new_call_run(user_type)
   end
   
 end

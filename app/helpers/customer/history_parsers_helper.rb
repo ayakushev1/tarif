@@ -94,10 +94,11 @@ module Customer::HistoryParsersHelper
   end
   
   def create_call_run_if_not_exists
-    Customer::CallRun.create(:name => "Моделирование звонков", :source => 1, :description => "", :user_id => current_or_guest_user_id) if
-      !Customer::CallRun.where(:user_id => current_or_guest_user_id).present?
+    Customer::CallRun.min_new_call_run(user_type).times.each do |i|
+      Customer::CallRun.create(:name => "Загрузка детализации №#{i}", :source => 1, :description => "", :user_id => current_or_guest_user_id)
+    end  if !Customer::CallRun.where(:user_id => current_or_guest_user_id).present?
   end
-   
+
   def user_params
     user_params_filtr_session_filtr_params = session_filtr_params(user_params_filtr)
     {

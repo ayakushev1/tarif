@@ -4,7 +4,7 @@ table.init do |t|
   t.heads = if user_type == :admin
   	['Название', 'Описание', 'Описание звонков', 'Календарный период','Тип подбора','Номер подбра','ID','Пользователь','', '', '', '']
   else
-  	['Название', 'Описание', 'Описание звонков', 'Календарный период','Тип подбора','Номер подбра','', '', '', '']
+  	['Название', 'Описание', 'Описание звонков', 'Календарный период','Тип подбора','Номер подбра','', '', '']
   end 
   
   t.set_fields do |run| 
@@ -17,9 +17,12 @@ table.init do |t|
     run.run,
     link_to( 'Просмотр', result_run_path(run)), 
     link_to( 'Редактировать', edit_result_run_path(run)), 
-    link_to( 'Удалить', run, method: :delete, data: { confirm: 'Are you sure?'}),
     link_to( 'Подбор', result_path(run)), 
-  ] + (user_type != :admin ? [] : [run.id, (run.user.name if run.user)])
+  ] + (user_type != :admin ? [] : [
+    link_to( 'Удалить', run, method: :delete, data: { confirm: 'Are you sure?'}),
+  	run.id, 
+  	(run.user.name if run.user),
+  	])
   end
 end
 %>
