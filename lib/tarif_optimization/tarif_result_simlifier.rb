@@ -1,8 +1,9 @@
 class TarifOptimization::TarifResultSimlifier  
   attr_reader :options             
   attr_accessor :updated_tarif_results, :groupped_identical_services 
-  attr_accessor :tarif_sets, :services_that_depended_on, :operator, :tarif, :common_services, :common_services_by_parts,
-                :cons_tarif_results_by_parts, :tarif_results, :cons_tarif_results
+  attr_accessor :operator, :tarif
+#  attr_accessor :tarif_sets, :services_that_depended_on, :common_services, :common_services_by_parts,
+#                :cons_tarif_results_by_parts, :tarif_results, :cons_tarif_results
   
   attr_reader :if_update_tarif_sets_to_calculate_from_with_cons_tarif_results,
               :eliminate_identical_tarif_sets
@@ -10,6 +11,15 @@ class TarifOptimization::TarifResultSimlifier
   def initialize(options = {} )
     @options = options    
     set_generation_params(options)
+    @operator = options[:operator]
+    @tarif = options[:tarif]
+#    @tarif_sets = input_data[:tarif_sets]
+#    @services_that_depended_on = input_data[:services_that_depended_on]
+#    @common_services_by_parts = input_data[:common_services_by_parts]
+#    @common_services = input_data[:common_services]
+#    @cons_tarif_results_by_parts = input_data[:cons_tarif_results_by_parts]
+#    @tarif_results = input_data[:tarif_results]
+#    @cons_tarif_results = input_data[:cons_tarif_results]
   end
     
   def set_generation_params(options)
@@ -17,19 +27,21 @@ class TarifOptimization::TarifResultSimlifier
     @if_update_tarif_sets_to_calculate_from_with_cons_tarif_results = options[:if_update_tarif_sets_to_calculate_from_with_cons_tarif_results] == 'true' ? true : false
   end
   
-  def set_input_data(input_data)
-    @tarif_sets = input_data[:tarif_sets]
-    @services_that_depended_on = input_data[:services_that_depended_on]
-    @operator = input_data[:operator]
-    @tarif = input_data[:tarif]
-    @common_services_by_parts = input_data[:common_services_by_parts]
-    @common_services = input_data[:common_services]
-    @cons_tarif_results_by_parts = input_data[:cons_tarif_results_by_parts]
-    @tarif_results = input_data[:tarif_results]
-    @cons_tarif_results = input_data[:cons_tarif_results]
-  end
+#  def set_input_data(input_data)
+#  end
+
+  def tarif_sets; options[:tarif_list_generator].tarif_sets; end          
+  def services_that_depended_on; options[:tarif_list_generator].services_that_depended_on; end
+  def common_services_by_parts; options[:tarif_list_generator].common_services_by_parts; end 
+  def common_services; options[:tarif_list_generator].common_services; end  
+  def cons_tarif_results_by_parts; options[:current_tarif_optimization_results].cons_tarif_results_by_parts; end
+  def tarif_results; options[:current_tarif_optimization_results].tarif_results; end
+  def cons_tarif_results; options[:current_tarif_optimization_results].cons_tarif_results; end
+  
+  
   
   def simplify_tarif_results_and_tarif_sets
+#    raise(StandardError)
     if if_update_tarif_sets_to_calculate_from_with_cons_tarif_results
       tarif_sets, tarif_results = update_tarif_sets_with_cons_tarif_results
     end

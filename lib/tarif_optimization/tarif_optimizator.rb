@@ -237,19 +237,19 @@ class TarifOptimization::TarifOptimizator
   end
   
   def simplify_tarif_resuts_by_tarif(operator, tarif, accounting_period)
-    tarif_result_simlifier = TarifOptimization::TarifResultSimlifier.new(options[:tarif_result_simlifier_params] || {})
-    
-    tarif_result_simlifier.set_input_data({
-      :tarif_sets => tarif_list_generator.tarif_sets,          
-      :services_that_depended_on => tarif_list_generator.services_that_depended_on,
+    tarif_result_simlifier = TarifOptimization::TarifResultSimlifier.new((options[:tarif_result_simlifier_params] || {}).merge({
       :operator => operator,      
       :tarif => tarif,
-      :common_services_by_parts => tarif_list_generator.common_services_by_parts, 
-      :common_services => tarif_list_generator.common_services,  
-      :cons_tarif_results_by_parts => current_tarif_optimization_results.cons_tarif_results_by_parts,
-      :tarif_results => current_tarif_optimization_results.tarif_results,
-      :cons_tarif_results => current_tarif_optimization_results.cons_tarif_results,
-    })
+      :tarif_list_generator => tarif_list_generator,
+      :current_tarif_optimization_results => current_tarif_optimization_results,
+#      :tarif_sets => tarif_list_generator.tarif_sets,          
+#      :services_that_depended_on => tarif_list_generator.services_that_depended_on,
+#      :common_services_by_parts => tarif_list_generator.common_services_by_parts, 
+#      :common_services => tarif_list_generator.common_services,  
+#      :cons_tarif_results_by_parts => current_tarif_optimization_results.cons_tarif_results_by_parts,
+#      :tarif_results => current_tarif_optimization_results.tarif_results,
+#      :cons_tarif_results => current_tarif_optimization_results.cons_tarif_results,
+    }))
     
     tarif_result_simlifier.simplify_tarif_results_and_tarif_sets
   end
