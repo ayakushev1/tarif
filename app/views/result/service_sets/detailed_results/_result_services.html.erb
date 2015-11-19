@@ -9,7 +9,8 @@ table.init do |t|
      f.sum_duration_minute,
      f.count_volume,
      f.sum_volume,
-     (f.call_id_count if current_user_admin?),      
+     (f.call_id_count if current_user_admin?), 
+     (f.categ_ids if current_user_admin?)     
   	] 
   end	
 end
