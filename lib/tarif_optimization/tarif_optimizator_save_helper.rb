@@ -38,7 +38,7 @@ module TarifOptimization::TarifOptimizatorSaveHelper
   end
 
   def update_minor_results
-    tarif_list_generator.calculate_service_packs; tarif_list_generator.calculate_service_packs_by_parts
+#    tarif_list_generator.calculate_service_packs; tarif_list_generator.calculate_service_packs_by_parts
     
     start_time = minor_result_saver.results['start_time'].to_datetime if minor_result_saver.results and minor_result_saver.results['start_time']
     start_time = performance_checker.start if !start_time
@@ -50,7 +50,7 @@ module TarifOptimization::TarifOptimizatorSaveHelper
       {:performance_results => performance_checker.show_stat_hash(updated_original_performance_results),
        :original_performance_results => updated_original_performance_results,
        :start_time => start_time,
-       :calls_stat => calls_stat_calculator.calculate_calls_stat(query_constructor),
+#       :calls_stat => calls_stat_calculator.calculate_calls_stat(query_constructor),
 #         :service_packs_by_parts => tarif_list_generator.tarif_sets, #,будет показывать только последний посчитанный тариф
        :service_packs_by_parts => tarif_list_generator.service_packs_by_parts,
        }})

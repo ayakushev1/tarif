@@ -97,7 +97,7 @@ class TarifOptimization::TarifOptimizator
     init_input_for_one_operator_calculation(operator)                    
     init_calls_count_by_parts(operator)
     calls_stat_calculator.update_customer_calls_with_global_categories(query_constructor) if tarif_list_generator.operators[0] == operator
-
+    update_call_stat(operator) if options[:update_call_stat]
     
     @calcutate_with_tarif_slices = true
     if !@calcutate_with_tarif_slices
@@ -365,6 +365,11 @@ class TarifOptimization::TarifOptimizator
       Result::Agregate.create(agregates_array)
     end
     
+  end
+  
+  def update_call_stat(operator)
+    Result::CallStat.where(:run_id => result_run_id, :operator_id => operator).first_or_create.
+      update(:stat => calls_stat_calculator.calculate_calls_stat(query_constructor))    
   end
 
 end

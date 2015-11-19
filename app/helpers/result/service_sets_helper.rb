@@ -1,6 +1,6 @@
 module Result::ServiceSetsHelper
   include SavableInSession::Filtrable, SavableInSession::Tableable, SavableInSession::ArrayOfHashable,
-  SavableInSession::ProgressBarable, SavableInSession::SessionInitializers
+          SavableInSession::SessionInitializers
   
   def results_select
     create_filtrable("results_select")
@@ -84,8 +84,10 @@ module Result::ServiceSetsHelper
     filtr = session_filtr_params(calls_stat_options)
     calls_stat_options = filtr.keys.map{|key| key if filtr[key] == 'true'}
     calls_stat_options = {"rouming" => 'true'} if calls_stat_options.blank?
+    operator_id = result_service_sets.model.first.operator_id if result_service_sets and result_service_sets.model and result_service_sets.model.first
     options = {:base_name => 'calls_stat', :current_id_name => 'calls_stat_category', :id_name => 'calls_stat_category', :pagination_per_page => 100}
-    @calls_stat ||= create_array_of_hashable(minor_result_presenter.calls_stat_array(calls_stat_options), options )
+    @calls_stat ||= create_array_of_hashable(
+      Result::CallStat.where(:run_id => run_id, :operator_id => operator_id).first_or_create.calls_stat_array(calls_stat_options), options )
   end
    
   def optimization_params_session_info

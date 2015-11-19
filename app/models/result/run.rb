@@ -31,6 +31,7 @@ class Result::Run < ActiveRecord::Base
   has_many :agregates, :class_name =>'Result::Agregate', :foreign_key => :run_id
   has_many :services, :class_name =>'Result::Service', :foreign_key => :run_id
   has_many :service_categories, :class_name =>'Result::ServiceCategory', :foreign_key => :run_id
+  has_many :call_stats, :class_name =>'Result::CallStat', :foreign_key => :run_id
 
 #  serialize :calculation_choices, HashSerializer
 #  store_accessor :calculation_choices, :blog, :github, :twitter

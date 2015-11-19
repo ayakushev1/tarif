@@ -1,14 +1,14 @@
 class TarifOptimization::TarifOptimizatorRunner
   def self.recalculate_direct(controller_options)
     options = optimization_params(controller_options)
-    options_to_add = {:use_background_process_informers => false, :if_clean_output_results => true, :is_send_email => false }
+    options_to_add = {:use_background_process_informers => false, :if_clean_output_results => true, :is_send_email => false, :update_call_stat => true }
     calculate(options.merge(options_to_add))
   end
   
   def self.recalculate_with_spawling(controller_options)
     options = optimization_params(controller_options)    
     Spawnling.new(:argv => "optimize for #{options[:user_input][:user_id]}") do
-      options_to_add = {:use_background_process_informers => true, :if_clean_output_results => true, :is_send_email => true }
+      options_to_add = {:use_background_process_informers => true, :if_clean_output_results => true, :is_send_email => true, :update_call_stat => true }
       calculate(options.merge(options_to_add))
     end
   end
@@ -30,8 +30,12 @@ class TarifOptimization::TarifOptimizatorRunner
         services[:tarif_options] = {operator => options[:services_by_operator][:tarif_options][operator]}
         services[:common_services] = {operator => options[:services_by_operator][:common_services][operator]}
 
-        is_send_email = true if operator == options[:services_by_operator][:operators].last and tarif == options[:services_by_operator][:tarifs][operator].last
-        options_to_add = {:use_background_process_informers => false, :if_clean_output_results => false, :services_by_operator => services, :is_send_email => is_send_email} 
+        if operator == options[:services_by_operator][:operators].last and tarif == options[:services_by_operator][:tarifs][operator].last
+          is_send_email = true 
+          update_call_stat = true
+        end
+        options_to_add = {:use_background_process_informers => false, :if_clean_output_results => false, :services_by_operator => services, 
+                          :is_send_email => is_send_email, :update_call_stat => update_call_stat} 
         options_to_calculate = options.merge(options_to_add)
         number_of_workers_to_add += 1
         

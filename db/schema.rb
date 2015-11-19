@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151118210617) do
+ActiveRecord::Schema.define(version: 20151119084015) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -363,6 +363,16 @@ ActiveRecord::Schema.define(version: 20151118210617) do
   add_index "result_agregates", ["service_category_name"], name: "index_result_agregates_on_service_category_name", using: :btree
   add_index "result_agregates", ["service_set_id"], name: "index_result_agregates_on_service_set_id", using: :btree
   add_index "result_agregates", ["tarif_id"], name: "index_result_agregates_on_tarif_id", using: :btree
+
+  create_table "result_call_stats", force: :cascade do |t|
+    t.integer "run_id"
+    t.integer "operator_id"
+    t.jsonb   "stat"
+  end
+
+  add_index "result_call_stats", ["operator_id"], name: "index_result_call_stats_on_operator_id", using: :btree
+  add_index "result_call_stats", ["run_id"], name: "index_result_call_stats_on_run_id", using: :btree
+  add_index "result_call_stats", ["stat"], name: "index_result_call_stats_on_stat", using: :gin
 
   create_table "result_runs", force: :cascade do |t|
     t.string  "name"
