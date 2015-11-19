@@ -21,12 +21,13 @@ class TarifOptimization::FinalTarifResultPreparator2
       service_set_result[service_set_id] ||= {
         'run_id' => input_data[:run_id], 'operator_id' => input_data[:operator], 'tarif_id' => tarif_id, 'service_set_id' => service_set_id,
         'service_ids' => service_ids, 'identical_services' => [], 'common_services' => common_services, 'tarif_options' => tarif_options,
-        'price' => 0.0, 'call_id_count' => 0, 'stat_results' => {}}
+        'price' => 0.0, 'call_id_count' => 0, 'categ_ids' => [], 'stat_results' => {}}
 
       process_final_tarif_set_tarif_sets_by_part(service_set_result, service_result, agregate_result, category_result, service_set_id, input_data)
          
       service_set_result[service_set_id].merge!({
         "call_id_count" => service_set_result[service_set_id]['stat_results']["call_id_count"],
+        "categ_ids" => service_set_result[service_set_id]['stat_results']["categ_ids"],
         "count_volume" => service_set_result[service_set_id]['stat_results']["count_volume"],
         "sum_volume" => service_set_result[service_set_id]['stat_results']["sum_volume"],
         "sum_duration_minute" => service_set_result[service_set_id]['stat_results']["sum_duration_minute"],})
@@ -36,6 +37,7 @@ class TarifOptimization::FinalTarifResultPreparator2
       service_result.each do |service_id, result|
         service_result[service_id].merge!({
           "call_id_count" => service_result[service_id]['stat_results']["call_id_count"],
+          "categ_ids" => service_result[service_id]['stat_results']["categ_ids"],
           "count_volume" => service_result[service_id]['stat_results']["count_volume"],
           "sum_volume" => service_result[service_id]['stat_results']["sum_volume"],
           "sum_duration_minute" => service_result[service_id]['stat_results']["sum_duration_minute"],})
@@ -45,6 +47,7 @@ class TarifOptimization::FinalTarifResultPreparator2
         category_result[service_id].each do |sc_name, sc_resutl|
           category_result[service_id][sc_name].merge!({
             "call_id_count" => category_result[service_id][sc_name]['stat_results']["call_id_count"],
+            "categ_ids" => category_result[service_id][sc_name]['stat_results']["categ_ids"],
             "count_volume" => category_result[service_id][sc_name]['stat_results']["count_volume"],
             "sum_volume" => category_result[service_id][sc_name]['stat_results']["sum_volume"],
             "sum_duration_minute" => category_result[service_id][sc_name]['stat_results']["sum_duration_minute"],})
@@ -56,6 +59,7 @@ class TarifOptimization::FinalTarifResultPreparator2
       agregate_result.each do |sc_name, result|
         agregate_result[sc_name].merge!({
           "call_id_count" => agregate_result[sc_name]['stat_results']["call_id_count"],
+          "categ_ids" => agregate_result[sc_name]['stat_results']["categ_ids"],
           "count_volume" => agregate_result[sc_name]['stat_results']["count_volume"],
           "sum_volume" => agregate_result[sc_name]['stat_results']["sum_volume"],
           "sum_duration_minute" => agregate_result[sc_name]['stat_results']["sum_duration_minute"],})
@@ -99,7 +103,7 @@ class TarifOptimization::FinalTarifResultPreparator2
       (price_value_detail['all_stat'].keys - stat_detail_keys_to_exclude).each do |stat_key|
         if price_value_detail['all_stat'][stat_key].is_a?(Array)
           service_set_result[service_set_id]['stat_results'][stat_key] ||= []
-          service_set_result[service_set_id]['stat_results'][stat_key] += (price_value_detail['all_stat'][stat_key] || 0).round(2)
+          service_set_result[service_set_id]['stat_results'][stat_key] += (price_value_detail['all_stat'][stat_key].uniq - service_set_result[service_set_id]['stat_results'][stat_key])
         else
           service_set_result[service_set_id]['stat_results'][stat_key] ||= 0
           service_set_result[service_set_id]['stat_results'][stat_key] += (price_value_detail['all_stat'][stat_key] || 0).round(2)
@@ -128,7 +132,7 @@ class TarifOptimization::FinalTarifResultPreparator2
 
     service_result[service_id] ||= {
       'run_id' => input_data[:run_id], 'tarif_id' =>  input_data[:tarif_id], 'service_set_id' => service_set_id, 'service_id' => service_id,
-      'price' => 0.0, 'call_id_count' => 0, 'stat_results' => {}}
+      'price' => 0.0, 'call_id_count' => 0, 'categ_ids' => [], 'stat_results' => {}}
     
     stat_detail_keys_to_exclude = ['month', 'call_ids']
     
@@ -136,7 +140,7 @@ class TarifOptimization::FinalTarifResultPreparator2
       (price_value_detail['all_stat'].keys - stat_detail_keys_to_exclude).each do |stat_key|
         if price_value_detail['all_stat'][stat_key].is_a?(Array)
           service_result[service_id]['stat_results'][stat_key] ||= []
-          service_result[service_id]['stat_results'][stat_key] += price_value_detail['all_stat'][stat_key].round(2)
+          service_result[service_id]['stat_results'][stat_key] += (price_value_detail['all_stat'][stat_key].uniq - service_result[service_id]['stat_results'][stat_key])
         else
           service_result[service_id]['stat_results'][stat_key] ||= 0
           service_result[service_id]['stat_results'][stat_key] += (price_value_detail['all_stat'][stat_key] || 0).round(2)
@@ -166,19 +170,19 @@ class TarifOptimization::FinalTarifResultPreparator2
 
       category_result[service_id][sc_name] ||= {
         'run_id' => input_data[:run_id], 'tarif_id' =>  input_data[:tarif_id], 'service_set_id' => service_set_id, 'service_id' => service_id,
-        'price' => 0.0, 'call_id_count' => 0, 'stat_results' => {}}
+        'price' => 0.0, 'call_id_count' => 0, 'categ_ids' => [], 'stat_results' => {}}
 
       agregate_result[sc_name] ||= {
         'run_id' => input_data[:run_id], 'tarif_id' =>  input_data[:tarif_id], 'service_set_id' => service_set_id,
-        'price' => 0.0, 'call_id_count' => 0, 'stat_results' => {}}
+        'price' => 0.0, 'call_id_count' => 0, 'categ_ids' => [], 'stat_results' => {}}
 
       (price_value_detail['all_stat'].keys - stat_detail_keys_to_exclude).each do |stat_key|
         if price_value_detail['all_stat'][stat_key].is_a?(Array)
           category_result[service_id][sc_name]['stat_results'][stat_key] ||= []
-          category_result[service_id][sc_name]['stat_results'][stat_key] += price_value_detail['all_stat'][stat_key].round(2)
+          category_result[service_id][sc_name]['stat_results'][stat_key] += (price_value_detail['all_stat'][stat_key].uniq - category_result[service_id][sc_name]['stat_results'][stat_key]) 
 
           agregate_result[sc_name]['stat_results'][stat_key] ||= []
-          agregate_result[sc_name]['stat_results'][stat_key] += price_value_detail['all_stat'][stat_key].round(2)
+          agregate_result[sc_name]['stat_results'][stat_key] += (price_value_detail['all_stat'][stat_key].uniq - agregate_result[sc_name]['stat_results'][stat_key]) 
         else
           category_result[service_id][sc_name]['stat_results'][stat_key] ||= 0
           category_result[service_id][sc_name]['stat_results'][stat_key] += (price_value_detail['all_stat'][stat_key] || 0).round(2)
@@ -192,6 +196,7 @@ class TarifOptimization::FinalTarifResultPreparator2
       category_result[service_id][sc_name]['call_id_count'] += (price_value_detail['call_id_count'] || 0).to_i
       
 #      category_result[service_id][sc_name]['call_ids'] = price_value_detail['call_ids']
+      category_result[service_id][sc_name]['categ_ids'] += price_value_detail['categ_ids'].uniq
       category_result[service_id][sc_name]['service_category_name'] = sc_name
       category_result[service_id][sc_name]['rouming_ids'] = category_details['service_category_rouming_id']
       category_result[service_id][sc_name]['geo_ids'] = category_details['service_category_geo_id']
@@ -218,6 +223,7 @@ class TarifOptimization::FinalTarifResultPreparator2
       agregate_result[sc_name]['call_id_count'] += (price_value_detail['call_id_count'] || 0).to_i
       
 #      agregate_result[sc_name]['call_ids'] = price_value_detail['call_ids']
+      agregate_result[sc_name]['categ_ids'] += price_value_detail['categ_ids'].uniq
       agregate_result[sc_name]['service_category_name'] = sc_name
       agregate_result[sc_name]['rouming_ids'] = category_details['service_category_rouming_id']
       agregate_result[sc_name]['geo_ids'] = category_details['service_category_geo_id']

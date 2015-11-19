@@ -38,6 +38,7 @@ class TarifOptimization::TarifOptimizationSqlBuilder
       'part', 
       'tarif_class_id', 
       'call_ids', 
+      'categ_ids', 
       'price_value',
       'call_id_count',
       '(price_values::json) as price_values',
@@ -85,6 +86,7 @@ class TarifOptimization::TarifOptimizationSqlBuilder
       "'#{part}'::text as part", 
       "#{service_id} as tarif_class_id", 
       "('{}')::text as call_ids", 
+      "('{}')::text as categ_ids", 
       '0.0 as price_value',
       '0 as call_id_count',
       "('[{\"call_id_count\":0}]')::text as price_values",
@@ -99,6 +101,7 @@ class TarifOptimization::TarifOptimizationSqlBuilder
       "'#{part}'::text as part", 
       'tarif_class_id', 
       'json_agg(call_ids)::text as call_ids', 
+      'json_agg(categ_ids)::text as categ_ids', 
       'sum(price_value) as price_value',
       'sum(call_id_count) as call_id_count',
       '(json_agg(row_to_json(service_categories_cost_sql_result)))::text as price_values',
@@ -247,7 +250,8 @@ class TarifOptimization::TarifOptimizationSqlBuilder
         
     price_formula = stat_function_collector.price_formula(price_formula_id)
     
-    stat_sql_fields = ["coalesce(month, -1)::integer as month", "coalesce(call_ids, '{}') as call_ids", "coalesce(call_id_count, 0) as call_id_count",]
+    stat_sql_fields = ["coalesce(month, -1)::integer as month", "coalesce(call_ids, '{}') as call_ids",
+                       "coalesce(categ_ids, '{}') as categ_ids", "coalesce(call_id_count, 0) as call_id_count",]
     price_formula['stat_params'].each { |stat_key, stat_function| stat_sql_fields << "coalesce(#{stat_key}, 0) as #{stat_key}" } if price_formula['stat_params']
     
     fields = if service_category_group_id > -1
@@ -257,7 +261,7 @@ class TarifOptimization::TarifOptimizationSqlBuilder
     end
       
     fields = (fields + [       
-      "month", "call_ids", "call_id_count", 
+      "month", "call_ids", "categ_ids", "call_id_count", 
       "#{price_formula_id} as price_formula_id", 
 #      "#{price_formula_order} as price_formula_calculation_order",
       "#{stat_function_collector.price_formula_string(price_formula_id)} as price_value",
@@ -329,7 +333,7 @@ class TarifOptimization::TarifOptimizationSqlBuilder
     price_formula = stat_function_collector.price_formula(price_formula_id)#.formula
 
     stat_string_2 = ["first_stat_sql.*"]
-    stat_string_4 = ["month", "array_agg(id) as call_ids", "count(id) as call_id_count", ]
+    stat_string_4 = ["month", "array_agg(id) as call_ids", "array_agg(global_category_id) as categ_ids", "count(id) as call_id_count", ]
     
     price_formula['stat_params'].each do |stat_key, stat_function| 
       stat_string_2 << "current_#{stat_key} + coalesce(prev_#{stat_key}, 0) as #{stat_key}"
@@ -361,13 +365,13 @@ class TarifOptimization::TarifOptimizationSqlBuilder
     group_by = "extract(#{price_formula['group_by'] || 'month'} from (description->>'time')::timestamp)"
     case check_out_call_ids
     when :window
-      fields = ["id", "extract(#{price_formula['window_over'] || 'month'} from (description->>'time')::timestamp) as month"]
+      fields = ["id", "global_category_id", "extract(#{price_formula['window_over'] || 'month'} from (description->>'time')::timestamp) as month"]
       price_formula['stat_params'].each { |stat_key, stat_function| fields << "#{stat_function} over m as current_#{stat_key}" } if price_formula['stat_params']
     when :group
-      fields = ["#{group_by} as month", "array_agg(id) as call_ids", "count(id) as call_id_count",]
+      fields = ["#{group_by} as month", "array_agg(id) as call_ids", "array_agg(global_category_id) as categ_ids", "count(id) as call_id_count",]
       price_formula['stat_params'].each {|stat_key, stat_function| fields << "#{stat_function} as #{stat_key}" } if price_formula['stat_params']    
     when :tarif
-      fields = ["#{group_by} as month", "'{}'::int[] as call_ids", "0 as call_id_count",]
+      fields = ["#{group_by} as month", "'{}'::int[] as call_ids", "'{}'::int[] as categ_ids", "0 as call_id_count",]
       price_formula['stat_params'].each {|stat_key, stat_function| fields << "#{stat_function} as #{stat_key}" } if price_formula['stat_params']    
     else
       raise(StandardError, 'wrong check_out_call_ids in first_stat_sql')

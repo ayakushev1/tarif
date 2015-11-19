@@ -29,6 +29,7 @@
 #  sum_duration_minute   :float
 #  sum_volume            :float
 #  count_volume          :integer
+#  categ_ids             :jsonb
 #
 
 class Result::Agregate < ActiveRecord::Base

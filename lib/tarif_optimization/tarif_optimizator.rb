@@ -29,7 +29,7 @@ class TarifOptimization::TarifOptimizator
     @performance_checker = Customer::Stat::PerformanceChecker.new()
 #    performance_checker.clean_history;
    init_additional_general_classes    
-    init_optimization_params
+   init_optimization_params
   end
   
   def init_input_data(options)
@@ -96,6 +96,8 @@ class TarifOptimization::TarifOptimizator
   def calculate_one_operator(operator)
     init_input_for_one_operator_calculation(operator)                    
     init_calls_count_by_parts(operator)
+    calls_stat_calculator.update_customer_calls_with_global_categories(query_constructor) if tarif_list_generator.operators[0] == operator
+
     
     @calcutate_with_tarif_slices = true
     if !@calcutate_with_tarif_slices

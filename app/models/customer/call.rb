@@ -11,6 +11,8 @@
 #  connect            :jsonb
 #  description        :jsonb
 #  call_run_id        :integer
+#  calendar_period    :string
+#  global_category_id :integer
 #
 
 class Customer::Call < ActiveRecord::Base

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151117034322) do
+ActiveRecord::Schema.define(version: 20151118210617) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -117,6 +117,8 @@ ActiveRecord::Schema.define(version: 20151117034322) do
     t.jsonb   "connect"
     t.jsonb   "description"
     t.integer "call_run_id"
+    t.string  "calendar_period"
+    t.integer "global_category_id"
   end
 
   add_index "customer_calls", ["base_service_id"], name: "index_customer_calls_on_base_service_id", using: :btree
@@ -345,6 +347,7 @@ ActiveRecord::Schema.define(version: 20151117034322) do
     t.float   "sum_duration_minute"
     t.float   "sum_volume"
     t.integer "count_volume"
+    t.jsonb   "categ_ids"
   end
 
   add_index "result_agregates", ["call_id_count"], name: "index_result_agregates_on_call_id_count", using: :btree
@@ -378,6 +381,7 @@ ActiveRecord::Schema.define(version: 20151117034322) do
     t.jsonb   "services_select"
     t.jsonb   "services_for_calculation_select"
     t.jsonb   "service_categories_select"
+    t.jsonb   "categ_ids"
   end
 
   add_index "result_runs", ["accounting_period"], name: "index_result_runs_on_accounting_period", using: :btree
@@ -423,6 +427,7 @@ ActiveRecord::Schema.define(version: 20151117034322) do
     t.float   "sum_duration_minute"
     t.float   "sum_volume"
     t.integer "count_volume"
+    t.jsonb   "categ_ids"
   end
 
   add_index "result_service_categories", ["call_id_count"], name: "index_result_service_categories_on_call_id_count", using: :btree
@@ -454,6 +459,7 @@ ActiveRecord::Schema.define(version: 20151117034322) do
     t.float   "sum_duration_minute"
     t.float   "sum_volume"
     t.integer "count_volume"
+    t.jsonb   "categ_ids"
   end
 
   add_index "result_service_sets", ["call_id_count"], name: "index_result_service_sets_on_call_id_count", using: :btree
@@ -473,6 +479,7 @@ ActiveRecord::Schema.define(version: 20151117034322) do
     t.float   "sum_duration_minute"
     t.float   "sum_volume"
     t.integer "count_volume"
+    t.jsonb   "categ_ids"
   end
 
   add_index "result_services", ["call_id_count"], name: "index_result_services_on_call_id_count", using: :btree

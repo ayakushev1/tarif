@@ -19,6 +19,7 @@
 #  services_select                 :jsonb
 #  services_for_calculation_select :jsonb
 #  service_categories_select       :jsonb
+#  categ_ids                       :jsonb
 #
 
 class Result::Run < ActiveRecord::Base

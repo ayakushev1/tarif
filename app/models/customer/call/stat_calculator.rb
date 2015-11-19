@@ -35,6 +35,26 @@ class Customer::Call::StatCalculator
     where_hash.join(' or ')
   end
   
+  def update_customer_calls_with_global_categories(query_constructor)
+    calls_stat_category_sql = []
+    calls_stat_categories.each do |calls_stat_category_name, calls_stat_category_criteria|
+      where_condition = []
+      calls_stat_category_criteria[:categories].each do |criteria_type, criteria_value|        
+        where_condition << query_constructor.categories_where_hash[criteria_value] if criteria_value
+      end
+      call_types = calls_stat_category_criteria[:call_types].map{|s| "\"#{s}\""}.join(', ')
+      fields = [
+        "'#{calls_stat_category_name}' as calls_stat_category",
+        "#{calls_stat_category_criteria[:order]}::integer as order",
+        "'[#{call_types}]' as call_types",
+        "#{calls_stat_functions_string(calls_stat_category_criteria[:stat_functions])}",
+      ]
+      Customer::Call.where(:call_run_id => call_run_id).where(calculation_scope_where_hash).
+        where("description->>'accounting_period' = '#{accounting_period}'").
+        select(fields.join(', ')).where(where_condition.join(' and ')).update_all(:global_category_id => calls_stat_category_criteria[:order])
+    end
+  end
+  
   def calculate_calls_stat(query_constructor)
     sql = calculate_calls_stat_sql(query_constructor)
 #    raise(StandardError, sql)
