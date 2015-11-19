@@ -24,6 +24,7 @@ class TarifOptimization::StatFunctionCollector
     stat_function_collector_saver = Customer::Stat::OptimizationResult.new('preloaded_calculations', 'stat_function_collector', nil)
     loaded_data = stat_function_collector_saver.results({:operator_id => operator_id.to_i, :tarif_id => region_id.to_i})
     return calculate_stat if loaded_data.blank?
+#    raise(StandardError)
     
     @service_stat = {}
     loaded_data['service_stat'].each do |part, service_stat_by_part|
@@ -92,7 +93,7 @@ class TarifOptimization::StatFunctionCollector
     ].each do |sql|
      PriceList.find_by_sql(sql). 
       each do |row| 
-        r = row.attributes
+        r = row#.attributes
 
         parts = eval(r['parts'])[0]
 #        raise(StandardError, [row, nil, parts] ) #if r['service_category_group_id'] ==  11

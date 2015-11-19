@@ -36,7 +36,7 @@ module Calls::HistoryParser
   
       message = {:file_is_good => true, 'message' => "Обработано #{parser.processed_percent}%"} if !message
       call_history_to_save = parser.parse_result.merge({'message' => message})
-      call_history_saver.save({:result => call_history_to_save}) #if !save_calls
+      call_history_saver.save({:result => call_history_to_save}) if parsing_params[:save_processes_result_to_stat]
   
       Customer::Call.where(:user_id => user_params[:user_id], :call_run_id => user_params[:call_run_id]).delete_all
       Customer::Call.bulk_insert(values: call_history_to_save['processed']) if save_calls

@@ -62,7 +62,7 @@ class Customer::Stat::OptimizationResult #ServiceHelper::OptimizationResultSaver
   
   def results(where_hash = {})
     result = output_model.where(where_hash).select("result as #{name}").first
-    result.attributes[name] if result
+    result[name] if result
   end
 
 end

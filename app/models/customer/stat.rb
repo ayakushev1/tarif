@@ -40,7 +40,7 @@ class Customer::Stat < ActiveRecord::Base
           else
             results[result_type] = result_value
           end
-        end if result_item and result_item.attributes and model_init_data and model_init_data[:result_name] and result_item[model_init_data[:result_name]]
+        end if result_item and model_init_data and model_init_data[:result_name] and result_item[model_init_data[:result_name]]
     end if result_model
     results
   end

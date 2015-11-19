@@ -14,6 +14,7 @@ class Customer::Stat::StatAndQuery #ServiceHelper::StatAndQuerySaver
       @fq_tarif_region_id = region_id
       stat_function_collector = TarifOptimization::StatFunctionCollector.new(all_services_by_operator[operator], optimization_params, operator, region_id, false)
 
+ #TODO ошибка потенциальная - :tarif_id => region_id.to_i
       stat_function_collector_saver.save({:operator_id => operator.to_i, :tarif_id => region_id.to_i, :result => {
         'service_stat' => stat_function_collector.service_stat,
         'service_group_stat' => stat_function_collector.service_group_stat,
