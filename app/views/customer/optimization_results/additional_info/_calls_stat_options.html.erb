@@ -10,7 +10,7 @@ form_item.init do |f|
 	
   [
   	[
-     label(filtr_name, "rouming", "Роуминг   ", label_html),
+     label(filtr_name, "rouming", "Роуминг", label_html),
  	 check_box(filtr_name, "rouming", ((s["rouming"].blank? or s["rouming"] == 'true') ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
 # 	 select(filtr_name, "rouming", [["show", true], ["not show", false]], {:selected => s["rouming"]}, html_options ),
   	],

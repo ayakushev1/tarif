@@ -4,7 +4,7 @@ content_in :accordion do |user|
   [
     [
      'Calls statistics',
-     render(:partial => 'customer/optimization_results/additional_info/calls_stat_options', :layout => 'application/layouts/filtr_inline_form', :locals => {:form_item => calls_stat_options, :html => {:class => "form-inline"}} ) +
+     render(:partial => 'customer/optimization_results/additional_info/calls_stat_options', :layout => 'application/layouts/filtr_form', :locals => {:form_item => calls_stat_options, :html => {:class => "form-inline"}} ) +
      render(:partial => 'customer/optimization_results/additional_info/calls_stat', :layout => 'application/layouts/model_table', :locals => {:table => calls_stat})	
     ], 
     [
