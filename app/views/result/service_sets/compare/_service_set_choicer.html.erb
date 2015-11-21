@@ -4,7 +4,7 @@ form_item.init do |f|
 	input_html = {:filtr_name => form_item.filtr_name, :class => "updatable form-control ", :action_name => result_service_sets_compare_path}
 	label_html = {} #{:class => "control-label "}
     s = session_filtr_params(f)
-    s_result_service_set_id = (s_result_service_set_id || {})
+    s_result_service_set_id = (session_filtr_params(f)['result_service_set_id'] || {})
     result_service_sets = Result::ServiceSet.includes(:tarif, :operator).where(:run_id => run_id)
 	
   [
