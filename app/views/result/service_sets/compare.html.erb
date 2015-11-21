@@ -1,5 +1,11 @@
 <% content_for :title, "Сравнение тарифов" %>
 
+<p>
+<%= render :partial => 'result/service_sets/compare/information' %>
+<%= link_to('Вернуться к списку описаний подборов тарифа', result_runs_path, 
+	{:class => "btn btn-success", :type =>"button", :remote => true}) %>
+</p>
+<br />
 <%= render(:partial => 'result/service_sets/compare/service_set_choicer', :layout => 'application/layouts/filtr_form_4_columns', :locals => {:form_item => service_set_choicer} ) %>
 <p>
 <%= render(:partial => 'result/service_sets/compare/comparison_options', :layout => 'application/layouts/filtr_form', :locals => {:form_item => comparison_options, :html => {:class => "form-inline"}} ) %>
