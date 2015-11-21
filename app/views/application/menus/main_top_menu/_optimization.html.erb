@@ -9,7 +9,7 @@
 	<% end %>
 		 
 	<%if controller.customer_has_tarif_optimized? %>
-		<li><%= link_to  'Результаты всех подборов тарифов', result_service_sets_results_path %></li>
+		<li><% link_to  'Результаты всех подборов тарифов', result_service_sets_results_path if user_type == :admin %></li>
 	<% end %>
 			 
 </ul>
