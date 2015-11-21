@@ -1,0 +1,20 @@
+<%
+translator = Customer::Call::StatCalculator.new
+table.init do |t|
+  model_keys_1 = t.model.collect {|row| row.keys }.flatten.uniq.
+  	collect{|key| key unless ['name_string', 'categ_ids'].include?(key)}.compact
+#  raise(StandardError, model_keys)	 
+  model_keys = ["fixed"] + (model_keys_1 - ["fixed"]) 
+  	
+  t.heads = model_keys.collect{|model_key| translator.tr(model_key)}
+  t.set_fields do |f| 
+  	model_keys.collect do |key|
+  		if f[key].is_a?(Array)
+  			f[key][0]
+  		else
+  			f[key]
+  		end  		
+   end #if f[model_keys[1]]
+  end 
+end
+%>

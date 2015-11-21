@@ -26,5 +26,8 @@ class Result::ServiceSet < ActiveRecord::Base
   belongs_to :tarif, :class_name =>'TarifClass', :foreign_key => :tarif_id
   belongs_to :operator, :class_name =>'Category', :foreign_key => :operator_id
 
+  def full_name
+    "#{operator.name} #{tarif.name}"
+  end
 end
 

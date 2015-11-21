@@ -93,7 +93,7 @@ module ApplicationHelper::Authorization
           'customer/payments' => ['create', 'new', 'edit', 'show', 'update', 'wait_for_payment_being_processed', 'process_payment'],
           'customer/optimization_steps' => ['choose_load_calls_options', 'check_loaded_calls', 'choose_optimization_options', 'optimize_tarifs', 'show_optimized_tarifs'],
           'customer/optimization_results' => ['show_customer_results', 'show_customer_detailed_results'],
-          'result/service_sets' => ['result', 'results', 'detailed_results'],
+          'result/service_sets' => ['result', 'results', 'detailed_results', 'compare'],
           'customer/demands' => ['index', 'create', 'new'],
           'errors' => ['error404', 'error422', 'error500'],
         }

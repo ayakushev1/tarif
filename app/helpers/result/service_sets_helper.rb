@@ -82,12 +82,39 @@ module Result::ServiceSetsHelper
 
   def calls_stat
     filtr = session_filtr_params(calls_stat_options)
-    calls_stat_options = filtr.keys.map{|key| key if filtr[key] == 'true'}
+    calls_stat_options = filtr.keys.map{|key| key if filtr[key] == 'true'} + ['fixed_payments']
     calls_stat_options = {"rouming" => 'true'} if calls_stat_options.blank?
+    
     operator_id = Result::ServiceSet.where(:run_id => run_id, :service_set_id => service_set_id).pluck(:operator_id)[0]
+    
     options = {:base_name => 'calls_stat', :current_id_name => 'calls_stat_category', :id_name => 'calls_stat_category', :pagination_per_page => 100}
     @calls_stat ||= create_array_of_hashable(
       Result::CallStat.where(:run_id => run_id, :operator_id => operator_id).first_or_create.calls_stat_array(calls_stat_options), options )
+  end
+   
+  def comparison_options
+    create_filtrable("comparison_options")
+  end
+
+  def service_set_choicer
+    create_filtrable("service_set_choicer")
+  end
+
+  def comparison_service_sets
+    filtr = session_filtr_params(comparison_options)
+    comparison_options = filtr.keys.map{|key| key if filtr[key] == 'true'}
+    comparison_options = {"service" => 'true'} if comparison_options.blank?
+    
+    session_filtr_params_service_set_choicer = session_filtr_params(service_set_choicer)
+    service_set_ids = (session_filtr_params_service_set_choicer['result_service_set_id'].values.compact - [""])
+    
+    comparison_base = session_filtr_params_service_set_choicer['comparison_base']
+    
+#    raise(StandardError, [session_filtr_params_service_set_choicer['comparison_base'], comparison_base])
+    options = {:base_name => 'comparison_service_sets', :current_id_name => 'global_category_id', :id_name => 'global_category_id', :pagination_per_page => 100}
+    @comparison_service_sets ||= create_array_of_hashable(
+      Result::Agregate.compare_service_sets_of_one_run(run_id, service_set_ids, [:price], comparison_options, comparison_base), options )
+#      raise(StandardError, @comparison_service_sets.model.collect {|row| row.keys }.flatten.uniq)
   end
    
   def optimization_params_session_info

@@ -13,7 +13,7 @@ class Result::CallStat < ActiveRecord::Base
   belongs_to :run, :class_name =>'Result::Run', :foreign_key => :run_id
   belongs_to :operator, :class_name =>'Category', :foreign_key => :operator_id
 
-  def calls_stat_array(group_by)
+  def calls_stat_array(group_by = [])
 #    group_by = ['rouming', 'service', nil, nil]
     if group_by.blank?
       result = (stat || []).collect{|row| row if row['count'] > 0}.compact
@@ -25,6 +25,7 @@ class Result::CallStat < ActiveRecord::Base
       (stat || []).each do |row|
         name = {}
         call_types = eval(row['call_types'])
+#        raise(StandardError, [row['call_types'], call_types, row])
         name['rouming'] = call_types[0] if group_by.include?('rouming')
         name['service'] = call_types[1] if group_by.include?('service')
         name['direction'] = call_types[2] if group_by.include?('direction')
@@ -33,7 +34,8 @@ class Result::CallStat < ActiveRecord::Base
 
         name_string = name.keys.collect{|k| name[k] }.compact.join('_') 
         
-        result_hash[name_string] ||= name.merge({'name_string' => name_string, 'count' => 0, 'sum_duration' => 0.0, 'count_volume' => 0, 'sum_volume' => 0.0})
+        result_hash[name_string] ||= name.merge({'name_string' => name_string, 'categ_ids' => [], 'count' => 0, 'sum_duration' => 0.0, 'count_volume' => 0, 'sum_volume' => 0.0})
+        result_hash[name_string]['categ_ids'] += (([row['order']] || []) - result_hash[name_string]['categ_ids'])
         result_hash[name_string]['count'] += row['count'] || 0
         result_hash[name_string]['sum_duration'] += row['sum_duration'] || 0.0
         result_hash[name_string]['count_volume'] += row['count_volume'] || 0

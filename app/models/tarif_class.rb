@@ -30,6 +30,10 @@ class TarifClass < ActiveRecord::Base
   scope :special_services, -> {where(:standard_service_id => 42)}
   scope :options_of_tarif, -> {where(:standard_service_id => 43)}
 
+  def full_name
+    "#{operator.name} #{name}"
+  end
+  
   def self.services_by_operator(operator_ids)
     if operator_ids.blank?
       none

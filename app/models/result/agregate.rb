@@ -36,6 +36,61 @@ class Result::Agregate < ActiveRecord::Base
   extend BatchInsert
 
   belongs_to :run, :class_name =>'Result::Run', :foreign_key => :run_id
+  belongs_to :tarif, :class_name =>'TarifClass', :foreign_key => :tarif_id
+  
+  def self.compare_service_sets_of_one_run(run_id, service_sets_to_compare = [], fields_to_show = [], group_by = [], comparison_base = 'compare_by_price')    
+    result = {}
+    heads = {}
+    groupped_global_categories = Customer::Call::StatCalculator.new.groupped_global_categories(group_by)
+    
+    includes(:tarif).where(:run_id => run_id, :service_set_id => service_sets_to_compare).each do |item|
+      item.categ_ids.each do |global_category_id|      
+        global_category_group_name = Customer::Call::StatCalculator.new.global_category_group_name(global_category_id, group_by)
+        result[global_category_group_name] ||= {}
+#        service_sets_to_compare.each do |service_set|        
+          result[global_category_group_name][item.service_set_id] ||= {}
+          heads[item.service_set_id] ||= item.tarif.full_name if item.tarif 
+          fields_to_show.collect do |field|
+            result[global_category_group_name][item.service_set_id][field] ||={:value => 0.0, :categ_ids => item.categ_ids.size, :volume => 0.0}
+            result[global_category_group_name][item.service_set_id][field][:value] += (item[field] || 0.0) / item.categ_ids.size.to_f
+            result[global_category_group_name][item.service_set_id][field][:volume] += 
+              ([item['sum_duration_minute'], item['sum_volume'], item['count_volume']].compact.map(&:to_f).sum || 0.0) / item.categ_ids.size.to_f
+#            raise(StandardError, result[global_category_group_name][item.service_set_id][field]) if result[global_category_group_name][item.service_set_id][field][:value] > 0.0
+          end          
+#        end
+      end
+      if true and item.categ_ids.blank? and !(item.periodic_ids + item.fix_ids).compact.blank?
+        
+        result['fixed'] ||= {}
+        result['fixed'][item.service_set_id] ||= {}
+        heads[item.service_set_id] ||= item.tarif.full_name if item.tarif
+        groupped_global_categories.merge!({'fixed' => {'name_string' => 'zfixed1', 'fixed' => 'Постоянные оплаты'}})
 
+        fields_to_show.collect do |field|
+#          result['fixed'][item.service_set_id][field] ||= {'name_string' => '-1', 'fixed' => 'Постоянные оплаты1', :value => 0.0, :categ_ids => item.categ_ids.size, :volume => 0.0}
+          result['fixed'][item.service_set_id][field] ||= {:value => 0.0, :categ_ids => item.categ_ids.size, :volume => 0.0}
+          result['fixed'][item.service_set_id][field][:value] += (item[field] || 0.0) 
+        end
+      end
+    end
+    output = []
+    result.each do |global_category_group_name, result_by_category|
+      temp = {}
+      result_by_category.each do |service_set, result_by_service_set|
+        temp[heads[service_set]] = result_by_service_set.values.map do |field| 
+          (comparison_base == 'compare_by_cost' ? 
+            field[:value].round(0) : 
+            (field[:volume] > 0.0 ? (field[:value] / field[:volume]).round(2) : field[:value].round(0))
+            )
+        end.flatten
+      end
+      output << groupped_global_categories[global_category_group_name].merge(temp)
+    end
+#        raise(StandardError, [output].join("\n"))
+#        raise(StandardError, [groupped_global_categories].join("\n"))
+    result = true ? output.sort_by!{|item| item['name_string']} : output
+#    raise(StandardError, result.join("\n\n"))
+  end
+ 
 end
 
