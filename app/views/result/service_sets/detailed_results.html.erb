@@ -7,9 +7,10 @@
 	Но при этом постарайтесь не попасть на ссылку, так как при нажатии на ссылку вы перейдете на описание тарифа или тарифной опции.  
 </p>
 
+<p>
 <%= render(:partial => 'result/service_sets/detailed_results/if_show_aggregate_results', :layout => 'application/layouts/filtr_form', 
 	:locals => {:form_item => controller.if_show_aggregate_results, :html => {:class => "form-inline"}} )  %>
-<br />
 <%= render :partial => 'result/service_sets/detailed_results/results_for_customer', :layout => 'application/layouts/tabs', 
     :locals => {:name => 'detailed_results', :active => session[:current_tabs_page]['detailed_results'].to_i} %>
       
+</p>
