@@ -4,6 +4,7 @@ form_item.init do |fi|
 	action_path = fi.model.id ? edit_result_run_path(fi.model) : new_result_run_path	
 	input_html = {:filtr_name => form_item.form_name, :class => "updatable form-control ", :action_name => action_path}
 	label_html = {:class => "form-label "}
+	link_to_html = {:class => "btn btn-info", :type =>"button", :remote => true}
 	s = session_model_params(fi)
 
   fi.set_fields do |f|
@@ -43,7 +44,7 @@ form_item.init do |fi|
 	   	f.number_field( :run, input_html.merge({:value => (s['run'] || 1), within: 1...10}))
 	   ], 
 	   [
-	   	f.label( " "), 
+	   	link_to( 'Список описаний', result_runs_path, link_to_html), 
 	   	f.submit("Сохранить", :class => "btn btn-primary", :type =>"submit", :remote => true)
 	   ],
 	   [

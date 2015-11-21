@@ -3,6 +3,7 @@ class Customer::CallRunsController < ApplicationController
   include Crudable
   crudable_actions :all
   
+  before_action :create_call_run_if_not_exists, only: [:index]
   before_action :check_if_allowed_new_call_run, only: [:new, :create]
   before_action :check_if_allowed_delete_call_run, only: [:destroy]
   
@@ -31,5 +32,12 @@ class Customer::CallRunsController < ApplicationController
   def allowed_new_call_run(user_type = :guest)
     Customer::CallRun.allowed_new_call_run(user_type)
   end
+
+  def create_call_run_if_not_exists
+    Customer::CallRun.min_new_call_run(user_type).times.each do |i|
+      Customer::CallRun.create(:name => "Загрузка детализации №#{i}", :source => 1, :description => "", :user_id => current_or_guest_user_id)
+    end  if !Customer::CallRun.where(:user_id => current_or_guest_user_id).present?
+  end
+
   
 end

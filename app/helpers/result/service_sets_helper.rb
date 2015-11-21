@@ -106,7 +106,7 @@ module Result::ServiceSetsHelper
     comparison_options = {"service" => 'true'} if comparison_options.blank?
     
     session_filtr_params_service_set_choicer = session_filtr_params(service_set_choicer)
-    service_set_ids = (session_filtr_params_service_set_choicer['result_service_set_id'].values.compact - [""])
+    service_set_ids = ((session_filtr_params_service_set_choicer['result_service_set_id'] || {}).values.compact - [""])
     
     comparison_base = session_filtr_params_service_set_choicer['comparison_base']
     

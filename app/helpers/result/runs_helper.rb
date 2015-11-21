@@ -33,6 +33,12 @@ module Result::RunsHelper
       select("description->>'accounting_period' as accounting_period").uniq
   end
   
+  def create_result_run_if_not_exists
+    Result::Run.allowed_min_result_run(user_type).times.each do |i|
+      Result::Run.create(:name => "Подбор тарифа №#{i}", :description => "", :user_id => current_or_guest_user_id, :run => 1, 
+        :optimization_type_id => 0)
+    end if !Result::Run.where(:user_id => current_or_guest_user_id).present?
+  end
   
 
 end
