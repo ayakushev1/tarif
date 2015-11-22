@@ -5,4 +5,4 @@ end
 #obj.extend(Customer::Calls)
 #TODO вернуть обратно
 #obj.generate_calls(obj.default_calls_generation_params)
-Calls::Generator.new(self).generate_calls
+Calls::Generator.new.generate_calls

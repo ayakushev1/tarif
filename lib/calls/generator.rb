@@ -5,7 +5,8 @@ class Calls::Generator
   attr_reader :context, :user_params, :common_params, :initial_inputs
   attr_accessor :customer_generation_params
 
-  def initialize(context, customer_calls_generation_params = {}, user_params = {})
+  def initialize(customer_calls_generation_params = {}, user_params = {})
+#    raise(StandardError, [customer_calls_generation_params, user_params].join("\n"))
     @context = context
 #      raise(StandardError, [customer_calls_generation_params.blank?, customer_calls_generation_params])
     @customer_generation_params = (customer_calls_generation_params.blank? ? default_calls_generation_params : customer_calls_generation_params)
@@ -71,17 +72,10 @@ class Calls::Generator
           i += 1
           next if (call_item[:description][:duration].to_f == 0.0 and call_item[:description][:volume].to_f == 0.0)
           p = customer_generation_params
-#            raise(StandardError, [call_item,
-#              p[:home_region]["phone_usage_type_id"] == _home_region_no_activity, p[:home_region]["phone_usage_type_id"],
-#              p[:own_country]["phone_usage_type_id"] == _own_country_no_activity, p[:own_country]["phone_usage_type_id"],
-#              p[:abroad]["phone_usage_type_id"] == _abroad_no_activity, p[:abroad]["phone_usage_type_id"],
-#              ]) if [:home_region, :own_country, :abroad].include?(rouming) or call_item[:connect][:country_id] != 1100
-
-
 
           calls << call_item
-          raise(StandardError, "Calls::generator - region_id is null") if !calls.last[:partner_phone][:region_id] and !(call_destination == :calls_to_abroad)
-          raise(StandardError, "Calls::generatoe - sms or mms on fixed line") if (calls.last[:partner_phone][:operator_type_id] == _fixed_line) and [_sms, _mms].include?(calls.last[:base_service_id]) 
+#          raise(StandardError, "Calls::generator - region_id is null") if !calls.last[:partner_phone][:region_id] and !(call_destination == :calls_to_abroad)
+#          raise(StandardError, "Calls::generatoe - sms or mms on fixed line") if (calls.last[:partner_phone][:operator_type_id] == _fixed_line) and [_sms, _mms].include?(calls.last[:base_service_id]) 
         end
       end
     end
@@ -318,17 +312,19 @@ class Calls::Generator
     country_reg = home_reg + p[:general]["share_of_time_in_own_country"].to_f
     abroad = country_reg + p[:general]["share_of_time_abroad"].to_f
     
-    case rand * abroad
-    when 0..own_reg
+    result = case rand * abroad
+    when 0...own_reg
       :own_region
-    when own_reg..home_reg
+    when own_reg...home_reg
       p[:home_region]["phone_usage_type_id"].to_i == _home_region_no_activity ? :own_region : :home_region
-    when home_reg..country_reg
+    when home_reg...country_reg
       p[:own_country]["phone_usage_type_id"].to_i == _own_country_no_activity ? :own_region : :own_country        
     else
       p[:abroad]["phone_usage_type_id"].to_i == _abroad_no_activity ? :own_region : :abroad                
 #      raise(StandardError)
     end
+    result
+#    raise(StandardError, result)
   end
   
   def choose_call_direction(rouming)

@@ -138,7 +138,7 @@ class Customer::Call::StatCalculator
       :service => ['calls', 'sms', 'mms', 'internet'],
       :geo => ['own_home_regions', 'own_country', 'sic_country', 'europe', 'all_world'],
       :operator => ['own_operator', 'not_own_operator'],
-      :fixed => ['fixed']
+#      :fixed => ['fixed']
     }
   end
   

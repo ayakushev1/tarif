@@ -16,7 +16,7 @@ class Customer::CallsController < ApplicationController
   end
   
   def generate_calls
-    Calls::Generator.new(self, customer_calls_generation_params, user_params).generate_calls
+    Calls::Generator.new(customer_calls_generation_params, user_params).generate_calls
     redirect_to customer_calls_path
   end
   
@@ -43,7 +43,7 @@ class Customer::CallsController < ApplicationController
     options = {:base_name => 'call_generation_params_report', :current_id_name => 'param', :id_name => 'param', :pagination_per_page => 20}
 #    @calls_gener_params_report ||= 
     create_array_of_hashable(
-      Calls::GenerationParamsPresenter.new(Calls::Generator.new(self, customer_calls_generation_params, user_params), customer_calls_generation_params).report )
+      Calls::GenerationParamsPresenter.new(Calls::Generator.new(customer_calls_generation_params, user_params), customer_calls_generation_params).report )
   end
   
   def setting_default_calls_generation_params
