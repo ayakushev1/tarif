@@ -84,7 +84,7 @@ class Calls::Generator
 
   def set_user_params(user_params)
     {
-      "user_id" => ( ( user_params["user_id"] if user_params ) || 2 ).to_i, 
+      "user_id" => user_params["user_id"], #( ( user_params["user_id"] if user_params ) || 2 ).to_i, 
       "own_phone_number" => ( ( user_params["own_phone_number"] if user_params ) || '7000000000' ), 
       'call_run_id' => user_params["call_run_id"]
     }
