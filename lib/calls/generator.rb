@@ -2,13 +2,11 @@ Dir[Rails.root.join("db/seeds/definitions/*.rb")].sort.each { |f| require f }
 
 class Calls::Generator
   extend ActiveSupport::Concern
-  attr_reader :context, :user_params, :common_params, :initial_inputs
+  attr_reader :user_params, :common_params, :initial_inputs
   attr_accessor :customer_generation_params
 
   def initialize(customer_calls_generation_params = {}, user_params = {})
-#    raise(StandardError, [customer_calls_generation_params, user_params].join("\n"))
-    @context = context
-#      raise(StandardError, [customer_calls_generation_params.blank?, customer_calls_generation_params])
+#    raise(StandardError, user_params)
     @customer_generation_params = (customer_calls_generation_params.blank? ? default_calls_generation_params : customer_calls_generation_params)
 #      raise(StandardError, [customer_calls_generation_params.blank?, customer_generation_params])
     @user_params = set_user_params(user_params)
