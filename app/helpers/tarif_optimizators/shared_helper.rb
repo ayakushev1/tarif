@@ -85,6 +85,9 @@ module TarifOptimizators::SharedHelper
     when 'fixed_operators'; 3
     when 'all_options'; 4
     when 'admin'; 5
+    when 'dddd'; 6 # reserved for comparisons
+    else
+      7
     end
   end
   

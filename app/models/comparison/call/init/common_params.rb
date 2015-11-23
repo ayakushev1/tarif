@@ -2,7 +2,7 @@ module Comparison::Call::Init
   CommonParams = {
     "country_id"=>1100, 
     "region_id"=>1238, 
-    "operator_id"=>1030, 
+#    "operator_id"=>1030, 
     "privacy_id"=>2, 
     :own_region=> {
 #      "phone_usage_type_id"=>201, 

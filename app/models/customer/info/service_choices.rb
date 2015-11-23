@@ -127,6 +127,27 @@ class Customer::Info::ServiceChoices < ActiveType::Record[Customer::Info]
     }
   end  
 
+  def self.services_for_comparison(operators = [], tarif_options = [])
+    result = {:operators => [], :tarifs => {}, :tarif_options => {}, :common_services => {}, }
+    operators.each do |operator_id|
+       result[:operators] << operator_id  
+       result[:tarifs][operator_id] = tarifs[operator_id]
+       result[:tarif_options][operator_id] = tarif_options_for_comparison(tarif_options)
+       result[:common_services][operator_id] = common_services[operator_id]
+    end
+    result
+  end
+  
+  def self.tarif_options_for_comparison(options_for_comparison = [])
+#    options_for_comparison = [:international_rouming, :country_rouming, :mms, :sms, :calls, :internet]
+    {
+      1023 => tarif_options_by_type[1023].map{|t| t[1] if options_for_comparison.include?(t[0])}.flatten.compact,
+      1025 => tarif_options_by_type[1025].map{|t| t[1] if options_for_comparison.include?(t[0])}.flatten.compact,
+      1028 => tarif_options_by_type[1028].map{|t| t[1] if options_for_comparison.include?(t[0])}.flatten.compact,
+      1030 => tarif_options_by_type[1030].map{|t| t[1] if options_for_comparison.include?(t[0])}.flatten.compact,
+    }
+  end  
+
   def self.tarif_options_by_type
     {
       1023 => {

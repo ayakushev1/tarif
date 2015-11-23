@@ -31,7 +31,7 @@ class TarifOptimization::TarifOptimizatorRunner
         services[:common_services] = {operator => options[:services_by_operator][:common_services][operator]}
 
         if operator == options[:services_by_operator][:operators].last and tarif == options[:services_by_operator][:tarifs][operator].last
-          is_send_email = true 
+          is_send_email = options[:user_input][:user_id] ? true : false 
           update_call_stat = true
         end
         options_to_add = {:use_background_process_informers => false, :if_clean_output_results => false, :services_by_operator => services, 

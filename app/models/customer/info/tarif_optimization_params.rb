@@ -26,7 +26,7 @@ class Customer::Info::TarifOptimizationParams < ActiveType::Record[Customer::Inf
     {
       'calculate_on_background' => 'true',
       'service_set_based_on_tarif_sets_or_tarif_results' => 'final_tarif_sets_by_parts',
-      'operator_id' => 1030,
+#      'operator_id' => 1030,
       'calculate_with_multiple_use' => 'true',
       'simplify_tarif_results' => 'true',
       'save_tarif_results_ord' => 'false',
