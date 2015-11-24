@@ -34,6 +34,7 @@ class Comparison::Optimization
         result << calculate_one_optimization(optimization_list_key, options, test)
       end
     end
+    update_comparison_result_on_calculation(optimization_list_key)
     result
   end
 
@@ -46,7 +47,7 @@ class Comparison::Optimization
       TarifOptimization::TarifOptimizatorRunner.recalculate_with_delayed_job(options) :
       TarifOptimization::TarifOptimizatorRunner.recalculate_direct(options)
     
-    update_result_run_on_calculation(optimization_list_key, options)
+    update_result_run_on_calculation(optimization_list_key, options)    
     result
   end
   
@@ -71,6 +72,18 @@ class Comparison::Optimization
       :service_categories_select => {},
     })
   end
+
+  def self.update_comparison_result_on_calculation(optimization_list_key)
+    Comparison::Result.where(:optimization_list_key => optimization_list_key.to_s).first_or_create do |result|
+      result.name = optimization_list[optimization_list_key][:name]
+      result.description = optimization_list[optimization_list_key][:description]
+      result.publication_status_id = 100
+      result.publication_order = 10000
+      result.optimization_list_key = optimization_list_key.to_s
+#      result.optimization_list_item = optimization_list[optimization_list_key]
+      result.optimization_result = [{}]
+    end.update({:optimization_list_item => optimization_list[optimization_list_key]})
+  end
   
   def self.unloaded_optimization_list_keys
     []
@@ -92,7 +105,7 @@ class Comparison::Optimization
     {
       :base_rank => {
         :name => "base_rank",
-        :description => "description of base_rank",
+        :description => "all_operators, tarifs_only, own_and_home_regions for students",
         :optimization_type => :all_operators_tarifs_only_own_and_home_regions, 
         :result_runs => {
           :student => {1023 => 0, 1025 => 1, 1028 => 2, 1030 => 3}

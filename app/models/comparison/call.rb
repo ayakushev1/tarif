@@ -36,7 +36,7 @@ class Comparison::Call
   
   def self.init_list
     {
-      :student => {"init_class" => Comparison::Call::Init::Student, "call_run_by_operator" => {1023 => 0, 1025 => 1, 1028 => 2, 1030 => 3}, },
+      :student => {:name => 'Студент', "init_class" => Comparison::Call::Init::Student, "call_run_by_operator" => {1023 => 0, 1025 => 1, 1028 => 2, 1030 => 3}, },
     }
   end
 
