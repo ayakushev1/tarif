@@ -38,12 +38,20 @@ class Result::Agregate < ActiveRecord::Base
   belongs_to :run, :class_name =>'Result::Run', :foreign_key => :run_id
   belongs_to :tarif, :class_name =>'TarifClass', :foreign_key => :tarif_id
   
-  def self.compare_service_sets_of_one_run(run_id, service_sets_to_compare = [], fields_to_show = [], group_by = [], comparison_base = 'compare_by_price')    
+  def self.ids_from_run_and_service_set_ids(service_sets_by_run_ids = {})
+    result = where('true')
+    service_sets_by_run_ids.each do |run_id, service_set_ids|
+      result = result.where(:run_id => run_id, :service_set_id => service_set_ids)
+    end
+    result
+  end
+  
+  def self.compare_service_sets_of_one_run(service_sets_by_run_ids, fields_to_show = [], group_by = [], comparison_base = 'compare_by_price')    
     result = {}
     heads = {}
     groupped_global_categories = Customer::Call::StatCalculator.new.groupped_global_categories(group_by)
     
-    includes(:tarif).where(:run_id => run_id, :service_set_id => service_sets_to_compare).each do |item|
+    includes(:tarif).ids_from_run_and_service_set_ids(service_sets_by_run_ids).each do |item|
       item.categ_ids.each do |global_category_id|      
         global_category_group_name = Customer::Call::StatCalculator.new.global_category_group_name(global_category_id, group_by)
         result[global_category_group_name] ||= {}

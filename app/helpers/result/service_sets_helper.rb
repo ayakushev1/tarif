@@ -113,7 +113,7 @@ module Result::ServiceSetsHelper
 #    raise(StandardError, [session_filtr_params_service_set_choicer['comparison_base'], comparison_base])
     options = {:base_name => 'comparison_service_sets', :current_id_name => 'global_category_id', :id_name => 'global_category_id', :pagination_per_page => 100}
     @comparison_service_sets ||= create_array_of_hashable(
-      Result::Agregate.compare_service_sets_of_one_run(run_id, service_set_ids, [:price], comparison_options, comparison_base), options )
+      Result::Agregate.compare_service_sets_of_one_run({run_id => service_set_ids}, [:price], comparison_options, comparison_base), options )
 #      raise(StandardError, @comparison_service_sets.model.collect {|row| row.keys }.flatten.uniq)
   end
    
