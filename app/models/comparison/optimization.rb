@@ -108,7 +108,7 @@ class Comparison::Optimization
         :description => "all_operators, tarifs_only, own_and_home_regions for students",
         :optimization_type => :all_operators_tarifs_only_own_and_home_regions, 
         :result_runs => {
-          :student => {1023 => 0, 1025 => 1, 1028 => 2, 1030 => 3}
+          :student => {1023 => 0, 1025 => 0, 1028 => 0, 1030 => 0}
         },
       },
     }

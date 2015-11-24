@@ -20,7 +20,6 @@ class Comparison::Result < ActiveRecord::Base
     Comparison::Optimization.optimization_list[optimization_list_key][:result_runs].each do |call_type_key, result_runs_by_operator|
       best_results = best_results_by_operator(result_runs_by_operator)
       ordered_operators_by_price = best_results.keys.sort_by{|k| best_results[k]['price']}
-#      raise(StandardError , [best_results.keys, best_results.keys.map{|k| best_results[k]['price']}, best_results.keys.sort_by{|k| best_results[k][:price]}])
       temp_result = {
         :optimization_list_key => optimization_list_key,
         :call_type => call_type_key,
@@ -40,7 +39,7 @@ class Comparison::Result < ActiveRecord::Base
   def self.best_results_by_operator(result_runs_by_operator)
     result = {}
     result_runs_by_operator.each do |operator_id, result_run_id|
-      result_by_operator = ::Result::ServiceSet.where(:run_id => result_run_id).order(:price).limit(1).first
+      result_by_operator = ::Result::ServiceSet.where(:run_id => result_run_id, :operator_id => operator_id).order(:price).limit(1).first
       result[operator_id] = result_by_operator ? result_by_operator.attributes : {} 
     end    
     result
