@@ -53,6 +53,13 @@ module Result::ServiceSetsHelper
     create_tableable(Result::ServiceSet.includes(:operator, :tarif).where(:run_id => run_id).order(:price), options)
   end
   
+  def result_service_sets_return_link_to
+    result_run = Result::Run.where(:id => run_id).first
+    comparison_result_id = session[:current_id]['comparison_result_id']
+#    raise(StandardError, comparison_result_id)
+    (result_run and result_run.user_id) ? result_runs_path : comparison_result_path(comparison_result_id)
+  end
+  
   def if_show_aggregate_results
     create_filtrable("if_show_aggregate_results")
   end

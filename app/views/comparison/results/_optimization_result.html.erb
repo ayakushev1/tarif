@@ -1,7 +1,7 @@
 <%
 table.init do |t|
   link_html = {:remote => true}
-  t.heads = ['Модель поведения', '1', '2', '3', '4']
+  t.heads = ['Модель поведения', '1', '2', '3', '4', '', '']
   
 	tarifs = t.model.map{|result| result['place'].values.map{|place| place['tarif_id'] if result['place']}.compact }.flatten 
 	tarifs_desc = {}
@@ -16,6 +16,7 @@ table.init do |t|
 	end
   
   t.set_fields do |result|   	
+  	result_run_id =  result['result_run_ids']
   	result_desc = result['place'].collect do |place, detail|
   		operator_desc = operators_desc[detail['operator_id']]
   		tarif_desc = tarifs_desc[detail['tarif_id']]
@@ -26,7 +27,11 @@ table.init do |t|
 
   [
     result['call_type_name'],
-  ] + result_desc + (user_type != :admin ? [] : [
+  ] + result_desc + [
+    (link_to( 'Детализация результатов', result_path(result['result_run_ids'][0]), link_html) if result['result_run_ids']), 
+    link_to( 'Сравнение', result_service_sets_compare_path, link_html), 
+  	
+  ] + (user_type != :admin ? [] : [
     result['optimization_list_key'],
     result['call_type'],
   	])

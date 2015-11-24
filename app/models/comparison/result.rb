@@ -21,6 +21,8 @@ class Comparison::Result < ActiveRecord::Base
       best_results = best_results_by_operator(result_runs_by_operator)
       ordered_operators_by_price = best_results.keys.sort_by{|k| best_results[k]['price']}
       temp_result = {
+        :result_run_id => result_runs_by_operator.values[0],
+        :result_run_ids => result_runs_by_operator.values,
         :optimization_list_key => optimization_list_key,
         :call_type => call_type_key,
         :call_type_name => Comparison::Call.init_list[call_type_key][:name],
