@@ -8,6 +8,11 @@ content_in :tabs do |user|
      'link' 
     ], 
     ([
+     'Рейтинги', 
+     render('/application/menus/main_top_menu/ratings'),
+     'dropdown-menu' 
+    ] if current_user_admin?), 
+    ([
      'Рекомендации', 
      render('/application/menus/main_top_menu/recommendation'),
      'dropdown-menu' 
