@@ -1,0 +1,8 @@
+<% content_for :title, "Список сравнение операторов и тарифов" %>
+
+<p>
+<%= render :partial => 'comparison/results/information/index' %>
+</p>
+
+<%= render :partial => 'results', :layout => 'application/layouts/model_table', :locals => {:table => controller.comparison_results_table}%>
+

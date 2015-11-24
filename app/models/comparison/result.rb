@@ -13,6 +13,7 @@
 #
 
 class Comparison::Result < ActiveRecord::Base
+  belongs_to :publication_status, :class_name =>'Content::Category', :foreign_key => :publication_status_id
   
   def self.compare_best_tarifs_by_operator(optimization_list_key)
     result = []

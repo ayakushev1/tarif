@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151119084015) do
+ActiveRecord::Schema.define(version: 20151124015912) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -55,6 +55,22 @@ ActiveRecord::Schema.define(version: 20151119084015) do
   end
 
   add_index "category_types", ["name"], name: "index_category_types_on_name", using: :btree
+
+  create_table "comparison_results", force: :cascade do |t|
+    t.string  "name"
+    t.text    "description"
+    t.integer "publication_status_id"
+    t.integer "publication_order"
+    t.string  "optimization_list_key"
+    t.jsonb   "optimization_list_item"
+    t.jsonb   "optimization_result"
+  end
+
+  add_index "comparison_results", ["optimization_list_item"], name: "index_comparison_results_on_optimization_list_item", using: :gin
+  add_index "comparison_results", ["optimization_list_key"], name: "index_comparison_results_on_optimization_list_key", using: :btree
+  add_index "comparison_results", ["optimization_result"], name: "index_comparison_results_on_optimization_result", using: :gin
+  add_index "comparison_results", ["publication_order"], name: "index_comparison_results_on_publication_order", using: :btree
+  add_index "comparison_results", ["publication_status_id"], name: "index_comparison_results_on_publication_status_id", using: :btree
 
   create_table "content_articles", force: :cascade do |t|
     t.integer  "author_id"

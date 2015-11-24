@@ -46,6 +46,13 @@ Rails.application.routes.draw do
     end
   end
   
+  namespace :comparison do
+    resources :results
+    controller :results do
+      get 'results/update_optimization_result' => :update_optimization_result
+    end
+  end
+
   namespace :result do
     resources :runs
 

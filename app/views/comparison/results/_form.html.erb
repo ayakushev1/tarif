@@ -1,0 +1,38 @@
+<%
+
+form_item.init do |fi|
+	action_path = fi.model.id ? edit_comparison_result_path(fi.model) : new_comparison_result_path	
+	input_html = {:filtr_name => form_item.form_name, :class => "updatable form-control ", :action_name => action_path}
+	label_html = {:class => "form-label "}
+	link_to_html = {:class => "btn btn-info", :type =>"button", :remote => true}
+	s = session_model_params(fi)
+
+  fi.set_fields do |f|
+
+ 	  [
+	   [
+	   	f.label( :name, 'Название', label_html), 
+	   	f.text_field( :name, input_html.merge({:value =>s['name']}))
+	   ], 
+	   [
+	   	f.label( :description, 'Описание', label_html), 
+	   	f.text_area( :description, input_html.merge({:value => s['description']}))
+	   ], 
+	   [
+	   	f.label( :publication_status_id, 'Статус публикации', label_html), 
+	   	f.collection_select(:publication_status_id, Content::Category.content_status, :id, :name, 
+  	   		{:selected => s["publication_status_id"] }, input_html )
+	   	], 
+	   [
+	   	f.label( :publication_order, 'Порядок публикации', label_html), 
+	   	f.number_field( :publication_order, input_html.merge({:value => (s['publication_order'] || 10000), within: 0..10000}))
+	   ], 
+	   [
+	   	link_to( 'Список описаний', comparison_results_path, link_to_html), 
+	   	f.submit("Сохранить", :class => "btn btn-primary", :type =>"submit", :remote => true)
+	   ],
+	  ]
+  end
+end
+%>
+

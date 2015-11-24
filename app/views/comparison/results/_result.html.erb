@@ -1,0 +1,23 @@
+<%
+form_item.init do |fi|
+  link_to_html = {:class => "btn btn-primary", :type =>"button", :remote => true}
+
+  fi.set_fields do  |result| 
+    [
+      ['Название', result.name], 
+      ['Описание сравнения операторов и тарифов', result.description], 
+	] + (user_type != :admin ? [] : [
+      ['id', result.id],
+      ['Статус публикации', (result.publication_status.name if result.publication_status)], 
+      ['Порядок публикации', result.publication_order], 
+      ['optimization_list_key', result.optimization_list_key],
+      ['optimization_list_item', result.optimization_list_item],
+      ['optimization_result', result.optimization_result],
+      [
+		link_to( 'Редактировать описание', edit_comparison_result_path(result), link_to_html),
+		link_to( 'Список описаний', comparison_results_path, link_to_html)      	
+      ],
+	])
+  end  
+end
+%>
