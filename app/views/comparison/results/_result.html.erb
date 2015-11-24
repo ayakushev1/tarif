@@ -17,7 +17,11 @@ form_item.init do |fi|
 		link_to( 'Редактировать описание', edit_comparison_result_path(result), link_to_html),
 		link_to( 'Список описаний', comparison_results_path, link_to_html)      	
       ],
+      [
+		link_to( 'Обновить optimization_result', comparison_path(result), link_to_html),
+      ],
 	])
   end  
 end
 %>
+

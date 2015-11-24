@@ -1,5 +1,6 @@
 <% content_for :title, "Описание сравнения операторов и тарифов" %>
 
-
 <%= render :partial => 'result', :layout => 'application/layouts/model_show', :locals => {:form_item => controller.comparison_result_form} %>
+
+<%= render :partial => 'optimization_result', :layout => 'application/layouts/model_table', :locals => {:table => controller.optimization_result}%>
 

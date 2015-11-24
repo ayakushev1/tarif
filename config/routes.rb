@@ -49,7 +49,7 @@ Rails.application.routes.draw do
   namespace :comparison do
     resources :results
     controller :results do
-      get 'results/update_optimization_result' => :update_optimization_result
+      get 'results/:id/update_optimization_result' => :update_optimization_result
     end
   end
 

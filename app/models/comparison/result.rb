@@ -19,13 +19,18 @@ class Comparison::Result < ActiveRecord::Base
     result = []
     Comparison::Optimization.optimization_list[optimization_list_key][:result_runs].each do |call_type_key, result_runs_by_operator|
       best_results = best_results_by_operator(result_runs_by_operator)
-      ordered_operators_by_price = best_results.keys.sort_by{|k| best_results[k][:price]}
+      ordered_operators_by_price = best_results.keys.sort_by{|k| best_results[k]['price']}
+#      raise(StandardError , [best_results.keys, best_results.keys.map{|k| best_results[k]['price']}, best_results.keys.sort_by{|k| best_results[k][:price]}])
       temp_result = {
-        :call_type => Comparison::Call.init_list[call_type_key][:name],
-        :first_place => (ordered_operators_by_price[0] ? best_results[ordered_operators_by_price[0]] : {}),
-        :second_place => (ordered_operators_by_price[1] ? best_results[ordered_operators_by_price[1]] : {}),
-        :third_place => (ordered_operators_by_price[2] ? best_results[ordered_operators_by_price[2]] : {}),
-        :fourth_place => (ordered_operators_by_price[3] ? best_results[ordered_operators_by_price[3]] : {}),
+        :optimization_list_key => optimization_list_key,
+        :call_type => call_type_key,
+        :call_type_name => Comparison::Call.init_list[call_type_key][:name],
+        :place => {
+          0 => (ordered_operators_by_price[0] ? best_results[ordered_operators_by_price[0]] : {}),
+          1 => (ordered_operators_by_price[1] ? best_results[ordered_operators_by_price[1]] : {}),
+          2 => (ordered_operators_by_price[2] ? best_results[ordered_operators_by_price[2]] : {}),
+          3 => (ordered_operators_by_price[3] ? best_results[ordered_operators_by_price[3]] : {}),
+        } 
       }
       result << temp_result
     end 
