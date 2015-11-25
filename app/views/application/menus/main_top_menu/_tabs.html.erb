@@ -9,9 +9,9 @@ content_in :tabs do |user|
     ], 
     ([
      'Рейтинги', 
-     render('/application/menus/main_top_menu/ratings'),
+     render('/application/menus/main_top_menu/comparisons'),
      'dropdown-menu' 
-    ] if current_user_admin?), 
+    ] if true or current_user_admin?), 
     ([
      'Рекомендации', 
      render('/application/menus/main_top_menu/recommendation'),

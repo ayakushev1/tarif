@@ -3,17 +3,19 @@ form_item.init do |fi|
   link_to_html = {:class => "btn btn-primary", :type =>"button", :remote => true}
 
   fi.set_fields do  |result| 
-    [
-      [
-		link_to( 'Редактировать описание', edit_comparison_result_path(result), link_to_html),
-		link_to( 'Список описаний', comparison_results_path, link_to_html)      	
-      ],
+    (user_type != :admin ? [] : [
       [
 		link_to( 'generate_calls_for_optimization_list', comparison_generate_calls_for_optimization_list_path(result), link_to_html),
 		link_to( 'calculate_from_optimization_list', comparison_calculate_from_optimization_list_path(result), link_to_html),
       ],
       [
 		link_to( 'Обновить optimization_result', comparison_update_optimization_result_path(result), link_to_html),
+		link_to( 'Редактировать описание', edit_comparison_result_path(result), link_to_html),
+      ],
+    ]) +
+    [  
+      [
+		link_to( 'Список описаний', comparison_results_path, link_to_html)      	
       ],
       ['Название', result.name], 
       ['Описание сравнения операторов и тарифов', result.description], 

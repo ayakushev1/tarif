@@ -15,11 +15,12 @@ module ApplicationHelper::Authorization
   def authenticate_and_authorise
     skip_authencate = my_skip_authenticate
     authenticate_user! unless skip_authencate
-
+  
     case
     when user_type == :admin
     when match_with_lists([:root_url, :external_api_processing])
     when match_with_lists([:public_url])
+    when (match_with_lists([:comparison]) and [:stranger, :guest, :trial, :user].include?(user_type))
     when (match_with_lists([:call_generation_and_parsing]) and [:stranger, :guest, :trial, :user].include?(user_type))
     when (match_with_lists([:tarif_optimization]) and [:stranger, :guest, :trial, :user].include?(user_type))
     when match_with_lists([:any_user_actions_with_devise])
@@ -36,7 +37,8 @@ module ApplicationHelper::Authorization
   def my_skip_authenticate
     match_with_lists([:root_url, :external_api_processing]) or 
     ([:bot].include?(user_type) and match_with_lists([:root_url, :public_url])) or 
-    (user_type == :guest and match_with_lists([:root_url, :public_url, :new_user_actions_with_devise, :call_generation_and_parsing, :tarif_optimization]))
+    (user_type == :guest and match_with_lists([:root_url, 
+        :public_url, :new_user_actions_with_devise, :comparison, :call_generation_and_parsing, :tarif_optimization]))
 #    match_with_lists([:root_url, :public_url, :new_user_actions_with_devise, :call_generation_and_parsing, :tarif_optimization, :external_api_processing])
   end
   
@@ -70,7 +72,8 @@ module ApplicationHelper::Authorization
         return true
       end
     end
-#    raise(StandardError) if action_list_name == :root_url #result == true
+    raise(StandardError, [request_method, action_list, controller_path, action_name]) if action_list_name.to_sym == :comparison and
+      controller_name == 'results'
     false
   end
   
@@ -96,6 +99,11 @@ module ApplicationHelper::Authorization
           'result/service_sets' => ['result', 'results', 'detailed_results', 'compare'],
           'customer/demands' => ['index', 'create', 'new'],
           'errors' => ['error404', 'error422', 'error500'],
+        }
+      },
+      :comparison => {
+        :methods => ['get'], :actions => {
+          'comparison/results' =>['index', 'show'],
         }
       },
       :call_generation_and_parsing => {
