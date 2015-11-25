@@ -3,20 +3,21 @@ table.init do |t|
   link_html = {:remote => true}
   t.heads = ['Модель поведения', '1', '2', '3', '4', '', '']
   
-	tarifs = t.model.map{|result| result['place'].values.map{|place| place['tarif_id'] if result['place']}.compact }.flatten 
+	tarifs = t.model.map{|result| result['place'].values.map{|place| place['tarif_id'] if result['place']}.compact if result['place'] }.flatten 
 	tarifs_desc = {}
 	TarifClass.where(:id => tarifs).each do |tarif|
 		tarifs_desc[tarif.id] = tarif
 	end
 
 	operators_desc = {}
-	operators = t.model.map{|result| result['place'].values.map{|place| place['operator_id'] if result['place']}.compact }.flatten
+	operators = t.model.map{|result| result['place'].values.map{|place| place['operator_id'] if result['place']}.compact if result['place'] }.flatten
 	Category.where(:id => operators).each do |operator|
 		operators_desc[operator.id] = operator
 	end
   
   t.set_fields do |result|   	
   	result_run_id =  result['result_run_ids']
+  	result_desc = []
   	result_desc = result['place'].collect do |place, detail|
   		operator_desc = operators_desc[detail['operator_id']]
   		tarif_desc = tarifs_desc[detail['tarif_id']]

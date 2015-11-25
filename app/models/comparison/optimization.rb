@@ -1,7 +1,12 @@
 class Comparison::Optimization
   
-  def self.calculate_from_optimization_list(optimization_list_keys = [], test = false)
-    Comparison::Call.generate_calls_for_new_inits
+  def self.generate_calls_for_optimization_list(optimization_list_keys = [], test = false)    
+    optimization_list_keys.collect do |optimization_list_key|
+      Comparison::Call.generate_calls_for_inits(optimization_list[optimization_list_key][:result_runs].keys)
+    end
+  end
+  
+  def self.calculate_from_optimization_list(optimization_list_keys = [], test = false)    
     result = {}
     optimization_list_keys.collect do |optimization_list_key|
       result[optimization_list_key] = calculate_one_item_from_optimization_list(optimization_list_key, test)      

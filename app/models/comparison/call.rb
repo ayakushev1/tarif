@@ -1,5 +1,12 @@
 class Comparison::Call
   
+  def self.generate_calls_for_inits(init_list_keys = [])
+    init_list_keys.collect do |init_list_key|
+      generate_calls_for_one_init(init_list_key)
+      init_list_key
+    end
+  end
+  
   def self.generate_calls_for_new_inits
     unloaded_init_keys.collect do |unloaded_init_key|
       generate_calls_for_one_init(unloaded_init_key)

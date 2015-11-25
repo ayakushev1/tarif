@@ -1,6 +1,8 @@
 <% content_for :title, "Список сравнение операторов и тарифов" %>
 
 <p>
+<%= link_to( 'Создать новое описание', new_comparison_result_path, 
+	{:class => "btn btn-success", :type => 'button'})  if user_type == :admin %>
 <%= render :partial => 'comparison/results/information/index' %>
 </p>
 

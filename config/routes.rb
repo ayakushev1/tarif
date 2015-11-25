@@ -51,7 +51,9 @@ Rails.application.routes.draw do
   namespace :comparison do
     resources :results
     controller :results do
-      get 'results/:id/update_optimization_result' => :update_optimization_result
+      get 'results/calculate_from_optimization_list/:id', action: :calculate_from_optimization_list, as: :calculate_from_optimization_list
+      get 'results/update_optimization_result/:id', action: :update_optimization_result, as: :update_optimization_result
+      get 'results/generate_calls_for_optimization_list/:id', action: :generate_calls_for_optimization_list, as: :generate_calls_for_optimization_list
     end
   end
 
