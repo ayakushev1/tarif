@@ -8,7 +8,7 @@ module Comparison::Call::Init
       "share_of_time_in_home_region"=>0.15, 
       "share_of_time_in_own_country"=>0.5, 
       "share_of_time_abroad"=>0.0
-    }.merge(CommonParams.slice("country_id", "region_id", "operator_id", "privacy_id")), 
+    }.merge(CommonParams.slice("country_id", "region_id", "privacy_id")), 
     :own_region=> {
       "number_of_day_calls"=>10, 
       "duration_of_calls"=>5, 
@@ -21,7 +21,7 @@ module Comparison::Call::Init
       "internet_trafic_per_month"=>0.2, 
       "share_of_incoming_calls"=>0.5, 
       "share_of_incoming_calls_from_own_mobile"=>0.3
-     }.deep_merge(CommonParams.slice("country_id", "region_id", "operator_id", "privacy_id", :own_region)), 
+     }.merge(CommonParams.slice("country_id", "region_id", "privacy_id")), 
     :home_region=> {
       "number_of_day_calls"=>1, 
       "duration_of_calls"=>5, 
@@ -34,7 +34,7 @@ module Comparison::Call::Init
       "internet_trafic_per_month"=>0.2, 
       "share_of_incoming_calls"=>0.5, 
       "share_of_incoming_calls_from_own_mobile"=>0.3
-    }.deep_merge(CommonParams.slice("country_id", :home_region)), 
+    }.merge(CommonParams.slice("country_id")), 
     :own_country=>{
       "number_of_day_calls"=>1, 
       "duration_of_calls"=>5, 
@@ -47,7 +47,7 @@ module Comparison::Call::Init
       "internet_trafic_per_month"=>0.0, 
       "share_of_incoming_calls"=>0.5, 
       "share_of_incoming_calls_from_own_mobile"=>0.3
-    }.deep_merge(CommonParams.slice("country_id", :own_country)), 
+    }.merge(CommonParams.slice("country_id")), 
     :abroad=>{
       "number_of_day_calls"=>0, 
       "duration_of_calls"=>0, 
@@ -60,8 +60,8 @@ module Comparison::Call::Init
       "internet_trafic_per_month"=>0.0, 
       "share_of_incoming_calls"=>0.5, 
       "share_of_incoming_calls_from_own_mobile"=>0.3
-    }.deep_merge(CommonParams.slice(:abroad)),
-  }
+    },
+  }.deep_merge(CommonParams.slice(:own_region, :home_region, :own_country, :abroad))
 
 end
 

@@ -12,6 +12,7 @@ class Calls::Generator
     @user_params = set_user_params(user_params)
     @common_params = set_common_params
     @initial_inputs = set_initial_inputs
+#    raise(StandardError, [customer_calls_generation_params[:own_region][:own_region], common_params, initial_inputs].join("\n"))
     self.extend Helper
 #      @a = _operators
 #      raise(StandardError, [customer_calls_generation_params, user_params, common_params, initial_inputs].join("\n\n"))
@@ -363,11 +364,11 @@ class Calls::Generator
           [choose_random_from_array( initial_inputs[rouming][call_destination]["partner_operator_ids"] ), _mobile,
          initial_inputs[rouming][call_destination]['partner_region_id'], initial_inputs[rouming][call_destination]['partner_country_id']
         ]
-      else
-        [common_params['fixed_operator_id'], _fixed_line,
-         initial_inputs[rouming][call_destination]['partner_region_id'], initial_inputs[rouming][call_destination]['partner_country_id']
-        ]
-      end
+        else
+          [common_params['fixed_operator_id'], _fixed_line,
+           initial_inputs[rouming][call_destination]['partner_region_id'], initial_inputs[rouming][call_destination]['partner_country_id']
+          ]
+        end
     when share_of_calls_to_fix_line(rouming)..(share_of_calls_to_fix_line(rouming) + share_of_calls_to_others_mobile(rouming) )
       [choose_random_from_array( initial_inputs[rouming][call_destination]["partner_operator_ids"] ), _mobile,
        initial_inputs[rouming][call_destination]['partner_region_id'], initial_inputs[rouming][call_destination]['partner_country_id']

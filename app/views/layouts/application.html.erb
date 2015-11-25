@@ -6,6 +6,7 @@
 	<script type="text/javascript" src="//vk.com/js/api/openapi.js?116"></script>	
 	<%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>	
   	<%= csrf_meta_tags %>
+    <%= favicon_link_tag "favicon.ico" %>
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 </head>
@@ -15,7 +16,6 @@
 
 </body>
 
-    <%= favicon_link_tag "favicon.ico" %>
 	<img src=<%= image_path("ajax-loader-big.gif") %> id='loading-indicator-ajax' style="display:none;"/>
 	<img src=<%= image_path("ajax-loader-big.gif") %> id='loading-indicator' style="display:none;"/>
 
