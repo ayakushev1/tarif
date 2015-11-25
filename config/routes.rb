@@ -28,6 +28,8 @@ Rails.application.routes.draw do
 #  devise_for :users, path: "auth", path_names: { sign_in: 'login', sign_out: 'logout', password: 'secret', confirmation: 'verification', unlock: 'unblock', registration: 'register', sign_up: 'cmon_let_me_in' }
 #  root 'home#index'
   root 'home#index'
+  resources :users
+  resources :tarif_classes
 
   controller :home do
     get 'home/short_description' => :short_description
@@ -166,9 +168,7 @@ Rails.application.routes.draw do
     end
 #    get 'categories/' => 'categories#index'    
   end
-  
-  resources :users
-  resources :tarif_classes
+    
   
 #  resources :tarif_lists, :price_lists  
 #  resources :parameters, only: :index
