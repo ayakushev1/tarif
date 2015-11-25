@@ -15,31 +15,10 @@
 		</div>	
 	</div>
 	<div class="row">
-        <div class="col-xs-12">
+        <div id="main_block_top_row_4" class="col-xs-12">
+        	<%= render 'layouts/ajax_load_block' %>
         	
-			<h1><%= yield(:title).blank? ? 'Title' : yield(:title) %></h1>
-			
-<!--
-			<ol class="breadcrumb">
-			  <li><% render_breadcrumbs %></li>
-			</ol>        	
--->
-        	<div id="main_block_top_row_4" class="content">
-				<%= user_type if false %>
-				<%= render('/application/shared/alerts') if false %>
-				<%= "user_signed_in? #{user_signed_in?}" if false %>
-				<%= "current_user #{current_user}" if false %>
-				<%= "user_session #{user_session}" if false %>
-				<%= "current_or_guest_user #{current_or_guest_user}" if false %>
-				<%= "#{controller.options[:services_by_operator].values}" if controller.respond_to?(:options) and false %>
-				<%= "#{controller.options[:selected_service_categories]}" if controller.respond_to?(:options) and false %>
 
-				<%= render :partial => 'application/shared/alerts' %>
-				
-				<div id=<%= view_id_name %> >
-					  <%= yield %>
-				</div>	  
-        	</div>
         	<br />
 	        <div>
 				<%= render('/application/shared/yandex_metrika_informet') if ENV["RAILS_ENV"] == "production" %>

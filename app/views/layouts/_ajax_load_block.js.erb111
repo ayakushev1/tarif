@@ -1,0 +1,1 @@
+<%= render :partial => 'layouts/ajax_load_block.html.erb' %>
