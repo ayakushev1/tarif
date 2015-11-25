@@ -2,10 +2,12 @@
 
 User-agent: Googlebot
 Disallow: 
+Host: www.mytarifs.ru
 Sitemap: http://www.mytarifs.ru/sitemap.xml
 
 User-agent: Yandex
 Disallow: 
+Host: www.mytarifs.ru
 Sitemap: http://www.mytarifs.ru/sitemap.xml
 
 User-agent: *
