@@ -51,6 +51,8 @@ end
 # To use ActiveModel has_secure_password
 gem 'bcrypt-ruby' , '~> 3.1.2'
 
+gem "breadcrumbs_on_rails"
+
 #gem 'rails_log_stdout',           github: 'heroku/rails_log_stdout'
 #gem 'rails3_serve_static_assets', github: 'heroku/rails3_serve_static_assets'
 

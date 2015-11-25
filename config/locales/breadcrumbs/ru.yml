@@ -1,0 +1,30 @@
+ru:
+  home: 
+    index: Домашняя страница
+  comparison/results: 
+    index: Рейтинг тарифов
+  customer/call_runs: 
+    index: Список описаний звонков
+    show: Описание звонков
+    edit: Редактирование описания звонков
+    update:  Сохранение описания звонков
+  customer/calls: 
+    index: Моделирование звонков
+  customer/history_parsers: 
+    index: Загрузка детализаций звонков
+  customer/calls: 
+     index: Звонки
+     set_calls_generation_params: Задание параметров моделирования звонков
+  result/runs: 
+    index: Список подборов тарифов
+    show: Описание подбора тарифов
+    edit: Редактирование подбора тарифов
+    update:  Сохранение подбора тарифов
+  tarif_optimizators/main: 
+    index: Подбор тарифа > Задание параметров
+  tarif_optimizators/fixed_services: 
+    index: Проверка стоимости > Задание параметров
+  tarif_optimizators/limited_scope: 
+    index: Подбор тарифа с ограничением услуг операторов > Задание параметров
+  tarif_optimizators/fixed_operators: 
+    index: Подбора тарифа для одного оператора > Задание параметров

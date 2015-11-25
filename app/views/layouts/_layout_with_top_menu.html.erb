@@ -17,10 +17,13 @@
 	<div class="row">
         <div class="col-xs-12">
         	
+			<h1><%= yield(:title).blank? ? 'Title' : yield(:title) %></h1>
+			
+<!--
 			<ol class="breadcrumb">
-			  <li><%= yield(:title).blank? ? 'Title' : yield(:title) %></li>
+			  <li><% render_breadcrumbs %></li>
 			</ol>        	
-
+-->
         	<div id="main_block_top_row_4" class="content">
 				<%= user_type if false %>
 				<%= render('/application/shared/alerts') if false %>
