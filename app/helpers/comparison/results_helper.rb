@@ -16,7 +16,7 @@ module Comparison::ResultsHelper
     call_type = session[:current_id]['call_type']
 
     comparison_result.optimization_result.each do |optimization_result|        
-      if optimization_result['call_type'] == call_type
+      if optimization_result['call_type'] == call_type or !call_type
         session[:filtr]["service_set_choicer_filtr"] ||={}
         session[:filtr]["service_set_choicer_filtr"]['result_service_set_id'] = optimization_result['service_set_ids']
 
@@ -26,6 +26,7 @@ module Comparison::ResultsHelper
         return true
       end
     end if comparison_result and comparison_result.optimization_result
+#    raise(StandardError, [comparison_result.optimization_result[0]["call_type"], call_type])
   end
   
 
