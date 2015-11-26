@@ -42,7 +42,7 @@ category = {:name => '_sctcg_own_home_regions_sms_to_own_home_regions', :service
   {:calculation_order => 0, :price => 9.95, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _item,
    :formula => {
      :group_by => 'day',
-     :stat_params => {:count_volume_more_0 => "count(case when ((description->>'volume')::float) > 0.0 then 1.0 else 0.0 end)",
+     :stat_params => {:count_volume_more_0 => "sum(case when ((description->>'volume')::float) > 0.0 then 1.0 else 0.0 end)",
                       :count_volume => "count((description->>'volume')::float)"},
      :method => 'price_formulas.price * count_volume_more_0 + 2.0 * GREATEST(count_volume - 100.0, 0.0)'}, } )
 

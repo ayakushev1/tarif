@@ -51,7 +51,7 @@ _bln_cenral_regions_not_moscow_regions =
   [_bryansk, _vladimir, _ivanovo, _kaluga, _kostroma, _rezyan, _smolensk, _tver, _tula, _yaroslav] + 
   [_bryansk_region, _vladimir_region, _ivanov_region, _kaluga_region, _kostroma_region,
    _rezyan_region, _smolensk_region, _tver_region, _tula_region, _yaroslav_region]
-_bln_exept_for_cenral_regions_not_moscow_regions = _regions - _bln_cenral_regions_not_moscow_regions
+_bln_exept_for_cenral_regions_not_moscow_regions = _regions - _bln_cenral_regions_not_moscow_regions - [_moscow, _moscow_region]
 
 _bln_bad_internet_regions = [ _amur_region, _birobidgan_region, _zabaikalsk_region, _irkutsk_region, _kamhatsky_region, _magadan_region, 
     _primorsk_region, _buryatia_region, _yakutia_region, _sahalin_region, _habarovsk_region, _chukotka_region]

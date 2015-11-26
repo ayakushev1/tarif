@@ -27,7 +27,7 @@ category = {:name => '_sctcg_own_home_regions_calls_to_own_and_home_regions_own_
   @tc.add_one_service_category_tarif_class(category, {}, 
   {:calculation_order => 0, :standard_formula_id => _stf_price_by_sum_duration_minute, :price => 1.3, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
    :formula => {
-     :stat_params => {:count_calls => "count(case when ((description->>'duration')::float) > 0.0 then 1.0 else 0.0 end)",                                            
+     :stat_params => {:count_calls => "sum(case when ((description->>'duration')::float) > 0.0 then 1.0 else 0.0 end)",                                            
                       :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
      :method => 'price_formulas.price * count_calls'}, } )
 

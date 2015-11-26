@@ -60,8 +60,8 @@ category = {:name => '_sctcg_own_home_regions_sms_to_all_country_regions', :serv
   {:calculation_order => 0, :price => 1.6, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
    :formula => {
      :group_by => 'day',
-     :stat_params => {:count_volume_less_11 => "count(case when ((description->>'volume')::float) < 11.0 then 1.0 else 0.0 end)",
-                      :count_volume_more_30 => "count(case when ((description->>'volume')::float) > 30.0 then 1.0 else 0.0 end)",
+     :stat_params => {:count_volume_less_11 => "sum(case when ((description->>'volume')::float) < 11.0 then 1.0 else 0.0 end)",
+                      :count_volume_more_30 => "sum(case when ((description->>'volume')::float) > 30.0 then 1.0 else 0.0 end)",
                       :count_volume => "count((description->>'volume')::float)"},
      :method => 'price_formulas.price * (count_volume_less_11 + count_volume_more_30) + 0.6 * (count_volume - count_volume_less_11 - count_volume_more_30)'}, } )
 
@@ -92,9 +92,9 @@ category = {:name => '_sctcg_own_home_regions_mms_to_own_home_regions', :service
    {:calculation_order => 0, :price => 1.6, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_mgf_home_region_rouming_internet', :description => '', 
    :formula => {
      :group_by => 'day',
-     :stat_params => {:count_volume_more_30 => "count(case when ((description->>'volume')::float) > 30.0 then 1.0 else 0.0 end)",
-                      :count_volume => "count((description->>'volume')::float)"},
-     :method => '0.6 * count_volume  + 1.0 * count_volume_more_30 * (count_volume - 30.0)'}, } )
+     :stat_params => {:count_volume_more_30 => "sum(case when ((description->>'volume')::float) > 30.0 then 1.0 else 0.0 end)",
+                      :sum_volume => "sum((description->>'volume')::float)"},
+     :method => '1.6 * sum_volume - 1.0 * count_volume_more_30 * 30.0'}, },)
 
 
 #Tarif option 'Везде Москва — в Центральном регионе'
@@ -157,8 +157,8 @@ category = {:name => 'sctcg_cenral_regions_not_own_and_home_region_sms_to_all_co
   {:calculation_order => 0, :price => 1.6, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
    :formula => {
      :group_by => 'day',
-     :stat_params => {:count_volume_less_11 => "count(case when ((description->>'volume')::float) < 11.0 then 1.0 else 0.0 end)",
-                      :count_volume_more_30 => "count(case when ((description->>'volume')::float) > 30.0 then 1.0 else 0.0 end)",
+     :stat_params => {:count_volume_less_11 => "sum(case when ((description->>'volume')::float) < 11.0 then 1.0 else 0.0 end)",
+                      :count_volume_more_30 => "sum(case when ((description->>'volume')::float) > 30.0 then 1.0 else 0.0 end)",
                       :count_volume => "count((description->>'volume')::float)"},
      :method => 'price_formulas.price * (count_volume_less_11 + count_volume_more_30) + 0.6 * (count_volume - count_volume_less_11 - count_volume_more_30)'}, },
     :tarif_set_must_include_tarif_options => [_mgf_everywhere_moscow_in_central_region] )  
@@ -245,8 +245,8 @@ category = {:name => 'sctcg_cenral_regions_not_own_and_home_region_sms_to_all_co
   {:calculation_order => 0, :price => 1.6, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
    :formula => {
      :group_by => 'day',
-     :stat_params => {:count_volume_less_11 => "count(case when ((description->>'volume')::float) < 11.0 then 1.0 else 0.0 end)",
-                      :count_volume_more_30 => "count(case when ((description->>'volume')::float) > 30.0 then 1.0 else 0.0 end)",
+     :stat_params => {:count_volume_less_11 => "sum(case when ((description->>'volume')::float) < 11.0 then 1.0 else 0.0 end)",
+                      :count_volume_more_30 => "sum(case when ((description->>'volume')::float) > 30.0 then 1.0 else 0.0 end)",
                       :count_volume => "count((description->>'volume')::float)"},
      :method => 'price_formulas.price * (count_volume_less_11 + count_volume_more_30) + 0.6 * (count_volume - count_volume_less_11 - count_volume_more_30)'}, },
     :tarif_set_must_include_tarif_options => [_mgf_be_as_home] )  
@@ -267,9 +267,9 @@ category = {:name => 'sctcg_cenral_regions_not_own_and_home_region_sms_to_sms_ot
    {:calculation_order => 0, :price => 1.6, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_mgf_home_region_rouming_internet', :description => '', 
    :formula => {
      :group_by => 'day',
-     :stat_params => {:count_volume_more_30 => "count(case when ((description->>'volume')::float) > 30.0 then 1.0 else 0.0 end)",
-                      :count_volume => "count((description->>'volume')::float)"},
-     :method => '0.6 * count_volume  + 1.0 * count_volume_more_30 * (count_volume - 30.0)'}, },
+     :stat_params => {:count_volume_more_30 => "sum(case when ((description->>'volume')::float) > 30.0 then 1.0 else 0.0 end)",
+                      :sum_volume => "sum((description->>'volume')::float)"},
+     :method => '1.6 * sum_volume - 1.0 * count_volume_more_30 * 30.0'}, },
    :tarif_set_must_include_tarif_options => [_mgf_be_as_home] )  
 
 
