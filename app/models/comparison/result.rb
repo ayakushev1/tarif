@@ -20,12 +20,16 @@ class Comparison::Result < ActiveRecord::Base
     Comparison::Optimization.optimization_list[optimization_list_key][:result_runs].each do |call_type_key, result_runs_by_operator|
       best_results = best_results_by_operator(result_runs_by_operator)
       ordered_operators_by_price = best_results.keys.sort_by{|k| best_results[k]['price']}
+      service_set_ids = {}
+      i = 0
+      ordered_operators_by_price.map{|o_r| service_set_ids[i] = best_results[o_r]['service_set_id']; i += 1}
       temp_result = {
         :result_run_id => result_runs_by_operator.values[0],
         :result_run_ids => result_runs_by_operator.values,
         :optimization_list_key => optimization_list_key,
         :call_type => call_type_key,
         :call_type_name => Comparison::Call.init_list[call_type_key][:name],
+        :service_set_ids => service_set_ids,
         :place => {
           0 => (ordered_operators_by_price[0] ? best_results[ordered_operators_by_price[0]] : {}),
           1 => (ordered_operators_by_price[1] ? best_results[ordered_operators_by_price[1]] : {}),

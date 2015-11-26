@@ -2,6 +2,7 @@ class Comparison::ResultsController < ApplicationController
   include Comparison::ResultsHelper
   include Crudable
   crudable_actions :all
+  before_action :set_run_id, only: :show
   
   def generate_calls_for_optimization_list
     if params[:id]

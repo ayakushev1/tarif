@@ -16,21 +16,21 @@ form_item.init do |f|
  	 	{:selected => (s["comparison_base"] || 'compare_by_price')}, input_html ),
   	],
   	[
-	label(filtr_name, "result_service_set_id[1]", "Выбор тарифа №1", label_html),
-	collection_select(filtr_name, "result_service_set_id[1]", result_service_sets, :service_set_id, :full_name, 
-	  	   {:include_blank => "выберите тариф", :selected => s_result_service_set_id['1']  }, input_html ),
+	label(filtr_name, "result_service_set_id[0]", "Выбор тарифа №1", label_html),
+	collection_select(filtr_name, "result_service_set_id[0]", result_service_sets, :service_set_id, :full_name, 
+	  	   {:include_blank => "выберите тариф", :selected => s_result_service_set_id['0']  }, input_html ),
 	  	   
-	label(filtr_name, "result_service_set_id[2]", "Выбор тарифа №2", label_html),
+	label(filtr_name, "result_service_set_id[1]", "Выбор тарифа №2", label_html),
+	collection_select(filtr_name, "result_service_set_id[1]", result_service_sets, :service_set_id, :full_name, 
+	  	   {:include_blank => "выберите тариф", :selected => s_result_service_set_id['1'] }, input_html ),
+
+	label(filtr_name, "result_service_set_id[2]", "Выбор тарифа №3", label_html),
 	collection_select(filtr_name, "result_service_set_id[2]", result_service_sets, :service_set_id, :full_name, 
 	  	   {:include_blank => "выберите тариф", :selected => s_result_service_set_id['2'] }, input_html ),
 
-	label(filtr_name, "result_service_set_id[3]", "Выбор тарифа №3", label_html),
+	label(filtr_name, "result_service_set_id[3]", "Выбор тарифа №4", label_html),
 	collection_select(filtr_name, "result_service_set_id[3]", result_service_sets, :service_set_id, :full_name, 
 	  	   {:include_blank => "выберите тариф", :selected => s_result_service_set_id['3'] }, input_html ),
-
-	label(filtr_name, "result_service_set_id[4]", "Выбор тарифа №4", label_html),
-	collection_select(filtr_name, "result_service_set_id[4]", result_service_sets, :service_set_id, :full_name, 
-	  	   {:include_blank => "выберите тариф", :selected => s_result_service_set_id['4'] }, input_html ),
   	],
   ]
 	    
