@@ -89,9 +89,11 @@ class Calls::Generator
             partner_operator_id, partner_operator_type_id, partner_region_id, partner_country_id = choose_call_operator(rouming, call_direction, call_destination)
             
             next if ( partner_operator_type_id == _fixed_line ) and [_sms, _mms].include?(base_service_id)
+            
+            base_subservice_id = (base_service_id == _3g ? _inbound : choose_call_direction(rouming))
  
             call_item = {
-              :base_service_id => base_service_id, :base_subservice_id => choose_call_direction(rouming), 
+              :base_service_id => base_service_id, :base_subservice_id => base_subservice_id, 
               :user_id => common_params["user_id"], :call_run_id => common_params["call_run_id"],
             :own_phone => {
               :number => common_params["own_phone_number"], :operator_id => common_params["own_operator_id"],
