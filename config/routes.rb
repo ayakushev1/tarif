@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
-constraints(:host => "www.mytarifs.ru") do
+constraints(:host => "mytarifs.ru") do
     match "(*x)" => redirect { |params, request|
-      URI.parse(request.url).tap { |x| x.host = "mytarifs.ru" }.to_s
+      URI.parse(request.url).tap { |x| x.host = "www.mytarifs.ru" }.to_s
     }, via: [:get, :post]
   end
   
