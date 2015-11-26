@@ -18,6 +18,58 @@ class Calls::Generator
 #      raise(StandardError, [customer_calls_generation_params, user_params, common_params, initial_inputs].join("\n\n"))
   end
   
+  def self.generate_calls_from_one_to_other_operator(operator_id_1, call_run_id_1, operator_id_2, call_run_id_2)
+    calls = []
+    categories = {} 
+    ::Category.where(:id => [operator_id_1, operator_id_2]).each { |o| categories[o.id] = o.name }
+
+    Customer::Call.where(:call_run_id => call_run_id_1).each do |call|
+      call_item = call.attributes.deep_symbolize_keys
+#      raise(StandardError, call_item)
+      case 
+      when call_item[:partner_phone][:operator_id] == operator_id_1
+        partner_operator_id = operator_id_2
+        partner_operator = categories[partner_operator_id]
+      when call_item[:partner_phone][:operator_id] == operator_id_2
+        partner_operator_id = operator_id_1
+        partner_operator = categories[partner_operator_id]
+      else
+        partner_operator_id = call_item[:partner_phone][:operator_id]
+        partner_operator = call_item[:partner_phone][:operator]
+      end
+
+      case 
+      when call_item[:connect][:operator_id] == operator_id_1
+        connect_operator_id = operator_id_2
+        connect_operator = categories[connect_operator_id]
+      when call_item[:connect][:operator_id] == operator_id_2
+        connect_operator_id = operator_id_1
+        connect_operator = categories[connect_operator_id]
+      else
+        connect_operator_id = call_item[:connect][:operator_id]
+        connect_operator = call_item[:connect][:operator]
+      end
+        
+      call_item.deep_merge!({
+        :call_run_id => call_run_id_2,
+        :own_phone => {
+          :operator_id => operator_id_2,
+          :operator => categories[operator_id_2],
+          },
+        :partner_phone => {
+          :operator_id => partner_operator_id, 
+          :operator => partner_operator,
+          },
+        :connect => {
+          :operator_id => connect_operator_id, 
+          :operator => connect_operator,
+          },
+      })
+      calls << call_item
+    end
+    Customer::Call.bulk_insert values: calls
+  end
+  
   def generate_calls#(params_to_search_optimal_tarif)
     calls = []
     categories = {} 
@@ -39,7 +91,8 @@ class Calls::Generator
             next if ( partner_operator_type_id == _fixed_line ) and [_sms, _mms].include?(base_service_id)
  
             call_item = {
-              :base_service_id => base_service_id, :base_subservice_id => choose_call_direction(rouming), :user_id => common_params["user_id"], :call_run_id => common_params["call_run_id"],
+              :base_service_id => base_service_id, :base_subservice_id => choose_call_direction(rouming), 
+              :user_id => common_params["user_id"], :call_run_id => common_params["call_run_id"],
             :own_phone => {
               :number => common_params["own_phone_number"], :operator_id => common_params["own_operator_id"],
               :region_id => common_params["own_region_id"], :country_id => common_params["own_country_id"],

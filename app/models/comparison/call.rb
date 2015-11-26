@@ -15,12 +15,21 @@ class Comparison::Call
   end
   
   def self.generate_calls_for_one_init(call_init_key)    
-    init_list[call_init_key]["call_run_by_operator"].each do |operator_id, call_run_id|
+    if init_list[call_init_key] and init_list[call_init_key]["call_run_by_operator"]
+      
+      operator_id = init_list[call_init_key]["call_run_by_operator"].keys[0]
+      call_run_id = init_list[call_init_key]["call_run_by_operator"][operator_id]
+      
       calls_generation_params = init_list[call_init_key]["init_class"].deep_merge({:general => {"operator_id" => operator_id}})
       user_params = {"call_run_id" => call_run_id}
       Customer::Call.where(user_params).delete_all
       Calls::Generator.new(calls_generation_params, user_params).generate_calls
-    end if init_list[call_init_key]
+      
+      init_list[call_init_key]["call_run_by_operator"].except(operator_id).each do |operator_id_2, call_run_id_2|
+        Customer::Call.where({"call_run_id" => call_run_id_2}).delete_all
+        Calls::Generator.generate_calls_from_one_to_other_operator(operator_id, call_run_id, operator_id_2, call_run_id_2)
+      end
+    end
   end
   
   def self.clean_all_inits
