@@ -1,10 +1,4 @@
 Rails.application.routes.draw do
-constraints(:host => "mytarifs.ru") do
-    match "(*x)" => redirect { |params, request|
-      URI.parse(request.url).tap { |x| x.host = "www.mytarifs.ru" }.to_s
-    }, via: [:get, :post]
-  end
-  
   match "/404" => "errors#error404", via: [ :get, :post, :patch, :delete ]
   match "/422" => "errors#error422", via: [ :get, :post, :patch, :delete ]
   match "/500" => "errors#error500", via: [ :get, :post, :patch, :delete ]
