@@ -14,12 +14,11 @@ module Comparison::ResultsHelper
   
   def set_run_id
     call_type = session[:current_id]['call_type']
-    
 
     comparison_result.optimization_result.each do |optimization_result|        
       if optimization_result['call_type'] == call_type
         session[:filtr]["service_set_choicer_filtr"] ||={}
-#        session[:filtr]["service_set_choicer_filtr"]['result_service_set_id'] = {}
+        session[:filtr]["service_set_choicer_filtr"]['result_service_set_id'] = optimization_result['service_set_ids']
 
         session[:filtr]['results_select_filtr'] ||= {}
         session[:filtr]['results_select_filtr']['result_run_id'] = optimization_result["result_run_ids"][0] if optimization_result["result_run_ids"]

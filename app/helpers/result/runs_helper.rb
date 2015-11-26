@@ -40,5 +40,9 @@ module Result::RunsHelper
     end if !Result::Run.where(:user_id => current_or_guest_user_id).present?
   end
   
-
+  def set_run_id
+    session[:filtr]['results_select_filtr'] ||= {}
+    session[:filtr]['results_select_filtr']['result_run_id'] = session[:current_id]['result_run_id']
+#    raise(StandardError, session[:current_id]['result_run_id'])
+  end
 end
