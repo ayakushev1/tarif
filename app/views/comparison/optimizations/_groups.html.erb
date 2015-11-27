@@ -26,7 +26,7 @@ table.init do |t|
   	end if group.result and group.result['place']
 
   [
-    group.result['call_type_name'],
+    (group.result['call_type_name'] if group.result_run),
   ] + result_desc + [
     (link_to( 'Детализация результатов', result_path(group.result_run.id), link_html) if group.result_run), 
     (link_to( 'Сравнение', result_compare_path(group.result_run.id), link_html) if group.result_run), 
