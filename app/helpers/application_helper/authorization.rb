@@ -103,7 +103,7 @@ module ApplicationHelper::Authorization
       },
       :comparison => {
         :methods => ['get'], :actions => {
-          'comparison/results' =>['index', 'show'],
+          'comparison/optimizations' =>['index', 'show'],
         }
       },
       :call_generation_and_parsing => {
