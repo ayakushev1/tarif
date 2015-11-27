@@ -1,14 +1,17 @@
 module Result::RunsHelper
-  include SavableInSession::Tableable, SavableInSession::SessionInitializers
+  include SavableInSession::Filtrable, SavableInSession::Tableable, SavableInSession::SessionInitializers
   
   def result_runs_table
-    create_tableable(Result::Run.where(:user_id => current_or_guest_user_id))
+    result_runs_to_show = user_type == :admin ? 
+      Result::Run.query_from_filtr(session_filtr_params(result_runs_select)) :
+      Result::Run.where(:user_id => current_or_guest_user_id)
+    create_tableable(result_runs_to_show)
   end
   
-  def check_if_allowed_new_result_run
-    message = "Вам не разрешено создавать и хранить более #{allowed_new_result_run(user_type)} результатов"
-    redirect_to( result_runs_path, alert: message) if !is_allowed_new_result_run?
+  def result_runs_select
+    create_filtrable("result_runs_select")
   end
+
   
   def check_if_allowed_delete_result_run
     message = "Нельзя удалять единственное описание"

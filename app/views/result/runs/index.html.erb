@@ -5,6 +5,8 @@
 	{:class => "btn btn-success", :type => 'button'})  if controller.is_allowed_new_result_run? %>
 <%= render :partial => 'result/runs/information/index' %>
 </p>
-
+<p>
+	<%= render(:partial => 'result/runs/admin/result_runs_select', :layout => 'application/layouts/filtr_form_4_columns', :locals => {:form_item => result_runs_select} ) %>
+</p>
 <%= render :partial => 'runs', :layout => 'application/layouts/model_table', :locals => {:table => controller.result_runs_table}%>
 

@@ -70,7 +70,7 @@ class Comparison::Optimization < ActiveRecord::Base
     result = options[:calculation_choices].slice("result_run_id", "call_run_id")
     result.merge!(options[:services_by_operator].slice(:operators))
     return result if test
-
+#    raise(StandardError, [options[:selected_service_categories]].join("\n"))
     true ? 
       TarifOptimization::TarifOptimizatorRunner.recalculate_with_delayed_job(options) :
       TarifOptimization::TarifOptimizatorRunner.recalculate_direct(options)

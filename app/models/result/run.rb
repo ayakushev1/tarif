@@ -24,6 +24,7 @@
 #
 
 class Result::Run < ActiveRecord::Base
+  include WhereHelper #PgJsonHelper
   extend BatchInsert
   belongs_to :user, :class_name =>'User', :foreign_key => :user_id
   belongs_to :call_run, :class_name =>'Customer::CallRun', :foreign_key => :call_run_id

@@ -3,7 +3,7 @@ table.init do |t|
 #  t.caption = 'Listing users'
   link_html = {:remote => true}
   t.heads = if user_type == :admin
-  	['Название', 'Описание звонков', 'Календарный период', 'Тип подбора', 'Номер подбора','', '', '', '', '']
+  	['Название', 'Описание звонков', 'Календарный период', 'Тип подбора', 'Номер подбора','', '', '', '', '', '', '', '']
   else
   	['Название', 'Описание звонков', 'Календарный период', 'Тип подбора', 'Номер подбора','', '', '', '']
   end 
@@ -23,7 +23,9 @@ table.init do |t|
   ] + (user_type != :admin ? [] : [
     link_to( 'Удалить', run, method: :delete, data: { confirm: 'Are you sure?'}),
 #  	run.id, 
-#  	(run.user.name if run.user),
+  	run.optimization_type_id,
+  	run.comparison_group_id, 
+  	(run.user.name if run.user),
   	])
   end
 end

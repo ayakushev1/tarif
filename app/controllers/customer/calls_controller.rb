@@ -30,13 +30,14 @@ class Customer::CallsController < ApplicationController
   end
   
   def filtr
-#    @filtr ||= 
+    @filtr ||= 
     create_filtrable("customer_calls")
   end
   
   def customer_calls
-#    @customer_calls ||= 
-    create_tableable(Customer::Call.where(:user_id => current_or_guest_user_id).query_from_filtr(session_filtr_params(filtr)))
+    user_filtr = (user_type == :admin ? 'true' : {:user_id => current_or_guest_user_id})
+    @customer_calls ||= 
+    create_tableable(Customer::Call.includes(:base_service, :base_subservice, :user).where(user_filtr).query_from_filtr(session_filtr_params(filtr)))
   end
   
   def calls_gener_params_report
