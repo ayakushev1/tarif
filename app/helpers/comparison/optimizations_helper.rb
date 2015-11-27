@@ -13,7 +13,7 @@ module Comparison::OptimizationsHelper
   def set_run_id
 #    raise(StandardError) if !session[:current_id]['comparison_group_id']
     comparison_group = Comparison::Group.where(:id => session[:current_id]['comparison_group_id']).first
-    if comparison_group
+    if comparison_group and comparison_group.result
         session[:filtr]["service_set_choicer_filtr"] ||={}
         session[:filtr]["service_set_choicer_filtr"]['result_service_set_id'] = comparison_group.result['service_set_ids']
     end
