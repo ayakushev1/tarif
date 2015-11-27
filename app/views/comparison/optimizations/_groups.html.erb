@@ -3,14 +3,14 @@ table.init do |t|
   link_html = {:remote => true}
   t.heads = ['Модель поведения', '1', '2', '3', '4', '', '']
   
-	tarifs = t.model.map{|group| group.result['place'].values.map{|place| place['tarif_id'] if group.result['place']}.compact if group.result['place'] }.flatten 
+	tarifs = t.model.map{|group| group.result['place'].values.map{|place| place['tarif_id'] if group.result and group.result['place']}.compact if group.result and group.result['place'] }.flatten 
 	tarifs_desc = {}
 	TarifClass.where(:id => tarifs).each do |tarif|
 		tarifs_desc[tarif.id] = tarif
 	end
 #	raise(StandardError, tarifs_desc)
 	operators_desc = {}
-	operators = t.model.map{|group| group.result['place'].values.map{|place| place['operator_id'] if group.result['place']}.compact if group.result['place'] }.flatten
+	operators = t.model.map{|group| group.result['place'].values.map{|place| place['operator_id'] if group.result and group.result['place']}.compact if group.result and group.result['place'] }.flatten
 	Category.where(:id => operators).each do |operator|
 		operators_desc[operator.id] = operator
 	end
@@ -23,7 +23,7 @@ table.init do |t|
   		
   		link_to_if(tarif_desc.features['http'], "#{operator_desc.name} #{tarif_desc.name}", tarif_desc.features['http'], {:target => "_blank"}) +
   		content_tag(:p, "#{detail['price']} руб.") 	  		
-  	end if group.result['place']
+  	end if group.result and group.result['place']
 
   [
     group.result['call_type_name'],
