@@ -1,4 +1,4 @@
-module Comparison::Call::Init
+module Customer::Call::Init
   CommonParams = {
     "country_id"=>1100, 
     "region_id"=>1238, 

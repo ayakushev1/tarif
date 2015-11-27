@@ -29,5 +29,15 @@ class Result::ServiceSet < ActiveRecord::Base
   def full_name
     "#{operator.name} #{tarif.name}"
   end
+
+  def self.best_results_by_operator(result_run_id, operator_ids)
+    result = {}
+    operator_ids.each do |operator_id|
+      result_by_operator = where(:run_id => result_run_id, :operator_id => operator_id).order(:price).limit(1).first
+      result[operator_id] = result_by_operator ? result_by_operator.attributes : {} 
+    end    
+    result
+  end
+  
 end
 

@@ -1,49 +1,66 @@
-class Comparison::Optimization
+# == Schema Information
+#
+# Table name: comparison_optimizations
+#
+#  id                    :integer          not null, primary key
+#  name                  :string
+#  description           :text
+#  publication_status_id :integer
+#  publication_order     :integer
+#  optimization_type_id  :integer
+#
+
+class Comparison::Optimization < ActiveRecord::Base
+  belongs_to :type, :class_name =>'Comparison::OptimizationType', :foreign_key => :optimization_type_id
+  has_many :groups, :class_name =>'Comparison::Group', :foreign_key => :optimization_id
   
-  def self.generate_calls_for_optimization_list(optimization_list_keys = [], test = false)    
-    optimization_list_keys.collect do |optimization_list_key|
-      Comparison::Call.generate_calls_for_inits(optimization_list[optimization_list_key][:result_runs].keys)
-    end
+  def self.update_comparison_results
+    all.collect{|optimization| optimization.update_comparison_results}
   end
   
-  def self.calculate_from_optimization_list(optimization_list_keys = [], test = false)    
+  def update_comparison_results
+    groups.collect{|group| group.update_comparison_results}
+  end
+  
+  def self.generate_calls(only_new = true, test = false)    
+    all.collect{|optimization| optimization.generate_calls(only_new, test)}   
+  end
+  
+  def generate_calls(only_new = true, test = false)    
+    groups.collect{|group| group.generate_calls(only_new, test) }   
+  end
+  
+  def self.calculate(only_new = true, test = false)    
     result = {}
-    optimization_list_keys.collect do |optimization_list_key|
-      result[optimization_list_key] = calculate_one_item_from_optimization_list(optimization_list_key, test)      
-    end
+    all.collect{|optimization| result[optimization.name] = optimization.calculate(only_new, test)}
+    result      
   end
   
-  def self.calculate_one_item_from_optimization_list(optimization_list_key, test = false)
-    call_type_keys = optimization_list[optimization_list_key][:result_runs].keys
-    optimization_type_key = optimization_list[optimization_list_key][:optimization_type]
-    optimization_type = optimization_type_list[optimization_type_key]
+  def calculate(only_new = true, test = false)
+    optimization_type = type.attributes.symbolize_keys #.deep_symbolize_keys
     result = []
-    call_type_keys.each do |call_type_key|
-      call_type = Comparison::Call.init_list[call_type_key]
-      
-      optimization_list[optimization_list_key][:result_runs][call_type_key].each do |operator_id, result_run_id|
-        call_run_id = call_type["call_run_by_operator"][operator_id]
-        
+    groups.each do |group|
+      next if only_new and group.result and group.result[0] and !group.result[0].blank?
+      group.call_runs.each do |call_run|
         local_options = {
-          :call_run_id => call_run_id,
-          :accounting_period => accounting_period_by_call_run_id(call_run_id),
-          :result_run_id => result_run_id,
-          :operators => [operator_id],
+          :call_run_id => call_run.id,
+          :accounting_period => accounting_period_by_call_run_id(call_run.id),
+          :result_run_id => group.result_run.id,
+          :operators => [call_run.operator_id],
           :for_service_categories => optimization_type[:for_service_categories],
           :for_services_by_operator => optimization_type[:for_services_by_operator],
         }
         optimization_type_options = optimization_type.deep_merge(local_options)
         options = Comparison::Optimization::Init.base_params(optimization_type_options)
         
-#        raise(StandardError, options.keys)
-        result << calculate_one_optimization(optimization_list_key, options, test)
+        result << calculate_one_optimization(options, test)
+        group.result_run.update(result_run_update_options(options)) 
       end
     end
-    update_comparison_result_on_calculation(optimization_list_key)
     result
   end
 
-  def self.calculate_one_optimization(optimization_list_key, options, test = false)    
+  def calculate_one_optimization(options, test = false)    
     result = options[:calculation_choices].slice("result_run_id", "call_run_id")
     result.merge!(options[:services_by_operator].slice(:operators))
     return result if test
@@ -51,20 +68,19 @@ class Comparison::Optimization
     true ? 
       TarifOptimization::TarifOptimizatorRunner.recalculate_with_delayed_job(options) :
       TarifOptimization::TarifOptimizatorRunner.recalculate_direct(options)
-    
-    update_result_run_on_calculation(optimization_list_key, options)    
+          
     result
   end
   
-  def self.update_result_run_on_calculation(optimization_list_key, options)
-    Result::Run.where(:id => options[:calculation_choices]["result_run_id"]).first_or_create.update({
-      :name => optimization_list[optimization_list_key][:name],
-      :description => optimization_list[optimization_list_key][:description],
+  def result_run_update_options(options)
+    {
+      :name => name,
+      :description => description,
       :user_id => nil,
       :run => 1,
       
-      :call_run_id => options[:calculation_choices]["call_run_id"],
-      :accounting_period => options[:calculation_choices]["accounting_period"],
+      :call_run_id => options[:call_run_id],
+      :accounting_period => options[:accounting_period],
       :optimization_type_id => 6,
       :optimization_params => options[:optimization_params],
       :calculation_choices => options[:calculation_choices],
@@ -75,62 +91,11 @@ class Comparison::Optimization
       :services_select => {},
       :services_for_calculation_select => {},
       :service_categories_select => {},
-    })
+    }
   end
 
-  def self.update_comparison_result_on_calculation(optimization_list_key)
-    Comparison::Result.where(:optimization_list_key => optimization_list_key.to_s).first_or_create do |result|
-      result.name = optimization_list[optimization_list_key][:name]
-      result.description = optimization_list[optimization_list_key][:description]
-      result.publication_status_id = 100
-      result.publication_order = 10000
-      result.optimization_list_key = optimization_list_key.to_s
-#      result.optimization_list_item = optimization_list[optimization_list_key]
-      result.optimization_result = [{}]
-    end.update({:optimization_list_item => optimization_list[optimization_list_key]})
-  end
-  
-  def self.unloaded_optimization_list_keys
-    []
-  end  
-  
-  def self.optimization_list_result_run_ids
-    optimization_list.values.map{|o| o[:result_runs].values.map(&:values) }.flatten
-  end
-  
-  def self.loaded_result_run_ids
-    Result::Run.where("user_id is null").pluck(:id).uniq
-  end
-  
-  def self.accounting_period_by_call_run_id(call_run_id)
+  def accounting_period_by_call_run_id(call_run_id)
     '1_2015'
-  end
-  
-  def self.optimization_list
-    {
-      :base_rank => {
-        :name => "base_rank",
-        :description => "all_operators, tarifs_only, own_and_home_regions for students",
-        :optimization_type => :all_operators_tarifs_only_own_and_home_regions, 
-        :result_runs => {
-          :student => {1023 => 0, 1025 => 0, 1028 => 0, 1030 => 0}
-        },
-      },
-    }
-  end
-
-  def self.optimization_type_list
-    {
-      :all_operators_tarifs_only_own_and_home_regions => {
-        :for_service_categories => {
-            :country_roming => true,
-            :intern_roming => true,
-            :mms => true,
-            :internet => true,          
-        },
-        :for_services_by_operator => [],
-      },
-    }
   end
 
 end

@@ -20,12 +20,14 @@
 #  services_for_calculation_select :jsonb
 #  service_categories_select       :jsonb
 #  categ_ids                       :jsonb
+#  comparison_group_id             :integer
 #
 
 class Result::Run < ActiveRecord::Base
   extend BatchInsert
   belongs_to :user, :class_name =>'User', :foreign_key => :user_id
   belongs_to :call_run, :class_name =>'Customer::CallRun', :foreign_key => :call_run_id
+  belongs_to :comparison_group, :class_name =>'Comparison::Group', :foreign_key => :comparison_group_id
   has_many :tarifs, :class_name =>'Result::Tarif', :foreign_key => :run_id
   has_many :service_sets, :class_name =>'Result::ServiceSet', :foreign_key => :run_id
   has_many :agregates, :class_name =>'Result::Agregate', :foreign_key => :run_id

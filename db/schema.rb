@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151124015912) do
+ActiveRecord::Schema.define(version: 20151127034949) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,21 +56,43 @@ ActiveRecord::Schema.define(version: 20151124015912) do
 
   add_index "category_types", ["name"], name: "index_category_types_on_name", using: :btree
 
-  create_table "comparison_results", force: :cascade do |t|
+  create_table "comparison_group_call_runs", force: :cascade do |t|
+    t.integer "comparison_group_id"
+    t.integer "call_run_id"
+  end
+
+  add_index "comparison_group_call_runs", ["call_run_id"], name: "index_comparison_group_call_runs_on_call_run_id", using: :btree
+  add_index "comparison_group_call_runs", ["comparison_group_id"], name: "index_comparison_group_call_runs_on_comparison_group_id", using: :btree
+
+  create_table "comparison_groups", force: :cascade do |t|
+    t.string  "name"
+    t.integer "optimization_id"
+    t.jsonb   "result"
+  end
+
+  add_index "comparison_groups", ["optimization_id"], name: "index_comparison_groups_on_optimization_id", using: :btree
+  add_index "comparison_groups", ["result"], name: "index_comparison_groups_on_result", using: :gin
+
+  create_table "comparison_optimization_types", force: :cascade do |t|
+    t.string "name"
+    t.jsonb  "for_service_categories"
+    t.jsonb  "for_services_by_operator"
+  end
+
+  add_index "comparison_optimization_types", ["for_service_categories"], name: "index_comparison_optimization_types_on_for_service_categories", using: :gin
+  add_index "comparison_optimization_types", ["for_services_by_operator"], name: "index_comparison_optimization_types_on_for_services_by_operator", using: :gin
+
+  create_table "comparison_optimizations", force: :cascade do |t|
     t.string  "name"
     t.text    "description"
     t.integer "publication_status_id"
     t.integer "publication_order"
-    t.string  "optimization_list_key"
-    t.jsonb   "optimization_list_item"
-    t.jsonb   "optimization_result"
+    t.integer "optimization_type_id"
   end
 
-  add_index "comparison_results", ["optimization_list_item"], name: "index_comparison_results_on_optimization_list_item", using: :gin
-  add_index "comparison_results", ["optimization_list_key"], name: "index_comparison_results_on_optimization_list_key", using: :btree
-  add_index "comparison_results", ["optimization_result"], name: "index_comparison_results_on_optimization_result", using: :gin
-  add_index "comparison_results", ["publication_order"], name: "index_comparison_results_on_publication_order", using: :btree
-  add_index "comparison_results", ["publication_status_id"], name: "index_comparison_results_on_publication_status_id", using: :btree
+  add_index "comparison_optimizations", ["optimization_type_id"], name: "index_comparison_optimizations_on_optimization_type_id", using: :btree
+  add_index "comparison_optimizations", ["publication_order"], name: "index_comparison_optimizations_on_publication_order", using: :btree
+  add_index "comparison_optimizations", ["publication_status_id"], name: "index_comparison_optimizations_on_publication_status_id", using: :btree
 
   create_table "content_articles", force: :cascade do |t|
     t.integer  "author_id"
@@ -119,8 +141,13 @@ ActiveRecord::Schema.define(version: 20151124015912) do
     t.string  "name"
     t.integer "source"
     t.text    "description"
+    t.integer "operator_id"
+    t.string  "init_class"
+    t.jsonb   "init_params"
   end
 
+  add_index "customer_call_runs", ["init_params"], name: "index_customer_call_runs_on_init_params", using: :gin
+  add_index "customer_call_runs", ["operator_id"], name: "index_customer_call_runs_on_operator_id", using: :btree
   add_index "customer_call_runs", ["source"], name: "index_customer_call_runs_on_source", using: :btree
   add_index "customer_call_runs", ["user_id"], name: "index_customer_call_runs_on_user_id", using: :btree
 
@@ -408,11 +435,13 @@ ActiveRecord::Schema.define(version: 20151124015912) do
     t.jsonb   "services_for_calculation_select"
     t.jsonb   "service_categories_select"
     t.jsonb   "categ_ids"
+    t.integer "comparison_group_id"
   end
 
   add_index "result_runs", ["accounting_period"], name: "index_result_runs_on_accounting_period", using: :btree
   add_index "result_runs", ["calculation_choices"], name: "index_result_runs_on_calculation_choices", using: :btree
   add_index "result_runs", ["call_run_id"], name: "index_result_runs_on_call_run_id", using: :btree
+  add_index "result_runs", ["comparison_group_id"], name: "index_result_runs_on_comparison_group_id", using: :btree
   add_index "result_runs", ["optimization_params"], name: "index_result_runs_on_optimization_params", using: :btree
   add_index "result_runs", ["optimization_type_id"], name: "index_result_runs_on_optimization_type_id", using: :btree
   add_index "result_runs", ["run"], name: "index_result_runs_on_run", using: :btree

@@ -1,6 +1,6 @@
 #:categories => {:rouming => _own_country_rouming, :service => _calls_out, :geo => _service_to_mts_europe, :operator => _service_to_not_own_operator}},
 
-module Comparison::Call::Init
+module Customer::Call::Init
   Student = {
     :general=> {
 #    "phone_usage_type_id"=>243, 
