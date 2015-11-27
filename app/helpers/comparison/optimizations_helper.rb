@@ -3,7 +3,8 @@ module Comparison::OptimizationsHelper
           SavableInSession::SessionInitializers
 
   def comparison_optimizations_table
-    create_tableable(Comparison::Optimization)
+    model_to_show = user_type == :admin ? Comparison::Optimization : Comparison::Optimization.published
+    create_tableable(model_to_show)
   end
   
   def comparison_groups    

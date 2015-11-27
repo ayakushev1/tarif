@@ -15,6 +15,11 @@ class Comparison::Optimization < ActiveRecord::Base
   belongs_to :type, :class_name =>'Comparison::OptimizationType', :foreign_key => :optimization_type_id
   has_many :groups, :class_name =>'Comparison::Group', :foreign_key => :optimization_id
   
+  scope :draft, -> {where(:publication_status_id => 100)}
+  scope :reviewed, -> {where(:publication_status_id => 101)}
+  scope :published, -> {where(:publication_status_id => 102)}
+  scope :hidden, -> {where(:publication_status_id => 103)}
+
   def self.update_comparison_results
     all.collect{|optimization| optimization.update_comparison_results}
   end
@@ -31,13 +36,13 @@ class Comparison::Optimization < ActiveRecord::Base
     groups.collect{|group| group.generate_calls(only_new, test) }   
   end
   
-  def self.calculate(only_new = true, test = false)    
+  def self.calculate_optimizations(only_new = true, test = false)    
     result = {}
-    all.collect{|optimization| result[optimization.name] = optimization.calculate(only_new, test)}
+    all.collect{|optimization| result[optimization.name] = optimization.calculate_optimizations(only_new, test)}
     result      
   end
   
-  def calculate(only_new = true, test = false)
+  def calculate_optimizations(only_new = true, test = false)
     optimization_type = type.attributes.symbolize_keys #.deep_symbolize_keys
     result = []
     groups.each do |group|

@@ -11,7 +11,7 @@ class Comparison::OptimizationsController < ApplicationController
   end
 
   def calculate_optimizations
-    Comparison::Optimization.where(:id => params[:id]).calculate
+    Comparison::Optimization.where(:id => params[:id]).calculate_optimizations
 
     redirect_to comparison_optimization_path(params[:id]), :notice => "Рейтинг запущен на расчет"
   end
