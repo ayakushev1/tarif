@@ -1,0 +1,25 @@
+<%
+table.init do |t|
+  link_html = {:remote => true}
+  t.heads = if user_type == :admin
+  	['Название', 'Описание сравнения', 'Статус публикации', 'Порядок публикации', 'Тип оптимизации', '', '', '', ]
+  else
+  	['Название', 'Описание сравнения операторов и тарифов', '']
+  end 
+  
+  t.set_fields do |optimization| 
+  [
+    optimization.name,
+    optimization.description,
+    link_to( 'Просмотр', comparison_optimization_path(optimization), link_html), 
+  ] + (user_type != :admin ? [] : [
+    (optimization.publication_status.name if optimization.publication_status), 
+    optimization.publication_order,
+    (optimization.type.name if optimization.type),
+    link_to( 'Редактировать', edit_comparison_optimization_path(optimization), link_html), 
+    link_to( 'Удалить', optimization, method: :delete, data: { confirm: 'Are you sure?'}),
+#  	optimization.id, 
+  	])
+  end
+end
+%>

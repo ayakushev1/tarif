@@ -1,0 +1,5 @@
+<% content_for :title, "Описание и результаты рейтинга" %>
+
+<%= render :partial => 'optimization', :layout => 'application/layouts/model_show', :locals => {:form_item => controller.comparison_optimization_form} %>
+
+<%= render :partial => 'groups', :layout => 'application/layouts/model_table', :locals => {:table => controller.comparison_groups}%>

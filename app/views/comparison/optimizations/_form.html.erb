@@ -1,7 +1,7 @@
 <%
 
 form_item.init do |fi|
-	action_path = fi.model.id ? edit_comparison_result_path(fi.model) : new_comparison_result_path	
+	action_path = fi.model.id ? edit_comparison_optimization_path(fi.model) : new_comparison_optimization_path	
 	input_html = {:filtr_name => form_item.form_name, :class => "updatable form-control ", :action_name => action_path}
 	label_html = {:class => "form-label "}
 	link_to_html = {:class => "btn btn-info", :type =>"button", :remote => true}
@@ -28,7 +28,7 @@ form_item.init do |fi|
 	   	f.number_field( :publication_order, input_html.merge({:value => (s['publication_order'] || 10000), within: 0..10000}))
 	   ], 
 	   [
-	   	link_to( 'Список описаний', comparison_results_path, link_to_html), 
+	   	link_to( 'Список описаний', comparison_optimizations_path, link_to_html), 
 	   	f.submit("Сохранить", :class => "btn btn-primary", :type =>"submit", :remote => true)
 	   ],
 	  ]

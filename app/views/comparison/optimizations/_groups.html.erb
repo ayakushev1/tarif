@@ -3,38 +3,37 @@ table.init do |t|
   link_html = {:remote => true}
   t.heads = ['Модель поведения', '1', '2', '3', '4', '', '']
   
-	tarifs = t.model.map{|result| result['place'].values.map{|place| place['tarif_id'] if result['place']}.compact if result['place'] }.flatten 
+	tarifs = t.model.map{|group| group.result['place'].values.map{|place| place['tarif_id'] if group.result['place']}.compact if group.result['place'] }.flatten 
 	tarifs_desc = {}
 	TarifClass.where(:id => tarifs).each do |tarif|
 		tarifs_desc[tarif.id] = tarif
 	end
-
+#	raise(StandardError, tarifs_desc)
 	operators_desc = {}
-	operators = t.model.map{|result| result['place'].values.map{|place| place['operator_id'] if result['place']}.compact if result['place'] }.flatten
+	operators = t.model.map{|group| group.result['place'].values.map{|place| place['operator_id'] if group.result['place']}.compact if group.result['place'] }.flatten
 	Category.where(:id => operators).each do |operator|
 		operators_desc[operator.id] = operator
 	end
   
-  t.set_fields do |result|   	
-  	result_run_id =  result['result_run_ids']
+  t.set_fields do |group|   	
   	result_desc = []
-  	result_desc = result['place'].collect do |place, detail|
+  	result_desc = group.result['place'].collect do |place, detail|
   		operator_desc = operators_desc[detail['operator_id']]
   		tarif_desc = tarifs_desc[detail['tarif_id']]
   		
   		link_to_if(tarif_desc.features['http'], "#{operator_desc.name} #{tarif_desc.name}", tarif_desc.features['http'], {:target => "_blank"}) +
   		content_tag(:p, "#{detail['price']} руб.") 	  		
-  	end if result['place']
+  	end if group.result['place']
 
   [
-    result['call_type_name'],
+    group.result['call_type_name'],
   ] + result_desc + [
-    (link_to( 'Детализация результатов', result_path(result['result_run_ids'][0]), link_html) if result['result_run_ids']), 
+    (link_to( 'Детализация результатов', result_path(group.result_run.id), link_html) if group.result_run), 
     link_to( 'Сравнение', result_service_sets_compare_path, link_html), 
   	
   ] + (user_type != :admin ? [] : [
-    result['optimization_list_key'],
-    result['call_type'],
+    group.result['optimization_list_key'],
+    group.result['call_type'],
   	])
   end
 end

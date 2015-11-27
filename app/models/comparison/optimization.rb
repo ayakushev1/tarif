@@ -11,6 +11,7 @@
 #
 
 class Comparison::Optimization < ActiveRecord::Base
+  belongs_to :publication_status, :class_name =>'Content::Category', :foreign_key => :publication_status_id
   belongs_to :type, :class_name =>'Comparison::OptimizationType', :foreign_key => :optimization_type_id
   has_many :groups, :class_name =>'Comparison::Group', :foreign_key => :optimization_id
   

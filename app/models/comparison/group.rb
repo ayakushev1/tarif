@@ -18,17 +18,18 @@ class Comparison::Group < ActiveRecord::Base
     call_runs.generate_group_calls(only_new, test) 
   end
   
-  def update_comparison_result
+  def update_comparison_results
+#    raise(StandardError, result_run)
     update(:result => compare)
   end
   
   def compare
-    return false if result_run
+    return self.attributes if !result_run
     operator_ids = call_runs.map(&:operator_id)
     
     best_results = Result::ServiceSet.best_results_by_operator(result_run.id, operator_ids)
     ordered_operators_by_price = best_results.keys.sort_by{|k| best_results[k]['price']}
-    
+#    raise(StandardError, best_results)
     service_set_ids = {}
     i = 0
     ordered_operators_by_price.map{|o_r| service_set_ids[i] = best_results[o_r]['service_set_id']; i += 1}

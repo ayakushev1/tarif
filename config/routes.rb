@@ -8,14 +8,6 @@ Rails.application.routes.draw do
     path_names: { sign_in: 'login', sign_out: 'logout'}
 
   devise_scope :user do
-#    get "users/new" => "users/registrations#new"
-#    post "users/create" => "users/registrations#create"
-#    get "users/:id/edit" => "users/registrations#edit"
-#    patch "users/:id" => "users/registrations#update"
-#    put "users/:id" => "users/registrations#update"
-#    delete "users/:id" => "users/registrations#destroy"
-#    get "users/sign_out" => "users/sessions#destroy"
-    
     patch "/confirm" => "confirmations#confirm"
 
     get "login" => "users/sessions#new"
@@ -24,9 +16,6 @@ Rails.application.routes.draw do
 
   end
 
-#  devise_for :users, :path => '', :path_names => {:sign_in => 'login', :sign_out => 'logout'}
-#  devise_for :users, path: "auth", path_names: { sign_in: 'login', sign_out: 'logout', password: 'secret', confirmation: 'verification', unlock: 'unblock', registration: 'register', sign_up: 'cmon_let_me_in' }
-#  root 'home#index'
   root 'home#index'
   resources :users
   resources :tarif_classes
@@ -49,11 +38,11 @@ Rails.application.routes.draw do
   end
   
   namespace :comparison do
-    resources :results
-    controller :results do
-      get 'results/calculate_from_optimization_list/:id', action: :calculate_from_optimization_list, as: :calculate_from_optimization_list
-      get 'results/update_optimization_result/:id', action: :update_optimization_result, as: :update_optimization_result
-      get 'results/generate_calls_for_optimization_list/:id', action: :generate_calls_for_optimization_list, as: :generate_calls_for_optimization_list
+    resources :optimizations
+    controller :optimizations do
+      get 'optimizations/calculate_optimizations/:id', action: :calculate_optimizations, as: :calculate_optimizations
+      get 'optimizations/update_comparison_results/:id', action: :update_comparison_results, as: :update_comparison_results
+      get 'optimizations/generate_calls_for_optimization/:id', action: :generate_calls_for_optimization, as: :generate_calls_for_optimization
     end
   end
 
