@@ -40,7 +40,7 @@ module Result::RunsHelper
     end if !Result::Run.where(:user_id => current_or_guest_user_id).present?
   end
   
-  def set_run_id
+  def set_run_id1
     session[:filtr]["service_set_choicer_filtr"] ||={}
     session[:filtr]["service_set_choicer_filtr"]['result_service_set_id'] = nil
 

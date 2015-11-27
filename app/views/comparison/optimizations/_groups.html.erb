@@ -29,11 +29,11 @@ table.init do |t|
     group.result['call_type_name'],
   ] + result_desc + [
     (link_to( 'Детализация результатов', result_path(group.result_run.id), link_html) if group.result_run), 
-    link_to( 'Сравнение', result_service_sets_compare_path, link_html), 
+    (link_to( 'Сравнение', result_compare_path(group.result_run.id), link_html) if group.result_run), 
   	
   ] + (user_type != :admin ? [] : [
-    group.result['optimization_list_key'],
-    group.result['call_type'],
+#    group.result.keys,
+#    group.result['service_set_ids'],
   	])
   end
 end

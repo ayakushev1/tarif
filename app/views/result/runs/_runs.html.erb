@@ -19,7 +19,7 @@ table.init do |t|
     link_to( 'Просмотр', result_run_path(run), link_html), 
     link_to( 'Редактировать', edit_result_run_path(run), link_html), 
     link_to( 'Подбор', result_path(run), link_html), 
-    link_to( 'Сравнение', result_service_sets_compare_path, link_html), 
+    link_to( 'Сравнение', result_compare_path(run.id), link_html), 
   ] + (user_type != :admin ? [] : [
     link_to( 'Удалить', run, method: :delete, data: { confirm: 'Are you sure?'}),
 #  	run.id, 

@@ -2,7 +2,8 @@ class Comparison::OptimizationsController < ApplicationController
   include Comparison::OptimizationsHelper
   include Crudable
   crudable_actions :all
-    
+  after_action :set_run_id, only: :show
+      
   def generate_calls_for_optimization
     Comparison::Optimization.where(:id => params[:id]).generate_calls
 

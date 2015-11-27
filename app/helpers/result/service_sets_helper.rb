@@ -10,8 +10,6 @@ module Result::ServiceSetsHelper
     session[:filtr]['results_select_filtr'] ||= {}
     session[:filtr]['results_select_filtr']['result_run_id'] = params[:result_run_id] if params[:result_run_id]
     params[:result_run_id] || (session_filtr_params(results_select)['result_run_id'] || -1).to_i
-#    run = Result::Run.where(:user_id => current_or_guest_user_id, :run => 1).first
-#    run ? run[:id] : -1
   end
   
   def service_set_id
@@ -55,9 +53,8 @@ module Result::ServiceSetsHelper
   
   def result_service_sets_return_link_to
     result_run = Result::Run.where(:id => run_id).first
-    comparison_result_id = session[:current_id]['comparison_result_id']
-#    raise(StandardError, comparison_result_id)
-    (result_run and result_run.user_id) ? result_runs_path : comparison_optimizations_path(comparison_result_id)
+    comparison_result_id = session[:current_id]['comparison_optimization_id']
+    (result_run and result_run.user_id) ? result_runs_path : comparison_optimization_path(comparison_result_id)
   end
   
   def if_show_aggregate_results
