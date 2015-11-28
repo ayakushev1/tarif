@@ -54,7 +54,7 @@ module Result::ServiceSetsHelper
   def result_service_sets_return_link_to
     result_run = Result::Run.where(:id => run_id).first
     comparison_result_id = session[:current_id]['comparison_optimization_id']
-    (result_run and result_run.user_id) ? result_runs_path : comparison_optimization_path(comparison_result_id)
+    ((result_run and result_run.user_id) or !comparison_result_id) ? result_runs_path : comparison_optimization_path(comparison_result_id)
   end
   
   def if_show_aggregate_results

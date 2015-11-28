@@ -39,7 +39,10 @@ module Calls::HistoryParser
       call_history_saver.save({:result => call_history_to_save}) if parsing_params[:save_processes_result_to_stat]
   
       Customer::Call.where(:user_id => user_params[:user_id], :call_run_id => user_params[:call_run_id]).delete_all
-      Customer::Call.bulk_insert(values: call_history_to_save['processed']) if save_calls
+      if save_calls
+        Customer::Call.bulk_insert(values: call_history_to_save['processed']) 
+        Customer::CallRun.where(:id => user_params[:call_run_id]).first_or_create.calculate_call_stat
+      end
         
       call_history_to_save['message']
     end

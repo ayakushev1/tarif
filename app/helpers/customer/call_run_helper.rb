@@ -3,11 +3,11 @@ module Customer::CallRunHelper
 
   def call_run
 #    raise(StandardError, [params[:id], Customer::CallRun.where(:id => params[:id]).first])
-    @call_run ||= Customer::CallRun.where(:id => params[:id].to_i).first
+    @call_run ||= Customer::CallRun.includes(:user).where(:id => params[:id].to_i).first
   end
   
   def customer_call_runs
-    create_tableable(Customer::CallRun.where(:user_id => current_or_guest_user_id))
+    @customer_call_runs ||= create_tableable(Customer::CallRun.includes(:user).where(:user_id => current_or_guest_user_id))
   end
   
   def check_if_allowed_new_call_run
@@ -25,7 +25,7 @@ module Customer::CallRunHelper
   end
   
   def customer_call_runs_count
-    Customer::CallRun.where(:user_id => current_or_guest_user_id).count
+    customer_call_runs.model.count
   end
   
   def allowed_new_call_run(user_type = :guest)
@@ -35,7 +35,7 @@ module Customer::CallRunHelper
   def create_call_run_if_not_exists
     Customer::CallRun.min_new_call_run(user_type).times.each do |i|
       Customer::CallRun.create(:name => "Загрузка детализации №#{i}", :source => 1, :description => "", :user_id => current_or_guest_user_id)
-    end  if !Customer::CallRun.where(:user_id => current_or_guest_user_id).present?
+    end  if !customer_call_runs.model.present?
   end
 
   def calls_stat_options

@@ -14,5 +14,6 @@ class Customer::CallRunsController < ApplicationController
     call_run.calculate_call_stat
     redirect_to customer_call_stat_path(params[:id]), :notice => "Статистика готова"
   end
+
   
 end

@@ -43,9 +43,9 @@ module Crudable
     end                
     
     def add_access_methods
-      self.send(:define_method, collection_name) do
-        create_tableable(model_class)
-      end
+#      self.send(:define_method, collection_name) do
+#        create_tableable(model_class)
+#      end
 
       self.send(:define_method, model_name) do
         @model

@@ -115,7 +115,7 @@ class Customer::CallRun < ActiveRecord::Base
       end
       
       result = []
-      result_hash.each {|name, value| result << value if value['count'] != -10.01 }
+      result_hash.each {|name, value| result << value if value['count'] > 0.0 }
       true ? result.sort_by!{|item| item['name_string']} : result
     end
   end
