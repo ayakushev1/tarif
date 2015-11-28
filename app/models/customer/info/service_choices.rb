@@ -138,14 +138,16 @@ class Customer::Info::ServiceChoices < ActiveType::Record[Customer::Info]
     result
   end
   
-  def self.tarif_options_for_comparison(options_for_comparison = [])
+  def self.tarif_options_for_comparison(options_for_comparison_1 = [])
 #    options_for_comparison = [:international_rouming, :country_rouming, :mms, :sms, :calls, :internet]
-    {
+    options_for_comparison = options_for_comparison_1.map(&:to_sym)
+    result = {
       1023 => tarif_options_by_type[1023].map{|t| t[1] if options_for_comparison.include?(t[0])}.flatten.compact,
       1025 => tarif_options_by_type[1025].map{|t| t[1] if options_for_comparison.include?(t[0])}.flatten.compact,
       1028 => tarif_options_by_type[1028].map{|t| t[1] if options_for_comparison.include?(t[0])}.flatten.compact,
       1030 => tarif_options_by_type[1030].map{|t| t[1] if options_for_comparison.include?(t[0])}.flatten.compact,
     }
+#    raise(StandardError, [options_for_comparison, result])
   end  
 
   def self.tarif_options_by_type

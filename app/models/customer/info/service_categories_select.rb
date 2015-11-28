@@ -192,18 +192,21 @@ class Customer::Info::ServiceCategoriesSelect < ActiveType::Record[Customer::Inf
     end
   end
     
-  def self.default_selected_categories(user_type = :guest, direct_options = {})
-    if direct_options.blank?
+  def self.default_selected_categories(user_type = :guest, direct_options_1 = {})
+    
+    if direct_options_1.blank?
       country_roming = {:guest => false, :trial => true, :user => true, :admin => true }[user_type]
       intern_roming = {:guest => false, :trial => false, :user => true, :admin => true }[user_type]
       mms = {:guest => false, :trial => false, :user => true, :admin => true }[user_type]
       internet = {:guest => false, :trial => false, :user => true, :admin => true }[user_type]
     else
+      direct_options = direct_options_1.symbolize_keys
       country_roming = direct_options[:country_roming].blank? ? false : direct_options[:country_roming]
       intern_roming = direct_options[:intern_roming].blank? ? false : direct_options[:intern_roming]
       mms = direct_options[:mms].blank? ? false : direct_options[:mms]
       internet = direct_options[:internet].blank? ? false : direct_options[:internet]
     end
+
     {
       :own_and_home_regions_rouming => {
         :is_chosen => true,

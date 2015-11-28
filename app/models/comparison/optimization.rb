@@ -48,6 +48,7 @@ class Comparison::Optimization < ActiveRecord::Base
     groups.each do |group|
       next if only_new and group.result and group.result[0] and !group.result[0].blank?
       group.call_runs.each do |call_run|
+        
         local_options = {
           :call_run_id => call_run.id,
           :accounting_period => accounting_period_by_call_run_id(call_run.id),
@@ -58,6 +59,7 @@ class Comparison::Optimization < ActiveRecord::Base
         }
         optimization_type_options = optimization_type.deep_merge(local_options)
         options = Comparison::Optimization::Init.base_params(optimization_type_options)
+#        raise(StandardError, [optimization_type[:for_services_by_operator], options[:services_by_operator]].join("\n"))
         
         result << calculate_one_optimization(options, test)
         group.result_run.update(result_run_update_options(options)) 

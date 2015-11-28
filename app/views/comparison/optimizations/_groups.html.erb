@@ -26,13 +26,13 @@ table.init do |t|
   	end if group.result and group.result['place']
 
   [
-    (group.result['call_type_name'] if group.result),
+    group.name,
   ] + result_desc + [
     (link_to( 'Детализация результатов', result_path(group.result_run.id), link_html) if group.result_run), 
     (link_to( 'Сравнение', result_compare_path(group.result_run.id), link_html) if group.result_run), 
   	
   ] + (user_type != :admin ? [] : [
-#    group.result.keys,
+#    group.attributes,
 #    group.result['service_set_ids'],
   	])
   end

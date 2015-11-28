@@ -1,14 +1,14 @@
 #:categories => {:rouming => _own_country_rouming, :service => _calls_out, :geo => _service_to_mts_europe, :operator => _service_to_not_own_operator}},
 
-module Customer::Call::Init
-  Student = {
+module Customer::Call::Init::Student
+  OwnAndHomeRegionsOnly = {
     :general=> {
 #    "phone_usage_type_id"=>243, 
-      "share_of_time_in_own_region"=>0.35, 
+      "share_of_time_in_own_region"=>0.85, 
       "share_of_time_in_home_region"=>0.15, 
-      "share_of_time_in_own_country"=>0.5, 
+      "share_of_time_in_own_country"=>0.0, 
       "share_of_time_abroad"=>0.0
-    }.merge(CommonParams.slice("country_id", "region_id", "privacy_id")), 
+    }.merge(Customer::Call::Init::CommonParams.slice("country_id", "region_id", "privacy_id")), 
     :own_region=> {
       "number_of_day_calls"=>10, 
       "duration_of_calls"=>5, 
@@ -21,7 +21,7 @@ module Customer::Call::Init
       "internet_trafic_per_month"=>0.2, 
       "share_of_incoming_calls"=>0.5, 
       "share_of_incoming_calls_from_own_mobile"=>0.3
-     }.merge(CommonParams.slice("country_id", "region_id", "privacy_id")), 
+     }.merge(Customer::Call::Init::CommonParams.slice("country_id", "region_id", "privacy_id")), 
     :home_region=> {
       "number_of_day_calls"=>1, 
       "duration_of_calls"=>5, 
@@ -34,7 +34,7 @@ module Customer::Call::Init
       "internet_trafic_per_month"=>0.2, 
       "share_of_incoming_calls"=>0.5, 
       "share_of_incoming_calls_from_own_mobile"=>0.3
-    }.merge(CommonParams.slice("country_id")), 
+    }.merge(Customer::Call::Init::CommonParams.slice("country_id")), 
     :own_country=>{
       "number_of_day_calls"=>1, 
       "duration_of_calls"=>5, 
@@ -47,7 +47,7 @@ module Customer::Call::Init
       "internet_trafic_per_month"=>0.0, 
       "share_of_incoming_calls"=>0.5, 
       "share_of_incoming_calls_from_own_mobile"=>0.3
-    }.merge(CommonParams.slice("country_id")), 
+    }.merge(Customer::Call::Init::CommonParams.slice("country_id")), 
     :abroad=>{
       "number_of_day_calls"=>0, 
       "duration_of_calls"=>0, 
@@ -61,7 +61,7 @@ module Customer::Call::Init
       "share_of_incoming_calls"=>0.5, 
       "share_of_incoming_calls_from_own_mobile"=>0.3
     },
-  }.deep_merge(CommonParams.slice(:own_region, :home_region, :own_country, :abroad))
+  }.deep_merge(Customer::Call::Init::CommonParams.slice(:own_region, :home_region, :own_country, :abroad))
 
 end
 
