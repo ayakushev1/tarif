@@ -39,7 +39,8 @@ module Customer::HistoryParsersHelper
   def update_customer_infos
     Customer::Info::CallsDetailsParams.update_info(current_or_guest_user_id, session_filtr_params(user_params_filtr))
     Customer::Info::CallsParsingParams.update_info(current_or_guest_user_id, session_filtr_params(parsing_params_filtr)) if user_type == :admin
-    Customer::Info::ServicesUsed.decrease_one_free_trials_by_one(current_or_guest_user_id, 'calls_parsing_count')    
+    Customer::Info::ServicesUsed.decrease_one_free_trials_by_one(current_or_guest_user_id, 'calls_parsing_count')  
+    Customer::CallRun.find(customer_call_run_id).update(:operator_id => user_params[:operator_id])  
   end
   
   def check_uploaded_call_history_file(call_history_file)
@@ -96,7 +97,7 @@ module Customer::HistoryParsersHelper
   def create_call_run_if_not_exists
     Customer::CallRun.min_new_call_run(user_type).times.each do |i|
       Customer::CallRun.create(:name => "Загрузка детализации №#{i}", :source => 1, :description => "", :user_id => current_or_guest_user_id)
-    end  if !Customer::CallRun.where(:user_id => current_or_guest_user_id).present?
+    end if !Customer::CallRun.where(:user_id => current_or_guest_user_id).present?
   end
 
   def user_params

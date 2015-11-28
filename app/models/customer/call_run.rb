@@ -10,6 +10,7 @@
 #  operator_id :integer
 #  init_class  :string
 #  init_params :jsonb
+#  stat        :jsonb
 #
 
 class Customer::CallRun < ActiveRecord::Base
@@ -80,6 +81,64 @@ class Customer::CallRun < ActiveRecord::Base
   def self.unloaded_call_runs
     where("user_id is null").where.not(:id => loaded_call_run_ids)
   end
+  
+  def calls_stat_array(group_by = [], accounting_period = nil)
+    return [] if !stat
+    accounting_period = stat.keys[0] if !(accounting_period and stat.keys.include?(accounting_period))
+    chosen_stat = stat[accounting_period]
+    if group_by.blank?
+      result = chosen_stat.collect{|row| row if row['count'] > 0}.compact
+      result = (false ? result.sort_by{|row| row['order']} : result) || []
+      result
+    else
+      i = 0
+      result_hash = {}
+      chosen_stat.each do |row|
+        name = {}
+        call_types = eval(row['call_types'])
+#        raise(StandardError, [row['call_types'], call_types, row])
+        name['rouming'] = call_types[0] if group_by.include?('rouming')
+        name['service'] = call_types[1] if group_by.include?('service')
+        name['direction'] = call_types[2] if group_by.include?('direction')
+        name['geo'] = call_types[3] if group_by.include?('geo')
+        name['operator'] = call_types[4] if group_by.include?('operator')
+
+        name_string = name.keys.collect{|k| name[k] }.compact.join('_') 
+        
+        result_hash[name_string] ||= name.merge({'name_string' => name_string, 'categ_ids' => [], 'count' => 0, 'sum_duration' => 0.0, 'count_volume' => 0, 'sum_volume' => 0.0})
+        result_hash[name_string]['categ_ids'] += (([row['order']] || []) - result_hash[name_string]['categ_ids'])
+        result_hash[name_string]['count'] += row['count'] || 0
+        result_hash[name_string]['sum_duration'] += row['sum_duration'] || 0.0
+        result_hash[name_string]['count_volume'] += row['count_volume'] || 0
+        result_hash[name_string]['sum_volume'] += row['sum_volume'] || 0.0
+        i += 1
+      end
+      
+      result = []
+      result_hash.each {|name, value| result << value if value['count'] != -10.01 }
+      true ? result.sort_by!{|item| item['name_string']} : result
+    end
+  end
+  
+  def calculate_call_stat
+    @fq_tarif_region_id = 1238
+    accounting_periods = Customer::Call.where(:call_run_id => id).pluck("description->>'accounting_period'").uniq
+    all_selected_categories = Customer::Info::ServiceCategoriesSelect.default_selected_categories(:admin, {
+      :country_roming => true, :intern_roming => true, :mms => true, :internet => true })
+    selected_service_categories = Customer::Info::ServiceCategoriesSelect.service_categories_from_selected_services(all_selected_categories)
+    
+    query_constructor = TarifOptimization::QueryConstructor.new(self, {:tarif_class_ids => [], :performance_checker => false}, (operator_id || 1030), @fq_tarif_region_id, true )
+      
+    result = {}
+    accounting_periods.each do |accounting_period|
+      calculator = Customer::Call::StatCalculator.new({:call_run_id => id, :accounting_period => accounting_period}) #, 
+      calculator.calculate_calculation_scope(query_constructor, selected_service_categories)
+      result[accounting_period] = calculator.calculate_calls_stat(query_constructor)
+      
+    end
+    update(:stat => result)
+  end
+
   
 end
 

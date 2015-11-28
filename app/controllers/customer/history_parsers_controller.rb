@@ -1,5 +1,6 @@
 class Customer::HistoryParsersController < ApplicationController
   include Customer::HistoryParsersHelper, Customer::HistoryParsersBackgroundHelper
+  helper Customer::HistoryParsersHelper, Customer::HistoryParsersBackgroundHelper
 #  include Crudable
 #  crudable_actions :index
 

@@ -2,41 +2,34 @@
 form_item.init do |f|
 #  f.caption = "Choice of service"	
   f.set_fields do |filtr_name|
-	input_html = {:filtr_name => form_item.filtr_name, :class => "updatable form-control ", :action_name => customer_optimization_results_show_additional_info_path}
+	input_html = {:filtr_name => form_item.filtr_name, :class => "updatable form-control ", :action_name => customer_call_stat_path(params[:id])}
 	label_html = {:class => "control-label "}
-    html_options = {:action_name => customer_optimization_results_show_additional_info_path }
     s = session_filtr_params(f)
-    #raise(StandardError, select(filtr_name, "rouming", [["show", true], ["not show", false]], {:selected => s["rouming"]}, html_options ))
 	
   [
   	[
      label(filtr_name, "rouming", "Роуминг", label_html),
  	 check_box(filtr_name, "rouming", ((s["rouming"].blank? or s["rouming"] == 'true') ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
-# 	 select(filtr_name, "rouming", [["show", true], ["not show", false]], {:selected => s["rouming"]}, html_options ),
   	],
 
   	[
      label(filtr_name, "service", "Услуга", label_html),
  	 check_box(filtr_name, "service", (s["service"] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
-# 	 select(filtr_name, "service", [["show", true], ["not show", false]], {:selected => s["service"]}, html_options ),
   	],
 
   	[
      label(filtr_name, "direction", "Направление связи", label_html),
  	 check_box(filtr_name, "direction", (s["direction"] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
-# 	 select(filtr_name, "direction", [["show", true], ["not show", false]], {:selected => s["direction"]}, html_options ),
   	],
 
   	[
      label(filtr_name, "geo", "Куда", label_html),
  	 check_box(filtr_name, "geo", (s["geo"] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
-# 	 select(filtr_name, "geo", [["show", true], ["not show", false]], {:selected => s["geo"]}, html_options ),
   	],
 
   	[
      label(filtr_name, "operator", "На какого оператора", label_html),
  	 check_box(filtr_name, "operator", (s["operator"] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
-# 	 select(filtr_name, "operator", [["show", true], ["not show", false]], {:selected => s["operator"]}, html_options ),
   	],	
   ]
 	    

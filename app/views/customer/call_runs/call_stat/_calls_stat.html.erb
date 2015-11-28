@@ -1,0 +1,41 @@
+<%
+def tr(word)
+	dictionary = {
+		'rouming' => 'Роуминг', 'service' => 'Услуга', 'direction' => 'Направление связи', 'geo' => 'Куда', 'operator' => 'На какого оператора', 
+		'count' => 'Кол-во услуг', 'sum duration' => 'Звонки, мин', 'count volume' => 'СМС и ММС, шт', 'sum volume' => 'Интернет, Мб',
+		'calls'=> 'звонки', 'sms'=> 'смс', 'mms'=> 'ммс', 'internet'=> 'интернет',
+		'in'=> 'входящие', 'out'=> 'исходящие', 
+		'own_home_regions' => 'собственный и домашний регион', 'own_country' => 'Россия', 'all_world' => 'за границей',
+		'to_not_rouming_country' => 'За пределы страны нахождения', 'not_own_country' => 'за пределы России',
+		'to_russia' => 'в Россию', 'europe' => 'в европу',
+		'own_operator' => 'на своего оператора',  'not_own_operator' => 'на чужого оператора'
+	}
+	if word and dictionary[word.to_s]
+		dictionary[word.to_s]
+	else
+		word
+	end
+end
+
+table.init do |t|
+#  t.caption = 'Calls stat'
+#  t.base_name = 'calls_stat'
+#  t.current_id_name = 'calls_stat_category'
+#  t.pagination_per_page = 100
+#  t.id_name = 'calls_stat_category'#'service_category_tarif_class_id'
+  model_keys = t.model.collect {|row| row.keys }.flatten.uniq.collect{|key| key unless ['id', 'name_string', 'categ_ids'].include?(key)}.compact  
+  t.heads = model_keys.collect{|model_key| tr(model_key.split('_').join(' '))}
+  t.set_fields do |f| 
+  	model_keys.collect do |key|
+  	  if ['sum_duration'].include?(key)
+  	  	f[key].round(1) if f[key]
+  	  elsif ['count_volume', 'sum_volume'].include?(key)
+  	  	f[key].round(0) if f[key]
+  	  else
+#  	  	raise(StandardError, [key, f[key], tr(f[key])]) if key == 'service1'
+  	  	tr(f[key])
+  	  end 
+    end
+  end
+end
+%>

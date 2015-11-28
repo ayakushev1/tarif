@@ -121,6 +121,10 @@ Rails.application.routes.draw do
     end   
     
     resources :call_runs
+    controller :call_runs do
+      get 'call_runs/call_stat/:id', action: :call_stat, as: :call_stat
+      get 'call_runs/calculate_call_stat/:id', action: :calculate_call_stat, as: :calculate_call_stat
+    end
 
     controller :calls do
       get 'calls/' => :index

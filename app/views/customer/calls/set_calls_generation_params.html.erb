@@ -3,9 +3,9 @@
 
 <form class="form-inline">
   <div class="form-group">
-  	<p>
 		<%= render :partial => 'call_run_choice' %>
 
+  	<p>
 		<%= link_to('Редактировать описание моделирования', customer_call_runs_path, {:class => "btn btn-primary", :type =>"button"}) %>
 		
 		<%= link_to('Сгенерировать историю звонков', customer_calls_generate_calls_path, {:class => "btn btn-primary", :type =>"button"}) %>

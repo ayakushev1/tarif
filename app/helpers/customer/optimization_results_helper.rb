@@ -81,6 +81,7 @@ module Customer::OptimizationResultsHelper
   end
 
   def calls_stat
+#    raise(StandardError, 'optimization_results_helper')
     filtr = session_filtr_params(calls_stat_options)
     calls_stat_options = filtr.keys.map{|key| key if filtr[key] == 'true'}
     calls_stat_options = {"rouming" => 'true'} if calls_stat_options.blank?

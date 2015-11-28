@@ -1,0 +1,17 @@
+<% content_for :title, "Статистика звонков" %>
+
+<% link_to_html = {:class => "btn btn-success", :type =>"button", :remote => true} %>
+<p>
+<%= render :partial => 'customer/call_runs/information' %>
+<%= link_to( 'Расчитать статистику', customer_calculate_call_stat_path(params[:id]), link_to_html) %>
+<%= link_to( 'Список описаний', customer_call_runs_path, link_to_html) %>
+</p>
+<p>
+	
+</p>
+<%= render(:partial => 'customer/call_runs/call_stat/account_period_choicer', :layout => 'application/layouts/filtr_form_4_columns', :locals => {:form_item => calls_stat_options} ) %> 
+<p>
+<%= render(:partial => 'customer/call_runs/call_stat/calls_stat_options', :layout => 'application/layouts/filtr_form', :locals => {:form_item => calls_stat_options, :html => {:class => "form-inline"}} ) %> 
+</p>
+<%= render(:partial => 'customer/call_runs/call_stat/calls_stat', :layout => 'application/layouts/model_table', :locals => {:table => calls_stat}) %>
+

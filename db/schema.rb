@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151127034949) do
+ActiveRecord::Schema.define(version: 20151128051912) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -144,11 +144,13 @@ ActiveRecord::Schema.define(version: 20151127034949) do
     t.integer "operator_id"
     t.string  "init_class"
     t.jsonb   "init_params"
+    t.jsonb   "stat"
   end
 
   add_index "customer_call_runs", ["init_params"], name: "index_customer_call_runs_on_init_params", using: :gin
   add_index "customer_call_runs", ["operator_id"], name: "index_customer_call_runs_on_operator_id", using: :btree
   add_index "customer_call_runs", ["source"], name: "index_customer_call_runs_on_source", using: :btree
+  add_index "customer_call_runs", ["stat"], name: "index_customer_call_runs_on_stat", using: :gin
   add_index "customer_call_runs", ["user_id"], name: "index_customer_call_runs_on_user_id", using: :btree
 
   create_table "customer_calls", force: :cascade do |t|

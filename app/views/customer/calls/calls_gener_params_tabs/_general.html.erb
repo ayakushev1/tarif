@@ -24,7 +24,7 @@ form_item.init do |f|
   	[label(filtr_name, "country_id", "Ваша страна", label_html),
   	 collection_select(filtr_name, "country_id", Category.where(:id=>1100), :id, :name,  {:include_blank => false, :selected => s_filtr["country_id"] }, input_html ),
   	 
-  	 label(filtr_name, "[region_id]", "Ваш регион", label_html),
+  	 label(filtr_name, "region_id", "Ваш регион", label_html),
   	 collection_select(filtr_name, "region_id", Category.regions.where(:parent_id => s_filtr["country_id"]), :id, :name, 
   	   {:include_blank => true, :selected => s_filtr["region_id"] }, input_html )
   	],   

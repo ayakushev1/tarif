@@ -1,43 +1,18 @@
 class Customer::CallRunsController < ApplicationController
+  include Customer::CallRunHelper
+  helper Customer::CallRunHelper
   include SavableInSession::Tableable
   include Crudable
   crudable_actions :all
+#  before_action :init_call_run, only: :calculate_call_stat
   
   before_action :create_call_run_if_not_exists, only: [:index]
   before_action :check_if_allowed_new_call_run, only: [:new, :create]
   before_action :check_if_allowed_delete_call_run, only: [:destroy]
   
-  def customer_call_runs
-    create_tableable(Customer::CallRun.where(:user_id => current_or_guest_user_id))
+  def calculate_call_stat
+    call_run.calculate_call_stat
+    redirect_to customer_call_stat_path(params[:id]), :notice => "Статистика готова"
   end
-  
-  def check_if_allowed_new_call_run
-    message = "Вам не разрешено создавать более #{allowed_new_call_run(user_type)}  описаний"
-    redirect_to( customer_call_runs_path, alert: message) if !is_allowed_new_call_run?
-  end
-  
-  def check_if_allowed_delete_call_run
-    message = "Нельзя удалять последнее описание"
-    redirect_to( customer_call_runs_path, alert: message) if customer_call_runs_count < (Customer::CallRun.min_new_call_run(user_type) + 1)
-  end
-  
-  def is_allowed_new_call_run?
-    customer_call_runs_count < allowed_new_call_run(user_type) ? true : false
-  end
-  
-  def customer_call_runs_count
-    Customer::CallRun.where(:user_id => current_or_guest_user_id).count
-  end
-  
-  def allowed_new_call_run(user_type = :guest)
-    Customer::CallRun.allowed_new_call_run(user_type)
-  end
-
-  def create_call_run_if_not_exists
-    Customer::CallRun.min_new_call_run(user_type).times.each do |i|
-      Customer::CallRun.create(:name => "Загрузка детализации №#{i}", :source => 1, :description => "", :user_id => current_or_guest_user_id)
-    end  if !Customer::CallRun.where(:user_id => current_or_guest_user_id).present?
-  end
-
   
 end

@@ -7,9 +7,10 @@ table.init do |t|
     call_run.name,
     call_run.source_name,
     call_run.description,
-#    call_run.id,      
+    call_run.operator_id,      
     link_to( 'Просмотр', customer_call_run_path(call_run), ), 
     link_to( 'Редактировать', edit_customer_call_run_path(call_run)), 
+    link_to( 'Статистика звонков', customer_call_stat_path(call_run)), 
   ] + (user_type != :admin ? [] : [
     link_to( 'Удалить', call_run, method: :delete, data: { confirm: 'Are you sure?'}),
   	call_run.id, 
