@@ -2,10 +2,11 @@ module Result::RunsHelper
   include SavableInSession::Filtrable, SavableInSession::Tableable, SavableInSession::SessionInitializers
   
   def result_runs_table
+    return @result_runs_table if @result_runs_table
     result_runs_to_show = user_type == :admin ? 
-      Result::Run.query_from_filtr(session_filtr_params(result_runs_select)) :
-      Result::Run.where(:user_id => current_or_guest_user_id)
-    create_tableable(result_runs_to_show)
+      Result::Run.includes(:user, :call_run, :comparison_group).query_from_filtr(session_filtr_params(result_runs_select)) :
+      Result::Run.includes(:user, :call_run, :comparison_group).where(:user_id => current_or_guest_user_id)
+    @result_runs_table = create_tableable(result_runs_to_show)
   end
   
   def result_runs_select
@@ -23,7 +24,7 @@ module Result::RunsHelper
   end
   
   def result_runs_count
-    Result::Run.where(:user_id => current_or_guest_user_id).count
+   result_runs_table.model.count
   end
   
   def allowed_new_result_run(user_type = :guest)
@@ -40,7 +41,7 @@ module Result::RunsHelper
     Result::Run.allowed_min_result_run(user_type).times.each do |i|
       Result::Run.create(:name => "Подбор тарифа №#{i}", :description => "", :user_id => current_or_guest_user_id, :run => 1, 
         :optimization_type_id => 0)
-    end if !Result::Run.where(:user_id => current_or_guest_user_id).present?
+    end if !result_runs_table.model.present?
   end
   
   def set_run_id1

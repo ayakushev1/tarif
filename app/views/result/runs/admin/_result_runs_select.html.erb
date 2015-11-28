@@ -8,15 +8,15 @@ form_item.init do |f|
   [
   	[
 	label(filtr_name, "user_id", "Пользователь", label_html),
-	collection_select(filtr_name, "user_id", User.where(:id => Result::Run.query_from_filtr(s, 'user_id').pluck(:user_id).uniq ), 
+	collection_select(filtr_name, "user_id", User.where(:id => Result::Run.includes(:user, :call_run, :comparison_group).query_from_filtr(s, 'user_id').pluck(:user_id).uniq ), 
 		:id, :name, {:include_blank => "выберите пользователя", :selected => s['user_id']  }, input_html ),
 
 	label(filtr_name, "call_run_id", "Источник звонков", label_html),
-	collection_select(filtr_name, "call_run_id", Customer::CallRun.where(:id => Result::Run.query_from_filtr(s, 'call_run_id').pluck(:call_run_id).uniq ), 
+	collection_select(filtr_name, "call_run_id", Customer::CallRun.where(:id => Result::Run.includes(:user, :call_run, :comparison_group).query_from_filtr(s, 'call_run_id').pluck(:call_run_id).uniq ), 
 		:id, :name, {:include_blank => "выберите источник звонков", :selected => s['call_run_id']  }, input_html ),
   		
 	label(filtr_name, "comparison_group_id", "Источник звонков", label_html),
-	collection_select(filtr_name, "comparison_group_id", Comparison::Group.where(:id => Result::Run.query_from_filtr(s, 'comparison_group_id').pluck(:comparison_group_id).uniq ), 
+	collection_select(filtr_name, "comparison_group_id", Comparison::Group.where(:id => Result::Run.includes(:user, :call_run, :comparison_group).query_from_filtr(s, 'comparison_group_id').pluck(:comparison_group_id).uniq ), 
 		:id, :name, {:include_blank => "выберите источник звонков", :selected => s['comparison_group_id']  }, input_html ),
   		
   	],
