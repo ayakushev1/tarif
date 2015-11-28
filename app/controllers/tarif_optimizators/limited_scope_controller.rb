@@ -1,5 +1,6 @@
 class TarifOptimizators::LimitedScopeController < ApplicationController
   include TarifOptimizators::LimitedScopeHelper
+  helper TarifOptimizators::LimitedScopeHelper
   
   before_action :create_result_run_if_not_exists, only: [:index]
   before_action :update_call_run_on_result_run_change, only: [:index]

@@ -1,5 +1,6 @@
 class Customer::OptimizationResultsController < ApplicationController
   include Customer::OptimizationResultsHelper
+  helper Customer::OptimizationResultsHelper
 
   after_action :track_show_customer_results, only: :show_customer_results
 

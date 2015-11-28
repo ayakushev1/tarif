@@ -1,5 +1,6 @@
 class Comparison::OptimizationsController < ApplicationController
   include Comparison::OptimizationsHelper
+  helper Comparison::OptimizationsHelper
   include Crudable
   crudable_actions :all
   after_action :set_run_id, only: :show

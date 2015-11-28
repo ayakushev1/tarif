@@ -1,5 +1,6 @@
 class Result::RunsController < ApplicationController
   include Result::RunsHelper
+  helper Result::RunsHelper
   include SavableInSession::Tableable
   include Crudable
   crudable_actions :all
