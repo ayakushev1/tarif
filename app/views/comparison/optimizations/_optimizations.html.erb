@@ -15,7 +15,7 @@ table.init do |t|
   ] + (user_type != :admin ? [] : [
     (optimization.publication_status.name if optimization.publication_status), 
     optimization.publication_order,
-    (optimization.type.name if optimization.type),
+#    (optimization.type.name if optimization.type),
     link_to( 'Редактировать', edit_comparison_optimization_path(optimization), link_html), 
     link_to( 'Удалить', optimization, method: :delete, data: { confirm: 'Are you sure?'}),
 #  	optimization.id, 

@@ -25,6 +25,8 @@ form_item.init do |fi|
       ['Порядок публикации', optimization.publication_order], 
       ['Results', (optimization.groups.map(&:result) if false and optimization.groups)],
       ['Тип оптимизации', (optimization.type.name if optimization.type)],
+      ['Категории услуг, используемые при оптимизации', (optimization.type.for_service_categories if optimization.type)],
+      ['Тарифные опции, используемые при оптимизации', (optimization.type.for_services_by_operator if optimization.type)],
 	])
   end  
 end

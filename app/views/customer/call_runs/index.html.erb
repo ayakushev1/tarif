@@ -5,5 +5,7 @@
 	{:class => "btn btn-success", :type => 'button'})  if controller.is_allowed_new_call_run? %>
 </p>
 
+<%= render(:partial => 'customer/call_runs/admin/call_runs_select', :layout => 'application/layouts/filtr_form_4_columns', :locals => {:form_item => call_runs_select} ) if user_type == :admin %>
+
 <%= render :partial => 'call_runs', :layout => 'application/layouts/model_table', :locals => {:table => controller.customer_call_runs}%>
 

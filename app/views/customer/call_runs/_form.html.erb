@@ -19,9 +19,7 @@ form_item.init do |fi|
 	   ], 
 	   [
 	   	f.label( :source, 'Источник данных', label_html), 
-	 	f.select(:source, [
-	 	 	["Моделирование", 0], 
-	 	 	["Загрузка детализации", 1]], {}, input_html)
+	 	f.select(:source, Customer::CallRun.source_names.map.with_index{|r, i| [r, i]}, {}, input_html)
 	   	], 
 	   [
 	   	f.label( " "), 

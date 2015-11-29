@@ -1,13 +1,21 @@
 module Customer::CallRunHelper
   include SavableInSession::Filtrable, SavableInSession::ArrayOfHashable, SavableInSession::SessionInitializers
 
+  def call_runs_select
+    @call_runs_select ||= create_filtrable("call_runs_select")
+  end
+
   def call_run
 #    raise(StandardError, [params[:id], Customer::CallRun.where(:id => params[:id]).first])
     @call_run ||= Customer::CallRun.includes(:user).where(:id => params[:id].to_i).first
   end
   
   def customer_call_runs
-    @customer_call_runs ||= create_tableable(Customer::CallRun.includes(:user).where(:user_id => current_or_guest_user_id))
+    return @customer_call_runs if @customer_call_runs
+    customer_call_runs_to_show = user_type == :admin ? 
+      Customer::CallRun.includes(:user, :operator).query_from_filtr(session_filtr_params(call_runs_select)) :
+      Customer::CallRun.includes(:user, :operator).where(:user_id => current_or_guest_user_id)
+    @customer_call_runs = create_tableable(customer_call_runs_to_show)
   end
   
   def check_if_allowed_new_call_run

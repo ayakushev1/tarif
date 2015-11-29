@@ -14,8 +14,10 @@
 #
 
 class Customer::CallRun < ActiveRecord::Base
+  include WhereHelper
+  
   belongs_to :user, :class_name =>'User', :foreign_key => :user_id
-  belongs_to :operator, :class_name =>'Category', :foreign_key => :operator_id
+  belongs_to :operator, :class_name =>'::Category', :foreign_key => :operator_id
   has_many :calls, :class_name =>'Customer::Call', :foreign_key => :call_run_id
 
   def full_name
@@ -23,7 +25,11 @@ class Customer::CallRun < ActiveRecord::Base
   end
   
   def source_name
-    ['Моделирование', 'Загрузка детализации', 'Сравнение'][source] if source
+    self.class.source_names[source] if source
+  end
+  
+  def self.source_names
+    ['Моделирование', 'Загрузка детализации', 'Сравнение']
   end
   
   def self.allowed_new_call_run(user_type = :guest)

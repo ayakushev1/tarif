@@ -4,19 +4,26 @@ form_item.init do |fi|
 	link_to_html = {:class => "btn btn-primary", :type =>"button", :remote => true}
 
   fi.set_fields do  |call_run| 
-    [
+    ([
       ['Название', call_run.name], 
       ['Источник данных', 
-      	(['Моделирование', 'Загрузка детализации'][call_run.source] if call_run.source)
+      	(call_run.class.source_names[call_run.source] if call_run.source)
       ], 
       ['Описание', call_run.description], 
-      (['Пользователь', (call_run.user.name if call_run.user)] if user_type == :admin), 
       [
 		link_to( 'Редактировать описание', edit_customer_call_run_path(call_run), link_to_html),
 		link_to( 'Список описаний', customer_call_runs_path, link_to_html)
       	
       ],
-    ].compact 
+    ] + ((user_type != :admin) ? [] : [
+		([link_to( 'Вернуться к описанию сравнения', comparison_optimization_path(session[:current_id]['comparison_optimization_id']), link_to_html)] if session[:current_id]['comparison_optimization_id']),
+      	['Пользователь', (call_run.user.name if call_run.user)], 
+      	['Оператор', (call_run.operator.name if call_run.operator)], 
+        ['init_class', call_run.init_class], 
+      ] +
+		(call_run.init_params.keys.map{|k| [k, call_run.init_params[k]]} if call_run.init_params)      
+      )
+      ).compact 
   end  
 end
 %>

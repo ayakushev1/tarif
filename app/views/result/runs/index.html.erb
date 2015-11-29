@@ -6,7 +6,7 @@
 <%= render :partial => 'result/runs/information/index' %>
 </p>
 <p>
-	<%= render(:partial => 'result/runs/admin/result_runs_select', :layout => 'application/layouts/filtr_form_4_columns', :locals => {:form_item => result_runs_select} ) %>
+<%= render(:partial => 'result/runs/admin/result_runs_select', :layout => 'application/layouts/filtr_form_4_columns', :locals => {:form_item => result_runs_select} ) if user_type == :admin %>
 </p>
 <%= render :partial => 'runs', :layout => 'application/layouts/model_table', :locals => {:table => controller.result_runs_table}%>
 

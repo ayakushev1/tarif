@@ -10,7 +10,7 @@ module Result::RunsHelper
   end
   
   def result_runs_select
-    create_filtrable("result_runs_select")
+    @result_runs_select ||= create_filtrable("result_runs_select")
   end
 
   
