@@ -56,6 +56,7 @@ class Comparison::Optimization < ActiveRecord::Base
           :operators => [call_run.operator_id],
           :for_service_categories => optimization_type[:for_service_categories],
           :for_services_by_operator => optimization_type[:for_services_by_operator],
+          :comparison_group_id => group.id
         }
         optimization_type_options = optimization_type.deep_merge(local_options)
         options = Comparison::Optimization::Init.base_params(optimization_type_options)
@@ -99,6 +100,7 @@ class Comparison::Optimization < ActiveRecord::Base
       :services_select => {},
       :services_for_calculation_select => {},
       :service_categories_select => {},
+      :comparison_group_id => options[:comparison_group_id]
     }
   end
 
