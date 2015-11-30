@@ -24,7 +24,10 @@ class Customer::CallsController < ApplicationController
   def update_customer_infos
     Customer::Info::CallsGenerationParams.update_info(current_or_guest_user_id, customer_calls_generation_params)
     Customer::Info::ServicesUsed.decrease_one_free_trials_by_one(current_or_guest_user_id, 'calls_modelling_count')
-    Customer::CallRun.find(customer_call_run_id).update(:operator_id => customer_calls_generation_params[:general]['operator_id'].to_i) 
+    Customer::CallRun.find(customer_call_run_id).update(
+      :operator_id => customer_calls_generation_params[:general]['operator_id'].to_i,
+      :init_params => customer_calls_generation_params
+    ) 
 #    raise(StandardError, customer_calls_generation_params[:general]['operator_id']) 
   end
   

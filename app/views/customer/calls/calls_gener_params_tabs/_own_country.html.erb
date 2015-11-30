@@ -26,9 +26,9 @@ form_item.init do |f|
   	[label(filtr_name, "country_id", "Страна", label_html),
   	 collection_select(filtr_name, "country_id", Category.where(:id=>1100), :id, :name,  {:include_blank => false, :selected => s_filtr["country_id"] }, input_html ),
   	 
-  	 label(filtr_name, "[travel_region_id]", "Ваш регион для поездок", label_html),
-  	 collection_select(filtr_name, "travel_region_id", Category.regions.where(:parent_id => s_filtr["country_id"]), :id, :name, 
-  	   {:include_blank => true, :selected => s_filtr["travel_region_id"] }, input_html )
+  	 label(filtr_name, "[rouming_region_id]", "Ваш регион для поездок", label_html),
+  	 collection_select(filtr_name, "rouming_region_id", Category.regions.where(:parent_id => s_filtr["country_id"]), :id, :name, 
+  	   {:include_blank => true, :selected => s_filtr["rouming_region_id"] }, input_html )
   	],   
   	
   	[label(filtr_name, "number_of_day_calls", "Количество звонков в день", label_html),

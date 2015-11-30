@@ -199,7 +199,7 @@ class Calls::Generator
           :calls_to_home_region => {
             "partner_phone_number" => common_params["others_phone_number"], 
             "partner_operator_ids" => common_params["partner_operator_ids"], 
-            "partner_region_id" => p[:home_region]["home_region_id"].to_i,
+            "partner_region_id" => p[:home_region]["rouming_region_id"].to_i,
             "partner_country_id" => p[:general]["country_id"].to_i,
           },  
           :calls_to_own_country => {
@@ -241,7 +241,7 @@ class Calls::Generator
           :calls_to_home_region => {
             "partner_phone_number" => common_params["others_phone_number"], 
             "partner_operator_ids" => common_params["partner_operator_ids"], 
-            "partner_region_id" => p[:home_region]["home_region_id"].to_i,
+            "partner_region_id" => p[:home_region]["rouming_region_id"].to_i,
             "partner_country_id" => p[:general]["country_id"].to_i,
           },  
           :calls_to_own_country => {
@@ -256,7 +256,7 @@ class Calls::Generator
             "partner_region_id" => nil,
             "partner_country_id" => p[:own_region]["country_for_international_calls_ids"],
           },  
-          "connection_region" => p[:home_region]["home_region_id"].to_i,
+          "connection_region" => p[:home_region]["rouming_region_id"].to_i,
           "connection_country" => p[:general]["country_id"].to_i,
           "connection_operator" => p[:general]["operator_id"].to_i,
           "average_duration_of_call" => average_duration_of_call(:home_region),  
@@ -283,7 +283,7 @@ class Calls::Generator
           :calls_to_home_region => {
             "partner_phone_number" => common_params["others_phone_number"], 
             "partner_operator_ids" => common_params["partner_operator_ids"], 
-            "partner_region_id" => p[:home_region]["home_region_id"].to_i,
+            "partner_region_id" => p[:home_region]["rouming_region_id"].to_i,
             "partner_country_id" => p[:general]["country_id"].to_i,
           },  
           :calls_to_own_country => {
@@ -298,7 +298,7 @@ class Calls::Generator
             "partner_region_id" => nil,
             "partner_country_id" => p[:own_region]["country_for_international_calls_ids"],
           },  
-          "connection_region" => p[:own_country]["travel_region_id"].to_i,
+          "connection_region" => p[:own_country]["rouming_region_id"].to_i,
           "connection_country" => p[:general]["country_id"].to_i,
           "connection_operator" => p[:general]["operator_id"].to_i,
           "average_duration_of_call" => average_duration_of_call(:own_country),  
@@ -325,7 +325,7 @@ class Calls::Generator
           :calls_to_home_region => {
             "partner_phone_number" => common_params["others_phone_number"], 
             "partner_operator_ids" => common_params["partner_operator_ids"], 
-            "partner_region_id" => p[:home_region]["home_region_id"].to_i,
+            "partner_region_id" => p[:home_region]["rouming_region_id"].to_i,
             "partner_country_id" => p[:general]["country_id"].to_i,
           },  
           :calls_to_own_country => {
@@ -341,8 +341,8 @@ class Calls::Generator
             "partner_country_id" => p[:own_region]["country_for_international_calls_ids"].to_i,
           },  
           "connection_region" => nil,
-          "connection_country" => p[:abroad]["foreign_country_id"].to_i,
-          "connection_operator" => Relation.country_operator(p[:abroad]["foreign_country_id"]).to_i,
+          "connection_country" => p[:abroad]["rouming_country_id"].to_i,
+          "connection_operator" => Relation.country_operator(p[:abroad]["rouming_country_id"]).to_i,
           "average_duration_of_call" => average_duration_of_call(:abroad).to_i,  
           "number_of_day_calls" => p[:abroad]["number_of_day_calls"].to_i,  
           "share_of_calls_to_own_mobile" => share_of_calls_to_own_mobile(:abroad),
@@ -607,7 +607,7 @@ class Calls::Generator
         {
         'phone_usage_type_id' => ((usage_pattern_id and usage_pattern_id.to_i != 0) ? usage_pattern_id.to_i : _home_region_no_activity),
         'country_id' => _russia,
-        'home_region_id' => _moscow_region, 
+        'rouming_region_id' => _moscow_region, 
        }.merge(usage_pattern(usage_pattern_id || _home_region_no_activity) )          
       }
     when :own_country
@@ -616,7 +616,7 @@ class Calls::Generator
         {
         'phone_usage_type_id' => ((usage_pattern_id and usage_pattern_id.to_i != 0) ? usage_pattern_id.to_i : _own_country_no_activity),
         'country_id' => _russia,
-        'travel_region_id' => _piter, 
+        'rouming_region_id' => _piter, 
        }.merge(usage_pattern(usage_pattern_id || _own_country_no_activity) )
       }
     when :abroad
@@ -625,7 +625,7 @@ class Calls::Generator
         {
         'phone_usage_type_id' => ((usage_pattern_id and usage_pattern_id.to_i != 0) ? usage_pattern_id.to_i : _abroad_no_activity),
         'continent_id' => _europe, 
-        'foreign_country_id' => _ukraiun,
+        'rouming_country_id' => _ukraiun,
        }.merge(usage_pattern(usage_pattern_id || _abroad_no_activity) )
       }
     else

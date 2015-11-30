@@ -21,7 +21,7 @@ form_item.init do |fi|
       	['Оператор', (call_run.operator.name if call_run.operator)], 
         ['init_class', call_run.init_class], 
       ] +
-		(call_run.init_params.keys.map{|k| [k, call_run.init_params[k]]} if call_run.init_params)      
+		(call_run.init_params.blank? ? [] : call_run.init_params.keys.map{|k| [k, call_run.init_params[k]]}) 
       )
       ).compact 
   end  

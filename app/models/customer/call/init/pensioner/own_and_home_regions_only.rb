@@ -1,7 +1,7 @@
 #:categories => {:rouming => _own_country_rouming, :service => _calls_out, :geo => _service_to_mts_europe, :operator => _service_to_not_own_operator}},
 
 module Customer::Call::Init::Pensioner
-  OwnAndHomeRegionsOnly = {
+  OwnAndHomeRegionsOnly = { 
     :general=> {
 #    "phone_usage_type_id"=>243, 
       "share_of_time_in_own_region"=>0.85, 
@@ -21,7 +21,7 @@ module Customer::Call::Init::Pensioner
       "internet_trafic_per_month"=>0.2, 
       "share_of_incoming_calls"=>0.5, 
       "share_of_incoming_calls_from_own_mobile"=>0.3
-     }.merge(Customer::Call::Init::CommonParams.slice("country_id", "region_id", "privacy_id")), 
+     }, 
     :home_region=> {
       "number_of_day_calls"=>1, 
       "duration_of_calls"=>5, 
@@ -34,7 +34,7 @@ module Customer::Call::Init::Pensioner
       "internet_trafic_per_month"=>0.2, 
       "share_of_incoming_calls"=>0.5, 
       "share_of_incoming_calls_from_own_mobile"=>0.3
-    }.merge(Customer::Call::Init::CommonParams.slice("country_id")), 
+    }, 
     :own_country=>{
       "number_of_day_calls"=>1, 
       "duration_of_calls"=>5, 
@@ -47,7 +47,7 @@ module Customer::Call::Init::Pensioner
       "internet_trafic_per_month"=>0.0, 
       "share_of_incoming_calls"=>0.5, 
       "share_of_incoming_calls_from_own_mobile"=>0.3
-    }.merge(Customer::Call::Init::CommonParams.slice("country_id")), 
+    }, 
     :abroad=>{
       "number_of_day_calls"=>0, 
       "duration_of_calls"=>0, 
