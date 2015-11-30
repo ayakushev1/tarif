@@ -89,9 +89,10 @@ class Customer::CallRun < ActiveRecord::Base
   end
   
   def calls_stat_array(group_by = [], accounting_period = nil)
-    return [] if !stat
+    return [] if stat.blank?
     accounting_period = stat.keys[0] if !(accounting_period and stat.keys.include?(accounting_period))
     chosen_stat = stat[accounting_period]
+    return [] if chosen_stat.blank?
     if group_by.blank?
       result = chosen_stat.collect{|row| row if row['count'] > 0}.compact
       result = (false ? result.sort_by{|row| row['order']} : result) || []
