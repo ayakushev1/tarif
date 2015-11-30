@@ -1,6 +1,7 @@
 <div class="navbar-collapse">
 	<div class="container-fluid ">
 	  <ul class="nav navbar-nav navbar-right">
+	  	<% if false %>
 	    <li class="dropdown">
 	    	<a href="#" class="dropdown-toggle  f16" data-toggle="dropdown" >
 	    		<span class="flag <%= session[:locale].to_s %>"></span>
@@ -9,30 +10,30 @@
 				<li><%= link_to '', change_locale_path + '?' + {:locale => :ru}.to_param, {:class => "flag ru"} %></li>
 				<li><%= link_to '', change_locale_path + '?' + {:locale => :en}.to_param, {:class => "flag en"} %></li>
 	        </ul>
-	    </li>	    
+	    </li>	   
+	    <% end %> 
 	  	<% if current_or_guest_user %>
 		    <li><%= link_to(new_customer_demand_path, {:class => "hidden-xs"}) do %>
-		    	<span class="icon_menu_img"><%= image_tag("envelope_img.png") %></span>Письмо администратору
+		    	<span class="icon_menu_img"><%= image_tag("envelope_img.png") %></span><%= t(:letter_to_admin) %>
 		        <% end %>
 		    </li>
 		<% end %> 
 	
 	    <li class="dropdown">
 	    	<a href="#" class="dropdown-toggle" data-toggle="dropdown" >
-	    		<span class="icon_menu_img">
-	    			<%= image_tag("user_img.png") %>
-	    		</span>Пользователь: 
-	    		<span><%= current_user ? current_user.name : 'Гость' %></span>
+	    		<span class="icon_menu_img"><%= image_tag("user_img.png") %></span>
+	    		<span><%= t(:user) %></span> 
+	    		<span><%= current_user ? current_user.name : t(:default_guest_name) %></span>
 	    		<span class="caret"></span>
 	    	</a>
 	        <ul class="dropdown-menu user-dropdown-menu" role="menu">
 				<% if !current_user %>
-					<li><%= link_to 'Войти', login_path %></li>
+					<li><%= link_to t(:login), login_path %></li>
 				<% else %>
-					<li><%= link_to 'Профиль', user_path(controller.current_user) %></li>
-					<li><%= link_to 'Выйти', logout_path %></li>
+					<li><%= link_to t(:account_info), user_path(controller.current_user) %></li>
+					<li><%= link_to t(:logout), logout_path %></li>
 				<% end %>
-				    <li><%= link_to('Письмо администратору', new_customer_demand_path, {:class => "visible-xs-block"}) %></li>
+				    <li><%= link_to t(:letter_to_admin), new_customer_demand_path, {:class => "visible-xs-block"} %></li>
 	        </ul>
 	    </li>	    
 	  </ul>
