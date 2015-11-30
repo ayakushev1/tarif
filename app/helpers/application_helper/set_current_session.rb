@@ -6,6 +6,7 @@ module ApplicationHelper::SetCurrentSession
     session[:form] ||= {}
     session[:progress_bar] ||= {}
     session[:pagination] ||= {}    
+    session[:locale] ||= I18n.default_locale
     set_current_tabs_pages
     set_current_accordion_pages
 #    raise(StandardError)

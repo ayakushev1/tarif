@@ -33,7 +33,9 @@ h1 {
 .user-dropdown-menu {
    width: 100%;
 }
-
+.dropdown-menu {
+  min-width: 10px;
+}
 /*user code */
 .content {
     border: 1px solid #d9d9d9;
@@ -334,3 +336,17 @@ html.turbolinks-progress-bar::before {
     margin-right: 20px;
 }
 /* END USER CODE */
+
+.f16 .flag{
+  display:inline-block;
+  margin-left: 20px !important;
+  margin-right: 0px !important;
+  height:16px;width:16px;vertical-align:text-top;line-height:16px;background:url(flags16.png) no-repeat;}
+.f16 ._England{background-position:0 -112px;}
+.f16 .en{background-position:0 -3664px;}
+.f16 .ru{background-position:0 -3104px;}
+
+.f32 .flag{display:inline-block;height:32px;width:32px;vertical-align:text-top;line-height:32px;background:url(flags32.png) no-repeat;}
+.f32 ._England{background-position:0 -224px;}
+.f32 .en{background-position:0 -7328px;}
+.f32 .ru{background-position:0 -6208px;}

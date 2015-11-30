@@ -21,6 +21,7 @@ Rails.application.routes.draw do
   resources :tarif_classes
 
   controller :home do
+    get 'home/change_locale', action: :change_locale, as: :change_locale
     get 'home/short_description' => :short_description
     get 'home/detailed_description' => :detailed_description
     get 'home/update_tabs' => :update_tabs

@@ -6,6 +6,11 @@ class HomeController < ApplicationController
   def update_tabs
     render :nothing => true
   end
+  
+  def change_locale
+    redirect_to root_path, notice: t(:change_locale)
+  end
+
 
   private
   

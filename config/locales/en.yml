@@ -21,3 +21,6 @@
 
 en:
   hello: "Hello world"
+  ru: Russian
+  en: English
+  change_locale: "You switched to English"
