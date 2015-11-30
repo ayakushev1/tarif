@@ -26,7 +26,7 @@ module Tarif
     config.i18n.load_path += Dir[Rails.root.join('config', 'locales', '**', '*.{rb,yml}').to_s]
 #    config.i18n.load_path += Dir[Rails.root.join('config', 'locales', 'views', 'titles', '**', '*.{rb,yml}')]
     config.i18n.default_locale = :ru
-#    config.i18n.locale = :ru
+    config.i18n.locale = :ru
     
     config.action_controller.include_all_helpers = false    
     require Rails.root.join("lib/general/custom_public_exceptions")
