@@ -1,0 +1,36 @@
+<%
+
+form_item.init do |fi|
+	action_path = fi.model.id ? edit_customer_call_run_path(fi.model) : new_customer_call_run_path	
+	input_html = {:filtr_name => form_item.form_name, :class => "updatable form-control ", :action_name => action_path}
+	label_html = {:class => "form-label "}
+	form_name = form_item.form_name
+	s = session_model_params(fi)
+	categories = ['label', 'general', 'own_region', 'home_region', 'own_country', 'abroad']
+  fi.set_fields do |f|
+	if fi.model.init_params and user_type == :admin
+		init_params = [categories]
+		temp = {}
+	  	fi.model.init_params.each do |category, subcategory|
+	  		s[category] ||= {}	  		
+	  		subcategory.each do |k, v|	  				  			
+		  		temp[k] ||= {}
+		  		temp[k]['label'] ||= f.label("init_params[#{k}]", k, label_html)
+				temp[k][category] = f.text_field("init_params[#{category}][#{k}]", input_html.merge({:value => (s[category][k] || v) }) )
+	  		end if subcategory
+		end 
+		orderred_keys = fi.model.init_params['general'].keys
+		orderred_keys += (temp.keys - orderred_keys)
+		orderred_keys.map do |k|
+			cat_array = []
+			categories.each do |category|
+				cat_array << temp[k][category]
+			end
+			init_params << cat_array
+		end		
+		init_params << [f.label( " "), f.submit("Сохранить", :class => "btn btn-primary", :type =>"submit", :remote => true)]
+	end
+  end
+end
+%>
+
