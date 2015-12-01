@@ -55,7 +55,7 @@ module Customer::CallRunHelper
   end
   
   def account_period_options
-    call_run.stat ? call_run.stat.keys : [] 
+    call_run.stat and call_run.stat.is_a?(Hash) ? call_run.stat.keys : [] 
   end
 
   def calls_stat
