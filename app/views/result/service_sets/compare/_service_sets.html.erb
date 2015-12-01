@@ -2,9 +2,11 @@
 translator = Customer::Call::StatCalculator.new
 table.init do |t|
   model_keys_1 = t.model.collect {|row| row.keys }.flatten.uniq.
-  	collect{|key| key unless ['name_string', 'categ_ids'].include?(key)}.compact
+  	collect{|key| key unless ['name_string', 'categ_ids', 'sort'].include?(key)}.compact
 #  raise(StandardError, model_keys)	 
-  model_keys = ["fixed"] + (model_keys_1 - ["fixed"]) 
+  category_group_keys = ['fixed', 'rouming', 'service', 'direction', 'geo', 'operator']
+  model_keys = (category_group_keys & model_keys_1) + (model_keys_1 - category_group_keys) 
+#  model_keys = model_keys_1
   	
   t.heads = model_keys.collect{|model_key| translator.tr(model_key)}
   t.set_fields do |f| 
