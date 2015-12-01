@@ -26,7 +26,7 @@ form_item.init do |fi|
 	   ],
 	   [
 	   	'', 
-	   	f.text_field( :user_id, {:hidden => true, :value => current_or_guest_user_id })
+	   	f.text_field( :user_id, {:hidden => true, :value => (s['source'] == '2' ? nil : current_or_guest_user_id) })
 	   ],
 	  ]
   end

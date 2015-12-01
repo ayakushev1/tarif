@@ -8,7 +8,7 @@ form_item.init do |f|
   [
   	[
      label(filtr_name, "accounting_period", "Календарный период", label_html),
-     select(filtr_name, "accounting_period", account_period_options.map{|a| [a, a]}, 
+     select(filtr_name, "accounting_period", (account_period_options ? account_period_options.map{|a| [a, a]} : []), 
 	  	   {:selected => s["accounting_period"] }, input_html )
   	],
   ]
