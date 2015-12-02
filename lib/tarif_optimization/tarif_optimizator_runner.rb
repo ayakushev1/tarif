@@ -16,6 +16,7 @@ class TarifOptimization::TarifOptimizatorRunner
   def self.recalculate_with_delayed_job(controller_options)
     options = optimization_params(controller_options)
     priority = options[:user_input][:user_priority]
+#    raise(StandardError, options[:services_by_operator])
     
     TarifOptimization::TarifOptimizator.new(options).clean_output_results if controller_options[:if_clean_output_results]
     TarifOptimization::TarifOptimizator.new(options).clean_new_results if controller_options[:if_clean_output_results]

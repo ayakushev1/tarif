@@ -13,7 +13,7 @@
     :general_priority => _gp_tarif_option,
     :other_tarif_priority => {:lower => [_mts_rodnye_goroda, _mts_love_country], :higher => [_mts_love_country_all_world]},
     :prerequisites => [],
-    :forbidden_tarifs => {:to_switch_on => [_mts_smart, _mts_smart_plus, _mts_smart_top, _mts_smart_nonstop], :to_serve => []},
+    :forbidden_tarifs => {:to_switch_on => [_mts_smart_plus, _mts_smart_top, _mts_smart_nonstop], :to_serve => []},
     :multiple_use => false
   } } )
 
@@ -42,7 +42,7 @@
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 3.0})
 
 #Own country, sms, Outcoming, to_all_russia_regions
-  category = {:name => '_sctcg_own_home_regions_sms_to_own_home_regions', :service_category_rouming_id => _all_russia_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_all_own_country_regions}
+  category = {:name => '_sctcg_own_home_regions_sms_to_own_home_regions', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_all_own_country_regions}
   @tc.add_grouped_service_category_tarif_class(category, scg_mts_everywhere_as_home_included_in_tarif_sms[:id])
 
 @tc.add_tarif_class_categories
