@@ -32,7 +32,7 @@
     {:name => 'scg_bln_all_for_2700_post_internet' }, 
     {:name => "price for scg_bln_all_for_2700_post_internet"}, 
     {:calculation_order => 0, :standard_formula_id => _stf_zero_sum_volume_m_byte, 
-      :formula => {:window_condition => "(15000.0 >= sum_volume)", :window_over => 'month'}, :price => 0.0, :description => '' }
+      :formula => {:window_condition => "(30000.0 >= sum_volume)", :window_over => 'month'}, :price => 0.0, :description => '' }
     )
 
   #internet for add_speed_1gb option

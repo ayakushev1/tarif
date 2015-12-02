@@ -224,7 +224,7 @@ category = {:name => '_sctcg_own_country_mms_to_own_country', :service_category_
      :formula => {
        :multiple_use_of_tarif_option => {
          :group_by => 'month',
-         :stat_params => {:tarif_option_count_of_usage => "ceil(sum((description->>'volume')::float) / 150.0)", :sum_volume => "sum((description->>'volume')::float)"},
+         :stat_params => {:tarif_option_count_of_usage => "ceil(sum((description->>'volume')::float) / 70.0)", :sum_volume => "sum((description->>'volume')::float)"},
          :method => "price_formulas.price * tarif_option_count_of_usage", 
        }
      }, 
