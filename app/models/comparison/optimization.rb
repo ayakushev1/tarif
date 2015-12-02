@@ -47,8 +47,8 @@ class Comparison::Optimization < ActiveRecord::Base
     result = []
     groups.each do |group|
       next if only_new and group.result and group.result[0] and !group.result[0].blank?
-      group.call_runs.each do |call_run|
-        
+      if_clean_output_results = true
+      group.call_runs.each do |call_run|        
         local_options = {
           :call_run_id => call_run.id,
           :accounting_period => accounting_period_by_call_run_id(call_run.id),
@@ -59,11 +59,13 @@ class Comparison::Optimization < ActiveRecord::Base
           :comparison_group_id => group.id
         }
         optimization_type_options = optimization_type.deep_merge(local_options)
-        options = Comparison::Optimization::Init.base_params(optimization_type_options)
-#        raise(StandardError, [optimization_type[:for_services_by_operator], options[:services_by_operator]].join("\n"))
+        options = Comparison::Optimization::Init.base_params(optimization_type_options).merge({:if_clean_output_results => if_clean_output_results})
+        if_clean_output_results = false
+#        raise(StandardError, [group.id, optimization_type[:comparison_group_id], options[:comparison_group_id]])
         
-        result << calculate_one_optimization(options, test)
-        group.result_run.update(result_run_update_options(options)) 
+#        raise(StandardError, [group.inspect, group.result_run.comparison_group_id, options[:comparison_group_id]]) #if !group.result_run.comparison_group_id
+        result << calculate_one_optimization(options, false)
+        group.result_run.update(result_run_update_options(options.merge(local_options))) 
       end
     end
     result
@@ -88,13 +90,13 @@ class Comparison::Optimization < ActiveRecord::Base
       :user_id => nil,
       :run => 1,
       
-      :call_run_id => options[:call_run_id],
+      :call_run_id => nil, #options[:call_run_id],
       :accounting_period => options[:accounting_period],
       :optimization_type_id => 6,
       :optimization_params => options[:optimization_params],
       :calculation_choices => options[:calculation_choices],
       :selected_service_categories => options[:selected_service_categories],
-      :services_by_operator => options[:services_by_operator],
+      :services_by_operator =>  {}, #options[:services_by_operator],
       :temp_value => options[:temp_value],
       :service_choices => {},
       :services_select => {},

@@ -18,6 +18,7 @@ table.init do |t|
   t.set_fields do |group|   	
   	result_desc = []
   	result_desc = group.result['place'].collect do |place, detail|
+  		next if detail.blank?
   		operator_desc = operators_desc[detail['operator_id']]
   		tarif_desc = tarifs_desc[detail['tarif_id']]
   		

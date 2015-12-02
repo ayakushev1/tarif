@@ -17,8 +17,8 @@ class TarifOptimization::TarifOptimizatorRunner
     options = optimization_params(controller_options)
     priority = options[:user_input][:user_priority]
     
-    TarifOptimization::TarifOptimizator.new(options).clean_output_results
-    TarifOptimization::TarifOptimizator.new(options).clean_new_results
+    TarifOptimization::TarifOptimizator.new(options).clean_output_results if controller_options[:if_clean_output_results]
+    TarifOptimization::TarifOptimizator.new(options).clean_new_results if controller_options[:if_clean_output_results]
     
     is_send_email = false
     number_of_workers_to_add = 0
@@ -69,7 +69,7 @@ class TarifOptimization::TarifOptimizatorRunner
     end
 
     tarif_optimizator.calculate_all_operator_tarifs
-    tarif_optimizator.update_minor_results
+    tarif_optimizator.update_minor_results if tarif_optimizator.minor_result_saver
 
     UserMailer.tarif_optimization_complete(options[:user_input][:user_id], options[:user_input][:result_run_id]).
       deliver if options[:is_send_email] == true    

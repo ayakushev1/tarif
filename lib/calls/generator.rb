@@ -83,7 +83,7 @@ class Calls::Generator
           max_count_per_day_by_base_service = [0, count_per_day_by_base_service(rouming, base_service_id)].max
           next if max_count_per_day_by_base_service == 0
           
-          (0..max_count_per_day_by_base_service).each do |day_item|
+          (0...max_count_per_day_by_base_service).each do |day_item|
             call_destination = choose_call_destination(rouming)
             call_direction = choose_call_direction(rouming)
             partner_operator_id, partner_operator_type_id, partner_region_id, partner_country_id = choose_call_operator(rouming, call_direction, call_destination)
@@ -383,7 +383,7 @@ class Calls::Generator
   
   def choose_call_direction(rouming)
     case rand 
-    when 0..initial_inputs[rouming]["share_of_incoming_calls"].to_f
+    when 0...initial_inputs[rouming]["share_of_incoming_calls"].to_f
       _inbound
     else
       _outbound
@@ -396,7 +396,7 @@ class Calls::Generator
   
   def choose_incoming_calls_operator(rouming, call_destination)
     case rand 
-    when 0..share_of_incoming_calls_from_own_mobile(rouming).to_f
+    when 0...share_of_incoming_calls_from_own_mobile(rouming).to_f
       partner_operator_id = if call_destination == :calls_to_abroad
         choose_random_from_array( initial_inputs[rouming][call_destination]["partner_operator_ids"])
       else
@@ -414,7 +414,7 @@ class Calls::Generator
  
     def choose_outcoming_calls_operator(rouming, call_destination)
       case rand 
-      when 0..share_of_calls_to_fix_line(rouming)
+      when 0...share_of_calls_to_fix_line(rouming)
         if call_destination == :calls_to_abroad
           [choose_random_from_array( initial_inputs[rouming][call_destination]["partner_operator_ids"] ), _mobile,
          initial_inputs[rouming][call_destination]['partner_region_id'], initial_inputs[rouming][call_destination]['partner_country_id']
@@ -424,7 +424,7 @@ class Calls::Generator
            initial_inputs[rouming][call_destination]['partner_region_id'], initial_inputs[rouming][call_destination]['partner_country_id']
           ]
         end
-    when share_of_calls_to_fix_line(rouming)..(share_of_calls_to_fix_line(rouming) + share_of_calls_to_others_mobile(rouming) )
+    when share_of_calls_to_fix_line(rouming)...(share_of_calls_to_fix_line(rouming) + share_of_calls_to_others_mobile(rouming) )
       [choose_random_from_array( initial_inputs[rouming][call_destination]["partner_operator_ids"] ), _mobile,
        initial_inputs[rouming][call_destination]['partner_region_id'], initial_inputs[rouming][call_destination]['partner_country_id']
       ]        
@@ -447,9 +447,9 @@ class Calls::Generator
     
     def choose_call_destination(rouming)
       destination = case rand 
-        when 0..share_of_local_calls(rouming)
+        when 0...share_of_local_calls(rouming)
           rand < 0.7 ? :calls_to_own_region : :calls_to_home_region 
-        when share_of_local_calls(rouming)..(share_of_local_calls(rouming) + share_of_regional_calls(rouming) )
+        when share_of_local_calls(rouming)...(share_of_local_calls(rouming) + share_of_regional_calls(rouming) )
           :calls_to_own_country
         when (share_of_local_calls(rouming) + share_of_regional_calls(rouming) )..1
           :calls_to_abroad
@@ -525,7 +525,7 @@ class Calls::Generator
     when _calls
       initial_inputs[rouming]["number_of_day_calls"].to_i
     when _2g, _3g, _4g, _cdma
-      initial_inputs[rouming]["internet_trafic_per_month"] == 0.0 ? 0 : 1
+      initial_inputs[rouming]["internet_trafic_per_month"] < 0.00001 ? 0 : 5
     when _sms
       initial_inputs[rouming]["number_of_sms_per_day"].to_i
     when _mms
@@ -539,7 +539,8 @@ class Calls::Generator
       
   def duration_by_base_service(rouming, base_service_id)
     average_duraton_of_max_duration = initial_inputs[rouming]["average_duration_of_call"] / common_params["max_duration_of_call"]
-    base_service_id == _calls ? random(average_duraton_of_max_duration) * common_params["max_duration_of_call"] * 60.0 : 0.0
+    base_service_id == _calls ? initial_inputs[rouming]["average_duration_of_call"] * 60.0 : 0.0
+#    base_service_id == _calls ? random(average_duraton_of_max_duration) * common_params["max_duration_of_call"] * 60.0 * 1.61 : 0.0
 #    raise(StandardError, [initial_inputs[rouming]["average_duration_of_call"], common_params["max_duration_of_call"], random(average_duraton_of_max_duration) * 60.0 * 1.5 ])
   end
       
@@ -548,7 +549,7 @@ class Calls::Generator
     when _calls
       nil
     when _2g, _3g, _4g, _cdma
-      average_internet_volume_per_day(rouming).to_f
+      average_internet_volume_per_day(rouming).to_f / 5.0
     when _sms
       1
     when _mms
