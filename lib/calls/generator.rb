@@ -525,7 +525,7 @@ class Calls::Generator
     when _calls
       initial_inputs[rouming]["number_of_day_calls"].to_i
     when _2g, _3g, _4g, _cdma
-      initial_inputs[rouming]["internet_trafic_per_month"] < 0.00001 ? 0 : 5
+      initial_inputs[rouming]["internet_trafic_per_month"].to_f < 0.00001 ? 0 : 5
     when _sms
       initial_inputs[rouming]["number_of_sms_per_day"].to_i
     when _mms
