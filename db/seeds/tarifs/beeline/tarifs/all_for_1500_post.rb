@@ -39,7 +39,7 @@
   scg_bln_add_speed_1gb= @tc.add_service_category_group(
     {:name => 'scg_bln_add_speed_1gb' }, 
     {:name => "price for scg_bln_add_speed_1gb"}, 
-    {:calculation_order => 1, :price => 100.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'scf_bln_add_speed_1gb', :description => '', 
+    {:calculation_order => 1, :price => 250.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'scf_bln_add_speed_1gb', :description => '', 
      :formula => {
        :window_condition => "(1000.0 >= sum_volume)", :window_over => 'month',
        :stat_params => {:sum_volume => "sum((description->>'volume')::float)"},
@@ -56,13 +56,13 @@
      } 
     )
 
-  #internet for add_speed_3gb option
+  #internet for add_speed_4gb option
   scg_bln_add_speed_3gb= @tc.add_service_category_group(
     {:name => 'scg_bln_add_speed_3gb' }, 
     {:name => "price for scg_bln_add_speed_3gb"}, 
-    {:calculation_order => 2, :price => 200.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'scf_bln_add_speed_3gb', :description => '', 
+    {:calculation_order => 2, :price => 500.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'scf_bln_add_speed_3gb', :description => '', 
      :formula => {
-       :window_condition => "(3000.0 >= sum_volume)", :window_over => 'month',
+       :window_condition => "(4000.0 >= sum_volume)", :window_over => 'month',
        :stat_params => {:sum_volume => "sum((description->>'volume')::float)"},
        :method => "price_formulas.price",
        
@@ -70,8 +70,8 @@
          :group_by => 'month',
          :stat_params => {
            :sum_volume => "sum((description->>'volume')::float)",
-           :count_of_usage_of_3000 => "ceil((sum((description->>'volume')::float) - 3000.0) / 3000.0)"},
-       :method => "price_formulas.price * GREATEST(count_of_usage_of_3000, 0.0)",
+           :count_of_usage_of_4000 => "ceil((sum((description->>'volume')::float) - 4000.0) / 4000.0)"},
+       :method => "price_formulas.price * GREATEST(count_of_usage_of_4000, 0.0)",
        }
      },
      } 
@@ -83,7 +83,7 @@
     {:name => "price for scg_bln_auto_add_speed"}, 
     {:calculation_order => 3, :price => 20.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'scf_bln_auto_add_speed', :description => '', 
      :formula => {
-       :window_condition => "(150.0 >= sum_volume)", :window_over => 'month',
+       :window_condition => "(75.0 >= sum_volume)", :window_over => 'month',
        :stat_params => {:sum_volume => "sum((description->>'volume')::float)"},
        :method => "price_formulas.price",
        
@@ -91,8 +91,8 @@
          :group_by => 'month',
          :stat_params => {
            :sum_volume => "sum((description->>'volume')::float)",
-           :count_of_usage_of_150 => "ceil((sum((description->>'volume')::float) - 150.0) / 150.0)"},
-       :method => "price_formulas.price * GREATEST(count_of_usage_of_150, 0.0)",
+           :count_of_usage_of_75 => "ceil((sum((description->>'volume')::float) - 75.0) / 75.0)"},
+       :method => "price_formulas.price * GREATEST(count_of_usage_of_75, 0.0)",
        }
      },
      } 

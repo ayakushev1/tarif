@@ -28,8 +28,8 @@ scg_bln_highway_1 = @tc.add_service_category_group(
          :stat_params => {
            :sum_volume => "sum((description->>'volume')::float)",
            :count_of_usage_of_1000 => "GREATEST(ceil((sum((description->>'volume')::float) - 1000.0) / 1000.0), 0.0)",
-           :count_of_usage_of_3000 => "GREATEST(ceil((sum((description->>'volume')::float) - 1000.0) / 3000.0), 0.0)"},
-       :method => "price_formulas.price + case when count_of_usage_of_1000 > 2.0 then 200.0 * count_of_usage_of_3000 else 100.0 * count_of_usage_of_1000 end",
+           :count_of_usage_of_4000 => "GREATEST(ceil((sum((description->>'volume')::float) - 1000.0) / 4000.0), 0.0)"},
+       :method => "price_formulas.price + case when count_of_usage_of_1000 > 2.0 then 500.0 * count_of_usage_of_4000 else 250.0 * count_of_usage_of_1000 end",
        }
      }, 
     } )

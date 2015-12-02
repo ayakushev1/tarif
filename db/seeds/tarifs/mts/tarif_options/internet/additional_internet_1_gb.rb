@@ -11,7 +11,7 @@
       :internet_comp => [_mts_mts_planshet, _mts_internet_mini, _mts_internet_maxi, _mts_internet_super, _mts_internet_vip]}, 
     :general_priority => _gp_tarif_option_without_limits,#_gp_tarif_option_with_limits,
     :other_tarif_priority => {:lower => [], :higher => []},
-    :prerequisites => [_mts_smart, _mts_smart_mini, _mts_smart_plus, _mts_smart_top, _mts_smart_nonstop],
+    :prerequisites => [_mts_smart_plus, _mts_smart_top, _mts_smart_nonstop],
     :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},
     :multiple_use => true
   } } )
@@ -21,7 +21,7 @@
   scg_mts_additional_internet_1_gb_for_smart = @tc.add_service_category_group(
     {:name => 'scg_mts_additional_internet_1_gb_for_smart' }, 
     {:name => "price for scg_mts_additional_internet_1_gb_for_smart"}, 
-    {:calculation_order => 0, :price => 120.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_mts_additional_internet_1_gb_for_smart', :description => '', 
+    {:calculation_order => 0, :price => 100.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_mts_additional_internet_1_gb_for_smart', :description => '', 
      :formula => {
        :window_condition => "(1000.0 >= sum_volume)", :window_over => 'month',
        :stat_params => {:sum_volume => "sum((description->>'volume')::float)"},

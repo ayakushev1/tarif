@@ -270,6 +270,7 @@ TarifClass.create(id: _mts_unlimited_internet_on_day , operator_id: 1030, privac
 TarifClass.create(id: _mts_unlimited_sms , operator_id: 1030, privacy_id: 2, standard_service_id: 42, name: 'Безлимитные SMS')#смс пакет - месячный
 TarifClass.create(id: _mts_free_journey , operator_id: 1030, privacy_id: 2, standard_service_id: 42, name: 'Свободное путешествие')#смс пакет - месячный
 TarifClass.create(id: _mts_single_country , operator_id: 1030, privacy_id: 2, standard_service_id: 42, name: 'Единая страна')#
+TarifClass.create(id: _mts_100_sms_smart_mini , operator_id: 1030, privacy_id: 2, standard_service_id: 42, name: '100 SMS Smart mini')#
 
 #Теле, частные, тарифы
 TarifClass.create(id: _tele_black, operator_id: Category::Operator::Const::Tele2, privacy_id: 2, standard_service_id: 40, name: 'Черный')

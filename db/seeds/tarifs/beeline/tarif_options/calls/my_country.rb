@@ -20,12 +20,15 @@
 
 #Own country, calls, incoming
   category = {:name => 'own_country_calls_incoming', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_in}
+  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 3.0})  
+=begin
   @tc.add_one_service_category_tarif_class(category, {},  
   {:calculation_order => 0, :price => 3.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
    :formula => {
      :stat_params => {:count_calls => "count(((description->>'duration')::float) > 0.0)",                      
                       :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
      :method => 'price_formulas.price * count_calls'}, } )
+=end
 
 #Own country, calls, outcoming, to all own country regions, to all operators
   category = {:name => '_sctcg_own_country_calls_to_all_own_country_regions', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_all_own_country_regions}

@@ -17,14 +17,14 @@
     {:name => 'scg_mgf_all_included_vip_calls' }, 
     {:name => "price for scg_mgf_all_included_vip_calls"}, 
     {:calculation_order => 0, :standard_formula_id => _stf_price_by_sum_duration_minute, 
-      :formula => {:window_condition => "(5000.0 >= sum_duration_minute)", :window_over => 'month'}, :price => 0.0, :description => '' }
+      :formula => {:window_condition => "(2500.0 >= sum_duration_minute)", :window_over => 'month'}, :price => 0.0, :description => '' }
     )
   #sms included in tarif
   scg_mgf_all_included_vip_sms = @tc.add_service_category_group(
     {:name => 'scg_mgf_all_included_vip_sms' }, 
     {:name => "price for scg_mgf_all_included_vip_sms"}, 
     {:calculation_order => 0, :standard_formula_id => _stf_zero_count_volume_item, 
-      :formula => {:window_condition => "(5000 >= count_volume)", :window_over => 'month'}, :price => 0.0, :description => '' }
+      :formula => {:window_condition => "(2500 >= count_volume)", :window_over => 'month'}, :price => 0.0, :description => '' }
     )
 
   #mms included in tarif
@@ -56,18 +56,18 @@ category = {:name => '_sctcg_own_home_regions_calls_incoming', :service_category
 
 #Own and home regions, Calls, Outcoming, to_own_and_home_region, to_own_operator
 category = {:name => '_sctcg_own_home_regions_calls_to_own_home_regions_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_own_operator}
-  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_all_included_vip_calls[:id])
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 0.0})
+#  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_all_included_vip_calls[:id])
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 0.0})
 
 #Own and home regions, Calls, Outcoming, to_own_and_home_region, to_not_own_operator
 category = {:name => '_sctcg_own_home_regions_calls_to_own_home_regions_not_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_not_own_operator}
   @tc.add_grouped_service_category_tarif_class(category, scg_mgf_all_included_vip_calls[:id])
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 2.0})
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 2.5})
 
 #Own and home regions, Calls, Outcoming, to_own_country, to_own_operator
 category = {:name => '_sctcg_own_home_regions_calls_to_own_country_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country, :service_category_partner_type_id => _service_to_own_operator}
-  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_all_included_vip_calls[:id])
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 3.0 })
+#  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_all_included_vip_calls[:id])
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 0.0 })
 
 #Own and home regions, Calls, Outcoming, to_own_country, to_not_own_operator
 category = {:name => '_sctcg_own_home_regions_calls_to_own_country_not_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country, :service_category_partner_type_id => _service_to_not_own_operator}
@@ -85,7 +85,8 @@ category = {:name => '_sctcg_own_home_regions_sms_to_own_home_regions', :service
 
 #Own and home regions, sms, Outcoming, to_own country
 category = {:name => '_sctcg_own_home_regions_sms_to_own_country', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_own_country}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_count_volume_item, :price => 3.9})
+  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_all_included_vip_sms[:id])
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_count_volume_item, :price => 3.9})
 
 
 #Own and home regions, mms, incoming
@@ -107,18 +108,18 @@ category = {:name => '_sctcg_own_home_regions_mms_to_own_country', :service_cate
 
 #Own country, Calls, Incoming
 category = {:name => '_sctcg_own_country_calls_incoming', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_in}
-  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_all_included_vip_calls[:id])
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 3.0})
+#  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_all_included_vip_calls[:id])
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 3.0})
 
 #Own country, Calls, Outcoming, to_own_and_home_region, to_own_operator
 category = {:name => '_sctcg_own_country_calls_to_own_home_regions_own_operator', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_own_operator}
   @tc.add_grouped_service_category_tarif_class(category, scg_mgf_all_included_vip_calls[:id])
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 2.9})
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 3.0})
 
 #Own country, Calls, Outcoming, to_own_and_home_region, to_not_own_operator
 category = {:name => '_sctcg_own_country_calls_to_own_home_regions_not_own_operator', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_not_own_operator}
   @tc.add_grouped_service_category_tarif_class(category, scg_mgf_all_included_vip_calls[:id])
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 2.9})
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 3.0})
 
 #Own country, Calls, Outcoming, to_own_country, to_own_operator
 category = {:name => '_sctcg_own_country_calls_to_own_country_own_operator', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country, :service_category_partner_type_id => _service_to_own_operator}
@@ -138,11 +139,12 @@ category = {:name => '_sctcg_own_home_regions_sms_incoming', :service_category_r
 #Own country, sms, Outcoming, to_own_home_regions
 category = {:name => '_sctcg_own_country_sms_to_own_home_regions', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_own_and_home_regions}
   @tc.add_grouped_service_category_tarif_class(category, scg_mgf_all_included_vip_sms[:id])
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_count_volume_item, :price => 2.9})
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_count_volume_item, :price => 3.0})
 
 #Own country, sms, Outcoming, to_own country
 category = {:name => '_sctcg_own_country_sms_to_own_country', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_own_country}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => _stf_price_by_count_volume_item, :price => 3.9})
+  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_all_included_vip_sms[:id])
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_count_volume_item, :price => 3.9})
 
 #Central regions RF except for Own and home regions, mms, incoming
 category = {:name => '_sctcg_own_home_regions_mms_incoming', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _mms_in}

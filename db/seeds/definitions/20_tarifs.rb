@@ -61,6 +61,7 @@ _mts_50_sms_in_europe = 305; _mts_100_sms_in_europe = 306; _mts_50_sms_travellin
 _mts_onetime_sms_packet_50 = 333; _mts_onetime_sms_packet_150 = 334; _mts_onetime_sms_packet_300 = 335; 
 _mts_monthly_sms_packet_100 = 336; _mts_monthly_sms_packet_300 = 337; _mts_monthly_sms_packet_500 = 338; _mts_monthly_sms_packet_1000 = 339;
 _mts_unlimited_sms = 346   #new from 11.10.2015
+_mts_100_sms_smart_mini = 349   #new from 02.12.2015
 
 #_mts_everywhere_as_home_smart_plus = 319; _mts_everywhere_as_home_smart_mini = 320
 
