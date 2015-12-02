@@ -1,3 +1,5 @@
+Dir[Rails.root.join("db/seeds/definitions/*.rb")].sort.each { |f| require f }
+
 module Customer::Call::Init
   CommonParams = {
     "country_id"=>1100, 
