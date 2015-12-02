@@ -132,7 +132,7 @@ class Customer::Info::ServiceChoices < ActiveType::Record[Customer::Info]
     operators.each do |operator_id|
        result[:operators] << operator_id  
        result[:tarifs][operator_id] = tarifs[operator_id]
-       result[:tarif_options][operator_id] = tarif_options_for_comparison(tarif_options)
+       result[:tarif_options] = tarif_options_for_comparison(tarif_options)
        result[:common_services][operator_id] = common_services[operator_id]
     end
     result

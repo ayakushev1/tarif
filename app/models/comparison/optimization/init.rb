@@ -9,7 +9,7 @@ module Comparison::Optimization::Init
       :optimization_params => Customer::Info::TarifOptimizationParams.default_values,
       :calculation_choices => {
           "calculate_only_chosen_services"=>"false", 
-          "calculate_with_limited_scope"=>"false", 
+          "calculate_with_limited_scope"=>"true", 
           "calculate_with_fixed_services"=>"false", 
           "call_run_id"=>options[:call_run_id], 
           "accounting_period"=>options[:accounting_period], 
