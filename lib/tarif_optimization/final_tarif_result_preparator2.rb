@@ -196,7 +196,7 @@ class TarifOptimization::FinalTarifResultPreparator2
       category_result[service_id][sc_name]['call_id_count'] += (price_value_detail['call_id_count'] || 0).to_i
       
 #      category_result[service_id][sc_name]['call_ids'] = price_value_detail['call_ids']
-      category_result[service_id][sc_name]['categ_ids'] += price_value_detail['categ_ids'].uniq
+      category_result[service_id][sc_name]['categ_ids'] += (price_value_detail['categ_ids'] || []).uniq
       category_result[service_id][sc_name]['service_category_name'] = sc_name
       category_result[service_id][sc_name]['rouming_ids'] = category_details['service_category_rouming_id']
       category_result[service_id][sc_name]['geo_ids'] = category_details['service_category_geo_id']
@@ -223,7 +223,7 @@ class TarifOptimization::FinalTarifResultPreparator2
       agregate_result[sc_name]['call_id_count'] += (price_value_detail['call_id_count'] || 0).to_i
       
 #      agregate_result[sc_name]['call_ids'] = price_value_detail['call_ids']
-      agregate_result[sc_name]['categ_ids'] += price_value_detail['categ_ids'].uniq
+      agregate_result[sc_name]['categ_ids'] += (price_value_detail['categ_ids'] || []).uniq
       agregate_result[sc_name]['service_category_name'] = sc_name
       agregate_result[sc_name]['rouming_ids'] = category_details['service_category_rouming_id']
       agregate_result[sc_name]['geo_ids'] = category_details['service_category_geo_id']

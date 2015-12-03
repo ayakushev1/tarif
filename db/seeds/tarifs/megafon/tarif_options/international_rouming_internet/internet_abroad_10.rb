@@ -30,7 +30,7 @@ category = {:name => '_sctcg_mgf_ukraine_internet', :service_category_rouming_id
     } )
 
 #Europe, internet
-category = {:name => '_sctcg_mgf_europe_internet', :service_category_rouming_id => _sc_mgf_europe_internet_abroad, :service_category_calls_id => _internet}
+category = {:name => '_sc_mgf_countries_vacation_online', :service_category_rouming_id => _sc_mgf_europe_internet_abroad, :service_category_calls_id => _internet}
   @tc.add_one_service_category_tarif_class(category, {}, 
     {:calculation_order => 0, :price => 129.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_mgf_europe_internet_abroad_10', :description => '', 
      :formula => {

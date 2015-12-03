@@ -23,9 +23,9 @@ table.init do |t|
     	identical_services_for_one_group = identical_service_group.map do |item|     	
     		changed_item = item.is_a?(Array) ? item : [item]
     		changed_item.map do |id|
-    			link_to_if(s_desc[id]['service_http'], s_desc[id]['service_name'], s_desc[id]['service_http'], {:target => "_blank"})
-    		end.join(' + ') if item	    	      	 
-	    end.join(' или ') if identical_service_group
+    			link_to_if(s_desc[id]['service_http'], s_desc[id]['service_name'], s_desc[id]['service_http'], {:target => "_blank"}) if s_desc[id] 
+    		end.compact.join(' + ') if item	    	      	 
+	    end.compact.join(' или ') if identical_service_group
         "[ #{identical_services_for_one_group} ]"
     end.join(', ').html_safe if f.identical_services
     

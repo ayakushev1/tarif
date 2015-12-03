@@ -94,9 +94,16 @@ class TarifOptimization::TarifResultSimlifier
     
 #    raise(StandardError)
     updated_tarif_sets = reorder_tarif_sets(updated_tarif_sets, updated_tarif_results)
+
 #    raise(StandardError, eliminate_identical_tarif_sets)
     updated_tarif_sets, updated_tarif_results = group_identical_tarif_sets(updated_tarif_sets, updated_tarif_results, services_to_not_excude, eliminate_identical_tarif_sets) if eliminate_identical_tarif_sets
 
+    raise(StandardError, ['',
+      "updated_tarif_sets #{updated_tarif_sets}",
+#      "tarif_sets #{final_tarif_set_generator.tarif_sets}",
+      ''
+      ].join("\n\n")) if false
+      
     updated_tarif_sets, updated_tarif_results = group_identical_tarif_sets(updated_tarif_sets, updated_tarif_results, services_to_not_excude, eliminate_identical_tarif_sets) if eliminate_identical_tarif_sets
 
     [updated_tarif_sets, updated_tarif_results]
@@ -165,6 +172,9 @@ class TarifOptimization::TarifResultSimlifier
     updated_tarif_set_list = []
 
     updated_cons_tarif_results = calculate_updated_cons_tarif_results(updated_tarif_results)
+
+#    raise(StandardError, updated_tarif_sets)
+        
     groupped_tarif_results = updated_cons_tarif_results.group_by do |updated_cons_tarif_result| 
       updated_cons_tarif_result[1]['group_criteria'].to_s + '__' + updated_cons_tarif_result[1]['parts'].join('_')  
     end
@@ -204,11 +214,16 @@ class TarifOptimization::TarifResultSimlifier
     updated_cons_tarif_results = {}
     updated_tarif_results.each do |tarif_set_id, updated_tarif_result|
       updated_tarif_result.each do |part, updated_tarif_result_by_part|
+#        raise(StandardError, []) if tarif_set_id == '109' and part == 'all-world-rouming/mobile-connection'
         updated_cons_tarif_results[tarif_set_id] ||= {'price_value' => 0.0, 'call_id_count' => 0, 'group_criteria' => 0, 'parts' => [part]}
+        if updated_tarif_result_by_part.blank?
+          updated_cons_tarif_results[tarif_set_id]['parts'] << part #+= ([part] - updated_cons_tarif_results[tarif_set_id]['parts'])
+        end
+        
         updated_tarif_result_by_part.each do |service_id, updated_tarif_result_by_part_by_service|
           updated_cons_tarif_results[tarif_set_id]['price_value'] += updated_tarif_result_by_part_by_service['price_value'].to_f
           updated_cons_tarif_results[tarif_set_id]['call_id_count'] += updated_tarif_result_by_part_by_service['call_id_count'].to_i
-          updated_cons_tarif_results[tarif_set_id]['parts'] << part
+          updated_cons_tarif_results[tarif_set_id]['parts'] << part #+= ([part] - updated_cons_tarif_results[tarif_set_id]['parts'])
           updated_cons_tarif_results[tarif_set_id]['group_criteria'] += updated_tarif_result_by_part_by_service['price_value'].to_f.round(0).to_i #+
 #          updated_cons_tarif_results[tarif_set_id]['group_criteria'] += (updated_tarif_result_by_part_by_service['price_value'].to_f / 5.0).round(0).to_i #+
 #            updated_tarif_result_by_part_by_service['call_id_count'].to_i
