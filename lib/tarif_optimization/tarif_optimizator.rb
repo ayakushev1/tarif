@@ -369,7 +369,7 @@ class TarifOptimization::TarifOptimizator
   
   def update_call_stat(operator)
     Result::CallStat.where(:run_id => result_run_id, :operator_id => operator).first_or_create.
-      update(:stat => calls_stat_calculator.calculate_calls_stat(query_constructor))    
+      update_columns(:stat => calls_stat_calculator.calculate_calls_stat(query_constructor))    
   end
 
 end
