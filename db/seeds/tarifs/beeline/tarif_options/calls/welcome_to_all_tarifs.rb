@@ -27,7 +27,7 @@ category = {:name => '_sctcg_own_home_regions_calls_to_bln_welcome_1_to_bln_part
      :stat_params => {
                       :count_duration_minute_more_0 => "sum(case when ceil(((description->>'duration')::float)/60.0) > 0.0 then 1.0 else 0.0 end)",
                       :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
-     :method => '((sum_duration_minute - 1.0 )* 1.0 + count_duration_minute_more_0 * 5.0)'}, } )
+     :method => '((sum_duration_minute - count_duration_minute_more_0 ) * 1.0 + count_duration_minute_more_0 * 5.0)'}, } )
 
 #  {:calculation_order => 0, :standard_formula_id => _stf_price_by_sum_duration_minute, :price => 4.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
 #   :formula => {

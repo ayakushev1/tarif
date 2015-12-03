@@ -27,20 +27,18 @@ category = {:name => '_sctcg_own_home_regions_calls_to_own_region', :service_cat
   @tc.add_one_service_category_tarif_class(category, {}, 
   {:calculation_order => 0, :price => 2.6, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
    :formula => {
-     :stat_params => {:sum_duration_minute_less_1 => "sum(case when ((description->>'duration')::float) <= 60.0 then 1.0 else 0.0 end)",
-                      :count_duration_minute_more_1 => "sum(case when ((description->>'duration')::float) > 60.0 then 1.0 else 0.0 end)",                      
+     :stat_params => {:count_calls => "sum(case when ((description->>'duration')::float) > 0.0 then 1.0 else 0.0 end)",                      
                       :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
-     :method => 'price_formulas.price * (sum_duration_minute_less_1 + count_duration_minute_more_1) + 1.6 * (sum_duration_minute - sum_duration_minute_less_1)'}, } )
+     :method => 'price_formulas.price * count_calls + 1.6 * (sum_duration_minute - count_calls)'}, } )
 
 #Own and home regions, Calls, Outcoming, to_home_region
 category = {:name => '_sctcg_own_home_regions_calls_to_home_region', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_home_region}
   @tc.add_one_service_category_tarif_class(category, {}, 
   {:calculation_order => 0, :price => 1.6, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
    :formula => {
-     :stat_params => {:sum_duration_minute_less_1 => "sum(case when ((description->>'duration')::float) <= 60.0 then 1.0 else 0.0 end)",                      
-                      :count_duration_minute_more_1 => "sum(case when ((description->>'duration')::float) > 60.0 then 1.0 else 0.0 end)",                      
+     :stat_params => {:count_calls => "sum(case when ((description->>'duration')::float) > 0.0 then 1.0 else 0.0 end)",                      
                       :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
-     :method => 'price_formulas.price * (sum_duration_minute_less_1 + count_duration_minute_more_1) + 0.6 * (sum_duration_minute - sum_duration_minute_less_1)'}, } )
+     :method => 'price_formulas.price * count_calls + 1.6 * (sum_duration_minute - count_calls)'}, } )
 
 #Own and home regions, Calls, Outcoming, to_own_country, to_own_operator
 category = {:name => '_sctcg_own_home_regions_calls_to_own_country_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country, :service_category_partner_type_id => _service_to_own_operator}
@@ -117,10 +115,9 @@ category = {:name => 'sctcg_cenral_regions_not_own_and_home_region_calls_to_own_
   @tc.add_one_service_category_tarif_class(category, {}, 
   {:calculation_order => 0, :price => 2.6, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
    :formula => {
-     :stat_params => {:sum_duration_minute_less_1 => "sum(case when ((description->>'duration')::float) <= 60.0 then 1.0 else 0.0 end)",                      
-                      :count_duration_minute_more_1 => "sum(case when ((description->>'duration')::float) > 60.0 then 1.0 else 0.0 end)",                      
+     :stat_params => {:count_calls => "sum(case when ((description->>'duration')::float) > 0.0 then 1.0 else 0.0 end)",                      
                       :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
-     :method => 'price_formulas.price * (sum_duration_minute_less_1 + count_duration_minute_more_1) + 1.6 * (sum_duration_minute - sum_duration_minute_less_1)'}, },
+     :method => 'price_formulas.price * count_calls + 1.6 * (sum_duration_minute - count_calls)'}, },
     :tarif_set_must_include_tarif_options => [_mgf_everywhere_moscow_in_central_region] )  
 
 #Central regions RF except for Own and home regions, Calls, Outcoming, to_home_region
@@ -128,10 +125,9 @@ category = {:name => 'sctcg_cenral_regions_not_own_and_home_region_calls_to_home
   @tc.add_one_service_category_tarif_class(category, {}, 
   {:calculation_order => 0, :price => 1.6, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
    :formula => {
-     :stat_params => {:sum_duration_minute_less_1 => "sum(case when ((description->>'duration')::float) <= 60.0 then 1.0 else 1.0 end)",                      
-                      :count_duration_minute_more_1 => "sum(case when ((description->>'duration')::float) > 60.0 then 1.0 else 0.0 end)",                      
+     :stat_params => {:count_calls => "sum(case when ((description->>'duration')::float) > 0.0 then 1.0 else 0.0 end)",                      
                       :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
-     :method => 'price_formulas.price * (sum_duration_minute_less_1 + count_duration_minute_more_1) + 0.6 * (sum_duration_minute - sum_duration_minute_less_1)'}, },
+     :method => 'price_formulas.price * count_calls + 1.6 * (sum_duration_minute - count_calls)'}, },
     :tarif_set_must_include_tarif_options => [_mgf_everywhere_moscow_in_central_region] )  
 
 
@@ -205,10 +201,9 @@ category = {:name => 'sctcg_cenral_regions_not_own_and_home_region_calls_to_own_
   @tc.add_one_service_category_tarif_class(category, {}, 
   {:calculation_order => 0, :price => 2.6, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
    :formula => {
-     :stat_params => {:sum_duration_minute_less_1 => "sum(case when ((description->>'duration')::float) <= 60.0 then 1.0 else 0.0 end)",                      
-                      :count_duration_minute_more_1 => "sum(case when ((description->>'duration')::float) > 60.0 then 1.0 else 0.0 end)",                      
+     :stat_params => {:count_calls => "sum(case when ((description->>'duration')::float) > 0.0 then 1.0 else 0.0 end)",                      
                       :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
-     :method => 'price_formulas.price * (sum_duration_minute_less_1 + count_duration_minute_more_1) + 1.6 * (sum_duration_minute - sum_duration_minute_less_1)'}, },
+     :method => 'price_formulas.price * count_calls + 1.6 * (sum_duration_minute - count_calls)'}, },
     :tarif_set_must_include_tarif_options => [_mgf_be_as_home] )  
 
 #All Russia except for Own and home regions, Calls, Outcoming, to_home_region
@@ -216,10 +211,9 @@ category = {:name => 'sctcg_cenral_regions_not_own_and_home_region_calls_to_home
   @tc.add_one_service_category_tarif_class(category, {}, 
   {:calculation_order => 0, :price => 1.6, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute,
    :formula => {
-     :stat_params => {:sum_duration_minute_less_1 => "sum(case when ((description->>'duration')::float) <= 60.0 then 1.0 else 1.0 end)",                      
-                      :count_duration_minute_more_1 => "sum(case when ((description->>'duration')::float) > 60.0 then 1.0 else 0.0 end)",                      
+     :stat_params => {:count_calls => "sum(case when ((description->>'duration')::float) > 0.0 then 1.0 else 0.0 end)",                      
                       :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
-     :method => 'price_formulas.price * (sum_duration_minute_less_1 + count_duration_minute_more_1) + 0.6 * (sum_duration_minute - sum_duration_minute_less_1)'}, },
+     :method => 'price_formulas.price * count_calls + 1.6 * (sum_duration_minute - count_calls)'}, },
     :tarif_set_must_include_tarif_options => [_mgf_be_as_home] )  
 
 
