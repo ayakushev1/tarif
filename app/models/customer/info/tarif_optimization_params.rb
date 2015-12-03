@@ -19,7 +19,7 @@ class Customer::Info::TarifOptimizationParams < ActiveType::Record[Customer::Inf
   end
   
   def self.update_info(user_id, values)
-    where(:user_id => user_id).first_or_create.update(:info => values)
+    where(:user_id => user_id).first_or_create.update_columns(:info => values)
   end
   
   def self.default_values

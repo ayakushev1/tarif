@@ -19,7 +19,7 @@ class Customer::Info::ServiceChoices < ActiveType::Record[Customer::Info]
   end
   
   def self.update_info(user_id, values)
-    where(:user_id => user_id).first_or_create.update(:info => values)
+    where(:user_id => user_id).first_or_create.update_columns(:info => values)
   end
   
   def self.services_from_session_to_optimization_format(services_chosen)

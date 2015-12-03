@@ -22,7 +22,7 @@ class Customer::Info::ServicesUsed < ActiveType::Record[Customer::Info]
     update_amount = (cash / 95).to_i
     existing_info = info(user_id)
     
-    where(:user_id => user_id).first.update(:info => {
+    where(:user_id => user_id).first.update_columns(:info => {
       'calls_modelling_count' => (existing_info['calls_modelling_count'] || 0) + update_amount * values_for_payment['calls_modelling_count'], 
       'calls_parsing_count' => (existing_info['calls_parsing_count'] || 0) + update_amount * values_for_payment['calls_parsing_count'], 
       'tarif_optimization_count' => (existing_info['tarif_optimization_count'] || 0) + update_amount * values_for_payment['tarif_optimization_count'],
@@ -36,7 +36,7 @@ class Customer::Info::ServicesUsed < ActiveType::Record[Customer::Info]
 
   def self.decrease_one_free_trials_by_one(user_id, service_used)
     existing_info = info(user_id)
-    where(:user_id => user_id).first.update(:info => {
+    where(:user_id => user_id).first.update_columns(:info => {
       'calls_modelling_count' => (existing_info['calls_modelling_count'] || 0) - (service_used.to_s == 'calls_modelling_count' ? 1 : 0), 
       'calls_parsing_count' => (existing_info['calls_parsing_count'] || 0) - (service_used.to_s == 'calls_parsing_count' ? 1 : 0), 
       'tarif_optimization_count' => (existing_info['tarif_optimization_count'] || 0) - (service_used.to_s == 'tarif_optimization_count' ? 1 : 0),

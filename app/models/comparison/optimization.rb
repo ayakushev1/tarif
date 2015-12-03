@@ -65,7 +65,7 @@ class Comparison::Optimization < ActiveRecord::Base
         
 #        raise(StandardError, [group.inspect, group.result_run.comparison_group_id, options[:comparison_group_id]]) #if !group.result_run.comparison_group_id
         result << calculate_one_optimization(options, false)
-        group.result_run.update(result_run_update_options(options.merge(local_options))) 
+        group.result_run.update_columns(result_run_update_options(options.merge(local_options))) 
       end
     end
     result
@@ -76,9 +76,9 @@ class Comparison::Optimization < ActiveRecord::Base
     result.merge!(options[:services_by_operator].slice(:operators))
     return result if test
 #    raise(StandardError, [options[:selected_service_categories]].join("\n"))
-    true ? 
-      TarifOptimization::TarifOptimizatorRunner.recalculate_with_delayed_job(options) :
-      TarifOptimization::TarifOptimizatorRunner.recalculate_direct(options)
+#    true ? 
+#      TarifOptimization::TarifOptimizatorRunner.recalculate_with_delayed_job(options) :
+#      TarifOptimization::TarifOptimizatorRunner.recalculate_direct(options)
           
     result
   end

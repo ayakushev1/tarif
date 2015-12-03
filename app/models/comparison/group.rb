@@ -19,7 +19,7 @@ class Comparison::Group < ActiveRecord::Base
   end
   
   def update_comparison_results
-    update({:result => compare})
+    update_columns({:result => compare})
   end
   
   def compare

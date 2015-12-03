@@ -143,7 +143,7 @@ class Customer::CallRun < ActiveRecord::Base
       result[accounting_period] = calculator.calculate_calls_stat(query_constructor)
       
     end
-    update(:stat => result)
+    update_columns(:stat => result)
   end
 
   
