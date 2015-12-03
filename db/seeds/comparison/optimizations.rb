@@ -10,3 +10,11 @@ Comparison::Optimization.find_or_create_by(:id => 1).update(
     для каждого тарифа и для каждой корзины", 
   :publication_status_id => 100, :publication_order => 10000, :optimization_type_id => 1)
 
+Comparison::Optimization.find_or_create_by(:id => 2).update(
+  :name => 'Основной рейтинг тарифов сотовой связи на основе методологии ОЭСР', 
+  :description => "Рейтинг подготовлен для трех фиксированных наборов мобильных услуг сотовых операторов (корзин): малой, средней и дорогой.\
+    В состав услуг включены услуги только в пределах России. \ 
+    Стоимость услуг оценивалась с учетом подбора оптимальных тарифных опций по алгоритму www.mytarifs.ru \
+    для каждого тарифа и для каждой корзины", 
+  :publication_status_id => 100, :publication_order => 10000, :optimization_type_id => 1)
+
