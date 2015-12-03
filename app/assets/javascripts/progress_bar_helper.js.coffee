@@ -14,4 +14,4 @@ checkProgress = (progresspump) ->
 $(document).on 'ready page:load ajaxComplete', ->
   progresspump = setTimeout -> 
     checkProgress progresspump
-    , 1000
+  , 1000
