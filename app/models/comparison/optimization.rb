@@ -28,7 +28,8 @@ class Comparison::Optimization < ActiveRecord::Base
     groups.collect{|group| group.update_comparison_results}
   end
   
-  def self.generate_calls(only_new = true, test = false)    
+  def self.generate_calls(only_new = true, test = false)   
+#    raise(StandardError, only_new) 
     all.collect{|optimization| optimization.generate_calls(only_new, test)}   
   end
   
@@ -76,9 +77,9 @@ class Comparison::Optimization < ActiveRecord::Base
     result.merge!(options[:services_by_operator].slice(:operators))
     return result if test
 #    raise(StandardError, [options[:selected_service_categories]].join("\n"))
-#    true ? 
-#      TarifOptimization::TarifOptimizatorRunner.recalculate_with_delayed_job(options) :
-#      TarifOptimization::TarifOptimizatorRunner.recalculate_direct(options)
+    true ? 
+      TarifOptimization::TarifOptimizatorRunner.recalculate_with_delayed_job(options) :
+      TarifOptimization::TarifOptimizatorRunner.recalculate_direct(options)
           
     result
   end
