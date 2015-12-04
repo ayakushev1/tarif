@@ -124,4 +124,16 @@ class TarifOptimization::TarifOptimizatorRunner
      }   
   end
 
+  def self.clean_new_results(result_run_id = nil)
+    if result_run_id
+      Result::Tarif.where(:run_id => result_run_id).delete_all
+      Result::ServiceSet.where(:run_id => result_run_id).delete_all
+      Result::Service.where(:run_id => result_run_id).delete_all
+      Result::Agregate.where(:run_id => result_run_id).delete_all
+      Result::ServiceCategory.where(:run_id => result_run_id).delete_all
+    end
+
+  end
+  
+
 end
