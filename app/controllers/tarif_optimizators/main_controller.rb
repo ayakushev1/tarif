@@ -16,6 +16,7 @@ class TarifOptimizators::MainController < ApplicationController
 
   def recalculate    
     update_customer_infos
+    TarifOptimization::TarifOptimizatorRunner.clean_new_results(session_filtr_params(calculation_choices)['result_run_id'].to_i)
     TarifOptimization::TarifOptimizatorRunner.recalculate_with_delayed_job(options)
     redirect_to root_path, {:alert => "Мы сообщим вам электронным письмом об окончании расчетов"}
   end 

@@ -28,6 +28,7 @@ class TarifOptimizators::AdminController < ApplicationController
   
   def recalculate    
     update_customer_infos
+    TarifOptimization::TarifOptimizatorRunner.clean_new_results(session_filtr_params(calculation_choices)['result_run_id'].to_i)
     if session_filtr_params_optimization_params['calculate_on_background'] == 'true' and
       session_filtr_params(calculation_choices)['calculate_with_fixed_services'] == 'false'
       if (session_filtr_params_optimization_params['calculate_background_with_spawnling'] == 'true')
