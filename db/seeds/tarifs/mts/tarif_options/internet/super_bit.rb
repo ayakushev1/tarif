@@ -6,22 +6,88 @@
   :dependency => {
     :categories => [_tcgsc_internet],
     :incompatibility => {
-      :internet_comp => [_mts_mts_planshet, _mts_bit, _mts_super_bit, _mts_internet_mini, _mts_internet_maxi, _mts_internet_super, _mts_internet_vip]}, 
-      :internet_smart => [_mts_mts_planshet, _mts_additional_internet_500_mb, _mts_additional_internet_1_gb, _mts_super_bit],
+      :internet_comp => [_mts_bit, _mts_internet_super, _mts_internet_mini, _mts_internet_maxi, _mts_internet_super, _mts_internet_vip], 
+      :internet_smart => [_mts_additional_internet_500_mb, _mts_additional_internet_1_gb, _mts_super_bit]},
     :general_priority => _gp_tarif_option_without_limits,#_gp_tarif_option_with_limits,
-    :other_tarif_priority => {:lower => [_mts_mini_bit], :higher => [_mts_unlimited_internet_on_day]},
+    :other_tarif_priority => {:lower => [_mts_mini_bit], :higher => [_mts_unlimited_internet_on_day, _mts_turbo_button_100_mb, _mts_turbo_button_500_mb, _mts_turbo_button_2_gb, _mts_turbo_button_5_gb]},
     :prerequisites => [],
     :forbidden_tarifs => {:to_switch_on => [_mts_smart, _mts_smart_mini, _mts_smart_plus, _mts_smart_top, _mts_smart_nonstop, _mts_ultra, _mts_mts_connect_4], :to_serve => []},
     :multiple_use => false
   } } )
 
+  #internet included in tarif
+  scg_mts_super_bit_included_in_tarif_internet = @tc.add_service_category_group(
+    {:name => 'scg_mts_super_bit_included_in_tarif_internet' }, 
+    {:name => "price for _scg_mts_super_bit_included_in_tarif_internet"}, 
+    {:calculation_order => 0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :price => 350.0, :description => '', 
+      :formula => {
+       :window_condition => "(3000.0 >= sum_volume)", :window_over => 'month',
+       :stat_params => {:sum_volume => "sum((description->>'volume')::float)"},
+       :method => "price_formulas.price",
+     }, 
+    } )
+
+  #internet for add_speed_500mb option
+  scg_mts_add_speed_500mb = @tc.add_service_category_group(
+    {:name => 'scg_mts_add_speed_500mb_mts_super_bit' }, 
+    {:name => "price for scg_mts_add_speed_500mb_mts_super_bit"}, 
+    {:calculation_order => 1, :price => 95.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'scf_mts_add_speed_500mb_mts_super_bit', :description => '', 
+     :formula => {
+       :auto_turbo_buttons  => {
+         :group_by => 'month',
+         :stat_params => {
+           :sum_volume => "sum((description->>'volume')::float)",
+           :count_of_usage_of_500 => "ceil((sum((description->>'volume')::float) - 0.0) / 500.0)"},
+       :method => "price_formulas.price * GREATEST(count_of_usage_of_500, 0.0) + 0.02",
+       }
+     },
+     } 
+    )
+
+  #internet for add_speed_2gb option
+  scg_mts_add_speed_2gb = @tc.add_service_category_group(
+    {:name => 'scg_mts_add_speed_2gb_mts_super_bit' }, 
+    {:name => "price for scg_mts_add_speed_2gb_mts_super_bit"}, 
+    {:calculation_order => 2, :price => 250.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'scf_mts_add_speed_2gb_mts_super_bit', :description => '', 
+     :formula => {
+       :auto_turbo_buttons  => {
+         :group_by => 'month',
+         :stat_params => {
+           :sum_volume => "sum((description->>'volume')::float)",
+           :count_of_usage_of_2000 => "ceil((sum((description->>'volume')::float) - 0.0) / 2000.0)"},
+       :method => "price_formulas.price * GREATEST(count_of_usage_of_2000, 0.0) + 0.03",
+       }
+     },
+     } 
+    )
+
+  #internet for add_speed_5gb option
+  scg_mts_add_speed_5gb = @tc.add_service_category_group(
+    {:name => 'scg_mts_add_speed_5gb_mts_super_bit' }, 
+    {:name => "price for scg_mts_add_speed_5gb_mts_super_bit"}, 
+    {:calculation_order => 3, :price => 450.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'scf_mts_add_speed_5gb_mts_super_bit', :description => '', 
+     :formula => {
+       :auto_turbo_buttons  => {
+         :group_by => 'month',
+         :stat_params => {
+           :sum_volume => "sum((description->>'volume')::float)",
+           :count_of_usage_of_5000 => "ceil((sum((description->>'volume')::float) - 0.0) / 5000.0)"},
+       :method => "price_formulas.price * GREATEST(count_of_usage_of_5000, 0.0) + 0.04",
+       }
+     },
+     } 
+    )
+
 #Ежемесячная плата
-  @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => _stf_price_by_1_month, :price => 350.0})
+  @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => _stf_price_by_1_month, :price => 0.0})
 
 #Intranet rouming, internet
   category = {:name => '_sctcg_intranet_rouming_internet', :service_category_rouming_id => _all_russia_rouming, :service_category_calls_id => _internet}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => _stf_price_by_sum_volume_m_byte, 
-      :formula => {:window_condition => "(3000.0 >= sum_volume)", :window_over => 'month'}, :price => 0.0, :description => '' } )
+#  @tc.add_only_service_category_tarif_class(category)  
+  @tc.add_grouped_service_category_tarif_class(category, scg_mts_super_bit_included_in_tarif_internet[:id])
+  @tc.add_grouped_service_category_tarif_class(category, scg_mts_add_speed_500mb[:id], :tarif_set_must_include_tarif_options => [_mts_turbo_button_500_mb] )
+  @tc.add_grouped_service_category_tarif_class(category, scg_mts_add_speed_2gb[:id], :tarif_set_must_include_tarif_options => [_mts_turbo_button_2_gb] )
+  @tc.add_grouped_service_category_tarif_class(category, scg_mts_add_speed_5gb[:id], :tarif_set_must_include_tarif_options => [_mts_turbo_button_5_gb] )
 
 @tc.add_tarif_class_categories
 

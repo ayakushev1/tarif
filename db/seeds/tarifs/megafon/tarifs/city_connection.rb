@@ -15,8 +15,8 @@
 #Добавление новых service_category_group
   #calls included in tarif
   scg_mgf_city_connectioncalls = @tc.add_service_category_group(
-    {:name => 'scg_mgf_city_connectioncalls' }, 
-    {:name => "price for scg_mgf_city_connectioncalls"}, 
+    {:name => 'scg_mgf_city_connection_calls' }, 
+    {:name => "price for scg_mgf_city_connection_calls"}, 
     {:calculation_order => 0, :standard_formula_id => _stf_price_by_sum_duration_minute, 
       :formula => {:window_condition => "(500.0 >= sum_duration_minute)", :window_over => 'month'}, :price => 0.0, :description => '' }
     )

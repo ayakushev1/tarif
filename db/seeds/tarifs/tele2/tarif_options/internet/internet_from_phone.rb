@@ -4,8 +4,8 @@
   :features => {:http => 'http://msk.tele2.ru/internet/skidki/internet-s-telefona/'},
   :dependency => {
     :incompatibility => {
-      :internet_options => [_tele_internet_from_phone, _tele_paket_interneta, _tele_portfel_interneta, _tele_chemodan_interneta, 
-          _tele_day_in_net, _tele_add_speed_3gb, _tele_add_speed_100mb]
+      :internet_options => [_tele_internet_from_phone, _tele_paket_interneta, _tele_portfel_interneta, _tele_chemodan_interneta, _tele_day_in_net],
+      :add_speed_internet_options => [_tele_internet_from_phone, _tele_day_in_net, _tele_add_speed_3gb, _tele_add_speed_100mb]
     }, 
     :general_priority => _gp_tarif_option_without_limits,#_gp_tarif_option_with_limits,
     :other_tarif_priority => {:lower => [], :higher => []},

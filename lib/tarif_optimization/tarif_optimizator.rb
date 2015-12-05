@@ -149,11 +149,15 @@ class TarifOptimization::TarifOptimizator
         calculate_tarif_results(operator, service_slice)
       end
     end
-    
     current_tarif_optimization_results.update_all_tarif_results_with_missing_prev_results
     current_tarif_optimization_results.calculate_all_cons_tarif_results_by_parts        
     tarif_sets, tarif_results, groupped_identical_services = simplify_tarif_resuts_by_tarif(operator, tarif, accounting_period)
         
+    raise(StandardError, [
+      "tarif_sets #{tarif_sets}",
+      ""
+    ].join("\n\n")) if false
+
     if save_interim_results_after_calculating_tarif_results
       save_tarif_results(operator, tarif, accounting_period, {:tarif_sets => tarif_sets, :tarif_results => tarif_results, :groupped_identical_services => groupped_identical_services})    
       calculate_and_save_final_tarif_sets_by_tarif(operator, tarif, accounting_period)

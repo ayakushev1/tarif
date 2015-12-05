@@ -22,8 +22,8 @@
 #  @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => _stf_fixed_price_if_used_in_1_day_duration, :price => 10.0})
 
 #Own country, Internet
-#category = {:name => '_sctcg_mgf_own_country_rouming_internet', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _internet}
-#  @tc.add_only_service_category_tarif_class(category)  
+category = {:name => '_sctcg_mgf_own_country_rouming_internet', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _internet}
+  @tc.add_only_service_category_tarif_class(category)  
 
 
 

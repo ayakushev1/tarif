@@ -12,6 +12,7 @@
     :other_tarif_priority => {:lower => [_mts_mini_bit, _mts_unlimited_internet_on_day], :higher => []},
     :prerequisites => [_mts_mts_connect_4],
     :forbidden_tarifs => {:to_switch_on => [_mts_smart, _mts_smart_mini, _mts_smart_plus, _mts_ultra, _mts_mts_connect_4, _mts_smart_top, _mts_smart_nonstop], :to_serve => []},
+    :is_archived => true,
     :multiple_use => false
   } } )
 
@@ -32,14 +33,14 @@
        :stat_params => {:sum_volume => "sum((description->>'volume')::float)"}, 
        :method => "price_formulas.price",
        
-       :auto_turbo_buttons  => {
-         :group_by => 'month',
-         :stat_params => {
-           :sum_volume => "sum((description->>'volume')::float)",
-           :count_of_usage_of_500 => "ceil((sum((description->>'volume')::float) - 4000.0) / 500.0)",
-           :count_of_usage_of_2000 => "ceil((sum((description->>'volume')::float) - 4000.0) / 2000.0)"},
-       :method => "price_formulas.price + case when count_of_usage_of_500 > 2.66667 then count_of_usage_of_2000 * 250.0 when count_of_usage_of_500 > 0.0 then count_of_usage_of_500 * 95.0 else 0.0 end",
-       }
+#       :auto_turbo_buttons  => {
+#         :group_by => 'month',
+#         :stat_params => {
+#           :sum_volume => "sum((description->>'volume')::float)",
+#           :count_of_usage_of_500 => "ceil((sum((description->>'volume')::float) - 4000.0) / 500.0)",
+#           :count_of_usage_of_2000 => "ceil((sum((description->>'volume')::float) - 4000.0) / 2000.0)"},
+#       :method => "price_formulas.price + case when count_of_usage_of_500 > 2.66667 then count_of_usage_of_2000 * 250.0 when count_of_usage_of_500 > 0.0 then count_of_usage_of_500 * 95.0 else 0.0 end",
+#       }
      }, 
     } )
 

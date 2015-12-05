@@ -43,6 +43,40 @@
       :formula => {:window_condition => "(8000.0 >= sum_volume)", :window_over => 'month'}, :price => 0.0, :description => '' }
     )
 
+  #internet for add_speed_1gb option
+  scg_mgf_add_speed_1gb = @tc.add_service_category_group(
+    {:name => 'scg_mgf_add_speed_1gb_mgf_all_included_l' }, 
+    {:name => "price for scg_mgf_add_speed_1gb_mgf_all_included_l"}, 
+    {:calculation_order => 1, :price => 150.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'scf_mgf_add_speed_1gb_mgf_all_included_l', :description => '', 
+     :formula => {
+       :auto_turbo_buttons  => {
+         :group_by => 'month',
+         :stat_params => {
+           :sum_volume => "sum((description->>'volume')::float)",
+           :count_of_usage_of_1000 => "ceil((sum((description->>'volume')::float) - 0.0) / 1000.0)"},
+       :method => "price_formulas.price * GREATEST(count_of_usage_of_1000, 0.0) + 0.01",
+       }
+     },
+     } 
+    )
+
+  #internet for add_speed_4gb option
+  scg_mgf_add_speed_5gb = @tc.add_service_category_group(
+    {:name => 'scg_mgf_add_speed_5gb_mgf_all_included_l' }, 
+    {:name => "price for scg_mgf_add_speed_5gb_mgf_all_included_l"}, 
+    {:calculation_order => 2, :price => 400.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'scf_mgf_add_speed_5gb_mgf_all_included_l', :description => '', 
+     :formula => {
+       :auto_turbo_buttons  => {
+         :group_by => 'month',
+         :stat_params => {
+           :sum_volume => "sum((description->>'volume')::float)",
+           :count_of_usage_of_5000 => "ceil((sum((description->>'volume')::float) - 0.0) / 5000.0)"},
+       :method => "price_formulas.price * GREATEST(count_of_usage_of_5000, 0.0) + 0.02",
+       }
+     },
+     } 
+    )
+   
 #Переход на тариф
 #  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item, :price => 0.0})  
 
@@ -103,6 +137,8 @@ category = {:name => '_sctcg_own_home_regions_mms_to_own_country', :service_cate
 #Own and home regions, Internet
   category = {:name => 'own_and_home_regions_internet', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _internet}
   @tc.add_grouped_service_category_tarif_class(category, scg_mgf_all_included_l_internet[:id])
+  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_add_speed_1gb[:id], :tarif_set_must_include_tarif_options => [_mgf_add_speed_1gb] )
+  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_add_speed_5gb[:id], :tarif_set_must_include_tarif_options => [_mgf_add_speed_5gb] )
 
 
 #Own country, Calls, Incoming
@@ -132,6 +168,8 @@ category = {:name => '_sctcg_own_country_sms_to_own_home_regions', :service_cate
 #Own country, Internet
   category = {:name => 'own_country_internet', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _internet}
   @tc.add_grouped_service_category_tarif_class(category, scg_mgf_all_included_l_internet[:id])
+  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_add_speed_1gb[:id], :tarif_set_must_include_tarif_options => [_mgf_add_speed_1gb] )
+  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_add_speed_5gb[:id], :tarif_set_must_include_tarif_options => [_mgf_add_speed_5gb] )
 
 
 

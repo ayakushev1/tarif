@@ -52,6 +52,7 @@ def access_methods_to_constant_service_categories
 
   _sc_rouming_bln_all_russia_except_some_regions_for_internet = 510; _sc_rouming_bln_bad_internet_regions = 511;
   _sc_rouming_bln_cenral_regions_not_moscow_regions = 512; _sc_rouming_bln_exept_for_cenral_regions_not_moscow_regions = 513;
+  _sc_rouming_sc_rouming_bln_bad_internet_regions = 514;
   
  #география услуг
   _geography_services = 100;

@@ -13,9 +13,9 @@
   } } )
 
 scg_100_minutes_europe = @tc.add_service_category_group(
-  {:name => 'scg_100_minutes_europe' }, 
-  {:name => "price for scg_100_minutes_europe"}, 
-  {:calculation_order => 0, :price => 990.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute, :name => '_stf_100_minutes_europe', :description => '', 
+  {:name => 'scg_mgf_100_minutes_europe' }, 
+  {:name => "price for scg_mgf_100_minutes_europe"}, 
+  {:calculation_order => 0, :price => 990.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute, :name => 'scf_mgf_100_minutes_europe', :description => '', 
    :formula => {
      :window_condition => "(100.0 >= sum_duration_minute)", :window_over => 'month',
      :stat_params => {:sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},

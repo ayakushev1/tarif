@@ -35,6 +35,40 @@
       :formula => {:window_condition => "(4000.0 >= sum_volume)", :window_over => 'month'}, :price => 0.0, :description => '' }
     )
 
+  #internet for scg_tele_add_speed_100mb option
+  scg_tele_add_speed_100mb = @tc.add_service_category_group(
+    {:name => 'scg_tele_add_speed_100mb_tele_very_black' }, 
+    {:name => "price for scg_tele_add_speed_100mb_tele_very_black"}, 
+    {:calculation_order => 1, :price => 15.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'scf_tele_add_speed_100mb_tele_very_black', :description => '', 
+     :formula => {
+       :auto_turbo_buttons  => {
+         :group_by => 'day',
+         :stat_params => {
+           :sum_volume => "sum((description->>'volume')::float)",
+           :count_of_usage_of_100 => "ceil((sum((description->>'volume')::float) - 0.0) / 100.0)"},
+       :method => "price_formulas.price * GREATEST(count_of_usage_of_100, 0.0) + 0.01",
+       }
+     },
+     } 
+    )
+
+  #internet for scg_tele_add_speed_3gb option
+  scg_tele_add_speed_3gb= @tc.add_service_category_group(
+    {:name => 'scg_tele_add_speed_3gb_tele_very_black' }, 
+    {:name => "price for scg_tele_add_speed_3gb_tele_very_black"}, 
+    {:calculation_order => 2, :price => 150.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'scf_tele_add_speed_3gb_tele_very_black', :description => '', 
+     :formula => {
+       :auto_turbo_buttons  => {
+         :group_by => 'month',
+         :stat_params => {
+           :sum_volume => "sum((description->>'volume')::float)",
+           :count_of_usage_of_3000 => "ceil((sum((description->>'volume')::float) - 0.0) / 3000.0)"},
+       :method => "price_formulas.price * GREATEST(count_of_usage_of_3000, 0.0) + 0.02",
+       }
+     },
+     } 
+    )
+   
 #Переход на тариф
 #  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item, :price => 0.0})  
 
@@ -95,7 +129,9 @@ category = {:name => '_sctcg_own_home_regions_mms_to_own_country', :service_cate
 #Own and home regions, Internet
   category = {:name => 'own_and_home_regions_internet', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _internet}
   @tc.add_grouped_service_category_tarif_class(category, scg_tele_very_black_internet[:id])
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_volume_m_byte, :price => 0.16})  #как в опции Добавить скорость плюс 1 копейка
+  @tc.add_grouped_service_category_tarif_class(category, scg_tele_add_speed_100mb[:id], :tarif_set_must_include_tarif_options => [_tele_add_speed_100mb] )
+  @tc.add_grouped_service_category_tarif_class(category, scg_tele_add_speed_3gb[:id], :tarif_set_must_include_tarif_options => [_tele_add_speed_3gb] )
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 3,:standard_formula_id => _stf_price_by_sum_volume_m_byte, :price => 0.16})  #как в опции Добавить скорость плюс 1 копейка
 
 
 
@@ -138,7 +174,9 @@ category = {:name => '_sctcg_own_country_mms_to_own_country', :service_category_
 ##Own country, Internet
   category = {:name => 'own_and_home_regions_internet', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _internet}
   @tc.add_grouped_service_category_tarif_class(category, scg_tele_very_black_internet[:id])
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_volume_m_byte, :price => 0.16})  #как в опции Добавить скорость плюс 1 копейка
+  @tc.add_grouped_service_category_tarif_class(category, scg_tele_add_speed_100mb[:id], :tarif_set_must_include_tarif_options => [_tele_add_speed_100mb] )
+  @tc.add_grouped_service_category_tarif_class(category, scg_tele_add_speed_3gb[:id], :tarif_set_must_include_tarif_options => [_tele_add_speed_3gb] )
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 3,:standard_formula_id => _stf_price_by_sum_volume_m_byte, :price => 0.16})  #как в опции Добавить скорость плюс 1 копейка
 
 
 @tc.add_tarif_class_categories

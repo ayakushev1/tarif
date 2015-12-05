@@ -120,6 +120,8 @@ _mgf_internet_xs = 476; _mgf_internet_s = 477; _mgf_internet_m = 478; _mgf_inter
 _mgf_internet_24 = 481; _mgf_internet_24_pro = 482; 
 _mgf_bit_pro = 484; _mgf_bit_mega_pro_150 = 485; _mgf_bit_mega_pro_250 = 486; _mgf_bit_mega_pro_500 = 487;
 _mgf_internet_tablet = 488;  #new from 11.10.2015
+_mgf_add_speed_1gb = 494; _mgf_add_speed_5gb = 495;   #new from 02.12.2015
+
  
 
 #beeline

@@ -61,7 +61,7 @@ TarifClass.create(id: _bln_30_days_of_internet_for_russia_rouming, operator_id: 
 TarifClass.create(id: _bln_welcome_to_all_tarifs, operator_id: 1025, privacy_id: 2, standard_service_id: 42, name: 'Добро пожаловать на ВСЕ')# интернет
 TarifClass.create(id: _bln_my_abroad_countries, operator_id: 1025, privacy_id: 2, standard_service_id: 42, name: 'Моё зарубежье')# интернет
 TarifClass.create(id: _bln_add_speed_1gb, operator_id: 1025, privacy_id: 2, standard_service_id: 42, name: 'Продли скорость 1 Гб')# интернет
-TarifClass.create(id: _bln_add_speed_3gb, operator_id: 1025, privacy_id: 2, standard_service_id: 42, name: 'Продли скорость 3 Гб')# интернет
+TarifClass.create(id: _bln_add_speed_3gb, operator_id: 1025, privacy_id: 2, standard_service_id: 42, name: 'Продли скорость 4 Гб')# интернет
 TarifClass.create(id: _bln_auto_add_speed, operator_id: 1025, privacy_id: 2, standard_service_id: 42, name: 'Автопродление скорости')# интернет
 
 #Мегафон, частные, тарифы
@@ -155,6 +155,8 @@ TarifClass.create(id: _mgf_minute_packs_25_world, operator_id: 1028, privacy_id:
 TarifClass.create(id: _mgf_minute_packs_50_europe, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Пакеты минут 50 Европа и СНГ')
 TarifClass.create(id: _mgf_minute_packs_50_world, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Пакеты минут 50 Мир')
 TarifClass.create(id: _mgf_be_as_home, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Будь как дома')
+TarifClass.create(id: _mgf_add_speed_1gb, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Продли скорость 1 ГБ')
+TarifClass.create(id: _mgf_add_speed_5gb, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Продли скорость 5 ГБ')
 
 #TarifClass.create(id: _mgf_prodli_skorost, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Продли скорость')
 #TarifClass.create(id: _mgf_prodli_skorost_lite, operator_id: 1028, privacy_id: 2, standard_service_id: 42, name: 'Продли скорость Лайт')

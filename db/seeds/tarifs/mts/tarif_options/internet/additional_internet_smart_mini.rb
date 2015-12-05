@@ -6,9 +6,12 @@
   :dependency => {
     :categories => [_tcgsc_internet],
     :incompatibility => {
-      :internet_smart => [_mts_mts_planshet, _mts_additional_internet_500_mb, _mts_additional_internet_1_gb, _mts_super_bit,
+      :turbobuttons => [_mts_additional_internet_500_mb, _mts_additional_internet_1_gb,
+        _mts_additional_internet_smart_mini, _mts_additional_internet_smart, _mts_additional_internet_smart_other,
+        _mts_turbo_button_100_mb, _mts_turbo_button_500_mb, _mts_turbo_button_2_gb, _mts_turbo_button_5_gb],
+      :internet_smart => [_mts_additional_internet_500_mb, _mts_additional_internet_1_gb, _mts_super_bit,
         _mts_additional_internet_smart_mini, _mts_additional_internet_smart, _mts_additional_internet_smart_other],
-      :internet_comp => [_mts_mts_planshet, _mts_internet_mini, _mts_internet_maxi, _mts_internet_super, _mts_internet_vip]}, 
+      :internet_comp => [_mts_internet_mini, _mts_internet_maxi, _mts_internet_super, _mts_internet_vip]}, 
     :general_priority => _gp_tarif_option_without_limits,#_gp_tarif_option_with_limits,
     :other_tarif_priority => {:lower => [], :higher => []},
     :prerequisites => [_mts_smart_mini],

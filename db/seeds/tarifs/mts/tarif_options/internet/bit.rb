@@ -6,14 +6,30 @@
   :dependency => {
     :categories => [_tcgsc_internet],
     :incompatibility => {
-      :internet_comp => [_mts_mts_planshet, _mts_bit, _mts_super_bit, _mts_internet_mini, _mts_internet_maxi, _mts_internet_super, _mts_internet_vip]}, 
+      :internet_comp => [_mts_bit, _mts_internet_super, _mts_internet_mini, _mts_internet_maxi, _mts_internet_super, _mts_internet_vip]}, 
     :general_priority => _gp_tarif_option_without_limits,#_gp_tarif_option_with_limits,
-    :other_tarif_priority => {:lower => [_mts_mini_bit], :higher => [_mts_unlimited_internet_on_day]},
+    :other_tarif_priority => {:lower => [_mts_mini_bit], :higher => [_mts_unlimited_internet_on_day, _mts_turbo_button_100_mb, _mts_turbo_button_500_mb, _mts_turbo_button_2_gb, _mts_turbo_button_5_gb]},
     :prerequisites => [],
     :forbidden_tarifs => {:to_switch_on => [_mts_smart, _mts_smart_mini, _mts_smart_plus, _mts_smart_top, _mts_smart_nonstop, _mts_ultra, _mts_mts_connect_4], :to_serve => []},
     :multiple_use => false
   } } )
 
+  #internet for add_speed_100mb option
+  scg_mts_add_speed_100mb = @tc.add_service_category_group(
+    {:name => 'scg_mts_add_speed_100mb_mts_bit' }, 
+    {:name => "price for scg_mts_add_speed_100mb_mts_bit"}, 
+    {:calculation_order => 1, :price => 30.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'scf_mts_add_speed_100mb_mts_bit', :description => '', 
+     :formula => {
+       :auto_turbo_buttons  => {
+         :group_by => 'day',
+         :stat_params => {
+           :sum_volume => "sum((description->>'volume')::float)",
+           :count_of_usage_of_100 => "ceil((sum((description->>'volume')::float) - 0.0) / 100.0)"},
+       :method => "price_formulas.price * GREATEST(count_of_usage_of_100, 0.0) + 0.01",
+       }
+     },
+     } 
+    )
 #Ежемесячная плата
   @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => _stf_price_by_1_month, :price => 200.0})
 
@@ -21,6 +37,7 @@
   category = {:name => '_sctcg_own_home_regions_internet', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _internet}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => _stf_price_by_sum_volume_m_byte, 
       :formula => {:window_condition => "(75.0 >= sum_volume)", :window_over => 'day'}, :price => 0.0, :description => '' } )
+  @tc.add_grouped_service_category_tarif_class(category, scg_mts_add_speed_100mb[:id], :tarif_set_must_include_tarif_options => [_mts_turbo_button_100_mb] )
     
 @tc.add_tarif_class_categories
 

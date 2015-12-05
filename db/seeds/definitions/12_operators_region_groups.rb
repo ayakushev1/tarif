@@ -55,7 +55,7 @@ _bln_exept_for_cenral_regions_not_moscow_regions = _regions - _bln_cenral_region
 
 _bln_bad_internet_regions = [ _amur_region, _birobidgan_region, _zabaikalsk_region, _irkutsk_region, _kamhatsky_region, _magadan_region, 
     _primorsk_region, _buryatia_region, _yakutia_region, _sahalin_region, _habarovsk_region, _chukotka_region]
-_bln_all_russia_except_some_regions_for_internet = _regions - _bln_bad_internet_regions
+_bln_all_russia_except_some_regions_for_internet = _regions - _bln_bad_internet_regions - [_moscow, _moscow_region]
 
 #tele_2
 _tele_own_country_rouming_1 = [_altai_region, _barnaul, _amur_region, _blagoveshensk, _astrahan_region, _volgograd_region, _zabaikalsk_region, _ivanov_region,

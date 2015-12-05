@@ -17,7 +17,7 @@
 scg_mgf_internet_extra_1_gb = @tc.add_service_category_group(
     {:name => 'scg_mgf_internet_extra_1_gb' }, 
     {:name => "price for scg_mgf_internet_extra_1_gb"}, 
-    {:calculation_order => 0, :price => 150.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_mts_additional_internet_2_gb_for_smart', :description => '', 
+    {:calculation_order => 0, :price => 150.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'scf_mgf_internet_extra_1_gb', :description => '', 
      :formula => {
        :window_condition => "(1000.0 >= sum_volume)", :window_over => 'month',
        :stat_params => {:sum_volume => "sum((description->>'volume')::float)"},

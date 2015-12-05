@@ -314,6 +314,10 @@ class TarifOptimization::TarifListGenerator
         end
       end
     end
+    raise(StandardError, [
+      "tarif_sets #{tarif_option_by_compatibility}",
+      ""
+    ].join("\n\n")) if false
 #    raise(StandardError, [tarif_option_by_compatibility ])
   end
 
@@ -397,7 +401,7 @@ class TarifOptimization::TarifListGenerator
         end
       end
     end
-#    raise(StandardError)
+#    raise(StandardError, tarif_option_combinations)
   end
 
   def reorder_tarif_option_combinations
@@ -440,7 +444,7 @@ class TarifOptimization::TarifListGenerator
         end
       end
     end
-#    raise(StandardError)
+#    raise(StandardError, @tarif_option_combinations)
   end
 
   def calculate_tarif_option_combinations_with_multiple_use
@@ -571,7 +575,7 @@ class TarifOptimization::TarifListGenerator
         end
       end
     end
-#    raise(StandardError)
+#    raise(StandardError, @tarif_sets)
   end
 
   def check_allowed_common_services(common_services_to_check, tarif)

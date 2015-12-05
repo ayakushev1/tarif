@@ -4,6 +4,8 @@
   :features => {:http => 'http://moscow.megafon.ru/internet/options/bit_megafonpro.html'},
   :dependency => {
     :incompatibility => {
+#      :add_speed_mgf_internet_24 => [_mgf_internet_24, _mgf_add_speed_1gb, _mgf_add_speed_5gb,
+#        _mgf_internet_24_pro, _mgf_bit_pro, _mgf_bit_mega_pro_150, _mgf_bit_mega_pro_250, _mgf_bit_mega_pro_500],
       :mgf_internet_24 => [_mgf_internet_24, _mgf_internet_xs, _mgf_internet_s, _mgf_internet_m, _mgf_internet_l, _mgf_internet_xl, 
         _mgf_internet_24_pro, _mgf_bit_pro, _mgf_bit_mega_pro_150, _mgf_bit_mega_pro_250, _mgf_bit_mega_pro_500],
       }, 

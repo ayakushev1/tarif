@@ -10,6 +10,7 @@
     :other_tarif_priority => {:lower => [_mts_mini_bit, _mts_bit], :higher => [_mts_mts_planshet, _mts_bit, _mts_super_bit, _mts_internet_mini, _mts_internet_maxi, _mts_internet_super, _mts_internet_vip]},
     :prerequisites => [_mts_mts_connect_4],
     :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},
+#    :is_archived => true,
     :multiple_use => false
   } } )
 
@@ -25,15 +26,17 @@
        :stat_params => {:sum_volume => "sum((description->>'volume')::float)"}, 
        :method => "price_formulas.price",
 
-       :auto_turbo_buttons  => {
-         :group_by => 'day',
-         :stat_params => {
-           :sum_volume => "sum((description->>'volume')::float)",
-           :count_of_usage_of_option => "ceil(sum((description->>'volume')::float) / 500.0)",
-           :count_of_usage_of_500 => "ceil((sum((description->>'volume')::float) - 500.0) / 500.0)",
-           :count_of_usage_of_2000 => "ceil((sum((description->>'volume')::float) - 500.0) / 2000.0)"},
-       :method => "price_formulas.price * count_of_usage_of_option + case when count_of_usage_of_500 > 2.66667 then count_of_usage_of_2000 * 250.0 when count_of_usage_of_500 > 0.0 then count_of_usage_of_500 * 95.0 else 0.0 end",
-       } } } )    
+#       :auto_turbo_buttons  => {
+#         :group_by => 'day',
+#         :stat_params => {
+#           :sum_volume => "sum((description->>'volume')::float)",
+#           :count_of_usage_of_option => "ceil(sum((description->>'volume')::float) / 500.0)",
+#           :count_of_usage_of_500 => "ceil((sum((description->>'volume')::float) - 500.0) / 500.0)",
+#           :count_of_usage_of_2000 => "ceil((sum((description->>'volume')::float) - 500.0) / 2000.0)"},
+#       :method => "price_formulas.price * count_of_usage_of_option + case when count_of_usage_of_500 > 2.66667 then count_of_usage_of_2000 * 250.0 when count_of_usage_of_500 > 0.0 then count_of_usage_of_500 * 95.0 else 0.0 end",
+#       } 
+    } 
+  } )    
 
 #Own country, Internet
   category = {:name => 'own_country_internet', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _internet}

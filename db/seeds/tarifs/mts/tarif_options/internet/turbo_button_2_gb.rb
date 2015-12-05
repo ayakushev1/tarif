@@ -5,41 +5,30 @@
   :features => {:http => 'http://www.mts.ru/mobil_inet_and_tv/internet_phone/additionally_services/turbo/'},
   :dependency => {
     :categories => [_tcgsc_internet],
-    :incompatibility => {}, 
+    :incompatibility => {
+#      :turbobuttons => [_mts_additional_internet_500_mb, _mts_additional_internet_1_gb,
+#        _mts_additional_internet_smart_mini, _mts_additional_internet_smart, _mts_additional_internet_smart_other,
+#        _mts_turbo_button_100_mb, _mts_turbo_button_500_mb, _mts_turbo_button_2_gb, _mts_turbo_button_5_gb],
+      }, 
     :general_priority => _gp_tarif_option_without_limits,#_gp_tarif_option_with_limits,
     :other_tarif_priority => {:lower => [], :higher => []},
-    :prerequisites => [_mts_smart, _mts_smart_plus, _mts_smart_top, _mts_ultra, _mts_smart_nonstop, _mts_smart_mini],
+    :prerequisites => [],
     :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},
     :multiple_use => true
   } } )
   
-#Добавление новых service_category_group
-  #internet included in tarif
-scg_mts_turbo_button_2_gb_for_smart = @tc.add_service_category_group(
-    {:name => 'scg_mts_turbo_button_2_gb_for_smart' }, 
-    {:name => "price for scg_mts_turbo_button_2_gb_for_smart"}, 
-    {:calculation_order => 0, :price => 250.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_mts_turbo_button_2_gb_for_smart', :description => '', 
-     :formula => {
-       :window_condition => "(2000.0 >= sum_volume)", :window_over => 'month',
-       :stat_params => {:sum_volume => "sum((description->>'volume')::float)"},
-       :method => "case when sum_volume > 0.0 then price_formulas.price else 0.0 end",
-       
-       :multiple_use_of_tarif_option => {
-         :group_by => 'month',
-         :stat_params => {:tarif_option_count_of_usage => "ceil(sum((description->>'volume')::float) / 2000.0)", :sum_volume => "sum((description->>'volume')::float)"},
-         :method => "price_formulas.price * tarif_option_count_of_usage", 
-       }
-     }, 
-    } )
-
 #Own and home regions, Internet
   category = {:name => '_sctcg_own_home_regions_internet', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _internet}
-  @tc.add_grouped_service_category_tarif_class(category, scg_mts_turbo_button_2_gb_for_smart[:id])
+  @tc.add_only_service_category_tarif_class(category)  
 
 #Own country, Internet
   category = {:name => 'own_country_internet', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _internet}
-  @tc.add_grouped_service_category_tarif_class(category, scg_mts_turbo_button_2_gb_for_smart[:id], 
-    :tarif_set_must_include_tarif_options => [_mts_everywhere_as_home_smart] )
+  @tc.add_only_service_category_tarif_class(category)  
+
+#All_russia_rouming, Internet
+  category = {:name => '_sctcg_all_russia_internet', :service_category_rouming_id => _all_russia_rouming, :service_category_calls_id => _internet}
+  @tc.add_only_service_category_tarif_class(category)  
+
 @tc.add_tarif_class_categories
 
 #TODO добавить порядок расчета опций и тарифов. Многие опции используются после исчерпания лимитов основного тарифа
