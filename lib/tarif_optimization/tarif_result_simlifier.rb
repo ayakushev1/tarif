@@ -55,7 +55,7 @@ class TarifOptimization::TarifResultSimlifier
     excluded_tarif_sets = []
     tarifs = tarif_sets.keys.map(&:to_i)
 #TODO проверить еще раз почему нельзя исключать common_services
-    array_of_services_that_depended_on = services_that_depended_on.values.flatten
+    array_of_services_that_depended_on = [] #services_that_depended_on.values.flatten
     services_to_not_excude = common_services[operator] + tarifs + array_of_services_that_depended_on
     sub_tarif_sets_with_zero_results_0 = calculate_sub_tarif_sets_with_zero_results_0(services_to_not_excude, array_of_services_that_depended_on)
     sub_tarif_sets_with_zero_results_1 = calculate_sub_tarif_sets_with_zero_results_1(services_to_not_excude)
@@ -106,6 +106,10 @@ class TarifOptimization::TarifResultSimlifier
       
     updated_tarif_sets, updated_tarif_results = group_identical_tarif_sets(updated_tarif_sets, updated_tarif_results, services_to_not_excude, eliminate_identical_tarif_sets) if eliminate_identical_tarif_sets
 
+    raise(StandardError, ['', services_to_not_excude.to_s,
+      updated_tarif_results.map{|set, set_v| set_v.map{|part, part_v| part_v.map{|service, service_v| [set, part, service, service_v['part'], service_v['price_value'].to_f.round(3), service_v['call_id_count']].to_s if part == 'own-country-rouming/mobile-connection' }}}, 
+      updated_tarif_sets, 'groupped_tarif_results', ''].join("\n\n")) if false
+
     [updated_tarif_sets, updated_tarif_results]
   end
   
@@ -137,7 +141,7 @@ class TarifOptimization::TarifResultSimlifier
           end
         end
       end
-
+#      raise(StandardError, services_to_not_excude)
       zero_tarif_ids = zero_tarif_ids - non_zero_tarif_ids - services_to_not_excude
 
       if !zero_tarif_ids.blank?
@@ -203,10 +207,13 @@ class TarifOptimization::TarifResultSimlifier
 
       updated_tarif_set_list << groupped_tarif_result_ids[services_to_leave_in_tarif_set_index][0]
     end
-    
+
+    raise(StandardError, ['', services_to_not_excude.to_s,
+      updated_tarif_results.map{|set, set_v| set_v.map{|part, part_v| part_v.map{|service, service_v| [set, part, service, service_v['part'], service_v['price_value'].to_f.round(3), service_v['call_id_count']].to_s if part == 'own-country-rouming/mobile-connection' }}}, 
+      updated_tarif_sets, 'groupped_tarif_results', ''].join("\n\n")) if false
+
     updated_tarif_sets, updated_tarif_results = update_tarif_sets_with_groupped_tarif_results(updated_tarif_sets, updated_tarif_results, updated_tarif_set_list)
 
-#    raise(StandardError)
     [updated_tarif_sets, updated_tarif_results]
   end
   
@@ -224,7 +231,7 @@ class TarifOptimization::TarifResultSimlifier
           updated_cons_tarif_results[tarif_set_id]['price_value'] += updated_tarif_result_by_part_by_service['price_value'].to_f
           updated_cons_tarif_results[tarif_set_id]['call_id_count'] += updated_tarif_result_by_part_by_service['call_id_count'].to_i
           updated_cons_tarif_results[tarif_set_id]['parts'] << part #+= ([part] - updated_cons_tarif_results[tarif_set_id]['parts'])
-          updated_cons_tarif_results[tarif_set_id]['group_criteria'] += updated_tarif_result_by_part_by_service['price_value'].to_f.round(0).to_i #+
+          updated_cons_tarif_results[tarif_set_id]['group_criteria'] += ((updated_tarif_result_by_part_by_service['price_value'].to_f * 1.0).round(0)).to_i #+
 #          updated_cons_tarif_results[tarif_set_id]['group_criteria'] += (updated_tarif_result_by_part_by_service['price_value'].to_f / 5.0).round(0).to_i #+
 #            updated_tarif_result_by_part_by_service['call_id_count'].to_i
         end

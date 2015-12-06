@@ -47,7 +47,7 @@
          :stat_params => {
            :sum_volume => "sum((description->>'volume')::float)",
            :count_of_usage_of_100 => "ceil((sum((description->>'volume')::float) - 0.0) / 100.0)"},
-       :method => "price_formulas.price * GREATEST(count_of_usage_of_100, 0.0) + 0.01",
+       :method => "price_formulas.price * GREATEST(count_of_usage_of_100, 0.0) + 0.0",
        }
      },
      } 
@@ -64,7 +64,7 @@
          :stat_params => {
            :sum_volume => "sum((description->>'volume')::float)",
            :count_of_usage_of_500 => "ceil((sum((description->>'volume')::float) - 0.0) / 500.0)"},
-       :method => "price_formulas.price * GREATEST(count_of_usage_of_500, 0.0) + 0.02",
+       :method => "price_formulas.price * GREATEST(count_of_usage_of_500, 0.0) + 0.0",
        }
      },
      } 
@@ -81,7 +81,7 @@
          :stat_params => {
            :sum_volume => "sum((description->>'volume')::float)",
            :count_of_usage_of_2000 => "ceil((sum((description->>'volume')::float) - 0.0) / 2000.0)"},
-       :method => "price_formulas.price * GREATEST(count_of_usage_of_2000, 0.0) + 0.03",
+       :method => "price_formulas.price * GREATEST(count_of_usage_of_2000, 0.0) + 0.0",
        }
      },
      } 
@@ -98,7 +98,7 @@
          :stat_params => {
            :sum_volume => "sum((description->>'volume')::float)",
            :count_of_usage_of_5000 => "ceil((sum((description->>'volume')::float) - 0.0) / 5000.0)"},
-       :method => "price_formulas.price * GREATEST(count_of_usage_of_5000, 0.0) + 0.04",
+       :method => "price_formulas.price * GREATEST(count_of_usage_of_5000, 0.0) + 0.0",
        }
      },
      } 

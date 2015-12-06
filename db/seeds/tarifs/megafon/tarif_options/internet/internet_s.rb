@@ -38,7 +38,7 @@ scg_mgf_internet_s = @tc.add_service_category_group(
          :stat_params => {
            :sum_volume => "sum((description->>'volume')::float)",
            :count_of_usage_of_1000 => "ceil((sum((description->>'volume')::float) - 0.0) / 1000.0)"},
-       :method => "price_formulas.price * GREATEST(count_of_usage_of_1000, 0.0) + 0.01",
+       :method => "price_formulas.price * GREATEST(count_of_usage_of_1000, 0.0) + 0.0",
        }
      },
      } 
@@ -55,7 +55,7 @@ scg_mgf_internet_s = @tc.add_service_category_group(
          :stat_params => {
            :sum_volume => "sum((description->>'volume')::float)",
            :count_of_usage_of_5000 => "ceil((sum((description->>'volume')::float) - 0.0) / 5000.0)"},
-       :method => "price_formulas.price * GREATEST(count_of_usage_of_5000, 0.0) + 0.02",
+       :method => "price_formulas.price * GREATEST(count_of_usage_of_5000, 0.0) + 0.0",
        }
      },
      } 
@@ -65,15 +65,15 @@ scg_mgf_internet_s = @tc.add_service_category_group(
   category = {:name => '_sctcg_own_home_regions_internet', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _internet}
 #  @tc.add_only_service_category_tarif_class(category)  
   @tc.add_grouped_service_category_tarif_class(category, scg_mgf_internet_s[:id])
-  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_add_speed_1gb[:id], :tarif_set_must_include_tarif_options => [_mgf_add_speed_1gb] )
-  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_add_speed_5gb[:id], :tarif_set_must_include_tarif_options => [_mgf_add_speed_5gb] )
+#  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_add_speed_1gb[:id], :tarif_set_must_include_tarif_options => [_mgf_add_speed_1gb] )
+#  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_add_speed_5gb[:id], :tarif_set_must_include_tarif_options => [_mgf_add_speed_5gb] )
 
 #Own country, Internet
   category = {:name => 'own_country_internet', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _internet}
 #  @tc.add_only_service_category_tarif_class(category)  
   @tc.add_grouped_service_category_tarif_class(category, scg_mgf_internet_s[:id])
-  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_add_speed_1gb[:id], :tarif_set_must_include_tarif_options => [_mgf_add_speed_1gb] )
-  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_add_speed_5gb[:id], :tarif_set_must_include_tarif_options => [_mgf_add_speed_5gb] )
+#  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_add_speed_1gb[:id], :tarif_set_must_include_tarif_options => [_mgf_add_speed_1gb] )
+#  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_add_speed_5gb[:id], :tarif_set_must_include_tarif_options => [_mgf_add_speed_5gb] )
 
 
 @tc.add_tarif_class_categories

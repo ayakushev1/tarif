@@ -7,7 +7,7 @@
   :dependency => {
     :categories => [_tcgsc_internet],
     :incompatibility => {
-      :internet_comp => [_mts_bit, _mts_internet_super, _mts_internet_mini, _mts_internet_maxi, _mts_internet_super, _mts_internet_vip], 
+      :internet_comp => [_mts_internet_super, _mts_internet_mini, _mts_internet_maxi, _mts_internet_super, _mts_internet_vip], 
       :internet_smart => [_mts_additional_internet_500_mb, _mts_additional_internet_1_gb,  _mts_super_bit]},
     :general_priority => _gp_tarif_option_without_limits,#_gp_tarif_option_with_limits,
     :other_tarif_priority => {:lower => [_mts_mini_bit], :higher => [_mts_turbo_button_100_mb, _mts_turbo_button_500_mb, _mts_turbo_button_2_gb, _mts_turbo_button_5_gb]},
@@ -40,7 +40,7 @@
          :stat_params => {
            :sum_volume => "sum((description->>'volume')::float)",
            :count_of_usage_of_500 => "ceil((sum((description->>'volume')::float) - 0.0) / 500.0)"},
-       :method => "price_formulas.price * GREATEST(count_of_usage_of_500, 0.0) + 0.02",
+       :method => "price_formulas.price * GREATEST(count_of_usage_of_500, 0.0) + 0.0",
        }
      },
      } 
@@ -57,7 +57,7 @@
          :stat_params => {
            :sum_volume => "sum((description->>'volume')::float)",
            :count_of_usage_of_2000 => "ceil((sum((description->>'volume')::float) - 0.0) / 2000.0)"},
-       :method => "price_formulas.price * GREATEST(count_of_usage_of_2000, 0.0) + 0.03",
+       :method => "price_formulas.price * GREATEST(count_of_usage_of_2000, 0.0) + 0.0",
        }
      },
      } 
@@ -74,7 +74,7 @@
          :stat_params => {
            :sum_volume => "sum((description->>'volume')::float)",
            :count_of_usage_of_5000 => "ceil((sum((description->>'volume')::float) - 0.0) / 5000.0)"},
-       :method => "price_formulas.price * GREATEST(count_of_usage_of_5000, 0.0) + 0.04",
+       :method => "price_formulas.price * GREATEST(count_of_usage_of_5000, 0.0) + 0.0",
        }
      },
      } 
@@ -87,21 +87,21 @@
 #Ежемесячная плата
   @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => _stf_price_by_1_month, :price => 0.0})
 
-#Home region, internet
-category = {:name => '_sctcg_home_region_internet', :service_category_rouming_id => _home_region_rouming, :service_category_calls_id => _internet}
+#_own_and_home_regions_rouming, internet
+category = {:name => '_sctcg_home_region_internet', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _internet}
 #  @tc.add_only_service_category_tarif_class(category)  
   @tc.add_grouped_service_category_tarif_class(category, scg_mts_internet_mini_included_in_tarif_internet[:id])
-  @tc.add_grouped_service_category_tarif_class(category, scg_mts_add_speed_500mb[:id], :tarif_set_must_include_tarif_options => [_mts_turbo_button_500_mb] )
-  @tc.add_grouped_service_category_tarif_class(category, scg_mts_add_speed_2gb[:id], :tarif_set_must_include_tarif_options => [_mts_turbo_button_2_gb] )
-  @tc.add_grouped_service_category_tarif_class(category, scg_mts_add_speed_5gb[:id], :tarif_set_must_include_tarif_options => [_mts_turbo_button_5_gb] )
+#  @tc.add_grouped_service_category_tarif_class(category, scg_mts_add_speed_500mb[:id], :tarif_set_must_include_tarif_options => [_mts_turbo_button_500_mb] )
+#  @tc.add_grouped_service_category_tarif_class(category, scg_mts_add_speed_2gb[:id], :tarif_set_must_include_tarif_options => [_mts_turbo_button_2_gb] )
+#  @tc.add_grouped_service_category_tarif_class(category, scg_mts_add_speed_5gb[:id], :tarif_set_must_include_tarif_options => [_mts_turbo_button_5_gb] )
 
 #All Russia rouming, internet, with turbo-buttons
 category = {:name => '_sctcg_all_russia_rouming_internet', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _internet}
 #  @tc.add_only_service_category_tarif_class(category)  
   @tc.add_grouped_service_category_tarif_class(category, scg_mts_internet_mini_included_in_tarif_internet[:id])
-  @tc.add_grouped_service_category_tarif_class(category, scg_mts_add_speed_500mb[:id], :tarif_set_must_include_tarif_options => [_mts_turbo_button_500_mb] )
-  @tc.add_grouped_service_category_tarif_class(category, scg_mts_add_speed_2gb[:id], :tarif_set_must_include_tarif_options => [_mts_turbo_button_2_gb] )
-  @tc.add_grouped_service_category_tarif_class(category, scg_mts_add_speed_5gb[:id], :tarif_set_must_include_tarif_options => [_mts_turbo_button_5_gb] )
+#  @tc.add_grouped_service_category_tarif_class(category, scg_mts_add_speed_500mb[:id], :tarif_set_must_include_tarif_options => [_mts_turbo_button_500_mb] )
+#  @tc.add_grouped_service_category_tarif_class(category, scg_mts_add_speed_2gb[:id], :tarif_set_must_include_tarif_options => [_mts_turbo_button_2_gb] )
+#  @tc.add_grouped_service_category_tarif_class(category, scg_mts_add_speed_5gb[:id], :tarif_set_must_include_tarif_options => [_mts_turbo_button_5_gb] )
 
 @tc.add_tarif_class_categories
 

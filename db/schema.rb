@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151128051912) do
+ActiveRecord::Schema.define(version: 20151205230801) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -510,13 +510,13 @@ ActiveRecord::Schema.define(version: 20151128051912) do
     t.integer "common_services",     array: true
     t.integer "tarif_options",       array: true
     t.integer "service_ids",         array: true
-    t.integer "identical_services",  array: true
     t.float   "price"
     t.integer "call_id_count"
     t.float   "sum_duration_minute"
     t.float   "sum_volume"
     t.integer "count_volume"
     t.jsonb   "categ_ids"
+    t.jsonb   "identical_services"
   end
 
   add_index "result_service_sets", ["call_id_count"], name: "index_result_service_sets_on_call_id_count", using: :btree

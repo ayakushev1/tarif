@@ -6,9 +6,9 @@
   :dependency => {
     :categories => [_tcgsc_internet],
     :incompatibility => {
-#      :turbobuttons => [_mts_additional_internet_500_mb, _mts_additional_internet_1_gb,
-#        _mts_additional_internet_smart_mini, _mts_additional_internet_smart, _mts_additional_internet_smart_other,
-#        _mts_turbo_button_100_mb, _mts_turbo_button_500_mb, _mts_turbo_button_2_gb, _mts_turbo_button_5_gb],
+      :turbobuttons => [_mts_additional_internet_500_mb, _mts_additional_internet_1_gb,
+        _mts_additional_internet_smart_mini, _mts_additional_internet_smart, _mts_additional_internet_smart_other,
+        _mts_turbo_button_100_mb, _mts_turbo_button_500_mb, _mts_turbo_button_2_gb, _mts_turbo_button_5_gb],
       }, 
     :general_priority => _gp_tarif_option_without_limits,#_gp_tarif_option_with_limits,
     :other_tarif_priority => {:lower => [], :higher => []},
@@ -17,6 +17,9 @@
     :multiple_use => true
   } } )
   
+
+#Ежемесячная плата
+  @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => _stf_price_by_1_month, :price => 1.0})
 
 #Own and home regions, Internet
   category = {:name => '_sctcg_own_home_regions_internet', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _internet}

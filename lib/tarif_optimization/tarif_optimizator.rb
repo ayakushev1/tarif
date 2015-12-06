@@ -353,6 +353,7 @@ class TarifOptimization::TarifOptimizator
       
 #    Result::ServiceSet.batch_save(service_sets_array, {})
     if save_new_final_tarif_results_in_my_batches
+#      raise(StandardError, service_sets_array)
       Result::ServiceSet.bulk_insert values: service_sets_array
       Result::Service.bulk_insert values: services_array
       Result::ServiceCategory.bulk_insert values: categories_array
@@ -369,6 +370,7 @@ class TarifOptimization::TarifOptimizator
       Result::Agregate.create(agregates_array)
     end
     
+    GC.start
   end
   
   def update_call_stat(operator)
