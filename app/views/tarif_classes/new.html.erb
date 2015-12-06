@@ -1,4 +1,4 @@
-<% 	content_for :title, tarif_class_form.model.id ? 'Edit TarifClass' : 'New TarifClass' %>
+<% content_for :title, t('.title') %>
 
 <%= render :partial => 'form', :layout => 'application/layouts/model_form_for', :locals => {:form_item =>.tarif_class_form} %>
 

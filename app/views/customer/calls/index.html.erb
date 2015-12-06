@@ -1,4 +1,4 @@
-<% content_for :title, "Список звонков" %>
+<% content_for :title, t('.title') %>
 
 <%= render :partial => 'filtr', :layout => 'application/layouts/filtr_inline_form', 
   :locals => {:form_item => controller.filtr, :html => {:class => "calls_form"} }%>

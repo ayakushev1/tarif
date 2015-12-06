@@ -1,4 +1,175 @@
 ru:
+  comparison:
+    optimizations:
+      index:
+        title: Список рейтингов
+        new_comparison_optimization_button: Создать новое описание
+        show_optimization_link: Просмотр
+        edit_optimization_link: Редактировать        
+        delete_optimization_link: Удалить
+      show:
+        title: Описание и результаты рейтинга
+        optimizations_link: Список описаний
+        groups:
+          detailed_results_link: Детализация результатов
+          result_comparison_link: Сравнение
+      new:
+        title: Создание нового рейтинга
+      edit:
+        title: Редактирование рейтинга
+      calculation_status:
+        title: Считаю что-то
+  customer:
+    call_runs:
+      index:
+        title: Список описаний моделирования или детализации звонков
+        call_runs:
+          show_link: Просмотр
+          edit_link: Редактировать
+          call_stat_link: Статистика звонков
+      new:
+        title: Создание нового описания моделирования или детализации звонков
+      show:
+        title: Описание моделирования или детализации звонков
+        call_run:
+          edit_link: Редактировать описание
+          call_runs_link: Список описаний
+      edit:
+        title: Редактирование описания моделирования или детализации звонков
+        form:
+          submit_button: Сохранить
+      call_stat:
+        title: Статистика звонков
+        call_runs_link: Список описаний
+        calculate_stat_link: Расчитать статистику
+    calls:
+      index:
+        title: Список звонков
+      set_calls_generation_params:
+        title: Задание параметров моделирования звонков
+        call_runs_link: Вернуться к списку моделирований 
+        generate_calls_link: Сгенерировать историю звонков
+      calculation_status:
+        title: Статус обработки загрузки звонков
+    demands:
+      new:
+        title: Письмо администрации сайта
+    history_parsers:
+      prepare_for_upload:
+        title: Загрузка детализации звонков
+        call_runs_link: Вернуться к списку загрузок
+        choose_file_link: Выберите файл
+        load_file_link: Загрузить историю звонков
+      calculation_status:
+        title: Статус загрузки звонков
+    optimization_result_movers:
+      new:
+        title: Выбор параметров перемещения результатов оптимизации
+    optimization_results:
+      show_customer_results:
+        title: Список лучших тарифов и тарифных опций
+      show_customer_detailed_results:
+        title: Детальный состав затрат по тарифу и опциям
+    payments:
+      new:
+        title: Выбор параметров платежа
+      wait_for_payment_being_processed:
+        title: Ожидание подтверждения платежа
+  errors:
+    error404:
+      title: Страница, которую вы ищите, не существует
+    error422:
+      title: Вам запрещен доступ
+    error500:
+      title: Мы сожалеем, но на сайте что-то сломалось
   home:
     index:
       title: Подбор лучшего тарифа
+    detailed_description:
+      title: Описание услуг
+    news:
+      title: Новостная лента ВКонтакте
+  result:
+    runs:
+      show:
+        title: Описание подбора тарифа
+        edit_link: Редактировать описание
+        results_link: Список описаний
+      new:
+        title: Создание нового описания подбора тарифа
+      index:
+        title: Список описаний подбора тарифов
+        show_link: Просмотр
+        edit_link: Редактировать
+        show_result_link: Подбор
+        compare_result_link: Сравнение
+      edit:
+        title: Редактирование описания подбора тарифа
+        results_link: Список описаний
+        save_link: Сохранить
+    service_sets:
+      results:
+        title: Список вариантов подбора лучших тарифов и тарифных опций
+        
+      result:
+        title: Список лучших тарифов и тарифных опций
+        result_service_sets_return_link_to: Вернуться к списку описаний подборов тарифа
+      detailed_results:
+        title: Детальный состав затрат по тарифу и опциям
+        back_result_button: Вернуться к списку лучших тарифов
+      compare:
+        title: Сравнение тарифов
+        result_service_sets_return_link_to: Вернуться к списку описаний подборов тарифа
+  tarif_classes:
+    show:
+      title: Описание тарифа или опции
+    new:
+      title: Новый тариф
+    edit:
+      title: Редактирование тарифа
+    index:
+      title: Список тарифов
+  tarif_optimizators:
+    admin:
+      index:
+        title: Задание параметров подбора тарифа
+        calculate_link: Подобрать тариф
+        result_run_link: Посмотреть результаты подбора тарифов
+      calculation_status:
+        title: Статус расчета операторов
+    all_options:
+      index:
+        title: Подбор тарифа для всех доступных вариантов подбора
+        calculate_link: Подобрать тариф
+        result_run_link: Посмотреть результаты подбора тарифов
+    fixed_operators:
+      index:
+        title: Подбор тарифа только для выбранных операторов
+        calculate_link: Подобрать тариф
+        result_run_link: Посмотреть результаты подбора тарифов
+    fixed_services:
+      index:
+        title: Расчет стоимости для определенного тарифа и набора опций
+        calculate_link: Подобрать тариф
+        result_run_link: Посмотреть результаты подбора тарифов
+    limited_scope:
+      index:
+        title: Подбор только для выбранных услуг операторов
+        calculate_link: Подобрать тариф
+        result_run_link: Посмотреть результаты подбора тарифов
+    main:
+      index:
+        title: Основной вариант подбора тарифа
+        calculate_link: Подобрать тариф
+        result_run_link: Посмотреть результаты подбора тарифов
+  users:
+    show:
+      title: Профиль
+    edit:
+      title: Редактирование профиля
+
+      
+
+        
+        
+       

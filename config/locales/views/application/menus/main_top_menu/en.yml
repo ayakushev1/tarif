@@ -1,0 +1,41 @@
+en:
+  root_path: Home
+  comparisons: Ratings
+  recommendation: Recommendations
+  preparations: Preparation
+  optimization: Optimization
+  service_description: Help
+  admin: Admin
+  
+  comparison_optimizations_path: Operators and tariffs
+  
+  content_articles_index_path: Index
+  content_articles_show_path: Details
+  content_articles_call_statistic_path: Call statistics
+  
+  customer_call_runs_path: Loaded call list
+  customer_calls_set_calls_generation_params_path: Call's modeling
+  customer_history_parsers_prepare_for_upload_path: Call's loading
+  customer_calls_path: Calls
+  
+  result_runs_path: Optimizations' list
+  tarif_optimizators_main_index_path: Main
+  tarif_optimizators_fixed_services_index_path: Cost validation
+  tarif_optimizators_limited_scope_index_path: With limited mobile services
+  tarif_optimizators_fixed_operators_index_path: For one mobile operator
+  tarif_optimizators_all_options_index_path: All options
+  result_service_sets_results_path: All optimization results
+  
+  home_detailed_description_path: Service description
+  home_news_path: News
+  new_customer_payments_path: Payments
+  
+  tarif_classes_path: Tariffs
+  customer_calls_set_calls_generation_params_path: Set params for generating calls  
+  customer_history_parsers_prepare_for_upload_path: Upload and parse call history
+  customer_calls_path: View calls
+  tarif_optimizators_admin_index_path: Tarif optimization
+  customer_optimization_results_show_results_path: Tarif results
+  customer_optimization_results_show_customer_results_path: Tarif customer results
+  customer_optimization_results_show_additional_info_path: Additional calls and tarif info
+  customer_optimization_result_movers_new_path: Move optimization results

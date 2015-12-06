@@ -1,4 +1,4 @@
-<% content_for :title, "Загрузка детализации звонков" %>
+<% content_for :title, t('.title') %>
 
 
 <%= render :partial => 'information' %>
@@ -8,7 +8,7 @@
   <div class="form-group">
   	<p>
 		<%= render :partial => 'call_run_choice' %>
-		<%= link_to('Редактировать описание моделирования', customer_call_runs_path, {:class => "btn btn-primary", :type =>"button"}) %>		
+		<%= link_to(t('customer.history_parsers.prepare_for_upload.call_runs_link'), customer_call_runs_path, {:class => "btn btn-primary", :type =>"button"}) %>		
 	</p>
   </div>
 </form>  	   

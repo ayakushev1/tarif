@@ -1,4 +1,4 @@
-<% content_for :title, "Ожидание подтверждения платежа" %>
+<% content_for :title, t('.title') %>
 
 <p>
 	<%= link_to('Проверить поступил ли платеж', customer_payments_wait_for_payment_being_processed_path, {:class => "btn btn-large", :type =>"button"}) %>

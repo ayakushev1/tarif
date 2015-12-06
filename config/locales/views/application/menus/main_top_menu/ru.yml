@@ -1,0 +1,41 @@
+ru:
+  root_path: Главная страница
+  comparisons: Рейтинги
+  recommendation: Рекомендации
+  preparations: Подготовка
+  optimization: Подбор тарифов
+  service_description: Помощь
+  admin: Админ
+  
+  comparison_optimizations_path: Сравнение оператов и тарифов
+  
+  content_articles_index_path: Выбор рекомендации
+  content_articles_show_path: Просмотр рекомендации
+  content_articles_call_statistic_path: Статистика услуг
+  
+  customer_call_runs_path: Список загрузок звонков
+  customer_calls_set_calls_generation_params_path: Моделирование звонков
+  customer_history_parsers_prepare_for_upload_path: Загрузка истории звонков
+  customer_calls_path: Звонки
+  
+  result_runs_path: Список подборов тарифов
+  tarif_optimizators_main_index_path: Основной
+  tarif_optimizators_fixed_services_index_path: Проверка стоимости
+  tarif_optimizators_limited_scope_index_path: С ограничением услуг
+  tarif_optimizators_fixed_operators_index_path: Для одного оператора
+  tarif_optimizators_all_options_index_path: Все возможности
+  result_service_sets_results_path: Результаты всех подборов тарифов
+  
+  home_detailed_description_path: Описание услуг
+  home_news_path: Новости
+  new_customer_payments_path: Перевод средств
+  
+  tarif_classes_path: Тарифы
+  customer_calls_set_calls_generation_params_path: Задание параметров для моделирования звонков  
+  customer_history_parsers_prepare_for_upload_path: Загрузка детализации
+  customer_calls_path: Звонки
+  tarif_optimizators_admin_index_path: Подбор тарифов
+  customer_optimization_results_show_results_path: Результаты подбора тарифов (админ)
+  customer_optimization_results_show_customer_results_path: Результаты подбора тарифов (пользовательские)
+  customer_optimization_results_show_additional_info_path: Дополнительная информация по результатам
+  customer_optimization_result_movers_new_path: Перенос результатов подбора

@@ -1,7 +1,7 @@
-<% content_for :title, "Список рейтингов" %>
+<% content_for :title, t('.title') %>
 
 <p>
-<%= link_to( 'Создать новое описание', new_comparison_optimization_path, 
+<%= link_to( t('.new_comparison_optimization_button'), new_comparison_optimization_path, 
 	{:class => "btn btn-success", :type => 'button'})  if user_type == :admin %>
 <%= render :partial => 'comparison/optimizations/information/index' %>
 </p>

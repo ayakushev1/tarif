@@ -1,9 +1,168 @@
 en:
-  login: Log in
-  logout: Log out
-  account_info: Account info
-  user: User
-  letter_to_admin: Letter to admin
-  default_guest_name: Guest
-  register: Register    
-        
+  comparison:
+    optimizations:
+      index:
+        title: List of ratings
+        new_comparison_optimization_button: Create a new description
+        show_optimization_link: View
+        edit_optimization_link: Edit
+        delete_optimization_link: Delete
+      show:
+        title: description and results of the rating
+        optimizations_link: List of definitions
+        groups:
+          detailed_results_link: Detailed results
+          result_comparison_link: Compare
+      new:
+        title: Creating a new rating
+      edit:
+        title: Editing rating
+      calculation_status:
+        title: I think something
+  customer:
+    call_runs:
+      index:
+        title: List of definitions modeling or call details
+        call_runs:
+          show_link: View
+          edit_link: Edit
+          call_stat_link: Call Statistics
+      new:
+        title: Creating a new description of modeling or call details
+      show:
+        title: Description of modeling or call details
+        call_run:
+          edit_link: Edit
+          call_runs_link: List of definitions
+      edit:
+        title: Editing the description of modeling or call details
+        form:
+          submit_button: Save
+      call_stat:
+        title: Call Statistics
+        call_runs_link: List of definitions
+        calculate_stat_link: Calculate Statistics
+    calls:
+      index:
+        title: Call list
+      set_calls_generation_params:
+        title: Setting the simulation calls
+        call_runs_link: Back to the list of simulations
+        generate_calls_link: Generate call history
+      calculation_status:
+        title: Processing Status of calls download
+    demands:
+      new:
+        title: Letter to admin
+    history_parsers:
+      prepare_for_upload:
+        title: Download call details
+        call_runs_link: Back to the list of downloads
+        choose_file_link: Select the file
+        load_file_link: Download call history
+      calculation_status:
+        title: The download status call
+    optimization_result_movers:
+      new:
+        title: Selection of parameters of movement optimization results
+    optimization_results:
+      show_customer_results:
+        title: List of the best tariffs and tariff options
+      show_customer_detailed_results:
+        title: detailed cost structure of the tariff and options
+    payments:
+      new:
+        title: Choice of payment options
+      wait_for_payment_being_processed:
+        title: Waiting for confirmation of payment
+  errors:
+    error404:
+      title: The page you are looking for does not exist
+    error422:
+      title: You are denied with access
+    error500:
+      title: We are sorry, but something went wrong with the site
+  home:
+    index:
+      title: Selection of the best tariff
+    detailed_description:
+      title: Description of services
+    news:
+      title: Newsline VKontakte
+  result:
+    runs:
+      show:
+        title: Description of the tariff selection
+        edit_link: Edit
+        results_link: List of definitions
+      new:
+        title: Creating a new description of the tariff selection
+      index:
+        title: List of tariff descriptions selection
+        show_link: View
+        edit_link: Edit
+        show_result_link: Selection
+        compare_result_link: Compare
+      edit:
+        title: Editing the description of the tariff selection
+        results_link: List of definitions
+        save_link: Save
+    service_sets:
+      results:
+        title: List of options for selection of the best tariffs and tariff options
+      result:
+        title: List of the best tariffs and tariff options
+        result_service_sets_return_link_to: Back to the list of descriptions rebounds fare
+      detailed_results:
+        title: detailed cost structure of the tariff and options
+        back_result_button: Back to the best tariff
+      compare:
+        title: Comparison of rates
+        result_service_sets_return_link_to: Back to the list of descriptions rebounds fare
+  tarif_classes:
+    show:
+      title: description or tariff option
+    new:
+      title: The new tariff
+    edit:
+      title: Editing fare
+    index:
+      title: List of tariffs
+  tarif_optimizators:
+    admin:
+      index:
+        title: Setting the tariff selection
+        calculate_link: Choose rate
+        result_run_link: View results matching tariffs
+      calculation_status:
+        title: Title of calculation operators
+    all_options:
+      index:
+        title: Selection of tariff for all available selection options
+        calculate_link: Choose rate
+        result_run_link: View results matching tariffs
+    fixed_operators:
+      index:
+        title: Selection of fare only for selected operators
+        calculate_link: Choose rate
+        result_run_link: View results matching tariffs
+    fixed_services:
+      index:
+        title: Calculating the cost of the fare for a particular set of options and
+        calculate_link: Choose rate
+        result_run_link: View results matching tariffs
+    limited_scope:
+      index:
+        title: Selection only for selected services operators
+        calculate_link: Choose rate
+        result_run_link: View results matching tariffs
+    main:
+      index:
+        title: The basic version of the tariff selection
+        calculate_link: Choose rate
+        result_run_link: View results matching tariffs
+  users:
+    show:
+      title: Profile
+    edit:
+      title: Edit Profile

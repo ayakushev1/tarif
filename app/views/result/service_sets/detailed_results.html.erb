@@ -1,8 +1,8 @@
-<% content_for :title, "Детальный состав затрат по тарифу и опциям" %>
+<% content_for :title, t('.title') %>
 
 <p>
 <%= render :partial => 'result/service_sets/detailed_results/information' %>
-<%= link_to(' Вернуться к списку лучших тарифов', result_path(controller.run_id), {:remote => true, :class => "btn btn-success", :type =>"button"}) %>
+<%= link_to(t('.back_result_button'), result_path(controller.run_id), {:remote => true, :class => "btn btn-success", :type =>"button"}) %>
 </p>
 <p>
 <%= render(:partial => 'result/service_sets/detailed_results/if_show_aggregate_results', :layout => 'application/layouts/filtr_form', 

@@ -11,13 +11,13 @@ table.init do |t|
   [
     optimization.name,
     optimization.description,
-    link_to( 'Просмотр', comparison_optimization_path(optimization), link_html), 
+    link_to( t('comparison.optimizations.index.show_optimization_link'), comparison_optimization_path(optimization), link_html), 
   ] + (user_type != :admin ? [] : [
     (optimization.publication_status.name if optimization.publication_status), 
     optimization.publication_order,
 #    (optimization.type.name if optimization.type),
-    link_to( 'Редактировать', edit_comparison_optimization_path(optimization), link_html), 
-    link_to( 'Удалить', optimization, method: :delete, data: { confirm: 'Are you sure?'}),
+    link_to( t('comparison.optimizations.index.edit_optimization_link'), edit_comparison_optimization_path(optimization), link_html), 
+    link_to( t('comparison.optimizations.index.delete_optimization_link'), optimization, method: :delete, data: { confirm: 'Are you sure?'}),
 #  	optimization.id, 
   	])
   end

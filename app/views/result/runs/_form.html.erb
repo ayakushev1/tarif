@@ -44,8 +44,8 @@ form_item.init do |fi|
 	   	f.number_field( :run, input_html.merge({:value => (s['run'] || 1), within: 1...10}))
 	   ], 
 	   [
-	   	link_to( 'Список описаний', result_runs_path, link_to_html), 
-	   	f.submit("Сохранить", :class => "btn btn-primary", :type =>"submit", :remote => true)
+	   	link_to( t('result.runs.edit.results_link'), result_runs_path, link_to_html), 
+	   	f.submit(t('result.runs.edit.save_link'), :class => "btn btn-primary", :type =>"submit", :remote => true)
 	   ],
 	   [
 	   	'', 

@@ -1,4 +1,4 @@
-<% content_for :title, "Задание параметров моделирования звонков" %>
+<% content_for :title, t('.title') %>
 
 
 <form class="form-inline">
@@ -6,9 +6,9 @@
 		<%= render :partial => 'call_run_choice' %>
 
   	<p>
-		<%= link_to('Редактировать описание моделирования', customer_call_runs_path, {:class => "btn btn-primary", :type =>"button"}) %>
+		<%= link_to(t('customer.calls.set_calls_generation_params.call_runs_link'), customer_call_runs_path, {:class => "btn btn-primary", :type =>"button"}) %>
 		
-		<%= link_to('Сгенерировать историю звонков', customer_calls_generate_calls_path, {:class => "btn btn-primary", :type =>"button"}) %>
+		<%= link_to(t('customer.calls.set_calls_generation_params.generate_calls_link'), customer_calls_generate_calls_path, {:class => "btn btn-primary", :type =>"button"}) %>
 
 		<%= render :partial => 'information' %>
 	</p>

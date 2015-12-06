@@ -1,4 +1,4 @@
-<% content_for :title, "Подбор только для выбранных услуг операторов" %>
+<% content_for :title, t('.title') %>
 
 <p>
 <%= render :partial => 'tarif_optimizators/limited_scope/input/information' %>
@@ -8,8 +8,8 @@
 </p>
 
 <p>
-<%= link_to('Подобрать тариф', tarif_optimizators_limited_scope_recalculate_path, {:class => "btn btn-primary", :type =>"button"}) %>
-<%= link_to('Посмотреть результаты подбора тарифов', result_path(result_run_id), {:class => "btn btn-primary", :type =>"button"}) %>
+<%= link_to(t('tarif_optimizators.limited_scope.index.calculate_link'), tarif_optimizators_limited_scope_recalculate_path, {:class => "btn btn-primary", :type =>"button"}) %>
+<%= link_to(t('tarif_optimizators.limited_scope.index.result_run_link'), result_path(result_run_id), {:class => "btn btn-primary", :type =>"button"}) %>
 </p>
 
 <%= render(:partial => 'tarif_optimizators/limited_scope/input/calculation_choices', :layout => 'application/layouts/filtr_form_group', 

@@ -4,36 +4,36 @@ content_in :tabs do |user|
   ([
     [
      '', 
-     link_to( 'Главная страница', root_path, remote: true, turbolinks: true),
+     link_to( t(:root_path) , root_path, remote: true, turbolinks: true), 
      'link' 
     ], 
     ([
-     'Рейтинги', 
+     t(:comparisons), 
      render('/application/menus/main_top_menu/comparisons'),
      'dropdown-menu' 
     ] if true or current_user_admin?), 
     ([
-     'Рекомендации', 
+     t(:recommendation), 
      render('/application/menus/main_top_menu/recommendation'),
      'dropdown-menu' 
     ] if current_user_admin?), 
     [
-     'Загрузка звонков', 
+     t(:preparations), 
      render('/application/menus/main_top_menu/preparations'),
      'dropdown-menu'     
     ], 
     [
-     'Подбор тарифов', 
+     t(:optimization), 
      render('/application/menus/main_top_menu/optimization'),
      'dropdown-menu'     
     ], 
     [
-     'Помощь', 
+     t(:service_description), 
      render('/application/menus/main_top_menu/service_description'),
      'dropdown-menu'     
     ], 
     ([
-     'Для администратора', 
+     t(:admin), 
      render('/application/menus/main_top_menu/admin'),
      'dropdown-menu'     
     ] if current_user_admin?), 

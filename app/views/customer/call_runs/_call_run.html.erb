@@ -11,8 +11,8 @@ form_item.init do |fi|
       ], 
       ['Описание', call_run.description], 
       [
-		link_to( 'Редактировать описание', edit_customer_call_run_path(call_run), link_to_html),
-		link_to( 'Список описаний', customer_call_runs_path, link_to_html)
+		link_to( t('customer.call_runs.show.call_run.edit_link'), edit_customer_call_run_path(call_run), link_to_html),
+		link_to( t('customer.call_runs.show.call_run.call_runs_link'), customer_call_runs_path, link_to_html)
       	
       ],
     ] + ((user_type != :admin) ? [] : [

@@ -14,9 +14,9 @@ table.init do |t|
     link_to( 'Удалить', call_run, method: :delete, data: { confirm: 'Are you sure?'}),
 #  	call_run.id, 
   	]) + [
-    link_to( 'Просмотр', customer_call_run_path(call_run), ), 
-    link_to( 'Редактировать', edit_customer_call_run_path(call_run)), 
-    link_to( 'Статистика звонков', customer_call_stat_path(call_run)), 
+    link_to( t('customer.call_runs.index.call_runs.show_link'), customer_call_run_path(call_run), ), 
+    link_to( t('customer.call_runs.index.call_runs.edit_link'), edit_customer_call_run_path(call_run)), 
+    link_to( t('customer.call_runs.index.call_runs.call_stat_link'), customer_call_stat_path(call_run)), 
   	]
   end
 end

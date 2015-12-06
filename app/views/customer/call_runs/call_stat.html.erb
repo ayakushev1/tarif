@@ -1,10 +1,10 @@
-<% content_for :title, "Статистика звонков" %>
+<% content_for :title, t('.title') %>
 
 <% link_to_html = {:class => "btn btn-success", :type =>"button", :remote => true} %>
 <p>
 <%= render :partial => 'customer/call_runs/information' %>
-<%= link_to( 'Расчитать статистику', customer_calculate_call_stat_path(params[:id]), link_to_html) %>
-<%= link_to( 'Список описаний', customer_call_runs_path, link_to_html) %>
+<%= link_to( t('customer.call_runs.call_stat.calculate_stat_link'), customer_calculate_call_stat_path(params[:id]), link_to_html) %>
+<%= link_to( t('customer.call_runs.call_stat.call_runs_link'), customer_call_runs_path, link_to_html) %>
 </p>
 <p>
 	

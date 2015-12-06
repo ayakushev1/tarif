@@ -12,8 +12,8 @@ form_item.init do |fi|
       ['Тип подбора тарифа', run.optimization_type],
       ['Номер подбра', run.run], 
       [
-		link_to( 'Редактировать описание', edit_result_run_path(run), link_to_html),
-		link_to( 'Список описаний', result_runs_path, link_to_html)      	
+		link_to( t('result.runs.show.edit_link'), edit_result_run_path(run), link_to_html),
+		link_to( t('result.runs.show.results_link'), result_runs_path, link_to_html)      	
       ],
 	] + (user_type != :admin ? [] : [
 	  	['ID', run.id],
