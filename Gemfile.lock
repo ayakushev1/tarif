@@ -78,9 +78,9 @@ GEM
       debug_inspector (>= 0.0.1)
     bootstrap-datepicker-rails (1.4.0)
       railties (>= 3.0)
-    bootstrap-sass (3.3.5.1)
-      autoprefixer-rails (>= 5.0.0.1)
-      sass (>= 3.3.0)
+    bootstrap-sass (3.3.6)
+      autoprefixer-rails (>= 5.2.1)
+      sass (>= 3.3.4)
     bootstrap-will_paginate (0.0.10)
       will_paginate
     bootswatch-rails (3.3.5)
@@ -313,7 +313,7 @@ DEPENDENCIES
   better_errors
   binding_of_caller
   bootstrap-datepicker-rails
-  bootstrap-sass (~> 3.3.5)
+  bootstrap-sass (~> 3.3.6)
   bootstrap-will_paginate
   bootswatch-rails
   breadcrumbs_on_rails

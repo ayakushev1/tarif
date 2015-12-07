@@ -20,7 +20,7 @@ group :assets do
 #  gem 'bootstrap-sass', '~> 3.3.1' 
 end
 
-  gem 'bootstrap-sass', '~> 3.3.5'
+  gem 'bootstrap-sass', '~> 3.3.6'
   gem 'sass-rails', '>= 5.0.3'
   gem 'autoprefixer-rails'
   gem 'uglifier', '>= 1.3.0'

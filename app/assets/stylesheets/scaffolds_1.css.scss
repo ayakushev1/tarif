@@ -8,6 +8,7 @@ $font-size-base: 14px;
 $font-size-h1: floor(($font-size-base * 2.2));
 
 
+
 /*
 $screen-xs-min: 4800px;
 $screen-sm-min: 7680px;
@@ -17,9 +18,9 @@ $screen-lg-min: 12000px;
 $screen-sm: 7680px;
 $screen-sm-min: $screen-sm;
 $screen-tablet: $screen-sm-min;
-*/
 @import "bootstrap-sprockets";
 @import "bootstrap";
+*/
 
 /*
 .current_table_row {
