@@ -1,9 +1,9 @@
 en:
-  login: Log in
-  logout: Log out
-  account_info: Account info
-  user: User
-  letter_to_admin: Letter to admin
-  default_guest_name: Guest
-  register: Register    
+  login: log in
+  logout: log out
+  account_info: account info
+  user: user
+  letter_to_admin: letter to admin
+  default_guest_name: guest
+  register: register    
         

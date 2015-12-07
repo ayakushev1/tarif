@@ -1,0 +1,19 @@
+
+<h2>Description of tariff selection</h2>
+<p>The selection consists of two steps.</p>
+<p>First, you need <%= link_to('to load your call history', customer_history_parsers_prepare_for_upload_path) %>
+   (currently only available for MTS, Megafon, Beeline and Tele2)
+   or <%= link_to('simulate it', customer_calls_set_calls_generation_params_path) %>. 
+</p>
+<p>
+   Then you can <%= link_to('proceed to the selection of the tariff', tarif_optimizators_main_index_path) %>.
+</p>   
+<p>
+   If you want, you can select a set of operator services (roaming calls, SMS, Internet, etc.) for which it is necessary to
+   pick up the tariff. This is useful for the selection of tariffs for mobile phones with two SIM cards.
+</p>
+<p>
+	You can also calculate the cost of mobile communication for the selected tariff and tariff options.
+</p>
+<p>A detailed description can be found <%= link_to 'here', home_detailed_description_path %></p>
+
