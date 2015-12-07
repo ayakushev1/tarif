@@ -8,72 +8,266 @@
 
 <url>
   <loc>http://www.mytarifs.ru/</loc>
-  <lastmod>2015-11-15T12:52:39+00:00</lastmod>
-  <changefreq>daily</changefreq>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/content/articles/index</loc>
-  <lastmod>2015-11-15T12:52:39+00:00</lastmod>
-  <changefreq>daily</changefreq>
+  <loc>http://www.mytarifs.ru/comparison/optimizations</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/content/articles/show</loc>
-  <lastmod>2015-11-15T12:52:39+00:00</lastmod>
-  <changefreq>daily</changefreq>
-</url>
-<url>
-  <loc>http://www.mytarifs.ru/content/articles/call_statistic</loc>
-  <lastmod>2015-11-15T12:52:39+00:00</lastmod>
-  <changefreq>daily</changefreq>
+  <loc>http://www.mytarifs.ru/customer/call_runs</loc>
 </url>
 <url>
   <loc>http://www.mytarifs.ru/customer/calls/set_calls_generation_params</loc>
-  <lastmod>2015-11-15T12:52:39+00:00</lastmod>
-  <changefreq>daily</changefreq>
 </url>
 <url>
   <loc>http://www.mytarifs.ru/customer/history_parsers/prepare_for_upload</loc>
-  <lastmod>2015-11-15T12:52:39+00:00</lastmod>
-  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/runs</loc>
 </url>
 <url>
   <loc>http://www.mytarifs.ru/tarif_optimizators/main/index</loc>
-  <lastmod>2015-11-15T12:52:39+00:00</lastmod>
-  <changefreq>daily</changefreq>
 </url>
 <url>
   <loc>http://www.mytarifs.ru/tarif_optimizators/fixed_services/index</loc>
-  <lastmod>2015-11-15T12:52:39+00:00</lastmod>
-  <changefreq>daily</changefreq>
 </url>
 <url>
   <loc>http://www.mytarifs.ru/tarif_optimizators/limited_scope/index</loc>
-  <lastmod>2015-11-15T12:52:39+00:00</lastmod>
-  <changefreq>daily</changefreq>
 </url>
 <url>
   <loc>http://www.mytarifs.ru/tarif_optimizators/fixed_operators/index</loc>
-  <lastmod>2015-11-15T12:52:39+00:00</lastmod>
-  <changefreq>daily</changefreq>
 </url>
 <url>
   <loc>http://www.mytarifs.ru/home/detailed_description</loc>
-  <lastmod>2015-11-15T12:52:39+00:00</lastmod>
-  <changefreq>daily</changefreq>
 </url>
 <url>
   <loc>http://www.mytarifs.ru/home/news</loc>
-  <lastmod>2015-11-15T12:52:39+00:00</lastmod>
-  <changefreq>daily</changefreq>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/comparison/optimizations/2</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/comparison/optimizations/1</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/customer/call_runs/248</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/customer/call_runs/248/edit</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/customer/call_runs/call_stat/248</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/customer/call_runs/247</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/customer/call_runs/247/edit</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/customer/call_runs/call_stat/247</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/customer/call_runs/246</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/customer/call_runs/246/edit</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/customer/call_runs/call_stat/246</loc>
 </url>
 <url>
   <loc>http://www.mytarifs.ru/customer/calls</loc>
-  <lastmod>2015-11-15T12:52:39+00:00</lastmod>
-  <changefreq>daily</changefreq>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/runs/results</loc>
-  <lastmod>2015-11-15T12:52:39+00:00</lastmod>
-  <changefreq>daily</changefreq>
+  <loc>http://www.mytarifs.ru/result/runs/357</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/runs/357/edit</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/results/357</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/compare/357</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/runs/356</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/runs/356/edit</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/results/356</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/compare/356</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/runs/355</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/runs/355/edit</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/results/355</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/compare/355</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/runs/354</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/runs/354/edit</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/results/354</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/compare/354</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/results/15</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/compare/15</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/results/16</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/compare/16</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/results/17</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/compare/17</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/results/10</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/compare/10</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/results/11</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/compare/11</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/results/12</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/compare/12</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/customer/calls?pagination%5Bcustomer_call_page%5D=1</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/customer/calls?pagination%5Bcustomer_call_page%5D=2</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/customer/calls?pagination%5Bcustomer_call_page%5D=3</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/customer/calls?pagination%5Bcustomer_call_page%5D=4</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/customer/calls?pagination%5Bcustomer_call_page%5D=5</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/customer/calls?pagination%5Bcustomer_call_page%5D=6</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/customer/calls?pagination%5Bcustomer_call_page%5D=7</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/customer/calls?pagination%5Bcustomer_call_page%5D=8</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/customer/calls?pagination%5Bcustomer_call_page%5D=9</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/customer/calls?pagination%5Bcustomer_call_page%5D=47</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/customer/calls?pagination%5Bcustomer_call_page%5D=48</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/results/15?pagination%5Bservice_sets_page%5D=1</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/results/15?pagination%5Bservice_sets_page%5D=2</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/results/15?pagination%5Bservice_sets_page%5D=3</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/results/15?pagination%5Bservice_sets_page%5D=4</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/detailed_results</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/results/16?pagination%5Bservice_sets_page%5D=1</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/results/16?pagination%5Bservice_sets_page%5D=2</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/results/16?pagination%5Bservice_sets_page%5D=3</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/results/16?pagination%5Bservice_sets_page%5D=4</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/results/17?pagination%5Bservice_sets_page%5D=1</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/results/17?pagination%5Bservice_sets_page%5D=2</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/results/17?pagination%5Bservice_sets_page%5D=3</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/results/17?pagination%5Bservice_sets_page%5D=4</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/results/10?pagination%5Bservice_sets_page%5D=1</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/results/10?pagination%5Bservice_sets_page%5D=2</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/results/10?pagination%5Bservice_sets_page%5D=3</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/results/10?pagination%5Bservice_sets_page%5D=4</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/results/11?pagination%5Bservice_sets_page%5D=1</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/results/11?pagination%5Bservice_sets_page%5D=2</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/results/11?pagination%5Bservice_sets_page%5D=3</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/results/11?pagination%5Bservice_sets_page%5D=4</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/results/12?pagination%5Bservice_sets_page%5D=1</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/results/12?pagination%5Bservice_sets_page%5D=2</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/results/12?pagination%5Bservice_sets_page%5D=3</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/results/12?pagination%5Bservice_sets_page%5D=4</loc>
 </url>
 </urlset>
