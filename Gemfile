@@ -30,6 +30,7 @@ gem 'will_paginate'
 gem 'bootstrap-will_paginate'
 gem 'bootstrap-datepicker-rails'
 gem 'bootswatch-rails'
+gem "font-awesome-rails"
 
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
