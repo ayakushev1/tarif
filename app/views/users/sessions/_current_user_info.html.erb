@@ -1,8 +1,14 @@
 <div class="navbar-collapse">
 	<div class="container-fluid ">
+	  <ul class="nav navbar-nav navbar-left">
+	  	<li>
+			<%= link_to image_tag("logo.png", :alt => 'Brand'), root_path('', :anchor => false), 
+				{:class => "nav navbar-brand", :remote => false} %>	  		
+	  	</li>
+	  </ul>
 	  <ul class="nav navbar-nav navbar-right">
 	  	<% if true %>
-	    <li class="dropdown">
+	    <li class="dropdown hidden-xs">
 	    	<a href="#" class="dropdown-toggle  f16" data-toggle="dropdown" >
 	    		<span class="flag <%= session[:locale].to_s %>"></span>
 	    	</a>
@@ -13,10 +19,10 @@
 	    </li>	   
 	    <% end %> 
 	  	<% if current_or_guest_user %>
-		    <li><%= link_to(new_customer_demand_path, {:class => "hidden-xs"}) do %>
-		    	<span class="icon_menu_img"><%= image_tag("envelope_img.png") %></span><%= t(:letter_to_admin) %>
-		        <% end %>
-		    </li>
+	    <li><%= link_to(new_customer_demand_path, {:class => "hidden-xs"}) do %>
+	    	<span class="icon_menu_img"><%= image_tag("envelope_img.png") %></span><%= t(:letter_to_admin) %>
+	        <% end %>
+	    </li>
 		<% end %> 
 	
 	    <li class="dropdown">
@@ -26,7 +32,7 @@
 	    		<span><%= current_user ? current_user.name : t(:default_guest_name) %></span>
 	    		<span class="caret"></span>
 	    	</a>
-	        <ul class="dropdown-menu user-dropdown-menu" role="menu">
+	        <ul class="dropdown-menu user-dropdown-menu f32" role="menu">
 				<% if !current_user %>
 					<li><%= link_to t(:register), new_user_registration_path %></li>
 					<li><%= link_to t(:login), login_path %></li>
@@ -35,6 +41,8 @@
 					<li><%= link_to t(:logout), logout_path %></li>
 				<% end %>
 				    <li><%= link_to t(:letter_to_admin), new_customer_demand_path, {:class => "visible-xs-block"} %></li>
+					<li><%= link_to '', change_locale_path + '?' + {:locale => :ru}.to_param, {:class => "visible-xs-block flag ru"} %></li>
+					<li><%= link_to '', change_locale_path + '?' + {:locale => :en}.to_param, {:class => "visible-xs-block flag en"} %></li>
 	        </ul>
 	    </li>	    
 	  </ul>

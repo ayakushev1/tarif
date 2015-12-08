@@ -21,7 +21,7 @@
 @import "bootstrap-sprockets";
 
 // Import cerulean variables
-@import "bootswatch/spacelab/variables";
+@import "bootswatch/journal/variables";
 
 // Then bootstrap itself
 @import "bootstrap";
@@ -30,7 +30,7 @@
 body1 { padding-top: 60px; }
 
 // And finally bootswatch style itself
-@import "bootswatch/spacelab/bootswatch";
+@import "bootswatch/journal/bootswatch";
 
 // Whatever application styles you have go last
 @import "scaffolds_1";

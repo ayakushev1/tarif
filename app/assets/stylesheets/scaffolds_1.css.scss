@@ -340,14 +340,18 @@ html.turbolinks-progress-bar::before {
 
 .f16 .flag{
   display:inline-block;
-  margin-left: 20px !important;
-  margin-right: 0px !important;
+  margin-left: 5px !important;
+  margin-right: 5px !important;
   height:16px;width:16px;vertical-align:text-top;line-height:16px;background:image_url("flags16.png") no-repeat;}
 .f16 ._England{background-position:0 -112px;}
 .f16 .en{background-position:0 -3664px;}
 .f16 .ru{background-position:0 -3104px;}
 
-.f32 .flag{display:inline-block;height:32px;width:32px;vertical-align:text-top;line-height:32px;background:image_url('flags32.png') no-repeat;}
+.f32 .flag{
+  display:inline-block;
+  margin-left: 25px !important;
+  margin-right: 5px !important;
+  height:32px;width:32px;vertical-align:text-top;line-height:32px;background:image_url('flags32.png') no-repeat;}
 .f32 ._England{background-position:0 -224px;}
 .f32 .en{background-position:0 -7328px;}
 .f32 .ru{background-position:0 -6208px;}
