@@ -1,7 +1,8 @@
 class HomeController < ApplicationController
+  layout 'landing', only: :introduction
 #  before_action :calls_stat_options
-  after_action :track_demo_results, only: :demo_results
-  after_action :track_index, only: :index
+#  after_action :track_demo_results, only: :demo_results
+#  after_action :track_index, only: :index
 
   def update_tabs
     render :nothing => true

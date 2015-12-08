@@ -91,7 +91,7 @@ module ApplicationHelper::Authorization
       },
       :public_url => {
         :methods => ['get'], :actions => {
-          'home' => ['index', 'short_description', 'detailed_description', 'update_tabs', 'news', 'change_locale'],
+          'home' => ['index', 'short_description', 'detailed_description', 'update_tabs', 'news', 'change_locale', 'introduction'],
           'content/articles' => ['show', 'index', 'call_statistic', 'detailed_results'],
           'customer/payments' => ['create', 'new', 'edit', 'show', 'update', 'wait_for_payment_being_processed', 'process_payment'],
           'customer/optimization_steps' => ['choose_load_calls_options', 'check_loaded_calls', 'choose_optimization_options', 'optimize_tarifs', 'show_optimized_tarifs'],
