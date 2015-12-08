@@ -11,3 +11,9 @@
 
 <%= collection_select(filtr_name, "customer_call_run_id", Customer::CallRun.where(:user_id => current_or_guest_user_id), :id, :full_name, 
   	   {:selected => s["customer_call_run_id"] }, input_html ) %>
+
+<%= link_to(t('customer.calls.set_calls_generation_params.call_runs_link'), customer_call_runs_path, {:class => "btn btn-success", :type =>"button"}) %>
+
+<%= link_to(t('customer.calls.set_calls_generation_params.generate_calls_link'), customer_calls_generate_calls_path, {:class => "btn btn-success", :type =>"button"}) %>
+
+<%= render :partial => 'information' %>
