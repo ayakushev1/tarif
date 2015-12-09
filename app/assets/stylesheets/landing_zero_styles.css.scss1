@@ -1,83 +1,51 @@
 /*
-Landing Zero theme - A free landing page theme from BootstrapZerobg-primary
+
+Landing Zero theme - A free landing page theme from BootstrapZero
 http://www.bootstrapzero.com
+
 */
+$body-background-color: #282828;
+$body-color: #d3d3d3;
 
-$body-bg:               #F9FDFF !default;
-$gray-base:              #000 !default;
-$gray:                   lighten($gray-base, 33.5%) !default;
+$hr-border-color:#fff;
+$a-color: #9c27b0;
+$a-focus-color: #9c27c1;
 
-$bg-primary-background-color: darken($body-bg, 6.5%) !default; //#333;
-$bg-primary-color: darken($gray-base, 20.0%) !default; //#eee
+$bg-primary-background-color: #333;
+$bg-dark-background-color: #222;
+$bg-dark-color: #eee;
 
-$bg-dark-background-color: darken($body-bg, 13.5%) !default; //#222
-$bg-dark-color: darken($gray-base, 13.5%) !default; //#eee
+$text-faded-color: rgba(245,245,245,0.7);
+$text-dark-color: #111;
+$text-primary-color: #9c27b0;
 
-$body-background-color: $body-bg; //#e4e4e4; //#282828;
-$body-color: #2d2d2d; //#d3d3d3;
-$body-webkit-tap-highlight-color: $bg-dark-background-color;
-
-$hr-border-color: $gray-base; // #fff
-
-$a-color: #317eb0; //#9c27b0;
-$a-focus-color: #317ec1; //#9c27c1;
-
-$text-faded-color: rgba(11,11,11,0.7); // rgba(245,245,245,0.7);
-$text-dark-color: #eee; // #111;
-$text-primary-color: $a-color;
-
-$modal-content-background-color: $body-bg; // #1d1d1d;
+$modal-content-background-color: #1d1d1d;
 
 $navbar-default-background-color: $bg-dark-background-color;
-$navbar-default-focus-background-color: #e8e8e8; // #181818;
-$navbar-default-border-color: rgba(221,221,221,.05); //rgba(35,35,35,.05);
-$navbar-default-nav-li-a-color: $bg-dark-color;
-$navbar-default-nav-li-a-media-768-color: rgba(1,1,1,0.8); //rgba(255,255,255,0.8);
-$navbar-default-nav-li-a-hover-color: $a-color;
-$navbar-default-nav-li-a-hover-media-768-color: #020202; //#fefefe;
-$navbar-default-nav-li-active-a-color: $a-color;
-$navbar-default-header-brand-focus-media-768-color: #0c0c0c; //#f4f4f4;
+$navbar-default-focus-background-color: #181818;
+$navbar-default-border-color: rgba(35,35,35,.05);
+$navbar-default-nav-li-a-color: #eee;
+$navbar-default-nav-li-a-media-768-color: rgba(255,255,255,0.8);
+$navbar-default-nav-li-a-hover-color: #9c27b0;
+$navbar-default-nav-li-a-hover-media-768-color: #fefefe;
+$navbar-default-nav-li-active-a-color: #9c27b0;
+$navbar-default-header-brand-focus-media-768-color: #f4f4f4;
 
-$navbar-header-color: $a-color;
+$navbar-header-color: #9c27b0;
 $navbar-header-focus-color: #8b27b0;
-$navbar-header-brand-media-768-color: rgba(1,1,1,0.7); //rgba(255,255,255,0.7);
+$navbar-header-brand-media-768-color: rgba(255,255,255,0.7);
 
-$navbar-default_affix-media-768-background-color: darken($body-bg, 20.0%) !default;
-$navbar-default_affix-media-768-border-color: rgba(222,222,222,.05); // rgba(34,34,34,.05);
-$navbar-default_affix-media-768-color: $a-color;
-$navbar-default_affix-focus-media-768-color: $navbar-header-focus-color;
-$navbar-default_affix-nav-li-a-media-768-color: #232323; //#ddd;
-$navbar-default_affix-nav-li-a-focus-media-768-color: $a-color;
+$header-background-color: #c9c9c9;
 
-$header-background-color: $body-background-color; //#c9c9c9;
-$header-color: $hr-border-color;
-$header-content-inner-color: $navbar-header-brand-media-768-color;
+$footer-background-color: #2d2d2d;
 
-$footer-background-color: $body-bg; //#2d2d2d;
+$form-control-background-color: #36333d;
+$form-control-focus-background-color: #ccc;
 
-$btn-default-background-color: $hr-border-color;
-$btn-default-border-color: $hr-border-color;
-$btn-default-color: $bg-dark-background-color;
-$btn-default-active-background-color: #0e0e0e; // #f2f2f2;
-$btn-default-focus-border-color: #131313; // #ededed;
-$btn-default-focus-color: $bg-dark-background-color;
+$btn-default-background-color: #fff;
+$btn-default-active-background-color: #f2f2f2;
 $btn-default-fieldset-disabled-background-color: $btn-default-background-color;
-$btn-default-fieldset-disabled-border-color: $hr-border-color;
 $btn-default-badge-background-color: $bg-dark-background-color;
-$btn-default-badge-color: $hr-border-color;
-
-$btn-primary-border-color: #101010; //#f0f0f0;
-$btn-primary-color: $gray-base; // no definition here
-
-$selection-background-color: $bg-dark-background-color;
-$selection-color: $hr-border-color;
-
-$moz-selection-background-color: $bg-dark-background-color;
-$moz-selection-color: $hr-border-color;
-
-$img-selection-color: $hr-border-color;
-$img-moz-selection-color: $hr-border-color;
-
 
 @import url(https://fonts.googleapis.com/css?family=Questrial);
 @import url(http://fonts.googleapis.com/css?family=Dancing+Script:700);
@@ -92,7 +60,7 @@ body {
     font-family: 'Questrial','Helvetica Neue',Arial,sans-serif;
     background-color: $body-background-color;
     color: $body-color;
-    webkit-tap-highlight-color: $body-webkit-tap-highlight-color; 
+    webkit-tap-highlight-color: #222;
 }
 
 hr {
@@ -130,10 +98,6 @@ p {
     margin-bottom: 20px;
 }
 
-.text-muted {
-	color: #444;
-}
-
 .wide-space {
     letter-spacing: 1.6px;
 }
@@ -145,7 +109,6 @@ p {
 
 .bg-primary {
     background-color: $bg-primary-background-color; 
-    color: $bg-primary-color;
 }
 
 .bg-dark {
@@ -277,31 +240,31 @@ footer {
     }
 
     .navbar-default.affix {
-        border-color: $navbar-default_affix-media-768-border-color; 
-        background-color: $navbar-default_affix-media-768-background-color;
+        border-color: rgba(34,34,34,.05);
+        background-color: $bg-dark-background-color;
     }
 
     .navbar-default.affix .navbar-header .navbar-brand {
         font-size: 15px;
-        color: $navbar-default_affix-media-768-color; 
+        color: #9c27b0;
         padding: 20px;
         letter-spacing: 1px;
     }
 
     .navbar-default.affix .navbar-header .navbar-brand:hover,
     .navbar-default.affix .navbar-header .navbar-brand:focus {
-        color: $navbar-default_affix-focus-media-768-color; 
+        color: #8b27b0;
     }
 
     .navbar-default.affix .nav > li>a,
     .navbar-default.affix .nav>li>a:focus {
-        color: $navbar-default_affix-nav-li-a-media-768-color; 
+        color: #ddd;
         text-shadow: 1px 1px 1px rgba(30,30,30,0.7);
     }
 
     .navbar-default.affix .nav > li>a:hover,
     .navbar-default.affix .nav>li>a:focus:hover {
-        color: $navbar-default_affix-nav-li-a-focus-media-768-color; 
+        color: #9c27b0;
     }
 }
 
@@ -309,7 +272,7 @@ header {
     position: relative;
     min-height: auto;
     text-align: center;
-    color: $header-color; 
+    color: #fff;
     width: 100%;
     background-color: $header-background-color; 
     background-image: url('https://splashbase1.s3.amazonaws.com/lifeofpix/regular/Life-of-Pix-free-stock-photos-Slate-Stone-Xeromatic-1440x953.jpg');
@@ -337,7 +300,22 @@ header .header-content .inner p {
     margin-bottom: 50px;
     font-size: 16px;
     font-weight: 300;
-    color: $header-content-inner-color; 
+    color: rgba(255,255,255,0.7);
+}
+
+#video-background {
+  position: absolute;
+  right: 0; 
+  bottom: 0;
+  min-width: 100%; 
+  min-height: 100%;
+  width: auto; 
+  height: auto;
+  z-index: 1;
+}
+
+#video-background.collapsing {
+  display:none;
 }
 
 footer {
@@ -386,6 +364,28 @@ footer {
 
 }
 
+.form-control {
+    display: block;
+    width: 100%;
+    height: 35px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.5;
+    color: #eee;
+    background-color: $form-control-background-color; 
+    background-image: none;
+    border: 1px solid #36333d;
+    border-radius: 4px;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+    transition: border-color ease-in-out .15s, box-shadow ease-in-out .15s;
+}
+
+.form-control:focus {
+    color: #222;
+    background-color: $form-control-focus-background-color; 
+    box-shadow: none;
+}
+
 textarea {
     resize: none;
 }
@@ -413,10 +413,60 @@ textarea {
     margin: 0 auto 20px;
 }
 
+.gallery-box {
+    display: block;
+    position: relative;
+    margin: 0 auto;
+    max-width: 650px;
+    overflow:hidden;
+}
+
+.gallery-box .gallery-box-caption {
+    display: block;
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    color: #fff;
+    opacity: 0;
+    background: rgba(44,44,44,.8);
+    -webkit-transition: all .35s;
+    -moz-transition: all .35s;
+    transition: all .35s;
+}
+
+.gallery-box .gallery-box-caption .gallery-box-content {
+    position: absolute;
+    top: 50%;
+    width: 100%;
+    text-align: center;
+    transform: translateY(-50%);
+}
+
+.gallery-box:hover .gallery-box-caption {
+    opacity: 1;
+}
+
+.gallery-box:hover img {
+    -webkit-transform: scale(1.1);
+    -ms-transform: scale(1.1);
+    transform: scale(1.1);
+}
+
+.gallery-box img {
+    -webkit-transition: all 300ms ease-in-out;
+    transition: all 300ms ease-in-out;
+}
+
+.no-gutter > [class*=col-] {
+    padding-right: 0;
+    padding-left: 0;
+}
 
 .btn-default {
-    border-color: $btn-default-border-color; 
-    color: $btn-default-color; 
+    border-color: #fff;
+    color: #222;
     background-color: $btn-default-background-color; 
     -webkit-transition: all .35s;
     -moz-transition: all .35s;
@@ -429,8 +479,8 @@ textarea {
 .btn-default:active,
 .btn-default.active,
 .open > .dropdown-toggle.btn-default {
-    border-color: $btn-default-focus-border-color; 
-    color: $btn-default-focus-color; 
+    border-color: #ededed;
+    color: #222;
     background-color: $btn-default-active-background-color; 
     opacity: 0.7;
 }
@@ -459,21 +509,20 @@ fieldset[disabled] .btn-default:active,
 .btn-default.disabled.active,
 .btn-default[disabled].active,
 fieldset[disabled] .btn-default.active {
-    border-color: $btn-default-fieldset-disabled-border-color; 
+    border-color: #fff;
     background-color: $btn-default-fieldset-disabled-background-color; 
     opacity: 0.7;
 }
 
 .btn-default .badge {
-    color: $btn-default-badge-color; 
+    color: #fff;
     background-color: $btn-default-badge-background-color; 
 }
 
 .btn.btn-primary {
     background-color: transparent;
-    border:1px solid $btn-primary-border-color;
-    border-color: $btn-primary-border-color; 
-    color: $btn-primary-color;
+    border:1px solid #f0f0f0;
+    border-color:#f0f0f0;
     -webkit-transition: all .35s;
     -moz-transition: all .35s;
     transition: all .35s;
@@ -496,22 +545,22 @@ fieldset[disabled] .btn-default.active {
 
 ::-moz-selection {
     text-shadow: none;
-    color: $moz-selection-color; 
-    background: $moz-selection-background-color; 
+    color: #fff;
+    background: #222;
 }
 
 ::selection {
     text-shadow: none;
-    color: $selection-color; 
-    background: $selection-background-color; 
+    color: #fff;
+    background: #222;
 }
 
 img::selection {
-    color: $img-selection-color; 
+    color: #fff;
     background: 0 0;
 }
 
 img::-moz-selection {
-    color: $img-moz-selection-color; 
+    color: #fff;
     background: 0 0;
 }

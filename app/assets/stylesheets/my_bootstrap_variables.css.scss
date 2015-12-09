@@ -1,0 +1,9 @@
+/*$current_table_row: #ddd;
+$body-bg: #ffffff;
+*/
+
+$body-bg: #F9FDFF; //#ffffff;
+$navbar-default-bg: darken($body-bg, 13.5%) !default; //#ffffff;
+$font-size-base: 14px;
+$font-size-h1: floor(($font-size-base * 2.2));
+

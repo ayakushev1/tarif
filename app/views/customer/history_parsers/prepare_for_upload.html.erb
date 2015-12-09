@@ -1,14 +1,11 @@
 <% content_for :title, t('.title') %>
 
-
-<%= render :partial => 'information' %>
-<%= render :partial => 'attention' %>
-
 <form class="form-inline">
   <div class="form-group">
-  	<p>
+  	<p><%= render :partial => 'attention' %>
 		<%= render :partial => 'call_run_choice' %>
 		<%= link_to(t('customer.history_parsers.prepare_for_upload.call_runs_link'), customer_call_runs_path, {:class => "btn btn-primary", :type =>"button"}) %>		
+		<%= render :partial => 'information' %>
 	</p>
   </div>
 </form>  	   
