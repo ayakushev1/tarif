@@ -6,5 +6,10 @@
 <%= render :partial => 'comparison/optimizations/information/index' %>
 </p>
 
-<%= render :partial => 'optimizations', :layout => 'application/layouts/model_table', :locals => {:table => controller.comparison_optimizations_table}%>
+<% if false %>
+	<%= render :partial => 'optimizations_table', :layout => 'application/layouts/model_table', :locals => {:table => controller.comparison_optimizations_table} %>
+<% else %>
+	<%= render :partial => 'optimizations_panels', :layout => 'application/layouts/model_panels', 
+		:locals => {:table => controller.comparison_optimizations_table, :panels_in_row => 4}  %>
+<% end %>
 

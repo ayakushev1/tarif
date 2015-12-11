@@ -1,0 +1,23 @@
+<%
+table.init do |t|
+  link_html = {:remote => true}
+  t.set_fields do |optimization| 
+  	{
+  	:head => optimization.name,
+  	:body => [
+	    optimization.description,
+    ] + (user_type != :admin ? [] : [
+		    (optimization.publication_status.name if optimization.publication_status), 
+		    optimization.publication_order,
+	]),
+	:footer => 
+	  content_tag(:div, {:class => "btn-toolbar"}) do
+		link_to( t('comparison.optimizations.index.show_optimization_link'), comparison_optimization_path(optimization), link_html.merge({:class => "btn btn-default"}) ) + 
+		(user_type != :admin ? "" : 
+			link_to( t('comparison.optimizations.index.edit_optimization_link'), edit_comparison_optimization_path(optimization), link_html.merge({:class => "btn btn-default"}) ) +
+		    link_to( t('comparison.optimizations.index.delete_optimization_link'), optimization, method: :delete, data: { confirm: 'Are you sure?'}, class: "btn btn-default") )
+	  end
+  	}
+  end
+end
+%>

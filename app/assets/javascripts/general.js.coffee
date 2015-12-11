@@ -46,7 +46,7 @@ $(document).on 'change', ".updatable", ->
       if $(":input")[element_before_ajax_index + 1]
       	$(":input")[element_before_ajax_index + 1].focus() 
         
-$(document).on 'click', "tr[id*=row]", ->
+$(document).on 'click', "tr[id*=row], .panel[id*=row]", ->
   row_name = $(this).attr("row_name")
   $("[id^=#{row_name}]").not(this).removeClass("current_table_row")
   $(this).addClass("current_table_row")

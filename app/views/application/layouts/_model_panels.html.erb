@@ -1,0 +1,34 @@
+<%
+panels_in_row = local_assigns[:panels_in_row] ? local_assigns[:panels_in_row] : 3
+
+
+table_html_options = {:id =>table.table_name, :class => 'table table-bordered table-hover table-condensed'}
+table_html_options = form_html_options.merge(html) if local_assigns[:html]
+
+%>
+<div class="table-responsive1">
+	<div class="text-center">
+			<%= will_paginate(table.model, :class=>'pagination text-center pagin_border', :remote => true, :param_name => table.pagination_param_name * panels_in_row ) %>
+	</div>	
+	
+	<% #table.model.to_a.in_groups_of(panels_in_row) do |item_group| %>
+	<div class="row equal-group" >
+		<% table.model.each do |item| %>
+		  <% if item %>
+  		  <div class="col-md-<%= 12 / panels_in_row %> col-sm-<%= 8 / panels_in_row %> col-xs-12">
+			<div class="panel panel-default equal-group-column" <%= table.row_details(item) %> >
+			  <div class="panel-heading equal-item-no-flex"><%= table.fields(item)[:head] %></div>
+			  <% table.fields(item)[:body].each do |body_item| %>
+				  <div class="panel-body equal-item-flex ">
+				    <%= body_item %>
+				  </div>
+			  <% end if table.fields(item)[:body] %>
+			  <div class="panel-footer equal-item-no-flex"><%= table.fields(item)[:footer] %></div>
+			</div>
+		  </div>
+		  <% end %>
+		<% end %>
+	</div>	
+	<%# end %>
+
+</div>
