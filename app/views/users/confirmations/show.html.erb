@@ -10,7 +10,7 @@
 
 <% content_for :title, "Предлагаем создать пароль для защиты ваших данных" %>
 
-<%= form_for(resource, as: resource_name, url: confirm_path(resource_name), html: {:class => "edit_form", :method => 'patch' }) do |f| %>
+<%= form_for(resource, as: resource_name, url: confirm_path(resource_name), html: {:class => "", :method => 'patch' }) do |f| %>
   <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) if current_user %>
 
    <% if !devise_error_messages!.blank? %>

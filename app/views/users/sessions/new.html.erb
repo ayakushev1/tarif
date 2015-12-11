@@ -7,7 +7,7 @@
 	label_html = {:class => "control-label "}
 %>
 
-<%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {:class => "edit_form", :'data-remote' => true, :'data-no-turbolink'=> false}) do |f| %>
+<%= form_for(resource, as: resource_name, url: session_path(resource_name), html: {:class => "", :'data-remote' => true, :'data-no-turbolink'=> false}) do |f| %>
   <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) if true or current_user %>
 
    <% if !devise_error_messages!.blank? or !alert.blank? or !notice.blank? %>

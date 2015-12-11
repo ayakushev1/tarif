@@ -10,7 +10,7 @@
 %>
 
 
-<%= form_for(@demand, html: {:class => "edit_form" }) do |f| %>
+<%= form_for(@demand, html: {:class => "" }) do |f| %>
   <%= tag(:input, :type => "hidden", :name => request_forgery_protection_token.to_s, :value => form_authenticity_token) if current_or_guest_user %>
 
    <% if !@demand.errors.blank? %>

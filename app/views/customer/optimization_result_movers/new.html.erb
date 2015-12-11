@@ -9,7 +9,7 @@
 %>
 
 <%= form_for @optimization_result_mover, url: customer_optimization_result_movers_move_path, 
-      html: {:'data-confirm' => "Вы уверены, что хотите переместить данные?", :class => "payment_block" } do |f| %>
+      html: {:'data-confirm' => "Вы уверены, что хотите переместить данные?", :class => "" } do |f| %>
 
    <% if !@optimization_result_mover.errors.blank? %>
 	<div class="alert alert-warning alert-dismissible" role="alert">

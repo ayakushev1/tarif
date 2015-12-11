@@ -12,8 +12,8 @@ table.init do |t|
   	[
 #  	 f['id'],
 #  	 f['author_id'],
-     link_to( content_tag(:span, image_tag("left_menu_5.png", :alt => 'Подробное описание')), 
-       content_articles_show_path, {:remote => true}),
+     link_to('', content_articles_show_path, 
+     	{:remote => true, :class => "fa fa-random fa-lg center", :'aria-hidden' => "true", :'aria-label' => "Подробное описание"}),
   	 f['title'],
   	 (f['content']['usage_model'] if f['content']),
 #  	 (f['content']['summary'] if f['content']),

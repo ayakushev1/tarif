@@ -1,8 +1,4 @@
 <%
-style_table = [
-#	[/a.*?href/, {:'data-remote' => true, :turbolinks => true}],
-]
-
 table_html_options = {:id =>table.table_name, :class => 'table table-bordered table-hover table-condensed'}
 table_html_options = form_html_options.merge(html) if local_assigns[:html]
 table_html_options = table_html_options.collect { |key, value| "#{key.to_s}=\"#{value.to_s}\""}.join(" ").html_safe
@@ -48,7 +44,7 @@ table_html_options = table_html_options.collect { |key, value| "#{key.to_s}=\"#{
 			    <tr <%= table.row_details(item) %> >
 			      <% table.fields(item) do |field| %>
 			        <td>
-			        	<%= add_css(field, style_table) %>
+			        	<%= field %>
 			        </td>
 			      <% end %>
 			    </tr> 

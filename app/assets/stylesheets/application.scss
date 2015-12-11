@@ -21,7 +21,7 @@
 @import "bootstrap-sprockets";
 
 // Import cerulean variables
-@import "bootswatch/cerulean/variables";
+@import "bootswatch/yeti/variables";
 
 @import "my_bootstrap_variables";
 
@@ -32,7 +32,7 @@
 body1 { padding-top: 60px; }
 
 // And finally bootswatch style itself
-@import "bootswatch/cerulean/bootswatch";
+@import "bootswatch/yeti/bootswatch";
 
 // Whatever application styles you have go last
 @import "scaffolds_1";

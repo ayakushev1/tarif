@@ -62,7 +62,7 @@ module SavableInSession::ArrayOfHashable
     end
     
     def current_row_class
-       @current_row_class || "current_table_row" 
+       @current_row_class || "active" 
     end
     
     def row_details(row)
