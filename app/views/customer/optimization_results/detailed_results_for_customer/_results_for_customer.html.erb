@@ -14,7 +14,7 @@ content_in :tabs do |user|
     	(session[:filtr]['if_show_aggregate_customer_results_filtr']['if_show'].blank? or session[:filtr]['if_show_aggregate_customer_results_filtr']['if_show'] == 'true')),
     [
      'Статистика услуг', 
-     render(:partial => 'customer/optimization_results/detailed_results_for_customer/call_stat/calls_stat_options', :layout => 'application/layouts/filtr_form', :locals => {:form_item => controller.calls_stat_options, :html => {:class => "form-inline"}} ) +
+     render(:partial => 'customer/optimization_results/detailed_results_for_customer/call_stat/calls_stat_options', :layout => 'application/layouts/filtr_form_inline', :locals => {:form_item => controller.calls_stat_options} ) +
      render(:partial => 'customer/optimization_results/detailed_results_for_customer/call_stat/calls_stat', :layout => 'application/layouts/model_table', :locals => {:table => controller.calls_stat})	
     ], 
   ].compact 

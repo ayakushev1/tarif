@@ -6,9 +6,9 @@
 	{:class => "btn btn-success", :type =>"button", :remote => true}) %>
 </p>
 <br />
-<%= render(:partial => 'result/service_sets/compare/service_set_choicer', :layout => 'application/layouts/filtr_form_4_columns', :locals => {:form_item => service_set_choicer} ) %>
+<%= render(:partial => 'result/service_sets/compare/service_set_choicer', :layout => 'application/layouts/filtr_form_n_columns', :locals => {:form_item => service_set_choicer} ) %>
 <p>
-<%= render(:partial => 'result/service_sets/compare/comparison_options', :layout => 'application/layouts/filtr_form', :locals => {:form_item => comparison_options, :html => {:class => "form-inline"}} ) %>
+<%= render(:partial => 'result/service_sets/compare/comparison_options', :layout => 'application/layouts/filtr_form_inline', :locals => {:form_item => comparison_options} ) %>
 </p>
 <%= render(:partial => 'result/service_sets/compare/service_sets', :layout => 'application/layouts/model_table', :locals => {:table => comparison_service_sets})%>
      	

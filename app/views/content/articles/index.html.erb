@@ -3,7 +3,7 @@
 
 <p style="font-size: normal">Для выбора нескольких значений удерживайте клавишу Ctrl</p>
 
-<%= render(:partial => 'content/articles/index/params', :layout => 'application/layouts/filtr_form_2_columns', 
+<%= render(:partial => 'content/articles/index/params', :layout => 'application/layouts/filtr_form_n_columns', 
     :locals => {:form_item => controller.recommendation_select_params}) %>
 
 <%= render(:partial => 'content/articles/index/articles', :layout => 'application/layouts/model_table', 

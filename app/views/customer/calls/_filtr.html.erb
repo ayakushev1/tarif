@@ -12,22 +12,21 @@ form_item.init do |f|
   	[
 	label(filtr_name, "call_run_id", "Выбор описания моделирования", label_html),	
 	collection_select(filtr_name, "call_run_id", Customer::CallRun.where(:id => user_calls_query.query_from_filtr(s, "call_run_id").pluck(:call_run_id).uniq ), :id, :name, 
-	  	   {:include_blank => "Описание моделирования", :selected => s["call_run_id"] }, input_html )
-	],
-	[
+	  	   {:include_blank => "Описание моделирования", :selected => s["call_run_id"] }, input_html ),
+
   	 label(filtr_name, "description[accounting_period]", "Календарный период", label_html),
   	 select(filtr_name, "description[accounting_period]", 
 	  	 user_calls_query.query_from_filtr(s, "description[accounting_period]").collect { |q| q.description['accounting_period'] }.uniq,
 #  		 accounting_periods(s["call_run_id"]), 
   	 	 {:include_blank => "выберите календарный период", :selected => (s["description"]["accounting_period"] if s["description"] )}, input_html ),
-	],
-  	[label(filtr_name, "base_service_id", "Услуга", label_html),
+
+  	 label(filtr_name, "base_service_id", "Услуга", label_html),
   	 collection_select(filtr_name, "base_service_id", Category.where(:id => user_calls_query.query_from_filtr(s, "base_service_id").pluck(:base_service_id).uniq ), :id, :name, 
-  	   {:include_blank => "Услуга", :selected => s["base_service_id"] }, input_html )
-  	],
-  	[label(filtr_name, "base_subservice_id", "Направление", label_html), 
+  	   {:include_blank => "Услуга", :selected => s["base_service_id"] }, input_html ),
+
+  	 label(filtr_name, "base_subservice_id", "Направление", label_html), 
   	 collection_select(filtr_name, "base_subservice_id", Category.where(:id => user_calls_query.query_from_filtr(s, "base_subservice_id").pluck(:base_subservice_id).uniq ), :id, :name, 
-  	   {:include_blank => "Направление услуги", :selected => s["base_subservice_id"] }, input_html )
+  	   {:include_blank => "Направление услуги", :selected => s["base_subservice_id"] }, input_html ),
   	],
 #  	["", collection_select(filtr_name, "user_id", User.where(:id => user_calls_query.query_from_filtr(s, "user_id").pluck(:user_id).uniq ), :id, :name, 
 #  	   {:include_blank => "Пользователь", :selected => s["user_id"] }, input_html )
@@ -44,37 +43,43 @@ form_item.init do |f|
 #  	["", collection_select(filtr_name, "own_phone[country_id]", Category.where(:id => user_calls_query.query_from_filtr(s, "own_phone[country_id]").collect { |q| q.own_phone['country_id'] }.uniq ) , :id, :name, 
 #  	   {:include_blank => "Страна пользователя", :selected => (s["own_phone"]["country_id"] if s["own_phone"] )}, input_html )
 #  	],
-  	[label(filtr_name, "partner_phone[number]", "Куда или откуда звоните", label_html), 
+  	[
+  	 label(filtr_name, "partner_phone[number]", "Куда или откуда звоните", label_html), 
+  	 '',
 #  	 select(filtr_name, "partner_phone[number]", user_calls_query.query_from_filtr(s, "partner_phone[number]").collect { |q| q.partner_phone['number'] }.uniq , 
 #  	   {:include_blank => "Телефон 2-й стороны", :selected => (s["partner_phone"]["number"] if s["partner_phone"] )}, input_html )
-  	],
-  	[label(filtr_name, "partner_phone[operator_id]", "Оператор", label_html), 
+
+  	 label(filtr_name, "partner_phone[operator_id]", "Оператор", label_html), 
   	 collection_select(filtr_name, "partner_phone[operator_id]", Category.where(:id => user_calls_query.query_from_filtr(s, "partner_phone[operator_id]").collect { |q| q.partner_phone['operator_id'] }.uniq ) , :id, :name, 
-  	   {:include_blank => "Оператор 2-й стороны", :selected => (s["partner_phone"]["operator_id"] if s["partner_phone"] )}, input_html )
-  	],
+  	   {:include_blank => "Оператор 2-й стороны", :selected => (s["partner_phone"]["operator_id"] if s["partner_phone"] )}, input_html ),
+
 #  	["Тип оператора 2-й стороны", collection_select(filtr_name, "partner_phone[operator_type_id]", Category.where(:id => user_calls_query.query_from_filtr(s, "partner_phone[operator_type_id]").collect { |q| q.partner_phone['operator_type_id'] }.uniq ) , :id, :name, 
 #  	   {:include_blank => "Тип оператора 2-й стороны", :selected => (s["partner_phone"]["operator_type_id"] if s["partner_phone"] )}, input_html )
 #  	],
-  	[label(filtr_name, "partner_phone[region_id]", "Регион", label_html), 
+  	 label(filtr_name, "partner_phone[region_id]", "Регион", label_html), 
   	 collection_select(filtr_name, "partner_phone[region_id]", Category.where(:id => user_calls_query.query_from_filtr(s, "partner_phone[region_id]").collect { |q| q.partner_phone['region_id'] }.uniq ) , :id, :name, 
-  	   {:include_blank => "Регион 2-й стороны", :selected => (s["partner_phone"]["region_id"] if s["partner_phone"] )}, input_html )
-  	],   
-  	[label(filtr_name, "partner_phone[country_id]", "Страна", label_html), 
+  	   {:include_blank => "Регион 2-й стороны", :selected => (s["partner_phone"]["region_id"] if s["partner_phone"] )}, input_html ),
+
+  	 label(filtr_name, "partner_phone[country_id]", "Страна", label_html), 
   	 collection_select(filtr_name, "partner_phone[country_id]", Category.where(:id => user_calls_query.query_from_filtr(s, "partner_phone[country_id]").collect { |q| q.partner_phone['country_id'] }.uniq ) , :id, :name, 
-  	   {:include_blank => "Страна 2-й стороны", :selected => (s["partner_phone"]["country_id"] if s["partner_phone"] )}, input_html )
-  	],  
-  	[' ', label(filtr_name, "", "Роуминг (где находитесь)", label_html)], 
-  	[label(filtr_name, "connect[operator_id]", "Оператор", label_html), 
-  	 collection_select(filtr_name, "connect[operator_id]", Category.where(:id => user_calls_query.query_from_filtr(s, "connect[operator_id]").collect { |q| q.connect['operator_id'] }.uniq ) , :id, :name, 
-  	   {:include_blank => "Оператор подключения", :selected => (s["connect"]["operator_id"] if s["connect"] )}, input_html )
+  	   {:include_blank => "Страна 2-й стороны", :selected => (s["partner_phone"]["country_id"] if s["partner_phone"] )}, input_html ),
   	],
-  	[label(filtr_name, "connect[region_id]", "Регион", label_html), 
+  	  
+  	[
+  	 ' ', 
+  	 label(filtr_name, "", "Роуминг (где находитесь)", label_html), 
+
+  	 label(filtr_name, "connect[operator_id]", "Оператор", label_html), 
+  	 collection_select(filtr_name, "connect[operator_id]", Category.where(:id => user_calls_query.query_from_filtr(s, "connect[operator_id]").collect { |q| q.connect['operator_id'] }.uniq ) , :id, :name, 
+  	   {:include_blank => "Оператор подключения", :selected => (s["connect"]["operator_id"] if s["connect"] )}, input_html ),
+
+  	 label(filtr_name, "connect[region_id]", "Регион", label_html), 
   	 collection_select(filtr_name, "connect[region_id]", Category.where(:id => user_calls_query.query_from_filtr(s, "connect[region_id]").collect { |q| q.connect['region_id'] }.uniq ) , :id, :name, 
-  	   {:include_blank => "Регион подключения", :selected => (s["connect"]["region_id"] if s["connect"] )}, input_html )
-  	],   
-  	[label(filtr_name, "connect[country_id]", "Страна", label_html), 
+  	   {:include_blank => "Регион подключения", :selected => (s["connect"]["region_id"] if s["connect"] )}, input_html ),
+
+  	 label(filtr_name, "connect[country_id]", "Страна", label_html), 
   	 collection_select(filtr_name, "connect[country_id]", Category.where(:id => user_calls_query.query_from_filtr(s, "connect[country_id]").collect { |q| q.connect['country_id'] }.uniq ) , :id, :name, 
-  	   {:include_blank => "Страна подключения", :selected => (s["connect"]["country_id"] if s["connect"] )}, input_html )
+  	   {:include_blank => "Страна подключения", :selected => (s["connect"]["country_id"] if s["connect"] )}, input_html ),
   	],   
   ] 
   end

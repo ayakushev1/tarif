@@ -9,24 +9,20 @@ label_html = {:class => "control-label "}
       [
       	label(filtr_name, "operator_id", "Оператор", label_html),
       	collection_select(filtr_name, "operator_id", Category.where(:id => TarifClass.query_from_filtr(s, "operator_id").pluck(:operator_id).uniq ), :id, :name, 
-	  	{:include_blank => "operator", :selected => s["operator_id"] }, input_html )
-	  ],
-#      [
+	  	{:include_blank => "operator", :selected => s["operator_id"] }, input_html ),
+
 #      	label(filtr_name, "privacy_id", "Для физических или юридических лиц", label_html),
 #      	collection_select(filtr_name, "privacy_id", Category.where(:id => TarifClass.query_from_filtr(s, "privacy_id").pluck(:privacy_id).uniq ), :id, :name, 
-#	  	{:include_blank => "privacy", :selected => s["privacy_id"] }, input_html )
-#	  ],
-      [
+#	  	{:include_blank => "privacy", :selected => s["privacy_id"] }, input_html ),
+
       	label(filtr_name, "standard_service_id", "Тип услуги", label_html),
       	collection_select(filtr_name, "standard_service_id", Category.where(:id => TarifClass.query_from_filtr(s, "standard_service_id").pluck(:standard_service_id).uniq ), :id, :name, 
-	  	{:include_blank => "standard service", :selected => s["standard_service_id"] }, input_html )
-	  ],
-      [
+	  	{:include_blank => "standard service", :selected => s["standard_service_id"] }, input_html ),
+
       	label(filtr_name, "dependency_parts", "Категория услуги", label_html),
       	select(filtr_name, "dependency_parts", TarifClass.where('dependency is not Null').inject([]){ |array, q| array + q['dependency']['parts'] if (q['dependency'] and q['dependency']['parts'])}.uniq, 
-	  	{:include_blank => "dependency_parts", :selected => (s["dependency_parts"])}, input_html.merge({:multiple => true, :size => 5}) )
-	  ],
-      [
+	  	{:include_blank => "dependency_parts", :selected => (s["dependency_parts"])}, input_html.merge({:multiple => true, :size => 5}) ),
+
       	label(filtr_name, "dependency_is_archived", "Архивный?", label_html),
       	select(filtr_name, "dependency_is_archived", [['true', 'true'], ['false', 'false']], 
 	  	{:include_blank => "dependency_is_archived", :selected => (s["dependency_is_archived"])}, input_html )

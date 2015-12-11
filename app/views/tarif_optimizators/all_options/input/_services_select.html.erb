@@ -9,16 +9,13 @@ form_item.init do |f|
   	[
      label(filtr_name, "operator_tel", "Теле2", label_html),
  	 check_box(filtr_name, "operator_tel", (s["operator_tel"] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
-	],
-	[
+
      label(filtr_name, "operator_bln", "Билайн", label_html),
  	 check_box(filtr_name, "operator_bln", (s["operator_bln"] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
-	],
-	[
+
      label(filtr_name, "operator_mgf", "Мегафон", label_html),
  	 check_box(filtr_name, "operator_mgf", (s["operator_mgf"] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
-	],
-	[
+
      label(filtr_name, "operator_mts", "МТС", label_html),
  	 check_box(filtr_name, "operator_mts", (s["operator_mts"] == 'true' ? {:checked => 'checked'} : {} ).merge(input_html), true, false ),
   	],

@@ -17,7 +17,7 @@ content_in :tabs do |user|
     ([
      'Статистика услуг', 
      content_tag(:p, {}) do
-	     render(:partial => 'result/service_sets/detailed_results/call_stat/calls_stat_options', :layout => 'application/layouts/filtr_form', :locals => {:form_item => calls_stat_options, :html => {:class => "form-inline"}} ) 
+	     render(:partial => 'result/service_sets/detailed_results/call_stat/calls_stat_options', :layout => 'application/layouts/filtr_form_inline', :locals => {:form_item => calls_stat_options} ) 
 	 end +	
 	     render(:partial => 'result/service_sets/detailed_results/call_stat/calls_stat', :layout => 'application/layouts/model_table', :locals => {:table => calls_stat})
     ] if true), 

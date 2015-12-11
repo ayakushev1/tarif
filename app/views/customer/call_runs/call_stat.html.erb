@@ -9,9 +9,9 @@
 <p>
 	
 </p>
-<%= render(:partial => 'customer/call_runs/call_stat/account_period_choicer', :layout => 'application/layouts/filtr_form_4_columns', :locals => {:form_item => calls_stat_options} ) %> 
+<%= render(:partial => 'customer/call_runs/call_stat/account_period_choicer', :layout => 'application/layouts/filtr_form_n_columns', :locals => {:form_item => calls_stat_options} ) %> 
 <p>
-<%= render(:partial => 'customer/call_runs/call_stat/calls_stat_options', :layout => 'application/layouts/filtr_form', :locals => {:form_item => calls_stat_options, :html => {:class => "form-inline"}} ) %> 
+<%= render(:partial => 'customer/call_runs/call_stat/calls_stat_options', :layout => 'application/layouts/filtr_form_inline', :locals => {:form_item => calls_stat_options} ) %> 
 </p>
 <%= render(:partial => 'customer/call_runs/call_stat/calls_stat', :layout => 'application/layouts/model_table', :locals => {:table => calls_stat}) %>
 

@@ -12,8 +12,8 @@
 <%= link_to(t('tarif_optimizators.fixed_operators.index.result_run_link'), result_path(result_run_id), {:class => "btn btn-primary", :type =>"button"}) %>
 </p>
 
-<%= render(:partial => 'tarif_optimizators/fixed_operators/input/calculation_choices', :layout => 'application/layouts/filtr_form_group', 
+<%= render(:partial => 'tarif_optimizators/fixed_operators/input/calculation_choices', :layout => 'application/layouts/filtr_form_n_columns', 
 	    :locals => {:form_item => calculation_choices} ) %>
 
-<%= render(:partial => 'tarif_optimizators/fixed_operators/input/services_select', :layout => 'application/layouts/filtr_inline_form', 
+<%= render(:partial => 'tarif_optimizators/fixed_operators/input/services_select', :layout => 'application/layouts/filtr_form_n_columns', 
         :locals => {:form_item => services_select} ) %>

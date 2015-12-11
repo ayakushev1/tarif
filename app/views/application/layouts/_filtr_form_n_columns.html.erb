@@ -7,7 +7,7 @@
 #	[/input.*?type.*?submit/, {:class => "btn btn-primary"}],
 #]
 
-form_html_options = {:id =>form_item.filtr_name, :class => "", :turbolinks => true}
+form_html_options = {:id =>form_item.filtr_name, :class => "history_filter", :turbolinks => true}
 form_html_options = form_html_options.merge(html) if local_assigns[:html]
 
 form_options = {:method => 'get', :remote => true, :authenticity_token => true}
@@ -24,34 +24,20 @@ form_options = form_options.merge(form_html_options)
 		<legend><%= form_item.caption %></legend>
 	<% end %>
 
-	<% form_item.fields(form_item.filtr_name) do |label_1, field_1, label_2, field_2, label_3, field_3, label_4, field_4, label_5, field_5| %>
+	<% form_item.fields(form_item.filtr_name) do |row_group| %>
 		<div class="row">
-			<div class="col-xs-4">
-				<%= label_1 %>
-				<%= field_1 %>
-			</div>
-
-			<div class="col-xs-2">
-				<%= label_2 %>
-				<%= field_2 %>
-			</div>
-
-			<div class="col-xs-2">
-				<%= label_3 %>
-				<%= field_3 %>
-			</div>
-
-			<div class="col-xs-2">
-				<%= label_4 %>
-				<%= field_4 %>
-			</div>
-
-			<div class="col-xs-2">
-				<%= label_5 %>
-				<%= field_5 %>
-			</div>
+		<% if row_group.size != 0  %>
+			<% size_of_columns = 12 / (row_group.size / 2) %>
+			<% row_group.in_groups_of(2) do |field_group| %>
+				<div class="col-xs-<%= size_of_columns %>">
+			      	<div class="form_group">
+					<%= field_group[0] %>
+					<%= field_group[1] %>
+					</div>
+				</div>
+			<% end %>	
+		<% end %>	
 		</div>		
-		<br />
 	<% end %>	
 <% end %>
 

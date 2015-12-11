@@ -1,6 +1,6 @@
 <% content_for :title, t('.title') %>
 
-<%= render :partial => 'tarif_class_filtr', :layout => 'application/layouts/filtr_inline_form', :locals => {:form_item => tarif_class_filtr, :html => {:class => "calls_form"} }%>
+<%= render :partial => 'tarif_class_filtr', :layout => 'application/layouts/filtr_form_n_columns', :locals => {:form_item => tarif_class_filtr, :html => {:class => "calls_form"} }%>
 
 <%= render :partial => 'tarif_classes', :layout => 'application/layouts/model_table', :locals => {:table => tarif_classes}%>
 

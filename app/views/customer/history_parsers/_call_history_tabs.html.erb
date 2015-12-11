@@ -16,7 +16,7 @@ content_in :tabs do |user|
     ], 
     ([
      'Параметры загрузки и обработки истории звонков', 
-     render(:partial => 'parsing_params', :layout => 'application/layouts/filtr_form_3_columns', :locals => {:form_item => parsing_params_filtr})        	
+     render(:partial => 'parsing_params', :layout => 'application/layouts/filtr_form_n_columns', :locals => {:form_item => parsing_params_filtr})        	
     ] if current_user_admin?),
   ].compact 
 end

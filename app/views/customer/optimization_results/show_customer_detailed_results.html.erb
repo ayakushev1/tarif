@@ -7,7 +7,7 @@
 	Но при этом постарайтесь не попасть на ссылку, так как при нажатии на ссылку вы перейдете на описание тарифа или тарифной опции.  
 </p>
 
-<%= render(:partial => 'customer/optimization_results/detailed_results_for_customer/if_show_aggregate_customer_results', :layout => 'application/layouts/filtr_form', 
+<%= render(:partial => 'customer/optimization_results/detailed_results_for_customer/if_show_aggregate_customer_results', :layout => 'application/layouts/filtr_form_inline', 
 	:locals => {:form_item => controller.if_show_aggregate_customer_results, :html => {:class => "form-inline"}} )  %>
 <br />
 <%= render :partial => 'customer/optimization_results/detailed_results_for_customer/results_for_customer', :layout => 'application/layouts/tabs', 
