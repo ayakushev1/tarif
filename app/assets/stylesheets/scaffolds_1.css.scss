@@ -29,7 +29,7 @@ table thead {
     display: flex;
     -webkit-flex-direction: column;
     flex-direction: column;
-//    flex: 1 1 auto;
+    flex: 1 1 auto;
 }
 .equal-item-no-flex {  
     flex: 0 0;

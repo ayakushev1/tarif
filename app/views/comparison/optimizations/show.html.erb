@@ -2,4 +2,10 @@
 
 <%= render :partial => 'optimization', :layout => 'application/layouts/model_show', :locals => {:form_item => controller.comparison_optimization_form} %>
 
-<%= render :partial => 'groups', :layout => 'application/layouts/model_table', :locals => {:table => controller.comparison_groups}%>
+<%if false %>
+	<%= render :partial => 'groups_table', :layout => 'application/layouts/model_table', 
+		:locals => {:table => controller.comparison_groups}%>
+<% else %>
+	<%= render :partial => 'groups_panels', :layout => 'application/layouts/model_panels', 
+		:locals => {:table => controller.comparison_groups, :panels_in_row => 4}%>
+<% end %>

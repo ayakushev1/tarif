@@ -1,0 +1,40 @@
+<%
+table.init do |t|
+  link_html = {:remote => true}
+  t.heads = ['Модель поведения', '1', '2', '3', '4', '', '']
+  
+	tarifs = t.model.map{|group| group.result['place'].values.map{|place| place['tarif_id'] if group.result and group.result['place']}.compact if group.result and group.result['place'] }.flatten 
+	tarifs_desc = {}
+	TarifClass.where(:id => tarifs).each do |tarif|
+		tarifs_desc[tarif.id] = tarif
+	end
+#	raise(StandardError, tarifs_desc)
+	operators_desc = {}
+	operators = t.model.map{|group| group.result['place'].values.map{|place| place['operator_id'] if group.result and group.result['place']}.compact if group.result and group.result['place'] }.flatten
+	Category.where(:id => operators).each do |operator|
+		operators_desc[operator.id] = operator
+	end
+  
+  t.set_fields do |group|   	
+  	result_desc = []
+  	result_desc = group.result['place'].collect do |place, detail|
+  		next if detail.blank?
+  		operator_desc = operators_desc[detail['operator_id']]
+  		tarif_desc = tarifs_desc[detail['tarif_id']]
+  		
+#  		content_tag(:span, "#{place.to_i + 1}. ") +
+  		content_tag(:span, "#{detail['price'].round(0)} руб.		") +
+  		link_to_if(tarif_desc.features['http'], "#{operator_desc.name} #{tarif_desc.name}", tarif_desc.features['http'], {:target => "_blank"}) 
+  	end if group.result and group.result['place']
+
+  	{
+  	:head => group.name,
+  	:body => result_desc,
+	:footer => (content_tag(:div, {:class => "btn-toolbar"}) do
+	    link_to( t('comparison.optimizations.show.groups.detailed_results_link'), result_path(group.result_run.id), link_html.merge({:class => "btn btn-default"})) + 
+	    link_to( t('comparison.optimizations.show.groups.result_comparison_link'), result_compare_path(group.result_run.id), link_html.merge({:class => "btn btn-default"}))
+	  end if group.result_run)
+  	}
+  end
+end
+%>
