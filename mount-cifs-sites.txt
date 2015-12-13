@@ -23,12 +23,22 @@ run production locally:
 		include production db in database.yml
 		foreman run rake assets:precompile
 		??? run in new window: memcached -v
-		add PATH_TO_HIT to public_url
+		add init_for_memory_test to recalculate in tarif_optimizators/admin/recalculate if recalculate
+		increate Rack::Timeout.timeout in config/initialisers/timeout
+		add PATH_TO_HIT to external_api
 		add  to application_controller
 				 def current_user
 				    User.find(1)
 				  end
 Is my app leaking memory?
+	TEST_COUNT=10 USE_SERVER=puma PATH_TO_HIT=/ foreman run derailed exec perf:mem_over_time				  
+	TEST_COUNT=1000 USE_SERVER=puma PATH_TO_HIT=/tarif_optimizators/admin/recalculate foreman run derailed exec perf:mem_over_time				  
+	TEST_COUNT=1 USE_SERVER=puma PATH_TO_HIT=/tarif_optimizators/admin/recalculate foreman run derailed exec perf:objects
+	TEST_COUNT=2 USE_SERVER=puma PATH_TO_HIT=/tarif_optimizators/admin/recalculate foreman run derailed exec perf:allocated_objects
+	TEST_COUNT=2 USE_SERVER=puma PATH_TO_HIT=/tarif_optimizators/admin/recalculate bundle exec derailed exec perf:heap
+	
+After last optimization made (take out newrelic_rpm gem (!), inject result of calculation for multiple use, freese strings, take out to_sym)	
+					  
 	USE_SERVER=puma PATH_TO_HIT=/result/runs/results TEST_COUNT=1000 bundle exec derailed exec perf:mem_over_time				  
 	USE_SERVER=puma PATH_TO_HIT=/customer/optimization_results/show_customer_results TEST_COUNT=1000 bundle exec derailed exec perf:mem_over_time
 	USE_SERVER=puma PATH_TO_HIT=/content/articles/detailed_results TEST_COUNT=1000 bundle exec derailed exec perf:mem_over_time				  

@@ -82,12 +82,12 @@ class TarifOptimization::FinalTarifSetGenerator
       
       common_services_to_exclude = (common_services_by_parts[operator.to_s][current_part] || [])
       tarif_sets_by_part_services_list = tarif_sets_by_tarif[current_part].
-        collect{|tarif_set_by_part_id, services| services - common_services_to_exclude}.collect{|f| tarif_set_id(f).to_sym}
+        collect{|tarif_set_by_part_id, services| services - common_services_to_exclude}.collect{|f| tarif_set_id(f).freeze}#.to_sym}
 
       if current_tarif_set.current_part_index == 0
         current_uniq_service_sets[current_tarif_set_by_part_name] = {
           :service_ids => current_tarif_set_by_part_services, :tarif_sets_by_part => [[current_part, current_tarif_set_by_part_name]], :tarif => tarif}              
-        fobidden_info[current_tarif_set_by_part_name] = init_fobidden_info(tarif_sets_by_part_services_list, current_tarif_set_by_part_services - common_services_to_exclude, tarif.to_s.to_sym)
+        fobidden_info[current_tarif_set_by_part_name] = init_fobidden_info(tarif_sets_by_part_services_list, current_tarif_set_by_part_services - common_services_to_exclude, tarif.to_s.freeze)#.to_sym)
       else
         uniq_service_set = nil; uniq_service_set_id = nil; tarif_set_by_part_id = nil;
         uniq_service_set = current_tarif_set_by_part_services[0..(current_tarif_set_by_part_services.size - current_services.size - 1)] 
@@ -194,7 +194,7 @@ class TarifOptimization::FinalTarifSetGenerator
   end
   
   def init_fobidden_info(tarif_sets_by_part_services_list, services_without_common_services, tarif)
-    services_without_common_services_name = tarif_set_id(services_without_common_services).to_sym
+    services_without_common_services_name = tarif_set_id(services_without_common_services).freeze#.to_sym
     current_fobidden_services_without_common_services = tarif_sets_by_part_services_list - [services_without_common_services_name]
     {
       :current_tarif_set_without_common_services => services_without_common_services_name,
@@ -210,7 +210,7 @@ class TarifOptimization::FinalTarifSetGenerator
   def check_if_final_tarif_set_is_fobidden(
     fobidden_info, tarif_sets_by_part_services_list, new_uniq_service_set_name, uniq_service_set_id, tarif_set_by_part_id, services_without_common_services,
       current_uniq_service_sets, uniq_service_set, tarif_sets_by_tarif) 
-    services_without_common_services_name = tarif_set_id(services_without_common_services).to_sym
+    services_without_common_services_name = tarif_set_id(services_without_common_services).freeze#.to_sym
     fobidden_info[new_uniq_service_set_name] ||= {}
     fobidden_info[new_uniq_service_set_name][:current_tarif_set_without_common_services] = services_without_common_services_name
     fobidden_info[new_uniq_service_set_name][:current_fobidden_services_without_common_services] = tarif_sets_by_part_services_list - [services_without_common_services_name]
@@ -219,14 +219,14 @@ class TarifOptimization::FinalTarifSetGenerator
     
 #TODO оптимизировать эту часть расчета
     tarif_ids_from_tarif_set = []; tarif_ids_from_current_part = []
-    fp[:tarif_sets_in_uniq_service_set_with_choice].each {|tarif_set| tarif_ids_from_tarif_set += (tarif_set.to_s.split('_') - tarif_ids_from_tarif_set) }
-    tarif_sets_by_part_services_list.each {|tarif_set| tarif_ids_from_current_part += (tarif_set.to_s.split('_') - tarif_ids_from_current_part) }
+    fp[:tarif_sets_in_uniq_service_set_with_choice].each {|tarif_set| tarif_ids_from_tarif_set += (tarif_set.to_s.freeze.split('_'.freeze).map(&:freeze) - tarif_ids_from_tarif_set) }
+    tarif_sets_by_part_services_list.each {|tarif_set| tarif_ids_from_current_part += (tarif_set.to_s.freeze.split('_'.freeze).map(&:freeze) - tarif_ids_from_current_part) }
     absent_tarif_ids = tarif_ids_from_tarif_set - tarif_ids_from_current_part
     
     adjusted_tarif_sets_in_uniq_service_set_with_choice = []
     fp[:tarif_sets_in_uniq_service_set_with_choice].each do |tarif_set|
       adusted_tarif_set_ids = tarif_set.to_s.split('_') - absent_tarif_ids
-      adjusted_tarif_sets_in_uniq_service_set_with_choice << tarif_set_id(adusted_tarif_set_ids).to_sym
+      adjusted_tarif_sets_in_uniq_service_set_with_choice << tarif_set_id(adusted_tarif_set_ids).freeze#.to_sym
     end
     
     new_allowed_tarif_sets_in_uniq_service_set_with_choice = adjusted_tarif_sets_in_uniq_service_set_with_choice - fp[:tarif_sets_in_uniq_service_set_with_choice]
@@ -295,11 +295,11 @@ class TarifOptimization::FinalTarifSetGenerator
   end
     
   def tarif_set_id(tarif_ids)
-    tarif_ids.collect {|tarif_id| tarif_id if tarif_id}.compact.join('_')
+    tarif_ids.collect {|tarif_id| tarif_id if tarif_id}.compact.join('_'.freeze).freeze
   end
 
   def tarif_set_id_with_part(tarif_ids, part)
-    tarif_ids.collect {|tarif_id| "#{tarif_id}::#{part}" if tarif_id}.compact.join('_')
+    tarif_ids.collect {|tarif_id| "#{tarif_id}::#{part.freeze}" if tarif_id}.compact.join('_'.freeze).freeze
   end
 
 end

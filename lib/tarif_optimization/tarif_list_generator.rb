@@ -81,13 +81,13 @@ class TarifOptimization::TarifListGenerator
       @all_parts = parts
     else
       @all_parts = [
-        'all-world-rouming/sms', 'all-world-rouming/mms', 'all-world-rouming/calls', 'all-world-rouming/mobile-connection',
-        'own-country-rouming/sms', 'own-country-rouming/mms', 'own-country-rouming/calls', 'own-country-rouming/mobile-connection', 
-        'mms', 'onetime', 'periodic'
+        'all-world-rouming/sms'.freeze, 'all-world-rouming/mms'.freeze, 'all-world-rouming/calls'.freeze, 'all-world-rouming/mobile-connection'.freeze,
+        'own-country-rouming/sms'.freeze, 'own-country-rouming/mms'.freeze, 'own-country-rouming/calls'.freeze, 'own-country-rouming/mobile-connection'.freeze, 
+        'mms'.freeze, 'onetime'.freeze, 'periodic'.freeze
         ]
     end
-    @parts_used_as_multiple = ['all-world-rouming/sms', 'own-country-rouming/sms', 'all-world-rouming/mms', 'mms', 'own-country-rouming/mms', 
-      'all-world-rouming/mobile-connection', 'own-country-rouming/mobile-connection' ] & @all_parts
+    @parts_used_as_multiple = ['all-world-rouming/sms'.freeze, 'own-country-rouming/sms'.freeze, 'all-world-rouming/mms'.freeze, 'mms'.freeze, 'own-country-rouming/mms'.freeze, 
+      'all-world-rouming/mobile-connection'.freeze, 'own-country-rouming/mobile-connection'.freeze ] & @all_parts
   end
   
   def set_generation_params(options)
@@ -119,9 +119,9 @@ class TarifOptimization::TarifListGenerator
   
   def load_dependencies
     @dependencies = {}; @service_description = {}
-    TarifClass.where(:id => all_services).select("*").all.each do |r|
-      service_description[r['id']] = r
-      dependencies[r['id']] = r['dependency']
+    TarifClass.where(:id => all_services).select("*".freeze).all.each do |r|
+      service_description[r['id'.freeze]] = r
+      dependencies[r['id'.freeze]] = r['dependency'.freeze]
     end    
   end
   
@@ -132,7 +132,7 @@ class TarifOptimization::TarifListGenerator
     Service::CategoryTarifClass.where(:tarif_class_id => all_services).where("(conditions->>'tarif_set_must_include_tarif_options') is not null").
       select("tarif_class_id, conditions->>'tarif_set_must_include_tarif_options' as tarif_set_must_include_tarif_options").uniq.each do |r|
         dependent_services = eval(r['tarif_set_must_include_tarif_options'])
-        tarif_class_id = r['tarif_class_id'].to_i
+        tarif_class_id = r['tarif_class_id'.freeze].to_i
         @services_that_depended_on[tarif_class_id] ||= []
         @services_that_depended_on[tarif_class_id] += ((dependent_services & all_services) - @services_that_depended_on[tarif_class_id])
     end    
@@ -141,11 +141,11 @@ class TarifOptimization::TarifListGenerator
   def load_periodic_services
     @periodic_services = [], @onetime_services = []
     Service::CategoryTarifClass.where(:tarif_class_id => all_services).where.not(:service_category_periodic_id => nil).select(:tarif_class_id).uniq.each do |r|
-        tarif_class_id = r['tarif_class_id'].to_i
+        tarif_class_id = r['tarif_class_id'.freeze].to_i
         @periodic_services << tarif_class_id
     end    
     Service::CategoryTarifClass.where(:tarif_class_id => all_services).where.not(:service_category_one_time_id => nil).select(:tarif_class_id).uniq.each do |r|
-        tarif_class_id = r['tarif_class_id'].to_i
+        tarif_class_id = r['tarif_class_id'.freeze].to_i
         @onetime_services << tarif_class_id
     end    
   end
@@ -156,8 +156,8 @@ class TarifOptimization::TarifListGenerator
       @uniq_parts_by_operator[operator] ||= []; @uniq_parts_criteria_by_operator[operator] ||= []
       services.each do |service|
 #TODO убрать дублирование по parts_criteria в calls_stat_calculator
-        @uniq_parts_by_operator[operator] += ((dependencies[service] || {})['parts'] & all_parts) - @uniq_parts_by_operator[operator]; 
-        @uniq_parts_criteria_by_operator[operator] += (dependencies[service] || {})['parts_criteria'] - @uniq_parts_criteria_by_operator[operator]
+        @uniq_parts_by_operator[operator] += ((dependencies[service] || {})['parts'.freeze] & all_parts) - @uniq_parts_by_operator[operator]; 
+        @uniq_parts_criteria_by_operator[operator] += (dependencies[service] || {})['parts_criteria'.freeze] - @uniq_parts_criteria_by_operator[operator]
       end
     end
   end
@@ -167,7 +167,7 @@ class TarifOptimization::TarifListGenerator
     all_services_by_operator.each do |operator, services|
       services.each do |service|
         parts_by_service[service] = []
-        (dependencies[service]['parts'] & all_parts).each do |part|
+        (dependencies[service]['parts'.freeze] & all_parts).each do |part|
           parts_by_service[service] << part 
         end
       end      
@@ -183,7 +183,7 @@ class TarifOptimization::TarifListGenerator
       end
       
       services.each do |service|
-        (dependencies[service]['parts'] & all_parts).each do |part|
+        (dependencies[service]['parts'.freeze] & all_parts).each do |part|
           all_services_by_parts[operator][part] << service
         end
       end      
@@ -199,7 +199,7 @@ class TarifOptimization::TarifListGenerator
       end if uniq_parts_by_operator and uniq_parts_by_operator[operator] 
       
       services.each do |service|
-        (dependencies[service]['parts'] & all_parts).each do |part|
+        (dependencies[service]['parts'.freeze] & all_parts).each do |part|
           common_services_by_parts[operator][part] << service
         end
       end      
@@ -213,17 +213,17 @@ class TarifOptimization::TarifListGenerator
         service_packs[tarif] = [tarif]
         common_services[operator].each {|common_service| service_packs[tarif] << common_service}
         tarif_options[operator].each do |tarif_option|
-          next if dependencies[tarif_option]['is_archived'] == true
+          next if dependencies[tarif_option]['is_archived'.freeze] == true
 
-          if !dependencies[tarif_option]['prerequisites'].blank? and dependencies[tarif_option]['prerequisites'].include?(tarif)
+          if !dependencies[tarif_option]['prerequisites'.freeze].blank? and dependencies[tarif_option]['prerequisites'.freeze].include?(tarif)
             service_packs[tarif] << tarif_option
           end
           
-          if !dependencies[tarif_option]['forbidden_tarifs']['to_switch_on'].blank? and !dependencies[tarif_option]['forbidden_tarifs']['to_switch_on'].include?(tarif)
+          if !dependencies[tarif_option]['forbidden_tarifs'.freeze]['to_switch_on'.freeze].blank? and !dependencies[tarif_option]['forbidden_tarifs'.freeze]['to_switch_on'.freeze].include?(tarif)
             service_packs[tarif] << tarif_option
           end
           
-          if dependencies[tarif_option]['prerequisites'].blank? and dependencies[tarif_option]['forbidden_tarifs']['to_switch_on'].blank?
+          if dependencies[tarif_option]['prerequisites'.freeze].blank? and dependencies[tarif_option]['forbidden_tarifs'.freeze]['to_switch_on'.freeze].blank?
             service_packs[tarif] << tarif_option
           end
         end
@@ -237,7 +237,7 @@ class TarifOptimization::TarifListGenerator
     service_packs.each do |tarif, service_pack|
       @service_packs_by_parts[tarif] ||= {}
       service_pack.each do |service|
-        (dependencies[service]['parts'] & all_parts).each do |part|
+        (dependencies[service]['parts'.freeze] & all_parts).each do |part|
           @service_packs_by_parts[tarif][part] ||= []
           @service_packs_by_parts[tarif][part] << service
         end
@@ -252,7 +252,7 @@ class TarifOptimization::TarifListGenerator
       service_pack.each do |part, services|
         service_packs_by_general_priority[tarif][part] ||= {}
         services.each do |service|
-          general_priority = dependencies[service]['general_priority']
+          general_priority = dependencies[service]['general_priority'.freeze]
           service_packs_by_general_priority[tarif][part][general_priority] ||= []
           service_packs_by_general_priority[tarif][part][general_priority] << service
         end
@@ -287,13 +287,13 @@ class TarifOptimization::TarifListGenerator
         service_pack.each do |part, services|
           tarif_option_by_compatibility[tarif][part] ||= {}
           fobidden_combinations_by_service[tarif][part] ||= {}
-          if ['periodic', 'onetime'].include?(part)
-            periodic_incompatibility_name = 'special_periodic_for_tarif_list_generation'
+          if ['periodic'.freeze, 'onetime'.freeze].include?(part)
+            periodic_incompatibility_name = 'special_periodic_for_tarif_list_generation'.freeze
             tarif_option_by_compatibility[tarif][part][periodic_incompatibility_name] = services
           else
             services.each do |service|
               fobidden_combinations_by_service[tarif][part][service] ||= []
-              incompatibility_groups = dependencies[service]['incompatibility']
+              incompatibility_groups = dependencies[service]['incompatibility'.freeze]
               incompatibility_groups.each do |incompatibility_name, incompatible_services|
                 tarif_option_by_compatibility[tarif][part][incompatibility_name] ||= []
                 tarif_option_by_compatibility[tarif][part][incompatibility_name] << service
@@ -328,7 +328,7 @@ class TarifOptimization::TarifListGenerator
       tarif_option_by_compatibility.each do |tarif, service_pack|
         tarif_option_combinations[tarif] ||= {}
         service_pack.each do |part, incompatibility_groups|
-          next if ['periodic', 'onetime'].include?(part)
+          next if ['periodic'.freeze, 'onetime'.freeze].include?(part)
           tarif_option_combinations[tarif][part] ||= {}
           services = incompatibility_groups.values.flatten.uniq
           tarif_set_id = tarif_set_id(services)
@@ -337,12 +337,12 @@ class TarifOptimization::TarifListGenerator
         
         uniq_services_in_tarif_option_combinations = tarif_option_combinations[tarif].map{|c| c[1].map{|t| t[1]}}.flatten.compact.uniq
         (uniq_services_in_tarif_option_combinations & periodic_services).each do |service|
-          tarif_option_combinations[tarif]['periodic'] ||= {}
-          tarif_option_combinations[tarif]['periodic'][tarif_set_id([service])] = [service]
+          tarif_option_combinations[tarif]['periodic'.freeze] ||= {}
+          tarif_option_combinations[tarif]['periodic'.freeze][tarif_set_id([service])] = [service]
         end
         (uniq_services_in_tarif_option_combinations & onetime_services).each do |service|
-           tarif_option_combinations[tarif]['onetime'] ||= {}
-         tarif_option_combinations[tarif]['onetime'][tarif_set_id([service])] = [service]
+           tarif_option_combinations[tarif]['onetime'.freeze] ||= {}
+         tarif_option_combinations[tarif]['onetime'.freeze][tarif_set_id([service])] = [service]
         end
       end
     else      
@@ -352,11 +352,11 @@ class TarifOptimization::TarifListGenerator
         service_pack.each do |part, incompatibility_groups|
           tarif_option_combinations[tarif][part] ||= {}
           fobidden_combinations_by_set_id[tarif][part] ||= {}
-          if ['periodic', 'onetime'].include?(part)
-            incompatibility_groups['special_periodic_for_tarif_list_generation'].each do |service|
+          if ['periodic'.freeze, 'onetime'.freeze].include?(part)
+            incompatibility_groups['special_periodic_for_tarif_list_generation'.freeze].each do |service|
               tarif_set_id = tarif_set_id([service])
               tarif_option_combinations[tarif][part][tarif_set_id] = [service]
-            end if incompatibility_groups['special_periodic_for_tarif_list_generation']
+            end if incompatibility_groups['special_periodic_for_tarif_list_generation'.freeze]
           else
 #            raise(StandardError)
             incompatibility_groups.each do |incompatibility_group_name, incompatibility_group_1|
@@ -394,10 +394,10 @@ class TarifOptimization::TarifListGenerator
         end
         uniq_services_in_tarif_option_combinations = tarif_option_combinations[tarif].map{|c| c[1].map{|t| t[1]}}.flatten.compact.uniq
         (uniq_services_in_tarif_option_combinations & periodic_services).each do |service|
-          tarif_option_combinations[tarif]['periodic'][tarif_set_id([service])] = [service]
+          tarif_option_combinations[tarif]['periodic'.freeze][tarif_set_id([service])] = [service]
         end
         (uniq_services_in_tarif_option_combinations & onetime_services).each do |service|
-          tarif_option_combinations[tarif]['onetime'][tarif_set_id([service])] = [service]
+          tarif_option_combinations[tarif]['onetime'.freeze][tarif_set_id([service])] = [service]
         end
       end
     end
@@ -415,12 +415,12 @@ class TarifOptimization::TarifListGenerator
         tarif_sets.each do |tarif_set_id, services|
           tarif_option_group = []
           tarif_option_with_limit_group = []
-          if ['periodic', 'onetime'].include?(part)
+          if ['periodic'.freeze, 'onetime'.freeze].include?(part)
             tarif_option_combinations[tarif][part][tarif_set_id] = services
           else
             services.each do |service|
               next if service.blank?
-              tarif_option_general_priority = dependencies[service]['general_priority']
+              tarif_option_general_priority = dependencies[service]['general_priority'.freeze]
               tarif_option_group << service if tarif_option_general_priority == gp_tarif_option
               tarif_option_with_limit_group << service if tarif_option_general_priority == gp_tarif_option_with_limits
               if !calculate_only_chosen_services or !calculate_with_fixed_services
@@ -432,10 +432,10 @@ class TarifOptimization::TarifListGenerator
   
             services.each do |service|
               next if service.blank?
-              less_prioprite_tarif_options = new_services & dependencies[service]['other_tarif_priority']['lower']
+              less_prioprite_tarif_options = new_services & dependencies[service]['other_tarif_priority'.freeze]['lower'.freeze]
               new_services = less_prioprite_tarif_options + (new_services - less_prioprite_tarif_options)
   
-              more_prioprite_tarif_options = new_services & dependencies[service]['other_tarif_priority']['higher']
+              more_prioprite_tarif_options = new_services & dependencies[service]['other_tarif_priority'.freeze]['higher'.freeze]
               new_services = (new_services - more_prioprite_tarif_options) + more_prioprite_tarif_options
             end
             new_tarif_set_id = tarif_set_id(new_services)
@@ -459,7 +459,7 @@ class TarifOptimization::TarifListGenerator
           new_services = []
           services.each do |service|
             next if service.blank?
-            multiple_use = dependencies[service]['multiple_use']
+            multiple_use = dependencies[service]['multiple_use'.freeze]
             new_services << service
 #TODO разобраться когда можно использовать multiple_use (для каких parts), и связать с параметрами оптимизации 
             break if false #calculate_with_multiple_use and multiple_use and parts_used_as_multiple.include?(part)
@@ -479,10 +479,10 @@ class TarifOptimization::TarifListGenerator
         operator = service_description[tarif][:operator_id].to_i
         tarif_sets_without_common_services[tarif] ||= {}
         all_parts.each do |part|
-          next if ['periodic', 'onetime'].include?(part)
+          next if ['periodic'.freeze, 'onetime'.freeze].include?(part)
           tarif_option_sets = tarif_option_combinations[tarif][part]
           tarif_sets_without_common_services[tarif][part] ||= {}
-          tarif_general_priority = dependencies[tarif]['general_priority']
+          tarif_general_priority = dependencies[tarif]['general_priority'.freeze]
           if tarif_option_sets.blank?
             new_services = [tarif]
             new_tarif_set_id = tarif_set_id(new_services)
@@ -497,7 +497,7 @@ class TarifOptimization::TarifListGenerator
                 tarif_option_with_limit_group = []
                 tarif_options.each do |tarif_option|
                   next if tarif_option.blank?
-                  tarif_option_general_priority = dependencies[tarif_option]['general_priority']
+                  tarif_option_general_priority = dependencies[tarif_option]['general_priority'.freeze]
                   tarif_option_group << tarif_option if tarif_option_general_priority == gp_tarif_option
                   tarif_option_with_limit_group << tarif_option if tarif_option_general_priority == gp_tarif_option_with_limits
                   
@@ -515,17 +515,17 @@ class TarifOptimization::TarifListGenerator
         end
         
         services_that_depended_on_service_ids = services_that_depended_on.keys.map(&:to_i) 
-        tarif_sets_without_common_services[tarif]['periodic'] ||= {}
-        tarif_sets_without_common_services[tarif]['onetime'] ||= {}
+        tarif_sets_without_common_services[tarif]['periodic'.freeze] ||= {}
+        tarif_sets_without_common_services[tarif]['onetime'.freeze] ||= {}
         
         tarif_sets_without_common_services[tarif].each do |part, tarif_sets_without_common_services_by_part|    
-          next if ['periodic', 'onetime'].include?(part)      
+          next if ['periodic'.freeze, 'onetime'.freeze].include?(part)      
           tarif_sets_without_common_services_by_part.each do |tarif_set_id, services|
 #            (services_that_depended_on_service_ids & services & periodic_services).each do |main_depended_service|
             (services_that_depended_on_service_ids & services).each do |main_depended_service|
               new_periodic_services = [main_depended_service] + services_that_depended_on[main_depended_service]
               new_tarif_set_id = tarif_set_id(new_periodic_services)
-              tarif_sets_without_common_services[tarif]['periodic'][new_tarif_set_id] = new_periodic_services
+              tarif_sets_without_common_services[tarif]['periodic'.freeze][new_tarif_set_id] = new_periodic_services
             end
 #            (services_that_depended_on_service_ids & services & onetime_services).each do |main_depended_service|
             (services_that_depended_on_service_ids & services).each do |main_depended_service|
@@ -536,13 +536,13 @@ class TarifOptimization::TarifListGenerator
           end
         end
         
-        ((tarif_option_combinations[tarif]['periodic'].map{|o| o[1]}.flatten + [tarif])).each do |service|
-          tarif_sets_without_common_services[tarif]['periodic'][tarif_set_id([service])] = [service]
-        end if tarif_option_combinations[tarif]['periodic']
+        ((tarif_option_combinations[tarif]['periodic'.freeze].map{|o| o[1]}.flatten + [tarif])).each do |service|
+          tarif_sets_without_common_services[tarif]['periodic'.freeze][tarif_set_id([service])] = [service]
+        end if tarif_option_combinations[tarif]['periodic'.freeze]
         
-        ((tarif_option_combinations[tarif]['onetime'].map{|o| o[1]}.flatten + [tarif])).each do |service|
-          tarif_sets_without_common_services[tarif]['onetime'][tarif_set_id([service])] = [service]
-        end if tarif_option_combinations[tarif]['onetime']
+        ((tarif_option_combinations[tarif]['onetime'.freeze].map{|o| o[1]}.flatten + [tarif])).each do |service|
+          tarif_sets_without_common_services[tarif]['onetime'.freeze][tarif_set_id([service])] = [service]
+        end if tarif_option_combinations[tarif]['onetime'.freeze]
       end
     end
   end
@@ -557,7 +557,7 @@ class TarifOptimization::TarifListGenerator
         
         allowed_common_services = check_allowed_common_services(common_services_by_parts[operator][part] || [], tarif)
         
-        if ['periodic', 'onetime'].include?(part)
+        if ['periodic'.freeze, 'onetime'.freeze].include?(part)
           tarif_sets_without_common_services_by_tarif_by_parts.each do |tarif_set_id, services|
             tarif_sets[tarif][part][tarif_set_id] = services            
           end
@@ -581,15 +581,15 @@ class TarifOptimization::TarifListGenerator
   def check_allowed_common_services(common_services_to_check, tarif)
     allowed_common_services = []
     common_services_to_check.collect do |common_service|
-      if !dependencies[common_service]['prerequisites'].blank? and dependencies[common_service]['prerequisites'].include?(tarif)
+      if !dependencies[common_service]['prerequisites'.freeze].blank? and dependencies[common_service]['prerequisites'.freeze].include?(tarif)
         allowed_common_services << common_service
       end
       
-      if !dependencies[common_service]['forbidden_tarifs']['to_switch_on'].blank? and !dependencies[common_service]['forbidden_tarifs']['to_switch_on'].include?(tarif)
+      if !dependencies[common_service]['forbidden_tarifs'.freeze]['to_switch_on'.freeze].blank? and !dependencies[common_service]['forbidden_tarifs'.freeze]['to_switch_on'.freeze].include?(tarif)
         allowed_common_services << common_service
       end
       
-      if dependencies[common_service]['prerequisites'].blank? and dependencies[common_service]['forbidden_tarifs']['to_switch_on'].blank?
+      if dependencies[common_service]['prerequisites'.freeze].blank? and dependencies[common_service]['forbidden_tarifs'.freeze]['to_switch_on'.freeze].blank?
         allowed_common_services << common_service
       end
     end
@@ -609,7 +609,7 @@ class TarifOptimization::TarifListGenerator
           tarif_options.reverse.each do |tarif_option|
             next if tarif_option.blank?
             tarif_options_slices[operator][slice] ||= {:ids => [], :prev_ids => [], :set_ids => [], :prev_set_ids => [], :uniq_set_ids => {}, :parts => []}
-            tarif_option_general_priority = dependencies[tarif_option]['general_priority']
+            tarif_option_general_priority = dependencies[tarif_option]['general_priority'.freeze]
             break if tarif_option_general_priority != gp_tarif_option  #change next on break 31/07/14
             set_ids = tarif_options.reverse[0..slice].reverse
             set_id = tarif_set_id(set_ids)
@@ -643,7 +643,7 @@ class TarifOptimization::TarifListGenerator
           services.reverse.each do |service|
             next if service.blank?
             tarifs_slices[operator][slice] ||= {:ids => [], :prev_ids => [], :set_ids => [], :prev_set_ids => [], :uniq_set_ids => {}, :parts => []}
-            service_general_priority = dependencies[service]['general_priority']
+            service_general_priority = dependencies[service]['general_priority'.freeze]
 
             if service_general_priority == gp_tarif_option and slice == 0
               tarif_option_slice += 1

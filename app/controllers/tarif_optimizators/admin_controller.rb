@@ -46,6 +46,8 @@ class TarifOptimizators::AdminController < ApplicationController
   end 
   
   def check_inputs_for_recalculate     
+#    init_for_memory_test
+
     if session_filtr_params(calculation_choices)['result_run_id'].blank?
       redirect_to({:action => :index}, {:alert => "Выберите описание подбора тарифа"}) and return
     end
@@ -91,7 +93,6 @@ class TarifOptimizators::AdminController < ApplicationController
       end
     end
   end
-  
   private
   
   def track_recalculate

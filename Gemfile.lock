@@ -187,7 +187,6 @@ GEM
     moneta (0.8.0)
     multi_json (1.11.2)
     netrc (0.11.0)
-    newrelic_rpm (3.14.0.305)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
     orm_adapter (0.5.0)
@@ -341,7 +340,6 @@ DEPENDENCIES
   memcachier
   memory_profiler
   minitest-spec-rails
-  newrelic_rpm
   nokogiri
   pdf-reader
   pg

@@ -121,7 +121,7 @@ group :development, :test do
 # gem 'dotenv-rails'
 end 
 
-gem 'newrelic_rpm'
+#gem 'newrelic_rpm'
 
 gem 'platform-api' #heroku api
 #gem 'ruby-prof'

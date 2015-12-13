@@ -41,10 +41,10 @@ class TarifOptimization::CurrentTarifSet
     tarif_results.each do |tarif_set_id, tarif_result|
       new_cons_tarif_results_by_parts[tarif_set_id] ||= {}
       tarif_result.each do |part, tarif_result_by_part|
-        new_cons_tarif_results_by_parts[tarif_set_id][part] ||= {'price_value' => 0.0, 'call_id_count' => 0}
+        new_cons_tarif_results_by_parts[tarif_set_id][part] ||= {'price_value'.freeze => 0.0, 'call_id_count'.freeze => 0}
         tarif_result_by_part.each do |service_id, tarif_result_by_part_by_service|
-          new_cons_tarif_results_by_parts[tarif_set_id][part]['price_value'] += tarif_result_by_part_by_service['price_value'].to_f
-          new_cons_tarif_results_by_parts[tarif_set_id][part]['call_id_count'] += tarif_result_by_part_by_service['call_id_count'].to_i
+          new_cons_tarif_results_by_parts[tarif_set_id][part]['price_value'.freeze] += tarif_result_by_part_by_service['price_value'.freeze].to_f
+          new_cons_tarif_results_by_parts[tarif_set_id][part]['call_id_count'.freeze] += tarif_result_by_part_by_service['call_id_count'.freeze].to_i
         end
       end
     end
@@ -53,28 +53,28 @@ class TarifOptimization::CurrentTarifSet
   def init_tarif_sets_as_array
     @tarif_price = 0.0
     if new_cons_tarif_results_by_parts.keys.include?(tarif)
-      @tarif_price += new_cons_tarif_results_by_parts[tarif]['periodic']['price_value'].to_f if new_cons_tarif_results_by_parts[tarif] and new_cons_tarif_results_by_parts[tarif]['periodic']
-      @tarif_price += new_cons_tarif_results_by_parts[tarif]['onetime']['price_value'].to_f if new_cons_tarif_results_by_parts[tarif] and new_cons_tarif_results_by_parts[tarif]['onetime']
+      @tarif_price += new_cons_tarif_results_by_parts[tarif]['periodic'.freeze]['price_value'.freeze].to_f if new_cons_tarif_results_by_parts[tarif] and new_cons_tarif_results_by_parts[tarif]['periodic'.freeze]
+      @tarif_price += new_cons_tarif_results_by_parts[tarif]['onetime'.freeze]['price_value'.freeze].to_f if new_cons_tarif_results_by_parts[tarif] and new_cons_tarif_results_by_parts[tarif]['onetime'.freeze]
     else
       periodic_fix_part = tarif_results.keys.map do |key| 
-        if key.split('_').include?(tarif) and tarif_results[key].keys.include?('periodic') and tarif_results[key]['periodic'].keys.include?(tarif.to_i)
-          @tarif_price += tarif_results[key]['periodic'][tarif.to_i]['price_value'].to_f
+        if key.split('_').include?(tarif) and tarif_results[key].keys.include?('periodic'.freeze) and tarif_results[key]['periodic'.freeze].keys.include?(tarif.to_i)
+          @tarif_price += tarif_results[key]['periodic'.freeze][tarif.to_i]['price_value'.freeze].to_f
           break
         end
        end
       
       onetime_fix_part = tarif_results.keys.map do |key| 
-        if key.split('_').include?(tarif) and tarif_results[key].keys.include?('onetime') and tarif_results[key]['onetime'].keys.include?(tarif.to_i)
-          @tarif_price += tarif_results[key]['onetime'][tarif.to_i]['price_value'].to_f
+        if key.split('_').include?(tarif) and tarif_results[key].keys.include?('onetime'.freeze) and tarif_results[key]['onetime'.freeze].keys.include?(tarif.to_i)
+          @tarif_price += tarif_results[key]['onetime'.freeze][tarif.to_i]['price_value'.freeze].to_f
           break
         end
        end       
     end
 
-    @parts = (tarif_sets_by_tarif.keys - ['periodic', 'onetime']).sort_by do |part| 
+    @parts = (tarif_sets_by_tarif.keys - ['periodic'.freeze, 'onetime'.freeze]).sort_by do |part| 
       price_values = new_cons_tarif_results_by_parts.collect do |tarif_sets_name, new_cons_tarif_results_by_part| 
         result = 0.0
-        result = new_cons_tarif_results_by_part[part]['price_value'].to_f if new_cons_tarif_results_by_part[part]
+        result = new_cons_tarif_results_by_part[part]['price_value'.freeze].to_f if new_cons_tarif_results_by_part[part]
         result
       end.compact
 
@@ -96,8 +96,8 @@ class TarifOptimization::CurrentTarifSet
       tarif_sets_prices_by_part = []
       tarif_sets_counts_by_part = []
       tarif_sets_names_as_array[part_index].each do |tarif_sets_name|
-        tarif_sets_prices_by_part << new_cons_tarif_results_by_parts[tarif_sets_name][part]['price_value'].to_f
-        tarif_sets_counts_by_part << new_cons_tarif_results_by_parts[tarif_sets_name][part]['call_id_count'].to_i
+        tarif_sets_prices_by_part << new_cons_tarif_results_by_parts[tarif_sets_name][part]['price_value'.freeze].to_f
+        tarif_sets_counts_by_part << new_cons_tarif_results_by_parts[tarif_sets_name][part]['call_id_count'.freeze].to_i
         
       end
       @tarif_sets_prices << tarif_sets_prices_by_part
@@ -294,25 +294,25 @@ class TarifOptimization::CurrentTarifSet
         new_periodic_services = [main_depended_service] + services_that_depended_on[main_depended_service.to_s]
         new_tarif_set_id = tarif_set_id(new_periodic_services)
         
-        periodic_part_price += new_cons_tarif_results_by_parts[new_tarif_set_id]['periodic']['price_value'].to_f if new_cons_tarif_results_by_parts[new_tarif_set_id] and 
-          new_cons_tarif_results_by_parts[new_tarif_set_id]['periodic']
-        periodic_part_price += new_cons_tarif_results_by_parts[new_tarif_set_id]['onetime']['price_value'].to_f if new_cons_tarif_results_by_parts[new_tarif_set_id] and 
-          new_cons_tarif_results_by_parts[new_tarif_set_id]['onetime']
+        periodic_part_price += new_cons_tarif_results_by_parts[new_tarif_set_id]['periodic'.freeze]['price_value'.freeze].to_f if new_cons_tarif_results_by_parts[new_tarif_set_id] and 
+          new_cons_tarif_results_by_parts[new_tarif_set_id]['periodic'.freeze]
+        periodic_part_price += new_cons_tarif_results_by_parts[new_tarif_set_id]['onetime'.freeze]['price_value'.freeze].to_f if new_cons_tarif_results_by_parts[new_tarif_set_id] and 
+          new_cons_tarif_results_by_parts[new_tarif_set_id]['onetime'.freeze]
         counted_depended_on_services += new_periodic_services
       end
     end
     
     (tarif_sets_services - counted_depended_on_services).uniq.each do |service|
-      periodic_part_price += new_cons_tarif_results_by_parts[tarif_set_id([service])]['periodic']['price_value'].to_f if 
-        new_cons_tarif_results_by_parts[tarif_set_id([service])] and new_cons_tarif_results_by_parts[tarif_set_id([service])]['periodic']
-      periodic_part_price += new_cons_tarif_results_by_parts[tarif_set_id([service])]['onetime']['price_value'].to_f if 
-        new_cons_tarif_results_by_parts[tarif_set_id([service])] and new_cons_tarif_results_by_parts[tarif_set_id([service])]['onetime']
+      periodic_part_price += new_cons_tarif_results_by_parts[tarif_set_id([service])]['periodic'.freeze]['price_value'.freeze].to_f if 
+        new_cons_tarif_results_by_parts[tarif_set_id([service])] and new_cons_tarif_results_by_parts[tarif_set_id([service])]['periodic'.freeze]
+      periodic_part_price += new_cons_tarif_results_by_parts[tarif_set_id([service])]['onetime'.freeze]['price_value'.freeze].to_f if 
+        new_cons_tarif_results_by_parts[tarif_set_id([service])] and new_cons_tarif_results_by_parts[tarif_set_id([service])]['onetime'.freeze]
     end
     periodic_part_price
   end
 
   def tarif_set_id(tarif_ids)
-    tarif_ids.collect {|tarif_id| tarif_id if tarif_id}.compact.join('_')
+    tarif_ids.collect {|tarif_id| tarif_id if tarif_id}.compact.join('_'.freeze).freeze
   end
   
 end

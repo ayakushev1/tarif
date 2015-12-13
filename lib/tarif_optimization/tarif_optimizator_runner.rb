@@ -58,11 +58,13 @@ class TarifOptimization::TarifOptimizatorRunner
   def self.calculate(options)
     tarif_optimizator = TarifOptimization::TarifOptimizator.new(options)   
 
-    Customer::Stat::PerformanceChecker.apply(TarifOptimization::TarifOptimizator)
-    Customer::Stat::PerformanceChecker.apply(TarifOptimization::FinalTarifSetGenerator)
-    Customer::Stat::PerformanceChecker.apply(TarifOptimization::CurrentTarifSet)
-    Customer::Stat::PerformanceChecker.apply(TarifOptimization::QueryConstructor)
-    Customer::Stat::PerformanceChecker.apply(TarifOptimization::CurrentTarifOptimizationResults)
+    if options[:tarif_optimizator_input][:monitor_performance] == 'true'
+      Customer::Stat::PerformanceChecker.apply(TarifOptimization::TarifOptimizator)
+      Customer::Stat::PerformanceChecker.apply(TarifOptimization::FinalTarifSetGenerator)
+      Customer::Stat::PerformanceChecker.apply(TarifOptimization::CurrentTarifSet)
+      Customer::Stat::PerformanceChecker.apply(TarifOptimization::QueryConstructor)
+      Customer::Stat::PerformanceChecker.apply(TarifOptimization::CurrentTarifOptimizationResults)
+    end
 
     if options[:use_background_process_informers]
       Customer::BackgroundStat::Informer.apply(TarifOptimization::TarifOptimizator)

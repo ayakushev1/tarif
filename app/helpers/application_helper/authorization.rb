@@ -80,9 +80,10 @@ module ApplicationHelper::Authorization
   def action_lists
     {
       :external_api_processing => {
-        :methods => ['post'], :actions => {
+        :methods => ['get'], :actions => {
           'customer/payments' =>['process_payment'],
-        }
+#          'tarif_optimizators/admin' => ['recalculate', 'index'],
+        },
       },
       :root_url => {
         :methods => ['get'], :actions => {
@@ -100,7 +101,7 @@ module ApplicationHelper::Authorization
           'customer/demands' => ['index', 'create', 'new'],
           'errors' => ['error404', 'error422', 'error500'],
         }
-      },
+      }, 
       :comparison => {
         :methods => ['get'], :actions => {
           'comparison/optimizations' =>['index', 'show'],

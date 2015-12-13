@@ -31,28 +31,29 @@ class TarifOptimization::TarifOptimizationSqlBuilder
   def max_formula_order_collector; tarif_optimizator.max_formula_order_collector; end
   def performance_checker; tarif_optimizator.performance_checker; end
   
+  def inject_for_processing(str)
+    yield str
+  end
+  
   def calculate_service_part_sql(service_list, price_formula_order)
-    sql = calculate_service_list_sql(service_list, price_formula_order) 
+    inject_for_processing(calculate_service_list_sql(service_list, price_formula_order)) do |sql|
+      fields = [
+        'part'.freeze, 
+        'tarif_class_id'.freeze, 
+        'call_ids'.freeze, 
+        'categ_ids'.freeze, 
+        'price_value'.freeze,
+        'call_id_count'.freeze,
+        '(price_values::json) as price_values'.freeze,
+        'set_id'.freeze
+      ]
 
-    fields = [
-      'part', 
-      'tarif_class_id', 
-      'call_ids', 
-      'categ_ids', 
-      'price_value',
-      'call_id_count',
-      '(price_values::json) as price_values',
-      'set_id'
-    ]
-    
-    sql = "with calculate_service_list_sql as (#{sql}) select #{fields.join(', ')} from calculate_service_list_sql" unless sql.blank?
-
-    check_sql(sql, price_formula_order)
-    sql
+      sql.blank? ? sql : "with calculate_service_list_sql as (#{sql}) select #{fields.join(', '.freeze)} from calculate_service_list_sql"
+    end
   end
   
   def calculate_service_list_sql(service_list, price_formula_order)
-    sql = service_list.collect do |service_list_item| 
+    service_list.collect do |service_list_item| 
       service_id = service_list_item[:ids]
       next if !service_id 
       part = service_list_item[:parts]
@@ -63,10 +64,10 @@ class TarifOptimization::TarifOptimizationSqlBuilder
       next if !tarif_list_generator.parts_by_service[service_id].include?(part)
       prev_call_ids_count = 0 
       tarif_results[set_id][part].each do |service_id_1, tarif_results_value |  
-        prev_call_ids_count += tarif_results_value['call_id_count'] 
+        prev_call_ids_count += tarif_results_value['call_id_count'.freeze] 
       end
       
-      next if (calls_count_by_parts[part] == 0) and !['periodic', 'onetime'].include?(part)
+      next if (calls_count_by_parts[part] == 0) and !['periodic'.freeze, 'onetime'.freeze].include?(part)
 #TODO подумать чтобы убрать !(calls_count_by_parts[part] == 0)
       if !(calls_count_by_parts[part] == 0) and prev_call_ids_count == calls_count_by_parts[part]
         empty_service_cost_sql(service_id, set_id, price_formula_order, part)
@@ -74,124 +75,119 @@ class TarifOptimization::TarifOptimizationSqlBuilder
         sql_1 = service_cost_sql(service_id, set_id, price_formula_order, part)
         sql_1 unless sql_1.blank?      
       end 
-    end.compact.join(' union ')
-
-#    raise(StandardError, [sql])
-    check_sql(sql, price_formula_order)
-    sql
+    end.compact.join(' union '.freeze)
   end
   
   def empty_service_cost_sql(service_id, set_id, price_formula_order, part)
     fields = [
-      "'#{part}'::text as part", 
-      "#{service_id} as tarif_class_id", 
-      "('{}')::text as call_ids", 
-      "('{}')::text as categ_ids", 
-      '0.0 as price_value',
-      '0 as call_id_count',
-      "('[{\"call_id_count\":0}]')::text as price_values",
+      "'#{part}'::text as part".freeze, 
+      "#{service_id} as tarif_class_id".freeze, 
+      "('{}')::text as call_ids".freeze, 
+      "('{}')::text as categ_ids".freeze, 
+      '0.0 as price_value'.freeze,
+      '0 as call_id_count'.freeze,
+      "('[{\"call_id_count\":0}]')::text as price_values".freeze,
       "'#{set_id || -1}' as set_id"
     ]    
     "(select #{fields.join(',')})"
   end
   
   def service_cost_sql(service_id, set_id = nil, price_formula_order, part)
-    raise(StandardError, [stat_function_collector.tarif_class_parts[service_id]]) unless part
-    fields = [
-      "'#{part}'::text as part", 
-      'tarif_class_id', 
-      'json_agg(call_ids)::text as call_ids', 
-      'json_agg(categ_ids)::text as categ_ids', 
-      'sum(price_value) as price_value',
-      'sum(call_id_count) as call_id_count',
-      '(json_agg(row_to_json(service_categories_cost_sql_result)))::text as price_values',
-      "'#{set_id || -1}' as set_id"
-    ]    
-    sql = service_categories_cost_sql(service_id, set_id, price_formula_order, part)    
-    sql = "(select #{fields.join(', ')} from (#{sql}) as service_categories_cost_sql_result group by tarif_class_id, set_id)"  unless sql.blank?
-#    raise(StandardError, [sql]) if sql.blank?
-    
-    check_sql(sql, service_id, set_id, price_formula_order)    
-    sql
+#    raise(StandardError, [stat_function_collector.tarif_class_parts[service_id]]) unless part
+    inject_for_processing(service_categories_cost_sql(service_id, set_id, price_formula_order, part)) do |sql|
+      fields = [
+        "'#{part}'::text as part".freeze, 
+        'tarif_class_id'.freeze, 
+        'json_agg(call_ids)::text as call_ids'.freeze, 
+        'json_agg(categ_ids)::text as categ_ids'.freeze, 
+        'sum(price_value) as price_value'.freeze,
+        'sum(call_id_count) as call_id_count'.freeze,
+        '(json_agg(row_to_json(service_categories_cost_sql_result)))::text as price_values'.freeze,
+        "'#{set_id || -1}' as set_id"
+      ]    
+#      sql = "(select #{fields.join(', '.freeze)} from (#{sql}) as service_categories_cost_sql_result group by tarif_class_id, set_id)"  unless sql.blank?      
+#      check_sql(sql, service_id, set_id, price_formula_order) if check_sql_before_running    
+#      sql
+      sql.blank? ? sql : "(select #{fields.join(', '.freeze)} from (#{sql}) as service_categories_cost_sql_result group by tarif_class_id, set_id)"
+    end
   end
   
   def service_categories_cost_sql(service_id, set_id = nil, price_formula_order, part)  
-    result = service_categories_cost_sql_from_service_category_groups(service_id, set_id, price_formula_order, part)
-    result += service_categories_cost_sql_from_service_categories(service_id, set_id, price_formula_order, part)
-    sql = result.compact.join(' union ')
-    sql = "with base_stat_by_part as (#{calculate_base_stat_by_part_sql(part)}), \ 
-      united_service_categories_cost_sql as (#{sql} ) select *, all_stat::json as all_stat from united_service_categories_cost_sql" unless sql.blank?
-    
-#    raise(StandardError, sql) if service_id == 330 and part == 'periodic'
-
-    check_sql(sql, service_id, set_id, price_formula_order)
-    sql
+    inject_for_processing( (service_categories_cost_sql_from_service_category_groups(service_id, set_id, price_formula_order, part) + 
+      service_categories_cost_sql_from_service_categories(service_id, set_id, price_formula_order, part)).compact.join(' union ') ) do |sql|
+        
+        sql.blank? ? sql : "with base_stat_by_part as (#{calculate_base_stat_by_part_sql(part)}), \ 
+          united_service_categories_cost_sql as (#{sql} ) select *, all_stat::json as all_stat from united_service_categories_cost_sql"
+    end
   end
   
   def calculate_base_stat_by_part_sql(part)
-    result = Customer::Call.where(calculation_scope_where_hash(part)).
-      where(:call_run_id => call_run_id).where("description->>'accounting_period' = '#{accounting_period}'").to_sql
+#    result = 
+    Customer::Call.where(calculation_scope_where_hash(part)).
+      where(:call_run_id => call_run_id).where("description->>'accounting_period' = '#{accounting_period}'".freeze).to_sql
 #    raise(StandardError, calculation_scope_where_hash(part))   
-    result
+#    result
   end
   
   def service_categories_cost_sql_from_service_category_groups(service_id, set_id = nil, price_formula_order, part)
-    result = [] 
-    stat_function_collector.service_group_ids[part][price_formula_order][service_id].each do |service_category_group_id|        
-      stat_details = stat_function_collector.service_group_stat[part][price_formula_order][service_category_group_id]      
-      
-      if price_formula_order < (max_formula_order_collector.max_order_by_price_list_and_part[part][stat_details[:price_lists_id]] + 1)  
-#TODO проверить нужно ли применять  service_category_tarif_class_ids_after_condition_if_formula_tarif_condition_is_true
-        service_category_tarif_class_ids = calculate_service_category_ids_for_category_group_and_set_id(service_category_group_id, set_id, price_formula_order, part)
-        service_category_tarif_class_ids = service_category_tarif_class_ids_after_condition_if_tarif_option_included(service_category_tarif_class_ids, set_id)
-      
-        prev_group_call_ids = current_tarif_optimization_results.find_prev_group_call_ids(set_id, part, service_category_group_id)
-        prev_stat_values_string = current_tarif_optimization_results.prev_stat_function_values(stat_details[:price_formula_id], set_id, part, service_category_group_id)
-
-        result << service_category_cost_sql(
-          calculate_base_stat_sql(service_category_tarif_class_ids, part), service_category_tarif_class_ids[0], service_category_group_id, 
-          stat_details[:price_formula_id], service_id, set_id, part, prev_group_call_ids, prev_stat_values_string)
-      end
-    end if stat_function_collector.service_group_ids[part] and stat_function_collector.service_group_ids[part][price_formula_order] and stat_function_collector.service_group_ids[part][price_formula_order][service_id]
-    result
+    inject_for_processing([]) do |result| 
+      stat_function_collector.service_group_ids[part][price_formula_order][service_id].each do |service_category_group_id|        
+        stat_details = stat_function_collector.service_group_stat[part][price_formula_order][service_category_group_id]      
+        
+        if price_formula_order < (max_formula_order_collector.max_order_by_price_list_and_part[part][stat_details[:price_lists_id]] + 1)  
+  #TODO проверить нужно ли применять  service_category_tarif_class_ids_after_condition_if_formula_tarif_condition_is_true
+          service_category_tarif_class_ids = calculate_service_category_ids_for_category_group_and_set_id(service_category_group_id, set_id, price_formula_order, part)
+          service_category_tarif_class_ids = service_category_tarif_class_ids_after_condition_if_tarif_option_included(service_category_tarif_class_ids, set_id)
+        
+          prev_group_call_ids = current_tarif_optimization_results.find_prev_group_call_ids(set_id, part, service_category_group_id)
+          prev_stat_values_string = current_tarif_optimization_results.prev_stat_function_values(stat_details[:price_formula_id], set_id, part, service_category_group_id)
+  
+          result << service_category_cost_sql(
+            calculate_base_stat_sql(service_category_tarif_class_ids, part), service_category_tarif_class_ids[0], service_category_group_id, 
+            stat_details[:price_formula_id], service_id, set_id, part, prev_group_call_ids, prev_stat_values_string)
+        end
+      end if stat_function_collector.service_group_ids[part] and stat_function_collector.service_group_ids[part][price_formula_order] and stat_function_collector.service_group_ids[part][price_formula_order][service_id]
+      result
+    end
   end  
 
   def service_categories_cost_sql_from_service_categories(service_id, set_id = nil, price_formula_order, part)
-    result = [] 
-    stat_function_collector.service_stat[part][price_formula_order][service_id].each do |stat_details_key, stat_details|
-
-#     raise(StandardError, stat_details[:service_category_tarif_class_ids]) if service_id == 294 and part == 'periodic_'
-
-      if price_formula_order < (max_formula_order_collector.max_order_by_price_list_and_part[part][stat_details[:price_lists_id]] + 1)
-        service_category_tarif_class_ids = service_category_tarif_class_ids_after_condition_if_tarif_option_included(stat_details[:service_category_tarif_class_ids], set_id)
-        service_category_tarif_class_id = service_category_tarif_class_ids[0]
-        next if service_category_tarif_class_ids.blank?
-
-        service_category_tarif_class_ids_for_base_stat_sql = service_category_tarif_class_ids_after_condition_if_formula_tarif_condition_is_true(
-          service_category_tarif_class_ids, stat_details, service_id, part)
-#        service_category_tarif_class_ids_for_base_stat_sql = service_category_tarif_class_ids_after_condition_if_tarif_option_included(
-#          service_category_tarif_class_ids_for_base_stat_sql, set_id)
+    inject_for_processing([]) do |result| 
+      stat_function_collector.service_stat[part][price_formula_order][service_id].each do |stat_details_key, stat_details|
+  
+  #     raise(StandardError, stat_details[:service_category_tarif_class_ids]) if service_id == 294 and part == 'periodic_'
+  
+        if price_formula_order < (max_formula_order_collector.max_order_by_price_list_and_part[part][stat_details[:price_lists_id]] + 1)
+          service_category_tarif_class_ids = service_category_tarif_class_ids_after_condition_if_tarif_option_included(stat_details[:service_category_tarif_class_ids], set_id)
+          service_category_tarif_class_id = service_category_tarif_class_ids[0]
+          next if service_category_tarif_class_ids.blank?
+  
+          service_category_tarif_class_ids_for_base_stat_sql = service_category_tarif_class_ids_after_condition_if_formula_tarif_condition_is_true(
+            service_category_tarif_class_ids, stat_details, service_id, part)
+  #        service_category_tarif_class_ids_for_base_stat_sql = service_category_tarif_class_ids_after_condition_if_tarif_option_included(
+  #          service_category_tarif_class_ids_for_base_stat_sql, set_id)
+            
+  #        raise(StandardError, [stat_details[:service_category_tarif_class_ids]]) if service_category_tarif_class_ids.blank?
           
-#        raise(StandardError, [stat_details[:service_category_tarif_class_ids]]) if service_category_tarif_class_ids.blank?
-        
-#TODO проверить правильно ли работает исключение предыдущих ids
-        prev_group_call_ids = current_tarif_optimization_results.find_prev_group_call_ids(set_id, part, -1)
-        prev_stat_values_string = current_tarif_optimization_results.prev_stat_function_values(stat_details[:price_formula_id], set_id, part, -1)
-
-#    raise(StandardError, service_category_tarif_class_ids_for_base_stat_sql) if service_id == 294 and part == 'periodic'
-
-        result << service_category_cost_sql(calculate_base_stat_sql(service_category_tarif_class_ids_for_base_stat_sql, part), 
-          service_category_tarif_class_id, -1, stat_details[:price_formula_id], service_id, set_id,
-          part, prev_group_call_ids, prev_stat_values_string)
-      end
-    end if stat_function_collector.service_stat[part] and stat_function_collector.service_stat[part][price_formula_order] and stat_function_collector.service_stat[part][price_formula_order][service_id]
-    result
+  #TODO проверить правильно ли работает исключение предыдущих ids
+          prev_group_call_ids = current_tarif_optimization_results.find_prev_group_call_ids(set_id, part, -1)
+          prev_stat_values_string = current_tarif_optimization_results.prev_stat_function_values(stat_details[:price_formula_id], set_id, part, -1)
+  
+  #    raise(StandardError, service_category_tarif_class_ids_for_base_stat_sql) if service_id == 294 and part == 'periodic'
+  
+          result << service_category_cost_sql(calculate_base_stat_sql(service_category_tarif_class_ids_for_base_stat_sql, part), 
+            service_category_tarif_class_id, -1, stat_details[:price_formula_id], service_id, set_id,
+            part, prev_group_call_ids, prev_stat_values_string)
+        end
+      end if stat_function_collector.service_stat[part] and stat_function_collector.service_stat[part][price_formula_order] and stat_function_collector.service_stat[part][price_formula_order][service_id]
+      result
+    end
   end  
   
   def service_category_tarif_class_ids_after_condition_if_formula_tarif_condition_is_true(service_category_tarif_class_ids, stat_details, service_id, part)
     price_formula_id = stat_details[:price_formula_id]
     price_formula_details = stat_function_collector.price_formula(price_formula_id) if price_formula_id
-    formula_tarif_condition = price_formula_details["tarif_condition"] if price_formula_details
+    formula_tarif_condition = price_formula_details["tarif_condition".freeze] if price_formula_details
 
 #    raise(StandardError) if service_id == 322 and part == 'periodic'
 
@@ -216,19 +212,20 @@ class TarifOptimization::TarifOptimizationSqlBuilder
   end
 
   def service_category_tarif_class_ids_after_condition_if_tarif_option_included(service_category_tarif_class_ids, set_id)
-    result = []
-    service_category_tarif_class_ids.each do |service_category_tarif_class_id|
-      next if service_category_tarif_class_id == -1
-      raise(StandardError, [set_id, service_category_tarif_class_id]) if !query_constructor.tarif_class_categories[service_category_tarif_class_id]
-      condition_field = query_constructor.tarif_class_categories[service_category_tarif_class_id]['conditions']  
-      if condition_field and condition_field['tarif_set_must_include_tarif_options'] and 
-        (condition_field['tarif_set_must_include_tarif_options'] & set_id.split('_').map{|s| s.to_i}).count == 0
-      else
-        result << service_category_tarif_class_id
+    inject_for_processing([]) do |result| 
+      service_category_tarif_class_ids.each do |service_category_tarif_class_id|
+        next if service_category_tarif_class_id == -1
+        raise(StandardError, [set_id, service_category_tarif_class_id]) if !query_constructor.tarif_class_categories[service_category_tarif_class_id]
+        condition_field = query_constructor.tarif_class_categories[service_category_tarif_class_id]['conditions'.freeze]  
+        if condition_field and condition_field['tarif_set_must_include_tarif_options'.freeze] and 
+          (condition_field['tarif_set_must_include_tarif_options'.freeze] & set_id.split('_').map{|s| s.to_i}).count == 0
+        else
+          result << service_category_tarif_class_id
+        end
       end
+      raise(StandardError, [service_category_tarif_class_ids, result]) if set_id == "203__"
+      result
     end
-    raise(StandardError, [service_category_tarif_class_ids, result]) if set_id == "203__"
-    result
   end
   
   def calculate_base_stat_sql(service_category_tarif_class_ids, part)
@@ -236,9 +233,10 @@ class TarifOptimization::TarifOptimizationSqlBuilder
 #      where(:call_run_id => call_run_id).where("description->>'accounting_period' = '#{accounting_period}'").
 #      where(query_constructor.joined_tarif_classes_category_where_hash(service_category_tarif_class_ids))
 #    raise(StandardError, calculation_scope_where_hash(part))   
-    sql = "(select * from base_stat_by_part customer_calls where #{query_constructor.joined_tarif_classes_category_where_hash(service_category_tarif_class_ids)}) customer_calls"
-    result = Customer::Call.from(sql)
-    result
+#    sql = "(select * from base_stat_by_part customer_calls where #{query_constructor.joined_tarif_classes_category_where_hash(service_category_tarif_class_ids)}) customer_calls"
+#    result = Customer::Call.from(sql)
+#    result
+    Customer::Call.from("(select * from base_stat_by_part customer_calls where #{query_constructor.joined_tarif_classes_category_where_hash(service_category_tarif_class_ids)}) customer_calls")
   end
   
   def calculation_scope_where_hash(part)
@@ -250,153 +248,135 @@ class TarifOptimization::TarifOptimizationSqlBuilder
         
     price_formula = stat_function_collector.price_formula(price_formula_id)
     
-    stat_sql_fields = ["coalesce(month, -1)::integer as month", "coalesce(call_ids, '{}') as call_ids",
-                       "coalesce(categ_ids, '{}') as categ_ids", "coalesce(call_id_count, 0) as call_id_count",]
-    price_formula['stat_params'].each { |stat_key, stat_function| stat_sql_fields << "coalesce(#{stat_key}, 0) as #{stat_key}" } if price_formula['stat_params']
+    stat_sql_fields = ["coalesce(month, -1)::integer as month".freeze, "coalesce(call_ids, '{}') as call_ids".freeze,
+                       "coalesce(categ_ids, '{}') as categ_ids".freeze, "coalesce(call_id_count, 0) as call_id_count".freeze,]
+    price_formula['stat_params'.freeze].each { |stat_key, stat_function| stat_sql_fields << "coalesce(#{stat_key}, 0) as #{stat_key}" } if price_formula['stat_params'.freeze]
     
     fields = if service_category_group_id > -1
-      ["sctc_2.tarif_class_id", "price_lists.service_category_group_id", "-1 as service_category_tarif_class_id", "service_category_groups.name as service_category_name"]
+      ["sctc_2.tarif_class_id".freeze, "price_lists.service_category_group_id".freeze, "-1 as service_category_tarif_class_id".freeze, "service_category_groups.name as service_category_name".freeze]
     else
-      ["sctc_1.tarif_class_id", "-1 as service_category_group_id", "sctc_1.id as service_category_tarif_class_id", "sctc_1.name as service_category_name",]
+      ["sctc_1.tarif_class_id".freeze, "-1 as service_category_group_id".freeze, "sctc_1.id as service_category_tarif_class_id".freeze, "sctc_1.name as service_category_name".freeze,]
     end
       
     fields = (fields + [       
-      "month", "call_ids", "categ_ids", "call_id_count", 
-      "#{price_formula_id} as price_formula_id", 
+      "month".freeze, "call_ids".freeze, "categ_ids".freeze, "call_id_count".freeze, 
+      "#{price_formula_id} as price_formula_id".freeze, 
 #      "#{price_formula_order} as price_formula_calculation_order",
-      "#{stat_function_collector.price_formula_string(price_formula_id)} as price_value",
+      "#{stat_function_collector.price_formula_string(price_formula_id)} as price_value".freeze,
 #      "#{price_formula_order} as price_formula_order",
-      "row_to_json(stat_sql)::text as all_stat"      
-    ]).join(', ')
+      "row_to_json(stat_sql)::text as all_stat".freeze      
+    ]).join(', '.freeze)
     
     distinct_fields = [
-      "price_lists.service_category_group_id", "month", "price_formula_id", "price_lists.service_category_tarif_class_id"
-    ].join(', ')
+      "price_lists.service_category_group_id".freeze, "month".freeze, "price_formula_id".freeze, "price_lists.service_category_tarif_class_id".freeze
+    ].join(', '.freeze)
     
     service_category_choice_sql = service_category_choice_sql(base_stat_sql, price_formula_id, set_id, part, prev_group_call_ids, prev_stat_values_string)
 
     sql = [
-      "with",
-      "fixed_input as ( select 1 ),",
+      "with".freeze,
+      "fixed_input as ( select 1 ),".freeze,
       "service_category_choice_sql as ( #{service_category_choice_sql} ),",
-      "stat_sql as ( select #{stat_sql_fields.join(', ')} from fixed_input left outer join service_category_choice_sql on true )",
+      "stat_sql as ( select #{stat_sql_fields.join(', '.freeze)} from fixed_input left outer join service_category_choice_sql on true )",
 #TODO проверить как правильно использовать distinct (здесь он используется для удаления дублирующих записей возникающих при расчета service_category_groups)
 #TODO можно использовать exists instead of distinct (select * from a where exist (select 'any' from a where conditions))
-      "select distinct on (#{distinct_fields}) #{fields}",
+      "select distinct on (#{distinct_fields}) #{fields}".freeze,
 #      "select distinct #{fields}",
-      "from stat_sql, price_formulas",
-      "LEFT OUTER JOIN price_standard_formulas ON price_standard_formulas.id = price_formulas.standard_formula_id",
+      "from stat_sql, price_formulas".freeze,
+      "LEFT OUTER JOIN price_standard_formulas ON price_standard_formulas.id = price_formulas.standard_formula_id".freeze,
      
-      "LEFT OUTER JOIN price_lists ON price_lists.id = price_formulas.price_list_id",
-      "LEFT OUTER JOIN service_category_tarif_classes sctc_1 ON sctc_1.id = price_lists.service_category_tarif_class_id",
+      "LEFT OUTER JOIN price_lists ON price_lists.id = price_formulas.price_list_id".freeze,
+      "LEFT OUTER JOIN service_category_tarif_classes sctc_1 ON sctc_1.id = price_lists.service_category_tarif_class_id".freeze,
 
-      "LEFT OUTER JOIN service_category_groups ON service_category_groups.id = price_lists.service_category_group_id",
-      "LEFT OUTER JOIN service_category_tarif_classes sctc_2 ON sctc_2.as_standard_category_group_id = service_category_groups.id",
+      "LEFT OUTER JOIN service_category_groups ON service_category_groups.id = price_lists.service_category_group_id".freeze,
+      "LEFT OUTER JOIN service_category_tarif_classes sctc_2 ON sctc_2.as_standard_category_group_id = service_category_groups.id".freeze,
 
-      "where",
+      "where".freeze,
       "price_formulas.id = #{price_formula_id} and ",
 #      "price_formulas.calculation_order = #{price_formula_order} and",
-      "price_lists.tarif_list_id is null and",
-      "(",
+      "price_lists.tarif_list_id is null and".freeze,
+      "(".freeze,
       "(sctc_2.tarif_class_id = #{service_id} and sctc_2.as_standard_category_group_id = #{ service_category_group_id } ) or",      
       "(sctc_1.tarif_class_id = #{service_id} and sctc_2.as_standard_category_group_id is null and sctc_1.id = #{ service_category_tarif_class_id || -1} )",
       ")",# limit 1",  
     ].join(' ')
     sql = "(#{sql})"
-
-#    raise(StandardError, sql) if prev_group_call_ids.size > 0 #service_category_group_id #service_id == 681 #service_id == 322 and part == 'periodic'
-
-    check_sql(sql, service_id, service_category_tarif_class_id, service_category_group_id, price_formula_id, service_id, set_id,
-      part, prev_group_call_ids, prev_stat_values_string)
-#    raise(StandardError, stat_function_collector.price_formula_string(price_formula_id)) if service_id == 294 and part == 'periodic'
-    sql
   end
 
   def service_category_choice_sql(base_stat_sql, price_formula_id, set_id, part, prev_group_call_ids, prev_stat_values_string)
     excluded_call_ids_by_part = prev_service_call_ids_by_parts[set_id][part] 
 
-    sql = if !stat_function_collector.price_formula(price_formula_id)['window_condition'].blank?
+    if !stat_function_collector.price_formula(price_formula_id)['window_condition'.freeze].blank?
       service_category_accumulated_stat_sql(base_stat_sql, price_formula_id, excluded_call_ids_by_part, :window, prev_group_call_ids, prev_stat_values_string)
-    elsif !stat_function_collector.price_formula(price_formula_id)['tarif_condition'].blank?
+    elsif !stat_function_collector.price_formula(price_formula_id)['tarif_condition'.freeze].blank?
       first_stat_sql(base_stat_sql, price_formula_id, excluded_call_ids_by_part, :tarif)
     else
       first_stat_sql(base_stat_sql, price_formula_id, excluded_call_ids_by_part, :group)
     end
-#    raise(StandardError, sql) if price_formula_id == 103619 #service_id == 322 and part == 'periodic'
-
-    check_sql(sql, price_formula_id)
-    sql
   end 
 
   def service_category_accumulated_stat_sql(base_stat_sql, price_formula_id, excluded_call_ids_by_part = {}, check_out_call_ids, prev_group_call_ids, prev_stat_values_string) 
 #В запросах дальше поле 'month' выступает как название периода по которому идут расчеты       
     price_formula = stat_function_collector.price_formula(price_formula_id)#.formula
 
-    stat_string_2 = ["first_stat_sql.*"]
-    stat_string_4 = ["month", "array_agg(id) as call_ids", "array_agg(global_category_id) as categ_ids", "count(id) as call_id_count", ]
+    stat_string_2 = ["first_stat_sql.*".freeze]
+    stat_string_4 = ["month".freeze, "array_agg(id) as call_ids".freeze, "array_agg(global_category_id) as categ_ids".freeze, "count(id) as call_id_count".freeze, ]
     
-    price_formula['stat_params'].each do |stat_key, stat_function| 
+    price_formula['stat_params'.freeze].each do |stat_key, stat_function| 
       stat_string_2 << "current_#{stat_key} + coalesce(prev_#{stat_key}, 0) as #{stat_key}"
       stat_string_4 << "#{stat_function} as #{stat_key}"
-    end if price_formula['stat_params']
+    end if price_formula['stat_params'.freeze]
 
-    sql = [
-      "with",
+    [
+      "with".freeze,
       "prev_sql (#{prev_service_category_accumulated_stat_sql(price_formula_id, prev_stat_values_string)} ),",
       "first_stat_sql as ( #{first_stat_sql(base_stat_sql, price_formula_id, (excluded_call_ids_by_part - prev_group_call_ids ), check_out_call_ids)} ),",
       
       "service_category_accumulated_ids_sql_2 as (select #{stat_string_2.join(', ')} from first_stat_sql",
-      "left outer join prev_sql on first_stat_sql.month = prev_sql.month), ",
+      "left outer join prev_sql on first_stat_sql.month = prev_sql.month), ".freeze,
       
-      "service_category_accumulated_stat_sql_3 as ",
+      "service_category_accumulated_stat_sql_3 as ".freeze,
       "(select array_agg(id) as group_call_ids, month from service_category_accumulated_ids_sql_2 where #{price_formula['window_condition']} group by month)",
       
       "select #{stat_string_4.join(', ')} from customer_calls, service_category_accumulated_stat_sql_3",
       "where id != all('{#{excluded_call_ids_by_part.join(', ')}}') and id = any(group_call_ids)",
-      "group by month",
+      "group by month".freeze,
     ].join(' ')
-
-    check_sql(sql, price_formula_id, prev_group_call_ids, prev_stat_values_string)
-    sql
   end
   
   def first_stat_sql(base_stat_sql, price_formula_id, excluded_call_ids_by_part, check_out_call_ids)
     price_formula = stat_function_collector.price_formula(price_formula_id)
-    group_by = "extract(#{price_formula['group_by'] || 'month'} from (description->>'time')::timestamp)"
+    group_by = "extract(#{price_formula['group_by'.freeze] || 'month'.freeze} from (description->>'time')::timestamp)".freeze
     case check_out_call_ids
     when :window
-      fields = ["id", "global_category_id", "extract(#{price_formula['window_over'] || 'month'} from (description->>'time')::timestamp) as month"]
-      price_formula['stat_params'].each { |stat_key, stat_function| fields << "#{stat_function} over m as current_#{stat_key}" } if price_formula['stat_params']
+      fields = ["id".freeze, "global_category_id".freeze, "extract(#{price_formula['window_over'.freeze] || 'month'.freeze} from (description->>'time')::timestamp) as month"]
+      price_formula['stat_params'.freeze].each { |stat_key, stat_function| fields << "#{stat_function} over m as current_#{stat_key}" } if price_formula['stat_params'.freeze]
     when :group
-      fields = ["#{group_by} as month", "array_agg(id) as call_ids", "array_agg(global_category_id) as categ_ids", "count(id) as call_id_count",]
-      price_formula['stat_params'].each {|stat_key, stat_function| fields << "#{stat_function} as #{stat_key}" } if price_formula['stat_params']    
+      fields = ["#{group_by} as month".freeze, "array_agg(id) as call_ids", "array_agg(global_category_id) as categ_ids".freeze, "count(id) as call_id_count".freeze,]
+      price_formula['stat_params'.freeze].each {|stat_key, stat_function| fields << "#{stat_function} as #{stat_key}".freeze } if price_formula['stat_params'.freeze]    
     when :tarif
-      fields = ["#{group_by} as month", "'{}'::int[] as call_ids", "'{}'::int[] as categ_ids", "0 as call_id_count",]
-      price_formula['stat_params'].each {|stat_key, stat_function| fields << "#{stat_function} as #{stat_key}" } if price_formula['stat_params']    
+      fields = ["#{group_by} as month".freeze, "'{}'::int[] as call_ids".freeze, "'{}'::int[] as categ_ids".freeze, "0 as call_id_count".freeze,]
+      price_formula['stat_params'.freeze].each {|stat_key, stat_function| fields << "#{stat_function} as #{stat_key}".freeze } if price_formula['stat_params'.freeze]    
     else
       raise(StandardError, 'wrong check_out_call_ids in first_stat_sql')
     end
 
-    sql = base_stat_sql.select("#{fields.join(', ')}").where.not(:id => excluded_call_ids_by_part)
+    sql = base_stat_sql.select("#{fields.join(', '.freeze)}").where.not(:id => excluded_call_ids_by_part)
       
-    sql = if price_formula['window_over']
+    if price_formula['window_over'.freeze]
       "#{sql.to_sql} WINDOW m as (partition by extract(#{price_formula['window_over'] || 'month'} from (description->>'time')::timestamp) order by (description->>'time')::timestamp )"    
     else
-      sql.group("month").to_sql
+      sql.group("month".freeze).to_sql
     end  
-#    raise(StandardError) #if price_formula['standard_formula_id'] == 18
-    check_sql(sql, price_formula_id)
-    show_bad_performing_sql(sql, 'first_stat_sql', 0.01)
-    sql
   end
 
   def prev_service_category_accumulated_stat_sql(price_formula_id, prev_stat_values_string) 
     price_formula = stat_function_collector.price_formula(price_formula_id)
-    stat_string_0 = ["month", "prev_month_ids"]
+    stat_string_0 = ["month".freeze, "prev_month_ids".freeze]
     
-    price_formula['stat_params'].each { |stat_key, stat_function| stat_string_0 << "prev_#{stat_key}" } if price_formula['stat_params']
+    price_formula['stat_params'.freeze].each { |stat_key, stat_function| stat_string_0 << "prev_#{stat_key}".freeze } if price_formula['stat_params'.freeze]
     
-    "#{stat_string_0.join(', ')} ) as (values #{prev_stat_values_string.join(', ')}"
+    "#{stat_string_0.join(', '.freeze)} ) as (values #{prev_stat_values_string.join(', '.freeze)}"
   end
       
   module Helper
@@ -414,7 +394,7 @@ class TarifOptimization::TarifOptimizationSqlBuilder
     end
     
     def show_bad_performing_sql(sql, checkpoint_name, time_limit, *params_to_show)
-      if execute_additional_sql and performance_checker.results[checkpoint_name]['duration'] > time_limit
+      if execute_additional_sql and performance_checker and performance_checker.results[checkpoint_name]['duration'] > time_limit
         raise(StandardError, (params_to_show + [nil, checkpoint_name, sql, performance_checker.show_stat]).join("\n\n") ) 
       end
     end

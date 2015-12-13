@@ -16,7 +16,8 @@ class TarifOptimization::TarifOptimizator
 #настройки вывода результатов
   attr_reader  :simplify_tarif_results, :save_tarif_results_ord, :output_call_ids_to_tarif_results, :output_call_count_to_tarif_results, 
                :analyze_query_constructor_performance, :save_interim_results_after_calculating_tarif_results, :analyze_final_tarif_set_generator_performance,
-               :calculate_old_final_tarif_preparator, :save_new_final_tarif_results_in_my_batches
+               :calculate_old_final_tarif_preparator, :save_new_final_tarif_results_in_my_batches,
+               :monitor_performance
                #, :save_interim_results_after_calculating_final_tarif_sets
                
 #user input
@@ -27,7 +28,7 @@ class TarifOptimization::TarifOptimizator
   def initialize(options = {})
     init_input_data(options)
     init_output_params(options)
-    @performance_checker = Customer::Stat::PerformanceChecker.new()
+    @performance_checker = Customer::Stat::PerformanceChecker.new() if monitor_performance
 #    performance_checker.clean_history;
    init_additional_general_classes    
    init_optimization_params
@@ -54,6 +55,8 @@ class TarifOptimization::TarifOptimizator
     @save_interim_results_after_calculating_tarif_results = (options[:tarif_optimizator_input][:save_interim_results_after_calculating_tarif_results] == 'true' ? true : false)
     @calculate_old_final_tarif_preparator = (options[:tarif_optimizator_input][:calculate_old_final_tarif_preparator] == 'true' ? true : false)
     @save_new_final_tarif_results_in_my_batches = (options[:tarif_optimizator_input][:save_new_final_tarif_results_in_my_batches] == 'true' ? true : false)
+
+    @monitor_performance = (options[:tarif_optimizator_input][:monitor_performance] == 'true' ? true : false)
   end
   
   def init_additional_general_classes
@@ -134,7 +137,7 @@ class TarifOptimization::TarifOptimizator
   def init_query_constructor(operator)
     @query_constructor = TarifOptimization::QueryConstructor.new(self, {
       :tarif_class_ids => tarif_list_generator.all_services_by_operator[operator], 
-      :performance_checker => (analyze_query_constructor_performance ? performance_checker : nil),
+      :performance_checker => ((analyze_query_constructor_performance and monitor_performance) ? performance_checker : nil),
       }, operator, @fq_tarif_region_id, true )
   end
   
@@ -218,7 +221,7 @@ class TarifOptimization::TarifOptimizator
 #      :tarif_results => current_tarif_optimization_results.tarif_results,
 #      :cons_tarif_results => current_tarif_optimization_results.cons_tarif_results,
     }))
-    
+#    raise(StandardError)
     tarif_result_simlifier.simplify_tarif_results_and_tarif_sets
   end
   
@@ -237,7 +240,7 @@ class TarifOptimization::TarifOptimizator
       :tarif_results => saved_results['tarif_results'],
       :cons_tarif_results => saved_results['cons_tarif_results'],
       :groupped_identical_services => saved_results['groupped_identical_services'],
-      :performance_checker => (analyze_final_tarif_set_generator_performance ? performance_checker : nil),        
+      :performance_checker => ((analyze_final_tarif_set_generator_performance and monitor_performance) ? performance_checker : nil),        
     })
 
     saved_results = nil
@@ -291,12 +294,13 @@ class TarifOptimization::TarifOptimizator
   end
   
   def calculate_tarif_results_batch(batch_low_limit, batch_high_limit, price_formula_order)
+=begin
     sql = ""
     sql = calculate_service_part_sql(batch_low_limit, batch_high_limit, price_formula_order)
-
-    executed_tarif_result_batch_sql = execute_tarif_result_batch_sql(sql)  
-    
+    executed_tarif_result_batch_sql = execute_tarif_result_batch_sql(sql)      
     process_tarif_results_batch(executed_tarif_result_batch_sql, price_formula_order)
+=end  
+     process_tarif_results_batch(execute_tarif_result_batch_sql(calculate_service_part_sql(batch_low_limit, batch_high_limit, price_formula_order) ), price_formula_order)
   end
   
   def calculate_service_part_sql(batch_low_limit, batch_high_limit, price_formula_order)
@@ -304,7 +308,7 @@ class TarifOptimization::TarifOptimizator
   end
   
   def execute_tarif_result_batch_sql(sql)
-    tarif_optimization_sql_builder.check_sql(sql, current_tarif_optimization_results.service_ids_to_calculate.count, sql.split(' ').size)
+    tarif_optimization_sql_builder.check_sql(sql, current_tarif_optimization_results.service_ids_to_calculate.count, sql.split(' ').size) if check_sql_before_running
     Customer::Call.find_by_sql(sql) unless sql.blank?
   end
   
