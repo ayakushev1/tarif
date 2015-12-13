@@ -22,6 +22,7 @@
 //= require jquery.remotipart
 // Loads all Bootstrap javascripts
 //= require bootstrap
+//= require bootstrap/tooltip
 // require bootstrap-sprockets
 // require bootstrap-datepicker/core
 //= require turbolinks
