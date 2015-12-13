@@ -21,8 +21,8 @@
 //= require jquery_ujs
 //= require jquery.remotipart
 // Loads all Bootstrap javascripts
-// require bootstrap
-//= require bootstrap-sprockets
+//= require bootstrap
+// require bootstrap-sprockets
 // require bootstrap-datepicker/core
 //= require turbolinks
 //= require_tree .

@@ -6,6 +6,8 @@ or rvm use 2.1.1
 to load seed data in test db - rake db:seed RAILS_ENV=test
 to clear log - rake log:clear 
 
+RAILS_ENV=production foreman run rails s
+
 Heroku
 heroku labs:enable log-runtime-metrics  to test memory usage in time and see results in logs
 
