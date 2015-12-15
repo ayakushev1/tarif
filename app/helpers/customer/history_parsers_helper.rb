@@ -91,7 +91,7 @@ module Customer::HistoryParsersHelper
   def customer_call_run_id
     session_filtr_params(call_run_choice)['customer_call_run_id'] ||
     Customer::CallRun.where(:user_id => current_or_guest_user_id).
-      first_or_create(:name => "Моделирование звонков", :source => 1, :description => "", :user_id => current_or_guest_user_id).id
+      first_or_create(:name => "Загрузка детализации №1", :source => 1, :description => "", :user_id => current_or_guest_user_id).id
   end
   
   def create_call_run_if_not_exists
