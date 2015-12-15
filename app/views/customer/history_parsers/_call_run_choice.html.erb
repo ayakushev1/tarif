@@ -7,7 +7,7 @@
    	label_html = {:class => "control-label "}
 %>
 
-<%= label(filtr_name, "customer_call_run_id", "Выбор описания моделирования", label_html) %>
+<%= label(filtr_name, "customer_call_run_id", "Сохранение загрузки", label_html) %>
 
 <%= collection_select(filtr_name, "customer_call_run_id", Customer::CallRun.where(:user_id => current_or_guest_user_id), :id, :full_name, 
   	   {:selected => s["customer_call_run_id"] }, input_html ) %>

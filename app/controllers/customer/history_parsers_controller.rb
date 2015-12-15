@@ -15,7 +15,7 @@ class Customer::HistoryParsersController < ApplicationController
 
   def calculation_status
     if !background_process_informer.calculating?   
-      redirect_to({:action => :prepare_for_upload})
+      redirect_to tarif_optimizators_main_index_path, {:notice => "Детализация загружена. Можно приступить к подбору тарифа"}
     end
   end
   

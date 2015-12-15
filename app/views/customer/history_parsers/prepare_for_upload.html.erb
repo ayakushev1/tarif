@@ -1,16 +1,6 @@
 <% content_for :title, t('.title') %>
 
-<form class="form-inline">
-  <div class="form-group">
-  	<p> 
-  		<%= render :partial => 'attention' %>
-		<%= render :partial => 'call_run_choice' %>
-		<%= link_to(t('customer.history_parsers.prepare_for_upload.call_runs_link'), customer_call_runs_path, {:class => "btn btn-primary", :type =>"button"}) %>		
-		<%= render :partial => 'information' %>
-	</p>
-  </div>
-</form>  	   
-<br />
+<%= render :partial => 'attention' %>
 
 <p>
 <%= render(:partial => 'customer/history_parsers/user_params', :layout => 'application/layouts/filtr_form_n_columns', :locals => {:form_item => user_params_filtr}) %>
@@ -18,6 +8,18 @@
 <p>
 <%= render :partial => 'upload_form' %>
 </p>
+
+<form class="form-inline">
+  <div class="form-group">
+  	<p> 
+		<%= render :partial => 'call_run_choice' %>
+		<%= link_to(t('customer.history_parsers.prepare_for_upload.call_runs_link'), customer_call_runs_path, {:class => "btn btn-primary", :type =>"button"}) %>		
+		<%= render :partial => 'information' %>
+	</p>
+  </div>
+</form>  	   
+
+
 <p>
 <%= render( :partial => 'call_history_tabs', :layout => 'application/layouts/tabs', 
       :locals => {:name => 'call_history_tabs', :active => session[:current_tabs_page]['call_history_tabs'].to_i}) if user_type == :admin %>
