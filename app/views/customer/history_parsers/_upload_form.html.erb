@@ -5,13 +5,13 @@
               :remote => parsing_params[:file_upload_remote_mode], 
               :'data-type' => :html, 
               :multipart => true, 
-              :turbolinks => parsing_params[:file_upload_turbolink_mode]) do %>
+              :'data-no-turbolink' => parsing_params[:file_upload_turbolink_mode]) do %>
 
-	<label for="call_history" , class="btn btn-primary" ><%= t('customer.history_parsers.prepare_for_upload.choose_file_link') %></label>
+	<label for="call_history" , class="btn btn-primary" ><%= t('customer.history_parsers.prepare_for_upload.load_file_link') %></label>
 	<div hidden>
-		<%= text_field_tag('call_history', nil, "type" => "file")%>
+		<%= file_field_tag('call_history')%>
 	</div>		
-	<%= submit_tag(t('customer.history_parsers.prepare_for_upload.load_file_link'), {:class => "btn btn-primary"} ) %>  
+	<% submit_tag(t('customer.history_parsers.prepare_for_upload.load_file_link'), {:class => "btn btn-primary"} ) %>  
 
 <% end %>
 
