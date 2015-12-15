@@ -42,9 +42,10 @@ class Calls::HistoryParser::Parser
       
       if date.to_date.month.to_i >= user_params[:accounting_period_month].to_i and date.to_date.year.to_i >= user_params[:accounting_period_year].to_i
         operator_processer.parse_row(row, date) 
-        i += 1
       end 
-      
+
+      i += 1
+
       background_process_informer.increase_current_value(update_step) if background_process_informer and (i + 1).divmod(update_step)[1] == 0
     end 
     nil
