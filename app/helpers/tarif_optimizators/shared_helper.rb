@@ -42,8 +42,13 @@ module TarifOptimizators::SharedHelper
   
   def create_result_run_if_not_exists
     Result::Run.allowed_min_result_run(user_type).times.each do |i|
-      Result::Run.create(:name => "Подбор тарифа №#{i}", :description => "", :user_id => current_or_guest_user_id, :run => 1, 
-        :optimization_type_id => optimization_type_from_controller_name)
+      create_hash = {:name => "Подбор тарифа №#{i}", :description => "", :user_id => current_or_guest_user_id, :run => 1, 
+        :optimization_type_id => optimization_type_from_controller_name}
+      if i == 0
+        call_run_id = customer_call_run_id
+        create_hash.merge!(:call_run_id => call_run_id) if call_run_id > -1
+      end
+      Result::Run.create(create_hash)
     end if !Result::Run.where(:user_id => current_or_guest_user_id).present?
   end
     
