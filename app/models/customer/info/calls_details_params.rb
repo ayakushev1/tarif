@@ -25,11 +25,11 @@ class Customer::Info::CallsDetailsParams < ActiveType::Record[Customer::Info]
   def self.default_values
     {
      'own_phone_number' => '100000000', 
-     'operator_id' => 1030, 
+#     'operator_id' => 1030, 
      'region_id' => 1238, 
      'country_id' => 1100,
-#     'accounting_period_month' => 1,
-#     'accounting_period_year' => 2015,
+     'accounting_period_month' => 6,
+     'accounting_period_year' => 2014,
     }
   end
 
