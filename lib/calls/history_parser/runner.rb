@@ -8,8 +8,7 @@ module Calls::HistoryParser
     end
   
     def recalculate_on_back_ground(call_history_file, save_calls = true)
-      parser = Calls::HistoryParser::Parser.new(call_history_file, user_params, parsing_params)
-      message = parser.check_if_file_is_good
+      parser, message = Calls::HistoryParser::Parser.find_operator_parser(call_history_file, user_params, parsing_params)
       return message if !message[:file_is_good]
       
       prepare_background_process_informer
@@ -23,8 +22,7 @@ module Calls::HistoryParser
     end
     
     def recalculate_direct(call_history_file, save_calls = true)
-      parser = Calls::HistoryParser::Parser.new(call_history_file, user_params, parsing_params)
-      message = parser.check_if_file_is_good
+      parser, message = Calls::HistoryParser::Parser.find_operator_parser(call_history_file, user_params, parsing_params)
       return message if !message[:file_is_good]
 
       parse_file(parser, call_history_file, save_calls)

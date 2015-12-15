@@ -1,12 +1,10 @@
 <% content_for :title, t('.title') %>
 
-<%= render :partial => 'attention' %>
-
 <p>
-<%= render(:partial => 'customer/history_parsers/user_params', :layout => 'application/layouts/filtr_form_n_columns', :locals => {:form_item => user_params_filtr}) %>
+	<% render(:partial => 'customer/history_parsers/user_params', :layout => 'application/layouts/filtr_form_n_columns', :locals => {:form_item => user_params_filtr})  if false %>
 </p>
 <p>
-<%= render :partial => 'upload_form' %>
+	<%= render :partial => 'upload_form' %>
 </p>
 
 <form class="form-inline">

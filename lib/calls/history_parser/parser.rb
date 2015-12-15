@@ -12,11 +12,32 @@ class Calls::HistoryParser::Parser
     @background_process_informer = parsing_params[:background_process_informer] || Customer::BackgroundStat::Informer.new('parsing_uploaded_file', user_params[:user_id])
   end
   
+  def self.find_operator_parser(call_history_file, user_params, parsing_params)
+    if user_params[:operator_id] > 0
+      parser = Calls::HistoryParser::Parser.new(call_history_file, user_params, parsing_params)
+      message = parser.check_if_file_is_good
+    else
+      file_type = Calls::HistoryParser::ClassLoader.file_type(call_history_file)
+      message = {:file_is_good => false, 'message' => "Неправильный формат детализации", :a => Calls::HistoryParser::ClassLoader.allowed_operators_by_file_type[file_type]} 
+      parser = nil
+  
+      Calls::HistoryParser::ClassLoader.allowed_operators_by_file_type[file_type].each do |operator_id|
+        parser = Calls::HistoryParser::Parser.new(call_history_file, user_params.merge!({:operator_id => operator_id}), parsing_params)
+        message = parser.check_if_file_is_good
+        if message[:file_is_good]
+          Customer::CallRun.find(user_params[:call_run_id]).update_columns({:operator_id => operator_id})
+          break 
+        end
+      end if Calls::HistoryParser::ClassLoader.allowed_operators_by_file_type[file_type]
+    end
+    [parser, message]
+  end
+  
   def check_if_file_is_good
 
     column_indexes = operator_processer.find_column_indexes(file_processer.table_rows(operator_processer.table_filtrs))
 
-    return {:file_is_good => false, 'message' => "Неправильный формат выписки"} if !column_indexes
+    return {:file_is_good => false, 'message' => "Неправильный формат детализации"} if !column_indexes
 
     {:file_is_good => true, 'message' => nil}
   end

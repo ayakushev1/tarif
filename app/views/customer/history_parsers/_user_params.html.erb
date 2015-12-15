@@ -13,9 +13,10 @@ form_item.init do |f|
   f.set_fields do |filtr_name| 
     html_options = {:action_name => customer_history_parsers_prepare_for_upload_path}
   [
-  	[label(filtr_name, "operator_id", "Ваш оператор", label_html),
-  	 collection_select(filtr_name, "operator_id", Category::Operator.operators_with_parsing, :id, :name, {:include_blank => true, :selected => s_filtr["operator_id"] }, 
-  	 	input_html ),   
+  	[
+#	 label(filtr_name, "operator_id", "Ваш оператор", label_html),
+#  	 collection_select(filtr_name, "operator_id", Category::Operator.operators_with_parsing, :id, :name, {:include_blank => true, :selected => s_filtr["operator_id"] }, 
+#  	 	input_html ),   
 
 #  	 label(filtr_name, "[region_id]", "Ваш регион", label_html),
 #  	 collection_select(filtr_name, "region_id", Category.regions.where(:parent_id => s_filtr["country_id"]), :id, :name, 

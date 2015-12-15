@@ -45,6 +45,19 @@ class Calls::HistoryParser::ClassLoader
     end      
   end
   
+  def self.check_if_file_type_match_with_operator(file_type, operator_id)
+    allowed_operators_by_file_type[file_type].include?(operator_id)
+  end
+  
+  def self.allowed_operators_by_file_type
+    {
+      'pdf' => [1023],
+      'xls' => [1025, 1030],
+      'xlsx' => [1025, 1030],
+      'html' => [1028, 1030],
+    }
+  end
+
   def self.file_type(file)
 #    raise(StandardError, file_type)    
     file_name_as_array = (file.public_methods.include?(:original_filename) ? file.original_filename.to_s.split('.') : file.path.to_s.split('.'))

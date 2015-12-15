@@ -47,8 +47,8 @@ module Customer::HistoryParsersHelper
     result = {:file_is_good => true, 'message' => nil}
 
 #    raise(StandardError, user_params[:operator_id])    
-    message = "Не выбран оператор. Выберите вашего оператора"
-    return result = {:file_is_good => false, 'message' => message} if user_params[:operator_id].blank? or user_params[:operator_id] == 0
+#    message = "Не выбран оператор. Выберите вашего оператора"
+#    return result = {:file_is_good => false, 'message' => message} if user_params[:operator_id].blank? or user_params[:operator_id] == 0
 
     file_size = (call_history_file.size / 1000000.0).round(2) if call_history_file
     message = "Файл слишком большой: #{file_size}Mb. Он должен быть не больше #{parsing_params[:file_upload_max_size]}Mb"
@@ -59,29 +59,17 @@ module Customer::HistoryParsersHelper
     return result = {:file_is_good => false, 'message' => message} if !parsing_params[:allowed_call_history_file_types].include?(file_type)
     
     message = "Тип файла не совпадает с разрешенным типом файла для оператора"
-    return result = {:file_is_good => false, 'message' => message} if !check_if_file_type_match_with_operator(file_type)
+    return result = {:file_is_good => false, 'message' => message} if (user_params[:operator_id] > 0) and !check_if_file_type_match_with_operator(file_type)
     
     result
   end
   
   def check_if_file_type_match_with_operator(file_type)
-    case file_type
-    when 'html'
-      [1030, 1028].include?(user_params[:operator_id]) ? true : false
-    when 'xls', 'xlsx'
-      [1025, 1030].include?(user_params[:operator_id]) ? true : false
-    when 'pdf'
-      [1023].include?(user_params[:operator_id]) ? true : false
-    else
-      false
-    end
+    Calls::HistoryParser::ClassLoader.check_if_file_type_match_with_operator(file_type, user_params[:operator_id])
   end
   
   def file_type(file)
-#    raise(StandardError, file_type)    
-    file_name_as_array = (file.public_methods.include?(:original_filename) ? file.original_filename.to_s.split('.') : file.path.to_s.split('.'))
-    file_type = file_name_as_array[file_name_as_array.size - 1] if file_name_as_array
-    file_type = file_type.downcase if file_type
+    Calls::HistoryParser::ClassLoader.file_type(file)
   end
   
   def call_run_choice
