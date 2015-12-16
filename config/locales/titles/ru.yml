@@ -46,7 +46,7 @@ ru:
       index:
         title: Список звонков
       set_calls_generation_params:
-        title: Задание параметров моделирования звонков
+        title: Моделирование истории звонков
         call_runs_link: Вернуться к списку моделирований 
         generate_calls_link: Сгенерировать историю звонков
       calculation_status:

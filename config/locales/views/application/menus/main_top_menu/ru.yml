@@ -31,7 +31,7 @@ ru:
   new_customer_payments_path: Перевод средств
   
   tarif_classes_path: Тарифы
-  customer_calls_set_calls_generation_params_path: Задание параметров для моделирования звонков  
+  customer_calls_set_calls_generation_params_path: Моделирование звонков  
   customer_history_parsers_prepare_for_upload_path: Загрузка детализации
   customer_calls_path: Звонки
   tarif_optimizators_admin_index_path: Подбор тарифов
