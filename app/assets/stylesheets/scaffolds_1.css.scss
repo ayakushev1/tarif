@@ -69,7 +69,8 @@ table thead {
   display:inline-block;
   margin-left: 5px !important;
   margin-right: 5px !important;
-  height:16px;width:16px;vertical-align:text-top;line-height:16px;background:image_url("flags16.png") no-repeat;}
+  height:16px !important;
+  width:16px;vertical-align:text-top;line-height:16px;background:image_url("flags16.png") no-repeat;}
 .f16 ._England{background-position:0 -112px;}
 .f16 .en{background-position:0 -3664px;}
 .f16 .ru{background-position:0 -3104px;}

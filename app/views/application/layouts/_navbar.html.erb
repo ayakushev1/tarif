@@ -6,13 +6,15 @@ name ||= 'tabs'
 active ||= -1 
 i = 0
 
-@content_from_tabs = []
-content_from :tabs do |caption, body, type| 
-  @content_from_tabs << [caption, body, type]
+@content_from_tabs = {:left => [], :right => [], :collapsed => []}
+content_from(:tabs).each do |position, tab_list|
+#	@content_from_tabs[position] ||= []
+	tab_list.each do |caption, body, type| 
+    @content_from_tabs[position] << [caption, body, type]
+  end
 end 
 
 %>
-
 <nav class="navbar navbar-default ">
 	<div class="container-fluid">
 
@@ -23,14 +25,16 @@ end
 		    	<span class="icon-bar"></span>
 		    	<span class="icon-bar"></span>
 	      </button>
-	      <a class="navbar-brand "><%= brand_name %></a>
+	      <% @content_from_tabs[:collapsed].each do |caption, body, type| %>
+	      	<%= caption %>
+	      <% end %>	      
 	    </div>
 	    
 		<% i = 0 %>
 		
 	   <div class="collapse navbar-collapse" id="<%= name %>">
 			<ul class="nav navbar-nav">
-				<% @content_from_tabs.each do |caption, body, type| %>
+				<% @content_from_tabs[:left].each do |caption, body, type| %>
 					<% case type %>
 					<% when 'dropdown-menu' %>
 				    	<li class="dropdown <%= (i==active) ? 'active' : '' %>">
@@ -46,6 +50,28 @@ end
 					<% end %>
 					
 			    	<% i += 1 %>
+			    <% end %>
+			</ul>
+			
+			<% i = -1 %>
+			
+			<ul class="nav navbar-nav navbar-right">
+				<% @content_from_tabs[:right].each do |caption, body, type| %>
+					<% case type %>
+					<% when 'dropdown-menu' %>
+				    	<li class="dropdown <%= (i==active) ? 'active' : 'not-active' %>">
+				    		<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">			    			
+				    				<%= caption %>				    			
+				    		</a>
+			    			<%= body %>
+				    	</li>
+					<% when 'link' %>
+						<li><%= body %></li>						
+					<% else %>
+						<%= body %>
+					<% end %>
+					
+			    	<% i += 0 %>
 			    <% end %>
 			</ul>
 		</div>		

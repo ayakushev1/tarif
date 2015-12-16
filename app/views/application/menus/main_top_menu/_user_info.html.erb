@@ -1,0 +1,9 @@
+<ul class="dropdown-menu ">
+	<% if !current_user %>
+		<li><%= link_to t(:register), new_user_registration_path %></li>
+		<li><%= link_to t(:login), login_path %></li>
+	<% else %>
+		<li><%= link_to t(:account_info), user_path(controller.current_user) %></li>
+		<li><%= link_to t(:logout), logout_path %></li>
+	<% end %>
+</ul>

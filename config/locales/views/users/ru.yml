@@ -3,6 +3,6 @@ ru:
   logout: выйти
   account_info: профиль
   user: пользователь
-  letter_to_admin: письмо администратору
+  letter_to_admin: Письмо администратору
   default_guest_name: гость
   register: зарегистрироваться

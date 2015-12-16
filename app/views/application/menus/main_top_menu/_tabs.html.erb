@@ -1,42 +1,70 @@
 <%
 
 content_in :tabs do |user| 
-  ([
-    [
-     '', 
-     link_to( t(:root_path) , root_path, remote: false, turbolinks: true), 
-     'link' 
-    ], 
-    ([
-     t(:comparisons), 
-     render('/application/menus/main_top_menu/comparisons'),
-     'dropdown-menu' 
-    ] if true or current_user_admin?), 
-    ([
-     t(:recommendation), 
-     render('/application/menus/main_top_menu/recommendation'),
-     'dropdown-menu' 
-    ] if current_user_admin?), 
-    [
-     t(:preparations), 
-     render('/application/menus/main_top_menu/preparations'),
-     'dropdown-menu'     
-    ], 
-    [
-     t(:optimization), 
-     render('/application/menus/main_top_menu/optimization'),
-     'dropdown-menu'     
-    ], 
-    [
-     t(:service_description), 
-     render('/application/menus/main_top_menu/service_description'),
-     'dropdown-menu'     
-    ], 
-    ([
-     t(:admin), 
-     render('/application/menus/main_top_menu/admin'),
-     'dropdown-menu'     
-    ] if current_user_admin?), 
-  ]).compact 
+  {
+  	:left =>([
+	    [
+	     '', 
+	     link_to('WWW.MYTARIFS.RU', root_path, {:class => "nav navbar-brand hidden-xs", :remote => false}),
+	     'link' 
+	    ], 
+	    ([
+	     t(:comparisons), 
+	     render('/application/menus/main_top_menu/comparisons'),
+	     'dropdown-menu' 
+	    ] if true or current_user_admin?), 
+	    ([
+	     t(:recommendation), 
+	     render('/application/menus/main_top_menu/recommendation'),
+	     'dropdown-menu' 
+	    ] if current_user_admin?), 
+	    [
+	     t(:preparations), 
+	     render('/application/menus/main_top_menu/preparations'),
+	     'dropdown-menu'     
+	    ], 
+	    [
+	     t(:optimization), 
+	     render('/application/menus/main_top_menu/optimization'),
+	     'dropdown-menu'     
+	    ], 
+	    [
+	     t(:service_description), 
+	     render('/application/menus/main_top_menu/service_description'),
+	     'dropdown-menu'     
+	    ], 
+	    ([
+	     t(:admin), 
+	     render('/application/menus/main_top_menu/admin'),
+	     'dropdown-menu'     
+	    ] if current_user_admin?), 
+  	]).compact,
+  	:right =>([
+	    [
+	     content_tag(:span, content_tag(:span, "", {:class => "flag #{session[:locale].to_s}"}), {:class => "f16"}), 
+	     render('/application/menus/main_top_menu/language_choice'),
+	     'dropdown-menu'     
+	    ], 
+	    [
+	     content_tag(:span, image_tag("user_img.png"), {:class => "icon_menu_img"}) +
+	     content_tag(:span, t(:user)) + ": " +
+	     content_tag(:span, current_user ? current_user.name : t(:default_guest_name)) +
+	     content_tag(:span, '', {:class => "caret"}), 
+	     render('/application/menus/main_top_menu/user_info'),
+	     'dropdown-menu'     
+	    ], 
+  	]).compact,
+  	:collapsed =>([
+	    [
+	     content_tag(:a, link_to( 'WWW.MYTARIFS.RU', root_path, {:class => "nav navbar-brand visible-xs-block"} ), {:class => "navbar-brand"})
+	    ], 
+	    [
+	     content_tag(:a, {:class => "navbar-brand visible-xs-block pull-right"}) do
+		     content_tag(:span, image_tag("user_img.png"), {:class => "icon_menu_img"}) +
+		     content_tag(:span, current_user ? current_user.name : t(:default_guest_name)) 
+	     end
+	    ], 
+  	]).compact,
+  }
 end
 %>
