@@ -7,8 +7,7 @@
               :multipart => true, 
               :'data-no-turbolink' => parsing_params[:file_upload_turbolink_mode]) do %>
 
- 	<%= render :partial => 'attention' %>
-	<label for="call_history" , class="btn btn-primary" ><%= t('customer.history_parsers.prepare_for_upload.load_file_link') %></label>
+	<label for="call_history" , class="btn btn-primary btn-xl" ><%= t('customer.history_parsers.prepare_for_upload.load_file_link') %></label>
 	<div hidden>
 		<%= file_field_tag('call_history')%>
 	</div>		

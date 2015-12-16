@@ -1,11 +1,25 @@
 <% content_for :title, t('.title') %>
+<% content_for :hide_title, 'true' %>
+
+<header id="first">
+    <div class="header-content">
+        <div class="inner">
+            <h1 class="cursive"><%= t('.title') %></h1>
+            <h5>Можно загрузить детализации звонков для <strong>МТС</strong> в формате HTML, XLS или XLSX,
+			<strong>Мегафон</strong> в формате HTML, <strong>Билайн</strong> в формате XLS или XLSX, 
+			<strong>Теле2</strong> в формате PDF.</h5>
+            <hr>
+           	<%= render :partial => 'upload_form' %>
+        </div>
+    </div>
+</header>
+
 
 <p>
-	<% render(:partial => 'customer/history_parsers/user_params', :layout => 'application/layouts/filtr_form_n_columns', :locals => {:form_item => user_params_filtr})  if false %>
+	<% render(:partial => 'customer/history_parsers/user_params', :layout => 'application/layouts/filtr_form_n_columns', 
+		:locals => {:form_item => user_params_filtr})  if false %>
 </p>
-<p>
-	<%= render :partial => 'upload_form' %>
-</p>
+
 
 <div class="panel panel-default" >
 	<div class="panel-heading">Сохранение результатов загрузки детализации</div>

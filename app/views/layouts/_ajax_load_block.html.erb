@@ -1,4 +1,6 @@
-<h1><%= yield(:title).blank? ? 'Title' : yield(:title) %></h1>
+<% if yield(:hide_title) != 'true'  %>
+	<h1><%= yield(:title) %></h1>
+<% end %>
 
 <!--
 			<ol class="breadcrumb">
