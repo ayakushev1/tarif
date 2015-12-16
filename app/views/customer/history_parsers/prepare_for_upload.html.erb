@@ -8,6 +8,8 @@
             <h5>Можно загрузить детализации звонков для <strong>МТС</strong> в формате HTML, XLS или XLSX,
 			<strong>Мегафон</strong> в формате HTML, <strong>Билайн</strong> в формате XLS или XLSX, 
 			<strong>Теле2</strong> в формате PDF.</h5>
+			<% session[:current_accordion_page]['home_steps_accord'] = 0 %>
+			<h5><%= link_to "Инструкция по получению детализации на сайтах операторов", home_detailed_description_path %></h5>
             <hr>
            	<%= render :partial => 'upload_form' %>
         </div>

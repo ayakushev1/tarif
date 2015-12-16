@@ -9,7 +9,7 @@
 
 	<label for="call_history" , class="btn btn-primary btn-xl" ><%= t('customer.history_parsers.prepare_for_upload.load_file_link') %></label>
 	<div hidden>
-		<%= file_field_tag('call_history')%>
+		<%= file_field_tag('call_history', {:hidden => true})%>
 	</div>		
 	<% submit_tag(t('customer.history_parsers.prepare_for_upload.load_file_link'), {:class => "btn btn-primary"} ) %>  
 
