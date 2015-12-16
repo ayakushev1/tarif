@@ -57,7 +57,7 @@ ru:
     history_parsers:
       prepare_for_upload:
         title: Загрузка детализации звонков
-        call_runs_link: Вернуться к списку загрузок
+        call_runs_link: Перейти в список загрузок
         choose_file_link: Выберите файл
         load_file_link: Загрузить историю звонков
       calculation_status:

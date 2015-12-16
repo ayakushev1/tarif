@@ -7,18 +7,19 @@
 	<%= render :partial => 'upload_form' %>
 </p>
 
-<form class="form-inline">
-  <div class="form-group">
-  	<p> 
+<div class="panel panel-default" >
+	<div class="panel-heading">Сохранение результатов загрузки детализации</div>
+	<div class="panel-body">
 		<%= render :partial => 'call_run_choice' %>
+	</div>
+	<div class="panel-footer">
 		<%= link_to(t('customer.history_parsers.prepare_for_upload.call_runs_link'), customer_call_runs_path, {:class => "btn btn-primary", :type =>"button"}) %>		
 		<%= render :partial => 'information' %>
-	</p>
-  </div>
-</form>  	   
-
+	</div>
+</div>
 
 <p>
 <%= render( :partial => 'call_history_tabs', :layout => 'application/layouts/tabs', 
       :locals => {:name => 'call_history_tabs', :active => session[:current_tabs_page]['call_history_tabs'].to_i}) if user_type == :admin %>
 </p>
+
