@@ -17,8 +17,8 @@ form_item.init do |fi|
       [
 		link_to( t('comparison.optimizations.show.optimizations_link'), comparison_optimizations_path, link_to_html)      	
       ],
-      ['Название', optimization.name], 
-      ['Описание сравнения операторов и тарифов', optimization.description], 
+#      ['Название', optimization.name], 
+#      ['Описание сравнения операторов и тарифов', optimization.description], 
 	] + (user_type != :admin ? [] : [
       ['id', optimization.id],
       ['Статус публикации', (optimization.publication_status.name if optimization.publication_status)], 

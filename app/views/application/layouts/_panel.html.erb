@@ -2,17 +2,15 @@
 panel_html = local_assigns[:html] ? local_assigns[:html] : "panel-default"
 %>
 <div class="panel <%= panel_html %>" >
-	<div class="panel-heading"><%= panel[:head] %></div>
-	<div class="panel-body">
+	<div class="panel-heading"><%= panel[:head] %></div>	
 	<% if (panel[:body]).is_a?(Array) %>
+		<ul class="list-group" >
 		<% panel[:body].each do |body_item| %>
-		<p class="">
-			<%= body_item %>
-		</p>
+			<li class="list-group-item"><%= body_item %></li>
 		<% end  %>
+		</ul>
 	<% else  %>
-		<% panel[:body] %>
-	<% end  %>
-	</div>
+		<div class="panel-body"> <% panel[:body] %></div>
+	<% end  %>	
 	<div class="panel-footer"><%= table.fields(item)[:footer] %></div>
 </div>

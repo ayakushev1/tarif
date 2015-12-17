@@ -1,9 +1,24 @@
 <% content_for :title, t('.title') %>
+<% content_for :hide_title, 'true' %>
+
+<header id="first">
+    <div class="header-content header-content-smaller">
+        <div class="inner">
+            <h1 class="cursive"><%= t('.title') %></h1>
+            <h5>Сравнение операторов и тарифов подготовлено следующим образом.
+				Мы смоделировали несколько типичных моделей поведения пользователей мобильной связи.
+				После этого для каждого оператора выбрали лучший тариф и опции по стоимости пользования.
+				При выборе лучшего тарифа мы накладывали ограничения по набору услуг операторов.
+				Детали сравнения указаны в описании сравнения</h5>
+            <hr>
+        </div>
+    </div>
+</header>
 
 <p>
 <%= link_to( t('.new_comparison_optimization_button'), new_comparison_optimization_path, 
 	{:class => "btn btn-success", :type => 'button'})  if user_type == :admin %>
-<%= render :partial => 'comparison/optimizations/information/index' %>
+<% render :partial => 'comparison/optimizations/information/index' %>
 </p>
 
 <% if false %>

@@ -1,4 +1,20 @@
 <% content_for :title, t('.title') %>
+<% content_for :hide_title, 'true' %>
+
+<header id="first">
+    <div class="header-content header-content-smaller">
+        <div class="inner">
+            <h1 class="cursive"><small><%= controller.comparison_optimization_form.model.name %></small></h1>
+            <hr>
+            <ul >
+            <% controller.comparison_optimization_form.model.description.split(". ").each do |desc_item| %>
+            	<li class="pull-left"><%= desc_item %></li>
+            <% end %>	
+            </ul>            
+        </div>
+    </div>
+</header>
+
 
 <%= render :partial => 'optimization', :layout => 'application/layouts/model_show', :locals => {:form_item => controller.comparison_optimization_form} %>
 

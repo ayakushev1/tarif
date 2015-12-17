@@ -18,13 +18,11 @@ table_html_options = form_html_options.merge(html) if local_assigns[:html]
   		  <div class="col-md-<%= 12 / panels_in_row %> col-sm-<%= 8 / panels_in_row %> col-xs-12">
 			<div class="panel panel-default equal-group-column" <%= table.row_details(item) %> >
 			  <div class="panel-heading equal-item-no-flex"><%= table.fields(item)[:head] %></div>
-			  <div class="panel-body equal-item-flex ">
+			  <ul class="list-group equal-item-flex" >
 			  <% table.fields(item)[:body].each do |body_item| %>
-				  <p class="">
-				    <%= body_item %>
-				  </p>
+			  	<li class="list-group-item"><%= body_item %></li>
 			  <% end if table.fields(item)[:body] %>
-			  </div>
+			  </ul>
 			  <div class="panel-footer equal-item-no-flex"><%= table.fields(item)[:footer] %></div>
 			</div>
 		  </div>

@@ -16,6 +16,7 @@ Rails.application.routes.draw do
 
   end
 
+#  user_type == :guest ? (root 'home#index') : (root "comparison/optimizations/2")
   root 'home#index'
   resources :users
   resources :tarif_classes
