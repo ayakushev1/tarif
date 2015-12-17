@@ -48,6 +48,14 @@ class TarifOptimization::FinalTarifSetGenerator
     update_current_uniq_sets_with_periodic_part(current_uniq_service_sets, tarif_sets[tarif], best_current_uniq_service_sets)    
 
     load_current_uniq_service_sets_to_final_tarif_sets(current_uniq_service_sets, fobidden_info)
+    
+    raise(StandardError, [
+      "current_uniq_service_sets #{current_uniq_service_sets}",
+      "tarif_sets[tarif], #{tarif_sets[tarif]}",
+      "best_current_uniq_service_sets #{best_current_uniq_service_sets}",
+      "@final_tarif_sets #{@final_tarif_sets}",      
+    ].join("/n/n")) if false
+    
   end
   
   def calculate_final_tarif_sets_by_tarif(tarif_sets_by_tarif, operator, tarif, tarif_results)
@@ -147,17 +155,25 @@ class TarifOptimization::FinalTarifSetGenerator
 
   def update_current_uniq_sets_with_periodic_part(current_uniq_service_sets, tarif_sets_by_tarif, best_current_uniq_service_sets)
     services_that_depended_on_service_ids = services_that_depended_on.keys.map(&:to_i)    
+
     current_uniq_service_sets.each do |uniq_service_set_id, uniq_service_set|
-#    raise(StandardError)  
       if !uniq_service_set[:fobidden] and best_current_uniq_service_sets[:set_ids].include?(uniq_service_set_id)
         counted_depended_on_services = []
         (uniq_service_set[:service_ids] & services_that_depended_on_service_ids).each do |main_depended_service|
           if !(uniq_service_set[:service_ids] & services_that_depended_on[main_depended_service.to_s]).blank?
-            new_periodic_services = [main_depended_service] + services_that_depended_on[main_depended_service.to_s]
+            new_periodic_services = [main_depended_service] + (uniq_service_set[:service_ids] & services_that_depended_on[main_depended_service.to_s])
             new_tarif_set_id = tarif_set_id(new_periodic_services)
             current_uniq_service_sets[uniq_service_set_id][:tarif_sets_by_part] << (['periodic', new_tarif_set_id] - current_uniq_service_sets[uniq_service_set_id][:tarif_sets_by_part])
             current_uniq_service_sets[uniq_service_set_id][:tarif_sets_by_part] << (['onetime', new_tarif_set_id] - current_uniq_service_sets[uniq_service_set_id][:tarif_sets_by_part])
             counted_depended_on_services += new_periodic_services
+            raise(StandardError, [
+              "uniq_service_set[:service_ids] #{uniq_service_set[:service_ids]}",
+              "services_that_depended_on[main_depended_service.to_s] #{services_that_depended_on[main_depended_service.to_s]}",
+              "new_periodic_services #{new_periodic_services}",
+              "new_tarif_set_id #{new_tarif_set_id}",
+              "counted_depended_on_services #{counted_depended_on_services}",
+              "main_depended_service #{main_depended_service}",
+            ].join("\n\n")) if false and (new_tarif_set_id == "202_313_314_283_320_319" and uniq_service_set_id == "276_297_202_283_202_276_202_294_349_202_312_202_283_277_202_277_202_202_277_202")
           end
         end
         
@@ -170,6 +186,16 @@ class TarifOptimization::FinalTarifSetGenerator
         current_uniq_service_sets[uniq_service_set_id][:fobidden] = true
       end
     end
+
+    raise(StandardError, [
+      "current_uniq_service_sets #{current_uniq_service_sets}",
+      "services_that_depended_on #{services_that_depended_on}"
+#      "tarif_sets_by_tarif, #{tarif_sets_by_tarif}",
+#      "best_current_uniq_service_sets #{best_current_uniq_service_sets}",
+#      "@final_tarif_sets #{@final_tarif_sets}",  
+#      "services_that_depended_on_service_ids #{services_that_depended_on_service_ids}"    
+    ].join("\n\n")) if false
+
   end
   
   def load_current_uniq_service_sets_to_final_tarif_sets(current_uniq_service_sets, fobidden_info)

@@ -5,6 +5,9 @@ table.init do |t|
   t.set_fields do |f| 
   	[
      (f.price.round(0).to_s(:delimited, precision: 0) if f.price),      
+#     s_desc[f.service_id],
+#     f.service_id,
+#     f.service_set_id,
   	 link_to_if(s_desc[f.service_id]['service_http'], s_desc[f.service_id]['service_name'], s_desc[f.service_id]['service_http'], {:target => "_blank"}),    
      f.sum_duration_minute,
      f.count_volume,
