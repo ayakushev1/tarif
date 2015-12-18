@@ -13,7 +13,7 @@
         _mts_additional_internet_smart_mini, _mts_additional_internet_smart, _mts_additional_internet_smart_other],
       :internet_comp => [_mts_internet_mini, _mts_internet_maxi, _mts_internet_super, _mts_internet_vip]}, 
     :general_priority => _gp_tarif_option_without_limits,#_gp_tarif_option_with_limits,
-    :other_tarif_priority => {:lower => [], :higher => []},
+    :other_tarif_priority => {:lower => [], :higher => [_mts_everywhere_as_home_smart]},
     :prerequisites => [_mts_smart_plus, _mts_smart_top, _mts_smart_nonstop],
     :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},
     :multiple_use => true

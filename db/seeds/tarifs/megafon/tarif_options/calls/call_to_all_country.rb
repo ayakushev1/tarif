@@ -5,7 +5,7 @@
   :dependency => {
     :incompatibility => {}, 
     :general_priority => _gp_tarif_option,
-    :other_tarif_priority => {:lower => [], :higher => []},
+    :other_tarif_priority => {:lower => [], :higher => [_mgf_be_as_home]},
     :prerequisites => [],
     :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},
     :multiple_use => false

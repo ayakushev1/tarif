@@ -33,7 +33,7 @@ class Customer::Info::TarifOptimizationParams < ActiveType::Record[Customer::Inf
       'analyze_query_constructor_performance' => 'false',
       'save_interim_results_after_calculating_tarif_results' => 'false',
   #        'save_interim_results_after_calculating_final_tarif_sets' => 'false',
-      'service_ids_batch_size' => 5,
+      'service_ids_batch_size' => 20,
       'use_short_tarif_set_name' => 'true',
       'show_zero_tarif_result_by_parts' => 'false',
       'if_update_tarif_sets_to_calculate_from_with_cons_tarif_results' => 'true',

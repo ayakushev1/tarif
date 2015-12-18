@@ -39,29 +39,29 @@ stf << { :id => _stf_fixed_price_if_used_in_1_day_duration, :price_unit_id => _r
          :description => '',  :formula => {
            :tarif_condition => true,
            :group_by => 'day', 
-           :stat_params => {:sum_duration => "sum((description->>'duration')::float)"},
-           :method => "case when sum_duration > 0.0 then price_formulas.price else 0.0 end"} }#
+           :stat_params => {:count_of_usage => "count(*)"},#"sum((description->>'duration')::float)"},
+           :method => "case when count_of_usage > 0.0 then price_formulas.price else 0.0 end"} }#
 
 stf << { :id => _stf_fixed_price_if_used_in_1_day_volume, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _day, :name => 'fixed fee if volume is used during day', 
          :description => '',  :formula => {
            :tarif_condition => true,
            :group_by => 'day', 
-           :stat_params => {:sum_volume => "sum((description->>'volume')::float)"},
-           :method => "case when sum_volume > 0.0 then price_formulas.price else 0.0 end"} }#
+           :stat_params => {:count_of_usage => "count(*)"},#"sum((description->>'volume')::float)"},
+           :method => "case when count_of_usage > 0.0 then price_formulas.price else 0.0 end"} }#
 
 stf << { :id => _stf_price_by_1_month_if_used, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _month, :name => 'monthly fee', 
          :description => '',  :formula => {
            :tarif_condition => true,
            :group_by => 'month', 
-           :stat_params => {:count_time => "(count(description->>'time')::integer)"},
-           :method => "case when count_time > 0.0 then price_formulas.price else 0.0 end"} }#
+           :stat_params => {:count_of_usage => "count(*)"},
+           :method => "case when count_of_usage > 0.0 then price_formulas.price else 0.0 end"} }#
 
 stf << { :id => _stf_price_by_1_item_if_used, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _item, :name => 'onetime fee', 
          :description => '',  :formula => {
            :tarif_condition => true,
            :group_by => 'month', 
-           :stat_params => {:count_time => "(count(description->>'time')::integer)"},
-           :method => "case when count_time > 0.0 then price_formulas.price else 0.0 end"} }#
+           :stat_params => {:count_of_usage => "count(*)"},
+           :method => "case when count_of_usage > 0.0 then price_formulas.price else 0.0 end"} }#
 
 
 

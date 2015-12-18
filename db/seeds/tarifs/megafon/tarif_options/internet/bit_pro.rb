@@ -10,7 +10,7 @@
       _mgf_internet_24_pro, _mgf_bit_pro, _mgf_bit_mega_pro_150, _mgf_bit_mega_pro_250, _mgf_bit_mega_pro_500],
       }, 
     :general_priority => _gp_tarif_option_without_limits,#_gp_tarif_option_with_limits,
-    :other_tarif_priority => {:lower => [], :higher => []},
+    :other_tarif_priority => {:lower => [], :higher => [_mgf_internet_in_russia]},
     :prerequisites => [_mgf_all_included_xs, _mgf_all_included_s, _mgf_all_included_m, _mgf_all_included_l, _mgf_all_included_vip, 
       _mgf_sub_moscow, _mgf_around_world, _mgf_international, _mgf_city_connection, ],
     :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},
@@ -46,7 +46,7 @@ scg_mgf_bit_pro = @tc.add_service_category_group(
 #Другие категории опции должны иметь мешьший приоритет, или не пересекаться с опцией
 
 #Ежедневная плата
-  @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => _stf_fixed_price_if_used_in_1_day_duration, :price => 10.0},
+  @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => _stf_fixed_price_if_used_in_1_day_volume, :price => 10.0},
     :tarif_set_must_include_tarif_options => [_mgf_internet_in_russia] )
 
 #Own country, Internet
