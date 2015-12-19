@@ -4,8 +4,8 @@ module ApplicationHelper::DefaultRenderer
 #    raise(StandardError, [controller_name, action_name, params])
     
     respond_to do |format|
-      format.js {render_js(view_context.default_view_id_name)}
       format.html
+      format.js {render_js(view_context.default_view_id_name)}
       format.json
       format.any_format {render }
     end
@@ -16,7 +16,7 @@ module ApplicationHelper::DefaultRenderer
       js_string = v.content_tag(:div, render_to_string(:action => template, :layout => 'layouts/_ajax_load_block.html.erb'), {:id => v.view_id_name})
       js_string = "$('##{id_of_page_to_substitute}').html(\" #{v.escape_javascript js_string} \");"          
 #      render action_name
-      render :inline => js_string, :content_type => 'text/html'#, :layout => 'application'
+      render :inline => js_string#, :content_type => 'text/html'#, :layout => 'application'
     end
   end
   
