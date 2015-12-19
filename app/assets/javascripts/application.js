@@ -20,6 +20,7 @@
 // require jquery.ui.effect-blind
 //= require jquery_ujs
 //= require jquery.remotipart
+//= require wow.min
 // Loads all Bootstrap javascripts
 //= require bootstrap
 // require bootstrap-sprockets
