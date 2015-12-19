@@ -9,7 +9,7 @@ module Customer::BackgroundStat::Helper
   
   def calculating?
     if process_info_model.exists?
-      raise(StandardError, process_info_model.first['result_key']['calculating']) if process_info_model.first['result_key']['calculating'].is_a?(String)
+#      raise(StandardError, process_info_model.first['result_key']['calculating']) if process_info_model.first['result_key']['calculating'].is_a?(String)
       process_info_model.first['result_key']['calculating']
     else
       false

@@ -8,7 +8,8 @@ checkProgress = (progresspump) ->
   #      calculationStatus = true    
   #    clearInterval(progresspump) if calculationStatus
       $.ajax
-        url: action             
+        url: action,
+        dataType: "script"             
   
   
 $(document).on 'ready page:load ajaxComplete', ->
