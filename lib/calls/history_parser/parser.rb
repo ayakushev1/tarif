@@ -44,6 +44,8 @@ class Calls::HistoryParser::Parser
   end
   
   def parse
+    call_history_file.rewind if call_history_file.eof?
+    
     call_detail_rows = file_processer.table_rows(operator_processer.table_filtrs)
     
     max_row_number = [parsing_params[:call_history_max_line_to_process],  file_processer.table_body_size].min
