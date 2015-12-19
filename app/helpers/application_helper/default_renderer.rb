@@ -7,7 +7,7 @@ module ApplicationHelper::DefaultRenderer
       format.js {render_js(view_context.default_view_id_name)}
       format.html
       format.json
-      format.any_format {render_js(view_context.default_view_id_name)}
+      format.any_format {render }
     end
   end
 
