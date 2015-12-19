@@ -34,6 +34,7 @@ class Calls::HistoryParser::Parser
   end
   
   def check_if_file_is_good
+    call_history_file.rewind if call_history_file.eof?  
 
     column_indexes = operator_processer.find_column_indexes(file_processer.table_rows(operator_processer.table_filtrs))
 

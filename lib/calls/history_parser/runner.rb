@@ -13,7 +13,7 @@ module Calls::HistoryParser
       
       prepare_background_process_informer
       Spawnling.new(:argv => "parsing call history file for #{user_params[:user_id]}") do
-#        background_process_informer.init(0, 100)
+        background_process_informer.init(0, 100)
         message = parse_file(parser, call_history_file, save_calls)
         background_process_informer.finish
         message
