@@ -7,7 +7,8 @@ table.init do |t|
 #  t.pagination_per_page = 12
 #  t.id_name = 'service_sets_id'#'service_category_tarif_class_id'
   model_keys = t.model.collect {|row| row.keys }.flatten.uniq.collect{|key| key unless ['tarif_results', 'tarif_detail_results',
-  	'service_description', 'operator_description', 'operator_name', 'tarif_name', 'tarif_http', 
+  	'service_description', 'operator_description', 'operator_name', 'tarif_name', 'tarif_http', 'stat_results', 'operator',
+  	'common_services',
   	'services', 'identical_services', 'tarif_cost', 'calls_volume', 'sms_volume', 'internet_volume'].include?(key)}.compact  
   t.heads = model_keys.collect{|model_key| model_key.split('_').join(' ')}
   t.set_fields do |f| 
