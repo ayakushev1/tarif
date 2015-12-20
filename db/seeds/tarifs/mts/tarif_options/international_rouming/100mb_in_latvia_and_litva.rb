@@ -18,7 +18,7 @@
 _sctcg_litva_and_latvia_rouming_internet = {:name => '_sctcg_litva_and_latvia_rouming_internet', :service_category_rouming_id => _sc_lithuania_and_latvia_rouming, :service_category_calls_id => _internet}
 
 #Ежемесячная плата
-  @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => _stf_fixed_price_if_used_in_1_day_duration, :price => 350.0})
+  @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => _stf_fixed_price_if_used_in_1_day_volume, :price => 350.0})
   
 #Intranet rouming, internet
   @tc.add_one_service_category_tarif_class(_sctcg_litva_and_latvia_rouming_internet, {}, 

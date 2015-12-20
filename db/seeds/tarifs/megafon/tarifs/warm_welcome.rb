@@ -108,7 +108,7 @@ category = {:name => '_sctcg_own_home_regions_mms_to_own_country', :service_cate
     :tarif_set_must_include_tarif_options => [_mgf_everywhere_moscow_in_central_region] )  
 
 #Ежедневная плата
-  @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => _stf_fixed_price_if_used_in_1_day_duration, :price => 3.0},
+  @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => _stf_fixed_price_if_used_in_1_day_any, :price => 3.0},
     :tarif_set_must_include_tarif_options => [_mgf_everywhere_moscow_in_central_region] )  
 
 #Central regions RF except for Own and home regions, Calls, Incoming
@@ -215,7 +215,7 @@ category = {:name => '_sctcg_cenral_regions_not_own_and_home_region_mms_to_own_c
     :tarif_set_must_include_tarif_options => [_mgf_be_as_home] )  
 
 #Ежедневная плата
-  @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => _stf_fixed_price_if_used_in_1_day_duration, :price => 15.0},
+  @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => _stf_fixed_price_if_used_in_1_day_any, :price => 15.0},
     :tarif_set_must_include_tarif_options => [_mgf_be_as_home] )  
 
 #All Russia except for Own and home regions, Calls, Incoming

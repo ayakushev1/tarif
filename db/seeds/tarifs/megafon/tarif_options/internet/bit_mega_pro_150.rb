@@ -40,7 +40,7 @@ scg_mgf_bit_mega_pro_150 = @tc.add_service_category_group(
 #Другие категории опции должны иметь мешьший приоритет, или не пересекаться с опцией
 
 #Ежедневная плата
-  @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => _stf_fixed_price_if_used_in_1_day_duration, :price => 10.0},
+  @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => _stf_fixed_price_if_used_in_1_day_volume, :price => 10.0},
     :tarif_set_must_include_tarif_options => [_mgf_internet_in_russia] )
 
 #Own country, Internet

@@ -37,7 +37,7 @@ category = {:name => '_sctcg_own_home_regions_sms_to_own_and_home_regions', :ser
     :tarif_set_must_include_tarif_options => [_mgf_be_as_home] )  
 
 #Ежедневная плата
-  @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => _stf_fixed_price_if_used_in_1_day_duration, :price => 15.0},
+  @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => _stf_fixed_price_if_used_in_1_day_volume, :price => 15.0},
     :tarif_set_must_include_tarif_options => [_mgf_be_as_home] )  
 
 #Own country, sms, to_own_and_home_regions

@@ -20,7 +20,7 @@
 #  @tc.add_only_service_category_tarif_class(_sctcg_one_time_tarif_switch_on)  
 
 #Ежедневная плата
-#  @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => _stf_fixed_price_if_used_in_1_day_duration, :price => 10.0})
+#  @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => _stf_fixed_price_if_used_in_1_day_volume, :price => 10.0})
 #  @tc.add_only_service_category_tarif_class(_sctcg_periodic_day_fee)  
 
 #Own country, Internet
