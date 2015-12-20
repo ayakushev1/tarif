@@ -19,12 +19,20 @@ table.init do |t|
         link_to_if(s_desc[id]['service_http'], s_desc[id]['service_name'], s_desc[id]['service_http'], {:target => "_blank"})	
     end.join(', ').html_safe if f.tarif_options
 
-    identical_services = f.identical_services.map do |identical_service_group|
+    identical_services = f.identical_services.map do |identical_service_group_1|
+    	identical_service_group = identical_service_group_1.is_a?(Array) ? identical_service_group_1 : [identical_service_group_1]
     	identical_services_for_one_group = identical_service_group.map do |item|     	
-    		changed_item = item.is_a?(Array) ? item : [item]
-    		changed_item.map do |id|
-    			link_to_if(s_desc[id]['service_http'], s_desc[id]['service_name'], s_desc[id]['service_http'], {:target => "_blank"}) if s_desc[id] 
-    		end.compact.join(' + ') if item	    	      	 
+    		changed_item = case 
+			when item.is_a?(String)
+				item.split('_')
+			when item.is_a?(Array)
+				item
+			else
+				[item]
+			end
+			changed_item.map do |id|
+				link_to_if(s_desc[id.to_i]['service_http'], s_desc[id.to_i]['service_name'], s_desc[id.to_i]['service_http'], {:target => "_blank"}) if !id.blank? and s_desc[id.to_i]
+    		end.compact.join(' + ') if changed_item	    	      	 
 	    end.compact.join(' или ') if identical_service_group
         "[ #{identical_services_for_one_group} ]"
     end.join(', ').html_safe if f.identical_services
@@ -36,7 +44,7 @@ table.init do |t|
   	 link_to_if(s_desc[f.tarif_id]['service_http'], s_desc[f.tarif_id]['service_name'], s_desc[f.tarif_id]['service_http'], {:target => "_blank"}),    
      common_services,   
      tarif_options,
-#     f.attributes,
+     f.attributes,
 #     (Result::Service.where(:run_id => 4, :service_set_id => f.service_set_id).
 #      where("true").pluck(:service_id).uniq - f.service_ids),
 #     (f.service_ids - Result::Service.where(:run_id => 4, :service_set_id => f.service_set_id).
