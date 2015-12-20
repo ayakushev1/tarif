@@ -235,7 +235,7 @@ class TarifOptimization::TarifResultSimlifier
     updated_tarif_results.each do |tarif_set_id, updated_tarif_result|
       updated_tarif_result.each do |part, updated_tarif_result_by_part|
 #        raise(StandardError, []) if tarif_set_id == '109' and part == 'all-world-rouming/mobile-connection'
-        updated_cons_tarif_results[tarif_set_id] ||= {'price_value'.freeze => 0.0, 'call_id_count'.freeze => 0, 'group_criteria'.freeze => 0, 'parts'.freeze => [part]}
+        updated_cons_tarif_results[tarif_set_id] ||= {'price_value'.freeze => 0.0, 'call_id_count'.freeze => 0, 'group_criteria'.freeze => 0.0, 'parts'.freeze => [part]}
         if updated_tarif_result_by_part.blank?
           updated_cons_tarif_results[tarif_set_id]['parts'.freeze] << part #+= ([part] - updated_cons_tarif_results[tarif_set_id]['parts'])
         end
@@ -244,7 +244,7 @@ class TarifOptimization::TarifResultSimlifier
           updated_cons_tarif_results[tarif_set_id]['price_value'.freeze] += updated_tarif_result_by_part_by_service['price_value'.freeze].to_f
           updated_cons_tarif_results[tarif_set_id]['call_id_count'.freeze] += updated_tarif_result_by_part_by_service['call_id_count'.freeze].to_i
           updated_cons_tarif_results[tarif_set_id]['parts'.freeze] << part #+= ([part] - updated_cons_tarif_results[tarif_set_id]['parts'])
-          updated_cons_tarif_results[tarif_set_id]['group_criteria'.freeze] += ((updated_tarif_result_by_part_by_service['price_value'.freeze].to_f * 1.0).round(0)).to_i #+
+          updated_cons_tarif_results[tarif_set_id]['group_criteria'.freeze] += ((updated_tarif_result_by_part_by_service['price_value'.freeze].to_f * 1000000.0).round(2))#.to_i #+
 #          updated_cons_tarif_results[tarif_set_id]['group_criteria'] += (updated_tarif_result_by_part_by_service['price_value'].to_f / 5.0).round(0).to_i #+
 #            updated_tarif_result_by_part_by_service['call_id_count'].to_i
         end

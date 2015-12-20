@@ -46,7 +46,7 @@ class TarifOptimization::FinalTarifSetGenerator
       tarif_sets[tarif], operator, tarif, tarif_results)
     
     dd = {}
-    current_uniq_service_sets.each{|k, v| dd[k] = v[:price] if !v[:fobidden] and v[:price] and v[:price] < 2100.0 }
+    current_uniq_service_sets.each{|k, v| dd[k] = v[:price].round(2) if !v[:fobidden] and v[:price] and v[:price] < 2100.00 }
     
     update_current_uniq_sets_with_periodic_part(current_uniq_service_sets, tarif_sets[tarif], best_current_uniq_service_sets)    
 
@@ -60,7 +60,7 @@ class TarifOptimization::FinalTarifSetGenerator
       "",
     ].join("\n\n")) if false
     ddd = {}
-    current_uniq_service_sets.each{|k, v| ddd[k] = v[:price] if !v[:fobidden] and v[:price] and v[:price] < 2100.0 }
+    current_uniq_service_sets.each{|k, v| ddd[k] = v[:price].round(2) if !v[:fobidden] and v[:price] and v[:price] < 2100.00 }
 
     load_current_uniq_service_sets_to_final_tarif_sets(current_uniq_service_sets, fobidden_info)
 
@@ -72,14 +72,14 @@ class TarifOptimization::FinalTarifSetGenerator
       "tarif_results #{tarif_results and tarif_results}",
       "dd #{dd}}",
       "ddd #{ddd}}",
-      "best_current_uniq_service_sets #{best_current_uniq_service_sets}",
+      "best_current_uniq_service_sets #{best_current_uniq_service_sets.map{|k,v| k == :prices ? v.map{|d| d.round(2)} : v}}",
       "",
     ].join("\n\n")) if false
     
   end
   
   def calculate_final_tarif_sets_by_tarif(tarif_sets_by_tarif, operator, tarif, tarif_results)
-    best_current_uniq_service_sets = {:prices => [100000000000.0], :set_ids => [tarif.to_s]}
+    best_current_uniq_service_sets = {:prices => [100000000000.00], :set_ids => [tarif.to_s]}
     current_uniq_service_sets = {}
     fobidden_info = {}
     
