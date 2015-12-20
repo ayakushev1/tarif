@@ -70,7 +70,7 @@ class TarifOptimization::TarifResultSimlifier
     tarifs = tarif_sets.keys.map(&:to_i)
 #TODO проверить еще раз почему нельзя исключать common_services
     array_of_services_that_depended_on = services_that_depended_on.values.flatten
-    services_to_not_excude = common_services[operator] + tarifs + array_of_services_that_depended_on
+    services_to_not_excude = common_services[operator] + tarifs #+ array_of_services_that_depended_on
     sub_tarif_sets_with_zero_results_0 = calculate_sub_tarif_sets_with_zero_results_0(services_to_not_excude, array_of_services_that_depended_on)
     sub_tarif_sets_with_zero_results_1 = calculate_sub_tarif_sets_with_zero_results_1(services_to_not_excude)
     
