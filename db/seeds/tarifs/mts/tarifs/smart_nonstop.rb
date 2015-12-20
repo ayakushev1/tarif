@@ -18,14 +18,14 @@
     {:name => 'scg_mts_smart_nonstop_included_in_tarif_calls' }, 
     {:name => "price for _scg_mts_smart_nonstop_included_in_tarif_calls"}, 
     {:calculation_order => 0, :standard_formula_id => _stf_price_by_sum_duration_minute, 
-      :formula => {:window_condition => "(500.0 >= sum_duration_minute)", :window_over => 'month'}, :price => 0.0, :description => '' }
+      :formula => {:window_condition => "(400.0 >= sum_duration_minute)", :window_over => 'month'}, :price => 0.0, :description => '' }
     )
   #sms included in tarif
   scg_mts_smart_nonstop_included_in_tarif_sms = @tc.add_service_category_group(
     {:name => 'scg_mts_smart_nonstop_included_in_tarif_sms' }, 
     {:name => "price for _scg_mts_smart_nonstop_included_in_tarif_sms"}, 
     {:calculation_order => 0, :standard_formula_id => _stf_zero_count_volume_item, 
-      :formula => {:window_condition => "(500.0 >= count_volume)", :window_over => 'month'}, :price => 0.0, :description => '' }
+      :formula => {:window_condition => "(400.0 >= count_volume)", :window_over => 'month'}, :price => 0.0, :description => '' }
     )
   #internet included in tarif
   scg_mts_smart_nonstop_included_in_tarif_internet = @tc.add_service_category_group(
@@ -109,7 +109,7 @@
 #  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item_if_used, :price => 0.0})  
 
 #Ежемесячная плата
-  @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => _stf_price_by_1_month, :price => 650.0})
+  @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => _stf_price_by_1_month, :price => 500.0})
 
 #All_russia_rouming, mms, Incoming
   category = {:name => '_sctcg_all_russia_mms_incoming', :service_category_rouming_id => _all_russia_rouming, :service_category_calls_id => _mms_in}

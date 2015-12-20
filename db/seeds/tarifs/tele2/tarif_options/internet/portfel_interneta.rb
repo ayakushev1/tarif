@@ -67,14 +67,14 @@ scg_tele_portfel_interneta = @tc.add_service_category_group(
   category = {:name => '_sctcg_own_home_regions_internet', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _internet}
 #  @tc.add_only_service_category_tarif_class(category)  
   @tc.add_grouped_service_category_tarif_class(category, scg_tele_portfel_interneta[:id])
-#  @tc.add_grouped_service_category_tarif_class(category, scg_tele_add_speed_100mb[:id], :tarif_set_must_include_tarif_options => [_tele_add_speed_100mb] )
-#  @tc.add_grouped_service_category_tarif_class(category, scg_tele_add_speed_3gb[:id], :tarif_set_must_include_tarif_options => [_tele_add_speed_3gb] )
+  @tc.add_grouped_service_category_tarif_class(category, scg_tele_add_speed_100mb[:id], :tarif_set_must_include_tarif_options => [_tele_add_speed_100mb] )
+  @tc.add_grouped_service_category_tarif_class(category, scg_tele_add_speed_3gb[:id], :tarif_set_must_include_tarif_options => [_tele_add_speed_3gb] )
 
 #Own country, Internet
   category = {:name => 'own_country_internet', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _internet}
 #  @tc.add_only_service_category_tarif_class(category)  
   @tc.add_grouped_service_category_tarif_class(category, scg_tele_portfel_interneta[:id])
-#  @tc.add_grouped_service_category_tarif_class(category, scg_tele_add_speed_100mb[:id], :tarif_set_must_include_tarif_options => [_tele_add_speed_100mb] )
-#  @tc.add_grouped_service_category_tarif_class(category, scg_tele_add_speed_3gb[:id], :tarif_set_must_include_tarif_options => [_tele_add_speed_3gb] )
+  @tc.add_grouped_service_category_tarif_class(category, scg_tele_add_speed_100mb[:id], :tarif_set_must_include_tarif_options => [_tele_add_speed_100mb] )
+  @tc.add_grouped_service_category_tarif_class(category, scg_tele_add_speed_3gb[:id], :tarif_set_must_include_tarif_options => [_tele_add_speed_3gb] )
 
 @tc.add_tarif_class_categories

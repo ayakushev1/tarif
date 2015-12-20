@@ -84,17 +84,17 @@ scg_bln_highway_1 = @tc.add_service_category_group(
   category = {:name => '_sc_rouming_bln_cenral_regions_not_moscow_regions_internet', :service_category_rouming_id => _sc_rouming_bln_cenral_regions_not_moscow_regions, :service_category_calls_id => _internet}
 #  @tc.add_only_service_category_tarif_class(category)  
   @tc.add_grouped_service_category_tarif_class(category, scg_bln_highway_1[:id])
-#  @tc.add_grouped_service_category_tarif_class(category, scg_bln_add_speed_1gb[:id], :tarif_set_must_include_tarif_options => [_bln_add_speed_1gb] )
-#  @tc.add_grouped_service_category_tarif_class(category, scg_bln_add_speed_3gb[:id], :tarif_set_must_include_tarif_options => [_bln_add_speed_3gb] )
-#  @tc.add_grouped_service_category_tarif_class(category, scg_bln_auto_add_speed[:id], :tarif_set_must_include_tarif_options => [_bln_auto_add_speed] )
+  @tc.add_grouped_service_category_tarif_class(category, scg_bln_add_speed_1gb[:id], :tarif_set_must_include_tarif_options => [_bln_add_speed_1gb] )
+  @tc.add_grouped_service_category_tarif_class(category, scg_bln_add_speed_3gb[:id], :tarif_set_must_include_tarif_options => [_bln_add_speed_3gb] )
+  @tc.add_grouped_service_category_tarif_class(category, scg_bln_auto_add_speed[:id], :tarif_set_must_include_tarif_options => [_bln_auto_add_speed] )
 
 #_sc_rouming_bln_exept_for_cenral_regions_not_moscow_regions, Internet
   category = {:name => '_sc_rouming_bln_all_russia_except_some_regions_for_internet_internet', :service_category_rouming_id => _sc_rouming_bln_all_russia_except_some_regions_for_internet, :service_category_calls_id => _internet}
 #  @tc.add_only_service_category_tarif_class(category)  
   @tc.add_grouped_service_category_tarif_class(category, scg_bln_highway_1[:id], :tarif_set_must_include_tarif_options => [_bln_30_days_of_internet_for_russia_rouming] )
-#  @tc.add_grouped_service_category_tarif_class(category, scg_bln_add_speed_1gb[:id], :tarif_set_must_include_tarif_options => [_bln_add_speed_1gb, _bln_30_days_of_internet_for_russia_rouming] )
-#  @tc.add_grouped_service_category_tarif_class(category, scg_bln_add_speed_3gb[:id], :tarif_set_must_include_tarif_options => [_bln_add_speed_3gb, _bln_30_days_of_internet_for_russia_rouming] )
-#  @tc.add_grouped_service_category_tarif_class(category, scg_bln_auto_add_speed[:id], :tarif_set_must_include_tarif_options => [_bln_auto_add_speed, _bln_30_days_of_internet_for_russia_rouming] )
+  @tc.add_grouped_service_category_tarif_class(category, scg_bln_add_speed_1gb[:id], :tarif_set_must_include_tarif_options => [_bln_add_speed_1gb, _bln_30_days_of_internet_for_russia_rouming] )
+  @tc.add_grouped_service_category_tarif_class(category, scg_bln_add_speed_3gb[:id], :tarif_set_must_include_tarif_options => [_bln_add_speed_3gb, _bln_30_days_of_internet_for_russia_rouming] )
+  @tc.add_grouped_service_category_tarif_class(category, scg_bln_auto_add_speed[:id], :tarif_set_must_include_tarif_options => [_bln_auto_add_speed, _bln_30_days_of_internet_for_russia_rouming] )
 
 
 @tc.add_tarif_class_categories
