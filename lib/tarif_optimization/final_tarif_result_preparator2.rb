@@ -62,7 +62,7 @@ class TarifOptimization::FinalTarifResultPreparator2
         "service_set_result[service_set_id] #{service_set_result[service_set_id]}",
         "service_result #{service_result}",
         "",
-      ].join("/n/n")) if false and service_set_id == "276_297_202_283_202_276_202_294_349_202_312_202_283_277_202_277_202_202_277_202"
+      ].join("\n\n")) if false and service_set_id == "174_178_102_493_102_174_178_102_493_174_178_102_174_179_102_493"
 
       agregate_result.each do |sc_name, result|
         agregate_result[sc_name].merge!({
@@ -83,7 +83,22 @@ class TarifOptimization::FinalTarifResultPreparator2
     input_data[:final_tarif_sets][service_set_id]['tarif_sets_by_part'.freeze].each do |tarif_set_by_part|
       part = tarif_set_by_part[0]; tarif_set_by_part_id = tarif_set_by_part[1]
       tarif_results = input_data[:tarif_results]
-      tarif_results_for_service_set_and_part =tarif_results[tarif_set_by_part_id][part] if tarif_results and tarif_results[tarif_set_by_part_id]
+      tarif_results_for_service_set_and_part = tarif_results[tarif_set_by_part_id][part] if tarif_results and tarif_results[tarif_set_by_part_id]
+
+      raise(StandardError, [
+        "",
+#        "final_tarif_set #{final_tarif_set}",
+        "input_data[:final_tarif_sets] #{input_data[:final_tarif_sets]}",
+        "service_set_result[service_set_id] #{service_set_result[service_set_id]}",
+        "service_result #{service_result}",
+        "tarif_results_for_service_set_and_part #{tarif_results_for_service_set_and_part}",
+        "input_data[:final_tarif_sets][service_set_id]['tarif_sets_by_part'.freeze] #{input_data[:final_tarif_sets][service_set_id]['tarif_sets_by_part'.freeze]}",
+        "tarif_set_by_part #{tarif_set_by_part}",
+        "part #{part}",
+        "tarif_set_by_part_id #{tarif_set_by_part_id}",
+        "tarif_results[tarif_set_by_part_id][part] #{tarif_results and tarif_results[tarif_set_by_part_id][part]}",
+        "",
+      ].join("\n\n")) if false and tarif_set_by_part == ["onetime", "102_493"] and service_set_id == "174_178_102_493_102_174_178_102_493_174_178_102_174_179_102_493"
       
       tarif_results_for_service_set_and_part.each do |service_id, tarif_result_for_service_set_and_part |
         stat_detail_keys_to_exclude = ['month'.freeze, 'call_ids'.freeze]

@@ -52,10 +52,24 @@ class TarifOptimization::TarifResultSimlifier
 #tarif_results['200'].map{|p| p[1].map{|t| [t[1]['price_value'], t[1]['call_id_count']]}}
 
   def update_tarif_sets_with_cons_tarif_results
+    raise(StandardError, ['',
+      "tarif_results #{tarif_results}",
+      "tarif_results[443] #{tarif_results["443"]['periodic']}",
+      "tarif_results[442] #{tarif_results["442"]['periodic']}",
+      "tarif_results[102_442] #{tarif_results["102_442"]['periodic']}",
+      "tarif_results[102] #{tarif_results["102"]['periodic']}",
+      "tarif_results[102_443] #{tarif_results["102_443"]['periodic']}",
+      "tarif_results[174_102_442] #{tarif_results["174_102_442"]['periodic']}",
+      "tarif_results[174_102] #{tarif_results["174_102"]['periodic']}",
+      "tarif_results[174_102_443] #{tarif_results["174_102_443"]['periodic']}",
+      "tarif_results.keys #{tarif_results.keys}",
+      ''
+      ].join("\n\n")) if false
+
     excluded_tarif_sets = []
     tarifs = tarif_sets.keys.map(&:to_i)
 #TODO проверить еще раз почему нельзя исключать common_services
-    array_of_services_that_depended_on = [] #services_that_depended_on.values.flatten
+    array_of_services_that_depended_on = services_that_depended_on.values.flatten
     services_to_not_excude = common_services[operator] + tarifs + array_of_services_that_depended_on
     sub_tarif_sets_with_zero_results_0 = calculate_sub_tarif_sets_with_zero_results_0(services_to_not_excude, array_of_services_that_depended_on)
     sub_tarif_sets_with_zero_results_1 = calculate_sub_tarif_sets_with_zero_results_1(services_to_not_excude)
@@ -100,14 +114,13 @@ class TarifOptimization::TarifResultSimlifier
 
     raise(StandardError, ['',
       "updated_tarif_sets #{updated_tarif_sets}",
-#      "tarif_sets #{final_tarif_set_generator.tarif_sets}",
       ''
       ].join("\n\n")) if false
       
     updated_tarif_sets, updated_tarif_results = group_identical_tarif_sets(updated_tarif_sets, updated_tarif_results, services_to_not_excude, eliminate_identical_tarif_sets) if eliminate_identical_tarif_sets
 
     raise(StandardError, ['', services_to_not_excude.to_s,
-      updated_tarif_results.map{|set, set_v| set_v.map{|part, part_v| part_v.map{|service, service_v| [set, part, service, service_v['part'], service_v['price_value'].to_f.round(3), service_v['call_id_count']].to_s if part == 'own-country-rouming/mobile-connection' }}}, 
+      updated_tarif_results.map{|set, set_v| set_v.map{|part, part_v| part_v.map{|service, service_v| [set, part, service, service_v['part'], service_v['price_value'].to_f.round(3), service_v['call_id_count']].to_s if part == 'periodic' }}}, 
       updated_tarif_sets, 'groupped_tarif_results', ''].join("\n\n")) if false
 
     [updated_tarif_sets, updated_tarif_results]

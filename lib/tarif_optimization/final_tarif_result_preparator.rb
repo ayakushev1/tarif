@@ -55,7 +55,7 @@ class TarifOptimization::FinalTarifResultPreparator
           (price_value_detail['all_stat'].keys - stat_detail_keys_to_exclude).each do |stat_key|
             if price_value_detail['all_stat'][stat_key].is_a?(Array)
               prepared_final_tarif_results['service_set'][service_set_id]['stat_results'][stat_key] ||= []
-              prepared_final_tarif_results['service_set'][service_set_id]['stat_results'][stat_key] += (price_value_detail['all_stat'][stat_key] || 0).round(2)
+              prepared_final_tarif_results['service_set'][service_set_id]['stat_results'][stat_key] += (price_value_detail['all_stat'][stat_key] || 0)
             else
               prepared_final_tarif_results['service_set'][service_set_id]['stat_results'][stat_key] ||= 0
               prepared_final_tarif_results['service_set'][service_set_id]['stat_results'][stat_key] += (price_value_detail['all_stat'][stat_key] || 0).round(2)
@@ -105,7 +105,7 @@ class TarifOptimization::FinalTarifResultPreparator
           (price_value_detail['all_stat'].keys - stat_detail_keys_to_exclude).each do |stat_key|
             if price_value_detail['all_stat'][stat_key].is_a?(Array)
               prepared_final_tarif_results['tarif_results'][service_set_id][tarif_id_from_tarif_results]['stat_results'][stat_key] ||= []
-              prepared_final_tarif_results['tarif_results'][service_set_id][tarif_id_from_tarif_results]['stat_results'][stat_key] += price_value_detail['all_stat'][stat_key].round(2)
+              prepared_final_tarif_results['tarif_results'][service_set_id][tarif_id_from_tarif_results]['stat_results'][stat_key] += price_value_detail['all_stat'][stat_key]
             else
               prepared_final_tarif_results['tarif_results'][service_set_id][tarif_id_from_tarif_results]['stat_results'][stat_key] ||= 0
               prepared_final_tarif_results['tarif_results'][service_set_id][tarif_id_from_tarif_results]['stat_results'][stat_key] += (price_value_detail['all_stat'][stat_key] || 0).round(2)
@@ -235,7 +235,7 @@ class TarifOptimization::FinalTarifResultPreparator
           (price_value_detail['all_stat'].keys - stat_detail_keys_to_exclude).each do |stat_key|
             if price_value_detail['all_stat'][stat_key].is_a?(Array)
               prepared_final_tarif_results['tarif_detail_results'][service_set_id][s_id][sc_name]['stat_results'][stat_key] ||= []
-              prepared_final_tarif_results['tarif_detail_results'][service_set_id][s_id][sc_name]['stat_results'][stat_key] += price_value_detail['all_stat'][stat_key].round(2)
+              prepared_final_tarif_results['tarif_detail_results'][service_set_id][s_id][sc_name]['stat_results'][stat_key] += price_value_detail['all_stat'][stat_key]
             else
               prepared_final_tarif_results['tarif_detail_results'][service_set_id][s_id][sc_name]['stat_results'][stat_key] ||= 0
               prepared_final_tarif_results['tarif_detail_results'][service_set_id][s_id][sc_name]['stat_results'][stat_key] += (price_value_detail['all_stat'][stat_key] || 0).round(2)
@@ -277,7 +277,7 @@ class TarifOptimization::FinalTarifResultPreparator
           (price_value_detail['all_stat'].keys - stat_detail_keys_to_exclude).each do |stat_key|
             if price_value_detail['all_stat'][stat_key].is_a?(Array)
               prepared_final_tarif_results['tarif_results_by_part'][service_set_id][tarif_class_id]['stat_results'][stat_key] ||= []
-              prepared_final_tarif_results['tarif_results_by_part'][service_set_id][tarif_class_id]['stat_results'][stat_key] += price_value_detail['all_stat'][stat_key].round(2)
+              prepared_final_tarif_results['tarif_results_by_part'][service_set_id][tarif_class_id]['stat_results'][stat_key] += price_value_detail['all_stat'][stat_key]
             else
               prepared_final_tarif_results['tarif_results_by_part'][service_set_id][tarif_class_id]['stat_results'][stat_key] ||= 0
               prepared_final_tarif_results['tarif_results_by_part'][service_set_id][tarif_class_id]['stat_results'][stat_key] += (price_value_detail['all_stat'][stat_key] || 0).round(2)
@@ -323,7 +323,7 @@ class TarifOptimization::FinalTarifResultPreparator
           (price_value_detail['all_stat'].keys - stat_detail_keys_to_exclude).each do |stat_key|
             if price_value_detail['all_stat'][stat_key].is_a?(Array)
               prepared_final_tarif_results['tarif_detail_results_by_part'][service_set_id][tarif_class_id][s_id]['stat_results'][stat_key] ||= []
-              prepared_final_tarif_results['tarif_detail_results_by_part'][service_set_id][tarif_class_id][s_id]['stat_results'][stat_key] += price_value_detail['all_stat'][stat_key].round(2)
+              prepared_final_tarif_results['tarif_detail_results_by_part'][service_set_id][tarif_class_id][s_id]['stat_results'][stat_key] += price_value_detail['all_stat'][stat_key]
             else
               prepared_final_tarif_results['tarif_detail_results_by_part'][service_set_id][tarif_class_id][s_id]['stat_results'][stat_key] ||= 0
               prepared_final_tarif_results['tarif_detail_results_by_part'][service_set_id][tarif_class_id][s_id]['stat_results'][stat_key] += (price_value_detail['all_stat'][stat_key] || 0).round(2)

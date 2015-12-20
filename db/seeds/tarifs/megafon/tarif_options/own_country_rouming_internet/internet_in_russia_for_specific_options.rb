@@ -7,7 +7,7 @@
       :mgf_internet_in_russia_for_specific_options => [_mgf_internet_in_russia_for_specific_options, 
         _mgf_internet_24, _mgf_internet_xs, _mgf_internet_s, _mgf_internet_m, _mgf_internet_l, 
         _mgf_internet_24_pro, _mgf_bit_pro, _mgf_bit_mega_pro_150, _mgf_bit_mega_pro_250, _mgf_bit_mega_pro_500],
-      :mgf_internet_in_russia => [_mgf_internet_in_russia_for_specific_options, _mgf_internet_in_russia, _mgf_gigabite_to_road],
+      :mgf_internet_in_russia => [_mgf_be_as_home, _mgf_internet_in_russia_for_specific_options, _mgf_internet_in_russia, _mgf_gigabite_to_road],
         }, 
     :general_priority => _gp_tarif_option,
     :other_tarif_priority => {:lower => [], :higher => []},
@@ -20,9 +20,11 @@
 
 #Подключение услуги
 #  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item_if_used, :price => 30.0})  
+#  @tc.add_only_service_category_tarif_class(_sctcg_one_time_tarif_switch_on)  
 
 #Ежедневная плата
 #  @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => _stf_fixed_price_if_used_in_1_day_duration, :price => 5.0})
+#  @tc.add_only_service_category_tarif_class(_sctcg_periodic_day_fee)  
 
 #Own country, Internet
 category = {:name => '_sctcg_mgf_own_country_rouming_internet', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _internet}

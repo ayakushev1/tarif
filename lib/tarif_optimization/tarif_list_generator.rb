@@ -513,25 +513,31 @@ class TarifOptimization::TarifListGenerator
             end
           end
         end
-        
+
         services_that_depended_on_service_ids = services_that_depended_on.keys.map(&:to_i) 
         tarif_sets_without_common_services[tarif]['periodic'.freeze] ||= {}
         tarif_sets_without_common_services[tarif]['onetime'.freeze] ||= {}
         
+#        raise(StandardError, @tarif_sets_without_common_services)
+
         tarif_sets_without_common_services[tarif].each do |part, tarif_sets_without_common_services_by_part|    
           next if ['periodic'.freeze, 'onetime'.freeze].include?(part)      
           tarif_sets_without_common_services_by_part.each do |tarif_set_id, services|
 #            (services_that_depended_on_service_ids & services & periodic_services).each do |main_depended_service|
             (services_that_depended_on_service_ids & services).each do |main_depended_service|
-              new_periodic_services = [main_depended_service] + services_that_depended_on[main_depended_service]
-              new_tarif_set_id = tarif_set_id(new_periodic_services)
-              tarif_sets_without_common_services[tarif]['periodic'.freeze][new_tarif_set_id] = new_periodic_services
+              services_that_depended_on[main_depended_service].each do |service_that_depended_on|
+                new_periodic_services = [main_depended_service] + [service_that_depended_on]
+                new_tarif_set_id = tarif_set_id(new_periodic_services)
+                tarif_sets_without_common_services[tarif]['periodic'.freeze][new_tarif_set_id] = new_periodic_services
+              end
             end
 #            (services_that_depended_on_service_ids & services & onetime_services).each do |main_depended_service|
             (services_that_depended_on_service_ids & services).each do |main_depended_service|
-              new_periodic_services = [main_depended_service] + services_that_depended_on[main_depended_service]
-              new_tarif_set_id = tarif_set_id(new_periodic_services)
-              tarif_sets_without_common_services[tarif]['onetime'][new_tarif_set_id] = new_periodic_services
+              services_that_depended_on[main_depended_service].each do |service_that_depended_on|
+                new_periodic_services = [main_depended_service] + [service_that_depended_on]
+                new_tarif_set_id = tarif_set_id(new_periodic_services)
+                tarif_sets_without_common_services[tarif]['onetime'][new_tarif_set_id] = new_periodic_services
+              end
             end
           end
         end
@@ -545,6 +551,7 @@ class TarifOptimization::TarifListGenerator
         end if tarif_option_combinations[tarif]['onetime'.freeze]
       end
     end
+#    raise(StandardError, @tarif_sets_without_common_services)
   end
   
   def calculate_tarif_sets
