@@ -25,8 +25,7 @@ table.init do |t|
     end.join(', ').html_safe if f['tarif_options']
 
     identical_services = f['identical_services'].map do |identical_service_group|
-    	identical_services_for_one_group = identical_service_group.map do |item_1|
-    		item = item_1.is_a?(Array) ? item_1 : [item_1]     	
+    	identical_services_for_one_group = identical_service_group.map do |item|     	
     		item.map do |service_id|
     			link_to_if(service_id['service_http'], service_id['service_name'], service_id['service_http'], {:target => "_blank"})
     		end.join(' + ') if item	    	      	 
