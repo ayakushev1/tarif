@@ -48,8 +48,8 @@ $(document).on 'change', ".updatable", ->
         
 $(document).on 'click', "tr[id*=row], .panel[id*=row]", ->
   row_name = $(this).attr("row_name")
-  $("[id^=#{row_name}]").not(this).removeClass("current_table_row")
-  $(this).addClass("current_table_row")
+#  $("[id^=#{row_name}]").not(this).removeClass("current_table_row")
+#  $(this).addClass("current_table_row")
   row_id_name = $(this).attr("current_id_name")
   row_url = $(this).attr("action_name")
   
@@ -60,7 +60,7 @@ $(document).on 'click', "tr[id*=row], .panel[id*=row]", ->
 
   $.ajax
     url: row_url, 
-    async: false,
+    async: true,
     data: filtr,
     dataType: "script",
     headers: referer: row_url
