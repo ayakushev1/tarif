@@ -13,6 +13,9 @@
     color: $gray;
 }
 
+.panel-heading.active {
+  background: lighten($panel-primary-heading-bg, 6.5%);
+}
 
 table thead {
   background: #28A1E7;
