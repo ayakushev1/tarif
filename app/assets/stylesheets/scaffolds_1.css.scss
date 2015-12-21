@@ -14,7 +14,7 @@
 }
 
 .panel-heading.active {
-  background: lighten($panel-primary-heading-bg, 6.5%);
+  background: darken($panel-default-heading-bg, 13.5%);
 }
 
 table thead {
