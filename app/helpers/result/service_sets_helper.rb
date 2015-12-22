@@ -52,7 +52,14 @@ module Result::ServiceSetsHelper
     create_tableable(Result::ServiceSet.includes(:operator, :tarif).where(:run_id => run_id).order(:price), options)
   end
   
-  def result_service_sets_return_link_to
+  def results_service_sets
+    return @results_service_sets if @results_service_sets
+    options = {:base_name => 'service_sets', :current_id_name => 'service_set_id', :id_name => 'service_set_id', :pagination_per_page => 10}
+    @results_service_sets = 
+    create_tableable(Result::ServiceSet.includes(:operator, :tarif).where(:run_id => session_filtr_params(results_select)['result_run_id']).order(:price), options)
+  end
+  
+  def result_service_sets_return_link_to    
     result_run = Result::Run.where(:id => run_id).first
     comparison_result_id = session[:current_id]['comparison_optimization_id']
     ((result_run and result_run.user_id) or !comparison_result_id) ? result_runs_path : comparison_optimization_path(comparison_result_id)

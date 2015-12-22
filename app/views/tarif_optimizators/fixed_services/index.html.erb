@@ -9,7 +9,7 @@
 
 <p>
 <%= link_to(t('tarif_optimizators.fixed_services.index.calculate_link'), tarif_optimizators_fixed_services_recalculate_path, {:class => "btn btn-primary", :type =>"button"}) %>
-<%= link_to(t('tarif_optimizators.fixed_services.index.result_run_link'), result_path(result_run_id), {:class => "btn btn-primary", :type =>"button"}) %>
+<%= link_to(t('tarif_optimizators.fixed_services.index.result_run_link'), result_service_sets_result_path(result_run_id), {:class => "btn btn-primary", :type =>"button"}) %>
 </p>
 
 <%= render(:partial => 'tarif_optimizators/fixed_services/input/calculation_choices', :layout => 'application/layouts/filtr_form_n_columns', 

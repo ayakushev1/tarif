@@ -55,8 +55,8 @@ Rails.application.routes.draw do
 
     controller :service_sets do
       get 'service_sets/results' => :results
-      get 'service_sets/results/:result_run_id' => :result
-      get 'service_sets/detailed_results' => :detailed_results
+      get 'service_sets/result/:result_run_id', action: :result, as: :service_sets_result
+      get 'service_sets/detailed_results/:result_run_id', action: :detailed_results, as: :service_sets_detailed_results
       get 'service_sets/compare/:result_run_id', action: :compare, as: :compare
       get 'service_sets/test' => :test
     end
