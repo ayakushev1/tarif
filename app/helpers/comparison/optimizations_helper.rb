@@ -18,7 +18,10 @@ module Comparison::OptimizationsHelper
         session[:filtr]["service_set_choicer_filtr"] ||={}
         session[:filtr]["service_set_choicer_filtr"]['result_service_set_id'] = comparison_group.result['service_set_ids']
     end
-
+  end
+  
+  def set_back_path
+    session[:back_path]['service_sets_result_return_link_to'] = 'comparison_optimization_path'
   end
 
   def comparison_progress_bar

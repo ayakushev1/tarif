@@ -44,6 +44,10 @@ module Result::RunsHelper
     end if !result_runs_table.model.present?
   end
   
+  def set_back_path
+    session[:back_path]['service_sets_result_return_link_to'] = 'result_runs_path'
+  end
+
   def set_run_id1
     session[:filtr]["service_set_choicer_filtr"] ||={}
     session[:filtr]["service_set_choicer_filtr"]['result_service_set_id'] = nil

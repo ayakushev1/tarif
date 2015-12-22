@@ -2,7 +2,7 @@
 
 <p>
 <%= render :partial => 'result/service_sets/detailed_results/information' %>
-<%= link_to(t('.back_result_button'), result_service_sets_result_path(controller.run_id), {:remote => true, :class => "btn btn-success", :type =>"button"}) %>
+<%= link_to(t('.back_result_button'), service_sets_detailed_results_return_link_to, {:remote => true, :class => "btn btn-success", :type =>"button"}) %>
 </p>
 <p>
 <%= render(:partial => 'result/service_sets/detailed_results/if_show_aggregate_results', :layout => 'application/layouts/filtr_form_inline', 

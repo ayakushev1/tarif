@@ -59,12 +59,6 @@ module Result::ServiceSetsHelper
     create_tableable(Result::ServiceSet.includes(:operator, :tarif).where(:run_id => session_filtr_params(results_select)['result_run_id']).order(:price), options)
   end
   
-  def result_service_sets_return_link_to    
-    result_run = Result::Run.where(:id => run_id).first
-    comparison_result_id = session[:current_id]['comparison_optimization_id']
-    ((result_run and result_run.user_id) or !comparison_result_id) ? result_runs_path : comparison_optimization_path(comparison_result_id)
-  end
-  
   def if_show_aggregate_results
     create_filtrable("if_show_aggregate_results")
   end
@@ -127,6 +121,35 @@ module Result::ServiceSetsHelper
     @comparison_service_sets ||= create_array_of_hashable(
       Result::Agregate.compare_service_sets_of_one_run({run_id => service_set_ids}, [:price], comparison_options, comparison_base), options )
 #      raise(StandardError, @comparison_service_sets.model.collect {|row| row.keys }.flatten.uniq)
+  end
+  
+  def set_back_path
+    session[:back_path]['result_service_sets_detailed_results_path'] = case action_name
+    when 'results'
+      'result_service_sets_results_path'
+    when 'result'
+      'result_service_sets_result_path'
+    end    
+  end
+
+  def service_sets_result_return_link_to    
+    back_path = session[:back_path]['service_sets_result_return_link_to'] || 'result_runs_path'
+    case back_path
+    when 'comparison_optimization_path'
+      comparison_optimization_path(session[:current_id]['comparison_optimization_id'])
+    else
+      result_runs_path
+    end
+  end
+  
+  def service_sets_detailed_results_return_link_to    
+    back_path = session[:back_path]['result_service_sets_detailed_results_path'] || 'result_service_sets_results_path'
+    case back_path
+    when 'result_service_sets_result_path'
+      result_service_sets_result_path(run_id)
+    else
+      result_service_sets_results_path
+    end
   end
   
   def optimization_params_session_info
