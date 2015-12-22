@@ -37,7 +37,7 @@ module SavableInSession::ArrayOfHashable
     end
     
     def model
-      @row_model=@model.paginate(page: pagination_page, :per_page => pagination_per_page).order(id_name)
+      @row_model=@model.paginate(page: pagination_page, :per_page => pagination_per_page).sort_by!{|r| r[id_name]}
       @row_model
     end
     

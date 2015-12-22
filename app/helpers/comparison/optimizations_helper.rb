@@ -4,11 +4,18 @@ module Comparison::OptimizationsHelper
 
   def comparison_optimizations_table
     model_to_show = user_type == :admin ? Comparison::Optimization : Comparison::Optimization.published
-    create_tableable(model_to_show)
+    options = {:base_name => 'comparison_optimizations', :current_id_name => 'comparison_optimization_id', :id_name => 'id', :pagination_per_page => 10}
+    create_tableable(model_to_show, options)
   end
   
   def comparison_groups    
-    create_tableable(comparison_optimization_form.model ? comparison_optimization_form.model.groups : nil)
+    model_to_show = comparison_optimization_form.model ? comparison_optimization_form.model.groups : nil
+    options = {:base_name => 'comparison_groups', :current_id_name => 'comparison_group_id', :id_name => 'id', :pagination_per_page => 10}
+    create_tableable(model_to_show, options)
+  end
+  
+  def check_current_id_exists
+    session[:current_id]['comparison_optimization_id'] = params[:id] if session[:current_id]['comparison_optimization_id'].blank?
   end
   
   def set_run_id

@@ -1,9 +1,9 @@
 class Customer::CallRunsController < ApplicationController
-  include Customer::CallRunHelper
-  helper Customer::CallRunHelper
-  include SavableInSession::Tableable
   include Crudable
   crudable_actions :all
+  include SavableInSession::Tableable
+  include Customer::CallRunHelper
+  helper Customer::CallRunHelper
 #  before_action :init_call_run, only: :calculate_call_stat
   
   before_action :create_call_run_if_not_exists, only: [:index]

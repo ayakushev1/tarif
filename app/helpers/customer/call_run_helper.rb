@@ -11,11 +11,12 @@ module Customer::CallRunHelper
   end
   
   def customer_call_runs
-    return @customer_call_runs if @customer_call_runs
+    return @customer_call_runs if @customer_call_runs and @customer_call_runs.model.present?
+    options = {:base_name => 'customer_call_runs', :current_id_name => 'call_run_id', :id_name => 'id', :pagination_per_page => 10}
     customer_call_runs_to_show = user_type == :admin ? 
       Customer::CallRun.includes(:user, :operator).query_from_filtr(session_filtr_params(call_runs_select)) :
       Customer::CallRun.includes(:user, :operator).where(:user_id => current_or_guest_user_id)
-    @customer_call_runs = create_tableable(customer_call_runs_to_show)
+    @customer_call_runs = create_tableable(customer_call_runs_to_show, options)
   end
   
   def check_if_allowed_new_call_run

@@ -112,13 +112,13 @@ en:
         title: List of options for selection of the best tariffs and tariff options
       result:
         title: List of the best tariffs and tariff options
-        result_service_sets_return_link_to: Back to the list of descriptions rebounds fare
+        service_sets_result_return_link_to: Back to the list of descriptions rebounds fare
       detailed_results:
         title: detailed cost structure of the tariff and options
         back_result_button: Back to the best tariff
       compare:
         title: Comparison of rates
-        result_service_sets_return_link_to: Back to the list of descriptions rebounds fare
+        service_sets_result_return_link_to: Back to the list of descriptions rebounds fare
   tarif_classes:
     show:
       title: description or tariff option

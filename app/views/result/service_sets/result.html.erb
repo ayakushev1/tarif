@@ -3,7 +3,7 @@
 <p>
 <%= render :partial => 'result/service_sets/result/attention' %>
 <%= render :partial => 'result/service_sets/result/information' %>
-<%= link_to(t('.result_service_sets_return_link_to'), service_sets_result_return_link_to, 
+<%= link_to(t('.service_sets_result_return_link_to'), service_sets_result_return_link_to, 
 	{:class => "btn btn-success", :type =>"button", :remote => true}) %>
 
 <%= render :partial => 'result/service_sets/result/service_sets', :layout => 'application/layouts/model_table', :locals => {:table => result_service_sets} %>

@@ -3,6 +3,7 @@ class Comparison::OptimizationsController < ApplicationController
   helper Comparison::OptimizationsHelper, Customer::HistoryParsersBackgroundHelper
   include Crudable
   crudable_actions :all
+  before_action :check_current_id_exists, only: [:show]
   before_action :set_back_path, only: [:show]
   after_action :set_run_id, only: :show
       

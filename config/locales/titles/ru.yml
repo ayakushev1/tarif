@@ -113,13 +113,13 @@ ru:
         
       result:
         title: Список лучших тарифов и тарифных опций
-        result_service_sets_return_link_to: Вернуться к списку описаний подборов тарифа
+        service_sets_result_return_link_to: Вернуться к списку описаний подборов тарифа
       detailed_results:
         title: Детальный состав затрат по тарифу и опциям
         back_result_button: Вернуться к списку лучших тарифов
       compare:
         title: Сравнение тарифов
-        result_service_sets_return_link_to: Вернуться к списку описаний подборов тарифа
+        service_sets_result_return_link_to: Вернуться к списку описаний подборов тарифа
   tarif_classes:
     show:
       title: Описание тарифа или опции
