@@ -1,18 +1,32 @@
 <% content_for :title, t('.title') %>
+<% content_for :hide_title, 'true' %>
 
-<p>
-<%= render :partial => 'tarif_optimizators/main/input/information' %>
-<%= render :partial => 'tarif_optimizators/shared/how_tarif_option_counted_for_user_types' %>
-<%= render :partial => 'tarif_optimizators/shared/how_service_scope_counted_for_user_types' %>
-<%= render :partial => 'tarif_optimizators/main/input/help' %>
-</p>
-<p>
-<%= link_to(t('tarif_optimizators.main.index.calculate_link'), tarif_optimizators_main_recalculate_path, {:class => "btn btn-primary", :type =>"button"}) %>
-<%= link_to(t('tarif_optimizators.main.index.result_run_link'), result_service_sets_result_path(result_run_id), {:class => "btn btn-primary", :type =>"button"}) %>
-</p>
+<header id="first">
+    <div class="header-content header-content-smaller">
+        <div class="inner">
+            <h1 class="cursive"><%= t('.title') %></h1>
+            <h5><strong>Основной вариант</strong> подбирает выгодный тариф из действующих тарифов и опций, 
+            	доступных для подключения в МТС, Билайн, Мегафон и Теле2.</h5>
+			<%= link_to(t('tarif_optimizators.main.index.calculate_link'), tarif_optimizators_main_recalculate_path, 
+				{:class => "btn btn-primary btn-xl", :type =>"button"}) %>
+            <hr>
+        </div>
+    </div>
+</header>
 
 
-<%= render(:partial => 'tarif_optimizators/main/input/calculation_choices', :layout => 'application/layouts/filtr_form_n_columns', 
-	    :locals => {:form_item => calculation_choices} ) %>
-
+<div class="panel panel-default" >
+	<div class="panel-heading"><h4> Сохранение результатов подбора тарифов</h4></div>
+	<div class="panel-body">
+		<%= render(:partial => 'tarif_optimizators/main/input/calculation_choices', :layout => 'application/layouts/filtr_form_n_columns', 
+			    :locals => {:form_item => calculation_choices} ) %>		
+	</div>
+	<div class="panel-footer">
+		<%= link_to(t('tarif_optimizators.main.index.result_run_link'), result_service_sets_result_path(result_run_id), 
+			{:class => "btn btn-success", :type =>"button"}) %>
+		<%= render :partial => 'tarif_optimizators/main/input/help' %>
+		<%= render :partial => 'tarif_optimizators/shared/how_tarif_option_counted_for_user_types' %>
+		<%= render :partial => 'tarif_optimizators/shared/how_service_scope_counted_for_user_types' %>
+	</div>
+</div>
 

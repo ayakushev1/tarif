@@ -1,16 +1,33 @@
 <% content_for :title, t('.title') %>
+<% content_for :hide_title, 'true' %>
 
-<%= render :partial => 'tarif_optimizators/all_options/input/information' %>
-<%= render :partial => 'tarif_optimizators/shared/how_tarif_option_counted_for_user_types' %>
-<%= render :partial => 'tarif_optimizators/shared/how_service_scope_counted_for_user_types' %>
-<%= render :partial => 'tarif_optimizators/all_options/input/help' %>
+<header id="first">
+    <div class="header-content header-content-smaller">
+        <div class="inner">
+            <h1 class="cursive"><%= t('.title') %></h1>
+            <h5>Вариант <strong>"Все возможности"</strong> подбирает выгодный тариф с учетом всех доступных вариантов.</h5>
+			<%= link_to(t('tarif_optimizators.all_options.index.calculate_link'), tarif_optimizators_all_options_recalculate_path, 
+				{:class => "btn btn-primary btn-xl", :type =>"button"}) %>
+            <hr>
+        </div>
+    </div>
+</header>
 
 
-<p>
+<div class="panel panel-default" >
+	<div class="panel-heading"><h4> Сохранение результатов подбора тарифов</h4></div>
+	<div class="panel-body">
+		<%= render(:partial => 'tarif_optimizators/all_options/input/calculation_choices', :layout => 'application/layouts/filtr_form_n_columns', 
+			    :locals => {:form_item => calculation_choices} ) %>		
+	</div>
+	<div class="panel-footer">
+		<%= link_to(t('tarif_optimizators.all_options.index.result_run_link'), result_service_sets_result_path(result_run_id), 
+			{:class => "btn btn-success", :type =>"button"}) %>
+		<%= render :partial => 'tarif_optimizators/all_options/input/help' %>
+		<%= render :partial => 'tarif_optimizators/shared/how_tarif_option_counted_for_user_types' %>
+		<%= render :partial => 'tarif_optimizators/shared/how_service_scope_counted_for_user_types' %>
+	</div>
+</div>
 
-<%= render(:partial => 'tarif_optimizators/all_options/input/calculation_choices', :layout => 'application/layouts/filtr_form_n_columns', 
-	    :locals => {:form_item => calculation_choices} ) %>
-	<%= link_to(t('tarif_optimizators.all_options.index.calculate_link'), tarif_optimizators_all_options_recalculate_path, {:class => "btn btn-primary", :type =>"button"}) %>
-	<%= link_to(t('tarif_optimizators.all_options.index.result_run_link'), result_service_sets_result_path(result_run_id), {:class => "btn btn-primary", :type =>"button"}) %>
-</p>
+
 

@@ -1,19 +1,41 @@
 <% content_for :title, t('.title') %>
+<% content_for :hide_title, 'true' %>
 
+<header id="first">
+    <div class="header-content header-content-smaller">
+        <div class="inner">
+            <h1 class="cursive"><%= t('.title') %></h1>
+            <h5>В данном варианте рассчитываются затраты для выбранного тарифа и опций.
+				Это можно использовать, когда вы планируете подключить или отключить опцию.</h5>
+			<%= link_to(t('tarif_optimizators.fixed_services.index.calculate_link'), tarif_optimizators_fixed_services_recalculate_path, 
+				{:class => "btn btn-primary btn-xl", :type =>"button"}) %>
+            <hr>
+        </div>
+    </div>
+</header>
+
+
+<div class="panel panel-default" >
+	<div class="panel-heading"><h4> Выбор тарифа и опций</h4></div>
+	<div class="panel-body">
+		<%= render(:partial => 'tarif_optimizators/fixed_services/input/services_for_calculation_select', :layout => 'application/layouts/filtr_form_n_columns', 
+			    :locals => {:form_item => services_for_calculation_select} ) %>
+	</div>
+</div>
 <p>
-<%= render :partial => 'tarif_optimizators/fixed_services/input/information' %>
-<%= render :partial => 'tarif_optimizators/shared/how_tarif_option_counted_for_user_types' %>
-<%= render :partial => 'tarif_optimizators/shared/how_service_scope_counted_for_user_types' %>
-<%= render :partial => 'tarif_optimizators/fixed_services/input/help' %>
-</p>
 
+<div class="panel panel-default" >
+	<div class="panel-heading"><h4> Сохранение результатов подбора тарифов</h4></div>
+	<div class="panel-body">
+		<%= render(:partial => 'tarif_optimizators/fixed_services/input/calculation_choices', :layout => 'application/layouts/filtr_form_n_columns', 
+			    :locals => {:form_item => calculation_choices} ) %>		
+	</div>
+	<div class="panel-footer">
+		<%= link_to(t('tarif_optimizators.fixed_services.index.result_run_link'), result_service_sets_result_path(result_run_id), 
+			{:class => "btn btn-success", :type =>"button"}) %>
+		<%= render :partial => 'tarif_optimizators/fixed_services/input/help' %>
+		<%= render :partial => 'tarif_optimizators/shared/how_tarif_option_counted_for_user_types' %>
+		<%= render :partial => 'tarif_optimizators/shared/how_service_scope_counted_for_user_types' %>
+	</div>
+</div>
 <p>
-<%= link_to(t('tarif_optimizators.fixed_services.index.calculate_link'), tarif_optimizators_fixed_services_recalculate_path, {:class => "btn btn-primary", :type =>"button"}) %>
-<%= link_to(t('tarif_optimizators.fixed_services.index.result_run_link'), result_service_sets_result_path(result_run_id), {:class => "btn btn-primary", :type =>"button"}) %>
-</p>
-
-<%= render(:partial => 'tarif_optimizators/fixed_services/input/calculation_choices', :layout => 'application/layouts/filtr_form_n_columns', 
-	    :locals => {:form_item => calculation_choices} ) %>
-<%= render(:partial => 'tarif_optimizators/fixed_services/input/services_for_calculation_select', :layout => 'application/layouts/filtr_form_n_columns', 
-	    :locals => {:form_item => services_for_calculation_select} ) %>
-
