@@ -5,7 +5,7 @@
 		<li><%= link_to  t(:tarif_optimizators_fixed_services_index_path), tarif_optimizators_fixed_services_index_path %></li>
 		<li><%= link_to  t(:tarif_optimizators_limited_scope_index_path), tarif_optimizators_limited_scope_index_path %></li>
 		<li><%= link_to  t(:tarif_optimizators_fixed_operators_index_path), tarif_optimizators_fixed_operators_index_path %></li>
-		<li><%= link_to  t(:tarif_optimizators_all_options_index_path), tarif_optimizators_all_options_index_path if false and [:user, :admin, :bot, :stranger].include?(user_type) %></li>
+		<li><%= link_to  t(:tarif_optimizators_all_options_index_path), tarif_optimizators_all_options_index_path %></li>
 	<% end %>
 		 
 	<% if controller.customer_has_tarif_optimized? %>

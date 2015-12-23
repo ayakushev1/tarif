@@ -1,10 +1,26 @@
 <% content_for :title, t('.title') %>
+<% content_for :hide_title, 'true' %>
 
-<p>
-<%= render :partial => 'result/service_sets/results/attention' %>
+<header id="first">
+    <div class="header-content header-content-smaller">
+        <div class="inner">
+            <h1 class="cursive"><%= t('.title') %></h1>
+            <h5>Здесь вы можете посмотреть все ваши сохраненные подборы тарифов</h5>
+            <hr>
+        </div>
+    </div>
+</header>
 
-<%= render(:partial => 'result/service_sets/results_select', :layout => 'application/layouts/filtr_form_n_columns', 
-	    :locals => {:form_item => results_select} ) %>
-</p>
+
+<div class="panel panel-default" >
+	<div class="panel-heading"><h4> Выбор подбора тарифа для просмотра</h4></div>
+	<div class="panel-body">
+		<%= render(:partial => 'result/service_sets/results_select', :layout => 'application/layouts/filtr_form_n_columns', 
+			    :locals => {:form_item => results_select} ) %>
+	</div>
+	<div class="panel-footer">
+		<%= render :partial => 'result/service_sets/results/attention' %>
+	</div>
+</div>
 
 <%= render :partial => 'result/service_sets/results/service_sets', :layout => 'application/layouts/model_table', :locals => {:table => results_service_sets} %>
