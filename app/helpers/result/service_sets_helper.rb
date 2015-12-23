@@ -76,7 +76,7 @@ module Result::ServiceSetsHelper
   end
   
   def result_agregates
-    options = {:base_name => 'agregates', :current_id_name => 'aggregated_service_category_name', :id_name => 'aggregated_service_category_name', :pagination_per_page => 100}
+    options = {:base_name => 'agregates', :current_id_name => 'aggregated_service_category_name', :id_name => 'service_category_name', :pagination_per_page => 100}
     @result_agregates ||= create_tableable(Result::Agregate.where(:run_id => run_id, :service_set_id => service_set_id).
       where(zero_string_condition).order(:rouming_ids, :geo_ids, :partner_ids, :calls_ids, :fix_ids), options)
   end
