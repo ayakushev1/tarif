@@ -1,0 +1,10 @@
+<%= render( 
+	:partial => '/application/menus/main_top_menu/tabs_collapsed', 
+	:layout => 'application/layouts/navbar_collapsed',
+	:locals => {
+		:name => 'main_top_menu_tabs', 
+		:active => session[:current_tabs_page]['main_top_menu_tabs'].to_i
+		}
+	)
+ %>
+

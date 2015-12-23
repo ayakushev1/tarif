@@ -22,7 +22,7 @@
         event.preventDefault();
     });
     
-    $('.navbar-collapse ul li a').click(function() {
+    $('.navbar-collapse ul li a1').click(function() {
         /* always close responsive nav after click */
         $('.navbar-toggle:visible').click();
     });

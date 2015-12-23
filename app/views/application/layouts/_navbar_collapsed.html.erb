@@ -1,0 +1,44 @@
+<%= active if false %>
+<%= session[:current_tabs_page]  if false %>
+
+<%
+name ||= 'tabs' 
+active ||= -1 
+i = 0
+
+@content_from_tabs = {:left => [], :right => [], :collapsed => []}
+content_from(:tabs).each do |position, tab_list|
+#	@content_from_tabs[position] ||= []
+	tab_list.each do |caption, body, type| 
+    @content_from_tabs[position] << [caption, body, type]
+  end
+end 
+
+%>
+
+
+  <a data-submenu="" data-toggle="dropdown"id="<%= name %>">
+    Меню
+    <span class="caret"></span>
+  </a>
+  <% i = 0 %>
+  <ul class="dropdown-menu" aria-labelledby="<%= name %>">
+  <% @content_from_tabs[:left].each do |caption, body, type| %>
+		<% case type %>
+		<% when 'dropdown-menu' %>
+	    	<li class="dropdown-submenu <%= (i==active) ? 'active' : '' %>" >
+	    		<a><%= caption %></a>
+				<%= body %>
+	    	</li>
+		<% when 'link' %>
+			<li><%= body %></li>						
+		<% else %>
+			<%= body %>
+		<% end %>
+		
+		<% i += 1 %>
+  <% end %>
+  </ul>
+
+
+

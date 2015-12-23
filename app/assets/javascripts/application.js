@@ -21,6 +21,7 @@
 //= require jquery_ujs
 //= require jquery.remotipart
 //= require wow.min
+//= require bootstrap-submenu.min
 // Loads all Bootstrap javascripts
 //= require bootstrap
 // require bootstrap-sprockets

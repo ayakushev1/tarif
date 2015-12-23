@@ -228,7 +228,7 @@ footer {
     color: $navbar-default-nav-li-a-color; 
 }
 
-.navbar-default .nav > li>a:hover,
+.navbar-default .nav>li>a:hover,
 .navbar-default .nav>li>a:focus:hover {
     color: $navbar-default-nav-li-a-hover-color; 
 }
@@ -240,8 +240,7 @@ footer {
 }
 
 .navbar-default .nav > li.active>a:hover,
-.navbar-default .nav>li.active>a:focus:hover
-{
+.navbar-default .nav>li.active>a:focus:hover {
     background-color: transparent;
 }
 
@@ -515,3 +514,5 @@ img::-moz-selection {
     color: $img-moz-selection-color; 
     background: 0 0;
 }
+
+@import "multi_level_menu";
