@@ -100,7 +100,7 @@ module ApplicationHelper::Authorization
           'result/service_sets' => ['result', 'results', 'detailed_results', 'compare'],
           'customer/demands' => ['index', 'create', 'new'],
           'errors' => ['error404', 'error422', 'error500'],
-          'comparison/optimizations' =>['index', 'show'],
+          'comparison/optimizations' =>['index', 'show', 'call_stat'],
         }
       }, 
       :comparison => {

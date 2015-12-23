@@ -9,7 +9,7 @@
 
 class Comparison::GroupCallRun < ActiveRecord::Base
   belongs_to :comparison_group, :class_name =>'Comparison::Group', :foreign_key => :comparison_group_id
-  belongs_to :call_runs, :class_name =>'Customer::CallRun', :foreign_key => :call_run_id
+  belongs_to :call_run, :class_name =>'Customer::CallRun', :foreign_key => :call_run_id
  
 end
 

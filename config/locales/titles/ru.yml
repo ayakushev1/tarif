@@ -11,14 +11,18 @@ ru:
         title: Описание и результаты рейтинга
         optimizations_link: Список описаний
         groups:
-          detailed_results_link: Детализация результатов
+          detailed_results_link: Результаты
           result_comparison_link: Сравнение
+          call_stat_link: Звонки
       new:
         title: Создание нового рейтинга
       edit:
         title: Редактирование рейтинга
       calculation_status:
         title: Считаю что-то
+      call_stat:
+        title: Статистика звонков
+        call_runs_link: Список рейтингов
   customer:
     call_runs:
       index:

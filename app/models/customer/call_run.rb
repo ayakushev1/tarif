@@ -19,6 +19,7 @@ class Customer::CallRun < ActiveRecord::Base
   belongs_to :user, :class_name =>'User', :foreign_key => :user_id
   belongs_to :operator, :class_name =>'::Category', :foreign_key => :operator_id
   has_many :calls, :class_name =>'Customer::Call', :foreign_key => :call_run_id
+  has_many :group_call_runs, :class_name =>'Comparison::GroupCallRun', :foreign_key => :call_run_id
 
   def full_name
     "#{source_name}: #{name}"
@@ -68,6 +69,7 @@ class Customer::CallRun < ActiveRecord::Base
     
     Customer::Call.where(user_params).delete_all
     Calls::Generator.new(calls_generation_params, user_params).generate_calls
+    calculate_call_stat
   end
   
   def self.generate_calls_from_one_to_other_operator(base_call_id, new_call_run_ids = [])
@@ -76,6 +78,7 @@ class Customer::CallRun < ActiveRecord::Base
       where(:id => new_call_run_ids).each do |new_call_run|
         Customer::Call.where({"call_run_id" => new_call_run.id}).delete_all
         Calls::Generator.generate_calls_from_one_to_other_operator(base_call.operator_id, base_call.id, new_call_run.operator_id, new_call_run.id)
+        new_call_run.calculate_call_stat
       end
     end
   end

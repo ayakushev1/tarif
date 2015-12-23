@@ -11,14 +11,18 @@ en:
         title: description and results of the rating
         optimizations_link: List of definitions
         groups:
-          detailed_results_link: Detailed results
+          detailed_results_link: Results
           result_comparison_link: Compare
+          call_stat_link: Calls
       new:
         title: Creating a new rating
       edit:
         title: Editing rating
       calculation_status:
         title: I think something
+      call_stat:
+        title: Call Statistics
+        call_runs_link: List of ratings
   customer:
     call_runs:
       index:

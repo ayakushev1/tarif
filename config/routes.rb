@@ -47,6 +47,7 @@ Rails.application.routes.draw do
       get 'optimizations/update_comparison_results/:id', action: :update_comparison_results, as: :update_comparison_results
       get 'optimizations/generate_calls_for_optimization/:id', action: :generate_calls_for_optimization, as: :generate_calls_for_optimization
       get 'optimizations/calculation_status/:id', action: :calculation_status, as: :calculation_status
+      get 'optimizations/call_stat/:id', action: :call_stat, as: :call_stat
     end
   end
 

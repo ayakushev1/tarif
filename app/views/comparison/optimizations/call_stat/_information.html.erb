@@ -1,0 +1,14 @@
+<%
+popover = {
+:title => "Описание",
+:content => "Статистика звонков позволяет проанализировать состав мобильных услуг, которыми вы пользуетесь.\
+			Статистику можно смотреть для разного уровня детализации. Нужный уровень выбираете,\
+			нажав на 'Роуминг', 'Услуга', 'Направление связи', 'Куда', 'На какого оператора'.",
+	
+#:button_name => "Информация о расчетах",
+:button_class => "btn btn-success",
+:button_symbol => content_tag(:span, "", {:class => "glyphicon glyphicon-info-sign", :'aria-hidden' =>true}),
+}
+%>
+
+<%= render :partial => "application/layouts/popover", :locals => {:popover => popover} %>

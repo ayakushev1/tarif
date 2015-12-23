@@ -1,0 +1,16 @@
+<% content_for :title, t('.title') %>
+
+<% link_to_html = {:class => "btn btn-success", :type =>"button", :remote => true} %>
+<p>
+<%= render :partial => 'comparison/optimizations/call_stat/information' %>
+<%= link_to( t('comparison.optimizations.call_stat.call_runs_link'), comparison_optimization_path(params[:id]), link_to_html) %>
+</p>
+<p>
+	
+</p>
+<%= render(:partial => 'comparison/optimizations/call_stat/operator_choicer', :layout => 'application/layouts/filtr_form_n_columns', :locals => {:form_item => calls_stat_options} ) %> 
+<p>
+<%= render(:partial => 'comparison/optimizations/call_stat/calls_stat_options', :layout => 'application/layouts/filtr_form_inline', :locals => {:form_item => calls_stat_options} ) %> 
+</p>
+<%= render(:partial => 'comparison/optimizations/call_stat/calls_stat', :layout => 'application/layouts/model_table', :locals => {:table => calls_stat}) %>
+
