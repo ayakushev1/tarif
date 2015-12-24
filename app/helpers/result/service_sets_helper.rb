@@ -129,6 +129,8 @@ module Result::ServiceSetsHelper
       'result_service_sets_results_path'
     when 'result'
       'result_service_sets_result_path'
+    else
+      'result_service_sets_result_path'
     end    
   end
 

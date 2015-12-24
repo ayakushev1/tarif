@@ -1,13 +1,27 @@
 <% content_for :title, t('.title') %>
+<% content_for :hide_title, 'true' %>
 
-<p>
-<%= render :partial => 'result/service_sets/detailed_results/information' %>
-<%= link_to(t('.back_result_button'), service_sets_detailed_results_return_link_to, {:remote => true, :class => "btn btn-success", :type =>"button"}) %>
-</p>
-<p>
-<%= render(:partial => 'result/service_sets/detailed_results/if_show_aggregate_results', :layout => 'application/layouts/filtr_form_inline', 
-	:locals => {:form_item => controller.if_show_aggregate_results} )  %>
-</p>
+<header id="first">
+    <div class="header-content header-content-smaller">
+        <div class="inner">
+            <h1 class="cursive"><%= t('.title') %></h1>
+            <h5>Детальный состав затрат показывает структуру затрат по отдельным тарифам и опциям, и мобильным услугам.
+				Можно также посмотреть агрегированные затраты только по мобильным услугам.</h5>
+            <hr>
+        </div>
+    </div>
+</header>
+
+<%= render 'result/service_sets/detailed_results/result' %>
+
+<div class="panel panel-default" >
+	<div class="panel-heading"><h4> Вариант показа затрат</h4></div>
+	<div class="panel-body">
+		<%= render(:partial => 'result/service_sets/detailed_results/if_show_aggregate_results', :layout => 'application/layouts/filtr_form_inline', 
+			:locals => {:form_item => controller.if_show_aggregate_results} )  %>
+	</div>
+</div>
+
 <%= render :partial => 'result/service_sets/detailed_results/results_for_customer', :layout => 'application/layouts/tabs', 
     :locals => {:name => 'detailed_results', :active => session[:current_tabs_page]['detailed_results'].to_i} %>
       
