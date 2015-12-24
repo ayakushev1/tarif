@@ -89,7 +89,7 @@ module Result::ServiceSetsHelper
   def calls_stat
     filtr = session_filtr_params(calls_stat_options)
     calls_stat_options = filtr.keys.map{|key| key if filtr[key] == 'true'} + ['fixed_payments']
-    calls_stat_options = {"rouming" => 'true'} if calls_stat_options.blank?
+    calls_stat_options = {"rouming" => 'true', "service" => 'true'} if calls_stat_options.blank?
     
     operator_id = Result::ServiceSet.where(:run_id => run_id, :service_set_id => service_set_id).pluck(:operator_id)[0]
     

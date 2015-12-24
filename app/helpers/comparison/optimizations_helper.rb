@@ -61,7 +61,7 @@ module Comparison::OptimizationsHelper
   def calls_stat
     filtr = session_filtr_params(calls_stat_options)
     calls_stat_options = filtr.keys.map{|key| key if filtr[key] == 'true'}
-    calls_stat_options = {"rouming" => 'true'} if calls_stat_options.blank?
+    calls_stat_options = {"rouming" => 'true', "service" => 'true'} if calls_stat_options.blank?
         
     operator_id = session_filtr_params(operator_choicer).try(:operator_id).try(:to_i) || operator_options[0]
 
