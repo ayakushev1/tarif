@@ -1,14 +1,29 @@
 <% content_for :title, t('.title') %>
+<% content_for :hide_title, 'true' %>
 
-<p>
-<%= render :partial => 'result/service_sets/compare/information' %>
-<%= link_to(t('.service_sets_result_return_link_to'), service_sets_result_return_link_to, 
-	{:class => "btn btn-success", :type =>"button", :remote => true}) %>
-</p>
-<br />
-<%= render(:partial => 'result/service_sets/compare/service_set_choicer', :layout => 'application/layouts/filtr_form_n_columns', :locals => {:form_item => service_set_choicer} ) %>
-<p>
-<%= render(:partial => 'result/service_sets/compare/comparison_options', :layout => 'application/layouts/filtr_form_inline', :locals => {:form_item => comparison_options} ) %>
-</p>
+<header id="first">
+    <div class="header-content header-content-smaller">
+        <div class="inner">
+            <h1 class="cursive"><%= t('.title') %></h1>
+            <h5>Сравнение тарифов помогает проанализировать отличия в стоимости между подобранными тарифами и опциями.
+				Возможны два варианта сравнения: по стоимости или по цене. </h5>
+            <hr>
+        </div>
+    </div>
+</header>
+
+<%= render 'result/service_sets/compare/result' %>
+
+<div class="panel panel-default" >
+	<div class="panel-heading"><h4> Параметры сравнения тарифов</h4></div>
+	<div class="panel-body">
+		<%= render(:partial => 'result/service_sets/compare/service_set_choicer', :layout => 'application/layouts/filtr_form_n_columns', :locals => {:form_item => service_set_choicer} ) %>
+		<p>
+		<%= render(:partial => 'result/service_sets/compare/comparison_options', :layout => 'application/layouts/filtr_form_inline', :locals => {:form_item => comparison_options} ) %>
+		</p>
+	</div>
+</div>
+
+
 <%= render(:partial => 'result/service_sets/compare/service_sets', :layout => 'application/layouts/model_table', :locals => {:table => comparison_service_sets})%>
      	

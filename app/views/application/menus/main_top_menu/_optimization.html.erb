@@ -5,11 +5,11 @@
 		<li><%= link_to  t(:tarif_optimizators_fixed_services_index_path), tarif_optimizators_fixed_services_index_path %></li>
 		<li><%= link_to  t(:tarif_optimizators_limited_scope_index_path), tarif_optimizators_limited_scope_index_path %></li>
 		<li><%= link_to  t(:tarif_optimizators_fixed_operators_index_path), tarif_optimizators_fixed_operators_index_path %></li>
-		<li><%= link_to  t(:tarif_optimizators_all_options_index_path), tarif_optimizators_all_options_index_path %></li>
+		<li><%= link_to  t(:tarif_optimizators_all_options_index_path), tarif_optimizators_all_options_index_path if false %></li>
 	<% end %>
 		 
 	<% if controller.customer_has_tarif_optimized? %>
-		<li><%= link_to  t(:result_service_sets_results_path), result_service_sets_results_path if user_type == :admin %></li>
+		<li><%= link_to  t(:result_service_sets_results_path), result_service_sets_results_path %></li>
 	<% end %>
 			 
 </ul>

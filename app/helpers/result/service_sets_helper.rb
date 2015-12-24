@@ -135,10 +135,14 @@ module Result::ServiceSetsHelper
   def service_sets_result_return_link_to    
     back_path = session[:back_path]['service_sets_result_return_link_to'] || 'result_runs_path'
     case back_path
-    when 'comparison_optimization_path'
-      comparison_optimization_path(session[:current_id]['comparison_optimization_id'])
-    else
-      result_runs_path
+    when 'comparison_optimization_path'; comparison_optimization_path(session[:current_id]['comparison_optimization_id'])
+    when "tarif_optimizators_main_index_path"; tarif_optimizators_main_index_path
+    when "tarif_optimizators_fixed_services_index_path"; tarif_optimizators_fixed_services_index_path
+    when "tarif_optimizators_limited_scope_index_path"; tarif_optimizators_limited_scope_index_path
+    when "tarif_optimizators_fixed_operators_index_path"; tarif_optimizators_fixed_operators_index_path
+    when "tarif_optimizators_all_options_index_path"; tarif_optimizators_all_options_index_path
+    when "tarif_optimizators_admin_index_path"; tarif_optimizators_admin_index_path
+    else result_runs_path
     end
   end
   

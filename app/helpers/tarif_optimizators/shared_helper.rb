@@ -95,5 +95,18 @@ module TarifOptimizators::SharedHelper
       7
     end
   end
+
+  def set_back_path
+    session[:back_path]['service_sets_result_return_link_to'] = case controller_name
+    when 'main'; "tarif_optimizators_main_index_path"
+    when 'fixed_services'; "tarif_optimizators_fixed_services_index_path"
+    when 'limited_scope'; "tarif_optimizators_limited_scope_index_path"
+    when 'fixed_operators'; "tarif_optimizators_fixed_operators_index_path"
+    when 'all_options'; "tarif_optimizators_all_options_index_path"
+    when 'admin'; "tarif_optimizators_admin_index_path"
+    else  "result_runs_path"
+    end    
+  end
+
   
 end

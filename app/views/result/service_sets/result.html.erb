@@ -1,10 +1,18 @@
 <% content_for :title, t('.title') %>
+<% content_for :hide_title, 'true' %>
 
-<p>
-<% render :partial => 'result/service_sets/result/attention' %>
-<%= render :partial => 'result/service_sets/result/information' %>
-<%= link_to(t('.service_sets_result_return_link_to'), service_sets_result_return_link_to, 
-	{:class => "btn btn-success", :type =>"button", :remote => true}) %>
+<header id="first">
+    <div class="header-content header-content-smaller">
+        <div class="inner">
+            <h1 class="cursive"><%= t('.title') %></h1>
+            <h5>Список лучших тарифов представляет результат подбора тарифа и опций.
+            	Для каждого тарифа выбрали самый выгодный набор опций.
+				Список упорядочен по возрастанию стоимости.</h5>
+            <hr>
+        </div>
+    </div>
+</header>
+
+<%= render 'result/service_sets/result/result' %>
 
 <%= render :partial => 'result/service_sets/result/service_sets', :layout => 'application/layouts/model_table', :locals => {:table => result_service_sets} %>
-</p>

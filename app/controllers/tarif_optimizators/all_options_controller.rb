@@ -2,6 +2,7 @@ class TarifOptimizators::AllOptionsController < ApplicationController
   include TarifOptimizators::AllOptionsHelper
   helper TarifOptimizators::AllOptionsHelper
   
+  before_action :set_back_path, only: [:index]
   before_action :create_result_run_if_not_exists, only: [:index]
   before_action :update_call_run_on_result_run_change, only: [:index]
   before_action :check_if_optimization_options_are_in_session, only: [:index]
