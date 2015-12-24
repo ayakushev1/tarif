@@ -13,13 +13,10 @@
 
 
 <div class="panel panel-default" >
-	<div class="panel-heading"><h4> Выбор подбора тарифа для просмотра</h4></div>
+	<div class="panel-heading"><h4> Сохраненные подборы тарифов</h4></div>
 	<div class="panel-body">
-		<%= render(:partial => 'result/service_sets/results_select', :layout => 'application/layouts/filtr_form_n_columns', 
+		<%= render(:partial => 'result/service_sets/results/results_select', :layout => 'application/layouts/filtr_form_n_columns', 
 			    :locals => {:form_item => results_select} ) %>
-	</div>
-	<div class="panel-footer">
-		<%= render :partial => 'result/service_sets/results/attention' %>
 	</div>
 </div>
 

@@ -10,9 +10,10 @@ form_item.init do |f|
 	
   [
   	[
-	label(filtr_name, "result_run_id", "Выбор вариант подбора тарифа", label_html),
+#	label(filtr_name, "result_run_id", "Выбор вариант подбора тарифа", label_html),
+    '',
 	collection_select(filtr_name, "result_run_id", Result::Run.where(:user_id => current_or_guest_user_id), :id, :full_name, 
-	  	   {:include_blank => "выберите вариант", :selected => s["result_run_id"] }, input_html )
+	  	   {:include_blank => false, :selected => s["result_run_id"] }, input_html )
   	],
   ]
 	    
