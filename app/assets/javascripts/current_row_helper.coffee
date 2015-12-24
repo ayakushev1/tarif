@@ -10,9 +10,9 @@ set_table_current_row = (row, e, async_mode = true) ->
     url: row_url, 
     async: async_mode,
     data: filtr,
-    dataType: "script",
-    headers: referer: row_url,
-    success: (data, textStatus, jqXHR) ->
+    dataType: "script"
+#    headers: referer: row_url
+#    success: (data, textStatus, jqXHR) ->
 
 run_remote_link = (link, e) ->
   link_url = $(link).attr("href")
@@ -21,8 +21,8 @@ run_remote_link = (link, e) ->
     url: link_url, 
     async: true,
     data: $(link).data(),
-    dataType: "script",
-    headers: referer: link_url,
+    dataType: "script"
+#    headers: referer: link_url
 
 $(document).on 'click', "tr[id*=row]:not(.active), .panel[id*=row]", (e) ->
   if !(/^\//.test($(e.target).attr("href")))
@@ -39,4 +39,5 @@ $(document).on 'click', "a", (e) ->
     if $(this).attr("my_remote") == "true"
       e.preventDefault()
       run_remote_link(this, e) 
+      history.pushState {page: this.href}, '', this.href
   
