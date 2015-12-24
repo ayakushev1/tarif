@@ -24,15 +24,18 @@ run_remote_link = (link, e) ->
     dataType: "script",
     headers: referer: link_url,
 
-$(document).on 'click', "tr[id*=row]:not(.active), .panel[id*=row]:not(.active)", (e) ->
+$(document).on 'click', "tr[id*=row]:not(.active), .panel[id*=row]", (e) ->
   if !(/^\//.test($(e.target).attr("href")))
-    set_table_current_row(this, e)
+    aa = !$(this).children(".panel-heading").hasClass("active")
+    if !$(this).children(".panel-heading").hasClass("active")
+      set_table_current_row(this, e)
 
 $(document).on 'click', "a", (e) ->
   row_elements = $(this).parents("tr[id*=row], .panel[id*=row]")
   if row_elements.length > 0
-    if !$(row_elements[0]).hasClass("active")
-      set_table_current_row(row_elements[0], e, false)
+    if !$(row_elements[0]).hasClass("active") 
+      if !$(row_elements[0]).children(".panel-heading").hasClass("active")
+        set_table_current_row(row_elements[0], e, false)
     if $(this).attr("my_remote") == "true"
       e.preventDefault()
       run_remote_link(this, e) 
