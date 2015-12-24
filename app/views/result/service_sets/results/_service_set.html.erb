@@ -3,7 +3,7 @@
   @heads = ['', 'Стоимость в месяц, руб', 'Оператор', 'Тариф', 'Общие услуги', 'Тарифные опции', 'Взаимозаменяемые опции']
   content_for :table_name, model.table_name
   content_for :caption,  model.table_name
-  content_for :pagination, will_paginate(model, :class=>'pagination text-center pagin_border', :remote => true, :param_name => 'pagination_param_name')
+  content_for :pagination, will_paginate(model, :class=>'pagination text-center pagin_border', :my_remote => true, :param_name => 'pagination_param_name')
   content_for :model, model
 
   s_desc = service_description(all_service_ids + identical_services)
@@ -36,7 +36,7 @@
 	  		
 	  		
 	  result << content_tag(:tr) do
-	     content_tag(:td, link_to('', result_service_sets_detailed_results_path, {:remote => true, :class => "fa fa-random fa-lg center", :'aria-hidden' => "true", :'aria-label' => "Просмотр"}) ) +
+	     content_tag(:td, link_to('', result_service_sets_detailed_results_path, {:my_remote => true, :class => "fa fa-random fa-lg center", :'aria-hidden' => "true", :'aria-label' => "Просмотр"}) ) +
 	  	 content_tag(:td, (f.price.round(0).to_s(:delimited, precision: 0) if f.price) ) +    
 	     content_tag(:td, (f.operator.name if f.operator) ) +     
 	  	 content_tag(:td, link_to_if(s_desc[f.tarif_id]['service_http'], s_desc[f.tarif_id]['service_name'], s_desc[f.tarif_id]['service_http'], {:target => "_blank"}) ) +    

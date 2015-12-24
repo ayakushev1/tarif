@@ -35,7 +35,7 @@ table.init do |t|
     
   	[
      link_to('', customer_optimization_results_show_customer_detailed_results_path, 
-     	{:remote => true, :class => "fa fa-random fa-lg center", :'aria-hidden' => "true", :'aria-label' => "Подробное описание"}),
+     	{:my_remote => true, :class => "fa fa-random fa-lg center", :'aria-hidden' => "true", :'aria-label' => "Подробное описание"}),
   	 (f['tarif_cost'].round(0).to_s(:delimited, precision: 0) if f['tarif_cost']),    
      f['operator_name'],     
   	 link_to_if(f['tarif_http'], f['tarif_name'], f['tarif_http'], {:target => "_blank"}),    

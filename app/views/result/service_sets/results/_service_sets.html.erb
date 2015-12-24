@@ -39,7 +39,7 @@ table.init do |t|
     end.join(', ').html_safe if f.identical_services
   	[
      link_to('', result_service_sets_detailed_results_path(f.run_id, {:current_id => {:service_set_id => f.service_set_id}}), 
-     	{:remote => true, :class => "fa fa-random fa-lg center", :'aria-hidden' => "true", :'aria-label' => "Просмотр"}),
+     	{:my_remote => true, :class => "fa fa-random fa-lg center", :'aria-hidden' => "true", :'aria-label' => "Просмотр"}),
   	 (f.price.round(0).to_s(:delimited, precision: 0) if f.price),    
      (f.operator.name if f.operator),     
   	 link_to_if(s_desc[f.tarif_id]['service_http'], s_desc[f.tarif_id]['service_name'], s_desc[f.tarif_id]['service_http'], {:target => "_blank"}),    

@@ -1,6 +1,6 @@
 <%
 table.init do |t|
-  link_html = {:remote => true}
+  link_html = {:my_remote => true}
   t.heads = ['Модель поведения', '1', '2', '3', '4', '', '']
   
 	tarifs = t.model.map{|group| group.result['place'].values.map{|place| place['tarif_id'] if group.result and group.result['place']}.compact if group.result and group.result['place'] }.flatten 
