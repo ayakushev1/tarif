@@ -57,8 +57,10 @@ class TarifOptimization::TarifOptimizationSqlBuilder
       service_id = service_list_item[:ids]
       next if !service_id 
       part = service_list_item[:parts]
-#    raise(StandardError, 1) if part == "own-country-rouming/calls"# and service_id == 276
       set_id = service_list_item[:set_ids]
+      
+#      raise(StandardError, [tarif_list_generator.tarif_sets, service_list]) if part == "periodic" and service_id == 484# and set_id == "484_443"
+      
       next if !max_formula_order_collector.max_order_by_service_and_part[part] or !max_formula_order_collector.max_order_by_service_and_part[part][service_id]
       next if price_formula_order > max_formula_order_collector.max_order_by_service_and_part[part][service_id]
       next if !tarif_list_generator.parts_by_service[service_id].include?(part)
@@ -142,11 +144,6 @@ class TarifOptimization::TarifOptimizationSqlBuilder
 
           service_category_tarif_class_ids = service_category_tarif_class_ids_after_condition_if_tarif_option_included(service_category_tarif_class_ids_from_tarif, set_id)
         
-          next if (service_category_tarif_class_ids_from_group & service_category_tarif_class_ids).blank?
-
-          prev_group_call_ids = current_tarif_optimization_results.find_prev_group_call_ids(set_id, part, service_category_group_id)
-          prev_stat_values_string = current_tarif_optimization_results.prev_stat_function_values(stat_details[:price_formula_id], set_id, part, service_category_group_id)
-          
           raise(StandardError, [
             "",
             "set_id #{set_id}",
@@ -157,8 +154,15 @@ class TarifOptimization::TarifOptimizationSqlBuilder
             "service_category_tarif_class_ids_from_tarif #{service_category_tarif_class_ids_from_tarif}",
             "service_category_tarif_class_ids #{service_category_tarif_class_ids}",
             "service_category_tarif_class_ids[0] #{service_category_tarif_class_ids[0]}",
+            "tarif_list_generator #{tarif_list_generator.tarif_sets}",
             ""
-          ].join("\n\n")) if false and service_category_group_id == 32540 #(service_category_tarif_class_ids & [392146,392147,392148,392149,392150,392151,392152,392153,392154,392155,392156,392157,392158,392159,392160,392161,392162,392163,392164,392165,392166,392167,392168,392169,392170,392171,392172,392173,392174,392175,392176,392177,392178]).size > 0
+          ].join("\n\n")) if false and service_category_group_id == 32363 and set_id.split("_").include?("443")
+
+          next if (service_category_tarif_class_ids_from_group & service_category_tarif_class_ids).blank?
+
+          prev_group_call_ids = current_tarif_optimization_results.find_prev_group_call_ids(set_id, part, service_category_group_id)
+          prev_stat_values_string = current_tarif_optimization_results.prev_stat_function_values(stat_details[:price_formula_id], set_id, part, service_category_group_id)
+          
           result << service_category_cost_sql(
             calculate_base_stat_sql(service_category_tarif_class_ids, part), service_category_tarif_class_ids[0], service_category_group_id, 
             stat_details[:price_formula_id], service_id, set_id, part, prev_group_call_ids, prev_stat_values_string)

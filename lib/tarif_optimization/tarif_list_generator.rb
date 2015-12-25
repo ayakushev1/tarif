@@ -529,6 +529,9 @@ class TarifOptimization::TarifListGenerator
                 new_periodic_services = [main_depended_service] + [service_that_depended_on]
                 new_tarif_set_id = tarif_set_id(new_periodic_services)
                 tarif_sets_without_common_services[tarif]['periodic'.freeze][new_tarif_set_id] = new_periodic_services
+                
+                tarif_option_combinations[tarif]['periodic'.freeze] ||= {}
+                tarif_option_combinations[tarif]['periodic'.freeze][new_tarif_set_id] ||= new_periodic_services                
               end
             end
 #            (services_that_depended_on_service_ids & services & onetime_services).each do |main_depended_service|
@@ -537,6 +540,9 @@ class TarifOptimization::TarifListGenerator
                 new_periodic_services = [main_depended_service] + [service_that_depended_on]
                 new_tarif_set_id = tarif_set_id(new_periodic_services)
                 tarif_sets_without_common_services[tarif]['onetime'][new_tarif_set_id] = new_periodic_services
+
+                tarif_option_combinations[tarif]['onetime'.freeze] ||= {}
+                tarif_option_combinations[tarif]['onetime'.freeze][new_tarif_set_id] ||= new_periodic_services                
               end
             end
           end
@@ -551,7 +557,7 @@ class TarifOptimization::TarifListGenerator
         end if tarif_option_combinations[tarif]['onetime'.freeze]
       end
     end
-#    raise(StandardError, @tarif_sets_without_common_services)
+#    raise(StandardError, ["", @tarif_sets_without_common_services, tarif_option_combinations, ""].join("\n\n"))
   end
   
   def calculate_tarif_sets
