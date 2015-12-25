@@ -37,8 +37,16 @@ class TarifCreator #ServiceHelper::TarifCreator
   
   def add_one_service_category_tarif_class(service_category_tarif_class_field_values, price_list_field_values, formula_field_values, condition_when_apply_sctc = {})
     begin
+      service_category_group = Service::CategoryGroup.create(:tarif_class_id => tarif_class_id)
+      service_category_group.update({:name => service_category_group[:id].to_s, :operator_id => operator_id} ) 
+  
+      price = PriceList.create({:service_category_group_id => service_category_group[:id], :is_active => true}.merge(price_list_field_values) )
+  
+      formulas = Price::Formula.create({:price_list_id => price[:id], :calculation_order => 0}.merge(formula_field_values) ) 
+      
       tarif_category = Service::CategoryTarifClass.create( 
-        {:tarif_class_id => tarif_class_id, :is_active => true}.merge(service_category_tarif_class_field_values)  )
+        {:tarif_class_id => tarif_class_id, :as_standard_category_group_id => service_category_group[:id], :is_active => true}.
+        merge(service_category_tarif_class_field_values)  )
 
       classified_service_parts = classify_service_parts(service_category_full_paths(service_category_tarif_class_field_values)) 
       parts = classified_service_parts[0]
@@ -47,11 +55,6 @@ class TarifCreator #ServiceHelper::TarifCreator
 
       tarif_category = Service::CategoryTarifClass.update(tarif_category[:id], {:conditions => conditions}) 
       
-      price = PriceList.create(
-        {:service_category_tarif_class_id => tarif_category[:id], :tarif_class_id => tarif_class_id, :is_active => true}.merge(price_list_field_values) )
-  
-      formulas = Price::Formula.create(
-        {:price_list_id => price[:id], :calculation_order => 0}.merge(formula_field_values) )
     rescue ActiveRecord::RecordNotUnique
       retry
     end        
@@ -72,7 +75,7 @@ class TarifCreator #ServiceHelper::TarifCreator
   
   def add_service_category_group(service_category_group_values, price_list_field_values, formula_field_values)
     begin
-      service_category_group = Service::CategoryGroup.find_or_create_by(:name => service_category_group_values[:name])
+      service_category_group = Service::CategoryGroup.find_or_create_by(:name => service_category_group_values[:name], :tarif_class_id => tarif_class_id)
       service_category_group = Service::CategoryGroup.update(service_category_group[:id],
         {:id => service_category_group[:id], :operator_id => operator_id}.merge(service_category_group_values) ) 
   
