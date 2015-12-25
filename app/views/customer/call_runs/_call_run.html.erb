@@ -16,7 +16,10 @@ form_item.init do |fi|
       	
       ],
     ] + ((user_type != :admin) ? [] : [
-		([link_to( 'Вернуться к описанию сравнения', comparison_optimization_path(session[:current_id]['comparison_optimization_id']), link_to_html)] if session[:current_id]['comparison_optimization_id']),
+		([
+			link_to( 'Вернуться к описанию рейтинга', comparison_optimization_path(session[:current_id]['comparison_optimization_id']), 
+			link_to_html)] if session[:current_id]['comparison_optimization_id'
+		]),
       	['Пользователь', (call_run.user.name if call_run.user)], 
       	['Оператор', (call_run.operator.name if call_run.operator)], 
         ['init_class', call_run.init_class], 
