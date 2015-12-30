@@ -11,7 +11,7 @@ table.init do |t|
   	end
   [
 	 s.map(&:formulas).count,
-	 s.map{|r| r.formulas.map(&:price).map{|w| w.to_s(:rounded, precision: 2)}[0]}[0],
+#	 s.map{|r| r.formulas.map(&:price).map{|w| w.to_s(:rounded, precision: 2)}[0]}[0],
 	 s.map{|r| r.formulas.map(&:calculation_order)[0]}[0],
 #    f.id, 
 #    f.name, 

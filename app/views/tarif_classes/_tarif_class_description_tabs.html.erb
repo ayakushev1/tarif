@@ -7,34 +7,10 @@ content_in :tabs do |user|
      render( :partial => 'tarif_classes/tarif_class_description/full_tarif_class', :layout => 'application/layouts/model_show', :locals => {:form_item => controller.tarif_class_form})    
     ], 
     [
-     'Постоянные оплаты', 
-     render( :partial => 'tarif_classes/tarif_class_description/price_lists_fixed', :layout => 'application/layouts/model_table', :locals => {:table => controller.price_lists_for_show_fixed }) +
-     render( :partial => 'tarif_classes/tarif_class_description/price_formulas', :layout => 'application/layouts/model_table', :locals => {:table => controller.price_formulas_fixed}) +
-     render( :partial => 'tarif_classes/tarif_class_description/price_standard_formulas', :layout => 'application/layouts/model_table', :locals => {:table => controller.price_formulas_fixed})
-    ], 
-    [
      'Групповые категории',
      render( :partial => 'tarif_classes/tarif_class_description/service_categories_for_groups', :layout => 'application/layouts/model_table', :locals => {:table => controller.service_categories_for_groups }) +
      render( :partial => 'tarif_classes/tarif_class_description/price_formulas', :layout => 'application/layouts/model_table', :locals => {:table => controller.price_formulas_groups}) +
      render( :partial => 'tarif_classes/tarif_class_description/price_standard_formulas', :layout => 'application/layouts/model_table', :locals => {:table => controller.price_formulas_groups})
-    ], 
-    [
-     'Звонки', 
-     render( :partial => 'tarif_classes/tarif_class_description/price_lists_calls', :layout => 'application/layouts/model_table', :locals => {:table => controller.price_lists_for_show_calls }) +
-     render( :partial => 'tarif_classes/tarif_class_description/price_formulas', :layout => 'application/layouts/model_table', :locals => {:table => controller.price_formulas_calls}) +    
-     render( :partial => 'tarif_classes/tarif_class_description/price_standard_formulas', :layout => 'application/layouts/model_table', :locals => {:table => controller.price_formulas_calls})    
-    ], 
-    [
-     'СМС и ММС', 
-     render( :partial => 'tarif_classes/tarif_class_description/price_lists_calls', :layout => 'application/layouts/model_table', :locals => {:table => controller.price_lists_for_show_sms_mms }) +
-     render( :partial => 'tarif_classes/tarif_class_description/price_formulas', :layout => 'application/layouts/model_table', :locals => {:table => controller.price_formulas_sms_mms}) +    
-     render( :partial => 'tarif_classes/tarif_class_description/price_standard_formulas', :layout => 'application/layouts/model_table', :locals => {:table => controller.price_formulas_sms_mms})    
-    ], 
-    [
-     'Интернет', 
-     render( :partial => 'tarif_classes/tarif_class_description/price_lists_calls', :layout => 'application/layouts/model_table', :locals => {:table => controller.price_lists_for_show_internet }) +
-     render( :partial => 'tarif_classes/tarif_class_description/price_formulas', :layout => 'application/layouts/model_table', :locals => {:table => controller.price_formulas_internet}) +    
-     render( :partial => 'tarif_classes/tarif_class_description/price_standard_formulas', :layout => 'application/layouts/model_table', :locals => {:table => controller.price_formulas_internet})    
     ], 
   ] 
 end
