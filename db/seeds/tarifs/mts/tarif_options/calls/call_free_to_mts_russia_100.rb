@@ -17,9 +17,9 @@
 scg_mts_zero_to_mts_russia_100_included_in_tarif_calls = @tc.add_service_category_group(
   {:name => 'scg_mts_zero_to_mts_russia_100_included_in_tarif_calls' }, 
   {:name => "price for scg_mts_zero_to_mts_russia_100_included_in_tarif_calls"}, 
-  {:calculation_order => 0, :standard_formula_id => _stf_price_by_sum_duration_minute, 
-    :formula => {:window_condition => "(80.0 >= sum_duration_minute)", :window_over => 'day'}, :price => 3.5, :description => '' }
-  )
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxDurationMinuteForFixedPrice,  
+      :formula => {:params => {:max_duration_minute => 80.0, :price => 3.5}, :window_over => 'day' } }
+    )
   
 #own region rouming    
 
@@ -34,8 +34,8 @@ scg_mts_zero_to_mts_russia_100_included_in_tarif_calls = @tc.add_service_categor
 #Own region, calls, outcoming, to own country, to own operator
   category = {:name => '_sctcg_own_home_regions_calls_to_own_country_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country, :service_category_partner_type_id => _service_to_own_operator}
   @tc.add_one_service_category_tarif_class(category, {}, 
-  {:calculation_order => 0, :standard_formula_id => _stf_price_by_sum_duration_minute, 
-    :formula => {:window_condition => "(100.0 >= sum_duration_minute)", :window_over => 'day'}, :price => 3.5, :description => '' }  )
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxDurationMinuteForSpecialPrice,  
+      :formula => {:params => {:max_duration_minute => 100.0, :price => 3.5}, :window_over => 'day' } } )
 
 @tc.add_tarif_class_categories
 

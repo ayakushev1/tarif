@@ -28,7 +28,7 @@ module SavableInSession::ArrayOfHashable
     
     def initialize(array_of_hash, options = {})
       @options = options
-      @model = array_of_hash ? array_of_hash : [{}]
+      @model = !array_of_hash.blank? ? array_of_hash : [{}]
       @model_size = array_of_hash ? array_of_hash.size : -1
       @base_name = options[:base_name] || 'array_table'
       @table_name = "#{@base_name}_table"      

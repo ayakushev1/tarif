@@ -17,26 +17,26 @@
   scg_bln_my_beeline_post_calls = @tc.add_service_category_group(
     {:name => 'scg_bln_my_beeline_post_calls' }, 
     {:name => "price for scg_bln_my_beeline_post_calls"}, 
-    {:calculation_order => 0, :standard_formula_id => _stf_price_by_sum_duration_minute, 
-      :formula => {:window_condition => "(3000.0 >= sum_duration_minute)", :window_over => 'month'}, :price => 0.0, :description => '' }
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxDurationMinuteForFixedPrice,  
+      :formula => {:params => {:max_duration_minute => 3000.0, :price => 0.0}, :window_over => 'month' } }
     )
 
 #Подключение
-#  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item, :price => 0.0})  
+#  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => Price::StandardFormula::Const::PriceByItem, :formula => {:params => {:price => 0.0} } })  
 
 #Периодическая плата
-  @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => _stf_price_by_1_month, :price => 210.0})
+  @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => Price::StandardFormula::Const::PriceByMonth, :formula => {:params => {:price => 210.0} } })
 
 
 #Own and home regions, Calls, Outcoming, to_own_and_home_regions, to_own_operator
 category = {:name => '_sctcg_own_home_regions_calls_to_own_and_home_regions_to_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_own_operator}
   @tc.add_grouped_service_category_tarif_class(category, scg_bln_my_beeline_post_calls[:id])
-#  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 2.0})
+#  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 2.0} } })
 
 #Own and home regions, Calls, Outcoming, to_own_country, to_own_operator
 category = {:name => '_sctcg_own_home_regions_calls_to_own_country_to_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country, :service_category_partner_type_id => _service_to_own_operator}
   @tc.add_grouped_service_category_tarif_class(category, scg_bln_my_beeline_post_calls[:id])
-#  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 2.0})
+#  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 2.0} } })
 
 
 

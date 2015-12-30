@@ -13,11 +13,11 @@
 
 
 #Ежемесячная плата
-  @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => _stf_price_by_1_month, :price => 30.0})
+  @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => Price::StandardFormula::Const::PriceByMonth, :formula => {:params => {:price => 30.0} } })
 
 #Specific countries, Internet
 category = {:name => '_sc_mgf_countries_vacation_online', :service_category_rouming_id => _sc_mgf_countries_vacation_online, :service_category_calls_id => _internet}
-  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_sum_volume_m_byte, :price => 19.0})  
+  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => Price::StandardFormula::Const::PriceBySumVolumeMByte, :formula => {:params => {:price => 19.0} } })  
 
 
 @tc.add_tarif_class_categories

@@ -17,63 +17,32 @@
 scg_bln_highway_12 = @tc.add_service_category_group(
     {:name => 'scg_bln_highway_12' }, 
     {:name => "price for scg_bln_highway_12"}, 
-    {:calculation_order => 0, :price => 700.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_bln_highway_12', :description => '', 
-     :formula => {
-       :window_condition => "(12000.0 >= sum_volume)", :window_over => 'month',
-       :stat_params => {:sum_volume => "sum((description->>'volume')::float)"},
-       :method => "price_formulas.price",
-     }, 
-    } )
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteForFixedPrice,  
+      :formula => {:params => {:max_sum_volume => 12000.0, :price => 700.0}, :window_over => 'month' } }
+    )
 
   #internet for add_speed_1gb option
   scg_bln_add_speed_1gb= @tc.add_service_category_group(
     {:name => 'scg_bln_add_speed_1gb_bln_highway_12' }, 
     {:name => "price for scg_bln_add_speed_1gb_bln_highway_12"}, 
-    {:calculation_order => 1, :price => 250.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'scf_bln_add_speed_1gb_bln_highway_12', :description => '', 
-     :formula => {
-       :auto_turbo_buttons  => {
-         :group_by => 'month',
-         :stat_params => {
-           :sum_volume => "sum((description->>'volume')::float)",
-           :count_of_usage_of_1000 => "ceil((sum((description->>'volume')::float) - 0.0) / 1000.0)"},
-       :method => "price_formulas.price * GREATEST(count_of_usage_of_1000, 0.0) + 0.0",
-       }
-     },
-     } 
+    {:calculation_order => 1, :standard_formula_id => Price::StandardFormula::Const::TurbobuttonMByteForFixedPrice, 
+      :formula => {:params => {:max_sum_volume => 1000.0, :price => 250.0} } }
     )
 
   #internet for add_speed_4gb option
   scg_bln_add_speed_3gb= @tc.add_service_category_group(
     {:name => 'scg_bln_add_speed_3gb_bln_highway_12' }, 
     {:name => "price for scg_bln_add_speed_3gb_bln_highway_12"}, 
-    {:calculation_order => 2, :price => 500.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'scf_bln_add_speed_3gb_bln_highway_12', :description => '', 
-     :formula => {
-       :auto_turbo_buttons  => {
-         :group_by => 'month',
-         :stat_params => {
-           :sum_volume => "sum((description->>'volume')::float)",
-           :count_of_usage_of_4000 => "ceil((sum((description->>'volume')::float) - 0.0) / 4000.0)"},
-       :method => "price_formulas.price * GREATEST(count_of_usage_of_4000, 0.0) + 0.0",
-       }
-     },
-     } 
+    {:calculation_order => 2, :standard_formula_id => Price::StandardFormula::Const::TurbobuttonMByteForFixedPrice, 
+      :formula => {:params => {:max_sum_volume => 4000.0, :price => 500.0} } }
     )
    
 #internet for auto_add_speed option
   scg_bln_auto_add_speed= @tc.add_service_category_group(
     {:name => 'scg_bln_auto_add_speed_bln_highway_12' }, 
     {:name => "price for scg_bln_auto_add_speed_bln_highway_12"}, 
-    {:calculation_order => 3, :price => 20.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'scf_bln_auto_add_speed_bln_highway_12', :description => '', 
-     :formula => {
-       :auto_turbo_buttons  => {
-         :group_by => 'month',
-         :stat_params => {
-           :sum_volume => "sum((description->>'volume')::float)",
-           :count_of_usage_of_75 => "ceil((sum((description->>'volume')::float) - 0.0) / 75.0)"},
-       :method => "price_formulas.price * GREATEST(count_of_usage_of_75, 0.0) + 0.0",
-       }
-     },
-     } 
+    {:calculation_order => 3, :standard_formula_id => Price::StandardFormula::Const::TurbobuttonMByteForFixedPrice, 
+      :formula => {:params => {:max_sum_volume => 75.0, :price => 20.0} } }
     )
 
 #Own and home regions, Internet

@@ -18,25 +18,14 @@
 scg_tele_internet_from_phone = @tc.add_service_category_group(
     {:name => 'scg_tele_internet_from_phone' }, 
     {:name => "price for scg_tele_internet_from_phone"}, 
-    {:calculation_order => 0, :price => 0.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_tele_internet_from_phone', :description => '', 
-     :formula => {
-       :window_condition => "(75.0 >= sum_volume)", :window_over => 'day',
-       :stat_params => {:sum_volume => "sum((description->>'volume')::float)"},
-       :method => "price_formulas.price",
-       
-#       :multiple_use_of_tarif_option => {
-#         :group_by => 'day',
-#         :stat_params => {:tarif_option_count_of_usage => "ceil(sum((description->>'volume')::float) / 75.0)", :sum_volume => "sum((description->>'volume')::float)"},
-#         :method => "5.0 * tarif_option_count_of_usage", 
-#       }
-     }, 
-    } )
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteForFixedPrice,  
+      :formula => {:params => {:max_sum_volume => 75.0, :price => 0.0}, :window_over => 'day' } } )
 
 #Переход на тариф
-  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item_if_used, :price => 20.0})  
+  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => Price::StandardFormula::Const::PriceByItemIfUsed, :formula => {:params => {:price => 20.0} } })  
 
 #Ежемесячная плата
-  @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => _stf_price_by_1_month, :price => 150.0})
+  @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => Price::StandardFormula::Const::PriceByMonth, :formula => {:params => {:price => 150.0} } })
 
 #Own and home regions, Internet
   category = {:name => '_sctcg_own_home_regions_internet', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _internet}

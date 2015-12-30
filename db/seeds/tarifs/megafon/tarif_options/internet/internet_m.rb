@@ -19,48 +19,25 @@
 scg_mgf_internet_m = @tc.add_service_category_group(
     {:name => 'scg_mgf_internet_m' }, 
     {:name => "price for scg_mgf_internet_m"}, 
-    {:calculation_order => 0, :price => 590.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_mgf_internet_m', :description => '', 
-     :formula => {
-       :window_condition => "(8000.0 >= sum_volume)", :window_over => 'month',
-       :stat_params => {:sum_volume => "sum((description->>'volume')::float)"},
-       :method => "price_formulas.price",
-     }, 
-    } )
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteForFixedPrice,  
+      :formula => {:params => {:max_sum_volume => 8000.0, :price => 590.0}, :window_over => 'month' } } )
 
   #internet for add_speed_1gb option
   scg_mgf_add_speed_1gb = @tc.add_service_category_group(
     {:name => 'scg_mgf_add_speed_1gb_mgf_internet_m' }, 
     {:name => "price for scg_mgf_add_speed_1gb_mgf_internet_m"}, 
-    {:calculation_order => 1, :price => 150.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'scf_mgf_add_speed_1gb_mgf_internet_m', :description => '', 
-     :formula => {
-       :auto_turbo_buttons  => {
-         :group_by => 'month',
-         :stat_params => {
-           :sum_volume => "sum((description->>'volume')::float)",
-           :count_of_usage_of_1000 => "ceil((sum((description->>'volume')::float) - 0.0) / 1000.0)"},
-       :method => "price_formulas.price * GREATEST(count_of_usage_of_1000, 0.0) + 0.0",
-       }
-     },
-     } 
+    {:calculation_order => 1, :standard_formula_id => Price::StandardFormula::Const::TurbobuttonMByteForFixedPrice, 
+      :formula => {:params => {:max_sum_volume => 1000.0, :price => 150.0} } }
     )
 
   #internet for add_speed_4gb option
   scg_mgf_add_speed_5gb = @tc.add_service_category_group(
     {:name => 'scg_mgf_add_speed_5gb_mgf_internet_m' }, 
     {:name => "price for scg_mgf_add_speed_5gb_mgf_internet_m"}, 
-    {:calculation_order => 2, :price => 400.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'scf_mgf_add_speed_5gb_mgf_internet_m', :description => '', 
-     :formula => {
-       :auto_turbo_buttons  => {
-         :group_by => 'month',
-         :stat_params => {
-           :sum_volume => "sum((description->>'volume')::float)",
-           :count_of_usage_of_5000 => "ceil((sum((description->>'volume')::float) - 0.0) / 5000.0)"},
-       :method => "price_formulas.price * GREATEST(count_of_usage_of_5000, 0.0) + 0.0",
-       }
-     },
-     } 
+    {:calculation_order => 1, :standard_formula_id => Price::StandardFormula::Const::TurbobuttonMByteForFixedPrice, 
+      :formula => {:params => {:max_sum_volume => 5000.0, :price => 400.0} } }
     )
-   
+
 #Own and home regions, Internet
   category = {:name => '_sctcg_own_home_regions_internet', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _internet}
 #  @tc.add_only_service_category_tarif_class(category)  

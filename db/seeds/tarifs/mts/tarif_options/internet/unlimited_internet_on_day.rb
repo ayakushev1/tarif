@@ -15,47 +15,20 @@
   } } )
 
 #Переход на тариф
-  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item_if_used, :price => 50.0})  
+  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => Price::StandardFormula::Const::PriceByItemIfUsed, :formula => {:params => {:price => 50.0} } })  
 
 #Own and home regions rouming, internet
   category = {:name => '_sctcg_own_home_regions_internet', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _internet}
   @tc.add_one_service_category_tarif_class(category, {}, 
-    {:calculation_order => 0, :price => 50.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_mts_unlimited_internet_on_day', :description => '', 
-     :formula => {
-       :window_condition => "(500.0 >= sum_volume)", :window_over => 'day', 
-       :stat_params => {:sum_volume => "sum((description->>'volume')::float)"}, 
-       :method => "price_formulas.price",
-
-#       :auto_turbo_buttons  => {
-#         :group_by => 'day',
-#         :stat_params => {
-#           :sum_volume => "sum((description->>'volume')::float)",
-#           :count_of_usage_of_option => "ceil(sum((description->>'volume')::float) / 500.0)",
-#           :count_of_usage_of_500 => "ceil((sum((description->>'volume')::float) - 500.0) / 500.0)",
-#           :count_of_usage_of_2000 => "ceil((sum((description->>'volume')::float) - 500.0) / 2000.0)"},
-#       :method => "price_formulas.price * count_of_usage_of_option + case when count_of_usage_of_500 > 2.66667 then count_of_usage_of_2000 * 250.0 when count_of_usage_of_500 > 0.0 then count_of_usage_of_500 * 95.0 else 0.0 end",
-#       } 
-    } 
-  } )    
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteForFixedPrice,  
+      :formula => {:params => {:max_sum_volume => 500.0, :price => 50.0}, :window_over => 'day' } } )
 
 #Own country, Internet
   category = {:name => 'own_country_internet', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _internet}
   @tc.add_one_service_category_tarif_class(category, {}, 
-    {:calculation_order => 0, :price => 50.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_mts_unlimited_internet_on_day', :description => '', 
-     :formula => {
-       :window_condition => "(500.0 >= sum_volume)", :window_over => 'day', 
-       :stat_params => {:sum_volume => "sum((description->>'volume')::float)"}, 
-       :method => "price_formulas.price",
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteForFixedPrice,  
+      :formula => {:params => {:max_sum_volume => 500.0, :price => 50.0}, :window_over => 'day' } } )
 
-       :auto_turbo_buttons  => {
-         :group_by => 'day',
-         :stat_params => {
-           :sum_volume => "sum((description->>'volume')::float)",
-           :count_of_usage_of_option => "ceil(sum((description->>'volume')::float) / 500.0)",
-           :count_of_usage_of_500 => "ceil((sum((description->>'volume')::float) - 500.0) / 500.0)",
-           :count_of_usage_of_2000 => "ceil((sum((description->>'volume')::float) - 500.0) / 2000.0)"},
-       :method => "price_formulas.price * count_of_usage_of_option + case when count_of_usage_of_500 > 2.66667 then count_of_usage_of_2000 * 250.0 when count_of_usage_of_500 > 0.0 then count_of_usage_of_500 * 95.0 else 0.0 end",
-       } } } )    
 
 @tc.add_tarif_class_categories
 

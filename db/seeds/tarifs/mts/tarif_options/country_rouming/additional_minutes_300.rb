@@ -18,15 +18,15 @@
   scg_mts_additional_minutes_300_included_in_tarif_calls = @tc.add_service_category_group(
     {:name => 'scg_mts_additional_minutes_300_included_in_tarif_calls' }, 
     {:name => "price for scg_mts_additional_minutes_300_included_in_tarif_calls"}, 
-    {:calculation_order => 0, :standard_formula_id => _stf_price_by_sum_duration_minute, 
-      :formula => {:window_condition => "(300.0 >= sum_duration_minute)", :window_over => 'month'}, :price => 0.0, :description => '' }
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxDurationMinuteForFixedPrice,  
+      :formula => {:params => {:max_duration_minute => 300.0, :price => 0.0}, :window_over => 'month' } }
     )
  
 #Переход на тариф
-  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item_if_used, :price => 34.0})  
+  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => Price::StandardFormula::Const::PriceByItemIfUsed, :formula => {:params => {:price => 34.0} } })  
 
 #Ежемесячная плата
-  @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => _stf_price_by_1_month, :price => 390.0})
+  @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => Price::StandardFormula::Const::PriceByMonth, :formula => {:params => {:price => 390.0} } })
  
 #All own country regions, Calls, Outcoming, to_own_home_regions, to_own_operator
   category = {:name => '_sctcg_all_own_country_regions_calls_to_own_home_regions', :service_category_rouming_id => _all_russia_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions}

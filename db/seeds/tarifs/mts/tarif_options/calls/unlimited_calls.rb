@@ -18,12 +18,12 @@
 #TODO добавить разную тарификацию для разных регионов. В Московской области - 1 руб, а в Ленинградской - 47 коп.
   
 #Плата за использование
-  @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => _stf_fixed_price_if_used_in_1_day_duration, :price => 10.0})
+  @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => Price::StandardFormula::Const::FixedPriceIfUsedInOneDayDuration, :formula => {:params => {:price => 10.0} } })
 
 #Own region, Calls, outcoming, to own and home regions, to own operator
   category = {:name => '_sctcg_own_home_regions_calls_to_own_home_regions_to_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_own_operator}
   @tc.add_one_service_category_tarif_class(category, {}, 
-    {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_duration_minute, :price => 0.0})
+    {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 0.0} } })
 
 @tc.add_tarif_class_categories
 

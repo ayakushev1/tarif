@@ -24,13 +24,9 @@
 scg_mgf_bit_mega_pro_500 = @tc.add_service_category_group(
     {:name => 'scg_mgf_bit_mega_pro_500' }, 
     {:name => "price for scg_mgf_bit_mega_pro_500"}, 
-    {:calculation_order => 0, :price => 29.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_mgf_bit_mega_pro_500', :description => '', 
-     :formula => {
-       :window_condition => "(500.0 >= sum_volume)", :window_over => 'day',
-       :stat_params => {:sum_volume => "sum((description->>'volume')::float)"},
-       :method => "case when sum_volume > 0.0 then price_formulas.price else 0.0 end",
-     }, 
-    } )
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteForFixedPriceIfUsed,  
+      :formula => {:params => {:max_sum_volume => 500.0, :price => 29.0}, :window_over => 'day' } } )
+
 
 #Own and home regions, Internet
   category = {:name => '_sctcg_own_home_regions_internet', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _internet}

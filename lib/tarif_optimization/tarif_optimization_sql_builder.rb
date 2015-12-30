@@ -357,9 +357,10 @@ class TarifOptimization::TarifOptimizationSqlBuilder
       "left outer join prev_sql on first_stat_sql.month = prev_sql.month), ".freeze,
       
       "service_category_accumulated_stat_sql_3 as ".freeze,
-      "(select array_agg(id) as group_call_ids, month from service_category_accumulated_ids_sql_2 where #{price_formula['window_condition']} group by month)",
+      "(select array_agg(id) as group_call_ids, month from service_category_accumulated_ids_sql_2, (#{formula_params_sql(price_formula_id)}) as price_formulas",
+      "where #{price_formula['window_condition']} group by month)",
       
-      "select #{stat_string_4.join(', ')} from customer_calls, service_category_accumulated_stat_sql_3",
+      "select #{stat_string_4.join(', ')} from customer_calls, service_category_accumulated_stat_sql_3, (#{formula_params_sql(price_formula_id)}) price_formulas",
       "where id != all('{#{excluded_call_ids_by_part.join(', ')}}') and id = any(group_call_ids)",
       "group by month".freeze,
     ].join(' ')
@@ -382,7 +383,8 @@ class TarifOptimization::TarifOptimizationSqlBuilder
       raise(StandardError, 'wrong check_out_call_ids in first_stat_sql')
     end
 
-    sql = base_stat_sql.select("#{fields.join(', '.freeze)}").where.not(:id => excluded_call_ids_by_part)
+    sql = base_stat_sql.joins("left join (#{formula_params_sql(price_formula_id)}) price_formulas on true").
+      select("#{fields.join(', '.freeze)}").where.not(:id => excluded_call_ids_by_part)
       
     if price_formula['window_over'.freeze]
       "#{sql.to_sql} WINDOW m as (partition by extract(#{price_formula['window_over'] || 'month'} from (description->>'time')::timestamp) order by (description->>'time')::timestamp )"    
@@ -398,6 +400,10 @@ class TarifOptimization::TarifOptimizationSqlBuilder
     price_formula['stat_params'.freeze].each { |stat_key, stat_function| stat_string_0 << "prev_#{stat_key}".freeze } if price_formula['stat_params'.freeze]
     
     "#{stat_string_0.join(', '.freeze)} ) as (values #{prev_stat_values_string.join(', '.freeze)}"
+  end
+  
+  def formula_params_sql(price_formula_id)
+    "select formula from price_formulas where id = #{price_formula_id}"
   end
       
   module Helper

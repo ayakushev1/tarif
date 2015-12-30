@@ -285,9 +285,9 @@ class TarifOptimization::CurrentTarifOptimizationResults #ServiceHelper::Current
         cons_tarif_results_by_parts[tarif_set_id][part] = {'call_id_count'.freeze => 0, 'price_value'.freeze => 0.0}
         tarif_results_by_parts_by_tarif.each do |tarif_id, tarif_result_by_parts_by_tarif|
           cons_tarif_results[tarif_set_id]['call_id_count'.freeze] += tarif_result_by_parts_by_tarif['call_id_count'.freeze]
-          cons_tarif_results[tarif_set_id]['price_value'.freeze] += tarif_result_by_parts_by_tarif['price_value'.freeze]
-          cons_tarif_results_by_parts[tarif_set_id][part]['call_id_count'.freeze] += tarif_result_by_parts_by_tarif['call_id_count'.freeze]
-          cons_tarif_results_by_parts[tarif_set_id][part]['price_value'.freeze] += tarif_result_by_parts_by_tarif['price_value'.freeze]
+          cons_tarif_results[tarif_set_id]['price_value'.freeze] += (tarif_result_by_parts_by_tarif['price_value'.freeze] || 0.0)
+          cons_tarif_results_by_parts[tarif_set_id][part]['call_id_count'.freeze] += (tarif_result_by_parts_by_tarif['call_id_count'.freeze] || 0)
+          cons_tarif_results_by_parts[tarif_set_id][part]['price_value'.freeze] += (tarif_result_by_parts_by_tarif['price_value'.freeze] || 0.0)
         end
       end        
     end

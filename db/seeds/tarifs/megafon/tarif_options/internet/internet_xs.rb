@@ -18,46 +18,41 @@
 scg_mgf_internet_xs = @tc.add_service_category_group(
     {:name => 'scg_mgf_internet_xs' }, 
     {:name => "price for scg_mgf_internet_xs"}, 
-    {:calculation_order => 0, :price => 0.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_mgf_internet_xs', :description => '', 
-     :formula => {
-       :window_condition => "(70.0 >= sum_volume)", :window_over => 'day',
-       :stat_params => {:sum_volume => "sum((description->>'volume')::float)"},
-       :method => "case when sum_volume > 0.0 then price_formulas.price else 0.0 end",
-       
-       :multiple_use_of_tarif_option => {
-         :group_by => 'day',
-         :stat_params => {
-           :tarif_option_count_of_usage => "ceil((sum((description->>'volume')::float) - 70.0) / 70.0)",
-           :sum_volume => "sum((description->>'volume')::float)"},
-         :method => "19.0 * tarif_option_count_of_usage", 
-       }
-     }, 
-    } )
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteForFixedPrice,  
+      :formula => {:params => {:max_sum_volume => 70.0, :price => 0.0}, :window_over => 'day' } } )
+
+ #internet for add_speed_70mb option
+  scg_mgf_add_speed_70mb = @tc.add_service_category_group(
+    {:name => 'scg_mgf_add_speed_70mb_mgf_internet_xs' }, 
+    {:name => "price for scg_mgf_add_speed_70mb_mgf_internet_xs"}, 
+    {:calculation_order => 1, :standard_formula_id => Price::StandardFormula::Const::TurbobuttonMByteForFixedPrice, 
+      :formula => {:params => {:max_sum_volume => 70.0, :price => 19.0} } } )
 
 #Переход на тариф
-  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item, :price => 190.0})  
+  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => Price::StandardFormula::Const::PriceByItem, :formula => {:params => {:price => 190.0} } })  
 
 #Ежемесячная плата
-  @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => _stf_price_by_1_month, :price => 210.0})
+  @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => Price::StandardFormula::Const::PriceByMonth, :formula => {:params => {:price => 210.0} } })
 
 #Own and home regions, Internet
   category = {:name => '_sctcg_own_home_regions_internet', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _internet}
   @tc.add_grouped_service_category_tarif_class(category, scg_mgf_internet_xs[:id])
+  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_add_speed_70mb[:id])
 
 #Tarif option 'Интернет по России для определенных опций'
 #Другие категории опции должны иметь мешьший приоритет, или не пересекаться с опцией
 #Подключение услуги
-  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item, :price => 30.0},
+  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => Price::StandardFormula::Const::PriceByItem, :formula => {:params => {:price => 30.0} } },
     :tarif_set_must_include_tarif_options => [_mgf_internet_in_russia_for_specific_options] )
 
 #Ежедневная плата
-  @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => _stf_fixed_price_if_used_in_1_day_volume, :price => 5.0},
+  @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => Price::StandardFormula::Const::FixedPriceIfUsedInOneDayVolume, :formula => {:params => {:price => 5.0} } },
     :tarif_set_must_include_tarif_options => [_mgf_internet_in_russia_for_specific_options] )
 
 #Own country, Internet
   category = {:name => 'own_country_internet', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _internet}
-  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_internet_xs[:id], 
-    :tarif_set_must_include_tarif_options => [_mgf_internet_in_russia_for_specific_options] )
+  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_internet_xs[:id], :tarif_set_must_include_tarif_options => [_mgf_internet_in_russia_for_specific_options] )
+  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_add_speed_70mb[:id], :tarif_set_must_include_tarif_options => [_mgf_internet_in_russia_for_specific_options] )
 
 
 @tc.add_tarif_class_categories

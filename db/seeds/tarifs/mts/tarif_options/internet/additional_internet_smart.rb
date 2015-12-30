@@ -24,19 +24,8 @@
 scg_mts_additional_internet_smart = @tc.add_service_category_group(
     {:name => 'scg_mts_additional_internet_smart' }, 
     {:name => "price for scg_mts_additional_internet_smart"}, 
-    {:calculation_order => 0, :price => 50.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_mts_additional_internet_smart', :description => '', 
-     :formula => {
-       :window_condition => "(500.0 >= sum_volume)", :window_over => 'month',
-       :stat_params => {:sum_volume => "sum((description->>'volume')::float)"},
-       :method => "case when sum_volume > 0.0 then price_formulas.price else 0.0 end",
-       
-       :multiple_use_of_tarif_option => {
-         :group_by => 'month',
-         :stat_params => {:tarif_option_count_of_usage => "ceil(sum((description->>'volume')::float) / 500.0)", :sum_volume => "sum((description->>'volume')::float)"},
-         :method => "price_formulas.price * tarif_option_count_of_usage", 
-       }
-     }, 
-    } )
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteWithMultipleUseMonth, 
+      :formula => {:params => {:max_sum_volume => 500.0, :price => 50.0} } } )
 
 
 #All Russia rouming, Internet

@@ -17,25 +17,20 @@
 #Добавление новых service_category_group
 #internet included in tarif
 scg_mgf_internet_24 = @tc.add_service_category_group(
-    {:name => 'scg_mgf_internet_24' }, 
-    {:name => "price for scg_mgf_internet_24"}, 
-    {:calculation_order => 0, :price => 24.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_mgf_internet_24', :description => '', 
-     :formula => {
-       :window_condition => "(200.0 >= sum_volume)", :window_over => 'day',
-       :stat_params => {:sum_volume => "sum((description->>'volume')::float)"},
-       :method => "case when sum_volume > 0.0 then price_formulas.price else 0.0 end",
-     }, 
-    } )
-
+   {:name => 'scg_mgf_internet_24' }, 
+   {:name => "price for scg_mgf_internet_24"}, 
+   {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteForFixedPriceIfUsed,  
+      :formula => {:params => {:max_sum_volume => 200.0, :price => 24.0}, :window_over => 'day' } } )
+ 
 #Own and home regions, Internet
   category = {:name => '_sctcg_own_home_regions_internet', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _internet}
   @tc.add_grouped_service_category_tarif_class(category, scg_mgf_internet_24[:id])
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1, :standard_formula_id => _stf_price_by_sum_volume_m_byte, :price => 0.5})  
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1, :standard_formula_id => Price::StandardFormula::Const::PriceBySumVolumeMByte, :formula => {:params => {:price => 0.5} } })  
 
 #Own country, Internet
   category = {:name => 'own_country_internet', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _internet}
   @tc.add_grouped_service_category_tarif_class(category, scg_mgf_internet_24[:id])
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1, :standard_formula_id => _stf_price_by_sum_volume_m_byte, :price => 0.5})  
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1, :standard_formula_id => Price::StandardFormula::Const::PriceBySumVolumeMByte, :formula => {:params => {:price => 0.5} } })  
 
 
 @tc.add_tarif_class_categories

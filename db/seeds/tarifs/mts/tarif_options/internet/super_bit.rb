@@ -19,67 +19,35 @@
   scg_mts_super_bit_included_in_tarif_internet = @tc.add_service_category_group(
     {:name => 'scg_mts_super_bit_included_in_tarif_internet' }, 
     {:name => "price for _scg_mts_super_bit_included_in_tarif_internet"}, 
-    {:calculation_order => 0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :price => 350.0, :description => '', 
-      :formula => {
-       :window_condition => "(3000.0 >= sum_volume)", :window_over => 'month',
-       :stat_params => {:sum_volume => "sum((description->>'volume')::float)"},
-       :method => "price_formulas.price",
-     }, 
-    } )
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteForFixedPrice,  
+      :formula => {:params => {:max_sum_volume => 3000.0, :price => 350.0}, :window_over => 'month' } } )
 
   #internet for add_speed_500mb option
   scg_mts_add_speed_500mb = @tc.add_service_category_group(
     {:name => 'scg_mts_add_speed_500mb_mts_super_bit' }, 
     {:name => "price for scg_mts_add_speed_500mb_mts_super_bit"}, 
-    {:calculation_order => 1, :price => 95.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'scf_mts_add_speed_500mb_mts_super_bit', :description => '', 
-     :formula => {
-       :auto_turbo_buttons  => {
-         :group_by => 'month',
-         :stat_params => {
-           :sum_volume => "sum((description->>'volume')::float)",
-           :count_of_usage_of_500 => "ceil((sum((description->>'volume')::float) - 0.0) / 500.0)"},
-       :method => "price_formulas.price * GREATEST(count_of_usage_of_500, 0.0) + 0.02",
-       }
-     },
-     } 
+    {:calculation_order => 1, :standard_formula_id => Price::StandardFormula::Const::TurbobuttonMByteForFixedPrice, 
+      :formula => {:params => {:max_sum_volume => 500.0, :price => 95.0} } }
     )
 
   #internet for add_speed_2gb option
   scg_mts_add_speed_2gb = @tc.add_service_category_group(
     {:name => 'scg_mts_add_speed_2gb_mts_super_bit' }, 
     {:name => "price for scg_mts_add_speed_2gb_mts_super_bit"}, 
-    {:calculation_order => 2, :price => 250.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'scf_mts_add_speed_2gb_mts_super_bit', :description => '', 
-     :formula => {
-       :auto_turbo_buttons  => {
-         :group_by => 'month',
-         :stat_params => {
-           :sum_volume => "sum((description->>'volume')::float)",
-           :count_of_usage_of_2000 => "ceil((sum((description->>'volume')::float) - 0.0) / 2000.0)"},
-       :method => "price_formulas.price * GREATEST(count_of_usage_of_2000, 0.0) + 0.03",
-       }
-     },
-     } 
+    {:calculation_order => 2, :standard_formula_id => Price::StandardFormula::Const::TurbobuttonMByteForFixedPrice, 
+      :formula => {:params => {:max_sum_volume => 2000.0, :price => 250.0} } }
     )
 
   #internet for add_speed_5gb option
   scg_mts_add_speed_5gb = @tc.add_service_category_group(
     {:name => 'scg_mts_add_speed_5gb_mts_super_bit' }, 
     {:name => "price for scg_mts_add_speed_5gb_mts_super_bit"}, 
-    {:calculation_order => 3, :price => 450.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'scf_mts_add_speed_5gb_mts_super_bit', :description => '', 
-     :formula => {
-       :auto_turbo_buttons  => {
-         :group_by => 'month',
-         :stat_params => {
-           :sum_volume => "sum((description->>'volume')::float)",
-           :count_of_usage_of_5000 => "ceil((sum((description->>'volume')::float) - 0.0) / 5000.0)"},
-       :method => "price_formulas.price * GREATEST(count_of_usage_of_5000, 0.0) + 0.04",
-       }
-     },
-     } 
+    {:calculation_order => 3, :standard_formula_id => Price::StandardFormula::Const::TurbobuttonMByteForFixedPrice, 
+      :formula => {:params => {:max_sum_volume => 5000.0, :price => 450.0} } }
     )
 
 #Ежемесячная плата
-  @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => _stf_price_by_1_month, :price => 0.0})
+  @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => Price::StandardFormula::Const::PriceByMonth, :formula => {:params => {:price => 0.0} } })
 
 #Intranet rouming, internet
   category = {:name => '_sctcg_intranet_rouming_internet', :service_category_rouming_id => _all_russia_rouming, :service_category_calls_id => _internet}

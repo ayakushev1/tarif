@@ -17,16 +17,8 @@
 category = {:name => '_sctcg_own_home_regions_sms_to_own_home_regions', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_own_and_home_regions}
 #Own and home regions, sms, outcoming, to own and home regions
   @tc.add_one_service_category_tarif_class(category, {}, 
-    {:calculation_order => 0, :price => 75.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _item, :description => '', 
-     :formula => {
-       :window_condition => "(50.0 >= count_volume)", :window_over => 'month',
-       :stat_params => {:count_volume => "count(description)"},
-       :method => "case when count_volume > 0.0 then price_formulas.price else 0.0 end",
-       
-       :multiple_use_of_tarif_option => {
-         :group_by => 'month',
-         :stat_params => {:tarif_option_count_of_usage => "ceil(count(description) / 50.0)", :count_volume => "count(description->>'volume')"},
-         :method => "price_formulas.price * tarif_option_count_of_usage" } } } )
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxCountVolumeWithMultipleUseMonth,  
+      :formula => {:params => {:max_count_volume => 50.0, :price => 75.0}, :window_over => 'month' } } )
 
 @tc.add_tarif_class_categories
 

@@ -12,31 +12,20 @@
   } } )
 
 #Переход на тариф
-  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item, :price => 100.0})  
+  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => Price::StandardFormula::Const::PriceByItem, :formula => {:params => {:price => 100.0} } })  
 
 #Ежемесячная плата
-  @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => _stf_price_by_1_month, :price => 0.0})
+  @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => Price::StandardFormula::Const::PriceByMonth, :formula => {:params => {:price => 0.0} } })
 
-  
- 
-#Добавление новых service_category_group
-#internet included in tarif
-scg_mgf_internet_tablet = @tc.add_service_category_group(
-    {:name => 'scg_mgf_internet_tablet' }, 
-    {:name => "price for scg_mgf_internet_tablet"}, 
-    {:calculation_order => 0, :price => 30.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_mgf_internet_tablet', :description => '', 
-     :formula => {
-       :window_condition => "(320.0 >= sum_volume)", :window_over => 'day',
-       :stat_params => {
-         :sum_volume => "sum((description->>'volume')::float)",
-         },
-       :method => "case when sum_volume > 20.0 then price_formulas.price else 0.0 end",
-     }, 
-    } )
 
 #_all_russia_rouming, Internet
   category = {:name => '_sctcg_own_home_regions_internet', :service_category_rouming_id => _all_russia_rouming, :service_category_calls_id => _internet}
-  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_internet_tablet[:id])
+  @tc.add_one_service_category_tarif_class(category, {}, 
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteForFixedPrice,  
+      :formula => {:params => {:max_sum_volume => 20.0, :price => 0.0}, :window_over => 'day' } } )
+  @tc.add_one_service_category_tarif_class(category, {}, 
+    {:calculation_order => 1, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteForFixedPriceIfUsed,  
+      :formula => {:params => {:max_sum_volume => 300.0, :price => 30.0}, :window_over => 'day' } } )
 
 
 @tc.add_tarif_class_categories

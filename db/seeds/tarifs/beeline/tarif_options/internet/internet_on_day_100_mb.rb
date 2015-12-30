@@ -24,19 +24,8 @@
 scg_bln_internet_on_day_100_mb = @tc.add_service_category_group(
     {:name => 'scg_bln_internet_on_day_100_mb' }, 
     {:name => "price for scg_bln_internet_on_day_100_mb"}, 
-    {:calculation_order => 0, :price => 19.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_bln_internet_on_day_100_mb', :description => '', 
-     :formula => {
-       :window_condition => "(100.0 >= sum_volume)", :window_over => 'day',
-       :stat_params => {:sum_volume => "sum((description->>'volume')::float)"},
-       :method => "case when sum_volume > 0.0 then price_formulas.price else 0.0 end",
-       
-       :multiple_use_of_tarif_option => {
-         :group_by => 'day',
-         :stat_params => {:tarif_option_count_of_usage => "ceil(sum((description->>'volume')::float) / 100.0)", :sum_volume => "sum((description->>'volume')::float)"},
-         :method => "price_formulas.price * tarif_option_count_of_usage", 
-       }
-     }, 
-    } )
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteForFixedPriceIfUsed,  
+      :formula => {:params => {:max_sum_volume => 100.0, :price => 19.0}, :window_over => 'day' } } )
 
 
 #Own and home regions, Internet

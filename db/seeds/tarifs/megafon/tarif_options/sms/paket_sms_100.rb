@@ -20,21 +20,11 @@
   scg_mgf_paket_sms_100 = @tc.add_service_category_group(
     {:name => 'scg_mgf_paket_sms_100' }, 
     {:name => "price for scg_mgf_paket_sms_100"}, 
-    {:calculation_order => 0, :price => 140.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _item, :description => '', 
-     :formula => {
-       :window_condition => "(100 >= count_volume)", :window_over => 'month',
-       :stat_params => {:count_volume => "count(description->>'volume')"},
-       :method => "case when count_volume > 0.0 then price_formulas.price else 0.0 end",
-       
-       :multiple_use_of_tarif_option => {
-         :group_by => 'month',
-         :stat_params => {:tarif_option_count_of_usage => "ceil(count(description->>'volume') / 100.0)",
-                          :count_volume => "count(description->>'volume')"},
-         :method => "price_formulas.price * tarif_option_count_of_usage" } 
-         } } )
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxCountVolumeWithMultipleUseMonth,  
+      :formula => {:params => {:max_count_volume => 100.0, :price => 140.0} } } )
 
 #Переход на тариф
-  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item_if_used, :price => 20.0})  
+  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => Price::StandardFormula::Const::PriceByItemIfUsed, :formula => {:params => {:price => 20.0} } })  
 
 #Own and home regions, sms, to_own_country
 category = {:name => '_sctcg_own_home_regions_sms_to_own_country', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_own_country}

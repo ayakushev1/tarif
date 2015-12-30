@@ -18,20 +18,12 @@
 _sctcg_litva_and_latvia_rouming_internet = {:name => '_sctcg_litva_and_latvia_rouming_internet', :service_category_rouming_id => _sc_lithuania_and_latvia_rouming, :service_category_calls_id => _internet}
 
 #Ежемесячная плата
-  @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => _stf_fixed_price_if_used_in_1_day_volume, :price => 350.0})
+#  @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => Price::StandardFormula::Const::FixedPriceIfUsedInOneDayVolume, :formula => {:params => {:price => 350.0} } })
   
 #Intranet rouming, internet
   @tc.add_one_service_category_tarif_class(_sctcg_litva_and_latvia_rouming_internet, {}, 
-    {:calculation_order => 0, :price => 350.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => '_stf_litva_and_latvia_rouming_internet', :description => '', 
-     :formula => {
-       :window_condition => "(100.0 >= sum_volume)", :window_over => 'day',
-       :stat_params => {:sum_volume => "sum((description->>'volume')::float)"},
-       :method => "case when sum_volume > 0.0 then price_formulas.price else 0.0 end",
-       
-       :multiple_use_of_tarif_option => {
-         :group_by => 'day',
-         :stat_params => {:tarif_option_count_of_usage => "ceil(sum((description->>'volume')::float) / 100.0)", :sum_volume => "sum((description->>'volume')::float)"},
-         :method => "price_formulas.price * tarif_option_count_of_usage" } } } )
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteWithMultipleUseDay,  
+      :formula => {:params => {:max_sum_volume => 100.0, :price => 350.0} } } )
 
 @tc.add_tarif_class_categories
 

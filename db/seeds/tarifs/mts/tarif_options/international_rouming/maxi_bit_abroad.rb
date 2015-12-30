@@ -13,62 +13,46 @@
     :multiple_use => true
   } } )
 
-_sctcg_bit_abrod_1_rouming_internet = {:name => '_sctcg_bit_abrod_1_rouming_internet', :service_category_rouming_id => _sc_mts_rouming_in_bit_abrod_option_countries_1, :service_category_calls_id => _internet}
-_sctcg_bit_abrod_2_rouming_internet = {:name => '_sctcg_bit_abrod_2_rouming_internet', :service_category_rouming_id => _sc_mts_rouming_in_bit_abrod_option_countries_2, :service_category_calls_id => _internet}
-_sctcg_bit_abrod_3_rouming_internet = {:name => '_sctcg_bit_abrod_3_rouming_internet', :service_category_rouming_id => _sc_mts_rouming_in_bit_abrod_option_countries_3, :service_category_calls_id => _internet}
-_sctcg_bit_abrod_4_rouming_internet = {:name => '_sctcg_bit_abrod_4_rouming_internet', :service_category_rouming_id => _sc_mts_rouming_in_bit_abrod_option_countries_4, :service_category_calls_id => _internet}
 
 #bit_abrod_1 rouming, internet
-  @tc.add_one_service_category_tarif_class(_sctcg_bit_abrod_1_rouming_internet, {}, 
-    {:calculation_order => 0, :price => 8.571428571, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => '_stf_bit_abrod_1_rouming_internet', :description => '', 
-     :formula => {
-       :window_condition => "(70.0 >= sum_volume)", :window_over => 'day',
-       :stat_params => {:sum_volume => "sum((description->>'volume')::float)"},
-       :method => "case when sum_volume > 0.0 then price_formulas.price else 0.0 end",
-       
-       :multiple_use_of_tarif_option => {
-         :group_by => 'day',
-         :stat_params => {:tarif_option_count_of_usage => "ceil(sum((description->>'volume')::float) / 70.0)", :sum_volume => "sum((description->>'volume')::float)"},
-         :method => "price_formulas.price * tarif_option_count_of_usage" } } } )
+category = {:name => '_sctcg_bit_abrod_1_rouming_internet', :service_category_rouming_id => _sc_mts_rouming_in_bit_abrod_option_countries_1, :service_category_calls_id => _internet}
+  @tc.add_one_service_category_tarif_class(category, {}, 
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteForFixedPriceIfUsed, 
+      :formula => {:params => {:max_sum_volume => 70.0, :price => 8.571428571}, :window_over => 'day' } } )
+      
+  @tc.add_one_service_category_tarif_class(category, {}, 
+    {:calculation_order => 1, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteWithMultipleUseDay, 
+      :formula => {:params => {:max_sum_volume => 70.0, :price => 8.571428571} } } )
 
 #bit_abrod_2 rouming, internet
-  @tc.add_one_service_category_tarif_class(_sctcg_bit_abrod_2_rouming_internet, {}, 
-    {:calculation_order => 0, :price => 8.571428571, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => '_stf_bit_abrod_2_rouming_internet', :description => '', 
-     :formula => {
-       :window_condition => "(70.0 >= sum_volume)", :window_over => 'day',
-       :stat_params => {:sum_volume => "sum((description->>'volume')::float)"},
-       :method => "case when sum_volume > 0.0 then price_formulas.price else 0.0 end",
-       
-       :multiple_use_of_tarif_option => {
-         :group_by => 'day',
-         :stat_params => {:tarif_option_count_of_usage => "ceil(sum((description->>'volume')::float) / 70.0)", :sum_volume => "sum((description->>'volume')::float)"},
-         :method => "price_formulas.price * tarif_option_count_of_usage" } } } )
+category = {:name => '_sctcg_bit_abrod_2_rouming_internet', :service_category_rouming_id => _sc_mts_rouming_in_bit_abrod_option_countries_2, :service_category_calls_id => _internet}
+  @tc.add_one_service_category_tarif_class(category, {}, 
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteForFixedPriceIfUsed,  
+      :formula => {:params => {:max_sum_volume => 70.0, :price => 8.571428571}, :window_over => 'day' } } )
+      
+  @tc.add_one_service_category_tarif_class(category, {}, 
+    {:calculation_order => 1, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteWithMultipleUseDay, 
+      :formula => {:params => {:max_sum_volume => 70.0, :price => 8.571428571} } } )
 
 #bit_abrod_3 rouming, internet
-  @tc.add_one_service_category_tarif_class(_sctcg_bit_abrod_3_rouming_internet, {}, 
-    {:calculation_order => 0, :price => 8.571428571, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => '_stf_bit_abrod_3_rouming_internet', :description => '', 
-     :formula => {
-       :window_condition => "(70.0 >= sum_volume)", :window_over => 'day',
-       :stat_params => {:sum_volume => "sum((description->>'volume')::float)"},
-       :method => "case when sum_volume > 0.0 then price_formulas.price else 0.0 end",
-       
-       :multiple_use_of_tarif_option => {
-         :group_by => 'day',
-         :stat_params => {:tarif_option_count_of_usage => "ceil(sum((description->>'volume')::float) / 70.0)", :sum_volume => "sum((description->>'volume')::float)"},
-         :method => "price_formulas.price * tarif_option_count_of_usage" } } } )
+category = {:name => '_sctcg_bit_abrod_3_rouming_internet', :service_category_rouming_id => _sc_mts_rouming_in_bit_abrod_option_countries_3, :service_category_calls_id => _internet}
+  @tc.add_one_service_category_tarif_class(category, {}, 
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteForFixedPriceIfUsed,  
+      :formula => {:params => {:max_sum_volume => 70.0, :price => 8.571428571}, :window_over => 'day' } } )
+      
+  @tc.add_one_service_category_tarif_class(category, {}, 
+    {:calculation_order => 1, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteWithMultipleUseDay, 
+      :formula => {:params => {:max_sum_volume => 70.0, :price => 8.571428571} } } )
 
 #bit_abrod_4 rouming, internet
-  @tc.add_one_service_category_tarif_class(_sctcg_bit_abrod_4_rouming_internet, {}, 
-    {:calculation_order => 0, :price => 220.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => '_stf_bit_abrod_4_rouming_internet', :description => '', 
-     :formula => {
-       :window_condition => "(10.0 >= sum_volume)", :window_over => 'day',
-       :stat_params => {:sum_volume => "sum((description->>'volume')::float)"},
-       :method => "case when sum_volume > 0.0 then price_formulas.price else 0.0 end",
-       
-       :multiple_use_of_tarif_option => {
-         :group_by => 'day',
-         :stat_params => {:tarif_option_count_of_usage => "ceil(sum((description->>'volume')::float) / 10.0)", :sum_volume => "sum((description->>'volume')::float)"},
-         :method => "price_formulas.price * tarif_option_count_of_usage" } } } )
+category = {:name => '_sctcg_bit_abrod_4_rouming_internet', :service_category_rouming_id => _sc_mts_rouming_in_bit_abrod_option_countries_4, :service_category_calls_id => _internet}
+  @tc.add_one_service_category_tarif_class(category, {}, 
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteForFixedPriceIfUsed,  
+      :formula => {:params => {:max_sum_volume => 10.0, :price => 220.0}, :window_over => 'day' } } )
+      
+  @tc.add_one_service_category_tarif_class(category, {}, 
+    {:calculation_order => 1, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteWithMultipleUseDay, 
+      :formula => {:params => {:max_sum_volume => 10.0, :price => 220.0} } } ) 
 
 @tc.add_tarif_class_categories
 

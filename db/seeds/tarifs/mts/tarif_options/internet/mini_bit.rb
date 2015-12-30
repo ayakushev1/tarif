@@ -19,58 +19,31 @@
   scg_mts_add_speed_100mb = @tc.add_service_category_group(
     {:name => 'scg_mts_add_speed_100mb_mts_mini_bit' }, 
     {:name => "price for scg_mts_add_speed_100mb_mts_mini_bit"}, 
-    {:calculation_order => 1, :price => 30.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'scf_mts_add_speed_100mb_mts_mini_bit', :description => '', 
-     :formula => {
-       :auto_turbo_buttons  => {
-         :group_by => 'day',
-         :stat_params => {
-           :sum_volume => "sum((description->>'volume')::float)",
-           :count_of_usage_of_100 => "ceil((sum((description->>'volume')::float) - 0.0) / 100.0)"},
-       :method => "price_formulas.price * GREATEST(count_of_usage_of_100, 0.0) + 0.01",
-       }
-     },
-     } 
+    {:calculation_order => 2, :standard_formula_id => Price::StandardFormula::Const::TurbobuttonMByteForFixedPriceDay, 
+      :formula => {:params => {:max_sum_volume => 100.0, :price => 30.0} } }
     )
-
+ 
 #Ежемесячная плата
-  @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => _stf_price_by_1_month, :price => 0.0})
+  @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => Price::StandardFormula::Const::PriceByMonth, :formula => {:params => {:price => 0.0} } })
 
 #Own and Home regions rouming, internet
 category = {:name => '_sctcg_own_home_regions_internet', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _internet}
   @tc.add_one_service_category_tarif_class(category, {}, 
-  {:calculation_order => 0, :price => 20.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _minute, :name => '_stf_fixed_price_if_used_in_1_day_volume_for_mini_bit_sctcg_own_home_regions_internet', :description => '', 
-   :formula => {
-     :window_condition => "(10.0 >= sum_volume)", :window_over => 'day',
-     :stat_params => {:sum_volume => "sum((description->>'volume')::float)"},
-     :method => "case when sum_volume > 0.0 then price_formulas.price else 0.0 end",
-     
-     :multiple_use_of_tarif_option => {
-       :group_by => 'day',
-       :stat_params => {:tarif_option_count_of_usage => "ceil(sum((description->>'volume')::float) / 10.0)", :sum_volume => "sum((description->>'volume')::float)"},
-       :method => "case when tarif_option_count_of_usage > 1.0 then price_formulas.price * tarif_option_count_of_usage / 2.0 when tarif_option_count_of_usage = 1.0 then price_formulas.price else 0.0 end", 
-#       :method => "price_formulas.price * tarif_option_count_of_usage", 
-     }
-   }, 
-  } )
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteForFixedPrice,  
+      :formula => {:params => {:max_sum_volume => 10.0, :price => 20.0}, :window_over => 'day' } } )
+  @tc.add_one_service_category_tarif_class(category, {}, 
+    {:calculation_order => 1, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteForFixedPrice,  
+      :formula => {:params => {:max_sum_volume => 10.0, :price => 10.0}, :window_over => 'day' } } )
   @tc.add_grouped_service_category_tarif_class(category, scg_mts_add_speed_100mb[:id], :tarif_set_must_include_tarif_options => [_mts_turbo_button_100_mb] )
 
 #Own country, internet
 category = {:name => 'own_country_internet', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _internet}
   @tc.add_one_service_category_tarif_class(category, {}, 
-  {:calculation_order => 0, :price => 40.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => '_stf_fixed_price_if_used_in_1_day_volume_for_mini_bit_sctcg_own_country_internet', :description => '', 
-   :formula => {
-     :window_condition => "(10.0 >= sum_volume)", :window_over => 'day',
-     :stat_params => {:sum_volume => "sum((description->>'volume')::float)"},
-     :method => "case when sum_volume > 0.0 then price_formulas.price else 0.0 end", 
-
-     :multiple_use_of_tarif_option => {
-       :group_by => 'day',
-       :stat_params => {:tarif_option_count_of_usage => "ceil(sum((description->>'volume')::float) / 10.0)", :sum_volume => "sum((description->>'volume')::float)"},
-       :method => "case when tarif_option_count_of_usage > 1.0 then price_formulas.price * tarif_option_count_of_usage / 2.0 when tarif_option_count_of_usage = 1.0 then price_formulas.price else 0.0 end", 
-#       :method => "price_formulas.price * tarif_option_count_of_usage", 
-     }
-   } 
-  } )
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteForFixedPrice,  
+      :formula => {:params => {:max_sum_volume => 10.0, :price => 40.0}, :window_over => 'day' } } )
+  @tc.add_one_service_category_tarif_class(category, {}, 
+    {:calculation_order => 1, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteForFixedPrice,  
+      :formula => {:params => {:max_sum_volume => 10.0, :price => 20.0}, :window_over => 'day' } } )
   @tc.add_grouped_service_category_tarif_class(category, scg_mts_add_speed_100mb[:id], :tarif_set_must_include_tarif_options => [_mts_turbo_button_100_mb] )
 
 @tc.add_tarif_class_categories

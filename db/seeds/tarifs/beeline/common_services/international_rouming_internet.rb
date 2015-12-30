@@ -17,16 +17,16 @@
 #SIC, Internet
 category = {:name => '_sctcg_bln_sic_internet', :service_category_rouming_id => _sc_bln_sic, :service_category_calls_id => _internet}
   @tc.add_one_service_category_tarif_class(category, {}, 
-  {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_volume_m_byte, :price => 200.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte,
-   :formula => {:window_condition => "(40.0 >= sum_volume)", :window_over => 'day'} } )
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1, :standard_formula_id => _stf_price_by_sum_volume_m_byte, :price => 5.0})  
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxDurationMinuteForFixedPrice,  
+      :formula => {:params => {:max_duration_minute => 40.0, :price => 20.0}, :window_over => 'day' } } )
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1, :standard_formula_id => Price::StandardFormula::Const::PriceBySumVolumeMByte, :formula => {:params => {:price => 5.0} } })  
 
 #Other countries, Internet
 category = {:name => '_sctcg_bln_other_countries_internet', :service_category_rouming_id => _sc_bln_other_world, :service_category_calls_id => _internet}
   @tc.add_one_service_category_tarif_class(category, {}, 
-  {:calculation_order => 0,:standard_formula_id => _stf_price_by_sum_volume_m_byte, :price => 200.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte,
-   :formula => {:window_condition => "(40.0 >= sum_volume)", :window_over => 'day'} } )
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1, :standard_formula_id => _stf_price_by_sum_volume_m_byte, :price => 5.0})  
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxDurationMinuteForFixedPrice,  
+      :formula => {:params => {:max_duration_minute => 40.0, :price => 20.0}, :window_over => 'day' } } )
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1, :standard_formula_id => Price::StandardFormula::Const::PriceBySumVolumeMByte, :formula => {:params => {:price => 5.0} } })  
 
 
 @tc.add_tarif_class_categories

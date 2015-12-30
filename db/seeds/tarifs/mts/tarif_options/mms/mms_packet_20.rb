@@ -18,17 +18,8 @@
   scg_mts_mms_packet_20 = @tc.add_service_category_group(
     {:name => 'scg_mts_mms_packet_20' }, 
     {:name => "price for scg_mts_mms_packet_20"}, 
-    {:calculation_order => 0, :price => 60.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _item, :description => '', 
-     :formula => {
-       :window_condition => "(20 >= count_volume)", :window_over => 'month',
-       :stat_params => {:count_volume => "count(description->>'volume')"},
-       :method => "case when count_volume > 0.0 then price_formulas.price else 0.0 end",
-       
-       :multiple_use_of_tarif_option => {
-         :group_by => 'month',
-         :stat_params => {:tarif_option_count_of_usage => "ceil(count(description->>'volume') / 20.0)",
-                          :count_volume => "count(description->>'volume')"},
-         :method => "price_formulas.price * tarif_option_count_of_usage" } } } )
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxCountVolumeWithMultipleUseMonth,  
+      :formula => {:params => {:max_count_volume => 20.0, :price => 60.0} } } )
 
 #_all_russia_rouming, mms, Outcoming
   category = {:name => '_sctcg_all_russia_rouming_mms', :service_category_rouming_id => _all_russia_rouming, :service_category_calls_id => _mms_out}

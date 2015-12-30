@@ -3,12 +3,19 @@ class Customer::Stat::StatAndQuery #ServiceHelper::StatAndQuerySaver
     operators ||= Customer::Info::ServiceChoices.operators
     all_services_by_operator ||= Customer::Info::ServiceChoices.all_services_by_operator
     region_id ||= 1238
-    optimization_params = optimization_params || {:common => ['multiple_use_of_tarif_option', 'auto_turbo_buttons'], :onetime => [], :periodic => [], :calls => [], :sms => [], :internet => ['multiple_use_of_tarif_option']}
+    optimization_params = optimization_params || {
+      :common => ['multiple_use_of_tarif_option', 'auto_turbo_buttons'], 
+      :onetime => ['multiple_use_of_tarif_option', 'auto_turbo_buttons'], 
+      :periodic => ['multiple_use_of_tarif_option', 'auto_turbo_buttons'], 
+      :calls => ['multiple_use_of_tarif_option', 'auto_turbo_buttons'], 
+      :sms => ['multiple_use_of_tarif_option', 'auto_turbo_buttons'], 
+      :internet => ['multiple_use_of_tarif_option']}
     
     stat_function_collector_saver = Customer::Stat::OptimizationResult.new('preloaded_calculations', 'stat_function_collector', nil)
     stat_function_collector_saver.clean_output_results
     query_constructor_saver = Customer::Stat::OptimizationResult.new('preloaded_calculations', 'query_constructor', nil)
     query_constructor_saver.clean_output_results
+    raise(StandardError, ["", operators, all_services_by_operator, region_id, optimization_params, ""].join("\n\n")) if false
     operators.each do |operator| 
       @fq_tarif_operator_id = operator
       @fq_tarif_region_id = region_id

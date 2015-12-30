@@ -19,17 +19,8 @@
 scg_30_minutes_all_world = @tc.add_service_category_group(
   {:name => 'scg_30_minutes_all_world' }, 
   {:name => "price for scg_30_minutes_all_world"}, 
-  {:calculation_order => 0, :price => 990.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute, :name => '_stf_30_minutes_all_world', :description => '', 
-   :formula => {
-     :window_condition => "(30.0 >= sum_duration_minute)", :window_over => 'month',
-     :stat_params => {:sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
-     :method => 'price_formulas.price',
-
-#     :multiple_use_of_tarif_option => {
-#       :group_by => 'month',
-#       :stat_params => {:tarif_option_count_of_usage => "ceil(sum(ceil(((description->>'duration')::float)/60.0) / 30.0))", :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
-#       :method => "price_formulas.price * tarif_option_count_of_usage" } 
-       } } )
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxDurationMinuteForFixedPrice,  
+      :formula => {:params => {:max_duration_minute => 30.0, :price => 990.0}, :window_over => 'month' } } )
 
 
 #All world, calls, incoming

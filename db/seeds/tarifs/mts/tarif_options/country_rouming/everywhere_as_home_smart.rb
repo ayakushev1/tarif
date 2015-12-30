@@ -20,22 +20,23 @@
   scg_mts_smart_included_in_tarif_calls = @tc.add_service_category_group(
     {:name => 'scg_mts_smart_included_in_tarif_calls' }, 
     {:name => "price for _scg_mts_smart_included_in_tarif_calls"}, 
-    {:calculation_order => 1, :standard_formula_id => _stf_price_by_sum_duration_minute, 
-      :formula => {:window_condition => "(400.0 >= sum_duration_minute)", :window_over => 'month'}, :price => 0.0, :description => '' }
+    {:calculation_order => 1, :standard_formula_id => Price::StandardFormula::Const::MaxDurationMinuteForFixedPrice,  
+      :formula => {:params => {:max_duration_minute => 400.0, :price => 0.0}, :window_over => 'month' } }
     )
+
   #sms included in tarif
   scg_mts_smart_included_in_tarif_sms = @tc.add_service_category_group(
     {:name => 'scg_mts_smart_included_in_tarif_sms' }, 
     {:name => "price for _scg_mts_smart_included_in_tarif_sms"}, 
-    {:calculation_order => 1, :standard_formula_id => _stf_zero_count_volume_item, 
-      :formula => {:window_condition => "(1000.0 >= count_volume)", :window_over => 'month'}, :price => 0.0, :description => '' }
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxCountVolumeForFixedPrice,  
+      :formula => {:params => {:max_count_volume => 1000.0, :price => 0.0}, :window_over => 'month' } }
     )
   #internet included in tarif
   scg_mts_smart_included_in_tarif_internet = @tc.add_service_category_group(
     {:name => 'scg_mts_smart_included_in_tarif_internet' }, 
     {:name => "price for _scg_mts_smart_included_in_tarif_internet"}, 
-    {:calculation_order => 1, :standard_formula_id => _stf_zero_sum_volume_m_byte, 
-      :formula => {:window_condition => "(1500.0 >= sum_volume)", :window_over => 'month'}, :price => 0.0, :description => '' }
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteForFixedPrice,  
+      :formula => {:params => {:max_sum_volume => 1500.0, :price => 0.0}, :window_over => 'month' } }
     )
 =end
 

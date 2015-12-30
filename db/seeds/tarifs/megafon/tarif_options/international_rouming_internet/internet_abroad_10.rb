@@ -15,71 +15,26 @@
 #Ukraine, internet
 category = {:name => '_sctcg_mgf_ukraine_internet', :service_category_rouming_id => _sc_mgf_ukraine_internet_abroad, :service_category_calls_id => _internet}
   @tc.add_one_service_category_tarif_class(category, {}, 
-    {:calculation_order => 0, :price => 49.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_mgf_ukraine_internet_abroad_10', :description => '', 
-     :formula => {
-       :window_condition => "(10.0 >= sum_volume)", :window_over => 'day', 
-       :stat_params => {:sum_volume => "sum((description->>'volume')::float)"}, 
-       :method => "price_formulas.price",
-       
-       :multiple_use_of_tarif_option => {
-         :group_by => 'day',
-         :stat_params => {:tarif_option_count_of_usage => "ceil(sum((description->>'volume')::float) / 10.0)", :sum_volume => "sum((description->>'volume')::float)"},
-         :method => "price_formulas.price * tarif_option_count_of_usage", 
-       }
-     }, 
-    } )
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteWithMultipleUseDay,  
+      :formula => {:params => {:max_sum_volume => 10.0, :price => 49.0} } } )
 
 #Europe, internet
 category = {:name => '_sc_mgf_countries_vacation_online', :service_category_rouming_id => _sc_mgf_europe_internet_abroad, :service_category_calls_id => _internet}
   @tc.add_one_service_category_tarif_class(category, {}, 
-    {:calculation_order => 0, :price => 129.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_mgf_europe_internet_abroad_10', :description => '', 
-     :formula => {
-       :window_condition => "(10.0 >= sum_volume)", :window_over => 'day', 
-       :stat_params => {:sum_volume => "sum((description->>'volume')::float)"}, 
-       :method => "price_formulas.price",
-       
-       :multiple_use_of_tarif_option => {
-         :group_by => 'day',
-         :stat_params => {:tarif_option_count_of_usage => "ceil(sum((description->>'volume')::float) / 10.0)", :sum_volume => "sum((description->>'volume')::float)"},
-         :method => "price_formulas.price * tarif_option_count_of_usage", 
-       }
-     }, 
-    } )
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteWithMultipleUseDay,  
+      :formula => {:params => {:max_sum_volume => 10.0, :price => 129.0} } } )
 
 #Popular countries plus SIC, internet
 category = {:name => '_sctcg_mgf_popular_countries_internet', :service_category_rouming_id => _sc_mgf_popular_countries_internet_abroad, :service_category_calls_id => _internet}
   @tc.add_one_service_category_tarif_class(category, {}, 
-    {:calculation_order => 0, :price => 329.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_mgf_popular_countries_internet_abroad_10', :description => '', 
-     :formula => {
-       :window_condition => "(10.0 >= sum_volume)", :window_over => 'day', 
-       :stat_params => {:sum_volume => "sum((description->>'volume')::float)"}, 
-       :method => "price_formulas.price",
-       
-       :multiple_use_of_tarif_option => {
-         :group_by => 'day',
-         :stat_params => {:tarif_option_count_of_usage => "ceil(sum((description->>'volume')::float) / 10.0)", :sum_volume => "sum((description->>'volume')::float)"},
-         :method => "price_formulas.price * tarif_option_count_of_usage", 
-       }
-     }, 
-    } )
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteWithMultipleUseDay,  
+      :formula => {:params => {:max_sum_volume => 10.0, :price => 329.0} } } )
 
 #Other countries, internet
 category = {:name => '_sctcg_mgf_other_countries_internet', :service_category_rouming_id => _sc_mgf_other_countries_internet_abroad, :service_category_calls_id => _internet}
   @tc.add_one_service_category_tarif_class(category, {}, 
-    {:calculation_order => 0, :price => 1990.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_mgf_internet_abroad_10', :description => '', 
-     :formula => {
-       :window_condition => "(10.0 >= sum_volume)", :window_over => 'day', 
-       :stat_params => {:sum_volume => "sum((description->>'volume')::float)"}, 
-       :method => "price_formulas.price",
-       
-       :multiple_use_of_tarif_option => {
-         :group_by => 'day',
-         :stat_params => {:tarif_option_count_of_usage => "ceil(sum((description->>'volume')::float) / 10.0)", :sum_volume => "sum((description->>'volume')::float)"},
-         :method => "price_formulas.price * tarif_option_count_of_usage", 
-       }
-     }, 
-    } )
-
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteWithMultipleUseDay,  
+      :formula => {:params => {:max_sum_volume => 10.0, :price => 1990.0} } } )
 
 
 @tc.add_tarif_class_categories

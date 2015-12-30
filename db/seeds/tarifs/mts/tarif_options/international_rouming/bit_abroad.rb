@@ -17,24 +17,15 @@
 #bit_abrod_1 rouming, internet
   category = {:name => '_sctcg_bit_abrod_1_rouming_internet', :service_category_rouming_id => _sc_mts_rouming_in_bit_abrod_option_countries_1, :service_category_calls_id => _internet}
   @tc.add_one_service_category_tarif_class(category, {}, 
-    {:calculation_order => 0, :price => 10.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => '_stf_bit_abrod_1_rouming_internet', :description => '', 
-     :formula => {
-       :window_condition => "(30.0 >= sum_volume)", :window_over => 'day',
-       :stat_params => {:sum_volume => "sum((description->>'volume')::float)"},
-       :method => "case when sum_volume > 0.0 then price_formulas.price else 0.0 end",
-        }
-      } )
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteForFixedPriceIfUsed, 
+      :formula => {:params => {:max_sum_volume => 30.0, :price => 10.0}, :window_over => 'day' } } )
 
 #bit_abrod_4 rouming, internet
   category = {:name => '_sctcg_bit_abrod_4_rouming_internet', :service_category_rouming_id => _sc_mts_rouming_in_bit_abrod_option_countries_4, :service_category_calls_id => _internet}
   @tc.add_one_service_category_tarif_class(category, {}, 
-    {:calculation_order => 0, :price => 240.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => '_stf_bit_abrod_4_rouming_internet', :description => '', 
-     :formula => {
-       :window_condition => "(5.0 >= sum_volume)", :window_over => 'day',
-       :stat_params => {:sum_volume => "sum((description->>'volume')::float)"},
-       :method => "case when sum_volume > 0.0 then price_formulas.price else 0.0 end",
-      }
-     } )
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteForFixedPriceIfUsed, 
+      :formula => {:params => {:max_sum_volume => 5.0, :price => 240.0}, :window_over => 'day' } } )
+
 
 @tc.add_tarif_class_categories
 

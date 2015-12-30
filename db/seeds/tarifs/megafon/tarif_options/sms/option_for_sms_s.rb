@@ -18,12 +18,12 @@
   scg_mgf_option_for_sms_s_sms = @tc.add_service_category_group(
     {:name => 'scg_mgf_option_for_sms_s_sms' }, 
     {:name => "price for scg_mgf_option_for_sms_s_sms"}, 
-    {:calculation_order => 0, :standard_formula_id => _stf_zero_count_volume_item, 
-      :formula => {:window_condition => "(100 >= count_volume)", :window_over => 'month'}, :price => 0.0, :description => '' }
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxCountVolumeForFixedPrice,  
+      :formula => {:params => {:max_count_volume => 100.0, :price => 0.0}, :window_over => 'month' } }
     )
 
 #Подключение услуги
-  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item, :price => 100.0})
+  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => Price::StandardFormula::Const::PriceByItem, :formula => {:params => {:price => 100.0} } })
 
 #Own and home regions, sms, to_own_and_home_regions
 category = {:name => '_sctcg_own_home_regions_sms_to_own_and_home_regions', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_own_and_home_regions}
@@ -33,11 +33,11 @@ category = {:name => '_sctcg_own_home_regions_sms_to_own_and_home_regions', :ser
 #Tarif option 'Будь как дома'
 #Другие категории опции должны иметь мешьший приоритет, или не пересекаться с опцией
 #Подключение услуги
-  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => _stf_price_by_1_item, :price => 30.0},
+  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => Price::StandardFormula::Const::PriceByItem, :formula => {:params => {:price => 30.0} } },
     :tarif_set_must_include_tarif_options => [_mgf_be_as_home] )  
 
 #Ежедневная плата
-  @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => _stf_fixed_price_if_used_in_1_day_volume, :price => 15.0},
+  @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => Price::StandardFormula::Const::FixedPriceIfUsedInOneDayVolume, :formula => {:params => {:price => 15.0} } },
     :tarif_set_must_include_tarif_options => [_mgf_be_as_home] )  
 
 #Own country, sms, to_own_and_home_regions

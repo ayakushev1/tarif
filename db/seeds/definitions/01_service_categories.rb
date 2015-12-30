@@ -179,12 +179,21 @@ def access_methods_to_constant_service_categories
 #  _prf_free_sum_duration = 0; _prf_free_count_volume = 1; _prf_free_sum_volume = 2;
 
 #StandardFormulas
-  _stf_price_by_1_month = 0; _stf_price_by_1_item = 2;
+#  _stf_price_by_1_month = 0; _stf_price_by_1_item = 2;
   
-  _stf_zero_sum_duration_second = 10; _stf_zero_count_volume_item = 11;  _stf_zero_sum_volume_m_byte = 12;
-  _stf_price_by_sum_duration_second = 13; _stf_price_by_count_volume_item = 14; _stf_price_by_sum_volume_m_byte = 15; _stf_price_by_sum_volume_k_byte = 16 
-  _stf_price_by_sum_duration_minute = 17; _stf_fixed_price_if_used_in_1_day_duration = 18; _stf_fixed_price_if_used_in_1_day_volume = 19;
-  _stf_price_by_1_month_if_used = 20; _stf_price_by_1_item_if_used = 21; _stf_fixed_price_if_used_in_1_day_any = 22;
+#  _stf_zero_count_volume_item = 11;  
+#  _stf_zero_sum_volume_m_byte = 12;
+#  _stf_price_by_sum_duration_second = 13;
+#   _stf_price_by_count_volume_item = 14;
+#    _stf_price_by_sum_volume_m_byte = 15; 
+#    _stf_price_by_sum_volume_k_byte = 16 
+ # _stf_price_by_sum_duration_minute = 17; 
+#  _stf_fixed_price_if_used_in_1_day_duration = 18; 
+#  _stf_fixed_price_if_used_in_1_day_volume = 19;
+#  _stf_price_by_1_month_if_used = 20; 
+#  _stf_price_by_1_item_if_used = 21; 
+#  _stf_fixed_price_if_used_in_1_day_any = 22;
+  
 
   local_variables.each do |symbol|
     send(:define_method, symbol) do

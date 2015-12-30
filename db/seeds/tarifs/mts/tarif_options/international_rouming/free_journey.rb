@@ -17,23 +17,21 @@
 scg_mts_free_journey = @tc.add_service_category_group(
   {:name => 'scg_mts_free_journey' }, 
   {:name => "price for scg_mts_free_journey"}, 
-  {:calculation_order => 0, :price => 10.0, :price_unit_id => _rur, :volume_id => _call_description_duration, :volume_unit_id => _minute, :name => '_stf_mts_free_journey', :description => '', 
-   :formula => {
-     :window_condition => "(60.0 >= sum_duration_minute)", :window_over => 'day',
-     :stat_params => {:sum_duration_minute_after_10_min => "sum(case when ceil(((description->>'duration')::float)/60.0) > 10.0 then ceil(((description->>'duration')::float)/60.0) - 10.0 else 0.0 end)",
-                      :sum_duration_minute => "sum(ceil(((description->>'duration')::float)/60.0))"},
-     :method => 'price_formulas.price * sum_duration_minute_after_10_min'}, }  )
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxDurationMinuteForFixedPrice, 
+      :formula => {:params => {:max_duration_minute => 60.0, :price => 0.0}, :window_over => 'day' } } )
 
 #Ежедневная плата
-  @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => _stf_fixed_price_if_used_in_1_day_duration, :price => 250.0})
+  @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => Price::StandardFormula::Const::FixedPriceIfUsedInOneDayDuration, :formula => {:params => {:price => 250.0} } })
 
 #Chosen countries, calls, incoming, Австралия, Австрия, Армения, Великобритания, Венгрия, Германия, Греция, Израиль, Ирландия, Италия, Нидерланды, ОАЭ, Польша, Португалия, Франция, Чехия
   category = {:name => '_sctcg_mts_europe_calls_incoming', :service_category_rouming_id => _sc_rouming_mts_free_journey, :service_category_calls_id => _calls_in}
   @tc.add_grouped_service_category_tarif_class(category, scg_mts_free_journey[:id])
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 10.0} } })
 
 #Chosen countries, calls, outcoming, to Russia, Австралия, Австрия, Армения, Великобритания, Венгрия, Германия, Греция, Израиль, Ирландия, Италия, Нидерланды, ОАЭ, Польша, Португалия, Франция, Чехия
   category = {:name => '_sctcg_mts_europe_calls_to_russia', :service_category_rouming_id => _sc_rouming_mts_free_journey, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_russia}
   @tc.add_grouped_service_category_tarif_class(category, scg_mts_free_journey[:id])
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 10.0} } })
 
      
 @tc.add_tarif_class_categories

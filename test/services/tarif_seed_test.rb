@@ -37,7 +37,7 @@ describe TarifSeedTester do
  
     service_category_full_path = classify_service_parts(service_category_full_paths)
     classified_service_category = classify_service_category(service_category_full_path[0])
-    @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => _stf_price_by_count_volume_item, :price => 3.25},
+    @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => Price::StandardFormula::Const::PriceByCountVolumeItem, :price => 3.25},
       :tarif_set_must_include_tarif_options => [_mts_mms_discount_50_percent] )
   end
 end

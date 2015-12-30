@@ -24,13 +24,9 @@
 scg_mgf_bit_mega_pro_250 = @tc.add_service_category_group(
     {:name => 'scg_mgf_bit_mega_pro_250' }, 
     {:name => "price for scg_mgf_bit_mega_pro_250"}, 
-    {:calculation_order => 0, :price => 19.0, :price_unit_id => _rur, :volume_id => _call_description_volume, :volume_unit_id => _m_byte, :name => 'stf_mgf_bit_mega_pro_250', :description => '', 
-     :formula => {
-       :window_condition => "(250.0 >= sum_volume)", :window_over => 'day',
-       :stat_params => {:sum_volume => "sum((description->>'volume')::float)"},
-       :method => "case when sum_volume > 0.0 then price_formulas.price else 0.0 end",
-     }, 
-    } )
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteForFixedPriceIfUsed,  
+      :formula => {:params => {:max_sum_volume => 250.0, :price => 19.0}, :window_over => 'day' } } )
+
 
 #Own and home regions, Internet
   category = {:name => '_sctcg_own_home_regions_internet', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _internet}
@@ -40,7 +36,7 @@ scg_mgf_bit_mega_pro_250 = @tc.add_service_category_group(
 #Другие категории опции должны иметь мешьший приоритет, или не пересекаться с опцией
 
 #Ежедневная плата
-  @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => _stf_fixed_price_if_used_in_1_day_volume, :price => 10.0},
+  @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => Price::StandardFormula::Const::FixedPriceIfUsedInOneDayVolume, :formula => {:params => {:price => 10.0} } },
     :tarif_set_must_include_tarif_options => [_mgf_internet_in_russia] )
 
 #Own country, Internet
