@@ -557,7 +557,12 @@ class TarifOptimization::TarifListGenerator
         end if tarif_option_combinations[tarif]['onetime'.freeze]
       end
     end
-#    raise(StandardError, ["", @tarif_sets_without_common_services, tarif_option_combinations, ""].join("\n\n"))
+
+#    combination_names = []
+#    part = 'own-country-rouming/mobile-connection' #'all-world-rouming/mobile-connection'
+#    tarif_option_combinations[208][part].each{|k,v| combination_names << v.map{|s| service_description[s]['name']}}
+#    raise(StandardError, combination_names)
+
   end
   
   def calculate_tarif_sets

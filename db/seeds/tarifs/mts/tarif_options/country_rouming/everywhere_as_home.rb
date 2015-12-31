@@ -11,7 +11,8 @@
         :single_country => [_mts_single_country, _mts_everywhere_as_home]
         }, 
     :general_priority => _gp_tarif_option,
-    :other_tarif_priority => {:lower => [_mts_rodnye_goroda, _mts_love_country], :higher => [_mts_love_country_all_world]},
+    :other_tarif_priority => {:lower => [_mts_50_sms_travelling_in_russia, _mts_100_sms_travelling_in_russia, _mts_rodnye_goroda, _mts_love_country], 
+        :higher => [_mts_everywhere_as_home_smart, _mts_everywhere_as_home_Ultra, _mts_love_country_all_world]},
     :prerequisites => [],
     :forbidden_tarifs => {:to_switch_on => [_mts_smart_plus, _mts_smart_top, _mts_smart_nonstop], :to_serve => []},
     :multiple_use => false

@@ -5,7 +5,9 @@
   :features => {:http => 'http://www.mts.ru/mobil_inet_and_tv/internet_phone/additionally_services/minibit/'},
   :dependency => {
     :categories => [_tcgsc_internet],
-    :incompatibility => {}, 
+    :incompatibility => {
+      :internet_comp => [_mts_mini_bit, _mts_bit, _mts_super_bit, _mts_additional_internet_500_mb, _mts_additional_internet_1_gb, _mts_internet_mini, _mts_internet_maxi, _mts_internet_super, _mts_internet_vip], 
+    }, 
     :general_priority => _gp_tarif_option_without_limits,#_gp_tarif_option_with_limits,
     :other_tarif_priority => {:lower => [], :higher => [_mts_bit, _mts_internet_super, _mts_internet_mini, _mts_internet_maxi, _mts_internet_super, 
       _mts_internet_vip, _mts_unlimited_internet_on_day, 

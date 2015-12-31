@@ -1,16 +1,15 @@
 #Пакет 100 SMS (monthly)
 @tc = TarifCreator.new(Category::Operator::Const::Mts)
 @tc.create_tarif_class({
-  :id => _mts_monthly_sms_packet_100, :name => 'Пакет 100 SMS', :operator_id => Category::Operator::Const::Mts, :privacy_id => _person, :standard_service_id => _special_service,
-  :features => {:http => 'http://www.mts.ru/mob_connect/messaging/sms/discount2/sms/'},
+  :id => _mts_100_sms_smart_mini, :name => '100 SMS Smart mini', :operator_id => Category::Operator::Const::Mts, :privacy_id => _person, :standard_service_id => _special_service,
+  :features => {:http => 'http://www.mts.ru/mob_connect/tariffs/discounts/100sms_smart/'},
   :dependency => {
     :categories => [_tcgsc_sms],
-    :incompatibility => {:sms_packets => [_mts_monthly_sms_packet_100, _mts_monthly_sms_packet_300, _mts_monthly_sms_packet_500, _mts_monthly_sms_packet_1000,
-      _mts_onetime_sms_packet_50, _mts_onetime_sms_packet_150, _mts_onetime_sms_packet_300]}, 
+    :incompatibility => {}, 
     :general_priority => _gp_tarif_option_without_limits,#_gp_tarif_option_with_limits,
     :other_tarif_priority => {:lower => [], :higher => []},
-    :prerequisites => [],
-    :forbidden_tarifs => {:to_switch_on => [_mts_ultra], :to_serve => []},
+    :prerequisites => [_mts_smart_mini],
+    :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},
     :multiple_use => false
   } } )
 
@@ -18,7 +17,7 @@ category = {:name => '_sctcg_own_home_regions_sms_to_own_home_regions', :service
 #Own and home regions, sms, outcoming, to own and home regions
   @tc.add_one_service_category_tarif_class(category, {}, 
     {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxCountVolumeForFixedPriceIfUsed,  
-      :formula => {:params => {:max_count_volume => 100.0, :price => 120.0}, :window_over => 'month' } } )
+      :formula => {:params => {:max_count_volume => 100.0, :price => 25.0}, :window_over => 'month' } } )
 
 @tc.add_tarif_class_categories
 

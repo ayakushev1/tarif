@@ -41,20 +41,13 @@
   category = {:name => '_sctcg_own_home_regions_mms_incoming', :service_category_rouming_id => _all_world_rouming, :service_category_calls_id => _mms_in}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceByCountVolumeItem, :formula => {:params => {:price => 0.0} } })
 
-#Own and home regions, mms, outcoming, to own and home regions, to all operators
-  category = { :name => '_sctcg_own_home_regions_mms_to_own_country_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _mms_out, :service_category_geo_id => _service_to_own_and_home_regions}
-  @tc.add_grouped_service_category_tarif_class(category, scg_mts_umnyi_dom_included_in_tarif_mms[:id])
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1, :standard_formula_id => Price::StandardFormula::Const::PriceByCountVolumeItem, :formula => {:params => {:price => 6.5} } })
-
-#Intranet rouming, mms, outcoming, to own and home regions, to all operators
+#_all_russia_rouming, mms, outcoming, to own and home regions, to all operators
   category = { :name => '_sctcg_all_russia_rouming_mms_to_own_country_own_operator', :service_category_rouming_id => _all_russia_rouming, :service_category_calls_id => _mms_out, :service_category_geo_id => _service_to_own_and_home_regions}
   @tc.add_grouped_service_category_tarif_class(category, scg_mts_umnyi_dom_included_in_tarif_mms[:id])
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1, :standard_formula_id => Price::StandardFormula::Const::PriceByCountVolumeItem, :formula => {:params => {:price => 6.5} } })
 
-#TODO исправить на правильный регион, а также ниже в Tarif option MMS+ (discount 50%)
-#All_russia_rouming, mms, outcoming, to_own_country
-  category = {:name => '_sctcg_own_home_regions_mms_incoming', :service_category_rouming_id => _all_russia_rouming, :service_category_geo_id => _service_to_own_country, :service_category_calls_id => _mms_out}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::PriceByCountVolumeItem, :formula => {:params => {:price => 6.5} } })  
+#All_russia_rouming, mms, outcoming, _service_to_all_own_country_regions
+  category = {:name => '_sctcg_own_home_regions_mms_incoming', :service_category_rouming_id => _all_russia_rouming, :service_category_geo_id => _service_to_all_own_country_regions, :service_category_calls_id => _mms_out}
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 2, :standard_formula_id => Price::StandardFormula::Const::PriceByCountVolumeItem, :formula => {:params => {:price => 6.5} } })  
 
 #All_world_rouming, mms, Outcoming
   category = {:name => '_sctcg_own_home_regions_mms_incoming', :service_category_rouming_id => _all_world_rouming, :service_category_calls_id => _mms_out}
@@ -119,7 +112,7 @@
 
 #Own and home regions, wap-internet
   category = {:name => '_sctcg_own_home_regions_wap_internet', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _wap_internet}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::PriceBySumVolumeKByte, :formula => {:params => {:price => 2.75} } })
+#  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::PriceBySumVolumeKByte, :formula => {:params => {:price => 2.75} } })
 
 #Базовый тариф на междугородние и международные звонки при путешествии по России - как в собственном регионе - не забывать добавлять в тарифах!
 #При этом звонки на МТС - по тарифу для роуминга
@@ -159,19 +152,15 @@
   @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => Price::StandardFormula::Const::PriceByMonth, :formula => {:params => {:price => 34.0} } },
     :tarif_set_must_include_tarif_options => [_mts_mms_discount_50_percent] )
 
-#Own and home regions, mms, outcoming, to own and home regions, to all operators
-  category = { :name => '_sctcg_own_home_regions_mms_to_own_country_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _mms_out, :service_category_geo_id => _service_to_own_and_home_regions}
-  @tc.add_grouped_service_category_tarif_class(category, scg_mts_umnyi_dom_included_in_tarif_mms[:id],
-    :tarif_set_must_include_tarif_options => [_mts_mms_discount_50_percent] )  
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1, :standard_formula_id => Price::StandardFormula::Const::PriceByCountVolumeItem, :formula => {:params => {:price => 3.25} } },
-    :tarif_set_must_include_tarif_options => [_mts_mms_discount_50_percent] )
-
-#Intranet rouming, mms, outcoming, to own and home regions, to all operators
+#_all_russia_rouming, mms, outcoming, to own and home regions, to all operators
   category = { :name => '_sctcg_all_russia_rouming_mms_to_own_country_own_operator', :service_category_rouming_id => _all_russia_rouming, :service_category_calls_id => _mms_out, :service_category_geo_id => _service_to_own_and_home_regions}
   @tc.add_grouped_service_category_tarif_class(category, scg_mts_umnyi_dom_included_in_tarif_mms[:id],
     :tarif_set_must_include_tarif_options => [_mts_mms_discount_50_percent] )
+
+#All_russia_rouming, mms, outcoming, _service_to_all_own_country_regions
+  category = {:name => '_sctcg_own_home_regions_mms_incoming', :service_category_rouming_id => _all_russia_rouming, :service_category_geo_id => _service_to_all_own_country_regions, :service_category_calls_id => _mms_out}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1, :standard_formula_id => Price::StandardFormula::Const::PriceByCountVolumeItem, :formula => {:params => {:price => 3.25} } },
-    :tarif_set_must_include_tarif_options => [_mts_mms_discount_50_percent] )
+    :tarif_set_must_include_tarif_options => [_mts_mms_discount_50_percent] )  
 
 #enf_of MMS+
 

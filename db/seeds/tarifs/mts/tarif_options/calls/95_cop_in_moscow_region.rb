@@ -10,6 +10,7 @@
     :other_tarif_priority => {:lower => [], :higher => [_mts_unlimited_calls]},
     :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},
     :prerequisites => [_mts_red_energy],
+#    :is_archived => true,
     :multiple_use => false
   } } )
 

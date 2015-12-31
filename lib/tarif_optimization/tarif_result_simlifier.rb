@@ -244,7 +244,7 @@ class TarifOptimization::TarifResultSimlifier
           updated_cons_tarif_results[tarif_set_id]['price_value'.freeze] += updated_tarif_result_by_part_by_service['price_value'.freeze].to_f
           updated_cons_tarif_results[tarif_set_id]['call_id_count'.freeze] += updated_tarif_result_by_part_by_service['call_id_count'.freeze].to_i
           updated_cons_tarif_results[tarif_set_id]['parts'.freeze] << part #+= ([part] - updated_cons_tarif_results[tarif_set_id]['parts'])
-          updated_cons_tarif_results[tarif_set_id]['group_criteria'.freeze] += ((updated_tarif_result_by_part_by_service['price_value'.freeze].to_f * 1000000.0).round(2))#.to_i #+
+          updated_cons_tarif_results[tarif_set_id]['group_criteria'.freeze] += ((updated_tarif_result_by_part_by_service['price_value'.freeze].to_f * 100.0).round(2))#.to_i #+
 #          updated_cons_tarif_results[tarif_set_id]['group_criteria'] += (updated_tarif_result_by_part_by_service['price_value'].to_f / 5.0).round(0).to_i #+
 #            updated_tarif_result_by_part_by_service['call_id_count'].to_i
         end

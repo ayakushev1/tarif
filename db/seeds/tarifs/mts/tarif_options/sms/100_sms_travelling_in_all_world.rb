@@ -7,7 +7,7 @@
     :categories => [_tcgsc_sms],
     :incompatibility => {:sms_abroad => [_mts_50_sms_in_europe, _mts_100_sms_in_europe, _mts_50_sms_travelling_in_all_world, _mts_100_sms_travelling_in_all_world]}, 
     :general_priority => _gp_tarif_option_without_limits,#_gp_tarif_option_with_limits,
-    :other_tarif_priority => {:lower => [], :higher => [_mts_50_sms_in_europe, _mts_100_sms_in_europe]},
+    :other_tarif_priority => {:lower => [], :higher => []},
     :prerequisites => [],
     :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},
     :multiple_use => true

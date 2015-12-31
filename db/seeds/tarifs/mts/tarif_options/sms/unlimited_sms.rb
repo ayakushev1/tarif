@@ -5,10 +5,10 @@
   :features => {:http => 'http://www.mts.ru/mob_connect/messaging/sms/discount2/sms_unlim/'},
   :dependency => {
     :categories => [_tcgsc_sms],
-    :incompatibility => {:sms_packets => [_mts_monthly_sms_packet_100, _mts_monthly_sms_packet_300, _mts_monthly_sms_packet_500, _mts_monthly_sms_packet_1000,
+    :incompatibility => {:sms_packets => [_mts_unlimited_sms, _mts_monthly_sms_packet_100, _mts_monthly_sms_packet_300, _mts_monthly_sms_packet_500, _mts_monthly_sms_packet_1000,
       _mts_onetime_sms_packet_50, _mts_onetime_sms_packet_150, _mts_onetime_sms_packet_300]}, 
     :general_priority => _gp_tarif_option_without_limits,#_gp_tarif_option_with_limits,
-    :other_tarif_priority => {:lower => [], :higher => []},
+    :other_tarif_priority => {:lower => [], :higher => [_mts_50_sms_travelling_in_russia, _mts_100_sms_travelling_in_russia]},
     :prerequisites => [_mts_red_energy],
     :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},
     :multiple_use => true

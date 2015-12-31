@@ -7,7 +7,7 @@
     :categories => [_tcgsc_sms],
     :incompatibility => {:sms_travelling_in_russia => [_mts_50_sms_travelling_in_russia, _mts_100_sms_travelling_in_russia]}, 
     :general_priority => _gp_tarif_option_without_limits,#_gp_tarif_option_with_limits,
-    :other_tarif_priority => {:lower => [], :higher => []},
+    :other_tarif_priority => {:lower => [], :higher => [_mts_everywhere_as_home]},
     :prerequisites => [],
     :forbidden_tarifs => {:to_switch_on => [_mts_ultra], :to_serve => []},
     :multiple_use => true

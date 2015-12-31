@@ -56,6 +56,7 @@ class TarifOptimization::TarifOptimizatorRunner
   end
     
   def self.calculate(options)
+#    options[:tarif_optimizator_input][:monitor_performance] = 'true'
     tarif_optimizator = TarifOptimization::TarifOptimizator.new(options)   
 
     if options[:tarif_optimizator_input][:monitor_performance] == 'true'

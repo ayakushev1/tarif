@@ -7,7 +7,7 @@
     :categories => [_tcgsc_calls],
     :incompatibility => {:everywhere_as_home => [_mts_everywhere_as_home, _mts_everywhere_as_home_Ultra, _mts_everywhere_as_home_smart]}, 
     :general_priority => _gp_tarif_option,
-    :other_tarif_priority => {:lower => [], :higher => []},
+    :other_tarif_priority => {:lower => [_mts_everywhere_as_home], :higher => []},
     :prerequisites => [_mts_ultra],
     :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},
     :is_archived => true,

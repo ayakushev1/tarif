@@ -5,7 +5,7 @@
   :features => {:http => 'http://www.mts.ru/mob_connect/roaming/i_roaming/discount_roaming/free_travel/'},
   :dependency => {
     :categories => [_tcgsc_calls],
-    :incompatibility => {}, 
+    :incompatibility => {:free_journey => [_mts_free_journey, _mts_zero_without_limits]}, 
     :general_priority => _gp_tarif_option,
     :other_tarif_priority => {:lower => [], :higher => []},
     :prerequisites => [],

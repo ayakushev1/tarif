@@ -5,7 +5,7 @@
   :features => {:http => 'http://www.mts.ru/mob_connect/messaging/mms/discount2_mms/sms_pack/'},
   :dependency => {
     :categories => [_tcgsc_mms],
-    :incompatibility => {:mms_packets => [_mts_mms_packet_10, _mts_mms_packet_20, _mts_mms_packet_50]}, 
+    :incompatibility => {:mms_packets => [_mts_mms_discount_50_percent, _mts_mms_packet_10, _mts_mms_packet_20, _mts_mms_packet_50]}, 
     :general_priority => _gp_tarif_option_without_limits,#_gp_tarif_option_with_limits,
     :other_tarif_priority => {:lower => [], :higher => []},
     :prerequisites => [],

@@ -22,7 +22,7 @@
 
 #All_russia_rouming, mms, Outcoming
   category = {:name => '_sctcg_own_home_regions_mms_incoming', :service_category_rouming_id => _all_russia_rouming, :service_category_calls_id => _mms_out}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::PriceByCountVolumeItem, :formula => {:params => {:price => 6.5} } })  
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1, :standard_formula_id => Price::StandardFormula::Const::PriceByCountVolumeItem, :formula => {:params => {:price => 6.5} } })  
 
 #All_world_rouming, mms, Incoming
   category = {:name => '_sctcg_own_home_regions_mms_incoming', :service_category_rouming_id => _all_world_rouming, :service_category_calls_id => _mms_in}
@@ -91,7 +91,7 @@
 
 #Own and home regions, wap-internet
   category = {:name => '_sctcg_own_home_regions_wap_internet', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _wap_internet}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumVolumeKByte, :formula => {:params => {:price => 2.75} } })  
+#  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumVolumeKByte, :formula => {:params => {:price => 2.75} } })  
 
 #Базовый тариф на междугородние и международные звонки при путешествии по России - как в собственном регионе - не забывать добавлять в тарифах!
 #При этом звонки на МТС - по тарифу для роуминга
@@ -133,11 +133,7 @@ _sctcg_intranet_rouming_mms_to_own_country_own_operator = { :name => '_sctcg_all
   @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => Price::StandardFormula::Const::PriceByMonth, :formula => {:params => {:price => 34.0} } },
     :tarif_set_must_include_tarif_options => [_mts_mms_discount_50_percent] )
 
-#Own and home regions, mms, outcoming, to all own country regions, to own operator
-  @tc.add_one_service_category_tarif_class(_sctcg_own_home_regions_mms_to_own_country_own_operator, {}, {:standard_formula_id => Price::StandardFormula::Const::PriceByCountVolumeItem, :formula => {:params => {:price => 3.25} } },
-    :tarif_set_must_include_tarif_options => [_mts_mms_discount_50_percent] )
-
-#Intranet rouming, mms, outcoming, to all own country regions, to own operator
+#_all_russia_rouming, mms, outcoming, to all own country regions, to own operator
   @tc.add_one_service_category_tarif_class(_sctcg_intranet_rouming_mms_to_own_country_own_operator, {}, {:standard_formula_id => Price::StandardFormula::Const::PriceByCountVolumeItem,:formula => {:params => {:price => 3.25} } },
     :tarif_set_must_include_tarif_options => [_mts_mms_discount_50_percent] )
 
