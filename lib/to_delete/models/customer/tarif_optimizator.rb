@@ -9,17 +9,17 @@ class Customer::TarifOptimizator1 < ActiveType::Object
   attribute :services_for_calculation_select, default: proc {controller.create_filtrable("services_for_calculation_select")}
 
   attribute :operators_optimization_progress_bar, default: proc {
-    options = {'action_on_update_progress' => controller.customer_tarif_optimizators_calculation_status_path}.merge(
+    options = {'action_on_update_progress' => controller.tarif_optimizators_admin_calculation_status_path}.merge(
       background_process_informer_operators.current_values);
     controller.create_progress_barable('operators_optimization', options)}
   attribute :tarifs_optimization_progress_bar, default: proc {
-    options = {'action_on_update_progress' => controller.customer_tarif_optimizators_calculation_status_path}.merge(
+    options = {'action_on_update_progress' => controller.tarif_optimizators_admin_calculation_status_path}.merge(
       background_process_informer_tarifs.current_values);
     controller.create_progress_barable('tarifs_optimization', options)
 #    raise(StandardError)
     }
   attribute :tarif_optimization_progress_bar, default: proc {
-    options = {'action_on_update_progress' => controller.customer_tarif_optimizators_calculation_status_path}.merge(
+    options = {'action_on_update_progress' => controller.tarif_optimizators_admin_calculation_status_path}.merge(
       background_process_informer_tarif.current_values);
     controller.create_progress_barable('tarif_optimization', options)}
 

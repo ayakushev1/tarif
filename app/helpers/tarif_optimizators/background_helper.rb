@@ -4,20 +4,20 @@ module TarifOptimizators::BackgroundHelper
   attr_reader :background_process_informer_operators, :background_process_informer_tarifs, :background_process_informer_tarif
   
   def operators_optimization_progress_bar
-    options = {'action_on_update_progress' => customer_tarif_optimizators_calculation_status_path}.merge(
+    options = {'action_on_update_progress' => tarif_optimizators_admin_calculation_status_path}.merge(
       background_process_informer_operators.current_values);
     create_progress_barable('operators_optimization', options)
   end
   
   def tarifs_optimization_progress_bar
-    options = {'action_on_update_progress' => customer_tarif_optimizators_calculation_status_path}.merge(
+    options = {'action_on_update_progress' => tarif_optimizators_admin_calculation_status_path}.merge(
       background_process_informer_tarifs.current_values);
     create_progress_barable('tarifs_optimization', options)
 #    raise(StandardError)
   end
   
   def tarif_optimization_progress_bar
-    options = {'action_on_update_progress' => customer_tarif_optimizators_calculation_status_path}.merge(
+    options = {'action_on_update_progress' => tarif_optimizators_admin_calculation_status_path}.merge(
       background_process_informer_tarif.current_values);
     create_progress_barable('tarif_optimization', options)
   end
