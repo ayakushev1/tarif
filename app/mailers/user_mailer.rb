@@ -20,7 +20,7 @@ class UserMailer < ActionMailer::Base
 
   def welcome_email(user)
     @user = user
-    @url  = 'http://www.mytarifs.ru'/
+    @url  = 'http://www.mytarifs.ru/'
 #    raise(StandardError, [@user.email])
     mail(to: @user.email, subject: 'Welcome to My Site')
   end

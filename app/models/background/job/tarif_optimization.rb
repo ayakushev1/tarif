@@ -30,7 +30,7 @@ module Background::Job
     end
 
     def max_attempts
-      3
+      1
     end
     
     def destroy_failed_jobs
