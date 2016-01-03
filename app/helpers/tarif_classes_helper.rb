@@ -31,41 +31,42 @@ module TarifClassesHelper
       where(where_for_is_archived), options)
   end
 
-
-
-
-
-  def price_lists_for_index1
-    options = {:base_name => 'price_lists_for_index', :current_id_name => 'price_lists_for_index_id', :pagination_per_page => 10}
-    create_tableable(price_list, options)
-  end
-  
-
-  def service_categories_for_groups    
-    options = {:base_name => 'service_categories_for_groups', :current_id_name => 'service_categories_for_groups_id', :pagination_per_page => 10}
-    create_tableable(Service::CategoryTarifClass.
+  def full_category_groups
+    @full_category_groups ||= Service::CategoryGroup.
+      includes(service_category_tarif_classes: [:service_category_rouming, :service_category_geo, :service_category_partner_type,
+        :service_category_calls, :service_category_one_time, :service_category_periodic]).
+      includes(service_category_tarif_classes: [service_category_calls: [:parent_call]]).
+      includes(price_lists: [formulas: [:standard_formula]]).
       where(:tarif_class_id => session[:current_id]['tarif_class_id']).
-      where("as_standard_category_group_id is not Null").
-      order("conditions->>'tarif_set_must_include_tarif_options' DESC"). 
-      order(:as_standard_category_group_id, :service_category_calls_id, :service_category_rouming_id, :service_category_geo_id), options
-      )
-#    create_tableable(PriceList.where(:service_category_group_id => service_category_groups_ids) )
-#    raise(StandardError, PriceList.where(:service_category_group_id => service_category_groups_ids).to_sql )
+      order("service_category_tarif_classes.service_category_one_time_id").
+      order("service_category_tarif_classes.service_category_periodic_id").
+      order("service_categories.parent_id").
+      order("service_category_tarif_classes.service_category_rouming_id, service_category_tarif_classes.service_category_calls_id, service_category_tarif_classes.service_category_geo_id, service_category_tarif_classes.service_category_partner_type_id").
+      order("price_formulas.calculation_order")
   end
 
-  def price_formulas_groups
-    options = {:base_name => 'price_formulas_groups', :current_id_name => 'price_formulas_groups_id', :pagination_per_page => 10}
-    as_standard_category_group_id = Service::CategoryTarifClass.where(:id => session[:current_id]['service_category_tarif_class_id']).pluck(:as_standard_category_group_id)[0]
-    price_list_id = PriceList.where(:service_category_group_id => as_standard_category_group_id).pluck(:id)[0]
-    create_tableable(Price::Formula.with_price_list(price_list_id), options)
-#    raise(StandardError, price_list_id)
-#    create_tableable(Price::Formula.where(:price_list_id => session[:current_id]['price_list_id']) )
+  def category_groups
+    options = {:base_name => 'category_groups', :current_id_name => 'category_group_id', :pagination_per_page => 10}
+    create_tableable(Service::CategoryGroup.where(:tarif_class_id => session[:current_id]['tarif_class_id']), options)
   end
-  
-  def price_list1
-    PriceList.tarif_class_price_lists(session[:current_id]['tarif_class_id']).
-      includes(:service_category_tarif_class, :formulas).
-      order("service_category_tarif_classes.conditions->>'tarif_set_must_include_tarif_options'  DESC")
+
+  def service_categories
+    options = {:base_name => 'service_categories', :current_id_name => 'service_categories_id', :pagination_per_page => 10}
+    create_tableable(Service::CategoryTarifClass.
+      includes(:service_category_rouming, :service_category_geo, :service_category_partner_type, :service_category_calls, :service_category_one_time, :service_category_periodic).
+      where(:as_standard_category_group_id => session[:current_id]['category_group_id']).
+      order("conditions->>'tarif_set_must_include_tarif_options' DESC"). 
+      order(:as_standard_category_group_id, :service_category_calls_id, :service_category_rouming_id, :service_category_geo_id), options )
+  end
+
+  def price_formulas
+    options = {:base_name => 'price_formulas', :current_id_name => 'price_formula_id', :pagination_per_page => 10}
+    create_tableable(Price::Formula.joins(price_list: :service_category_group).where(:service_category_groups => {:id => session[:current_id]['category_group_id']}), options)
+  end
+
+  def price_standard_formulas
+    options = {:base_name => 'price_standard_formulas', :current_id_name => 'price_standard_formula_id', :pagination_per_page => 10}
+    create_tableable(Price::StandardFormula.includes(:price_unit, :volume, :volume_unit).joins(:formulas).where(:price_formulas => {:id => session[:current_id]['price_formula_id']}), options)
   end
 
 

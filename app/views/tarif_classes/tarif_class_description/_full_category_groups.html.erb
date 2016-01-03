@@ -1,0 +1,17 @@
+<% full_category_groups.each do |category_group| %>
+<div class="row">
+	<div class="col-xs-7">
+		<%= category_group.id %>
+		<%= nested_hash_to_s(categories_to_hash(category_group.service_category_tarif_classes)) %>
+	</div>	
+	<div class="col-xs-5">
+	<% category_group.price_lists.each do |price_list|%>	
+		<div class="row">
+		<% price_list.formulas.each do |formula| %>
+			<%= formula_presenter(formula) %>
+		<% end if price_list.formulas %>
+		</div>
+	<% end if category_group.price_lists %>
+	</div>	
+</div>
+<% end if full_category_groups %>

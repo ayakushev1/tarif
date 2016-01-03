@@ -16,6 +16,7 @@ class Service::Category < ActiveRecord::Base
 
   belongs_to :type, :class_name =>'Category', :foreign_key => :type_id
   belongs_to :parent, :class_name =>'Service::Category', :foreign_key => :parent_id
+  belongs_to :parent_call, :class_name =>'Service::Category', :foreign_key => :parent_id
   has_many :children, :class_name =>'Service::Category', :foreign_key => :parent_id
   has_many :criteria, :class_name =>'Service::Criterium', :foreign_key => :service_category_id
 #  has_and_belongs_to_many :tarif_classes, :join_table => ':service_category_tarif_classes', :class_name => '::TarifClass' 
