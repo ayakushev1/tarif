@@ -17,6 +17,7 @@ class Service::CategoryGroup < ActiveRecord::Base
   belongs_to :operator, :class_name =>'::Category', :foreign_key => :operator_id
   belongs_to :tarif_class, :class_name =>'::TarifClass', :foreign_key => :tarif_class_id
   has_many :service_category_tarif_classes, :class_name =>'Service::CategoryTarifClass', :foreign_key => :as_standard_category_group_id
+  has_many :price_lists, :class_name => '::PriceList', :foreign_key => :service_category_group_id
   
 end
 

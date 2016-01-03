@@ -1,0 +1,12 @@
+<%
+table.init do |t|
+  t.heads = ['Name', 'Part', 'Part criteria']
+  t.set_fields do |f| 
+  [
+    f.name,
+    f.conditions['parts'], 
+    f.conditions['parts_criteria'], 
+  ] 
+  end
+end
+%>
