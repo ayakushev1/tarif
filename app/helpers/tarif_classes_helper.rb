@@ -26,9 +26,10 @@ module TarifClassesHelper
       when 'true'
         "(dependency->>'is_archived')::boolean = true"
       end 
-      
+    
+    where_not_blank = "features is not null"  
     options = {:base_name => 'tarif_classes', :current_id_name => 'tarif_class_id', :pagination_per_page => 10}
-    create_tableable(TarifClass.query_from_filtr(filtr).where(where_for_category).where(where_for_is_archived), options)
+    create_tableable(TarifClass.query_from_filtr(filtr).where(where_for_category).where(where_for_is_archived).where(where_not_blank), options)
   end
 
   def full_category_groups
