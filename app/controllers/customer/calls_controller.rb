@@ -18,7 +18,7 @@ class Customer::CallsController < ApplicationController
   def generate_calls
     Calls::Generator.new(customer_calls_generation_params, user_params).generate_calls
     Customer::CallRun.where(:id => customer_call_run_id).first_or_create.calculate_call_stat
-    redirect_to customer_calls_path
+    redirect_to tarif_optimizators_main_index_path
   end
   
   def update_customer_infos
