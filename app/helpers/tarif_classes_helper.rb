@@ -8,7 +8,7 @@ module TarifClassesHelper
   end
 
  def tarif_class_form
-    create_formable(TarifClass.where(:id => session[:current_id]['tarif_class_id']).first)
+    create_formable(TarifClass.where(:id => (params[:id] || session[:current_id]['tarif_class_id'])).first)
   end
 
   def tarif_classes
