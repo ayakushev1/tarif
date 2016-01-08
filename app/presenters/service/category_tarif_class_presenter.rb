@@ -1,46 +1,75 @@
 module Service::CategoryTarifClassPresenter
-  def categories_to_hash(categories)
-#    categories_to_process = categories.select("service_category_one_time_id, service_category_periodic_id, service_category_rouming_id, 
-#      service_category_calls_id, service_category_geo_id, service_category_partner_type_id").distinct
-
-    temp = {}
-    categories.each do |cat|
-      case
-      when cat.service_category_one_time_id
-        temp[cat.service_category_one_time.name] = {} 
-      when cat.service_category_periodic_id
-        temp[cat.service_category_periodic.name] = {} 
-      else
-        temp[cat.service_category_calls.name] ||= {} 
-        temp[cat.service_category_calls.name][cat.service_category_rouming.name] ||= {} 
-        if cat.service_category_geo_id
-          temp[cat.service_category_calls.name][cat.service_category_rouming.name][cat.service_category_geo.name] ||= {}
-          temp[cat.service_category_calls.name][cat.service_category_rouming.name][cat.service_category_geo.name][cat.service_category_partner_type.name] ||= {} if cat.service_category_partner_type_id
-        else
-          temp[cat.service_category_calls.name][cat.service_category_rouming.name][cat.service_category_partner_type.name] ||= {} if cat.service_category_partner_type_id
-        end         
-      end
-    end if categories
-    temp
+  def category_groups_presenter(full_category_groups)
+    result = []
+    colspan = []
+    prev_service_category = nil
+    full_category_groups.each do |category_group|
+      temp = []
+      price_to_show = true
+      category_group.service_category_tarif_classes.each do |service_category|
+        temp = category_presenter(service_category, prev_service_category)         
+        temp << ((category_group.price_lists and category_group.price_lists.first.formulas and price_to_show) ? price_presenter(category_group.price_lists.first.formulas.first) : nil)
+        result << temp
+        price_to_show = false
+        prev_service_category = service_category        
+      end if category_group.service_category_tarif_classes            
+    end if full_category_groups
+    result_with_colspan(result)
   end
   
-  def nested_hash_to_s(nested_hash)           
-    nested_hash.keys.map do |key|
-      content_tag(:div, :style => "display: table-row;") do
-        if nested_hash[key].blank?
-          content_tag(:div, key, :style => "display: table-cell;")
-        else
-          content_tag(:div, key + ", " , :style => "display: table-cell;") + content_tag(:div, nested_hash_to_s(nested_hash[key]), :style => "display: table-cell; padding-left: 5px; padding-top: 5px;")  
+  def result_with_colspan(result_without_colspan_1)
+#    return result_without_colspan
+    result = []
+    result_without_colspan = result_without_colspan_1.reverse
+    result_without_colspan[0].each_index do |col|
+      current_row_span = 1
+      result_without_colspan.each_index do |row|
+        result[row] ||= []
+        if result_without_colspan[row][col] or (col > 0 and col < 4 and result[row][col-1][1])
+          result[row][col] = [result_without_colspan[row][col], current_row_span]
+          current_row_span = 1
+        else          
+          result[row][col] = [nil, nil]
+          current_row_span += 1
         end
       end
-    end.sum
+    end if result_without_colspan[0]
+    result.reverse
+  end  
+  
+  def category_presenter(service_category, prev_service_category)
+    curr_category = to_compare_format(service_category)
+    prev_category = prev_service_category ? to_compare_format(prev_service_category) : [nil, nil, nil, nil]
+    category_items_to_show = case
+    when curr_category == prev_category
+      [nil, nil, nil, nil]
+    when curr_category[0..2] == prev_category[0..2]
+      [nil, nil, nil, service_category.service_category_partner_type.try(:name)]
+    when curr_category[0..1] == prev_category[0..1]
+      [nil, nil, service_category.service_category_geo.try(:name), service_category.service_category_partner_type.try(:name)]
+    when curr_category[0] == prev_category[0]
+      [nil, service_category.service_category_rouming.try(:name), service_category.service_category_geo.try(:name), service_category.service_category_partner_type.try(:name)]
+    else
+      [first_show_item_choicer(service_category), service_category.service_category_rouming.try(:name), service_category.service_category_geo.try(:name), service_category.service_category_partner_type.try(:name)]
+    end
   end
   
-  def formula_presenter(formula)
-    content_tag(:div, :style => "display: table-row;") do
-      content_tag(:div, formula.calculation_order, :style => "display: table-cell; padding-left: 5px; padding-top: 5px;") +
-      content_tag(:div, price_presenter(formula), :style => "display: table-cell; padding-left: 5px; padding-top: 5px;")
+  def first_show_item_choicer(service_category)
+    case
+    when service_category.service_category_one_time_id
+      service_category.service_category_one_time.try(:name) 
+    when service_category.service_category_periodic_id
+      service_category.service_category_periodic.try(:name) 
+    else
+      service_category.service_category_calls.try(:name) || service_category.attributes
     end
+  end
+  
+  def to_compare_format(service_category)
+    [
+      [service_category.service_category_one_time_id, service_category.service_category_periodic_id, service_category.service_category_calls_id].compact[0],
+      service_category.service_category_rouming_id, service_category.service_category_geo_id, service_category.service_category_partner_type_id,
+    ]
   end
   
   def price_presenter(formula)
@@ -73,37 +102,37 @@ module Service::CategoryTarifClassPresenter
       if formula.formula['params']['price'] > 0.0
         "Стоимость оплаченных #{formula.formula['params']['max_duration_minute']} минут составляет #{formula.formula['params']['price']} руб. в #{window_over}"
       else
-        "Включены в стоимость #{formula.formula['params']['max_duration_minute']} минут в #{window_over}"
+        "Включены в абонентскую плату #{formula.formula['params']['max_duration_minute']} минут в #{window_over}"
       end      
     when Price::StandardFormula::Const::MaxCountVolumeForFixedPrice      
       if formula.formula['params']['price'] > 0.0
         "Стоимость оплаченных #{formula.formula['params']['max_count_volume']} штук составляет #{formula.formula['params']['price']} руб. в #{window_over}"
       else
-        "Включены в стоимость #{formula.formula['params']['max_count_volume']} штук в #{window_over}"
+        "Включены в абонентскую плату #{formula.formula['params']['max_count_volume']} штук в #{window_over}"
       end      
     when Price::StandardFormula::Const::MaxSumVolumeMByteForFixedPrice      
       if formula.formula['params']['price'] > 0.0
         "Стоимость оплаченных #{formula.formula['params']['max_sum_volume']} Мб составляет #{formula.formula['params']['price']} руб. в #{window_over}"
       else
-        "Включены в стоимость #{formula.formula['params']['max_sum_volume']} Мб в #{window_over}"
+        "Включены в абонентскую плату #{formula.formula['params']['max_sum_volume']} Мб в #{window_over}"
       end      
     when Price::StandardFormula::Const::MaxDurationMinuteForFixedPriceIfUsed      
       if formula.formula['params']['price'] > 0.0
         "Стоимость оплаченных #{formula.formula['params']['max_duration_minute']} минут составляет #{formula.formula['params']['price']} руб. в #{window_over}, если услуга использовалась."
       else
-        "Включены в стоимость #{formula.formula['params']['max_duration_minute']} минут в #{window_over}, если услуга использовалась."
+        "Включены в абонентскую плату #{formula.formula['params']['max_duration_minute']} минут в #{window_over}, если услуга использовалась."
       end      
     when Price::StandardFormula::Const::MaxCountVolumeForFixedPriceIfUsed      
       if formula.formula['params']['price'] > 0.0
         "Стоимость оплаченных #{formula.formula['params']['max_count_volume']} штук составляет #{formula.formula['params']['price']} руб. в #{window_over}, если услуга использовалась."
       else
-        "Включены в стоимость #{formula.formula['params']['max_count_volume']} штук в #{window_over}, если услуга использовалась."
+        "Включены в абонентскую плату #{formula.formula['params']['max_count_volume']} штук в #{window_over}, если услуга использовалась."
       end      
     when Price::StandardFormula::Const::MaxSumVolumeMByteForFixedPriceIfUsed      
       if formula.formula['params']['price'] > 0.0
         "Стоимость оплаченных #{formula.formula['params']['max_sum_volume']} Мб составляет #{formula.formula['params']['price']} руб. в #{window_over}, если услуга использовалась."
       else
-        "Включены в стоимость #{formula.formula['params']['max_sum_volume']} Мб в #{window_over}, если услуга использовалась."
+        "Включены в абонентскую плату #{formula.formula['params']['max_sum_volume']} Мб в #{window_over}, если услуга использовалась."
       end      
     when Price::StandardFormula::Const::MaxDurationMinuteForSpecialPrice
       "Стоимость оплаченных #{formula.formula['params']['max_duration_minute']} минут составляет #{formula.formula['params']['price']} руб. за минуту"

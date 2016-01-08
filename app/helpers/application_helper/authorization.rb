@@ -101,6 +101,7 @@ module ApplicationHelper::Authorization
           'customer/demands' => ['index', 'create', 'new'],
           'errors' => ['error404', 'error422', 'error500'],
           'comparison/optimizations' =>['index', 'show', 'call_stat'],
+          'tarif_classes' =>['index', 'show'],
         }
       }, 
       :comparison => {

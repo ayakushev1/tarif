@@ -186,19 +186,19 @@ cat << {:id => _sc_mgf_extended_countries_international_rouming, :name => 'Cтр
   crit << {:id => _sc_mgf_extended_countries_international_rouming * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
            :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mgf_extended_countries_international_rouming})", :service_category_id => _sc_mgf_extended_countries_international_rouming}
 
-cat << {:id => _sc_mgf_ukraine_internet_abroad, :name => 'Страны Европы Мегафона', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+cat << {:id => _sc_mgf_ukraine_internet_abroad, :name => 'Страны Европы Мегафона, Украина', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
   crit << {:id => _sc_mgf_ukraine_internet_abroad * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
            :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mgf_ukraine_internet_abroad})", :service_category_id => _sc_mgf_ukraine_internet_abroad}
 
-cat << {:id => _sc_mgf_europe_internet_abroad, :name => 'Страны Европы Мегафона', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+cat << {:id => _sc_mgf_europe_internet_abroad, :name => 'Страны Европы Мегафона, Европа', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
   crit << {:id => _sc_mgf_europe_internet_abroad * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
            :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mgf_europe_internet_abroad})", :service_category_id => _sc_mgf_europe_internet_abroad}
 
-cat << {:id => _sc_mgf_popular_countries_internet_abroad, :name => 'Страны Европы Мегафона', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+cat << {:id => _sc_mgf_popular_countries_internet_abroad, :name => 'Страны Европы Мегафона, Популярные страны', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
   crit << {:id => _sc_mgf_popular_countries_internet_abroad * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
            :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mgf_popular_countries_internet_abroad})", :service_category_id => _sc_mgf_popular_countries_internet_abroad}
 
-cat << {:id => _sc_mgf_other_countries_internet_abroad, :name => 'Страны Европы Мегафона', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
+cat << {:id => _sc_mgf_other_countries_internet_abroad, :name => 'Страны Европы Мегафона, Остальные страны', :type_id => _common, :parent_id => _all_world_rouming, :level => 3, :path => [_category_rouming, _sc_other_operator_rouming, _all_world_rouming]}
   crit << {:id => _sc_mgf_other_countries_internet_abroad * 10, :criteria_param_id => _call_connect_country_id, :comparison_operator_id => _in_array, :value_choose_option_id => _field, 
            :eval_string => "Relation.operator_country_groups_by_group_id(#{_relation_mgf_other_countries_internet_abroad})", :service_category_id => _sc_mgf_other_countries_internet_abroad}
 

@@ -14,7 +14,9 @@ module TarifClassesHelper
   def tarif_classes
 #    raise(StandardError, session[:filtr])
     filtr = session_filtr_params(tarif_class_filtr)
-    category = (filtr.extract!('dependency_parts')['dependency_parts'] || []) - ['']
+    category = filtr.extract!('dependency_parts')['dependency_parts'] #(filtr.extract!('dependency_parts')['dependency_parts'] || []) - ['']
+    where_for_category = category.blank? ? "true" : "(dependency->>'parts')::jsonb ?& array['#{category}']"
+    
     is_archived = filtr.extract!('dependency_is_archived')['dependency_is_archived']
     where_for_is_archived = case is_archived
       when is_archived.blank?
@@ -26,9 +28,7 @@ module TarifClassesHelper
       end 
       
     options = {:base_name => 'tarif_classes', :current_id_name => 'tarif_class_id', :pagination_per_page => 10}
-    create_tableable(TarifClass.query_from_filtr(filtr).
-      where("(dependency->>'parts')::jsonb @> '#{category}'::jsonb").
-      where(where_for_is_archived), options)
+    create_tableable(TarifClass.query_from_filtr(filtr).where(where_for_category).where(where_for_is_archived), options)
   end
 
   def full_category_groups
@@ -38,8 +38,10 @@ module TarifClassesHelper
       includes(service_category_tarif_classes: [service_category_calls: [:parent_call]]).
       includes(price_lists: [formulas: [:standard_formula]]).
       where(:tarif_class_id => session[:current_id]['tarif_class_id']).
+      where("(service_category_tarif_classes.conditions->>'tarif_set_must_include_tarif_options')::jsonb is null").
       order("service_category_tarif_classes.service_category_one_time_id").
       order("service_category_tarif_classes.service_category_periodic_id").
+      order("service_category_groups.id").
       order("service_categories.parent_id").
       order("service_category_tarif_classes.service_category_rouming_id, service_category_tarif_classes.service_category_calls_id, service_category_tarif_classes.service_category_geo_id, service_category_tarif_classes.service_category_partner_type_id").
       order("price_formulas.calculation_order")

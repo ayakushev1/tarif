@@ -18,30 +18,27 @@ form_item.init do |fi|
   	 	TarifClass.where(:id => tarif_class.dependency['other_tarif_priority']['higher']).map(&:name)
   	 end
   	 prerequisites = if tarif_class.dependency and tarif_class.dependency['prerequisites']
-  	 	TarifClass.where(:id => tarif_class.dependency['prerequisites']).map(&:name) 
+  	 	TarifClass.where(:id => tarif_class.dependency['prerequisites']).map(&:name).join(", ") 
   	 end
   	
 	[
-      [link_to('Back', tarif_classes_path, {:class => "btn btn-primary", :type =>"button", :remote => true}), 
-       link_to('Edit', edit_tarif_class_path(tarif_class), {:class => "btn btn-primary", :type =>"button", :remote => true})],  
-#	  ['Id', tarif_class.id], 
-#	  ['Name', tarif_class.name], 
 	  ['Оператор', (tarif_class.operator.name if tarif_class.operator) ], 
-	  ['Для физических или юридических лиц', (tarif_class.privacy.name if tarif_class.privacy) ], 
+	  ['Кто может подключить', (tarif_class.privacy.name if tarif_class.privacy) ], 
 	  ['Тариф или опция', (tarif_class.standard_service.name if tarif_class.standard_service) ], 
-	  ['Адрес в интернете', link_to_if(tarif_class.features, tarif_class.features['http'], tarif_class.features['http'], :target => "_blank") ], 
+	  ['Описание у оператора', link_to_if(tarif_class.features, tarif_class.features['http'], tarif_class.features['http'], :target => "_blank") ], 
+	  (['Требуемые тарифы или опции', prerequisites] if tarif_class.standard_service_id != 40), 
+	  ['Является архивным?', ((tarif_class.dependency['is_archived'] || "Нет") if tarif_class.dependency) ], 
+	].compact + (user_type == :admin ? [
+	  ["", ""],	
+      ["", 
+       link_to('Edit', edit_tarif_class_path(tarif_class), {:class => "btn btn-primary", :type =>"button", :remote => true})],  
+	  ['Возможность использовать несколько раз', (tarif_class.dependency['multiple_use'] if tarif_class.dependency) ], 
 	  ['Автоматически подобранные категории', (tarif_class.dependency['parts'] if tarif_class.dependency) ], 
-#	  ['Категории введенные вручную', (tarif_class.dependency['categories'] if tarif_class.dependency) ], 
 	  ['Несовместимость', incompatibility], 
 	  ['Общий приоритет', general_priority ], 
 	  ['Тарифы с меньшим приоритетом', lower_tarif_priority], 
 	  ['Тарифы с большим приоритетом', higher_tarif_priority], 
-	  ['Требуемые тарифы или опции', prerequisites], 
-	  ['Возможность использовать несколько раз', (tarif_class.dependency['multiple_use'] if tarif_class.dependency) ], 
-	  ['Является архивным?', ((tarif_class.dependency['is_archived'] || false) if tarif_class.dependency) ], 
-#	  ['Created', (tarif_class.created_at.to_formatted_s(:short) if  tarif_class.created_at) ], 
-#	  ['Updated', (tarif_class.updated_at.to_formatted_s(:short) if tarif_class.updated_at) ],
-	] 
+	] : [])
   end
 end	
 %>

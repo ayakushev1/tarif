@@ -3,20 +3,20 @@
 content_in :tabs do |user| 
   [
     [
-     'Общие характеристики', 
+     'Общее описание', 
      render( :partial => 'tarif_classes/tarif_class_description/full_tarif_class', :layout => 'application/layouts/model_show', :locals => {:form_item => controller.tarif_class_form})    
     ], 
     [
-     'Групповые категории',
+     'Цены', 
+     render( :partial => 'tarif_classes/tarif_class_description/full_category_groups')    
+    ], 
+    ([
+     'Админ',
      render( :partial => 'tarif_classes/tarif_class_description/category_groups', :layout => 'application/layouts/model_table', :locals => {:table => controller.category_groups }) +
      render( :partial => 'tarif_classes/tarif_class_description/service_categories', :layout => 'application/layouts/model_table', :locals => {:table => controller.service_categories }) +
      render( :partial => 'tarif_classes/tarif_class_description/price_formulas', :layout => 'application/layouts/model_table', :locals => {:table => controller.price_formulas}) +
      render( :partial => 'tarif_classes/tarif_class_description/price_standard_formulas', :layout => 'application/layouts/model_table', :locals => {:table => controller.price_standard_formulas})
-    ], 
-    [
-     'Полное описание', 
-     render( :partial => 'tarif_classes/tarif_class_description/full_category_groups', :locals => {:full_category_groups => controller.full_category_groups})    
-    ], 
-  ] 
+    ] if user_type == :admin), 
+  ].compact 
 end
 %>

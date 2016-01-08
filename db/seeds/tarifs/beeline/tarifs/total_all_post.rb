@@ -219,14 +219,14 @@ category = {:name => '_sctcg_own_country_mms_outcoming_to_not_own country', :ser
 
 
 #_sc_rouming_bln_all_russia_except_some_regions_for_internet, Internet, _sc_rouming_bln_all_russia_except_some_regions_for_internet
-  category = {:name => 'own_and_home_regions_internet', :service_category_rouming_id => _sc_rouming_bln_all_russia_except_some_regions_for_internet, :service_category_calls_id => _internet}
+  category = {:name => '_sc_rouming_bln_all_russia_except_some_regions_for_internet', :service_category_rouming_id => _sc_rouming_bln_all_russia_except_some_regions_for_internet, :service_category_calls_id => _internet}
   @tc.add_grouped_service_category_tarif_class(category, scg_bln_total_all_post_internet[:id])
   @tc.add_grouped_service_category_tarif_class(category, scg_bln_add_speed_1gb[:id], :tarif_set_must_include_tarif_options => [_bln_add_speed_1gb] )
   @tc.add_grouped_service_category_tarif_class(category, scg_bln_add_speed_3gb[:id], :tarif_set_must_include_tarif_options => [_bln_add_speed_3gb] )
   @tc.add_grouped_service_category_tarif_class(category, scg_bln_auto_add_speed[:id], :tarif_set_must_include_tarif_options => [_bln_auto_add_speed] )
 
 #_sc_rouming_bln_bad_internet_regions, Internet, _sc_rouming_bln_all_russia_except_some_regions_for_internet
-  category = {:name => 'own_and_home_regions_internet', :service_category_rouming_id => _sc_rouming_sc_rouming_bln_bad_internet_regions, :service_category_calls_id => _internet}
+  category = {:name => '_sc_rouming_bln_bad_internet_regions', :service_category_rouming_id => _sc_rouming_bln_bad_internet_regions, :service_category_calls_id => _internet}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::PriceBySumVolumeMByte, :formula => {:params => {:price => 9.95} } })  
 
 

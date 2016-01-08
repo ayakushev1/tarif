@@ -55,12 +55,12 @@ Customer::Category.create(id: 12, type_id: 27, name: "tarif_optimization_minor_r
 Customer::Category.create(id: 13, type_id: 27, name: "tarif_optimization_process_status")
 
 Category.delete_all
-Category.create(id: 1, type_id: 3, level_id: nil, parent_id: nil, name: "Legal")
-Category.create(id: 2, type_id: 3, level_id: nil, parent_id: nil, name: "Person")
+Category.create(id: 1, type_id: 3, level_id: nil, parent_id: nil, name: "Для юридических лиц")
+Category.create(id: 2, type_id: 3, level_id: nil, parent_id: nil, name: "Для физических лиц")
 
 Category.create(id: 40, type_id: 4, level_id: nil, parent_id: nil, name: "Тариф")
 Category.create(id: 41, type_id: 4, level_id: nil, parent_id: nil, name: "Общая услуга")
-Category.create(id: 42, type_id: 4, level_id: nil, parent_id: nil, name: "Специальная услуга")
+Category.create(id: 42, type_id: 4, level_id: nil, parent_id: nil, name: "Тарифная опция")
 Category.create(id: 43, type_id: 4, level_id: nil, parent_id: nil, name: "Опция тарифа")
 Category.create(id: 44, type_id: 4, level_id: nil, parent_id: nil, name: "Тестовые")
 Category.create(id: 45, type_id: 4, level_id: nil, parent_id: nil, name: "Для специальных задач")
