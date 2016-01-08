@@ -9,15 +9,15 @@ table.init do |t|
 #  	raise(StandardError, [f.service_ids, s_desc])
     current_id_set = {}
     services = f.service_ids.map do |id|
-        link_to_if(s_desc[id]['service_http'], s_desc[id]['service_name'], s_desc[id]['service_http'], {:target => "_blank"})	
+        link_to(s_desc[id]['service_name'], tarif_class_path(id.to_i), {:target => "_blank"})	
     end.join(', ').html_safe if f.service_ids
 
     common_services = f.common_services.map do |id|
-        link_to_if(s_desc[id]['service_http'], s_desc[id]['service_name'], s_desc[id]['service_http'], {:target => "_blank"})	
+        link_to(s_desc[id]['service_name'], tarif_class_path(id.to_i), {:target => "_blank"})	
     end.join(', ').html_safe if f.common_services
 
     tarif_options = f.tarif_options.map do |id|
-        link_to_if(s_desc[id]['service_http'], s_desc[id]['service_name'], s_desc[id]['service_http'], {:target => "_blank"})	
+        link_to(s_desc[id]['service_name'], tarif_class_path(id.to_i), {:target => "_blank"})	
     end.join(', ').html_safe if f.tarif_options
 
     identical_services = f.identical_services.map do |identical_service_group_1|
@@ -32,7 +32,7 @@ table.init do |t|
 				[item]
 			end
 			changed_item.map do |id|
-				link_to_if(s_desc[id.to_i]['service_http'], s_desc[id.to_i]['service_name'], s_desc[id.to_i]['service_http'], {:target => "_blank"}) if !id.blank? and s_desc[id.to_i]
+				link_to(s_desc[id.to_i]['service_name'], tarif_class_path(id.to_i), {:target => "_blank"}) if !id.blank? and s_desc[id.to_i]
     		end.compact.join(' + ') if changed_item	    	      	 
 	    end.compact.join(' или ') if identical_service_group
         "[ #{identical_services_for_one_group} ]"
@@ -42,7 +42,7 @@ table.init do |t|
      	{:my_remote => true, :class => "fa fa-random fa-lg center", :'aria-hidden' => "true", :'aria-label' => "Просмотр"}),
   	 (f.price.round(0).to_s(:delimited, precision: 0) if f.price),    
      (f.operator.name if f.operator),     
-  	 link_to_if(s_desc[f.tarif_id]['service_http'], s_desc[f.tarif_id]['service_name'], s_desc[f.tarif_id]['service_http'], {:target => "_blank"}),    
+  	 link_to(s_desc[f.tarif_id]['service_name'], tarif_class_path(f.tarif_id), {:target => "_blank"}),    
      common_services,   
      tarif_options,
 #     f.attributes,

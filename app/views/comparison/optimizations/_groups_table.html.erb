@@ -22,7 +22,7 @@ table.init do |t|
   		operator_desc = operators_desc[detail['operator_id']]
   		tarif_desc = tarifs_desc[detail['tarif_id']]
   		
-  		link_to_if(tarif_desc.features['http'], "#{operator_desc.name} #{tarif_desc.name}", tarif_desc.features['http'], {:target => "_blank"}) +
+  		link_to("#{operator_desc.name} #{tarif_desc.name}", tarif_desc, {:target => "_blank"}) +
   		content_tag(:p, "#{detail['price']} руб.") 	  		
   	end if group.result and group.result['place']
 

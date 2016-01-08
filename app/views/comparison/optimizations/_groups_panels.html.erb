@@ -24,7 +24,7 @@ table.init do |t|
   		
 #  		content_tag(:span, "#{place.to_i + 1}. ") +
   		content_tag(:span, "#{detail['price'].round(0)} руб.		") +
-  		link_to_if(tarif_desc.features['http'], "#{operator_desc.name} #{tarif_desc.name}", tarif_desc.features['http'], {:target => "_blank"}) 
+  		link_to("#{operator_desc.name} #{tarif_desc.name}", tarif_desc, {:target => "_blank"}) 
   	end if group.result and group.result['place']
 
   	{
