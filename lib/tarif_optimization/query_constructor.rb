@@ -208,6 +208,7 @@ class TarifOptimization::QueryConstructor
     @criteria_category = []
     crit = criterium_ids ? Service::Criterium.where(:id => criterium_ids) : Service::Criterium.all
     crit.each do |c| 
+#      raise(StandardError, c.attributes) if !c.service_category_id
       criteria_category[c.service_category_id] = [] if criteria_category[c.service_category_id].blank?
       criteria_category[c.service_category_id] << c.id
     end
