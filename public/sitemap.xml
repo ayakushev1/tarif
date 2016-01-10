@@ -1,273 +1,1529 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset
-      xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
-            http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-<!-- created with Free Online Sitemap Generator www.xml-sitemaps.com -->
-
+		<!--	created with www.mysitemapgenerator.com	-->
+		<urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
 <url>
-  <loc>http://www.mytarifs.ru/</loc>
+	<loc>http://www.mytarifs.ru/</loc>
+	<lastmod>2016-01-10T09:19:26+01:00</lastmod>
+	<priority>1.0</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/comparison/optimizations</loc>
+	<loc>http://www.mytarifs.ru/comparison/optimizations</loc>
+	<lastmod>2016-01-10T09:19:28+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/customer/call_runs</loc>
+	<loc>http://www.mytarifs.ru/customer/call_runs</loc>
+	<lastmod>2016-01-10T09:19:29+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/customer/calls/set_calls_generation_params</loc>
+	<loc>http://www.mytarifs.ru/customer/calls/set_calls_generation_params</loc>
+	<lastmod>2016-01-10T09:19:29+01:00</lastmod>
+	<priority>0.6</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/customer/history_parsers/prepare_for_upload</loc>
+	<loc>http://www.mytarifs.ru/customer/history_parsers/prepare_for_upload</loc>
+	<lastmod>2016-01-10T09:19:30+01:00</lastmod>
+	<priority>0.6</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/runs</loc>
+	<loc>http://www.mytarifs.ru/result/runs</loc>
+	<lastmod>2016-01-10T09:19:31+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_optimizators/main/index</loc>
+	<loc>http://www.mytarifs.ru/tarif_optimizators/main/index</loc>
+	<lastmod>2016-01-10T09:19:32+01:00</lastmod>
+	<priority>0.6</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_optimizators/fixed_services/index</loc>
+	<loc>http://www.mytarifs.ru/tarif_optimizators/fixed_services/index</loc>
+	<lastmod>2016-01-10T09:19:33+01:00</lastmod>
+	<priority>0.6</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_optimizators/limited_scope/index</loc>
+	<loc>http://www.mytarifs.ru/tarif_optimizators/limited_scope/index</loc>
+	<lastmod>2016-01-10T09:19:34+01:00</lastmod>
+	<priority>0.6</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_optimizators/fixed_operators/index</loc>
+	<loc>http://www.mytarifs.ru/tarif_optimizators/fixed_operators/index</loc>
+	<lastmod>2016-01-10T09:19:35+01:00</lastmod>
+	<priority>0.6</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/home/detailed_description</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes</loc>
+	<lastmod>2016-01-10T09:19:35+01:00</lastmod>
+	<priority>1.0</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/home/news</loc>
+	<loc>http://www.mytarifs.ru/home/detailed_description</loc>
+	<lastmod>2016-01-10T09:19:36+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/comparison/optimizations/2</loc>
+	<loc>http://www.mytarifs.ru/home/news</loc>
+	<lastmod>2016-01-10T09:19:37+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/comparison/optimizations/1</loc>
+	<loc>http://www.mytarifs.ru/customer/payments/new</loc>
+	<lastmod>2016-01-10T09:19:37+01:00</lastmod>
+	<priority>0.6</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/customer/call_runs/248</loc>
+	<loc>http://www.mytarifs.ru/customer/demands/new</loc>
+	<lastmod>2016-01-10T09:19:39+01:00</lastmod>
+	<priority>0.6</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/customer/call_runs/248/edit</loc>
+	<loc>http://www.mytarifs.ru/comparison/optimizations/2</loc>
+	<lastmod>2016-01-10T09:19:39+01:00</lastmod>
+	<priority>0.6</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/customer/call_runs/call_stat/248</loc>
+	<loc>http://www.mytarifs.ru/comparison/optimizations/1</loc>
+	<lastmod>2016-01-10T09:19:43+01:00</lastmod>
+	<priority>0.6</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/customer/call_runs/247</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes?pagination[tarif_classes_page]=1</loc>
+	<lastmod>2016-01-10T09:20:20+01:00</lastmod>
+	<priority>1.0</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/customer/call_runs/247/edit</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes?pagination[tarif_classes_page]=2</loc>
+	<lastmod>2016-01-10T09:20:21+01:00</lastmod>
+	<priority>1.0</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/customer/call_runs/call_stat/247</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes?pagination[tarif_classes_page]=3</loc>
+	<lastmod>2016-01-10T09:20:22+01:00</lastmod>
+	<priority>1.0</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/customer/call_runs/246</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes?pagination[tarif_classes_page]=4</loc>
+	<lastmod>2016-01-10T09:20:22+01:00</lastmod>
+	<priority>1.0</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/customer/call_runs/246/edit</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes?pagination[tarif_classes_page]=5</loc>
+	<lastmod>2016-01-10T09:20:24+01:00</lastmod>
+	<priority>1.0</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/customer/call_runs/call_stat/246</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes?pagination[tarif_classes_page]=6</loc>
+	<lastmod>2016-01-10T09:20:25+01:00</lastmod>
+	<priority>1.0</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/customer/calls</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes?pagination[tarif_classes_page]=7</loc>
+	<lastmod>2016-01-10T09:20:25+01:00</lastmod>
+	<priority>1.0</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/runs/357</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes?pagination[tarif_classes_page]=8</loc>
+	<lastmod>2016-01-10T09:20:26+01:00</lastmod>
+	<priority>1.0</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/runs/357/edit</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes?pagination[tarif_classes_page]=9</loc>
+	<lastmod>2016-01-10T09:20:27+01:00</lastmod>
+	<priority>1.0</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/results/357</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/100</loc>
+	<lastmod>2016-01-10T09:20:29+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/compare/357</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/101</loc>
+	<lastmod>2016-01-10T09:20:29+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/runs/356</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/102</loc>
+	<lastmod>2016-01-10T09:20:31+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/runs/356/edit</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/103</loc>
+	<lastmod>2016-01-10T09:20:32+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/results/356</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/104</loc>
+	<lastmod>2016-01-10T09:20:33+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/compare/356</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/105</loc>
+	<lastmod>2016-01-10T09:20:34+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/runs/355</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/106</loc>
+	<lastmod>2016-01-10T09:20:36+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/runs/355/edit</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/107</loc>
+	<lastmod>2016-01-10T09:20:37+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/results/355</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/108</loc>
+	<lastmod>2016-01-10T09:20:37+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/compare/355</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/109</loc>
+	<lastmod>2016-01-10T09:20:38+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/runs/354</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/802</loc>
+	<lastmod>2016-01-10T09:20:40+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/runs/354/edit</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/208</loc>
+	<lastmod>2016-01-10T09:20:40+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/results/354</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/600</loc>
+	<lastmod>2016-01-10T09:20:41+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/compare/354</loc>
+	<loc>http://www.mytarifs.ru/result/service_sets/result/15</loc>
+	<lastmod>2016-01-10T09:20:42+01:00</lastmod>
+	<priority>0.4</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/results/15</loc>
+	<loc>http://www.mytarifs.ru/result/service_sets/compare/15</loc>
+	<lastmod>2016-01-10T09:20:42+01:00</lastmod>
+	<priority>0.4</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/compare/15</loc>
+	<loc>http://www.mytarifs.ru/comparison/optimizations/call_stat/2</loc>
+	<lastmod>2016-01-10T09:20:43+01:00</lastmod>
+	<priority>0.4</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/results/16</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/800</loc>
+	<lastmod>2016-01-10T09:20:45+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/compare/16</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/202</loc>
+	<lastmod>2016-01-10T09:20:45+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/results/17</loc>
+	<loc>http://www.mytarifs.ru/result/service_sets/result/16</loc>
+	<lastmod>2016-01-10T09:20:45+01:00</lastmod>
+	<priority>0.4</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/compare/17</loc>
+	<loc>http://www.mytarifs.ru/result/service_sets/compare/16</loc>
+	<lastmod>2016-01-10T09:20:47+01:00</lastmod>
+	<priority>0.4</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/results/10</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/801</loc>
+	<lastmod>2016-01-10T09:20:47+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/compare/10</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/201</loc>
+	<lastmod>2016-01-10T09:20:48+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/results/11</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/602</loc>
+	<lastmod>2016-01-10T09:20:50+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/compare/11</loc>
+	<loc>http://www.mytarifs.ru/result/service_sets/result/17</loc>
+	<lastmod>2016-01-10T09:20:50+01:00</lastmod>
+	<priority>0.4</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/results/12</loc>
+	<loc>http://www.mytarifs.ru/result/service_sets/compare/17</loc>
+	<lastmod>2016-01-10T09:20:50+01:00</lastmod>
+	<priority>0.4</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/compare/12</loc>
+	<loc>http://www.mytarifs.ru/users/confirmation/new</loc>
+	<lastmod>2016-01-10T09:20:52+01:00</lastmod>
+	<priority>0.6</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/customer/calls?pagination%5Bcustomer_call_page%5D=1</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/624</loc>
+	<lastmod>2016-01-10T09:20:54+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/customer/calls?pagination%5Bcustomer_call_page%5D=2</loc>
+	<loc>http://www.mytarifs.ru/result/service_sets/result/10</loc>
+	<lastmod>2016-01-10T09:20:55+01:00</lastmod>
+	<priority>0.4</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/customer/calls?pagination%5Bcustomer_call_page%5D=3</loc>
+	<loc>http://www.mytarifs.ru/result/service_sets/compare/10</loc>
+	<lastmod>2016-01-10T09:20:55+01:00</lastmod>
+	<priority>0.4</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/customer/calls?pagination%5Bcustomer_call_page%5D=4</loc>
+	<loc>http://www.mytarifs.ru/comparison/optimizations/call_stat/1</loc>
+	<lastmod>2016-01-10T09:20:56+01:00</lastmod>
+	<priority>0.4</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/customer/calls?pagination%5Bcustomer_call_page%5D=5</loc>
+	<loc>http://www.mytarifs.ru/result/service_sets/result/11</loc>
+	<lastmod>2016-01-10T09:20:58+01:00</lastmod>
+	<priority>0.4</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/customer/calls?pagination%5Bcustomer_call_page%5D=6</loc>
+	<loc>http://www.mytarifs.ru/result/service_sets/compare/11</loc>
+	<lastmod>2016-01-10T09:20:58+01:00</lastmod>
+	<priority>0.4</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/customer/calls?pagination%5Bcustomer_call_page%5D=7</loc>
+	<loc>http://www.mytarifs.ru/result/service_sets/result/12</loc>
+	<lastmod>2016-01-10T09:20:59+01:00</lastmod>
+	<priority>0.4</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/customer/calls?pagination%5Bcustomer_call_page%5D=8</loc>
+	<loc>http://www.mytarifs.ru/result/service_sets/compare/12</loc>
+	<lastmod>2016-01-10T09:21:00+01:00</lastmod>
+	<priority>0.4</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/customer/calls?pagination%5Bcustomer_call_page%5D=9</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/110</loc>
+	<lastmod>2016-01-10T09:21:05+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/customer/calls?pagination%5Bcustomer_call_page%5D=47</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/112</loc>
+	<lastmod>2016-01-10T09:21:06+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/customer/calls?pagination%5Bcustomer_call_page%5D=48</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/113</loc>
+	<lastmod>2016-01-10T09:21:08+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/results/15?pagination%5Bservice_sets_page%5D=1</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/174</loc>
+	<lastmod>2016-01-10T09:21:08+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/results/15?pagination%5Bservice_sets_page%5D=2</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/177</loc>
+	<lastmod>2016-01-10T09:21:09+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/results/15?pagination%5Bservice_sets_page%5D=3</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/178</loc>
+	<lastmod>2016-01-10T09:21:10+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/results/15?pagination%5Bservice_sets_page%5D=4</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/179</loc>
+	<lastmod>2016-01-10T09:21:10+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/detailed_results</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/200</loc>
+	<lastmod>2016-01-10T09:21:11+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/results/16?pagination%5Bservice_sets_page%5D=1</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/203</loc>
+	<lastmod>2016-01-10T09:21:13+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/results/16?pagination%5Bservice_sets_page%5D=2</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/204</loc>
+	<lastmod>2016-01-10T09:21:13+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/results/16?pagination%5Bservice_sets_page%5D=3</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/205</loc>
+	<lastmod>2016-01-10T09:21:14+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/results/16?pagination%5Bservice_sets_page%5D=4</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/206</loc>
+	<lastmod>2016-01-10T09:21:15+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/results/17?pagination%5Bservice_sets_page%5D=1</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/207</loc>
+	<lastmod>2016-01-10T09:21:15+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/results/17?pagination%5Bservice_sets_page%5D=2</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/210</loc>
+	<lastmod>2016-01-10T09:21:16+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/results/17?pagination%5Bservice_sets_page%5D=3</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/212</loc>
+	<lastmod>2016-01-10T09:21:17+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/results/17?pagination%5Bservice_sets_page%5D=4</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/213</loc>
+	<lastmod>2016-01-10T09:21:18+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/results/10?pagination%5Bservice_sets_page%5D=1</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/214</loc>
+	<lastmod>2016-01-10T09:21:19+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/results/10?pagination%5Bservice_sets_page%5D=2</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/276</loc>
+	<lastmod>2016-01-10T09:21:20+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/results/10?pagination%5Bservice_sets_page%5D=3</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/277</loc>
+	<lastmod>2016-01-10T09:21:20+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/results/10?pagination%5Bservice_sets_page%5D=4</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/280</loc>
+	<lastmod>2016-01-10T09:21:21+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/results/11?pagination%5Bservice_sets_page%5D=1</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/281</loc>
+	<lastmod>2016-01-10T09:21:22+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/results/11?pagination%5Bservice_sets_page%5D=2</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/282</loc>
+	<lastmod>2016-01-10T09:21:23+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/results/11?pagination%5Bservice_sets_page%5D=3</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/283</loc>
+	<lastmod>2016-01-10T09:21:24+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/results/11?pagination%5Bservice_sets_page%5D=4</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/288</loc>
+	<lastmod>2016-01-10T09:21:25+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/results/12?pagination%5Bservice_sets_page%5D=1</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/289</loc>
+	<lastmod>2016-01-10T09:21:25+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/results/12?pagination%5Bservice_sets_page%5D=2</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/290</loc>
+	<lastmod>2016-01-10T09:21:26+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/results/12?pagination%5Bservice_sets_page%5D=3</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/291</loc>
+	<lastmod>2016-01-10T09:21:28+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/result/service_sets/results/12?pagination%5Bservice_sets_page%5D=4</loc>
+	<loc>http://www.mytarifs.ru/tarif_classes/292</loc>
+	<lastmod>2016-01-10T09:21:28+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/293</loc>
+	<lastmod>2016-01-10T09:21:28+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/294</loc>
+	<lastmod>2016-01-10T09:21:30+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/295</loc>
+	<lastmod>2016-01-10T09:21:30+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/296</loc>
+	<lastmod>2016-01-10T09:21:31+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/297</loc>
+	<lastmod>2016-01-10T09:21:33+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/302</loc>
+	<lastmod>2016-01-10T09:21:33+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/303</loc>
+	<lastmod>2016-01-10T09:21:35+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/304</loc>
+	<lastmod>2016-01-10T09:21:36+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/305</loc>
+	<lastmod>2016-01-10T09:21:36+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes?pagination[tarif_classes_page]=10</loc>
+	<lastmod>2016-01-10T09:21:38+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes?pagination[tarif_classes_page]=11</loc>
+	<lastmod>2016-01-10T09:21:38+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/317</loc>
+	<lastmod>2016-01-10T09:21:40+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/318</loc>
+	<lastmod>2016-01-10T09:21:41+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/319</loc>
+	<lastmod>2016-01-10T09:21:42+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/320</loc>
+	<lastmod>2016-01-10T09:21:45+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/321</loc>
+	<lastmod>2016-01-10T09:21:45+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/322</loc>
+	<lastmod>2016-01-10T09:21:45+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/323</loc>
+	<lastmod>2016-01-10T09:21:47+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/324</loc>
+	<lastmod>2016-01-10T09:21:47+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/325</loc>
+	<lastmod>2016-01-10T09:21:47+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/307</loc>
+	<lastmod>2016-01-10T09:21:50+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/308</loc>
+	<lastmod>2016-01-10T09:21:50+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/309</loc>
+	<lastmod>2016-01-10T09:21:53+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/310</loc>
+	<lastmod>2016-01-10T09:21:53+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/311</loc>
+	<lastmod>2016-01-10T09:21:53+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/312</loc>
+	<lastmod>2016-01-10T09:21:55+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/313</loc>
+	<lastmod>2016-01-10T09:21:56+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/314</loc>
+	<lastmod>2016-01-10T09:21:56+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/315</loc>
+	<lastmod>2016-01-10T09:21:58+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes?pagination[tarif_classes_page]=12</loc>
+	<lastmod>2016-01-10T09:21:59+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/326</loc>
+	<lastmod>2016-01-10T09:21:59+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/328</loc>
+	<lastmod>2016-01-10T09:22:01+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/329</loc>
+	<lastmod>2016-01-10T09:22:02+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/330</loc>
+	<lastmod>2016-01-10T09:22:03+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/331</loc>
+	<lastmod>2016-01-10T09:22:06+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/332</loc>
+	<lastmod>2016-01-10T09:22:06+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/333</loc>
+	<lastmod>2016-01-10T09:22:07+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/334</loc>
+	<lastmod>2016-01-10T09:22:08+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/335</loc>
+	<lastmod>2016-01-10T09:22:08+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/336</loc>
+	<lastmod>2016-01-10T09:22:10+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes?pagination[tarif_classes_page]=13</loc>
+	<lastmod>2016-01-10T09:22:10+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/337</loc>
+	<lastmod>2016-01-10T09:22:10+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/338</loc>
+	<lastmod>2016-01-10T09:22:12+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/339</loc>
+	<lastmod>2016-01-10T09:22:13+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/340</loc>
+	<lastmod>2016-01-10T09:22:13+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/341</loc>
+	<lastmod>2016-01-10T09:22:14+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/342</loc>
+	<lastmod>2016-01-10T09:22:15+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/343</loc>
+	<lastmod>2016-01-10T09:22:15+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/344</loc>
+	<lastmod>2016-01-10T09:22:17+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/345</loc>
+	<lastmod>2016-01-10T09:22:18+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/346</loc>
+	<lastmod>2016-01-10T09:22:18+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes?pagination[tarif_classes_page]=15</loc>
+	<lastmod>2016-01-10T09:22:20+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes?pagination[tarif_classes_page]=16</loc>
+	<lastmod>2016-01-10T09:22:21+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes?pagination[tarif_classes_page]=17</loc>
+	<lastmod>2016-01-10T09:22:22+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes?pagination[tarif_classes_page]=18</loc>
+	<lastmod>2016-01-10T09:22:23+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes?pagination[tarif_classes_page]=19</loc>
+	<lastmod>2016-01-10T09:22:23+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/831</loc>
+	<lastmod>2016-01-10T09:22:25+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/832</loc>
+	<lastmod>2016-01-10T09:22:25+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/840</loc>
+	<lastmod>2016-01-10T09:22:27+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/850</loc>
+	<lastmod>2016-01-10T09:22:28+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/860</loc>
+	<lastmod>2016-01-10T09:22:28+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/861</loc>
+	<lastmod>2016-01-10T09:22:29+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/880</loc>
+	<lastmod>2016-01-10T09:22:30+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/881</loc>
+	<lastmod>2016-01-10T09:22:30+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/882</loc>
+	<lastmod>2016-01-10T09:22:31+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/883</loc>
+	<lastmod>2016-01-10T09:22:33+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/884</loc>
+	<lastmod>2016-01-10T09:22:33+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/885</loc>
+	<lastmod>2016-01-10T09:22:34+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/886</loc>
+	<lastmod>2016-01-10T09:22:35+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/890</loc>
+	<lastmod>2016-01-10T09:22:35+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/895</loc>
+	<lastmod>2016-01-10T09:22:36+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/result/service_sets/result/15?pagination[service_sets_page]=1</loc>
+	<lastmod>2016-01-10T09:22:37+01:00</lastmod>
+	<priority>0.4</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/result/service_sets/result/15?pagination[service_sets_page]=2</loc>
+	<lastmod>2016-01-10T09:22:38+01:00</lastmod>
+	<priority>0.4</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/result/service_sets/result/15?pagination[service_sets_page]=3</loc>
+	<lastmod>2016-01-10T09:22:39+01:00</lastmod>
+	<priority>0.4</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/result/service_sets/result/15?pagination[service_sets_page]=4</loc>
+	<lastmod>2016-01-10T09:22:40+01:00</lastmod>
+	<priority>0.4</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/result/service_sets/detailed_results/15</loc>
+	<lastmod>2016-01-10T09:22:40+01:00</lastmod>
+	<priority>0.4</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/830</loc>
+	<lastmod>2016-01-10T09:22:41+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/440</loc>
+	<lastmod>2016-01-10T09:22:43+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/443</loc>
+	<lastmod>2016-01-10T09:22:43+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/650</loc>
+	<lastmod>2016-01-10T09:22:44+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/651</loc>
+	<lastmod>2016-01-10T09:22:45+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/652</loc>
+	<lastmod>2016-01-10T09:22:46+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/654</loc>
+	<lastmod>2016-01-10T09:22:46+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/655</loc>
+	<lastmod>2016-01-10T09:22:48+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/670</loc>
+	<lastmod>2016-01-10T09:22:48+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/702</loc>
+	<lastmod>2016-01-10T09:22:49+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/result/service_sets/result/16?pagination[service_sets_page]=1</loc>
+	<lastmod>2016-01-10T09:22:50+01:00</lastmod>
+	<priority>0.4</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/result/service_sets/result/16?pagination[service_sets_page]=2</loc>
+	<lastmod>2016-01-10T09:22:50+01:00</lastmod>
+	<priority>0.4</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/result/service_sets/result/16?pagination[service_sets_page]=3</loc>
+	<lastmod>2016-01-10T09:22:51+01:00</lastmod>
+	<priority>0.4</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/result/service_sets/result/16?pagination[service_sets_page]=4</loc>
+	<lastmod>2016-01-10T09:22:53+01:00</lastmod>
+	<priority>0.4</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/result/service_sets/detailed_results/16</loc>
+	<lastmod>2016-01-10T09:22:53+01:00</lastmod>
+	<priority>0.4</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/349</loc>
+	<lastmod>2016-01-10T09:22:54+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/601</loc>
+	<lastmod>2016-01-10T09:22:55+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/494</loc>
+	<lastmod>2016-01-10T09:22:55+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/result/service_sets/result/17?pagination[service_sets_page]=1</loc>
+	<lastmod>2016-01-10T09:22:56+01:00</lastmod>
+	<priority>0.4</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/result/service_sets/result/17?pagination[service_sets_page]=2</loc>
+	<lastmod>2016-01-10T09:22:58+01:00</lastmod>
+	<priority>0.4</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/result/service_sets/result/17?pagination[service_sets_page]=3</loc>
+	<lastmod>2016-01-10T09:22:58+01:00</lastmod>
+	<priority>0.4</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/result/service_sets/result/17?pagination[service_sets_page]=4</loc>
+	<lastmod>2016-01-10T09:22:59+01:00</lastmod>
+	<priority>0.4</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/result/service_sets/detailed_results/17</loc>
+	<lastmod>2016-01-10T09:23:00+01:00</lastmod>
+	<priority>0.4</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/805</loc>
+	<lastmod>2016-01-10T09:23:00+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/603</loc>
+	<lastmod>2016-01-10T09:23:01+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/441</loc>
+	<lastmod>2016-01-10T09:23:03+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/610</loc>
+	<lastmod>2016-01-10T09:23:03+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/653</loc>
+	<lastmod>2016-01-10T09:23:03+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/result/service_sets/result/10?pagination[service_sets_page]=1</loc>
+	<lastmod>2016-01-10T09:23:05+01:00</lastmod>
+	<priority>0.4</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/result/service_sets/result/10?pagination[service_sets_page]=2</loc>
+	<lastmod>2016-01-10T09:23:05+01:00</lastmod>
+	<priority>0.4</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/result/service_sets/result/10?pagination[service_sets_page]=3</loc>
+	<lastmod>2016-01-10T09:23:06+01:00</lastmod>
+	<priority>0.4</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/result/service_sets/result/10?pagination[service_sets_page]=4</loc>
+	<lastmod>2016-01-10T09:23:07+01:00</lastmod>
+	<priority>0.4</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/result/service_sets/detailed_results/10</loc>
+	<lastmod>2016-01-10T09:23:08+01:00</lastmod>
+	<priority>0.4</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/455</loc>
+	<lastmod>2016-01-10T09:23:08+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/result/service_sets/result/11?pagination[service_sets_page]=1</loc>
+	<lastmod>2016-01-10T09:23:10+01:00</lastmod>
+	<priority>0.4</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/result/service_sets/result/11?pagination[service_sets_page]=2</loc>
+	<lastmod>2016-01-10T09:23:11+01:00</lastmod>
+	<priority>0.4</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/result/service_sets/result/11?pagination[service_sets_page]=3</loc>
+	<lastmod>2016-01-10T09:23:11+01:00</lastmod>
+	<priority>0.4</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/result/service_sets/result/11?pagination[service_sets_page]=4</loc>
+	<lastmod>2016-01-10T09:23:12+01:00</lastmod>
+	<priority>0.4</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/result/service_sets/detailed_results/11</loc>
+	<lastmod>2016-01-10T09:23:13+01:00</lastmod>
+	<priority>0.4</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/result/service_sets/result/12?pagination[service_sets_page]=1</loc>
+	<lastmod>2016-01-10T09:23:13+01:00</lastmod>
+	<priority>0.4</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/result/service_sets/result/12?pagination[service_sets_page]=2</loc>
+	<lastmod>2016-01-10T09:23:14+01:00</lastmod>
+	<priority>0.4</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/result/service_sets/result/12?pagination[service_sets_page]=3</loc>
+	<lastmod>2016-01-10T09:23:15+01:00</lastmod>
+	<priority>0.4</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/result/service_sets/result/12?pagination[service_sets_page]=4</loc>
+	<lastmod>2016-01-10T09:23:16+01:00</lastmod>
+	<priority>0.4</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/result/service_sets/detailed_results/12</loc>
+	<lastmod>2016-01-10T09:23:17+01:00</lastmod>
+	<priority>0.4</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes?pagination[tarif_classes_page]=14</loc>
+	<lastmod>2016-01-10T09:23:18+01:00</lastmod>
+	<priority>1.0</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/347</loc>
+	<lastmod>2016-01-10T09:23:18+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/348</loc>
+	<lastmod>2016-01-10T09:23:20+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/400</loc>
+	<lastmod>2016-01-10T09:23:21+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/401</loc>
+	<lastmod>2016-01-10T09:23:21+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/402</loc>
+	<lastmod>2016-01-10T09:23:22+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/403</loc>
+	<lastmod>2016-01-10T09:23:24+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/404</loc>
+	<lastmod>2016-01-10T09:23:24+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/405</loc>
+	<lastmod>2016-01-10T09:23:25+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/406</loc>
+	<lastmod>2016-01-10T09:23:26+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/407</loc>
+	<lastmod>2016-01-10T09:23:27+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/410</loc>
+	<lastmod>2016-01-10T09:23:27+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/411</loc>
+	<lastmod>2016-01-10T09:23:29+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/412</loc>
+	<lastmod>2016-01-10T09:23:29+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/413</loc>
+	<lastmod>2016-01-10T09:23:30+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/430</loc>
+	<lastmod>2016-01-10T09:23:31+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/431</loc>
+	<lastmod>2016-01-10T09:23:31+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/432</loc>
+	<lastmod>2016-01-10T09:23:32+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/442</loc>
+	<lastmod>2016-01-10T09:23:33+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/444</loc>
+	<lastmod>2016-01-10T09:23:34+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/445</loc>
+	<lastmod>2016-01-10T09:23:34+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/450</loc>
+	<lastmod>2016-01-10T09:23:36+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/451</loc>
+	<lastmod>2016-01-10T09:23:36+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/452</loc>
+	<lastmod>2016-01-10T09:23:37+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/456</loc>
+	<lastmod>2016-01-10T09:23:38+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/457</loc>
+	<lastmod>2016-01-10T09:23:39+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/458</loc>
+	<lastmod>2016-01-10T09:23:39+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/459</loc>
+	<lastmod>2016-01-10T09:23:41+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/460</loc>
+	<lastmod>2016-01-10T09:23:41+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/461</loc>
+	<lastmod>2016-01-10T09:23:42+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/462</loc>
+	<lastmod>2016-01-10T09:23:43+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/463</loc>
+	<lastmod>2016-01-10T09:23:44+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/464</loc>
+	<lastmod>2016-01-10T09:23:44+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/465</loc>
+	<lastmod>2016-01-10T09:23:45+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/466</loc>
+	<lastmod>2016-01-10T09:23:46+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/470</loc>
+	<lastmod>2016-01-10T09:23:47+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/737</loc>
+	<lastmod>2016-01-10T09:23:48+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/738</loc>
+	<lastmod>2016-01-10T09:23:48+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/739</loc>
+	<lastmod>2016-01-10T09:23:49+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/803</loc>
+	<lastmod>2016-01-10T09:23:50+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/804</loc>
+	<lastmod>2016-01-10T09:23:51+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/482</loc>
+	<lastmod>2016-01-10T09:23:51+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/484</loc>
+	<lastmod>2016-01-10T09:23:53+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/485</loc>
+	<lastmod>2016-01-10T09:23:53+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/486</loc>
+	<lastmod>2016-01-10T09:23:54+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/487</loc>
+	<lastmod>2016-01-10T09:23:55+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/488</loc>
+	<lastmod>2016-01-10T09:23:56+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/489</loc>
+	<lastmod>2016-01-10T09:23:56+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/490</loc>
+	<lastmod>2016-01-10T09:23:57+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/491</loc>
+	<lastmod>2016-01-10T09:23:59+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/492</loc>
+	<lastmod>2016-01-10T09:23:59+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/493</loc>
+	<lastmod>2016-01-10T09:24:00+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/495</loc>
+	<lastmod>2016-01-10T09:24:01+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/604</loc>
+	<lastmod>2016-01-10T09:24:02+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/605</loc>
+	<lastmod>2016-01-10T09:24:02+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/611</loc>
+	<lastmod>2016-01-10T09:24:03+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/612</loc>
+	<lastmod>2016-01-10T09:24:04+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/613</loc>
+	<lastmod>2016-01-10T09:24:05+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/620</loc>
+	<lastmod>2016-01-10T09:24:06+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/621</loc>
+	<lastmod>2016-01-10T09:24:06+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/622</loc>
+	<lastmod>2016-01-10T09:24:08+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/623</loc>
+	<lastmod>2016-01-10T09:24:09+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/626</loc>
+	<lastmod>2016-01-10T09:24:09+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/627</loc>
+	<lastmod>2016-01-10T09:24:10+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/660</loc>
+	<lastmod>2016-01-10T09:24:11+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/661</loc>
+	<lastmod>2016-01-10T09:24:11+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/662</loc>
+	<lastmod>2016-01-10T09:24:13+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/663</loc>
+	<lastmod>2016-01-10T09:24:13+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/671</loc>
+	<lastmod>2016-01-10T09:24:14+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/672</loc>
+	<lastmod>2016-01-10T09:24:15+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/673</loc>
+	<lastmod>2016-01-10T09:24:16+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/674</loc>
+	<lastmod>2016-01-10T09:24:16+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/680</loc>
+	<lastmod>2016-01-10T09:24:18+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/681</loc>
+	<lastmod>2016-01-10T09:24:19+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/682</loc>
+	<lastmod>2016-01-10T09:24:19+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/683</loc>
+	<lastmod>2016-01-10T09:24:20+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/700</loc>
+	<lastmod>2016-01-10T09:24:21+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/701</loc>
+	<lastmod>2016-01-10T09:24:22+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/720</loc>
+	<lastmod>2016-01-10T09:24:23+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/730</loc>
+	<lastmod>2016-01-10T09:24:24+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/731</loc>
+	<lastmod>2016-01-10T09:24:24+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/732</loc>
+	<lastmod>2016-01-10T09:24:25+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/733</loc>
+	<lastmod>2016-01-10T09:24:26+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/734</loc>
+	<lastmod>2016-01-10T09:24:26+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/735</loc>
+	<lastmod>2016-01-10T09:24:27+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/736</loc>
+	<lastmod>2016-01-10T09:24:28+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/result/service_sets/results</loc>
+	<lastmod>2016-01-10T09:24:29+01:00</lastmod>
+	<priority>0.6</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/477</loc>
+	<lastmod>2016-01-10T09:24:30+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/471</loc>
+	<lastmod>2016-01-10T09:24:31+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/472</loc>
+	<lastmod>2016-01-10T09:24:31+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/473</loc>
+	<lastmod>2016-01-10T09:24:32+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/475</loc>
+	<lastmod>2016-01-10T09:24:33+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/476</loc>
+	<lastmod>2016-01-10T09:24:33+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/478</loc>
+	<lastmod>2016-01-10T09:24:35+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/479</loc>
+	<lastmod>2016-01-10T09:24:36+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/480</loc>
+	<lastmod>2016-01-10T09:24:36+01:00</lastmod>
+	<priority>0.8</priority>
+</url>
+<url>
+	<loc>http://www.mytarifs.ru/tarif_classes/481</loc>
+	<lastmod>2016-01-10T09:24:38+01:00</lastmod>
+	<priority>0.8</priority>
 </url>
 </urlset>
