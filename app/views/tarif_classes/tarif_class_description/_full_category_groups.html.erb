@@ -8,12 +8,13 @@
 	</thead>
 	<tbody>
 	<% [:fixed, :included_in_tarif, :others].each do |filtr| %>
-		<% category_groups_presenter(full_category_groups(filtr)).each do |full_category_group| %>
+		<% @categories = category_groups_presenter(full_category_groups(filtr)) %>
+		<% @categories[:result].each_with_index do |full_category_group, row| %>
 			<tr>
-			<% full_category_group.each do |full_category_group_item| %>
+			<% full_category_group.each_with_index do |full_category_group_item, col| %>
 				<% if full_category_group_item[1] %>
 				<td rowspan="<%= full_category_group_item[1] %>" style="vertical-align: middle !important;">
-					<%= full_category_group_item[0] %>
+					<%= @categories[:geo_names][row][col] ? @categories[:geo_names][row][col].join(", ") : full_category_group_item[0] %>
 				</td>	
 				<% end %>
 			<% end if full_category_group %>

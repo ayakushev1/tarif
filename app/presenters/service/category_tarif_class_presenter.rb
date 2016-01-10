@@ -1,38 +1,8 @@
 module Service::CategoryTarifClassPresenter
-  def criteria_value_names_from_service_category_ids(service_category_ids = [])
-#    _call_partner_phone_region_id = 9; _call_partner_phone_country_id = 10; _call_connect_region_id = 12; _call_connect_country_id = 13;
-#    _in_array = 126;
 
-    result = {}
-    service_categories = Service::Category.where(:id => service_category_ids).includes(:criteria).
-      where(:service_criteria => {:criteria_param_id => [9, 10, 12, 13], :comparison_operator_id => 126}).all
-    category_ids = []
-    
-    service_categories.each do |service_category|    
-      result[service_category.id] ||= []
-      service_category.criteria.each do |criterium|
-        if criterium.value and criterium.value.is_a?(Array) 
-          category_ids += criterium.value 
-          result[service_category.id] += criterium.value
-        end 
-      end
-    end
-        
-    category_names = {}
-    ::Category.select(:id, :name).where(:id => category_ids.uniq).each do |category|
-      category_names[category.id] = category.name
-    end
-    
-    result.each do |service_category_id, cat_ids|      
-      result[service_category_id] = cat_ids.uniq.map{|cat_id| category_names[cat_id]}
-    end
-    
-    result    
-  end
-  
   def category_groups_presenter(full_category_groups)
-    result = []
-    colspan = []
+    result = []; geo_names = []
+    criteria_value_names = criteria_value_names_from_full_category_groups(full_category_groups)
     prev_service_category = nil
     full_category_groups.each do |category_group|
       temp = []
@@ -41,11 +11,14 @@ module Service::CategoryTarifClassPresenter
         temp = category_presenter(service_category, prev_service_category)         
         temp << ((category_group.price_lists and category_group.price_lists.first.formulas and price_to_show) ? price_presenter(category_group.price_lists.first.formulas.first) : nil)
         result << temp
+        geo_names << [nil, 
+          (service_category.service_category_rouming_id ? criteria_value_names[service_category.service_category_rouming_id] : nil), nil, 
+          (service_category.service_category_geo_id ? criteria_value_names[service_category.service_category_geo_id] : nil), nil]
         price_to_show = false
         prev_service_category = service_category        
       end if category_group.service_category_tarif_classes            
     end if full_category_groups
-    result_with_colspan(result)
+    {:result => result_with_colspan(result), :geo_names => geo_names}
   end
   
   def result_with_colspan(result_without_colspan_1)
@@ -109,6 +82,42 @@ module Service::CategoryTarifClassPresenter
       [service_category.service_category_one_time_id, service_category.service_category_periodic_id, service_category.service_category_calls_id].compact[0],
       service_category.service_category_rouming_id, service_category.service_category_geo_id, service_category.service_category_partner_type_id,
     ]
+  end
+  
+  def criteria_value_names_from_service_category_ids(service_category_ids = [])
+#    _call_partner_phone_region_id = 9; _call_partner_phone_country_id = 10; _call_connect_region_id = 12; _call_connect_country_id = 13;
+#    _in_array = 126;
+
+    result = {}
+    service_categories = Service::Category.where(:id => service_category_ids).includes(:criteria).
+      where(:service_criteria => {:criteria_param_id => [9, 10, 12, 13], :comparison_operator_id => 126}).all
+    category_ids = []
+    
+    service_categories.each do |service_category|    
+      result[service_category.id] ||= []
+      service_category.criteria.each do |criterium|
+        if criterium.value and criterium.value.is_a?(Array) 
+          category_ids += criterium.value 
+          result[service_category.id] += criterium.value
+        end 
+      end
+    end
+        
+    category_names = {}
+    ::Category.select(:id, :name).where(:id => category_ids.uniq).each do |category|
+      category_names[category.id] = category.name
+    end
+    
+    result.each do |service_category_id, cat_ids|      
+      result[service_category_id] = cat_ids.uniq.map{|cat_id| category_names[cat_id]}
+    end
+    
+    result    
+  end
+  
+  def criteria_value_names_from_full_category_groups(full_category_groups)
+    service_category_ids = full_category_groups.map{|g| g.service_category_tarif_classes.map{|sc| [sc.service_category_rouming_id, sc.service_category_geo_id]}}.flatten
+    criteria_value_names_from_service_category_ids(service_category_ids)
   end
   
   def price_presenter(formula)

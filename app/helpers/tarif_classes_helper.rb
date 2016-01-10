@@ -41,7 +41,7 @@ module TarifClassesHelper
       includes(service_category_tarif_classes: [service_category_calls: [:parent_call]]).
       includes(price_lists: [formulas: [:standard_formula]]).
       where(filtr_condition(filtr)).
-      where(:tarif_class_id => params[:id]).
+      where(:tarif_class_id => (params[:id] || session[:current_id]['tarif_class_id'])).
       order("service_category_tarif_classes.service_category_one_time_id").
       order("service_category_tarif_classes.service_category_periodic_id").
       order("service_category_groups.id").

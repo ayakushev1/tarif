@@ -166,7 +166,7 @@
 
 #Asia, Africa and Australia, Internet
   category = {:name => '_sctcg_asia_afr_aust_internet', :service_category_rouming_id => _sc_tele_asia_afr_aust_rouming, :service_category_calls_id => _internet}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumVolumeMByte, :price => 50.0})
+  @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => Price::StandardFormula::Const::PriceBySumVolumeMByte, :formula => {:params => {:price => 50.0} } })
 
 
 
