@@ -14,7 +14,7 @@
 			<% full_category_group.each_with_index do |full_category_group_item, col| %>
 				<% if full_category_group_item[1] %>
 				<td rowspan="<%= full_category_group_item[1] %>" style="vertical-align: middle !important;">
-					<%= @categories[:geo_names][row][col] ? @categories[:geo_names][row][col].join(", ") : full_category_group_item[0] %>
+					<%= @categories[:geo_names][row][col] ? geo_presenter(full_category_group_item[0], @categories[:geo_names][row][col]) : full_category_group_item[0] %>
 				</td>	
 				<% end %>
 			<% end if full_category_group %>

@@ -84,6 +84,32 @@ module Service::CategoryTarifClassPresenter
     ]
   end
   
+  def geo_presenter(category_group_item, array_of_geo_names = [])
+    case 
+    when array_of_geo_names.size < 5
+      array_of_geo_names.join(", ")
+    else
+      category_group_item ? show_as_popover(category_group_item, array_of_geo_names.join(", ")) : nil
+    end
+  end
+  
+  def show_as_popover(title, content)
+    html = {
+      :tabindex => "0", 
+      :role => "button", 
+      :'data-toggle' => "popover", 
+      :'data-trigger' => "focus", 
+      :'data-placement' => "right",
+      :title => title, 
+      :'data-content' => content,
+      :'data-html' => true
+    }
+    
+    content_tag(:a, html) do
+      "#{title} ".html_safe + content_tag(:span, "", {:class => "fa fa-info-circle fa-1x", :'aria-hidden' =>true})
+    end
+  end
+   
   def criteria_value_names_from_service_category_ids(service_category_ids = [])
 #    _call_partner_phone_region_id = 9; _call_partner_phone_country_id = 10; _call_connect_region_id = 12; _call_connect_country_id = 13;
 #    _in_array = 126;
