@@ -12,8 +12,8 @@ module Service::CategoryTarifClassPresenter
         temp << ((category_group.price_lists and category_group.price_lists.first.formulas and price_to_show) ? price_presenter(category_group.price_lists.first.formulas.first) : nil)
         result << temp
         geo_names << [nil, 
-          (service_category.service_category_rouming_id ? criteria_value_names[service_category.service_category_rouming_id] : nil), nil, 
-          (service_category.service_category_geo_id ? criteria_value_names[service_category.service_category_geo_id] : nil), nil]
+          (service_category.service_category_rouming_id ? criteria_value_names[service_category.service_category_rouming_id] : nil), 
+          (service_category.service_category_geo_id ? criteria_value_names[service_category.service_category_geo_id] : nil), nil, nil]
         price_to_show = false
         prev_service_category = service_category        
       end if category_group.service_category_tarif_classes            
