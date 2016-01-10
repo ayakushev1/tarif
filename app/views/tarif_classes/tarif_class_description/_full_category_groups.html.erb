@@ -7,17 +7,20 @@
 		<th>Цена</th>
 	</thead>
 	<tbody>
-	<% category_groups_presenter(full_category_groups).each do |full_category_group| %>
-		<tr>
-		<% full_category_group.each do |full_category_group_item| %>
-			<% if full_category_group_item[1] %>
-			<td rowspan="<%= full_category_group_item[1] %>">
-				<%= full_category_group_item[0] %>
-			</td>	
-			<% end %>
-		<% end if full_category_group %>
-		</tr>
-	<% end if full_category_groups %>
+	<% [:fixed, :included_in_tarif, :others].each do |filtr| %>
+		<% category_groups_presenter(full_category_groups(filtr)).each do |full_category_group| %>
+			<tr>
+			<% full_category_group.each do |full_category_group_item| %>
+				<% if full_category_group_item[1] %>
+				<td rowspan="<%= full_category_group_item[1] %>" style="vertical-align: middle !important;">
+					<%= full_category_group_item[0] %>
+				</td>	
+				<% end %>
+			<% end if full_category_group %>
+			</tr>
+		<% end if full_category_groups %>
+		<tr><td colspan="5"><% %></td></tr>
+	<% end %>
 	</tbody>
 </table>
 

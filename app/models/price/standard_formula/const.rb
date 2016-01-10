@@ -15,10 +15,12 @@ module Price::StandardFormula::Const
   Price::StandardFormula::Const::PriceByMonthIfUsed = 21
   Price::StandardFormula::Const::PriceByItemIfUsed = 22
 
+  Price::StandardFormula::Const::MaxVolumesForFixedPriceConst = [30, 31, 32]
   Price::StandardFormula::Const::MaxDurationMinuteForFixedPrice = 30
   Price::StandardFormula::Const::MaxCountVolumeForFixedPrice = 31
   Price::StandardFormula::Const::MaxSumVolumeMByteForFixedPrice = 32
   
+  Price::StandardFormula::Const::MaxVolumesForFixedPriceIfUsedConst = [33, 34, 35]
   Price::StandardFormula::Const::MaxDurationMinuteForFixedPriceIfUsed = 33
   Price::StandardFormula::Const::MaxCountVolumeForFixedPriceIfUsed = 34
   Price::StandardFormula::Const::MaxSumVolumeMByteForFixedPriceIfUsed = 35
@@ -27,6 +29,7 @@ module Price::StandardFormula::Const
   Price::StandardFormula::Const::MaxCountVolumeForSpecialPrice = 37
   Price::StandardFormula::Const::MaxSumVolumeMByteForSpecialPrice = 38
 
+  Price::StandardFormula::Const::TurbobuttonsConst = [40, 41]
   Price::StandardFormula::Const::TurbobuttonMByteForFixedPrice = 40
   Price::StandardFormula::Const::TurbobuttonMByteForFixedPriceDay = 41
 

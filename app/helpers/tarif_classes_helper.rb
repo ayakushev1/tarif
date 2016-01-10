@@ -32,20 +32,38 @@ module TarifClassesHelper
     create_tableable(TarifClass.query_from_filtr(filtr).where(where_for_category).where(where_for_is_archived).where(where_not_blank), options)
   end
 
-  def full_category_groups
-    @full_category_groups ||= Service::CategoryGroup.
+  def full_category_groups(filtr = :fixed)
+    return @full_category_groups[filtr] if @full_category_groups.try(:filtr)
+    @full_category_groups ||= {}
+    @full_category_groups[filtr] = Service::CategoryGroup.
       includes(service_category_tarif_classes: [:service_category_rouming, :service_category_geo, :service_category_partner_type,
         :service_category_calls, :service_category_one_time, :service_category_periodic]).
       includes(service_category_tarif_classes: [service_category_calls: [:parent_call]]).
       includes(price_lists: [formulas: [:standard_formula]]).
-      where(:tarif_class_id => session[:current_id]['tarif_class_id']).
-      where("(service_category_tarif_classes.conditions->>'tarif_set_must_include_tarif_options')::jsonb is null").
+      where(filtr_condition(filtr)).
+      where(:tarif_class_id => params[:id]).
       order("service_category_tarif_classes.service_category_one_time_id").
       order("service_category_tarif_classes.service_category_periodic_id").
       order("service_category_groups.id").
       order("service_categories.parent_id").
       order("service_category_tarif_classes.service_category_rouming_id, service_category_tarif_classes.service_category_calls_id, service_category_tarif_classes.service_category_geo_id, service_category_tarif_classes.service_category_partner_type_id").
       order("price_formulas.calculation_order")
+  end
+  
+  def filtr_condition(filtr = :fixed)
+    base_filtr = "(service_category_tarif_classes.conditions->>'tarif_set_must_include_tarif_options')::jsonb is null"
+    fixed_filtr = "service_category_tarif_classes.service_category_one_time_id is not null or service_category_tarif_classes.service_category_periodic_id is not null"
+    included_in_tarif = "price_formulas.standard_formula_id = any('{#{Price::StandardFormula::Const::MaxVolumesForFixedPriceConst.join(', ')}}')"
+    case filtr
+    when :fixed
+      [base_filtr, fixed_filtr]
+    when :included_in_tarif
+      [base_filtr, "not (#{fixed_filtr})",included_in_tarif]
+    when :others
+      [base_filtr, "not (#{fixed_filtr})", "not (#{included_in_tarif})"]
+    else
+      [base_filtr]
+    end.map{|f| "(#{f})"}.join(" and ")
   end
 
   def category_groups

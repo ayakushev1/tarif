@@ -1,4 +1,35 @@
 module Service::CategoryTarifClassPresenter
+  def criteria_value_names_from_service_category_ids(service_category_ids = [])
+#    _call_partner_phone_region_id = 9; _call_partner_phone_country_id = 10; _call_connect_region_id = 12; _call_connect_country_id = 13;
+#    _in_array = 126;
+
+    result = {}
+    service_categories = Service::Category.where(:id => service_category_ids).includes(:criteria).
+      where(:service_criteria => {:criteria_param_id => [9, 10, 12, 13], :comparison_operator_id => 126}).all
+    category_ids = []
+    
+    service_categories.each do |service_category|    
+      result[service_category.id] ||= []
+      service_category.criteria.each do |criterium|
+        if criterium.value and criterium.value.is_a?(Array) 
+          category_ids += criterium.value 
+          result[service_category.id] += criterium.value
+        end 
+      end
+    end
+        
+    category_names = {}
+    ::Category.select(:id, :name).where(:id => category_ids.uniq).each do |category|
+      category_names[category.id] = category.name
+    end
+    
+    result.each do |service_category_id, cat_ids|      
+      result[service_category_id] = cat_ids.uniq.map{|cat_id| category_names[cat_id]}
+    end
+    
+    result    
+  end
+  
   def category_groups_presenter(full_category_groups)
     result = []
     colspan = []
@@ -25,7 +56,7 @@ module Service::CategoryTarifClassPresenter
       current_row_span = 1
       result_without_colspan.each_index do |row|
         result[row] ||= []
-        if result_without_colspan[row][col] or (col > 0 and col < 4 and result[row][col-1][1])
+        if result_without_colspan[row][col] or (col > 0 and col < 4 and col != 1 and result[row][col-1][1])
           result[row][col] = [result_without_colspan[row][col], current_row_span]
           current_row_span = 1
         else          
@@ -34,7 +65,13 @@ module Service::CategoryTarifClassPresenter
         end
       end
     end if result_without_colspan[0]
-    result.reverse
+    result.reverse!
+    
+    if true and result[0] and result[0][1..3] == [[nil, nil], [nil, nil], [nil, nil]]
+      [[result[0][0]] + [["", 1], ["", 1], ["", 1]] + [result[0][4]]] + result[1..result.size]
+    else
+      result
+    end    
   end  
   
   def category_presenter(service_category, prev_service_category)
@@ -49,6 +86,8 @@ module Service::CategoryTarifClassPresenter
       [nil, nil, service_category.service_category_geo.try(:name), service_category.service_category_partner_type.try(:name)]
     when curr_category[0] == prev_category[0]
       [nil, service_category.service_category_rouming.try(:name), service_category.service_category_geo.try(:name), service_category.service_category_partner_type.try(:name)]
+    when (curr_category[0] != prev_category[0] and curr_category[1] == prev_category[1] and true) 
+      [first_show_item_choicer(service_category), nil, service_category.service_category_geo.try(:name), service_category.service_category_partner_type.try(:name)]
     else
       [first_show_item_choicer(service_category), service_category.service_category_rouming.try(:name), service_category.service_category_geo.try(:name), service_category.service_category_partner_type.try(:name)]
     end
