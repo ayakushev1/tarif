@@ -155,7 +155,7 @@ class Customer::CallsController < ApplicationController
   
   def create_call_run_if_not_exists
     Customer::CallRun.min_new_call_run(user_type).times.each do |i|
-      Customer::CallRun.create(:name => "Загрузка детализации №#{i}", :source => 1, :description => "", :user_id => current_or_guest_user_id)
+      Customer::CallRun.create(:name => "Моделирование звонков №#{i}", :source => 1, :description => "", :user_id => current_or_guest_user_id)
     end  if !Customer::CallRun.where(:user_id => current_or_guest_user_id).present?
   end
 end
