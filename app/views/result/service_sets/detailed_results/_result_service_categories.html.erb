@@ -4,13 +4,11 @@ table.init do |t|
   t.heads = ['Стоимость в месяц, руб', 'Тип роуминга', 'Услуга', 'География услуги', 'Тип принимающего оператор', 
   	'Кол-во минут', 'Кол-во смс и ммс', 'Объем интернета, Мб', ('Кол-во обработанных записей'  if current_user_admin?)].compact
   t.set_fields do |f|
-  	rouming = !f.rouming_details.blank? ? content_tag(:a, f.rouming_names.join(', ') , {:href => '#', :'data-toggle' =>'tooltip', :title => f.rouming_details.join(', ')}).html_safe : f.rouming_names.join(', ') 
-  	geo = !f.geo_details.blank? ? content_tag(:a, f.geo_names.join(', ') , {:href => '#', :'data-toggle' =>'tooltip', :title => f.geo_details.join(', ')}).html_safe : f.geo_names.join(', ')
   	[
      (f.price.round(0).to_s(:delimited, precision: 0) if f.price),      
-  	 rouming,
+  	 geo_presenter(f.rouming_names.join(', '), f.rouming_details),
   	 ((f.calls_names || []) + (f.fix_names || [])).join(', '),
-  	 geo,
+  	 geo_presenter(f.geo_names.join(', '), f.geo_details),
   	 (f.partner_names.join(', ') if f.partner_names),
      f.sum_duration_minute,
      f.count_volume,
