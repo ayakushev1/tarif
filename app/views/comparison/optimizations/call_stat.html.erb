@@ -8,7 +8,8 @@
 <p>
 	
 </p>
-<%= render(:partial => 'comparison/optimizations/call_stat/operator_choicer', :layout => 'application/layouts/filtr_form_n_columns', :locals => {:form_item => calls_stat_options} ) %> 
+<%= render(:partial => 'comparison/optimizations/call_stat/operator_choicer', 
+	:layout => 'application/layouts/filtr_form_n_columns', :locals => {:form_item => calls_stat_options} ) if user_type == :admin %> 
 <p>
 <%= render(:partial => 'comparison/optimizations/call_stat/calls_stat_options', :layout => 'application/layouts/filtr_form_inline', :locals => {:form_item => calls_stat_options} ) %> 
 </p>
