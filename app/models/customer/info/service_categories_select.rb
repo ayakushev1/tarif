@@ -196,9 +196,9 @@ class Customer::Info::ServiceCategoriesSelect < ActiveType::Record[Customer::Inf
     
     if direct_options_1.blank?
       country_roming = {:guest => false, :trial => true, :user => true, :admin => true }[user_type]
-      intern_roming = {:guest => false, :trial => false, :user => true, :admin => true }[user_type]
-      mms = {:guest => false, :trial => false, :user => true, :admin => true }[user_type]
-      internet = {:guest => false, :trial => false, :user => true, :admin => true }[user_type]
+      intern_roming = {:guest => false, :trial => true, :user => true, :admin => true }[user_type]
+      mms = {:guest => false, :trial => true, :user => true, :admin => true }[user_type]
+      internet = {:guest => false, :trial => true, :user => true, :admin => true }[user_type]
     else
       direct_options = direct_options_1.symbolize_keys
       country_roming = direct_options[:country_roming].blank? ? false : direct_options[:country_roming]
