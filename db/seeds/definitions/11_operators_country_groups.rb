@@ -219,8 +219,8 @@ end
   _bln_international_13 = _world_countries_without_russia - _bln_international_2
 
   _bln_welcome_1 = [_tajikistan]
-  _bln_welcome_2 = [_armenia]
-  _bln_welcome_3 = [_kazakhstan, _ukraiun]
+  _bln_welcome_2 = [_armenia, _ukraiun]
+  _bln_welcome_3 = [_kazakhstan]
   _bln_welcome_4 = [_uzbekistan]
   _bln_welcome_5 = [_turkmenistan, ]
   _bln_welcome_6 = [_moldova]
