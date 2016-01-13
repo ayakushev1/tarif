@@ -205,7 +205,7 @@ GEM
       ruby-rc4
       ttfunk
     pg (0.18.4)
-    phantomjs (1.9.8.0)
+    phantomjs (1.9.7.0)
     platform-api (0.5.0)
       heroics
     poltergeist (1.8.1)
@@ -365,7 +365,7 @@ DEPENDENCIES
   nokogiri
   pdf-reader
   pg
-  phantomjs
+  phantomjs (= 1.9.7)
   platform-api
   poltergeist
   puma
