@@ -7,6 +7,7 @@ gem 'rails', "4.2.2"
 
 gem 'pg'
 gem 'nokogiri'
+#gem 'mechanize'
 #gem 'roo', '1.13.2'
 gem 'roo', '~> 2.1.0'
 gem 'roo-xls'
