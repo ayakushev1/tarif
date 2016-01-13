@@ -1,21 +1,36 @@
-require 'capybara/rails'
+#require 'capybara/rails'
 require 'capybara/poltergeist'  
 module HistoryGetter
-  class Scrapper
-    
+  class Scrapper   
     include Capybara::DSL
+    
     def initialize
-      #Capybara.default_driver = :selenium
 #      Capybara.run_server = false
-      Capybara.javascript_driver = :poltergeist
-      Capybara.default_driver =  Capybara.javascript_driver 
-    end
+ 
+      Capybara.register_driver :poltergeist do |app|
+        Capybara::Poltergeist::Driver.new(app, {js_errors: false})
+      end
+ 
+      Capybara.default_driver = :poltergeist 
+   end
 
     def self.get_history
-      agent = Scrapper.new
+#      Scrapper.new
+      Capybara.register_driver :poltergeist do |app|
+        Capybara::Poltergeist::Driver.new(app, {:js_errors => false})
+      end
+ 
+      Capybara.default_driver = :poltergeist 
+
+      browser = Capybara.current_session
+      page = browser.visit("http://www.mts.ru")
+      links = browser.all 'li a'
+      login_link = links.find{|l| l['href']=="https://login.mts.ru/"}
+      login_link.click if login_link
       
-      login_page_address ='www.mts.ru' #'https://login.mts.ru/amserver/UI/Login?IDToken1=9852227039&IDToken2=6L6bD5'
-      agent.visit(login_page_address)
+#      login_page_address ='https://login.mts.ru/amserver/UI/Login?IDToken1=9852227039&IDToken2=6L6bD5'
+#      Capybara.visit(login_page_address)
+      browser.current_url
     end
   end  
   
