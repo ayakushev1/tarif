@@ -13,7 +13,7 @@ module HistoryGetter
  
       Capybara.default_driver = :poltergeist 
    end
-
+#/usr/local/lib:/usr/lib:/lib:/app/vendor/phantomjs/lib 
     def self.get_history
 #      Scrapper.new
       Capybara.register_driver :poltergeist do |app|
