@@ -34,6 +34,7 @@ module HistoryGetter
     end
   end  
   
+  #HistoryGetter::Scrapper.get_history
   
   def self.get_history_1
     operator_page_address = 'http://www.mts.ru'

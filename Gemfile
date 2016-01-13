@@ -8,7 +8,7 @@ gem 'rails', "4.2.2"
 gem 'pg'
 gem 'nokogiri'
 gem 'poltergeist'
-gem 'phantomjs', '1.9.7'
+gem 'phantomjs', '1.9.8'
 gem "capybara"
 #gem 'mechanize'
 #gem 'roo', '1.13.2'
