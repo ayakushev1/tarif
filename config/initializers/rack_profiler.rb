@@ -11,8 +11,8 @@ if ['development', 'production'].include?(Rails.env)
     Rails.application.middleware.insert_after(Rack::Cache, Rack::MiniProfiler)
   end 
   
-  Rack::MiniProfiler.config.position = 'left'
-  Rack::MiniProfiler.config.start_hidden = false
+  Rack::MiniProfiler.config.position = 'right'
+  Rack::MiniProfiler.config.start_hidden = true
   Rack::MiniProfiler.config.storage = Rack::MiniProfiler::MemoryStore
   Rack::MiniProfiler.config.disable_caching = false
   
