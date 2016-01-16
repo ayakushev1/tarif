@@ -12,7 +12,7 @@ class Customer::CallRunsController < ApplicationController
   
   def calculate_call_stat
     call_run.calculate_call_stat
-    redirect_to customer_call_stat_path(params[:id]), :notice => "Статистика готова"
+    redirect_to customer_call_stat_path(params[:id]), :notice => "Статистика готова", status: :moved_permanently
   end
 
   

@@ -2,7 +2,7 @@
 
 <p>
 <%= link_to( 'Создать новое описание', new_customer_call_run_path, 
-	{:class => "btn btn-success", :type => 'button'})  if controller.is_allowed_new_call_run? %>
+	{:class => "btn btn-success", :type => 'button', :rel => "nofollow"})  if controller.is_allowed_new_call_run? %>
 </p>
 
 <p>

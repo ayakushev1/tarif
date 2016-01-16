@@ -25,7 +25,7 @@ form_item.init do |fi|
 	  ['Оператор', (tarif_class.operator.name if tarif_class.operator) ], 
 	  ['Кто может подключить', (tarif_class.privacy.name if tarif_class.privacy) ], 
 	  ['Тариф или опция', (tarif_class.standard_service.name if tarif_class.standard_service) ], 
-	  ['Описание у оператора', link_to_if(tarif_class.features, tarif_class.features['http'], tarif_class.features['http'], :target => "_blank") ], 
+	  ['Описание у оператора', link_to_if(tarif_class.features, tarif_class.features['http'], tarif_class.features['http'], :target => "_blank", :rel => "nofollow") ], 
 	  (['Требуемые тарифы или опции', prerequisites] if tarif_class.standard_service_id != 40), 
 	  ['Является архивным?', ((tarif_class.dependency['is_archived'] || "Нет") if tarif_class.dependency) ], 
 	].compact + (user_type == :admin ? [
