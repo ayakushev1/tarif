@@ -10,7 +10,7 @@
 	<% end %>
 		 
 	<%if controller.customer_has_calls_loaded? %>
-		<li><%= link_to  t(:customer_calls_path), customer_calls_path %></li>
+		<li><%= link_to  t(:customer_calls_path), customer_calls_path, {:rel => "nofollow"} %></li>
 	<% end %>
 
 </ul>

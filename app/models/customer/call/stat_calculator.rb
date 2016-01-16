@@ -19,6 +19,9 @@ class Customer::Call::StatCalculator
         service_category_where_condition = ['true']
         service_category_criteria.each do |criteria_type, criteria_value|
           service_category_where_condition << query_constructor.categories_where_hash[criteria_value] if criteria_value
+          
+          raise(StandardError) if Customer::Call.where(query_constructor.categories_where_hash[criteria_value]).size < 0 and criteria_value
+          
         end if service_category_criteria
         service_categories_where_condition << "(#{service_category_where_condition.join(' and ')})"
       end if selected_service_categories_by_part

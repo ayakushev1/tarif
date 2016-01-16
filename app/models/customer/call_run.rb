@@ -131,7 +131,9 @@ class Customer::CallRun < ActiveRecord::Base
   end
   
   def calculate_call_stat
-    @fq_tarif_region_id = 1238
+    @fq_tarif_region_id = 1238 if !@fq_tarif_region_id
+    @fq_tarif_operator_id = (operator_id || 1030) if !@fq_tarif_operator_id
+
     accounting_periods = Customer::Call.where(:call_run_id => id).pluck("description->>'accounting_period'").uniq
     all_selected_categories = Customer::Info::ServiceCategoriesSelect.default_selected_categories(:admin, {
       :country_roming => true, :intern_roming => true, :mms => true, :internet => true })

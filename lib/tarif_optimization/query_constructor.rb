@@ -76,23 +76,23 @@ class TarifOptimization::QueryConstructor
       @category_groups[category_group_id.to_i] = category_group
     end
 
-    @category_ids = loaded_data['category_ids'] #array of int
+    @category_ids = loaded_data['category_ids'.freeze] #array of int
   
     @parameters = loaded_data['parameters'] #array of AR
-    @criteria_where_hash = loaded_data['criteria_where_hash'] #array of string
-    @criteria_category = loaded_data['criteria_category'] #array of array of int
-    @categories_where_hash = loaded_data['categories_where_hash'] #array of string
+    @criteria_where_hash = loaded_data['criteria_where_hash'.freeze] #array of string
+    @criteria_category = loaded_data['criteria_category'.freeze] #array of array of int
+    @categories_where_hash = loaded_data['categories_where_hash'.freeze] #array of string
 
     @tarif_classes_categories_where_hash = {}
-    loaded_data['tarif_classes_categories_where_hash'].each do |tarif_class_category_id, tarif_classes_category_where_hash|
+    loaded_data['tarif_classes_categories_where_hash'.freeze].each do |tarif_class_category_id, tarif_classes_category_where_hash|
       @tarif_classes_categories_where_hash[tarif_class_category_id.to_i] = tarif_classes_category_where_hash
     end
   end
 
   def tarif_class_where_hash(tarif_class_id)
-    where = ["false"]
-    tarif_classes_categories_where_hash.each { |key, tcc| where << "( #{tcc} )" if tcc and tarif_class_categories[key]['tarif_class_id'] == tarif_class_id }
-    where.join(' or ')
+    where = ["false".freeze]
+    tarif_classes_categories_where_hash.each { |key, tcc| where << "( #{tcc} )" if tcc and tarif_class_categories[key]['tarif_class_id'.freeze] == tarif_class_id }
+    where.join(' or '.freeze)
   end
   
   def joined_tarif_classes_category_where_hash(tarif_classes_category_ids)
@@ -101,12 +101,12 @@ class TarifOptimization::QueryConstructor
       tcc = tarif_class_categories[tarif_classes_category_id] 
       where << "( #{tarif_classes_categories_where_hash[tcc['id']]} )" if tcc 
     end
-    where.join(' or ')
+    where.join(' or '.freeze)
   end
   
   def tarif_classes_category_where_hash(tarif_classes_category_id)
     tcc = tarif_class_categories[tarif_classes_category_id]
-    tcc ? tarif_classes_categories_where_hash[tcc['id']] : nil
+    tcc ? tarif_classes_categories_where_hash[tcc['id'.freeze]] : nil
   end
   
   def calculate_tarif_classes_categories_where_hash
@@ -116,8 +116,8 @@ class TarifOptimization::QueryConstructor
   
   def initial_tarif_classes_category_where_hash(tarif_classes_category)
     t = tarif_classes_category
-    [t['service_category_rouming_id'], t['service_category_geo_id'], t['service_category_partner_type_id'], 
-    t['service_category_calls_id'], t['service_category_one_time_id'], t['service_category_periodic_id']].
+    [t['service_category_rouming_id'.freeze], t['service_category_geo_id'.freeze], t['service_category_partner_type_id'.freeze], 
+    t['service_category_calls_id'.freeze], t['service_category_one_time_id'.freeze], t['service_category_periodic_id'.freeze]].
       collect { |category_id| category_id ? categories_where_hash[category_id] : true }.compact.join(' and ')
   end
   
@@ -125,8 +125,8 @@ class TarifOptimization::QueryConstructor
     @categories_where_hash = []
 
     Service::Category.where(:id => category_ids).order(:level).where(:parent_id => nil).each do |c|      
-      (childs_category[c['id']] << c['id']).each do |cat_id|
-        categories_where_hash[cat_id] = correct_category_criteria(cat_id).compact.join(' and ')
+      (childs_category[c['id'.freeze]] << c['id'.freeze]).each do |cat_id|
+        categories_where_hash[cat_id] = correct_category_criteria(cat_id).compact.join(' and '.freeze)
         categories_where_hash[cat_id] = 'true' if categories_where_hash[cat_id].blank?
       end   
     end
@@ -151,13 +151,13 @@ class TarifOptimization::QueryConstructor
   end
 
   def calculate_childs_category
-    categories.each { |c| add_child_category(c['id'], c['parent_id']) if c and c['parent_id'] }
+    categories.each { |c| add_child_category(c['id'.freeze], c['parent_id'.freeze]) if c and c['parent_id'.freeze] }
   end
   
   def add_child_category(child_id, parent_id)
     childs_category[parent_id] = [] if childs_category[parent_id].blank?
     childs_category[parent_id] << child_id
-    add_child_category(child_id, categories[parent_id]['parent_id']) if categories[parent_id] and categories[parent_id]['parent_id']
+    add_child_category(child_id, categories[parent_id]['parent_id'.freeze]) if categories[parent_id] and categories[parent_id]['parent_id'.freeze]
 #    raise(StandardError, categories[parent_id])
   end
   
@@ -168,34 +168,38 @@ class TarifOptimization::QueryConstructor
   end
   
   def criterium_where_hash(criterium)
-    criteria_param = parameter_class_sql_name(parameters[criterium['criteria_param_id']], context)
+    criteria_param = parameter_class_sql_name(parameters[criterium['criteria_param_id'.freeze]], context)
 
-    comparison_operator = comparison_operators[criterium['comparison_operator_id']]
+    comparison_operator = comparison_operators[criterium['comparison_operator_id'.freeze]]
     
-    value_param = criterium['value']
-    value_param = parameter_class_instance_value(parameters[criterium['value_param_id']], context, criterium['value']) if criterium['value_param_id']
+    value_param = criterium['value'.freeze]
+    value_param = parameter_class_instance_value(parameters[criterium['value_param_id'.freeze]], context, criterium['value'.freeze]) if criterium['value_param_id'.freeze]
     begin      
-      value_param = eval(criterium['eval_string']) if criterium['eval_string']
+      value_param = eval(criterium['eval_string'.freeze]) if criterium['eval_string'.freeze]
     rescue
-      raise(StandardError, [criterium, criterium['eval_string']])
+      raise(StandardError, [criterium, criterium['eval_string'.freeze]])
     end
     
     if criterium.value_choose_option_id == 153#_value_param_is_criterium_param
-      value_param_string = parameter_class_sql_name(parameters[criterium['value_param_id']], context)
+      value_param_string = parameter_class_sql_name(parameters[criterium['value_param_id'.freeze].freeze], context)
     else
-      value_param_string = "'#{value_param}'"
+      value_param_string = "'#{value_param}'".freeze
     end
     
      
     
-    case comparison_operator
+    result = case comparison_operator
     when 'in'
-      "(#{criteria_param} = any('{#{value_param.join(', ')}}') )"
+      "(#{criteria_param} = any('{#{value_param.join(', ')}}') )".freeze
     when 'not_in'
-      "(#{criteria_param} != all('{#{value_param.join(', ')}}') )"
+      "(#{criteria_param} != all('{#{value_param.join(', ')}}') )".freeze
     else
-      "(#{criteria_param} #{comparison_operator} #{value_param_string})"
-    end      
+      "(#{criteria_param} #{comparison_operator} #{value_param_string})".freeze
+    end 
+    
+#    raise(StandardError, result) if Customer::Call.where(result).size < 0
+    
+    result     
   end
       
   def load_parameters(parameter_ids = nil)
