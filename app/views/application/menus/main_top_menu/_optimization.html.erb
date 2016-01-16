@@ -9,7 +9,7 @@
 	<% end %>
 		 
 	<% if controller.customer_has_tarif_optimized? %>
-		<li><%= link_to  t(:result_service_sets_results_path), result_service_sets_results_path %></li>
+		<li><%= link_to  t(:result_service_sets_results_path), result_service_sets_results_path, {:rel => "nofollow"} %></li>
 	<% end %>
 			 
 </ul>

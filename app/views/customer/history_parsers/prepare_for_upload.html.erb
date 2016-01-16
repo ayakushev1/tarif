@@ -32,7 +32,8 @@
 		<%= render :partial => 'call_run_choice' %>
 	</div>
 	<div class="panel-footer">
-		<%= link_to(t('customer.history_parsers.prepare_for_upload.call_runs_link'), customer_call_runs_path, {:class => "btn btn-primary", :type =>"button"}) %>		
+		<%= link_to(t('customer.history_parsers.prepare_for_upload.call_runs_link'), customer_call_runs_path, 
+			{:class => "btn btn-primary", :type =>"button", :rel => "nofollow"}) %>		
 		<%= render :partial => 'information' %>
 	</div>
 </div>
