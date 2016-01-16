@@ -6,14 +6,14 @@ form_item.init do |f|
 	input_html = {:filtr_name => form_item.filtr_name, :class => "updatable form-control ", :action_name => customer_calls_path}
    	label_html = {:class => "control-label "}
     action_name = customer_calls_path
-    user_choice_id = user_type == :admin ? nil : current_or_guest_user_id
+    user_choice_id = user_type == :admin ?  (s["user_id"] || current_user_id) : current_or_guest_user_id
     query = Customer::Call.joins(:call_run).where(:customer_call_runs => {:user_id => current_or_guest_user_id}).query_hash_from_filtr_with_all_keys_excluded(session[:filtr][filtr_name])
     user_calls_query = user_type != :admin ? Customer::Call.joins(:call_run).where(:customer_call_runs => {:user_id => current_or_guest_user_id}) :
-    	Customer::Call.joins(:call_run)
+    	Customer::Call.joins(:call_run).where(:customer_call_runs => {:user_id => user_choice_id})
   (user_type == :admin ? [
   	[
 	label(filtr_name, "user_id", "Выбор пользователя", label_html),	
-	collection_select(filtr_name, "user_id", User.where(:id => user_calls_query.query_from_filtr(s, "user_id").pluck(:user_id).uniq ), :id, :name, 
+	collection_select(filtr_name, "user_id", User.joins(:customer_call_runs).select([:id, :name]).where.not(:customer_call_runs => {:operator_id => nil}).uniq, :id, :name, 
 	  	   {:selected => (s["user_id"] || current_user_id) }, input_html ),
   	],
   ] : []) +	
