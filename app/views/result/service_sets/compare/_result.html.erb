@@ -16,7 +16,7 @@ panel = {
 	:body => body,
 	:footer => render( :partial => 'result/service_sets/compare/information') + 
 			   link_to("Назад", service_sets_result_return_link_to, 
-							{:class => "btn btn-success", :type =>"button", :remote => true}),
+							{:class => "btn btn-success", :type =>"button", :remote => true, :rel => "nofollow"}),
 }
 %>
 
