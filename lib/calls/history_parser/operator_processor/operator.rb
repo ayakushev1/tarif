@@ -223,9 +223,12 @@ class Calls::HistoryParser::OperatorProcessor::Operator
   def find_column_indexes(table_heads_1)
     max_row_seach = 100
     table_heads = table_heads_1[0].is_a?(Array) ? table_heads_1 : [table_heads_1]
-    table_heads[0..max_row_seach].each do |table_head|
-      @row_column_index = {} 
-      correct_table_heads.each do |correct_table_head|
+    
+    table_heads[0..max_row_seach].each_with_index do |table_head, table_row|
+      @row_column_index = {}
+      
+      correct_table_heads.each_with_index do |correct_table_head, correct_index|
+        raise(StandardError, [table_head, correct_table_heads]) if table_row == 0 and correct_index == 1 and false
         correct_table_head.each do |local_name, out_name|
           @row_column_index[local_name] = table_head.index(out_name)
           break if !@row_column_index[local_name]

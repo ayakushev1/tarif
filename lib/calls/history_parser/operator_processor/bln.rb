@@ -129,7 +129,11 @@ class Calls::HistoryParser::OperatorProcessor::Bln < Calls::HistoryParser::Opera
   def row_date(row)
     result = nil
     begin
-      result = row[row_column_index[:date]].to_datetime if row[row_column_index[:date]]
+      result = if row_column_index[:time]
+        "#{row[row_column_index[:date]]} #{row[row_column_index[:time]]}".to_datetime
+      else
+        row[row_column_index[:date]].to_datetime if row[row_column_index[:date]]
+      end
       result = "invalid_date" if !result
     rescue StandardError
       result = "invalid_date"
@@ -140,9 +144,10 @@ class Calls::HistoryParser::OperatorProcessor::Bln < Calls::HistoryParser::Opera
   def correct_table_heads
     [
       {date: "Дата и время", number_init: "Исходящий номер", number_called: "Входящий номер",  call_type: "Описание услуги", service: "Тип услуги", duration: "Длительность, мин сек",  cost:  "Стоимость. руб", volume: "Размер сессии. МБ"},
+      {date: "Дата звонка", time: "Время звонка", number_init: "Инициатор звонка", number_called: "Набранный номер",  call_type: "Тип звонка", service: "Услуга", duration: "Продолжительность",  cost:  "Предварительная стоимость (без НДС)", volume: "Объем (MB)"},
     ]
   end
-  
+                                                                                                
   def table_filtrs
     {
       :xls => {
