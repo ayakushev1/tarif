@@ -40,5 +40,5 @@ protected
     url_for(controller: controller_name.to_s, action: action_name, only_path: true).sub('/', '')
   end
 
-
+ 
 end
