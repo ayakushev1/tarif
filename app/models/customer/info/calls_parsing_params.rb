@@ -26,7 +26,7 @@ class Customer::Info::CallsParsingParams < ActiveType::Record[Customer::Info]
     call_history_max_line_to_process = {:guest => 500, :trial => 1000, :user => 5000, :admin => 10000}[user_type]
     {
       'calculate_on_background' => 'true',
-      'save_processes_result_to_stat' => 'true',
+      'save_processes_result_to_stat' => 'false',
       'file_upload_remote_mode' => 'false',
       'file_upload_turbolink_mode' => 'false',
       'file_upload_form_method' => 'post',
