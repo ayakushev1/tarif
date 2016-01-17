@@ -181,7 +181,7 @@ class TarifOptimization::QueryConstructor
     end
     
     if criterium.value_choose_option_id == 153#_value_param_is_criterium_param
-      value_param_string = parameter_class_sql_name(parameters[criterium['value_param_id'.freeze].freeze], context)
+      value_param_string = parameter_class_sql_name(parameters[criterium['value_param_id'.freeze]], context)
     else
       value_param_string = "'#{value_param}'".freeze
     end

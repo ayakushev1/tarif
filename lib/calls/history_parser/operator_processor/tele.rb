@@ -128,10 +128,10 @@ class Calls::HistoryParser::OperatorProcessor::Tele < Calls::HistoryParser::Oper
   def row_date(row)
     result = nil
     begin
-      result = DateTime.strptime(row[row_column_index[:date]], "%d.%m.%y") if row[row_column_index[:date]]
-      result = "invalid_date" if !result
+      result = DateTime.strptime(row[row_column_index[:date]], "%d.%m.%y".freeze) if row[row_column_index[:date]]
+      result = "invalid_date".freeze if !result
     rescue StandardError
-      result = "invalid_date"
+      result = "invalid_date".freeze
     end    
 #    raise(StandardError) if row[row_column_index[:date]] == '10.10.15'
     result
@@ -139,7 +139,7 @@ class Calls::HistoryParser::OperatorProcessor::Tele < Calls::HistoryParser::Oper
   
   def correct_table_heads
       [
-        [["Дата", "и", "время", "план", "Типсоединения", "Номер", "в", "секундах", "в", "минутах", "стоимость", "по", "оплате"], ["тарифу"]],
+        [["Дата".freeze, "и".freeze, "время".freeze, "план".freeze, "Типсоединения".freeze, "Номер".freeze, "в".freeze, "секундах".freeze, "в".freeze, "минутах".freeze, "стоимость".freeze, "по".freeze, "оплате".freeze], ["тарифу".freeze]],
         ]
 #    [
 #      {date: "date:", time: "time:", tarif_name: "tarif_name:", service: "service:", number_called: "number_called:", duration: "duration:", duration_min: "duration_min", 

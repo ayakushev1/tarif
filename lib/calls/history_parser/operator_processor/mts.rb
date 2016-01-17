@@ -104,27 +104,29 @@ class Calls::HistoryParser::OperatorProcessor::Mts < Calls::HistoryParser::Opera
     result = nil
     begin
       result = "#{row[row_column_index[:date]]} #{row[row_column_index[:time]]} #{row[row_column_index[:gmt]]}".to_datetime
-      result = "invalid_date" if !result
+      result = "invalid_date".freeze if !result
     rescue StandardError
-      result = "invalid_date"
+      result = "invalid_date".freeze
     end    
     result    
   end
   
   def correct_table_heads
     [
-      {date:"Дата", time: "Время", gmt: "GMT*", number: "Номер", rouming: "Зона вызова", partner: "Зона направления вызова/номер сессии", service: "Услуга", duration: "Длительность", cost: "Стоимость без НДС"},
-      {date:"Дата", time: "Время", gmt: "GMT*", number: "Номер", rouming: "Зона вызова", partner: "Зона направления вызова/номер сессии", service: "Услуга", duration: "Длительность/Объем (мин.:сек.)/(Kb)", cost: "Стоимость руб."},
+      {date:"Дата".freeze, time: "Время".freeze, gmt: "GMT*".freeze, number: "Номер".freeze, rouming: "Зона вызова".freeze, 
+        partner: "Зона направления вызова/номер сессии".freeze, service: "Услуга".freeze, duration: "Длительность".freeze, cost: "Стоимость без НДС".freeze},
+      {date:"Дата".freeze, time: "Время".freeze, gmt: "GMT*".freeze, number: "Номер".freeze, rouming: "Зона вызова".freeze, 
+        partner: "Зона направления вызова/номер сессии".freeze, service: "Услуга".freeze, duration: "Длительность/Объем (мин.:сек.)/(Kb)".freeze, cost: "Стоимость руб.".freeze},
     ]
   end
   
   def table_filtrs
     {
       :html => {
-        :head => 'table table thead tr',
-        :head_column => 'th',
-        :body => 'table table tbody tr',
-        :body_column => 'td',
+        :head => 'table table thead tr'.freeze,
+        :head_column => 'th'.freeze,
+        :body => 'table table tbody tr'.freeze,
+        :body_column => 'td'.freeze,
       },
       :xls => {
         :body => 0,

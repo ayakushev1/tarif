@@ -124,9 +124,9 @@ class Calls::HistoryParser::OperatorProcessor::Megafon < Calls::HistoryParser::O
       date = Date.strptime(row[row_column_index[:date]], '%d.%m.%y')
 #      date += 2000 if date.year < 1000
       result = "#{date} #{row[row_column_index[:time]]}}".to_datetime
-      result = "invalid_date" if !result
+      result = "invalid_date".freeze if !result
     rescue StandardError
-      result = "invalid_date"
+      result = "invalid_date".freeze
     end    
     result
     
@@ -134,17 +134,18 @@ class Calls::HistoryParser::OperatorProcessor::Megafon < Calls::HistoryParser::O
 
   def correct_table_heads
     [
-      {date: "Дата", time: "Время", number: "Абонентский номер, адрес электронной почты, точка доступа", duration: "Прод/ Объем", tarification_unit: "Единица тарификации (мин, сек, шт, Kb, Mb)", service: "Вид услуги", rouming: "Место вызова", cost: "Стоимость (с НДС),  руб."},
+      {date: "Дата".freeze, time: "Время".freeze, number: "Абонентский номер, адрес электронной почты, точка доступа".freeze, duration: "Прод/ Объем".freeze, 
+        tarification_unit: "Единица тарификации (мин, сек, шт, Kb, Mb)".freeze, service: "Вид услуги".freeze, rouming: "Место вызова".freeze, cost: "Стоимость (с НДС),  руб.".freeze},
     ]
   end
 
   def table_filtrs
     {
       :html => {
-        :head => "body table [style='height:56px']",
-        :head_column => 'td',
-        :body => 'body table tr',
-        :body_column => 'td',
+        :head => "body table [style='height:56px']".freeze,
+        :head_column => 'td'.freeze,
+        :body => 'body table tr'.freeze,
+        :body_column => 'td'.freeze,
       },
     }    
   end

@@ -44,8 +44,8 @@ module Calls::HistoryParser::DbSearchHelper
   end
   
   def find_country_by_country_group(arr_of_string)
-    country_groups = [['популярные страны', _egypt], ['снг', _ukraiun], ['европа', _france], ['северная америка', _usa], 
-    ['южная америка', _brasilia], ['америка', _usa], ['азия', _tailand], ['африка', _egypt], ['австралия', _australia]]
+    country_groups = [['популярные страны'.freeze, _egypt], ['снг'.freeze, _ukraiun], ['европа'.freeze, _france], ['северная америка'.freeze, _usa], 
+    ['южная америка'.freeze, _brasilia], ['америка'.freeze, _usa], ['азия'.freeze, _tailand], ['африка'.freeze, _egypt], ['австралия'.freeze, _australia]]
     str = arr_of_string.join(' ')
     country_groups.each do |country_group|         
       return [country_group[1], 1] if str =~ /#{country_group[0]}/
@@ -54,7 +54,7 @@ module Calls::HistoryParser::DbSearchHelper
   end
   
   def find_region(arr_of_string)
-    speical_worlds = ['Республика', 'республика', 'область', 'край', 'автономный', 'автономная']
+    speical_worlds = ['Республика'.freeze, 'республика'.freeze, 'область'.freeze, 'край'.freeze, 'автономный'.freeze, 'автономная'.freeze]
     (arr_of_string - speical_worlds).each do |str|
       regions[:names].each_index do |region_index|       
         return [regions[:ids][region_index], region_index] if (regions[:names][region_index].split(' ') - speical_worlds).include?(str)
