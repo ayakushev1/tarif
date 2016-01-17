@@ -89,7 +89,8 @@ module TarifOptimizators::AllOptionsHelper
   def selected_service_categories
 #    return @selected_service_categories if @selected_service_categories    
     selected_services = Customer::Info::ServiceCategoriesSelect.selected_services_from_session_format(session_filtr_params(service_categories_select), user_type)
-    @selected_service_categories = Customer::Info::ServiceCategoriesSelect.service_categories_from_selected_services(selected_services)
+#    @selected_service_categories = 
+    Customer::Info::ServiceCategoriesSelect.service_categories_from_selected_services(selected_services)
   end
   
 end

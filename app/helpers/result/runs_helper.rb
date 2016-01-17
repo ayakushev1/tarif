@@ -2,16 +2,18 @@ module Result::RunsHelper
   include SavableInSession::Filtrable, SavableInSession::Tableable, SavableInSession::SessionInitializers
   
   def result_runs_table
-    return @result_runs_table if @result_runs_table and @result_runs_table.model.exists?
+#    return @result_runs_table if @result_runs_table and @result_runs_table.model.exists?
     options = {:base_name => 'result_runs', :current_id_name => 'result_run_id', :id_name => 'id', :pagination_per_page => 10}
     result_runs_to_show = user_type == :admin ? 
       Result::Run.includes(:user, :call_run, :comparison_group).query_from_filtr(session_filtr_params(result_runs_select)) :
       Result::Run.includes(:user, :call_run, :comparison_group).where(:user_id => current_or_guest_user_id)
-    @result_runs_table = create_tableable(result_runs_to_show, options)
+#    @result_runs_table = 
+    create_tableable(result_runs_to_show, options)
   end
   
   def result_runs_select
-    @result_runs_select ||= create_filtrable("result_runs_select")
+#    @result_runs_select ||= 
+    create_filtrable("result_runs_select")
   end
 
   
@@ -33,7 +35,8 @@ module Result::RunsHelper
   end
   
   def accounting_periods(call_run_id = nil)
-    @accounting_periods ||= Customer::Call.
+#    @accounting_periods ||= 
+    Customer::Call.
       where(:user_id => current_or_guest_user_id, :call_run_id => (call_run_id || -1).to_i).
       select("description->>'accounting_period' as accounting_period").uniq
   end

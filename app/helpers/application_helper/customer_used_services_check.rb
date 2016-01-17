@@ -74,7 +74,7 @@ module ApplicationHelper::CustomerUsedServicesCheck
   protected
   
   def customer_info
-    @customer_info ||= 
+#    @customer_info ||= 
     Customer::Info::ServicesUsed.info(current_or_guest_user.id)
   end
   

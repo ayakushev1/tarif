@@ -42,7 +42,8 @@ module TarifOptimizators::MainHelper
 #    return @selected_service_categories if @selected_service_categories    
 #    service_categories_select = Customer::Info::ServiceCategoriesSelect.default_values(user_type)
     selected_services = Customer::Info::ServiceCategoriesSelect.default_selected_categories(user_type)
-    @selected_service_categories = Customer::Info::ServiceCategoriesSelect.service_categories_from_selected_services(selected_services)
+#    @selected_service_categories = 
+    Customer::Info::ServiceCategoriesSelect.service_categories_from_selected_services(selected_services)
   end
   
 end

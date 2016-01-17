@@ -68,7 +68,8 @@ module Result::ServiceSetsHelper
 
   def result_services
     options = {:base_name => 'services', :current_id_name => 'service_id', :id_name => 'service_id', :pagination_per_page => 20}
-    @result_services ||= create_tableable(Result::Service.where(:run_id => run_id, :service_set_id => service_set_id).
+#    @result_services ||= 
+    create_tableable(Result::Service.where(:run_id => run_id, :service_set_id => service_set_id).
       where(zero_string_condition).order(price: :desc), options)
   end
   

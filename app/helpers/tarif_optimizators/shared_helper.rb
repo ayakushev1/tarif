@@ -24,7 +24,8 @@ module TarifOptimizators::SharedHelper
   end
 
   def accounting_periods(call_run_id = nil)
-    @accounting_periods ||= Customer::Call.
+#    @accounting_periods ||= 
+    Customer::Call.
       where(:user_id => current_or_guest_user_id, :call_run_id => (call_run_id || -1).to_i).
       select("description->>'accounting_period' as accounting_period").uniq
   end

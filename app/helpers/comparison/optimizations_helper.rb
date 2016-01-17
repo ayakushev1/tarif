@@ -32,18 +32,21 @@ module Comparison::OptimizationsHelper
   end
 
   def comparison_progress_bar
-    return @comparison_progress_bar if @comparison_progress_bar
+#    return @comparison_progress_bar if @comparison_progress_bar
     options = {'action_on_update_progress' => comparison_calculation_status_path(params[:id])}.merge(
       background_process_informer.current_values)
-    @comparison_progress_bar ||= create_progress_barable('comparison_progress_bar', options)
+#    @comparison_progress_bar ||= 
+    create_progress_barable('comparison_progress_bar', options)
   end
 
   def background_process_informer
-    @background_process_informer ||= Customer::BackgroundStat::Informer.new('calculating_comparison', current_or_guest_user.id)
+#    @background_process_informer ||= 
+    Customer::BackgroundStat::Informer.new('calculating_comparison', current_or_guest_user.id)
   end
   
   def call_runs
-    @call_runs ||= Customer::CallRun.joins(:group_call_runs).where(:comparison_group_call_runs => {:comparison_group_id => session[:current_id]['comparison_group_id']})
+#    @call_runs ||= 
+    Customer::CallRun.joins(:group_call_runs).where(:comparison_group_call_runs => {:comparison_group_id => session[:current_id]['comparison_group_id']})
   end
   
   def calls_stat_options
@@ -51,11 +54,13 @@ module Comparison::OptimizationsHelper
   end
 
   def operator_choicer
-    @operator_choicer ||= create_filtrable("operator_choicer")
+#    @operator_choicer ||= 
+    create_filtrable("operator_choicer")
   end
   
   def operator_options
-    @operator_options ||= call_runs.pluck(:operator_id)
+#    @operator_options ||= 
+    call_runs.pluck(:operator_id)
   end
 
   def calls_stat
@@ -68,7 +73,8 @@ module Comparison::OptimizationsHelper
     options = {:base_name => 'calls_stat', :current_id_name => 'calls_stat_category', :id_name => 'calls_stat_category', :pagination_per_page => 100}
     call_run = call_runs.where(:operator_id => operator_id).first
     call_run_array = call_run ? call_run.calls_stat_array(calls_stat_options) : [{}]
-    @calls_stat ||= create_array_of_hashable(call_run_array, options )
+#    @calls_stat ||= 
+    create_array_of_hashable(call_run_array, options )
   end
 
 end
