@@ -1,7 +1,8 @@
 @tc = TarifCreator.new(Category::Operator::Const::Megafon)
 @tc.create_tarif_class({
   :id => _mgf_all_simple, :name => 'Все просто', :operator_id => Category::Operator::Const::Megafon, :privacy_id => _person, :standard_service_id => _tarif,
-  :features => {:http => 'http://moscow.megafon.ru/tariffs/alltariffs/any_operator/vse_prosto/vse_prosto.html'},
+  :features => {:http => 'http://moscow.megafon.ru/tariffs/alltariffs/any_operator/vse_prosto/vse_prosto.html',
+    :buy_http => 'http://moscow.megafon.ru/zakaz/?tariff=tp_vse_prosto'},
   :dependency => {
     :incompatibility => {},
     :general_priority => _gp_tarif_without_limits,

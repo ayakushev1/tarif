@@ -1,7 +1,8 @@
 @tc = TarifCreator.new(Category::Operator::Const::Beeline)
 @tc.create_tarif_class({
   :id => _bln_zero_doubts, :name => 'Ноль сомнений', :operator_id => Category::Operator::Const::Beeline, :privacy_id => _person, :standard_service_id => _tarif,
-  :features => {:http => 'http://moskva.beeline.ru/customers/products/mobile/tariffs/details/nol-somneniy/'},
+  :features => {:http => 'http://moskva.beeline.ru/customers/products/mobile/tariffs/details/nol-somneniy/',
+    :buy_http => 'http://moskva.beeline.ru/shop/basket?shopProductId=116580'},
   :dependency => {
     :incompatibility => {},
     :general_priority => _gp_tarif_without_limits,

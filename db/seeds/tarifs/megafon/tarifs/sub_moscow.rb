@@ -7,6 +7,7 @@
     :general_priority => _gp_tarif_without_limits,
     :other_tarif_priority => {:lower => [], :higher => []},
     :forbidden_tarifs => {:to_switch_on => [], :to_serve => []},
+    :is_archived => true,
     :prerequisites => [],
     :multiple_use => false
   } } )

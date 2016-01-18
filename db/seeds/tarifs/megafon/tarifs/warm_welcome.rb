@@ -1,7 +1,8 @@
 @tc = TarifCreator.new(Category::Operator::Const::Megafon)
 @tc.create_tarif_class({
   :id => _mgf_warm_welcome, :name => 'Теплый прием', :operator_id => Category::Operator::Const::Megafon, :privacy_id => _person, :standard_service_id => _tarif,
-  :features => {:http => 'http://moscow.megafon.ru/tariffs/alltariffs/other_cities_and_countries/teplyy_priem/teplyy_priem.html'},
+  :features => {:http => 'http://moscow.megafon.ru/tariffs/alltariffs/other_cities_and_countries/teplyy_priem/teplyy_priem.html',
+    :buy_http => 'http://moscow.megafon.ru/zakaz/?tariff=tp_teply_priem'},
   :dependency => {
     :incompatibility => {},
     :general_priority => _gp_tarif_without_limits,

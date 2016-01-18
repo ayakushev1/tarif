@@ -1,7 +1,7 @@
 @tc = TarifCreator.new(Category::Operator::Const::Tele2)
 @tc.create_tarif_class({
   :id => _tele_orange, :name => 'Оранжевый', :operator_id => Category::Operator::Const::Tele2, :privacy_id => _person, :standard_service_id => _tarif,
-  :features => {:http => 'http://msk.tele2.ru/tariff/orange/'},
+  :features => {:http => 'http://msk.tele2.ru/tariff/orange/', :buy_http => 'http://msk.shop.tele2.ru/products/choose_tariff/_gv/tariff-id_10658'},
   :dependency => {
     :incompatibility => {},
     :general_priority => _gp_tarif_without_limits,

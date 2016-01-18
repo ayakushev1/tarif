@@ -1,7 +1,8 @@
 @tc = TarifCreator.new(Category::Operator::Const::Beeline)
 @tc.create_tarif_class({
   :id => _bln_all_for_900_post, :name => 'Всё за 900 (постоплатный)', :operator_id => Category::Operator::Const::Beeline, :privacy_id => _person, :standard_service_id => _tarif,
-  :features => {:http => 'http://moskva.beeline.ru/customers/products/mobile/tariffs/details/vse-za-900-postoplatnyy/'},
+  :features => {:http => 'http://moskva.beeline.ru/customers/products/mobile/tariffs/details/vse-za-900-postoplatnyy/',
+    :buy_http => 'http://moskva.beeline.ru/shop/basket?shopProductId=116395'},
   :dependency => {
     :incompatibility => {},
     :general_priority => _gp_tarif_with_limits,

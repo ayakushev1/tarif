@@ -2,7 +2,8 @@
 @tc = TarifCreator.new(Category::Operator::Const::Mts)
 @tc.create_tarif_class({
   :id => _mts_super_mts, :name => 'Супер МТС', :operator_id => Category::Operator::Const::Mts, :privacy_id => _person, :standard_service_id => _tarif,
-  :features => {:http => 'http://www.mts.ru/mob_connect/tariffs/tariffs/supermts/'},
+  :features => {:http => 'http://www.mts.ru/mob_connect/tariffs/tariffs/supermts/', 
+    :buy_http => 'http://shop.mts.ru/tariff/redirect.php?ID=1432591&regionId=1826'},
   :dependency => {
     :categories => [_tcgsc_calls, _tcgsc_sms, _tcgsc_mms, _tcgsc_internet],
     :incompatibility => {}, #{group_name => [tarif_class_ids]}

@@ -1,7 +1,8 @@
 @tc = TarifCreator.new(Category::Operator::Const::Beeline)
 @tc.create_tarif_class({
   :id => _bln_all_for_200, :name => 'Всё за 200', :operator_id => Category::Operator::Const::Beeline, :privacy_id => _person, :standard_service_id => _tarif,
-  :features => {:http => 'http://moskva.beeline.ru/customers/products/mobile/tariffs/details/vse-za-200/'},
+  :features => {:http => 'http://moskva.beeline.ru/customers/products/mobile/tariffs/details/vse-za-200/',
+    :buy_http => 'http://moskva.beeline.ru/shop/basket?shopProductId=111473'},
   :dependency => {
     :incompatibility => {},
     :general_priority => _gp_tarif_with_limits,

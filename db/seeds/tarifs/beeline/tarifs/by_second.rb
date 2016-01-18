@@ -1,7 +1,8 @@
 @tc = TarifCreator.new(Category::Operator::Const::Beeline)
 @tc.create_tarif_class({
   :id => _bln_by_second, :name => 'Посекундный', :operator_id => Category::Operator::Const::Beeline, :privacy_id => _person, :standard_service_id => _tarif,
-  :features => {:http => 'http://moskva.beeline.ru/customers/products/mobile/tariffs/details/posekundniy/'},
+  :features => {:http => 'http://moskva.beeline.ru/customers/products/mobile/tariffs/details/posekundniy/',
+    :buy_http => 'http://moskva.beeline.ru/shop/basket?shopProductId=116571'},
   :dependency => {
     :incompatibility => {},
     :general_priority => _gp_tarif_without_limits,
