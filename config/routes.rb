@@ -28,7 +28,8 @@ Rails.application.routes.draw do
     get 'home/detailed_description' => :detailed_description
     get 'home/update_tabs' => :update_tabs
     get 'home/news' => :news
-    
+    get 'home/sitemap' => :sitemap    
+    get 'home/contacts' => :contacts    
   end
 
   namespace :content do

@@ -1,0 +1,50 @@
+<% content_for :title, "Карта сайта" %>
+
+<ul class="">
+	<li>
+		<%= link_to('Главная страница', root_path, {:class => "", :remote => false}) %>		
+	</li>
+	<li>
+		<%= link_to  "Рейтинги", comparison_optimizations_path %>
+	</li>
+	<li><%= "Загрузка детализаций, моделирование звонков" %>
+		<ul class="">
+			<li><%= link_to  t(:customer_call_runs_path), customer_call_runs_path, {:rel => "nofollow"} %></li>		
+			<li><%= link_to  t(:customer_calls_set_calls_generation_params_path), customer_calls_set_calls_generation_params_path %></li>
+			<li><%= link_to t(:customer_history_parsers_prepare_for_upload_path), customer_history_parsers_prepare_for_upload_path %></li>
+			<li><%= link_to  t(:customer_calls_path), customer_calls_path, {:rel => "nofollow"} %></li>		
+		</ul>
+	</li>
+	<li><%= t(:optimization) %>
+		<ul class="">
+			<li><%= link_to  t(:result_runs_path), result_runs_path, {:rel => "nofollow"} %></li>
+			<li><%= link_to  t(:tarif_optimizators_main_index_path), tarif_optimizators_main_index_path %></li>
+			<li><%= link_to  t(:tarif_optimizators_fixed_services_index_path), tarif_optimizators_fixed_services_index_path %></li>
+			<li><%= link_to  t(:tarif_optimizators_limited_scope_index_path), tarif_optimizators_limited_scope_index_path %></li>
+			<li><%= link_to  t(:tarif_optimizators_fixed_operators_index_path), tarif_optimizators_fixed_operators_index_path %></li>
+			<li><%= link_to  t(:result_service_sets_results_path), result_service_sets_results_path, {:rel => "nofollow"} %></li>					 
+		</ul>
+	</li>
+	<li><%= t(:service_description) %>
+		<ul class="">
+			<li><%= link_to "Описание тарифов", tarif_classes_path %></li>		
+			<li><%= link_to t(:home_detailed_description_path), home_detailed_description_path %></li>		
+			<li><%= link_to t(:home_news_path), home_news_path %></li>		
+			<li><%= link_to t(:new_customer_payments_path), new_customer_payments_path, {:rel => "nofollow"} %></li>		
+			<li><%= link_to t(:letter_to_admin), new_customer_demand_path, {:rel => "nofollow"} %></li>		
+		</ul>		
+	</li>
+	<li><%= "Пользователь" %>
+		<ul class="">
+			<% if !current_user %>
+				<li><%= link_to t(:register), new_user_registration_path, {:rel => "nofollow"} %></li>
+				<li><%= link_to t(:login), login_path, {:rel => "nofollow"} %></li>
+			<% else %>
+				<li><%= link_to t(:account_info), user_path(controller.current_user), {:rel => "nofollow"} %></li>
+				<li><%= link_to t(:logout), logout_path, {:rel => "nofollow"} %></li>
+			<% end %>
+		</ul>
+	</li>
+</ul>
+
+
