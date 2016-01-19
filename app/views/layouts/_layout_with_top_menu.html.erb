@@ -14,6 +14,7 @@
         	<br />
 	        <div>
 				<%= render('/application/shared/yandex_metrika_informet') if ENV["RAILS_ENV"] == "production" %>
+				<%= render('/application/shared/google_universal_analytics') if ENV["RAILS_ENV"] == "production" %>
 	        </div>
         </div>
 	</div>
