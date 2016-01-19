@@ -30,8 +30,10 @@
 			<li><%= link_to "Описание тарифов", tarif_classes_path %></li>		
 			<li><%= link_to t(:home_detailed_description_path), home_detailed_description_path %></li>		
 			<li><%= link_to t(:home_news_path), home_news_path %></li>		
-			<li><%= link_to t(:new_customer_payments_path), new_customer_payments_path, {:rel => "nofollow"} %></li>		
+			<li><%= link_to("Контакты", home_contacts_path) %></li>
 			<li><%= link_to t(:letter_to_admin), new_customer_demand_path, {:rel => "nofollow"} %></li>		
+			<li><%= link_to("Карта сайта", home_sitemap_path) %></li>
+			<li><%= link_to t(:new_customer_payments_path), new_customer_payments_path, {:rel => "nofollow"} %></li>		
 		</ul>		
 	</li>
 	<li><%= "Пользователь" %>

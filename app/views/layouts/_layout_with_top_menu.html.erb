@@ -8,14 +8,7 @@
 	</div>
 	<div class="row" style="min-height: 500px;">
         <div id="main_block_top_row_4" class="col-xs-12">
-        	<%= render 'layouts/ajax_load_block' %>
-        	
-
-        	<br />
-	        <div>
-				<%= render('/application/shared/yandex_metrika_informet') if ENV["RAILS_ENV"] == "production" %>
-				<%= render('/application/shared/google_universal_analytics') if ENV["RAILS_ENV"] == "production" %>
-	        </div>
+        	<%= render 'layouts/ajax_load_block' %>        	
         </div>
 	</div>
 	<footer>
@@ -27,5 +20,10 @@
 	        </div>
 		</div>
 	</footer>
+	<br />
+    <div>
+		<%= render('/application/shared/yandex_metrika_informet') if ENV["RAILS_ENV"] == "production" %>
+		<%= render('/application/shared/google_universal_analytics') if ENV["RAILS_ENV"] == "production" %>
+    </div>
 </div>
 
