@@ -10,7 +10,7 @@ module Comparison::OptimizationsHelper
   
   def comparison_groups    
     model_to_show = comparison_optimization_form.model ? comparison_optimization_form.model.groups : nil
-    options = {:base_name => 'comparison_groups', :current_id_name => 'comparison_group_id', :id_name => 'id', :pagination_per_page => 10}
+    options = {:base_name => 'comparison_groups', :current_id_name => 'comparison_group_id', :id_name => 'id', :pagination_per_page => 100}
     create_tableable(model_to_show, options)
   end
   

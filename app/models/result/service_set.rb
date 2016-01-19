@@ -33,7 +33,7 @@ class Result::ServiceSet < ActiveRecord::Base
   def self.best_results_by_operator(result_run_id, operator_ids)
     result = {}
     operator_ids.each do |operator_id|
-      result_by_operator = where(:run_id => result_run_id, :operator_id => operator_id).order(:price).limit(1).first
+      result_by_operator = where(:run_id => result_run_id, :operator_id => operator_id).order("price, array_length(tarif_options,0)").limit(1).first
       result[operator_id] = result_by_operator ? result_by_operator.attributes : {} 
     end    
     result
