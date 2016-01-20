@@ -5,15 +5,13 @@
     <div class="header-content header-content-smaller">
         <div class="inner">
             <h1 class="cursive"><small><%= controller.comparison_optimization_form.model.name %></small></h1>
+            <hr />
             <ul >
             <% controller.comparison_optimization_form.model.description.split(". ").each do |desc_item| %>
-            	<li class="pull-left"><%= desc_item %></li>
+            	<li class="pull-left"><%= desc_item %></li><br />
             <% end %>	
             </ul>    
             <hr>
-            <br />
-            <br />
-            <br />
             <h4>Рейтинг не учитывает ваши особенности пользования мобильной связи. Поэтому мы предлагаем вам подобрать тариф и опции.</h4>
             <%= link_to "Начать подбор тарифа", customer_calls_set_calls_generation_params_path, {:class => "btn btn-primary btn-xl"} %>
         </div>
