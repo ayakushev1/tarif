@@ -1,4 +1,5 @@
-<% content_for :title, "Редактировать #{resource_name.to_s.humanize}" %>
+<% title "Редактировать #{resource_name.to_s.humanize}" %>
+<% noindex 'googlebot' %>
 
 <%
 	input_html = {:class => "form-control  "}

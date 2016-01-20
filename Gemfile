@@ -144,7 +144,7 @@ gem 'connection_pool'
 
 gem 'bulk_insert' #array of hashes to sql
 
-#gem 'meta-tags'
+gem 'meta-tags'
 
 # Use unicorn as the app server
 # gem 'unicorn'

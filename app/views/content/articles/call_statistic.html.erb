@@ -1,4 +1,5 @@
-<% content_for :title, "Статистика услуг" %>
+<% title "Статистика услуг" %>
+<% noindex 'googlebot' %>
  
 <%= render(:partial => 'content/articles/call_stat/calls_stat_options', :layout => 'application/layouts/filtr_form_inline', 
            :locals => {:form_item => controller.calls_stat_options} ) %>

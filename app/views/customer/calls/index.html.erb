@@ -1,4 +1,5 @@
-<% content_for :title, t('.title') %>
+<% title t('.title') %>
+<% noindex 'googlebot' %>
 
 <%= render :partial => 'filtr', :layout => 'application/layouts/filtr_form_n_columns', 
   :locals => {:form_item => controller.filtr}%>

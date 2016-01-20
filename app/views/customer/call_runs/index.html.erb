@@ -1,4 +1,5 @@
-<% content_for :title, t('.title') %>
+<% title t('.title') %>
+<% noindex 'googlebot' %>
 
 <p>
 <%= link_to( 'Создать новое описание', new_customer_call_run_path, 

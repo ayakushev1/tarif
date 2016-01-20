@@ -1,4 +1,5 @@
-<% content_for :title, t('.title') %>
+<% title t('.title') %>
+<% noindex 'googlebot' %>
 
 <%= render :partial => 'call_run', :layout => 'application/layouts/model_show', :locals => {:form_item => controller.customer_call_run_form} %>
 

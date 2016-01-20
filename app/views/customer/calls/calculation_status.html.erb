@@ -1,3 +1,4 @@
-<% content_for :title, t('.title') %>
+<% title t('.title') %>
+<% noindex 'googlebot' %>
 
 <%= render :partial => 'call_history_parsing_progress_bar', :layout => 'application/layouts/progress_bar', :locals => {:progress_bar => controller.call_history_parsing_progress_bar} %>
