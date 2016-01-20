@@ -1,4 +1,4 @@
-<% content_for :title, t('.title') %>
+<% title t('.title') %>
 
 <p>
 	<%	link_to_html = {:class => "btn btn-link", :type => 'button'} %>
@@ -9,4 +9,5 @@
 <p>
 	<%= link_to( 'Редактировать профиль', edit_user_path(controller.user), link_to_html )%> |
 	<%= link_to 'На главную страницу', root_path, link_to_html %>
+	<%= link_to 'Список пользователей', users_path, link_to_html if user_type == :admin %>
 </p>
