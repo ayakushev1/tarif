@@ -280,6 +280,7 @@ TarifClass.create(id: _tele_very_black, operator_id: Category::Operator::Const::
 TarifClass.create(id: _tele_orange, operator_id: Category::Operator::Const::Tele2, privacy_id: 2, standard_service_id: 40, name: 'Оранжевый')
 TarifClass.create(id: _tele_yellow, operator_id: Category::Operator::Const::Tele2, privacy_id: 2, standard_service_id: 40, name: 'Желтый')
 TarifClass.create(id: _tele_green, operator_id: Category::Operator::Const::Tele2, privacy_id: 2, standard_service_id: 40, name: 'Зеленый')
+TarifClass.create(id: _tele_internet_for_devices, operator_id: Category::Operator::Const::Tele2, privacy_id: 2, standard_service_id: 40, name: 'Интернет для устройств')
 
 TarifClass.create(id: _tele_most_black, operator_id: Category::Operator::Const::Tele2, privacy_id: 2, standard_service_id: 40, name: 'Самый черный')
 

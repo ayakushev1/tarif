@@ -162,6 +162,7 @@ _bln_add_speed_1gb = 737; _bln_add_speed_3gb = 738;  _bln_auto_add_speed = 739; 
 #tarifs
 _tele_black = 800; _tele_very_black = 801; _tele_orange = 802; _tele_yellow = 803; _tele_green = 804;
 _tele_most_black = 805;   #new from 11.10.2015
+_tele_internet_for_devices = 806; #new from 20.01.2016
 
 #common_services
 _tele_country_rouming = 830; _tele_international_rouming = 831;  _tele_intra_countries_services = 832;
