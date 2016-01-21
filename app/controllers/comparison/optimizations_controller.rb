@@ -5,6 +5,7 @@ class Comparison::OptimizationsController < ApplicationController
   crudable_actions :all
   before_action :check_current_id_exists, only: [:show]
   before_action :set_back_path, only: [:show]
+  before_action :validate_tarifs, only: [:show, :update_comparison_results]
   after_action :set_run_id, only: :show
       
   def calculation_status
@@ -18,7 +19,14 @@ class Comparison::OptimizationsController < ApplicationController
   end
 
   def calculate_optimizations
-    calculate_on_back_ground(true, Comparison::Optimization.where(:id => params[:id]), :calculate_optimizations)
+    calculation_options = {:only_new => true, :test => false, :update_comparison => false, :tarifs => []}
+    calculate_on_back_ground(true, Comparison::Optimization.where(:id => params[:id]), :calculate_optimizations, calculation_options)
+  end
+
+  def update_optimizations
+    tarifs = session_filtr_params(tarifs_to_update_comparison)["tarifs"] || []
+    calculation_options = {:only_new => true, :test => false, :update_comparison => true, :tarifs => tarifs}
+    calculate_on_back_ground(true, Comparison::Optimization.where(:id => params[:id]), :calculate_optimizations, calculation_options)
   end
 
   def update_comparison_results

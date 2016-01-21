@@ -37,18 +37,20 @@ class Comparison::Optimization < ActiveRecord::Base
     groups.collect{|group| group.generate_calls(only_new, test) }   
   end
   
-  def self.calculate_optimizations(only_new = true, test = false)    
+  def self.calculate_optimizations(calculation_options)    
     result = {}
-    all.collect{|optimization| result[optimization.name] = optimization.calculate_optimizations(only_new, test)}
+    all.collect{|optimization| result[optimization.name] = optimization.calculate_optimizations(calculation_options)}
     result      
   end
   
-  def calculate_optimizations(only_new = true, test = false)
+  def calculate_optimizations(calculation_options = default_calculation_options)
+    only_new = calculation_options[:only_new]; test = calculation_options[:test]; update_comparison = calculation_options[:update_comparison]; tarifs = calculation_options[:tarifs];
+
     optimization_type = type.attributes.symbolize_keys #.deep_symbolize_keys
     result = []
     groups.each do |group|
       next if only_new and group.result and group.result[0] and !group.result[0].blank?
-      if_clean_output_results = true
+      if_clean_output_results = update_comparison ? true : false
       group.call_runs.each do |call_run|        
         local_options = {
           :call_run_id => call_run.id,
@@ -60,12 +62,20 @@ class Comparison::Optimization < ActiveRecord::Base
           :comparison_group_id => group.id
         }
         optimization_type_options = optimization_type.deep_merge(local_options)
-        options = Comparison::Optimization::Init.base_params(optimization_type_options).merge({:if_clean_output_results => if_clean_output_results})
-        if_clean_output_results = false
-#        raise(StandardError, [group.id, optimization_type[:comparison_group_id], options[:comparison_group_id]])
+        raise(StandardError, [
+          Comparison::Optimization::Init.base_params(optimization_type_options)[:services_by_operator],
+          Comparison::Optimization::Init.base_params(optimization_type_options).deep_merge({:services_by_operator => {:tarifs => tarifs}})[:services_by_operator],
+          only_new,
+          test,
+          update_comparison,
+          tarifs.to_s,
+        ].join("\n\n")) if false
         
-#        raise(StandardError, [group.inspect, group.result_run.comparison_group_id, options[:comparison_group_id]]) #if !group.result_run.comparison_group_id
-        result << calculate_one_optimization(options, false)
+        options = Comparison::Optimization::Init.base_params(optimization_type_options).merge({:if_clean_output_results => if_clean_output_results})
+        calculation_options = update_comparison ? Comparison::Optimization::Init.base_params(optimization_type_options).deep_merge({:services_by_operator => {:tarifs => tarifs}}) : options
+        if_clean_output_results = false
+
+        result << calculate_one_optimization(calculation_options, false)
         group.result_run.update_columns(result_run_update_options(options.merge(local_options))) 
       end
     end
@@ -105,6 +115,10 @@ class Comparison::Optimization < ActiveRecord::Base
       :service_categories_select => {},
       :comparison_group_id => options[:comparison_group_id]
     }
+  end
+  
+  def default_calculation_options
+    {:only_new => true, :test => false, :update_comparison => false, :tarifs => []}
   end
 
   def accounting_period_by_call_run_id(call_run_id)

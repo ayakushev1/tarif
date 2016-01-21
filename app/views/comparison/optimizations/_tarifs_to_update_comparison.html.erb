@@ -1,0 +1,18 @@
+<%
+form_item.init do |f|
+  input_html = {:filtr_name => form_item.filtr_name, :class => "updatable form-control ", :action_name => comparison_optimization_path}
+  label_html = {:class => "control-label "}
+  f.set_fields do |filtr_name|
+    s = session_filtr_params(f)
+	
+  [
+  	[
+#     label(filtr_name, "tarifs", "Тарифы для пересчета", label_html), 
+     "",	
+     text_area(filtr_name, "tarifs", input_html.merge({:type => 'textarea', :value => s["tarifs"], :rows => 4 }) ),
+  	],
+  ]
+	    
+  end
+end
+%>

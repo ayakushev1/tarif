@@ -352,21 +352,17 @@ class TarifOptimization::TarifOptimizator
       :tarif_category_groups => query_constructor.category_groups.stringify_keys,
       :tarif_class_categories_by_category_group => query_constructor.tarif_class_categories_by_category_group.stringify_keys,
       })
+    
+    Result::ServiceSet.where(:run_id => run_id, :tarif_id => tarif_id).delete_all
+    Result::Service.where(:run_id => run_id, :tarif_id => tarif_id).delete_all
+    Result::ServiceCategory.where(:run_id => run_id, :tarif_id => tarif_id).delete_all
+    Result::Agregate.where(:run_id => run_id, :tarif_id => tarif_id).delete_all
 
-#    raise(StandardError, Result::ServiceSet.create(service_sets_array).to_sql)
-      
-#    Result::ServiceSet.batch_save(service_sets_array, {})
     if save_new_final_tarif_results_in_my_batches
-#      raise(StandardError, service_sets_array)
       Result::ServiceSet.bulk_insert values: service_sets_array
       Result::Service.bulk_insert values: services_array
       Result::ServiceCategory.bulk_insert values: categories_array
       Result::Agregate.bulk_insert values: agregates_array
-      
-#      Result::ServiceSet.batch_save(service_sets_array, {:id => -1})
-#      Result::Service.batch_save(services_array, {:id => -1})
-#      Result::ServiceCategory.batch_save(categories_array, {:id => -1})
-#      Result::Agregate.batch_save(agregates_array, {:id => -1})
     else
       Result::ServiceSet.create(service_sets_array)
       Result::Service.create(services_array)

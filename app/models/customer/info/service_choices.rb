@@ -59,6 +59,14 @@ class Customer::Info::ServiceChoices < ActiveType::Record[Customer::Info]
     validated_result 
   end
   
+  def self.simple_validate_tarifs(to_validate)
+    result = {}
+    operators.each do |operator|
+      result[operator] = to_validate.to_s.scan(/\d+/).map(&:to_i) & tarifs[operator]
+    end
+    result
+  end
+  
   def self.default_values(user_type = :guest)
     {
       'tarifs' => {'tel' => tarifs[1023], 'bln' => tarifs[1025], 'mgf' => tarifs[1028], 'mts' => tarifs[1030]},

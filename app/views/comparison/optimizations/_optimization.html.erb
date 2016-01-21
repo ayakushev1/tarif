@@ -1,21 +1,27 @@
 <%
 form_item.init do |fi|
   link_to_html = {:class => "btn btn-primary", :type =>"button", :remote => true}
+  link_to_html_with_confirm = link_to_html.merge({:data => { :confirm => "Are you sure?" }, :remote => false})
 
   fi.set_fields do  |optimization| 
     (user_type != :admin ? [] : [
       [
-		link_to( 'generate_calls_for_optimization', comparison_generate_calls_for_optimization_path(optimization), link_to_html),
-		link_to( 'calculate_optimizations', comparison_calculate_optimizations_path(optimization), link_to_html),
+		link_to( 'Сгенерировать звонки для рейтинга', comparison_generate_calls_for_optimization_path(optimization), link_to_html_with_confirm),
+		link_to( 'Рассчитать рейтинг', comparison_calculate_optimizations_path(optimization), link_to_html_with_confirm),
       ],
       [
-		link_to( 'update_comparison_results', comparison_update_comparison_results_path(optimization), link_to_html),
+		link_to( 'Обновить результаты рейтинга после расчетов', comparison_update_comparison_results_path(optimization), link_to_html),
 		link_to( 'Редактировать описание', edit_comparison_optimization_path(optimization), link_to_html),
+      ],
+      [
+		link_to( 'Пересчитать рейтинг для выбранных тарифов', comparison_update_optimizations_path(optimization), link_to_html_with_confirm),
+		render(:partial => 'comparison/optimizations/tarifs_to_update_comparison', 
+				:layout => 'application/layouts/filtr_form_inline', :locals => {:form_item => tarifs_to_update_comparison} ) 			
       ],
     ]) +
     [  
       [
-		link_to( t('comparison.optimizations.show.optimizations_link'), comparison_optimizations_path, link_to_html)      	
+		link_to( "Перейти к списку рейтингов", comparison_optimizations_path, link_to_html)      	
       ],
 #      ['Название', optimization.name], 
 #      ['Описание сравнения операторов и тарифов', optimization.description], 

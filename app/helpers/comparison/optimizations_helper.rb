@@ -63,6 +63,15 @@ module Comparison::OptimizationsHelper
     call_runs.pluck(:operator_id)
   end
 
+  def tarifs_to_update_comparison
+#    @tarifs_to_update_comparison ||= 
+    create_filtrable("tarifs_to_update_comparison")
+  end
+
+  def validate_tarifs    
+    params['tarifs_to_update_comparison_filtr'].merge!({"tarifs" => Customer::Info::ServiceChoices.simple_validate_tarifs(params['tarifs_to_update_comparison_filtr'])}) if params['tarifs_to_update_comparison_filtr']
+  end
+
   def calls_stat
     filtr = session_filtr_params(calls_stat_options)
     calls_stat_options = filtr.keys.map{|key| key if filtr[key] == 'true'}
