@@ -1,0 +1,74 @@
+# See http://www.robotstxt.org/robotstxt.html for documentation on how to use the robots.txt file
+
+User-agent: Googlebot
+Disallow: /*openstat*
+Disallow: /*?utm*
+Disallow: /*&utm*
+Disallow: /*?from*
+Disallow: /*&from*
+Disallow: /*gclid*
+Disallow: /*yclid*
+Disallow: /*?tid*
+Disallow: /*&tid*
+Disallow: /*.swf
+Disallow: /users
+Disallow: /confirm
+Disallow: /login
+Disallow: /submit_login
+Disallow: /logout
+Disallow: /home/change_locale
+Disallow: /update_tab
+Disallow: /content
+Disallow: /tarif_optimizators/main/recalculate
+Disallow: /tarif_optimizators/fixed_operators/recalculate
+Disallow: /tarif_optimizators/fixed_services/recalculate
+Disallow: /tarif_optimizators/limited_scope/recalculate
+Disallow: /tarif_optimizators/all_options/recalculate
+Disallow: /customer/services/calculate_statistic
+Disallow: /customer/services
+Disallow: /customer/call_runs
+Disallow: /customer/calls
+Allow: /customer/calls/set_calls_generation_params
+Disallow: /customer/history_parsers
+Allow: /customer/history_parsers/prepare_for_upload
+Disallow: /customer/payments
+Sitemap: http://www.mytarifs.ru/sitemap.xml
+
+User-agent: Yandex
+Disallow: /*openstat*
+Disallow: /*?utm*
+Disallow: /*&utm*
+Disallow: /*?from*
+Disallow: /*&from*
+Disallow: /*gclid*
+Disallow: /*yclid*
+Disallow: /*?tid*
+Disallow: /*&tid*
+Disallow: /*.swf
+Disallow: /users
+Disallow: /confirm
+Disallow: /login
+Disallow: /submit_login
+Disallow: /logout
+Disallow: /home/change_locale
+Disallow: /update_tab
+Disallow: /content
+Disallow: /tarif_optimizators/main/recalculate
+Disallow: /tarif_optimizators/fixed_operators/recalculate
+Disallow: /tarif_optimizators/fixed_services/recalculate
+Disallow: /tarif_optimizators/limited_scope/recalculate
+Disallow: /tarif_optimizators/all_options/recalculate
+Disallow: /customer/services/calculate_statistic
+Disallow: /customer/services
+Disallow: /customer/call_runs
+Disallow: /customer/calls
+Allow: /customer/calls/set_calls_generation_params
+Disallow: /customer/history_parsers
+Allow: /customer/history_parsers/prepare_for_upload
+Disallow: /customer/payments
+Host: www.mytarifs.ru
+Sitemap: http://www.mytarifs.ru/sitemap.xml
+
+User-agent: *
+Disallow: 
+
