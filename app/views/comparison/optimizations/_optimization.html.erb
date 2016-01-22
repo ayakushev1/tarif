@@ -14,6 +14,10 @@ form_item.init do |fi|
 		link_to( 'Редактировать описание', edit_comparison_optimization_path(optimization), link_to_html),
       ],
       [
+		link_to( 'Пересчитать все опубликованные рейтинг для выбранных тарифов', comparison_update_selected_optimizations_path(optimization), link_to_html_with_confirm),
+		"",
+      ],
+      [
 		link_to( 'Пересчитать рейтинг для выбранных тарифов', comparison_update_optimizations_path(optimization), link_to_html_with_confirm),
 		render(:partial => 'comparison/optimizations/tarifs_to_update_comparison', 
 				:layout => 'application/layouts/filtr_form_inline', :locals => {:form_item => tarifs_to_update_comparison} ) 			

@@ -44,6 +44,7 @@ Rails.application.routes.draw do
   namespace :comparison do
     resources :optimizations
     controller :optimizations do
+      get 'optimizations/update_selected_optimizations/:id', action: :update_selected_optimizations, as: :update_selected_optimizations
       get 'optimizations/calculate_optimizations/:id', action: :calculate_optimizations, as: :calculate_optimizations
       get 'optimizations/update_optimizations/:id', action: :update_optimizations, as: :update_optimizations
       get 'optimizations/update_comparison_results/:id', action: :update_comparison_results, as: :update_comparison_results

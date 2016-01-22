@@ -49,7 +49,9 @@ class Comparison::Optimization < ActiveRecord::Base
     optimization_type = type.attributes.symbolize_keys #.deep_symbolize_keys
     result = []
     groups.each do |group|
-      next if only_new and group.result and group.result[0] and !group.result[0].blank?
+#      raise(StandardError, [only_new, !update_comparison, group.result.try(:place).try(:"0").try(:blank?), 
+#        (only_new and !update_comparison and !group.result.try(:place).try(:"0").try(:blank?))].join("\n"))
+      next if only_new and !update_comparison and !group.result.try(:place).try(:"0").try(:blank?)
       if_clean_output_results = update_comparison ? true : false
       group.call_runs.each do |call_run|        
         local_options = {
