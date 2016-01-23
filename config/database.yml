@@ -32,7 +32,8 @@ test:
 production:
 #  <<: *default #use for rack-mini-profiller
 #  database: tarif_development
-  url: <%= ENV["DATABASE_URL"] %>
+#  url: <%= ENV["DATABASE_URL"] %>
+  url: <%= ENV["DOKKU_DATABASE_URL"] %>
 #<% if ENV["DATABASE_URL"] %>
 #  url: ENV["DATABASE_URL"]
 #<% else %>
