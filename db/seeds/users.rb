@@ -1,4 +1,4 @@
-User.delete_all
+#User.delete_all
 if !User.where(:id => 0, :name => "demo").first
   u = User.new(id: 0, name: "demo", email: 'ayakushev@rambler.ru', password: ENV["TARIF_ADMIN_PASSWORD"], password_confirmation: ENV["TARIF_ADMIN_PASSWORD"])
   u.skip_confirmation_notification!
