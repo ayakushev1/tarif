@@ -25,7 +25,7 @@ end
 #НЕ ЗАПУСКАТЬ ТАРИФЫ БЕЗ ОСТАЛЬНЫХ ТАБЛИЦ!!!
 Dir[Rails.root.join("db/seeds/tarifs/**/*.rb")].each { |f| require f }
 #Dir[Rails.root.join("db/seeds/tarifs/megafon/tarifs/all_included_s.rb")].each { |f| require f }
-#Customer::Stat::StatAndQuery.save_stat_function_collector
+Customer::Stat::StatAndQuery.save_stat_function_collector
 
 #  categories tarif_classes service/categories service/category_tarif_classes service/category_groups price/standard_formulas
 #  price_lists price/formulas relations

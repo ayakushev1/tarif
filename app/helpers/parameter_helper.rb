@@ -62,7 +62,19 @@ module ParameterHelper
 
     def value_from_class; param_class.select(field).first[field]; end;
 
-    def value_from_table; param_class.find_by_sql("select #{field} from #{table}").first[field];  end;
+    def value_from_table; 
+      begin
+        param_class.find_by_sql("select #{field} from #{table}").first[field];
+      rescue
+        raise(StandardError, [
+          "",
+          "param_class #{param_class.to_s}",
+          "field #{field}",
+          "table #{table}",
+          "",
+        ].join("\n\n"))
+      end        
+    end;
     
     def value_from_query; param_class.find_by_sql(query).first[field]; end;
     
