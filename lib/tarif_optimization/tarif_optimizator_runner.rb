@@ -51,7 +51,10 @@ class TarifOptimization::TarifOptimizatorRunner
       base_worker_add_number - Background::WorkerManager::Manager.worker_quantity('tarif_optimization'),
       number_of_workers_to_add
     ].min
-    Background::WorkerManager::Manager.start_number_of_worker('tarif_optimization', number_of_workers_to_add)
+    begin
+      Background::WorkerManager::Manager.start_number_of_worker('tarif_optimization', number_of_workers_to_add)
+    rescue
+    end
     i = 0
   end
     
