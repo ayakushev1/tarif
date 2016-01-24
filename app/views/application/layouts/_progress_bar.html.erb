@@ -1,22 +1,22 @@
-
-<legend><%= progress_bar.caption %></legend>
-
-<div class="alert-warning"><%= flash[:alert]%></div>
-
-<div><%= progress_bar.text_value %></div>
-<div class="progress">
-  <div 
-  	class="progress-bar progress-bar-primary progress-bar-striped" 
-  	role="progressbar" 
-  	aria-valuenow="<%=progress_bar.current_value%>" 
-  	aria-valuemin="<%=progress_bar.min_value%>" 
-  	aria-valuemax="<%=progress_bar.max_value%>" 
-  	action_name="<%=progress_bar.action_on_update_progress%>" 
-  	id="<%= progress_bar.progress_bar %>" 
-  	current_progress_value="<%=progress_bar.current_value_percent %>"
-  	style="width: <%=progress_bar.current_value_percent * 100%>%;">
-    
-    <span class="sr-only-111"><%= "#{progress_bar.current_value} from #{progress_bar.max_value}" %></span>
-  </div>
-</div>
-
+<% if progress_bar %>
+	<legend><%= progress_bar.caption %></legend>
+	
+	<div class="alert-warning"><%= flash[:alert]%></div>
+	
+	<div><%= progress_bar.text_value %></div>
+	<div class="progress">
+	  <div 
+	  	class="progress-bar progress-bar-primary progress-bar-striped" 
+	  	role="progressbar" 
+	  	aria-valuenow="<%=progress_bar.current_value%>" 
+	  	aria-valuemin="<%=progress_bar.min_value%>" 
+	  	aria-valuemax="<%=progress_bar.max_value%>" 
+	  	action_name="<%=progress_bar.action_on_update_progress%>" 
+	  	id="<%= progress_bar.progress_bar %>" 
+	  	current_progress_value="<%=progress_bar.current_value_percent %>"
+	  	style="width: <%=progress_bar.current_value_percent * 100%>%;">
+	    
+	    <span class="sr-only-111"><%= "#{progress_bar.current_value} from #{progress_bar.max_value}" %></span>
+	  </div>
+	</div>
+<% end %>
