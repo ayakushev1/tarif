@@ -19,22 +19,20 @@ class Comparison::OptimizationsController < ApplicationController
   end
 
   def calculate_optimizations
-    calculation_options = {:only_new => false, :test => false, :update_comparison => false, :tarifs => []}
-    calculate_on_back_ground(false, Comparison::Optimization.where(:id => params[:id]), :calculate_optimizations, calculation_options)
+    calculation_options = {:only_new => true, :test => false, :update_comparison => false, :tarifs => []}
+    calculate_on_back_ground(true, Comparison::Optimization.where(:id => params[:id]), :calculate_optimizations, calculation_options)
   end
 
   def update_selected_optimizations
     tarifs = session_filtr_params(tarifs_to_update_comparison)["tarifs"] || []
     calculation_options = {:only_new => false, :test => false, :update_comparison => true, :tarifs => tarifs}
-    calculate_on_back_ground(false, Comparison::Optimization.published, :calculate_optimizations, calculation_options)
+    calculate_on_back_ground(true, Comparison::Optimization.published, :calculate_optimizations, calculation_options)
   end
 
   def update_optimizations
     tarifs = session_filtr_params(tarifs_to_update_comparison)["tarifs"] || []
     calculation_options = {:only_new => false, :test => false, :update_comparison => true, :tarifs => tarifs}
-    session["update_optimizations"] = {:params => params, :tarifs => tarifs, :calculation_options => calculation_options}
-    session["update_optimizations"][:is_id_int] = params[:id].is_a?(String)
-    calculate_on_back_ground(false, Comparison::Optimization.where(:id => params[:id].try(:to_i)), :calculate_optimizations, calculation_options)
+    calculate_on_back_ground(true, Comparison::Optimization.where(:id => params[:id]), :calculate_optimizations, calculation_options)
   end
 
   def update_comparison_results
@@ -42,9 +40,6 @@ class Comparison::OptimizationsController < ApplicationController
   end
 
   def calculate_on_back_ground(if_calculate_on_back_ground, object_to_run, method_to_run, *arg)
-    session["update_optimizations"][:method_to_run] = method_to_run
-    session["update_optimizations"][:if_calculate_on_back_ground] = if_calculate_on_back_ground
-    session["update_optimizations"][:arg] = arg
     if if_calculate_on_back_ground
       background_process_informer.clear_completed_process_info_model
       background_process_informer.init(0, 100)
@@ -55,7 +50,6 @@ class Comparison::OptimizationsController < ApplicationController
       redirect_to comparison_calculation_status_path(params[:id])
     else
       result_of_update = object_to_run.send(method_to_run, *arg)
-      session["update_optimizations"][:result_of_update] = result_of_update
       redirect_to comparison_optimization_path(params[:id]), :notice => "#{method_to_run.to_s} executed: #{result_of_update}"
     end
   end
