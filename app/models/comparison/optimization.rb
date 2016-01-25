@@ -20,6 +20,14 @@ class Comparison::Optimization < ActiveRecord::Base
   scope :published, -> {where(:publication_status_id => 102)}
   scope :hidden, -> {where(:publication_status_id => 103)}
 
+  def self.clean_comparison_results
+    all.collect{|optimization| optimization.clean_comparison_results}
+  end
+  
+  def clean_comparison_results
+    groups.collect{|group| group.clean_comparison_results}
+  end
+  
   def self.update_comparison_results
     all.collect{|optimization| optimization.update_comparison_results}
   end

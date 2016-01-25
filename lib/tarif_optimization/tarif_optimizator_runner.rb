@@ -78,8 +78,11 @@ class TarifOptimization::TarifOptimizatorRunner
     tarif_optimizator.calculate_all_operator_tarifs
     tarif_optimizator.update_minor_results if tarif_optimizator.minor_result_saver
 
-    UserMailer.tarif_optimization_complete(options[:user_input][:user_id], options[:user_input][:result_run_id]).
-      deliver if options[:is_send_email] == true    
+    begin
+      UserMailer.tarif_optimization_complete(options[:user_input][:user_id], options[:user_input][:result_run_id]).
+        deliver if options[:is_send_email] == true    
+    rescue
+    end
   end
   
   def self.optimization_params(options = {})

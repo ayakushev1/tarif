@@ -14,6 +14,10 @@ class Comparison::Group < ActiveRecord::Base
   has_many :group_call_runs, :class_name =>'Comparison::GroupCallRun', :foreign_key => :comparison_group_id
   has_many :call_runs, through: :group_call_runs
   
+  def clean_comparison_results
+    TarifOptimization::TarifOptimizatorRunner.clean_new_results(result_run.id)
+  end
+  
   def generate_calls(only_new = true, test = false)    
     call_runs.generate_group_calls(only_new, test) 
   end
