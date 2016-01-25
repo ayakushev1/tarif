@@ -5,3 +5,9 @@ git push dokku master
 remote access to droplet: ssh root@46.101.146.117
 
 rails console: dokku run tarif bundle exec rails c
+
+
+#UBUNTU
+
+running network services:  sudo lsof -i -n -P | more
+							sudo netstat -tulpn

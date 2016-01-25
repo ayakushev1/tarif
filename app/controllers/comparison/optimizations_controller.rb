@@ -20,19 +20,19 @@ class Comparison::OptimizationsController < ApplicationController
 
   def calculate_optimizations
     calculation_options = {:only_new => false, :test => false, :update_comparison => false, :tarifs => []}
-    calculate_on_back_ground(true, Comparison::Optimization.where(:id => params[:id]), :calculate_optimizations, calculation_options)
+    calculate_on_back_ground(false, Comparison::Optimization.where(:id => params[:id]), :calculate_optimizations, calculation_options)
   end
 
   def update_selected_optimizations
     tarifs = session_filtr_params(tarifs_to_update_comparison)["tarifs"] || []
-    calculation_options = {:only_new => true, :test => false, :update_comparison => true, :tarifs => tarifs}
-    calculate_on_back_ground(true, Comparison::Optimization.published, :calculate_optimizations, calculation_options)
+    calculation_options = {:only_new => false, :test => false, :update_comparison => true, :tarifs => tarifs}
+    calculate_on_back_ground(false, Comparison::Optimization.published, :calculate_optimizations, calculation_options)
   end
 
   def update_optimizations
     tarifs = session_filtr_params(tarifs_to_update_comparison)["tarifs"] || []
-    calculation_options = {:only_new => true, :test => false, :update_comparison => true, :tarifs => tarifs}
-    calculate_on_back_ground(true, Comparison::Optimization.where(:id => params[:id]), :calculate_optimizations, calculation_options)
+    calculation_options = {:only_new => false, :test => false, :update_comparison => true, :tarifs => tarifs}
+    calculate_on_back_ground(false, Comparison::Optimization.where(:id => params[:id]), :calculate_optimizations, calculation_options)
   end
 
   def update_comparison_results
