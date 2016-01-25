@@ -5,14 +5,20 @@ module Background::WorkerManager
       worker_manager.start_number_of_worker(worker_type, number)
     end
     
-    def self.start_worker_if_no_worker_is_running(worker_type, number = 1)      
-      worker_manager.start_worker_if_no_worker_is_running(worker_type, number)
+    def self.start_worker_if_no_worker_is_running(worker_type, number = 1)  
+      begin
+        worker_manager.start_worker_if_no_worker_is_running(worker_type, number)
+      rescue
+      end    
     end
     
     def self.stop_workers_if_no_new_or_running_jobs(worker_type, min_number = 0)  
-      Rails.logger.info "Background::WorkerManager::Manager.stop_workers_if_no_new_or_running_jobs condition #{are_there_any_new_or_running_job?(worker_type)}"    
-      Rails.logger.info "Delayed::Job.where(:queue => worker_type.to_s, :failed_at => nil).count #{Delayed::Job.where(:queue => worker_type.to_s, :failed_at => nil).count}"    
-      worker_manager.stop_workers(worker_type, min_number) unless are_there_any_new_or_running_job?(worker_type)
+      begin
+        Rails.logger.info "Background::WorkerManager::Manager.stop_workers_if_no_new_or_running_jobs condition #{are_there_any_new_or_running_job?(worker_type)}"    
+        Rails.logger.info "Delayed::Job.where(:queue => worker_type.to_s, :failed_at => nil).count #{Delayed::Job.where(:queue => worker_type.to_s, :failed_at => nil).count}"    
+        worker_manager.stop_workers(worker_type, min_number) unless are_there_any_new_or_running_job?(worker_type)
+      rescue
+      end    
     end
 
     def self.worker_quantity(worker_type)

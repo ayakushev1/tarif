@@ -4,7 +4,11 @@ git push dokku master
 
 remote access to droplet: ssh root@46.101.146.117
 
-rails console: dokku run tarif bundle exec rails c
+rails console: 		dokku run tarif bundle exec rails c
+db:seed : 	   		dokku run tarif bundle exec rake db:seed
+set env_params 	   	dokku config:set tarif seed_option=seeds_for_comparison_related
+
+кол-во delayed_jobs: User.find_by_sql("select count(*) as dd from delayed_jobs")[0].attributes
 
 
 #UBUNTU

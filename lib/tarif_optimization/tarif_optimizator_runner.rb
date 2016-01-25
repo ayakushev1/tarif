@@ -47,11 +47,12 @@ class TarifOptimization::TarifOptimizatorRunner
     
     base_worker_add_number = (options[:tarif_optimizator_input][:max_number_of_tarif_optimization_workers] || 3).to_i
     base_worker_add_number = options[:user_input][:user_id] == 1 ? base_worker_add_number : 1
-    number_of_workers_to_add = [
-      base_worker_add_number - Background::WorkerManager::Manager.worker_quantity('tarif_optimization'),
-      number_of_workers_to_add
-    ].min
+    number_of_workers_to_add = 0
     begin
+      number_of_workers_to_add = [
+        base_worker_add_number - Background::WorkerManager::Manager.worker_quantity('tarif_optimization'),
+        number_of_workers_to_add
+      ].min
       Background::WorkerManager::Manager.start_number_of_worker('tarif_optimization', number_of_workers_to_add)
     rescue
     end
