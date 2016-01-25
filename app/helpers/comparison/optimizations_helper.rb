@@ -33,7 +33,7 @@ module Comparison::OptimizationsHelper
 
   def comparison_progress_bar
 #    return @comparison_progress_bar if @comparison_progress_bar
-    options = {'action_on_update_progress' => comparison_calculation_status_path(params[:id])}.merge(background_process_informer.current_values)
+    options = {'action_on_update_progress' => comparison_calculation_status_path(params[:id])}.merge(background_process_informer.current_values || {})
 #    @comparison_progress_bar ||= 
     create_progress_barable('comparison_progress_bar', options)
   end
