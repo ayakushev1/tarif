@@ -9,11 +9,11 @@ else
 		content_tag(:strong, "Сохраненное название подбора: ") + "#{result_service_sets.model.first.run.name}",
 		content_tag(:strong, "Сохраненное название звонков: ") + "#{result_service_sets.model.first.run.call_run.name}",
 	]
-end
+end if result_service_sets.model.first
 
 panel = {
 	:head => "Описание подбора тарифа",
-	:body => body,
+	:body => (body || ""),
 	:footer => render( :partial => 'result/service_sets/compare/information') + 
 			   link_to("Назад", service_sets_result_return_link_to, 
 							{:class => "btn btn-success", :type =>"button", :remote => true, :rel => "nofollow"}),
