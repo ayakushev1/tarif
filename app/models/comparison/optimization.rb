@@ -59,7 +59,7 @@ class Comparison::Optimization < ActiveRecord::Base
     groups.each do |group|
 #      raise(StandardError, [only_new, !update_comparison, group.result.try(:place).try(:"0").try(:blank?), 
 #        (only_new and !update_comparison and !group.result.try(:place).try(:"0").try(:blank?))].join("\n"))
-      next if only_new and !update_comparison and !group.result.try(:place).try(:"0").try(:blank?)
+      next if false and only_new and !update_comparison and !group.result.try(:place).try(:"0").try(:blank?)
       if_clean_output_results = update_comparison ? true : false
       group.call_runs.each do |call_run|        
         local_options = {
