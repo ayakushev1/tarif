@@ -3,20 +3,19 @@ table.init do |t|
 #  t.caption = 'Listing users'
   link_html = {:my_remote => true}
   t.heads = if user_type == :admin
-  	['Название', 'Описание звонков', 'Календарный период', 'Тип подбора', 'Номер подбора','', '', '', '', '', '', '', '']
+  	['Название', 'Описание звонков', 'Календарный период', 'Тип подбора', 'Номер подбора','', '', '', '', '', '', '']
   else
-  	['Название', 'Описание звонков', 'Календарный период', 'Тип подбора', 'Номер подбора','', '', '', '']
+  	['Название', 'Описание звонков', 'Календарный период', 'Тип подбора', 'Номер подбора', '', '', '']
   end 
   
   t.set_fields do |run| 
   [
-    run.name,
+    link_to( run.name, result_run_path(run), link_html), 
 #    run.description,
     (run.call_run.name if run.call_run), 
     run.accounting_period,
     run.optimization_type,
     run.run,
-    link_to( t('result.runs.index.show_link'), result_run_path(run), link_html), 
     link_to( t('result.runs.index.edit_link'), edit_result_run_path(run), link_html), 
     link_to( t('result.runs.index.show_result_link'), result_service_sets_result_path(run), link_html), 
     link_to( t('result.runs.index.compare_result_link'), result_compare_path(run.id), link_html), 

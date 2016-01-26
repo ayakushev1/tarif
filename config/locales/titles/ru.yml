@@ -105,7 +105,7 @@ ru:
         title: Список описаний подбора тарифов
         show_link: Просмотр
         edit_link: Редактировать
-        show_result_link: Подбор
+        show_result_link: Результаты подбора
         compare_result_link: Сравнение
       edit:
         title: Редактирование описания подбора тарифа
