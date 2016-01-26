@@ -18,6 +18,7 @@
 	<%= "#{controller.options[:selected_service_categories]}" if controller.respond_to?(:options) and false %>
 
 	<%= render :partial => 'application/shared/alerts' %>
+	<%= render :partial => 'application/shared/calculation_status' %>
 	
 	<div id=<%= view_id_name %> >
 		  <%= yield %>

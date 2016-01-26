@@ -1,5 +1,9 @@
 module ApplicationHelper::CustomerUsedServicesCheck
 
+  def is_user_calculating_now
+    Delayed::Job.where(:queue => "tarif_optimization", :attempts => 0, :reference_id => current_or_guest_user_id, :reference_type => 'user').exists?
+  end
+
   def redirect_to_make_payment_invitation_page_if_no_free_trials_left        
     if fobidden_to_visit_customer_with_no_free_trials(controller_name) and !customer_has_free_trials?(controller_name)
       trial_message = case controller_name

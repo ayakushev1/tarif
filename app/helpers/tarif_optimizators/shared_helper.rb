@@ -109,5 +109,4 @@ module TarifOptimizators::SharedHelper
     end    
   end
 
-  
 end

@@ -33,7 +33,6 @@ class TarifOptimizators::MainController < ApplicationController
       redirect_to({:action => :index}, {:alert => "Выберите период для расчета"}) and return
     end
 
-    is_user_calculating_now = Delayed::Job.where(:queue => "tarif_optimization", :attempts => 0, :reference_id => current_or_guest_user_id, :reference_type => 'user').exists?
     if is_user_calculating_now
       message = "Мы для вас сейчас уже подбираем тариф. Подождите до окончания подбора, мы сообщим об этом письмом, если вы предоставили адрес"
       redirect_to({:action => :index}, {:alert => message}) and return 

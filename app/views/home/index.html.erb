@@ -40,6 +40,7 @@
             </div>
     </nav>
     
+
     <header id="first">
         <div class="header-content">
             <div class="inner">
@@ -49,6 +50,8 @@
                 <hr>
                	<%= link_to "Рейтинг операторов", comparison_optimization_path(2), {:class => "btn btn-info btn-xl"} %> &nbsp; 
                	<%= link_to "Начать подбор тарифа", customer_calls_set_calls_generation_params_path, {:class => "btn btn-info btn-xl"} %> &nbsp; 
+				<%= render :partial => 'application/shared/alerts' %>
+				<%= render :partial => 'application/shared/calculation_status' %>
             </div>
         </div>
     </header>
