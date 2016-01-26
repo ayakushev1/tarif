@@ -19,7 +19,7 @@ class Comparison::OptimizationsController < ApplicationController
   end
 
   def calculate_optimizations
-    calculation_options = {:only_new => true, :test => false, :update_comparison => false, :tarifs => []}
+    calculation_options = {:only_new => false, :test => false, :update_comparison => false, :tarifs => []}
     calculate_on_back_ground(true, Comparison::Optimization.where(:id => params[:id]), :calculate_optimizations, calculation_options)
   end
 
