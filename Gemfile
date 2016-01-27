@@ -145,6 +145,8 @@ gem 'connection_pool'
 gem 'bulk_insert' #array of hashes to sql
 
 gem 'meta-tags'
+gem 'friendly_id', '~> 5.1.0' #for pretty ids
+gem 'babosa' #transliterate Russian Cyrillic slugs to ASCII
 
 # Use unicorn as the app server
 # gem 'unicorn'
