@@ -10,13 +10,13 @@
 #  common_services     :integer          is an Array
 #  tarif_options       :integer          is an Array
 #  service_ids         :integer          is an Array
-#  identical_services  :integer          is an Array
 #  price               :float
 #  call_id_count       :integer
 #  sum_duration_minute :float
 #  sum_volume          :float
 #  count_volume        :integer
 #  categ_ids           :jsonb
+#  identical_services  :jsonb
 #
 
 class Result::ServiceSet < ActiveRecord::Base

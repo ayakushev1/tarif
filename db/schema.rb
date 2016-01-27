@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151205230801) do
+ActiveRecord::Schema.define(version: 20160126154233) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -287,6 +287,19 @@ ActiveRecord::Schema.define(version: 20151205230801) do
   add_index "delayed_jobs", ["attempts"], name: "delayed_jobs_attempts", using: :btree
   add_index "delayed_jobs", ["priority", "run_at"], name: "delayed_jobs_priority", using: :btree
   add_index "delayed_jobs", ["queue"], name: "delayed_jobs_queue", using: :btree
+
+  create_table "friendly_id_slugs", force: :cascade do |t|
+    t.string   "slug",                      null: false
+    t.integer  "sluggable_id",              null: false
+    t.string   "sluggable_type", limit: 50
+    t.string   "scope"
+    t.datetime "created_at"
+  end
+
+  add_index "friendly_id_slugs", ["slug", "sluggable_type", "scope"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type_and_scope", unique: true, using: :btree
+  add_index "friendly_id_slugs", ["slug", "sluggable_type"], name: "index_friendly_id_slugs_on_slug_and_sluggable_type", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_id"], name: "index_friendly_id_slugs_on_sluggable_id", using: :btree
+  add_index "friendly_id_slugs", ["sluggable_type"], name: "index_friendly_id_slugs_on_sluggable_type", using: :btree
 
   create_table "parameters", force: :cascade do |t|
     t.string  "name"
@@ -657,11 +670,13 @@ ActiveRecord::Schema.define(version: 20151205230801) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.json     "dependency"
+    t.string   "slug"
   end
 
   add_index "tarif_classes", ["name"], name: "index_tarif_classes_on_name", using: :btree
   add_index "tarif_classes", ["operator_id"], name: "index_tarif_classes_on_operator_id", using: :btree
   add_index "tarif_classes", ["privacy_id"], name: "index_tarif_classes_on_privacy_id", using: :btree
+  add_index "tarif_classes", ["slug"], name: "index_tarif_classes_on_slug", unique: true, using: :btree
   add_index "tarif_classes", ["standard_service_id"], name: "index_tarif_classes_on_standard_service_id", using: :btree
 
   create_table "tarif_lists", force: :cascade do |t|

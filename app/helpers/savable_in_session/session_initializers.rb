@@ -31,24 +31,23 @@ module SavableInSession::SessionInitializers
     form_name = formable.form_name
     params_to_set = params.permit!.extract!(form_name)
     if params[:id]
-      if params_to_set[form_name]
+      if !params_to_set[form_name].blank?
         session[:form][form_name][:id] = params[:id]
         session[:form][form_name] = params_to_set[form_name]
       else
         if session[:form][form_name][:id] != params[:id]
           session[:form][form_name][:id] = params[:id]
           formable.model.attributes.each do |col, value|
-            session[:form][form_name][col] = value    
+            session[:form][form_name][col] = value if !(formable.model.class.respond_to?(:friendly) and col.to_sym == :id)
           end
         end        
       end
     else
       if params_to_set[form_name]
-        session[:form][form_name][:id] = nil
+        session[:form][form_name][:id] = nil if !(formable.model.class.respond_to?(:friendly) and col.to_sym == :id)
         session[:form][form_name] = params_to_set[form_name]
       end
     end
-#    raise(StandardError, [session[:form][form_name]])
   end
   
   def set_pagination_current_id(tableable)

@@ -116,7 +116,11 @@ module Crudable
   end
         
   def set_model
-    @model = params[:id] ?  model_class.find(params[:id]) : model_class.new
+    @model = if params[:id] 
+      model_class.respond_to?(:friendly) ? model_class.friendly.find(params[:id]) : model_class.find(params[:id])
+    else  
+      model_class.new
+    end
     @form_model = create_formable(@model )    
     params[form_model_name] = session_model_params(@form_model)
     @model.assign_attributes(model_params) 

@@ -7,8 +7,9 @@ module TarifClassesHelper
 #    raise(StandardError, session[:filtr])
   end
 
- def tarif_class_form
-    create_formable(TarifClass.where(:id => (params[:id] || session[:current_id]['tarif_class_id'])).first)
+  def tarif_class_form
+    condition = params[:id] ? {:slug => params[:id]} : {:id => session[:current_id]['tarif_class_id']}
+    create_formable(TarifClass.where(condition).first)
   end
 
   def tarif_classes
@@ -41,7 +42,8 @@ module TarifClassesHelper
       includes(service_category_tarif_classes: [service_category_calls: [:parent_call]]).
       includes(price_lists: [formulas: [:standard_formula]]).
       where(filtr_condition(filtr)).
-      where(:tarif_class_id => (params[:id] || session[:current_id]['tarif_class_id'])).
+#      where(:tarif_class_id => (params[:id] || session[:current_id]['tarif_class_id'])).
+      where(:tarif_class_id => tarif_class_form.model.id).
       order("service_category_tarif_classes.service_category_one_time_id").
       order("service_category_tarif_classes.service_category_periodic_id").
       order("service_category_groups.id").
@@ -68,7 +70,7 @@ module TarifClassesHelper
 
   def category_groups
     options = {:base_name => 'category_groups', :current_id_name => 'category_group_id', :pagination_per_page => 10}
-    create_tableable(Service::CategoryGroup.where(:tarif_class_id => session[:current_id]['tarif_class_id']), options)
+    create_tableable(Service::CategoryGroup.where(:tarif_class_id => tarif_class_form.model.id), options)
   end
 
   def service_categories

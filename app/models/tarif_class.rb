@@ -12,10 +12,14 @@
 #  created_at          :datetime
 #  updated_at          :datetime
 #  dependency          :json
+#  slug                :string
 #
 
 class TarifClass < ActiveRecord::Base
   include WhereHelper
+  extend FriendlyId
+  friendly_id :name, use: [:slugged, :finders]
+  
   belongs_to :operator, :class_name =>'Category', :foreign_key => :operator_id
   belongs_to :privacy, :class_name =>'Category', :foreign_key => :privacy_id
   belongs_to :standard_service, :class_name =>'Category', :foreign_key => :standard_service_id
@@ -29,6 +33,11 @@ class TarifClass < ActiveRecord::Base
   scope :common_services, -> {where(:standard_service_id => 41)}
   scope :special_services, -> {where(:standard_service_id => 42)}
   scope :options_of_tarif, -> {where(:standard_service_id => 43)}
+
+   def normalize_friendly_id(text)
+#     (text || name).to_s.to_slug.normalize(transliterations: [:russian, :latin]).to_s
+     text.to_slug.normalize! :transliterations => [:russian, :latin]
+   end
 
   def full_name
     "#{operator.name} #{name}"
