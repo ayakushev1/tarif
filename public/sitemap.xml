@@ -8,1235 +8,1307 @@
 
 <url>
   <loc>http://www.mytarifs.ru/</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/comparison/optimizations</loc>
-
-</url>
-<url>
-  <loc>http://www.mytarifs.ru/customer/calls/set_calls_generation_params</loc>
-
-</url>
-<url>
-  <loc>http://www.mytarifs.ru/customer/history_parsers/prepare_for_upload</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/tarif_optimizators/main/index</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/tarif_optimizators/fixed_services/index</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/tarif_optimizators/limited_scope/index</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/tarif_optimizators/fixed_operators/index</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/tarif_classes</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/home/detailed_description</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/home/news</loc>
-
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/comparison/optimizations/1</loc>
-
+  <loc>http://www.mytarifs.ru/home/contacts</loc>
 </url>
 <url>
   <loc>http://www.mytarifs.ru/comparison/optimizations/2</loc>
-
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/home/sitemap</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/comparison/optimizations/1</loc>
 </url>
 <url>
   <loc>http://www.mytarifs.ru/comparison/optimizations/3</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/comparison/optimizations/5</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/tarif_classes?pagination%5Btarif_classes_page%5D=1</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/tarif_classes?pagination%5Btarif_classes_page%5D=2</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/tarif_classes?pagination%5Btarif_classes_page%5D=3</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/tarif_classes?pagination%5Btarif_classes_page%5D=4</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/tarif_classes?pagination%5Btarif_classes_page%5D=5</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/tarif_classes?pagination%5Btarif_classes_page%5D=6</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/tarif_classes?pagination%5Btarif_classes_page%5D=7</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/tarif_classes?pagination%5Btarif_classes_page%5D=8</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/tarif_classes?pagination%5Btarif_classes_page%5D=9</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/tarif_classes?pagination%5Btarif_classes_page%5D=22</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/tarif_classes?pagination%5Btarif_classes_page%5D=23</loc>
-
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/100</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/vokrug-sveta</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/101</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/vse-prosto</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/102</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/megafon-vse-vklucheno-xs</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/103</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/megafon-vse-vklucheno-s</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/104</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/megafon-vse-vklucheno-m</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/105</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/megafon-vse-vklucheno-l</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/106</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/megafon-vse-vklucheno-vip</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/107</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/megafon-onlain</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/108</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/mezhdunarodnyi</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/109</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/perehodi-na-nol</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/802</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/oranzhevyi</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/208</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/super-mts</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/600</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/vsyo-za-200</loc>
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/result/15</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/compare/15</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/comparison/optimizations/call_stat/2</loc>
-
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/800</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/chernyi</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/202</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/smart-mini</loc>
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/result/16</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/compare/16</loc>
-
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/801</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/ochen-chernyi</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/201</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/smart</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/602</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/vsyo-za-600</loc>
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/result/17</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/compare/17</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/624</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/nol-somnenii</loc>
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/result/10</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/compare/10</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/comparison/optimizations/call_stat/1</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/result/11</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/compare/11</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/result/12</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/compare/12</loc>
-
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/110</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/mts-konnekt-4</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/112</loc>
-
+  <loc>http://www.mytarifs.ru/result/service_sets/result/20</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/113</loc>
-
+  <loc>http://www.mytarifs.ru/result/service_sets/compare/20</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/174</loc>
-
+  <loc>http://www.mytarifs.ru/comparison/optimizations/call_stat/3</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/177</loc>
-
+  <loc>http://www.mytarifs.ru/result/service_sets/result/21</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/178</loc>
-
+  <loc>http://www.mytarifs.ru/result/service_sets/compare/21</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/179</loc>
-
+  <loc>http://www.mytarifs.ru/result/service_sets/result/22</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/200</loc>
-
+  <loc>http://www.mytarifs.ru/result/service_sets/compare/22</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/203</loc>
-
+  <loc>http://www.mytarifs.ru/result/service_sets/result/23</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/204</loc>
-
+  <loc>http://www.mytarifs.ru/result/service_sets/compare/23</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/205</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/posekudnyi</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/206</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/vsyo-za-400</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/207</loc>
-
+  <loc>http://www.mytarifs.ru/result/service_sets/result/24</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/210</loc>
-
+  <loc>http://www.mytarifs.ru/result/service_sets/compare/24</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/212</loc>
-
+  <loc>http://www.mytarifs.ru/result/service_sets/result/25</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/213</loc>
-
+  <loc>http://www.mytarifs.ru/result/service_sets/compare/25</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/214</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/smart-nonstop</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/276</loc>
-
+  <loc>http://www.mytarifs.ru/result/service_sets/result/26</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/277</loc>
-
+  <loc>http://www.mytarifs.ru/result/service_sets/compare/26</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/280</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/vsyo-za-600-postoplatnyi</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/281</loc>
-
+  <loc>http://www.mytarifs.ru/result/service_sets/result/27</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/282</loc>
-
+  <loc>http://www.mytarifs.ru/result/service_sets/compare/27</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/283</loc>
-
+  <loc>http://www.mytarifs.ru/result/service_sets/result/28</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/288</loc>
-
+  <loc>http://www.mytarifs.ru/result/service_sets/compare/28</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/289</loc>
-
+  <loc>http://www.mytarifs.ru/result/service_sets/result/29</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/290</loc>
-
+  <loc>http://www.mytarifs.ru/result/service_sets/compare/29</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/291</loc>
-
+  <loc>http://www.mytarifs.ru/result/service_sets/result/30</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/292</loc>
-
+  <loc>http://www.mytarifs.ru/result/service_sets/compare/30</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/293</loc>
-
+  <loc>http://www.mytarifs.ru/result/service_sets/result/50</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/294</loc>
-
+  <loc>http://www.mytarifs.ru/result/service_sets/compare/50</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/295</loc>
-
+  <loc>http://www.mytarifs.ru/comparison/optimizations/call_stat/5</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/296</loc>
-
+  <loc>http://www.mytarifs.ru/result/service_sets/result/51</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/297</loc>
-
+  <loc>http://www.mytarifs.ru/result/service_sets/compare/51</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/302</loc>
-
+  <loc>http://www.mytarifs.ru/result/service_sets/result/52</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/303</loc>
-
+  <loc>http://www.mytarifs.ru/result/service_sets/compare/52</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/304</loc>
-
+  <loc>http://www.mytarifs.ru/result/service_sets/result/53</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/305</loc>
-
+  <loc>http://www.mytarifs.ru/result/service_sets/compare/53</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/samyi-chernyi</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/54</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/compare/54</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/55</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/compare/55</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/smart-top</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/56</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/compare/56</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/podmoskovnyi</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/svyaz-gorodov</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/teplyi-priem</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/puteshestvie-po-rossii</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/puteshestvie-po-miru</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/mezhdunarodnye-vyzovy</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/mobilnyi-internet</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/red-energy</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/ultra</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/mayak</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/tvoya-strana</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/umnyi-dom</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/rouming-po-strane</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/mezhdunarodnyi-rouming</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/rodnye-goroda</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/lubimaya-strana</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/vezde-kak-doma-ultra</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/vezde-kak-doma-smart</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/nol-bez-granits</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/bit-za-granitsei</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/maksi-bit-za-granitsei</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/super-bit-za-granitsei</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/100-mb-v-litve-i-latvii</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/ishodyaschie-zvonki-ot-119-rub</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/vezde-kak-doma</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/50-sms-v-poezdkah-po-rossii</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/100-sms-v-poezdkah-po-rossii</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/vhodyaschie-v-poezdkah-po-rossii</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/bit</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/superbit</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/minibit</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/50-sms-v-evrope</loc>
 </url>
 <url>
   <loc>http://www.mytarifs.ru/tarif_classes?pagination%5Btarif_classes_page%5D=10</loc>
-
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/306</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/100-sms-v-evrope</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/307</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/50-sms-v-poezdkah-po-miru</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/308</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/100-sms-v-poezdkah-po-miru</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/309</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/lubimaya-strana-ves-mir</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/310</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/dopolnitelnyi-paket-500-mb</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/311</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/dopolnitelnyi-paket-1-gb</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/312</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/internet-vo-vnutresetevom-rouminge</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/313</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/turbo-knopka-500-mb</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/314</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/turbo-knopka-2-gb</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/315</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/internet-mini</loc>
 </url>
 <url>
   <loc>http://www.mytarifs.ru/tarif_classes?pagination%5Btarif_classes_page%5D=11</loc>
-
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/316</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/internet-maxi</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/317</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/internet-super</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/318</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/internet-vip</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/319</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/turbo-knopka-5-gb</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/320</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/turbo-knopka-100-mb</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/321</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/dopolnitelnye-pakety-minut-150</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/322</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/dopolnitelnye-pakety-minut-300</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/323</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/paket-10-mms</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/324</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/paket-20-mms</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/325</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/paket-50-mms</loc>
 </url>
 <url>
   <loc>http://www.mytarifs.ru/tarif_classes?pagination%5Btarif_classes_page%5D=12</loc>
-
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/326</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/mms</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/328</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/oblast</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/329</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/95-kopeek-v-moskovskoi-oblasti</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/330</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/bezlimitnye-zvonki</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/331</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/zvoni-besplatno-na-mts-rossii-100</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/332</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/nol-na-mts</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/333</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/sms-paket-50</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/334</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/sms-paket-150</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/335</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/sms-paket-300</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/336</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/paket-100-sms</loc>
 </url>
 <url>
   <loc>http://www.mytarifs.ru/tarif_classes?pagination%5Btarif_classes_page%5D=13</loc>
-
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/337</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/paket-300-sms</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/338</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/paket-500-sms</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/339</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/paket-1000-sms</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/340</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/mts-planshet</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/341</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/mts-planshet-onlain</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/342</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/internet-na-den</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/343</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/dopolnitelnyi-paket-interneta-smart-mini</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/344</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/dopolnitelnyi-paket-interneta-smart</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/345</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/dopolnitelnyi-paket-interneta-smart-nonstop-plus-top</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/346</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/bezlimitnye-sms</loc>
 </url>
 <url>
   <loc>http://www.mytarifs.ru/tarif_classes?pagination%5Btarif_classes_page%5D=21</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/tarif_classes?pagination%5Btarif_classes_page%5D=15</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/tarif_classes?pagination%5Btarif_classes_page%5D=16</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/tarif_classes?pagination%5Btarif_classes_page%5D=17</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/tarif_classes?pagination%5Btarif_classes_page%5D=18</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/tarif_classes?pagination%5Btarif_classes_page%5D=19</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/tarif_classes?pagination%5Btarif_classes_page%5D=20</loc>
-
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/831</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/puteshestviya-po-rossii</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/832</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/puteshestviya-po-miru</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/840</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/zvonki-za-granitsu</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/850</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/vezde-nol</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/860</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/prostaya-geografiya</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/861</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/sms-svoboda</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/880</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/den-sms</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/881</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/internet-s-telefona</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/882</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/paket-interneta</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/883</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/portfel-interneta</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/884</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/den-v-seti</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/885</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/dobavit-skorosti-3gb</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/886</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/dobavit-skorosti-100mb</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/890</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/chemodan-interneta</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/895</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/internet-za-rubezhom</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/razgovory-bez-granits</loc>
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/result/15?pagination%5Bservice_sets_page%5D=1</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/result/15?pagination%5Bservice_sets_page%5D=2</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/result/15?pagination%5Bservice_sets_page%5D=3</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/result/15?pagination%5Bservice_sets_page%5D=4</loc>
-
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/15?pagination%5Bservice_sets_page%5D=5</loc>
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/detailed_results/15</loc>
-
-</url>
-<url>
-  <loc>http://www.mytarifs.ru/tarif_classes/830</loc>
-
-</url>
-<url>
-  <loc>http://www.mytarifs.ru/tarif_classes/440</loc>
-
-</url>
-<url>
-  <loc>http://www.mytarifs.ru/tarif_classes/443</loc>
-
-</url>
-<url>
-  <loc>http://www.mytarifs.ru/tarif_classes/650</loc>
-
-</url>
-<url>
-  <loc>http://www.mytarifs.ru/tarif_classes/651</loc>
-
-</url>
-<url>
-  <loc>http://www.mytarifs.ru/tarif_classes/652</loc>
-
-</url>
-<url>
-  <loc>http://www.mytarifs.ru/tarif_classes/654</loc>
-
-</url>
-<url>
-  <loc>http://www.mytarifs.ru/tarif_classes/655</loc>
-
-</url>
-<url>
-  <loc>http://www.mytarifs.ru/tarif_classes/670</loc>
-
-</url>
-<url>
-  <loc>http://www.mytarifs.ru/tarif_classes/702</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/result/16?pagination%5Bservice_sets_page%5D=1</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/result/16?pagination%5Bservice_sets_page%5D=2</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/result/16?pagination%5Bservice_sets_page%5D=3</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/result/16?pagination%5Bservice_sets_page%5D=4</loc>
-
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/16?pagination%5Bservice_sets_page%5D=5</loc>
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/detailed_results/16</loc>
-
-</url>
-<url>
-  <loc>http://www.mytarifs.ru/tarif_classes/349</loc>
-
-</url>
-<url>
-  <loc>http://www.mytarifs.ru/tarif_classes/601</loc>
-
-</url>
-<url>
-  <loc>http://www.mytarifs.ru/tarif_classes/494</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/result/17?pagination%5Bservice_sets_page%5D=1</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/result/17?pagination%5Bservice_sets_page%5D=2</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/result/17?pagination%5Bservice_sets_page%5D=3</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/result/17?pagination%5Bservice_sets_page%5D=4</loc>
-
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/17?pagination%5Bservice_sets_page%5D=5</loc>
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/detailed_results/17</loc>
-
-</url>
-<url>
-  <loc>http://www.mytarifs.ru/tarif_classes/805</loc>
-
-</url>
-<url>
-  <loc>http://www.mytarifs.ru/tarif_classes/603</loc>
-
-</url>
-<url>
-  <loc>http://www.mytarifs.ru/tarif_classes/441</loc>
-
-</url>
-<url>
-  <loc>http://www.mytarifs.ru/tarif_classes/610</loc>
-
-</url>
-<url>
-  <loc>http://www.mytarifs.ru/tarif_classes/653</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/result/10?pagination%5Bservice_sets_page%5D=1</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/result/10?pagination%5Bservice_sets_page%5D=2</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/result/10?pagination%5Bservice_sets_page%5D=3</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/result/10?pagination%5Bservice_sets_page%5D=4</loc>
-
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/10?pagination%5Bservice_sets_page%5D=5</loc>
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/detailed_results/10</loc>
-
-</url>
-<url>
-  <loc>http://www.mytarifs.ru/tarif_classes/455</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/result/11?pagination%5Bservice_sets_page%5D=1</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/result/11?pagination%5Bservice_sets_page%5D=2</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/result/11?pagination%5Bservice_sets_page%5D=3</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/result/11?pagination%5Bservice_sets_page%5D=4</loc>
-
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/11?pagination%5Bservice_sets_page%5D=5</loc>
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/detailed_results/11</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/result/12?pagination%5Bservice_sets_page%5D=1</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/result/12?pagination%5Bservice_sets_page%5D=2</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/result/12?pagination%5Bservice_sets_page%5D=3</loc>
-
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/result/12?pagination%5Bservice_sets_page%5D=4</loc>
-
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/12?pagination%5Bservice_sets_page%5D=5</loc>
 </url>
 <url>
   <loc>http://www.mytarifs.ru/result/service_sets/detailed_results/12</loc>
-
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/20?pagination%5Bservice_sets_page%5D=1</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/20?pagination%5Bservice_sets_page%5D=2</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/20?pagination%5Bservice_sets_page%5D=3</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/20?pagination%5Bservice_sets_page%5D=4</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/detailed_results/20</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/21?pagination%5Bservice_sets_page%5D=1</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/21?pagination%5Bservice_sets_page%5D=2</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/21?pagination%5Bservice_sets_page%5D=3</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/21?pagination%5Bservice_sets_page%5D=4</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/detailed_results/21</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/22?pagination%5Bservice_sets_page%5D=1</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/22?pagination%5Bservice_sets_page%5D=2</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/22?pagination%5Bservice_sets_page%5D=3</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/22?pagination%5Bservice_sets_page%5D=4</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/detailed_results/22</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/23?pagination%5Bservice_sets_page%5D=1</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/23?pagination%5Bservice_sets_page%5D=2</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/23?pagination%5Bservice_sets_page%5D=3</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/23?pagination%5Bservice_sets_page%5D=4</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/detailed_results/23</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/24?pagination%5Bservice_sets_page%5D=1</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/24?pagination%5Bservice_sets_page%5D=2</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/24?pagination%5Bservice_sets_page%5D=3</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/24?pagination%5Bservice_sets_page%5D=4</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/detailed_results/24</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/25?pagination%5Bservice_sets_page%5D=1</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/25?pagination%5Bservice_sets_page%5D=2</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/25?pagination%5Bservice_sets_page%5D=3</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/25?pagination%5Bservice_sets_page%5D=4</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/detailed_results/25</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/26?pagination%5Bservice_sets_page%5D=1</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/26?pagination%5Bservice_sets_page%5D=2</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/26?pagination%5Bservice_sets_page%5D=3</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/26?pagination%5Bservice_sets_page%5D=4</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/detailed_results/26</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/27?pagination%5Bservice_sets_page%5D=1</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/27?pagination%5Bservice_sets_page%5D=2</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/27?pagination%5Bservice_sets_page%5D=3</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/27?pagination%5Bservice_sets_page%5D=4</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/detailed_results/27</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/28?pagination%5Bservice_sets_page%5D=1</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/28?pagination%5Bservice_sets_page%5D=2</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/28?pagination%5Bservice_sets_page%5D=3</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/28?pagination%5Bservice_sets_page%5D=4</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/detailed_results/28</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/29?pagination%5Bservice_sets_page%5D=1</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/29?pagination%5Bservice_sets_page%5D=2</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/29?pagination%5Bservice_sets_page%5D=3</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/29?pagination%5Bservice_sets_page%5D=4</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/detailed_results/29</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/30?pagination%5Bservice_sets_page%5D=1</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/30?pagination%5Bservice_sets_page%5D=2</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/30?pagination%5Bservice_sets_page%5D=3</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/30?pagination%5Bservice_sets_page%5D=4</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/detailed_results/30</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/50?pagination%5Bservice_sets_page%5D=1</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/50?pagination%5Bservice_sets_page%5D=2</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/50?pagination%5Bservice_sets_page%5D=3</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/50?pagination%5Bservice_sets_page%5D=4</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/detailed_results/50</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/51?pagination%5Bservice_sets_page%5D=1</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/51?pagination%5Bservice_sets_page%5D=2</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/51?pagination%5Bservice_sets_page%5D=3</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/51?pagination%5Bservice_sets_page%5D=4</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/detailed_results/51</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/52?pagination%5Bservice_sets_page%5D=1</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/52?pagination%5Bservice_sets_page%5D=2</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/52?pagination%5Bservice_sets_page%5D=3</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/52?pagination%5Bservice_sets_page%5D=4</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/detailed_results/52</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/53?pagination%5Bservice_sets_page%5D=1</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/53?pagination%5Bservice_sets_page%5D=2</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/53?pagination%5Bservice_sets_page%5D=3</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/53?pagination%5Bservice_sets_page%5D=4</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/detailed_results/53</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/54?pagination%5Bservice_sets_page%5D=1</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/54?pagination%5Bservice_sets_page%5D=2</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/54?pagination%5Bservice_sets_page%5D=3</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/54?pagination%5Bservice_sets_page%5D=4</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/detailed_results/54</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/55?pagination%5Bservice_sets_page%5D=1</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/55?pagination%5Bservice_sets_page%5D=2</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/55?pagination%5Bservice_sets_page%5D=3</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/55?pagination%5Bservice_sets_page%5D=4</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/detailed_results/55</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/56?pagination%5Bservice_sets_page%5D=1</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/56?pagination%5Bservice_sets_page%5D=2</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/56?pagination%5Bservice_sets_page%5D=3</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/result/56?pagination%5Bservice_sets_page%5D=4</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/result/service_sets/detailed_results/56</loc>
 </url>
 <url>
   <loc>http://www.mytarifs.ru/tarif_classes?pagination%5Btarif_classes_page%5D=14</loc>
-
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/347</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/svobodnoe-puteshestvie</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/348</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/edinaya-strana</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/400</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/100-sms-smart-mini</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/401</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/ves-mir</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/402</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/30-minut-ves-mir</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/403</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/dalnie-strany</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/404</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/optsiya-vokrug-sveta</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/405</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/100-minut-evropa</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/406</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/skidka-25-na-ishodyaschie-vyzovy-v-rossiu-i-vse-vhodyaschie</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/407</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/skidka-50-na-ishodyaschie-vyzovy-v-rossiu</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/410</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/skidka-50-na-vse-vhodyaschie-vyzovy</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/411</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/50-sms-ves-mir</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/412</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/100-sms-ves-mir</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/413</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/50-sms-evropa</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/430</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/100-sms-evropa</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/431</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/internet-za-granitsei-10-mb</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/432</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/internet-za-granitsei-30-mb</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/442</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/otpusk-onlain</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/444</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/vsya-rossiya</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/445</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/puteshestvui-bez-zabot</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/450</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/vezde-moskva-v-tsentralnom-regione</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/451</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/internet-po-rossii</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/452</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/internet-po-rossii-dlya-opredelennyh-optsii</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/456</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/gigabait-v-dorogu</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/457</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/mms-24</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/458</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/paket-mms-10</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/459</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/paket-mms-50</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/460</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/optsiya-dlya-sms-s</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/461</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/optsiya-dlya-sms-l</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/462</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/optsiya-dlya-sms-m</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/463</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/optsiya-dlya-sms-xl</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/464</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/sms-stihiya</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/465</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/paket-sms-100</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/466</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/paket-sms-150</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/470</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/paket-sms-200</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/737</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/paket-sms-350</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/738</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/paket-sms-500</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/739</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/paket-sms-1000</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/803</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/100-sms</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/804</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/bezlimitnoe-obschenie</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/482</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/prodli-skorost-4-gb</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/484</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/avtoprodlenie-skorosti</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/485</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/zheltyi</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/486</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/zelenyi</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/487</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/internet-dlya-ustroistv</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/488</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/internet-24-pro</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/489</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/bit-pro</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/490</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/bit-megapro-150</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/491</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/bit-megapro-250</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/492</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/bit-megapro-500</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/493</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/internet-planshet</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/495</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/pakety-minut-25-evropa-i-sng</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/604</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/pakety-minut-50-evropa-i-sng</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/605</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/pakety-minut-25-mir</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/611</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/pakety-minut-50-mir</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/612</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/bud-kak-doma</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/613</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/prodli-skorost-1-gb</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/620</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/prodli-skorost-5-gb</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/621</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/vsyo-za-900</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/622</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/vsyo-za-1500</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/623</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/vsyo-za-2700</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/626</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/vsyo-za-900-postoplatnyi</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/627</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/vsyo-za-1500-postoplatnyi</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/660</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/vsyo-za-2700-postoplatnyi</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/661</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/sovsem-vsyo-postoplatnyi</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/662</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/go</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/663</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/dobro-pozhalovat</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/671</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/mobilnyi-pensioner</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/672</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/so-obschenie</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/673</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/posekundnyi</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/674</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/puteshestvie-po-miru-internet</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/680</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/puteshestvie-po-miru-internet-postoplatnyi</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/681</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/planeta-nol</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/682</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/moya-planeta</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/683</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/samyi-vygodnyi-internet-v-rouminge</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/700</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/planeta-interneta-postoplata</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/701</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/moya-strana</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/720</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/7-dnei-interneta-dlya-puteshestvii-po-rossii</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/730</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/30-dnei-interneta-dlya-puteshestvii-po-rossii</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/731</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/dobro-pozhalovat-na-vse</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/732</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/moyo-zarubezhe</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/733</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/moi-mezhgorod</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/734</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/moi-bilain</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/735</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/moi-bilain-postoplatnaya</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/736</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/moi-zvonki-v-drugie-strany</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/477</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/moi-sms</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/471</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/moi-sms-postoplatnaya</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/472</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/sms-bez-granits</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/473</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/haivei-1-gb</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/475</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/haivei-4-gb</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/476</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/haivei-8-gb</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/478</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/haivei-12-gb</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/479</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/haivei-20-gb</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/480</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/internet-na-den-100-mb</loc>
 </url>
 <url>
-  <loc>http://www.mytarifs.ru/tarif_classes/481</loc>
-
+  <loc>http://www.mytarifs.ru/tarif_classes/internet-na-den-500-mb</loc>
 </url>
 <url>
-	<loc>http://www.mytarifs.ru/home/contacts</loc>
+  <loc>http://www.mytarifs.ru/tarif_classes/zvoni-po-rossii</loc>
 </url>
 <url>
-	<loc>http://www.mytarifs.ru/home/sitemap</loc>
+  <loc>http://www.mytarifs.ru/tarif_classes/zvoni-vo-vse-strany</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/optsiya-svyaz-gorodov</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/internet-ekstra-1-gb</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/internet-xs</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/internet-s</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/internet-m</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/internet-l</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/internet-xl</loc>
+</url>
+<url>
+  <loc>http://www.mytarifs.ru/tarif_classes/internet-24</loc>
 </url>
 </urlset>
