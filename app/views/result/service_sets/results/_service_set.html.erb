@@ -12,22 +12,22 @@
 	  	f = row
 	  		
 	    services = f.service_ids.map do |id|
-	        link_to(s_desc[id]['service_name'], tarif_class_path(id.to_i), {:target => "_blank"})	
+	        link_to(s_desc[id]['service_name'], tarif_class_path((s_desc[id]['slug'] || id.to_i)), {:target => "_blank"})	
 	    end.join(', ').html_safe if f.service_ids
 	
 	    common_services = f.common_services.map do |id|
-	        link_to(s_desc[id]['service_name'], tarif_class_path(id.to_i), {:target => "_blank"})	
+	        link_to(s_desc[id]['service_name'], tarif_class_path((s_desc[id]['slug'] || id.to_i)), {:target => "_blank"})	
 	    end.join(', ').html_safe if f.common_services
 	
 	    tarif_options = f.tarif_options.map do |id|
-	        link_to(s_desc[id]['service_name'], tarif_class_path(id.to_i), {:target => "_blank"})	
+	        link_to(s_desc[id]['service_name'], tarif_class_path((s_desc[id]['slug'] || id.to_i)), {:target => "_blank"})	
 	    end.join(', ').html_safe if f.tarif_options
 	
 	    identical_services = f.identical_services.map do |identical_service_group|
 	    	identical_services_for_one_group = identical_service_group.map do |item|     	
 	    		changed_item = item.is_a?(Array) ? item : [item]
 	    		changed_item.map do |id|
-	    			link_to(s_desc[id]['service_name'], tarif_class_path(id.to_i), {:target => "_blank"})
+	    			link_to(s_desc[id]['service_name'], tarif_class_path((s_desc[id]['slug'] || id.to_i)), {:target => "_blank"})
 	    		end.join(' + ') if item	    	      	 
 		    end.join(' или ') if identical_service_group
 	        "[ #{identical_services_for_one_group} ]"
@@ -39,7 +39,7 @@
 	     content_tag(:td, link_to('', result_service_sets_detailed_results_path, {:my_remote => true, :class => "fa fa-random fa-lg center", :'aria-hidden' => "true", :'aria-label' => "Просмотр"}) ) +
 	  	 content_tag(:td, (f.price.round(0).to_s(:delimited, precision: 0) if f.price) ) +    
 	     content_tag(:td, (f.operator.name if f.operator) ) +     
-	  	 content_tag(:td, link_to(s_desc[f.tarif_id]['service_name'], tarif_class_path(f.tarif_id), {:target => "_blank"}) ) +    
+	  	 content_tag(:td, link_to(s_desc[f.tarif_id]['service_name'], tarif_class_path((s_desc[f.tarif_id]['slug'] || f.tarif_id)), {:target => "_blank"}) ) +    
 	     content_tag(:td, common_services ) +   
 	     content_tag(:td, tarif_options ) +
 	     content_tag(:td, identical_services ) +

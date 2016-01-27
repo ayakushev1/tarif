@@ -42,8 +42,8 @@ module Result::ServiceSetsHelper
     s_desc = {}
     service_ids = service_ids_1.map{|s| s.is_a?(String) ? s.split("_").map(&:to_i) : s }.flatten
 #    @service_description ||= 
-    TarifClass.where(:id => service_ids).select(:id, :name, :features).each do |row|
-      s_desc[row[:id]] = {'service_name' => row[:name], 'service_http' => row[:features]['http']}
+    TarifClass.where(:id => service_ids).select(:id, :name, :features, :slug).each do |row|
+      s_desc[row[:id]] = {'service_name' => row[:name], 'service_http' => row[:features]['http'], 'slug' => row[:slug]}
     end
     s_desc
   end

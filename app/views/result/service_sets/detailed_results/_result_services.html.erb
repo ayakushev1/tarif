@@ -8,7 +8,7 @@ table.init do |t|
 #     s_desc[f.service_id],
 #     f.service_id,
 #     f.service_set_id,
-  	 link_to(s_desc[f.service_id]['service_name'], tarif_class_path(f.service_id), {:target => "_blank"}),    
+  	 link_to(s_desc[f.service_id]['service_name'], tarif_class_path((s_desc[f.service_id]['slug'] || f.service_id)), {:target => "_blank"}),    
      f.sum_duration_minute,
      f.count_volume,
      f.sum_volume,
