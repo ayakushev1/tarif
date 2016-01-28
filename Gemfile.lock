@@ -294,6 +294,8 @@ GEM
       rubyzip (~> 1.0)
       websocket (~> 1.0)
     session (3.2.0)
+    sitemap_generator (5.1.0)
+      builder
     spawnling (2.1.6)
     spreadsheet (1.1.1)
       ruby-ole (>= 1.0)
@@ -389,6 +391,7 @@ DEPENDENCIES
   sass-rails (>= 5.0.3)
   sdoc (~> 0.4.0)
   selenium-webdriver
+  sitemap_generator
   spawnling (~> 2.1)
   spring
   stackprof

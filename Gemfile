@@ -148,6 +148,8 @@ gem 'babosa' #transliterate Russian Cyrillic slugs to ASCII
 
 gem "breadcrumbs_on_rails"
 
+gem 'sitemap_generator'
+
 # Use unicorn as the app server
 # gem 'unicorn'
 
