@@ -4,7 +4,8 @@ table.init do |t|
   t.heads = ['Название', 'Оператор', 'Тип пользователя', 'Категория',] + (user_type == :admin ? [ '', ''] : [])
   t.set_fields do |tarif_class| 
   [
-    link_to( tarif_class.name, tarif_class, :my_remote => true), 
+    link_to( tarif_class.name, tarif_class, :my_remote => false, :'data-no-turbolink'=>true), 
+#    link_to( tarif_class.name, tarif_class, :my_remote => true), 
     (tarif_class.operator.name if tarif_class.operator), 
     (tarif_class.privacy.name if tarif_class.privacy), 
     (tarif_class.standard_service.name if tarif_class.standard_service), 
