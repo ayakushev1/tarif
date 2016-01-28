@@ -55,6 +55,10 @@ module Result::ServiceSetsHelper
     create_tableable(Result::ServiceSet.includes(:operator, :tarif).where(:run_id => run_id).order("price, array_length(tarif_options,0)"), options)
   end
   
+  def results_service_set
+    Result::ServiceSet.where(:run_id => session_filtr_params(results_select)['result_run_id'], :service_set_id => service_set_id).first
+  end
+  
   def results_service_sets
 #    return @results_service_sets if @results_service_sets
     options = {:base_name => 'service_sets', :current_id_name => 'service_set_id', :id_name => 'service_set_id', :pagination_per_page => 10}

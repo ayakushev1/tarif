@@ -19,13 +19,11 @@
 		<ul class="list-group" >
 			<li class="list-group-item"><strong>Название рейтинга: </strong><%= result_service_sets.model.first.run.comparison_group.optimization.name %></li>
 			<li class="list-group-item"><strong>Название корзины: </strong><%= result_service_sets.model.first.run.comparison_group.name %></li>
-			<li class="list-group-item"><strong> Результат для: </strong><%= result_service_sets.model.first.try(:full_name) %></li>
 		</ul>
 	<% else %>
 		<ul class="list-group" >
 			<li class="list-group-item"><strong>Сохраненное название подбора: </strong><%= result_service_sets.model.first.run.name %></li>
 			<li class="list-group-item"><strong>Сохраненное название звонков: </strong><%= result_service_sets.model.first.run.call_run.name %></li>
-			<li class="list-group-item"><strong> Результат для: </strong><%= result_service_sets.model.first.try(:full_name) %></li>
 		</ul>
 	<% end if result_service_sets.model.first %>
 	<div class="panel-footer">
