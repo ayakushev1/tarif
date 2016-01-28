@@ -11,7 +11,6 @@ class ApplicationController < ActionController::Base
           SavableInSession::Formable, SavableInSession::SessionInitializers
   
   helper_method :session_filtr_params, :session_model_params, :breadcrumb_name, :my_path_for_current_controller_and_action
-  add_breadcrumb :breadcrumb_name, :my_path_for_current_controller_and_action
 
   
   before_action :current_or_guest_user
@@ -25,20 +24,6 @@ class ApplicationController < ActionController::Base
   before_action :redirect_to_make_payment_invitation_page_if_no_free_trials_left
   before_action :check_rack_mini_profiler
 
-protected
+  protected
   
-  def breadcrumb_name
-    I18n.t("#{controller_path}.#{action_name}") 
-  end
-  
-  def my_path_for_current_controller_and_action
-#    aa = url_for(controller: controller_name.to_s, action: action_name, only_path: true).sub('/', '')
-#    bb = controller_name
-#    cc = controller_path
-#    raise(StandardError, [aa, bb, cc].join("\n"))
-#    "#{controller_name}/#{action_name}"
-    url_for(controller: controller_name.to_s, action: action_name, only_path: true).sub('/', '')
-  end
-
- 
 end

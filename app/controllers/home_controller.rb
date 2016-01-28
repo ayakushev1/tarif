@@ -4,6 +4,22 @@ class HomeController < ApplicationController
 #  after_action :track_demo_results, only: :demo_results
 #  after_action :track_index, only: :index
 
+  def detailed_description
+    add_breadcrumb "Подробное описание шагов по подбору тарифа", home_detailed_description_path
+  end
+  
+  def news
+    add_breadcrumb "Новости", home_news_path
+  end
+  
+  def contacts
+    add_breadcrumb "Контакты", home_contacts_path
+  end
+  
+  def sitemap
+    add_breadcrumb "Карта сайта", home_sitemap_path
+  end
+  
   def update_tabs
     render :nothing => true
   end

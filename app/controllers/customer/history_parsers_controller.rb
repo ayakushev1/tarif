@@ -13,6 +13,12 @@ class Customer::HistoryParsersController < ApplicationController
 
   helper_method :customer_history_parser
 
+  def prepare_for_upload
+    customer_call_run = Customer::CallRun.where(:id => session_filtr_params(call_run_choice)["customer_call_run_id"]).first
+    add_breadcrumb "Сохраненные загрузки или моделирования звонков: #{customer_call_run.try(:name)}", customer_call_runs_path
+    add_breadcrumb "Загрузка детализаций звонков, задание параметров",  customer_history_parsers_prepare_for_upload_path
+  end
+  
   def calculation_status
     if !background_process_informer.calculating?   
       if Customer::Call.where(:call_run_id => customer_call_run_id).present?

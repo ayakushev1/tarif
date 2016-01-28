@@ -52,13 +52,4 @@ module Result::RunsHelper
     session[:back_path]['service_sets_result_return_link_to'] = 'result_runs_path'
   end
 
-  def set_run_id1
-    session[:filtr]["service_set_choicer_filtr"] ||={}
-    session[:filtr]["service_set_choicer_filtr"]['result_service_set_id'] = nil
-
-    session[:filtr]['results_select_filtr'] ||= {}
-    session[:filtr]['results_select_filtr']['result_run_id'] = session[:current_id]['result_run_id'].to_i if session[:current_id]['result_run_id']
-    
-#    raise(StandardError, session[:filtr]['results_select_filtr']['result_run_id'] )
-  end
 end

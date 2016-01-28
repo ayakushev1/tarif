@@ -55,7 +55,7 @@ class User < ActiveRecord::Base
   has_many :customer_calls, :class_name =>'Customer::Call', :foreign_key => :user_id, :dependent => :delete_all
 
 #  has_many :customer_transactions_general, -> {where(:info_type_id => 1)}, :class_name =>'Customer::Transaction', :foreign_key => :user_id, :dependent => :delete_all
-#  has_many :customer_transactions_cash, -> {where(:info_type_id => 2)}, :class_name =>'Customer::Transaction', :foreign_key => :user_id, :dependent => :delete_all
+  has_many :customer_transactions_cash, -> {where(:info_type_id => 2)}, :class_name =>'Customer::Transaction', :foreign_key => :user_id, :dependent => :delete_all
 #  has_many :customer_transactions_services_used, -> {where(:info_type_id => 3)}, :class_name =>'Customer::Transaction', :foreign_key => :user_id, :dependent => :delete_all
 #  has_many :customer_transactions_calls_generation_params, -> {where(:info_type_id => 4)}, :class_name =>'Customer::Transaction', :foreign_key => :user_id, :dependent => :delete_all
 #  has_many :customer_transactions_calls_details_params, -> {where(:info_type_id => 5)}, :class_name =>'Customer::Transaction', :foreign_key => :user_id, :dependent => :delete_all

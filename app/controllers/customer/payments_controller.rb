@@ -5,6 +5,10 @@ class Customer::PaymentsController < ApplicationController
   after_action :track_create, only: :create
   after_action :track_process_payment, only: :process_payment
 
+  def new
+    add_breadcrumb "Выбор параметров платежа", new_customer_payments_path
+  end
+  
   def create    
     if @payment_instruction.valid?        
       redirect_to @payment_instruction.url_to_yandex(current_or_guest_user)

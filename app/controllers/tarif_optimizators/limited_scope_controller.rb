@@ -13,6 +13,12 @@ class TarifOptimizators::LimitedScopeController < ApplicationController
   after_action :track_recalculate, only: :recalculate
   after_action :track_index, only: :index
 
+  def index
+    result_run = Result::Run.where(:id => session_filtr_params(calculation_choices)["result_run_id"]).first
+    add_breadcrumb "Сохраненные подборы: #{result_run.try(:name)}", result_runs_path
+    add_breadcrumb "Задание параметров для подбора с выбранным набором услуг", tarif_optimizators_limited_scope_index_path
+  end
+  
   def recalculate    
     update_customer_infos
     TarifOptimization::TarifOptimizatorRunner.clean_new_results(session_filtr_params(calculation_choices)['result_run_id'].to_i)

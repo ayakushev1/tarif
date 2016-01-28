@@ -70,16 +70,18 @@ module Comparison::OptimizationsHelper
   def validate_tarifs    
     params['tarifs_to_update_comparison_filtr'].merge!({"tarifs" => Customer::Info::ServiceChoices.simple_validate_tarifs(params['tarifs_to_update_comparison_filtr'])}) if params['tarifs_to_update_comparison_filtr']
   end
+  
+  def call_run
+    operator_id = session_filtr_params(operator_choicer).try(:operator_id).try(:to_i) || operator_options[0]
+    call_runs.where(:operator_id => operator_id).first
+  end
 
   def calls_stat
     filtr = session_filtr_params(calls_stat_options)
     calls_stat_options = filtr.keys.map{|key| key if filtr[key] == 'true'}
     calls_stat_options = {"rouming" => 'true', "service" => 'true'} if calls_stat_options.blank?
         
-    operator_id = session_filtr_params(operator_choicer).try(:operator_id).try(:to_i) || operator_options[0]
-
     options = {:base_name => 'calls_stat', :current_id_name => 'calls_stat_category', :id_name => 'calls_stat_category', :pagination_per_page => 100}
-    call_run = call_runs.where(:operator_id => operator_id).first
     call_run_array = call_run ? call_run.calls_stat_array(calls_stat_options) : [{}]
 #    @calls_stat ||= 
     create_array_of_hashable(call_run_array, options )

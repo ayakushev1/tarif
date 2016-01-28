@@ -134,6 +134,7 @@ module Result::ServiceSetsHelper
   def set_back_path
     session[:back_path]['result_service_sets_detailed_results_path'] = case action_name
     when 'results'
+      session[:back_path]['service_sets_result_return_link_to'] = ""
       'result_service_sets_results_path'
     when 'result'
       'result_service_sets_result_path'
@@ -163,6 +164,38 @@ module Result::ServiceSetsHelper
       result_service_sets_result_path(run_id)
     else
       result_service_sets_results_path
+    end
+  end
+  
+  def set_initial_breadcrumb_for_service_sets_result
+    case session[:back_path]['service_sets_result_return_link_to']# || 'result_runs_path'
+    when 'comparison_optimization_path'
+      add_breadcrumb I18n.t(:comparison_optimizations_path), comparison_optimizations_path
+      add_breadcrumb result_service_sets.model.first.try(:run).try(:comparison_group).try(:optimization).try(:name), comparison_optimization_path(session[:current_id]['comparison_optimization_id'])
+      add_breadcrumb result_service_sets.model.first.try(:run).try(:comparison_group).try(:name), comparison_optimization_path(session[:current_id]['comparison_optimization_id'])
+    when "tarif_optimizators_main_index_path"; tarif_optimizators_main_index_path
+    when "tarif_optimizators_fixed_services_index_path"; tarif_optimizators_fixed_services_index_path
+    when "tarif_optimizators_limited_scope_index_path"; tarif_optimizators_limited_scope_index_path
+    when "tarif_optimizators_fixed_operators_index_path"; tarif_optimizators_fixed_operators_index_path
+    when "tarif_optimizators_all_options_index_path"; tarif_optimizators_all_options_index_path
+    when "tarif_optimizators_admin_index_path"; tarif_optimizators_admin_index_path
+    when "result_runs_path"
+      add_breadcrumb "Список описаний подборов", result_runs_path
+      add_breadcrumb result_service_sets.model.first.try(:run).try(:name), result_runs_path
+    when "result_run_path"
+    end
+  end
+    
+  def set_initial_breadcrumb_for_service_sets_detailed_result
+    case session[:back_path]['result_service_sets_detailed_results_path']# || 'result_service_sets_results_path'
+    when 'result_service_sets_results_path'
+      add_breadcrumb "Сохраненные результаты подбора", result_service_sets_results_path
+      add_breadcrumb result_service_sets.model.first.try(:run).try(:name), result_service_sets_results_path
+    when 'result_service_sets_result_path'
+      add_breadcrumb " Результаты подбора", result_service_sets_result_path(run_id)
+    when 'result_runs_path'
+      add_breadcrumb "Список описаний подборов", result_runs_path
+      add_breadcrumb result_service_sets.model.first.try(:run).try(:name), result_run_path(run_id)        
     end
   end
   

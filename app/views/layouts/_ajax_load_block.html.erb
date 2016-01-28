@@ -1,12 +1,11 @@
+<ol class="breadcrumb">
+  <%= render_breadcrumbs :tag => :li, :separator => "" %>
+</ol>        	
+
 <% if yield(:hide_title) != 'true'  %>
 	<h1><%= title %></h1>
 <% end %>
 
-<!--
-			<ol class="breadcrumb">
-			  <li><% render_breadcrumbs %></li>
-			</ol>        	
--->
 <div class="content"> 
 	<%= user_type if false %>
 	<%= render('/application/shared/alerts') if false %>

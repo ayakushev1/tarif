@@ -13,11 +13,11 @@
 
 
 <div class="panel panel-default" >
-	<div class="panel-heading"><h4> Сохраненные подборы тарифов</h4></div>
+	<div class="panel-heading"><h4>Сохраненные подборы тарифов</h4></div>
 	<div class="panel-body">
 		<%= render(:partial => 'result/service_sets/results/results_select', :layout => 'application/layouts/filtr_form_n_columns', 
 			    :locals => {:form_item => results_select} ) %>
 	</div>
 </div>
 
-<%= render :partial => 'result/service_sets/results/service_sets', :layout => 'application/layouts/model_table', :locals => {:table => results_service_sets} %>
+<%= render :partial => 'result/shared/service_sets', :layout => 'application/layouts/model_table', :locals => {:table => results_service_sets} %>

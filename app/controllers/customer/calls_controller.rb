@@ -12,6 +12,10 @@ class Customer::CallsController < ApplicationController
   end
   
   def set_calls_generation_params      
+    customer_call_run = Customer::CallRun.where(:id => session_filtr_params(call_run_choice)["customer_call_run_id"]).first
+    add_breadcrumb "Сохраненные загрузки или моделирования звонков: #{customer_call_run.try(:name)}", customer_call_runs_path
+    add_breadcrumb "Моделирование звонков, задание параметров", customer_calls_set_calls_generation_params_path
+    
     update_location_data(params) 
   end
   
@@ -148,9 +152,8 @@ class Customer::CallsController < ApplicationController
   end
   
   def customer_call_run_id
-    session_filtr_params(call_run_choice)['customer_call_run_id'] ||
-    Customer::CallRun.where(:user_id => current_or_guest_user_id).
-      first_or_create(:name => "Моделирование звонков", :source => 0, :description => "", :user_id => current_or_guest_user_id).id  
+    session_filtr_params(call_run_choice)['customer_call_run_id'] || Customer::CallRun.where(:user_id => current_or_guest_user_id).
+      first_or_create(:name => "Моделирование звонков", :source => 0, :description => "", :user_id => current_or_guest_user_id).id
   end
   
   def create_call_run_if_not_exists

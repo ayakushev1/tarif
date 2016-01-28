@@ -3,11 +3,27 @@ class Comparison::OptimizationsController < ApplicationController
   helper Comparison::OptimizationsHelper, Customer::HistoryParsersBackgroundHelper
   include Crudable
   crudable_actions :all
+
   before_action :check_current_id_exists, only: [:show]
   before_action :set_back_path, only: [:show]
   before_action :validate_tarifs, only: [:show, :update_comparison_results]
+
   after_action :set_run_id, only: :show
+  
+  add_breadcrumb I18n.t(:comparison_optimizations_path), :comparison_optimizations_path
       
+  def show
+    add_breadcrumb comparison_optimization_form.model.name, comparison_optimization_path(params[:id])
+  end
+  
+  def call_stat
+    comparison_name = Comparison::Optimization.where(:id => session[:current_id]['comparison_optimization_id']).first.try(:name)
+    comparison_group_name = Comparison::Group.where(:id => session[:current_id]['comparison_group_id']).first.try(:name)
+    add_breadcrumb comparison_name, comparison_optimization_path(session[:current_id]['comparison_optimization_id'])
+    add_breadcrumb comparison_group_name, comparison_optimization_path(session[:current_id]['comparison_optimization_id'])
+    add_breadcrumb "Статистика звонков", comparison_call_stat_path(params[:id])
+  end
+  
   def calculation_status
     if !background_process_informer.calculating?   
       redirect_to comparison_optimization_path(params[:id])

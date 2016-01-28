@@ -12,7 +12,27 @@
     </div>
 </header>
 
-<%= render 'result/service_sets/compare/result' %>
+<div class="panel panel-default">
+	<div class="panel-heading"><h4>Описание подбора тарифа</h4></div>
+
+	<% if result_service_sets.model.first.run.comparison_group %>
+		<ul class="list-group" >
+			<li class="list-group-item"><strong>Название рейтинга: </strong><%= result_service_sets.model.first.run.comparison_group.optimization.name %></li>
+			<li class="list-group-item"><strong>Название корзины: </strong><%= result_service_sets.model.first.run.comparison_group.name %></li>
+			<li class="list-group-item"><strong> Результат для: </strong><%= result_service_sets.model.first.try(:full_name) %></li>
+		</ul>
+	<% else %>
+		<ul class="list-group" >
+			<li class="list-group-item"><strong>Сохраненное название подбора: </strong><%= result_service_sets.model.first.run.name %></li>
+			<li class="list-group-item"><strong>Сохраненное название звонков: </strong><%= result_service_sets.model.first.run.call_run.name %></li>
+			<li class="list-group-item"><strong> Результат для: </strong><%= result_service_sets.model.first.try(:full_name) %></li>
+		</ul>
+	<% end if result_service_sets.model.first %>
+	<div class="panel-footer">
+		<%= render( :partial => 'result/service_sets/compare/information') + 
+			link_to("Назад", service_sets_result_return_link_to, {:class => "btn btn-success", :type =>"button", :remote => true, :rel => "nofollow"}) %>
+	</div>
+</div>
 
 <div class="panel panel-default" >
 	<div class="panel-heading"><h4> Параметры сравнения тарифов</h4></div>
