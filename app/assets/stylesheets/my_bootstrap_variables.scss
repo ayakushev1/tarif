@@ -7,3 +7,7 @@ $navbar-default-bg: darken($body-bg, 13.5%) !default; //#ffffff;
 $font-size-base: 14px;
 $font-size-h1: floor(($font-size-base * 2.2));
 
+$a-color: #317eb0; //#9c27b0;
+$bg-primary-background-color: darken($body-bg, 6.5%) !default; //#333;
+$bg-primary-color: darken($gray-base, 20.0%) !default; //#eee
+$text-primary-color: $a-color;

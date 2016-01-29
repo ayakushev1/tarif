@@ -1,0 +1,69 @@
+<%
+
+form_item.init do |f|
+  input_html = {:filtr_name => form_item.filtr_name, :class => "updatable form-control ", :action_name => customer_calls_choose_your_tarif_with_our_help_path}
+  input_html_range = {:filtr_name => form_item.filtr_name, :class => "updatable form-control range", :action_name => customer_calls_choose_your_tarif_with_our_help_path}
+#  link_to_html = {:class => "btn btn-primary", :type => 'button', :'data-remote' => true, :turbolinks => true}
+#  submit_html = {:class => "btn btn-primary"}
+  label_html = {:class => "control-label "}
+  input_group_html = {:class => "input-group has-success"}
+  input_group_addon_html = {:class => "input-group-addon btn-success"}
+#  html_options = {:action_name => customer_calls_choose_your_tarif_with_our_help_path}
+	
+  f.action_on_submit = customer_calls_generate_calls_path	
+  s_filtr = session_filtr_params(controller.simple_call_generation_params)	
+  f.set_fields do |filtr_name| 
+    
+  [
+  	[
+  	 label(filtr_name, "operator_id", "Ваш оператор", label_html),
+  	 collection_select(filtr_name, "operator_id", Category::Operator.operators_with_tarifs, :id, :name, 
+  	 	{:include_blank =>  false, :selected => s_filtr["operator_id"] }, input_html ),   
+
+  	 label(filtr_name, "region_id", "Ваш регион", label_html),
+  	 collection_select(filtr_name, "region_id", Category.regions.where(:id => 1238), :id, :name, 
+  	   {:include_blank => false, :selected => 1238 }, input_html )
+  	],   
+
+  	[label(filtr_name, "number_of_day_calls", "Количество звонков в день", label_html),
+  	 content_tag(:div, input_group_html) do
+  	 	content_tag(:div, {:class => " "}) do
+		     text_field(filtr_name, "number_of_day_calls", input_html_range.merge(
+		     {:type => 'range', :min => 0, :max => 100.0, :step => 1, :value => s_filtr["number_of_day_calls"] }) ) 
+  	 	end +
+	  	content_tag(:span, s_filtr["number_of_day_calls"], input_group_addon_html)  
+  	 end,
+  	 
+  	 label(filtr_name, "duration_of_calls", "Средняя продолжительность звонка, мин", label_html),
+  	 content_tag(:div, input_group_html) do
+  	 	content_tag(:div, {:class => " "}) do
+		     text_field(filtr_name, "duration_of_calls", input_html_range.merge(
+		     {:type => 'range', :min => 0, :max => 60.0, :step => 0.1, :value => s_filtr["duration_of_calls"] }) ) 
+  	 	end +
+	  	content_tag(:span, s_filtr["duration_of_calls"], input_group_addon_html)  
+  	 end,
+  	],   
+  	
+  	[label(filtr_name, "number_of_sms_per_day", "Количество СМС в день, шт", label_html),
+  	 content_tag(:div, input_group_html) do
+  	 	content_tag(:div, {:class => " "}) do
+		     text_field(filtr_name, "number_of_sms_per_day", input_html_range.merge(
+		     {:type => 'range', :min => 0, :max => 100, :step => 1, :value => s_filtr["number_of_sms_per_day"] }) ) 
+  	 	end +
+	  	content_tag(:span, s_filtr["number_of_sms_per_day"], input_group_addon_html)  
+  	 end,
+  	 
+	 label(filtr_name, "internet_trafic_per_month", "Трафик интернета в месяц, Гб", label_html),
+  	 content_tag(:div, input_group_html) do
+  	 	content_tag(:div, {:class => " "}) do
+		     text_field(filtr_name, "internet_trafic_per_month", input_html_range.merge(
+		     {:type => 'range', :min => 0, :max => 30.0, :step => 0.02, :value => s_filtr["internet_trafic_per_month"] }) ) 
+  	 	end +
+	  	content_tag(:span, s_filtr["internet_trafic_per_month"], input_group_addon_html)  
+  	 end,
+    ],   
+  ] 
+  end
+end
+%>
+

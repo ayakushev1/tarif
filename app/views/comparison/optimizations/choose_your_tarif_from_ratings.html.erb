@@ -1,0 +1,121 @@
+<% title "Выбери какой тариф лучше для тебя" %>
+<% content_for :hide_title, 'true' %>
+
+<section id="first" >
+	<header>
+	    <div class="header-content header-content-smaller">
+	        <div class="inner">
+	            <h2 class="cursive"><big> Надоело переплачивать за мобильную связь?*</big></h2>
+	            <hr />
+	            <a class="page-scroll btn btn-success btn-xl" href="#one">Посмотри какой тариф лучше для тебя</a>
+	        </div>
+	    </div>
+	</header>
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<footer class="text-center">*В настоящее время только Москва и Московская область</footer>
+</section>
+
+<section class="bg-primary" id="one">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 text-center">
+                <h2 class="margin-top-0 text-success"><big> Выбери на кого ты похож </big></h2>
+                <p class="text-faded">
+                </p>
+                <hr class="primary">
+            </div>
+        </div>
+
+        <div class="row">
+	        <div class="row">
+	            <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 text-center">
+	                <h3 class="margin-top-0 text-default">Я пользуюсь всеми услугами мобильной связи</h3>
+	                <hr class="primary">
+	            </div>
+	        </div>
+        	
+            <div class="col-lg-4 col-md-4 text-center">
+                <div class="feature">
+                	<%= render :partial => 'group_panel', :locals => {:heading => "Изредка", :group_result_description => @group_result_description[10]}%>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 text-center">
+                <div class="feature">
+                	<%= render :partial => 'group_panel', :locals => {:heading => "Умеренно", :group_result_description => @group_result_description[11]}%>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 text-center">
+                <div class="feature">
+                	<%= render :partial => 'group_panel', :locals => {:heading => "Активно", :group_result_description => @group_result_description[12]}%>
+                </div>
+            </div>
+        </div>
+		<hr />
+
+        <div class="row">
+	        <div class="row">
+	            <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 text-center">
+	                <h3 class="margin-top-0 text-default">Я пользуюсь только интернетом</h3>
+	                <hr class="primary">
+	            </div>
+	        </div>
+        	
+            <div class="col-lg-4 col-md-4 text-center">
+                <div class="feature">
+                	<%= render :partial => 'group_panel', :locals => {:heading => "Читаю новости и проверяю почту", :group_result_description => @group_result_description[21]}%>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 text-center">
+                <div class="feature">
+                	<%= render :partial => 'group_panel', :locals => {:heading => "Смотрю видео-ролики и пользуюсь интернетом", :group_result_description => @group_result_description[23]}%>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 text-center">
+                <div class="feature">
+                	<%= render :partial => 'group_panel', :locals => {:heading => "Смотрю фильмы и пользуюсь интернетом", :group_result_description => @group_result_description[27]}%>
+                </div>
+            </div>
+        </div>
+		<hr />
+
+        <div class="row">
+	        <div class="row">
+	            <div class="col-lg-6 col-lg-offset-3 col-md-8 col-md-offset-2 text-center">
+	                <h3 class="margin-top-0 text-default">Я только говорю по телефону</h3>
+	                <hr class="primary">
+	            </div>
+	        </div>
+        	
+            <div class="col-lg-4 col-md-4 text-center">
+                <div class="feature">
+                	<%= render :partial => 'group_panel', :locals => {:heading => "Изредка", :group_result_description => @group_result_description[50]}%>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 text-center">
+                <div class="feature">
+                	<%= render :partial => 'group_panel', :locals => {:heading => "Умеренно", :group_result_description => @group_result_description[52]}%>
+                </div>
+            </div>
+            <div class="col-lg-4 col-md-4 text-center">
+                <div class="feature">
+                	<%= render :partial => 'group_panel', :locals => {:heading => "Активно", :group_result_description => @group_result_description[54]}%>
+                </div>
+            </div>
+        </div>
+		<hr />
+
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-8 col-md-offset-2 text-center">
+            	<%= link_to("Я другой", customer_calls_choose_your_tarif_with_our_help_path, {:class => "page-scroll btn btn-success btn-xl"}) %>
+            </div>
+        </div>
+
+    </div>
+</section>

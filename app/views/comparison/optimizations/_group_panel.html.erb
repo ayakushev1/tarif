@@ -1,0 +1,13 @@
+<div class="panel panel-primary" >
+	<div class="panel-heading"><%= "#{heading}#{}" %></div>
+	<div class="panel-body">
+		  <ul class="list-group equal-item-flex" >
+		  <% group_result_description.each do |place, desc| %>
+		  	<li class="list-group-item text-left">
+		  		<span><%= "#{desc[:price].round(0)} руб.		" %></span>
+		  		<%= link_to("#{desc[:operator_name]} #{desc[:tarif].name}", desc[:tarif], {:target => "_blank"}) %>
+		  	</li>
+		  <% end if group_result_description %>
+		  </ul>
+	</div>
+</div>

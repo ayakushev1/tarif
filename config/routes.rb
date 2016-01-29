@@ -44,6 +44,7 @@ Rails.application.routes.draw do
   namespace :comparison do
     resources :optimizations
     controller :optimizations do
+      get 'choose_your_tarif_from_ratings', action: :choose_your_tarif_from_ratings, as: :choose_your_tarif_from_ratings
       get 'optimizations/update_selected_optimizations/:id', action: :update_selected_optimizations, as: :update_selected_optimizations
       get 'optimizations/calculate_optimizations/:id', action: :calculate_optimizations, as: :calculate_optimizations
       get 'optimizations/update_optimizations/:id', action: :update_optimizations, as: :update_optimizations
@@ -135,6 +136,8 @@ Rails.application.routes.draw do
 
     controller :calls do
       get 'calls/' => :index
+      get 'calls/choose_your_tarif_with_our_help' => :choose_your_tarif_with_our_help
+      get 'calls/generate_calls_from_simple_form' => :generate_calls_from_simple_form
       get 'calls/set_calls_generation_params' => :set_calls_generation_params
       get 'calls/set_default_calls_generation_params' => :set_default_calls_generation_params
       get 'calls/generate_calls' => :generate_calls

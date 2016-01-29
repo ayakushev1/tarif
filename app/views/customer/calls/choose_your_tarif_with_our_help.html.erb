@@ -1,0 +1,77 @@
+<% title "Выбери какой тариф лучше c нашей помощью" %>
+<% content_for :hide_title, 'true' %>
+
+<section id="first" >
+	<header>
+	    <div class="header-content header-content-smaller">
+	        <div class="inner">
+	            <h2 class="cursive"><big> Надоело переплачивать за мобильную связь?</big></h2>
+	            <hr />
+	            <h4><strong>Сообщите</strong> нам как вы пользуетесь мобильной связью, и 
+	            	мы расскажем вам какой оператор, тариф и тарифные опции выгодны для вас.</h4>
+	            <hr />
+	            <a class="page-scroll btn btn-success btn-xl" href="#one">Сообщить</a>
+	        </div>
+	    </div>
+	</header>
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<br />
+	<footer class="text-center">*В настоящее время только Москва и Московская область</footer>
+</section>
+
+<section class="bg-primary" id="one">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-10 col-lg-offset-1 col-md-8 col-md-offset-2 text-center">
+                <h3 class="margin-top-0 text-success">Сообщить, как вы пользуетесь мобильной связью, можно так:</h3>
+                <p class="text-faded">
+                </p>
+                <hr class="primary">
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-lg-3 col-md-3 text-center">
+                <div class="feature">
+                	<h3 class="margin-top-0 text-default">Загрузить детализацию</h3>
+                	<%= link_to('инструкция', home_detailed_description_path) %> 
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-9 text-center">
+                <div class="feature111111">
+		            <h5>Можно загрузить детализации звонков для <strong>МТС</strong> в формате HTML, XLS или XLSX,
+					<strong>Мегафон</strong> в формате HTML, <strong>Билайн</strong> в формате XLS или XLSX, 
+					<strong>Теле2</strong> в формате PDF.</h5>
+		            <hr>
+		           	<%= render :partial => 'customer/history_parsers/upload_form' %>
+					<% session[:current_accordion_page]['home_steps_accord'] = 0 %>
+                </div>
+            </div>
+        </div>
+		<hr />
+		<hr />
+
+        <div class="row">
+            <div class="col-lg-3 col-md-3 text-center">
+                <div class="feature">
+                	<h3 class="margin-top-0 text-default">Подобрать самому</h3>
+                </div>
+            </div>
+            <div class="col-lg-9 col-md-9 text-center">
+                <div class="feature1111">
+                	<%= render( :partial => 'customer/calls/calls_gener_params_tabs/simple_form', 
+                		:layout => 'application/layouts/filtr_form_n_columns', :locals => {:form_item => controller.simple_call_generation_params} ) %>
+                	<br />
+					<%= link_to("Я подобрал", customer_calls_generate_calls_from_simple_form_path, 
+						{:class => "btn btn-success btn-xl", :type =>"button", :rel => "nofollow"}) %>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

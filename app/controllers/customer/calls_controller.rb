@@ -1,11 +1,38 @@
 class Customer::CallsController < ApplicationController
+  include Customer::HistoryParsersHelper, Customer::HistoryParsersBackgroundHelper
+  helper Customer::HistoryParsersHelper, Customer::HistoryParsersBackgroundHelper
 #  include Crudable
 #  crudable_actions :index
-  before_action :create_call_run_if_not_exists, only: [:set_calls_generation_params]
+  before_action :create_call_run_if_not_exists, only: [:set_calls_generation_params, :choose_your_tarif_with_our_help]
   before_action :update_usage_pattern, only: [:set_calls_generation_params]
-  before_action :setting_if_nil_default_calls_generation_params, only: [:set_calls_generation_params, :generate_calls]
+  before_action :setting_if_nil_default_calls_generation_params, only: [:set_calls_generation_params, :generate_calls, :choose_your_tarif_with_our_help]
   after_action -> {update_customer_infos}, only: :generate_calls
 
+  def choose_your_tarif_with_our_help
+    customer_call_run = Customer::CallRun.where(:user_id => current_or_guest_user_id).first
+    add_breadcrumb "Сохраненные загрузки или моделирования звонков: #{customer_call_run.try(:name)}", customer_call_runs_path
+    add_breadcrumb "Моделирование звонков, задание главных параметров", customer_calls_choose_your_tarif_with_our_help_path
+  end
+  
+  def generate_calls_from_simple_form
+    customer_call_run = Customer::CallRun.where(:user_id => current_or_guest_user_id).first
+    generation_params = session_filtr_params(simple_call_generation_params)
+    calls_generation_params = Customer::Call::Init::SimpleForm::OwnAndHomeRegionsOnly.symbolize_keys.
+      deep_merge({:own_region => generation_params, :home_region => generation_params, :general => {:operator_id => generation_params['operator_id']}})
+      
+    customer_call_run.update(:init_params => calls_generation_params, :init_class => 'Customer::Call::Init::SimpleForm::OwnAndHomeRegionsOnly', :operator_id => generation_params['operator_id'])
+    
+    user_params = {"call_run_id" => customer_call_run.id}
+    Customer::Call.where(user_params).delete_all
+    Calls::Generator.new(calls_generation_params, user_params).generate_calls
+    customer_call_run.calculate_call_stat
+    
+    redirect_to customer_call_run
+  end
+#  operator_id :integer
+#  init_class  :string
+#  init_params :jsonb
+  
   def set_default_calls_generation_params
     setting_default_calls_generation_params
     redirect_to customer_calls_set_calls_generation_params_path       
@@ -139,6 +166,10 @@ class Customer::CallsController < ApplicationController
     end
     @customer_calls_generation_params_filtr
 =end          
+  end
+  
+  def simple_call_generation_params
+    create_filtrable("simple_call_generation_params")
   end
   
   def update_location_data(params)

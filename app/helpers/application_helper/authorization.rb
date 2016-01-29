@@ -101,7 +101,7 @@ module ApplicationHelper::Authorization
           'result/service_sets' => ['result', 'results', 'detailed_results', 'compare'],
           'customer/demands' => ['index', 'create', 'new'],
           'errors' => ['error404', 'error422', 'error500'],
-          'comparison/optimizations' =>['index', 'show', 'call_stat'],
+          'comparison/optimizations' =>['index', 'show', 'call_stat', 'choose_your_tarif_from_ratings'],
           'tarif_classes' =>['index', 'show'],
         }
       }, 
@@ -112,7 +112,8 @@ module ApplicationHelper::Authorization
       },
       :call_generation_and_parsing => {
         :methods => [], :actions => {
-          'customer/calls' =>['index', 'set_calls_generation_params', 'set_default_calls_generation_params', 'generate_calls'],
+          'customer/calls' =>['index', 'set_calls_generation_params', 'set_default_calls_generation_params', 
+            'generate_calls', 'choose_your_tarif_with_our_help', 'generate_calls_from_simple_form'],
           'customer/call_runs' =>[],
           'customer/history_parsers' => ['prepare_for_upload', 'upload', 'calculation_status'],
         }
