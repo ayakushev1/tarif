@@ -1,0 +1,19 @@
+<%
+
+content_in :accordion do |user| 
+  [
+    [
+     'Я пользуюсь всеми услугами мобильной связи',
+     render(:partial => 'comparison/optimizations/ratings/all_services')
+    ], 
+    [
+     'Я пользуюсь только интернетом',
+     render(:partial => 'comparison/optimizations/ratings/internet')
+    ], 
+    [
+     'Я только говорю по телефону',
+     render(:partial => 'comparison/optimizations/ratings/calls')
+    ], 
+  ] 
+end
+%>
