@@ -12,7 +12,7 @@ class Customer::CallsController < ApplicationController
     customer_call_run = Customer::CallRun.where(:user_id => current_or_guest_user_id).first
     add_breadcrumb "Сохраненные загрузки или моделирования звонков: #{customer_call_run.try(:name)}", customer_call_runs_path
     add_breadcrumb "Моделирование звонков, задание главных параметров", customer_calls_choose_your_tarif_with_our_help_path
-    session[:work_flow][:offer_to_provide_email] = true
+    session[:work_flow]= {:offer_to_provide_email => true, :path_to_go => tarif_optimizators_main_recalculate_path}
   end
   
   def generate_calls_from_simple_form

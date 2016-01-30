@@ -68,7 +68,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
    def after_sign_up_path_for(resource)
     if session[:work_flow].try(:[], :tarif_optimization).try(:[], :status) == "ready_to_calculate"
       session[:work_flow][:tarif_optimization][:status] = "sent_to_calculate"
-      tarif_optimizators_main_index_path
+      tarif_optimizators_main_recalculate_path
     else
       super(resource)
     end

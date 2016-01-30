@@ -31,7 +31,9 @@ class TarifOptimizators::MainController < ApplicationController
   
   def init_inputs_for_autocalculate_for_just_registered_user
     if session[:work_flow].try(:[], :tarif_optimization).try(:[], :status) == "sent_to_calculate"
-      session[:work_flow][:tarif_optimization][:status] = "sent_to_calculate"
+      session[:work_flow][:tarif_optimization][:status] = "calculating"
+      session[:work_flow][:offer_to_provide_email] = false
+      session[:work_flow][:path_to_go] = nil
       create_result_run_if_not_exists
       init_calculation_choices_after_first_creating_result_runs
     end

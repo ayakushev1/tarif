@@ -16,7 +16,16 @@ module TarifOptimizators::SharedHelper
   end
   
   def customer_call_runs
-    Customer::CallRun.where(:user_id => current_or_guest_user_id)
+    Customer::CallRun.where(:user_id => current_or_guest_user_id, :id => customer_call_run_ids_and_accounting_periods_with_generated_calls[:call_run_ids])
+  end
+
+  def customer_call_run_ids_and_accounting_periods_with_generated_calls    
+    result = {:call_run_ids => [], :accounting_periods => []}
+    Customer::Call.joins(:call_run).where(:customer_call_runs => {:user_id => current_or_guest_user_id}).select(:call_run_id).uniq.
+      pluck(:call_run_id, "customer_calls.description->>'accounting_period'").each do |row|
+        result[:call_run_ids] << row[0]; result[:accounting_periods] << row[1];
+      end
+    result
   end
 
   def accounting_period
@@ -35,10 +44,14 @@ module TarifOptimizators::SharedHelper
   end
 
   def result_run_id
-    session_filtr_params(calculation_choices)['result_run_id'] ||
-    Result::Run.where(:user_id => current_or_guest_user_id).
-      first_or_create(:name => "Подбор тарифа", :description => "", :user_id => current_or_guest_user_id, :run => 1, 
-      :optimization_type_id => optimization_type_from_controller_name).id  
+    if session_filtr_params(calculation_choices)['result_run_id'].blank?
+#      session[:filtr][:calculation_choices_filtr] ||= {}
+      session[:filtr]["calculation_choices_filtr"]['result_run_id'] = Result::Run.where(:user_id => current_or_guest_user_id).
+        first_or_create(:name => "Подбор тарифа", :description => "", :user_id => current_or_guest_user_id, :run => 1, 
+        :optimization_type_id => optimization_type_from_controller_name).id 
+    end    
+    session_filtr_params(calculation_choices)['result_run_id']  
+#    session[:filtr]["calculation_choices_filtr"]['result_run_id']
   end
   
   def create_result_run_if_not_exists
@@ -46,8 +59,10 @@ module TarifOptimizators::SharedHelper
       create_hash = {:name => "Подбор тарифа №#{i}", :description => "", :user_id => current_or_guest_user_id, :run => 1, 
         :optimization_type_id => optimization_type_from_controller_name}
       if i == 0
-        call_run_id = customer_call_run_id
-        create_hash.merge!(:call_run_id => call_run_id) if call_run_id > -1
+        input = customer_call_run_ids_and_accounting_periods_with_generated_calls
+        if input[:call_run_ids][0]
+          create_hash.merge!(:call_run_id => input[:call_run_ids][0], :accounting_period => input[:accounting_periods][0])
+        end
       end
       Result::Run.create(create_hash)
     end if !Result::Run.where(:user_id => current_or_guest_user_id).present?
@@ -56,7 +71,7 @@ module TarifOptimizators::SharedHelper
   def init_calculation_choices_after_first_creating_result_runs
     result_run = Result::Run.where(:user_id => current_or_guest_user_id).where.not(:call_run_id => nil).first
     if result_run
-      session[:calculation_choices_filtr] = {:result_run_id => result_run.id, :call_run_id => result_run.call_run_id, :accounting_period => result_run.accounting_period} 
+      session[:filtr]["calculation_choices_filtr"] = {"result_run_id" => result_run.id, "call_run_id" => result_run.call_run_id, "accounting_period" => result_run.accounting_period} 
     end
   end
     

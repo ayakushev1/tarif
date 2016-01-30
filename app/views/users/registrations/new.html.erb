@@ -58,10 +58,19 @@
 	    <%= f.password_field :password_confirmation, {autocomplete: "off"}.merge(input_html) %>
   <% end %>
 
-  <% field_temp [true, true][step]do %>
+  <% field_temp [true, true][step] do %>
+  		<br />
   		<%= f.submit ["Отправить", "Зарегистрировать"][step], submit_html %>
   <% end %>
 
 <% end %>
+
+<br />
+  <% field_temp [true, false][step] do %>
+		<% if session[:work_flow].try(:[], :offer_to_provide_email) %>
+			<%= link_to("Перейти к подбору тарифа, если не хотите предоставлять email", session[:work_flow].try(:[], :path_to_go), 
+							{:class => "btn btn-primary", :type =>"button", :rel => "nofollow"}) %>
+		<% end %>
+  <% end %>
 
 <%= render "devise/shared/links" if [false, true][step] %>
