@@ -29,7 +29,7 @@ form_item.init do |f|
   	 content_tag(:div, input_group_html) do
   	 	content_tag(:div, {:class => " "}) do
 		     text_field(filtr_name, "number_of_day_calls", input_html_range.merge(
-		     {:type => 'range', :min => 0, :max => 100.0, :step => 1, :value => s_filtr["number_of_day_calls"] }) ) 
+		     {:type => 'range', :min => 0, :max => 100.0, :step => 1, :value => (s_filtr["number_of_day_calls"] || 1) }) ) 
   	 	end +
 	  	content_tag(:span, s_filtr["number_of_day_calls"], input_group_addon_html)  
   	 end,
@@ -38,7 +38,7 @@ form_item.init do |f|
   	 content_tag(:div, input_group_html) do
   	 	content_tag(:div, {:class => " "}) do
 		     text_field(filtr_name, "duration_of_calls", input_html_range.merge(
-		     {:type => 'range', :min => 0, :max => 60.0, :step => 0.1, :value => s_filtr["duration_of_calls"] }) ) 
+		     {:type => 'range', :min => 0, :max => 60.0, :step => 0.1, :value => (s_filtr["duration_of_calls"] || 2) }) ) 
   	 	end +
 	  	content_tag(:span, s_filtr["duration_of_calls"], input_group_addon_html)  
   	 end,
@@ -48,7 +48,7 @@ form_item.init do |f|
   	 content_tag(:div, input_group_html) do
   	 	content_tag(:div, {:class => " "}) do
 		     text_field(filtr_name, "number_of_sms_per_day", input_html_range.merge(
-		     {:type => 'range', :min => 0, :max => 100, :step => 1, :value => s_filtr["number_of_sms_per_day"] }) ) 
+		     {:type => 'range', :min => 0, :max => 100, :step => 1, :value => (s_filtr["number_of_sms_per_day"] || 2) }) ) 
   	 	end +
 	  	content_tag(:span, s_filtr["number_of_sms_per_day"], input_group_addon_html)  
   	 end,
@@ -57,7 +57,7 @@ form_item.init do |f|
   	 content_tag(:div, input_group_html) do
   	 	content_tag(:div, {:class => " "}) do
 		     text_field(filtr_name, "internet_trafic_per_month", input_html_range.merge(
-		     {:type => 'range', :min => 0, :max => 30.0, :step => 0.02, :value => s_filtr["internet_trafic_per_month"] }) ) 
+		     {:type => 'range', :min => 0, :max => 30.0, :step => 0.02, :value => (s_filtr["internet_trafic_per_month"] || 0.2) }) ) 
   	 	end +
 	  	content_tag(:span, s_filtr["internet_trafic_per_month"], input_group_addon_html)  
   	 end,
