@@ -126,6 +126,7 @@ class Calls::Generator
           i += 1
           next if (call_item[:description][:duration].to_f == 0.0 and call_item[:description][:volume].to_f == 0.0)
           p = customer_generation_params
+#    raise(StandardError, call_item)
 
           calls << call_item
 #          raise(StandardError, "Calls::generator - region_id is null") if !calls.last[:partner_phone][:region_id] and !(call_destination == :calls_to_abroad)
@@ -139,7 +140,7 @@ class Calls::Generator
   end
 
   def set_user_params(user_params)
-    {
+    result = {
       "user_id".freeze => user_params["user_id".freeze], #( ( user_params["user_id"] if user_params ) || 2 ).to_i, 
       "own_phone_number".freeze => ( ( user_params["own_phone_number".freeze] if user_params ) || '7000000000'.freeze ), 
       'call_run_id'.freeze => user_params["call_run_id".freeze]

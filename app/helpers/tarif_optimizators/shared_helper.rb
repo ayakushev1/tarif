@@ -52,6 +52,13 @@ module TarifOptimizators::SharedHelper
       Result::Run.create(create_hash)
     end if !Result::Run.where(:user_id => current_or_guest_user_id).present?
   end
+  
+  def init_calculation_choices_after_first_creating_result_runs
+    result_run = Result::Run.where(:user_id => current_or_guest_user_id).where.not(:call_run_id => nil).first
+    if result_run
+      session[:calculation_choices_filtr] = {:result_run_id => result_run.id, :call_run_id => result_run.call_run_id, :accounting_period => result_run.accounting_period} 
+    end
+  end
     
   def update_call_run_on_result_run_change
     session_filtr_params_calculation_choices = session[:filtr]['calculation_choices_filtr']

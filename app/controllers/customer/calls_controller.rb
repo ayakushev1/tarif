@@ -12,6 +12,7 @@ class Customer::CallsController < ApplicationController
     customer_call_run = Customer::CallRun.where(:user_id => current_or_guest_user_id).first
     add_breadcrumb "Сохраненные загрузки или моделирования звонков: #{customer_call_run.try(:name)}", customer_call_runs_path
     add_breadcrumb "Моделирование звонков, задание главных параметров", customer_calls_choose_your_tarif_with_our_help_path
+    session[:work_flow][:offer_to_provide_email] = true
   end
   
   def generate_calls_from_simple_form
@@ -22,12 +23,12 @@ class Customer::CallsController < ApplicationController
       
     customer_call_run.update(:init_params => calls_generation_params, :init_class => 'Customer::Call::Init::SimpleForm::OwnAndHomeRegionsOnly', :operator_id => generation_params['operator_id'])
     
-    user_params = {"call_run_id" => customer_call_run.id}
+    user_params = {"call_run_id" => customer_call_run.id, "user_id" => current_or_guest_user_id}
     Customer::Call.where(user_params).delete_all
     Calls::Generator.new(calls_generation_params, user_params).generate_calls
     customer_call_run.calculate_call_stat
     
-    redirect_to customer_call_run
+    redirect_user_to_registration_or_main_tarif_optimization
   end
 #  operator_id :integer
 #  init_class  :string
@@ -49,7 +50,7 @@ class Customer::CallsController < ApplicationController
   def generate_calls
     Calls::Generator.new(customer_calls_generation_params, user_params).generate_calls
     Customer::CallRun.where(:id => customer_call_run_id).first_or_create.calculate_call_stat
-    redirect_to tarif_optimizators_main_index_path
+    redirect_user_to_registration_or_main_tarif_optimization
   end
   
   def update_customer_infos

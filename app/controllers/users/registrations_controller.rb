@@ -65,12 +65,17 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # The path used after sign up.
-  # def after_sign_up_path_for(resource)
-  #   super(resource)
-  # end
+   def after_sign_up_path_for(resource)
+    if session[:work_flow].try(:[], :tarif_optimization).try(:[], :status) == "ready_to_calculate"
+      session[:work_flow][:tarif_optimization][:status] = "sent_to_calculate"
+      tarif_optimizators_main_index_path
+    else
+      super(resource)
+    end
+   end
 
   # The path used after sign up for inactive accounts.
-  # def after_inactive_sign_up_path_for(resource)
-  #   super(resource)
-  # end
+#   def after_inactive_sign_up_path_for(resource)
+#     super(resource)
+#   end
 end

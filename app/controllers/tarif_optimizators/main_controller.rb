@@ -3,6 +3,7 @@ class TarifOptimizators::MainController < ApplicationController
   helper TarifOptimizators::MainHelper
   
   before_action :set_back_path, only: [:index]
+  before_action :init_inputs_for_autocalculate_for_just_registered_user
   before_action :create_result_run_if_not_exists, only: [:index]
   before_action :update_call_run_on_result_run_change, only: [:index]
   before_action :check_if_optimization_options_are_in_session, only: [:index]
@@ -27,6 +28,14 @@ class TarifOptimizators::MainController < ApplicationController
     TarifOptimization::TarifOptimizatorRunner.recalculate_with_delayed_job(options)
     redirect_to root_path, {:alert => "Мы сообщим вам электронным письмом об окончании расчетов"}
   end 
+  
+  def init_inputs_for_autocalculate_for_just_registered_user
+    if session[:work_flow].try(:[], :tarif_optimization).try(:[], :status) == "sent_to_calculate"
+      session[:work_flow][:tarif_optimization][:status] = "sent_to_calculate"
+      create_result_run_if_not_exists
+      init_calculation_choices_after_first_creating_result_runs
+    end
+  end
   
   def check_inputs_for_recalculate     
     if session_filtr_params(calculation_choices)['result_run_id'].blank?

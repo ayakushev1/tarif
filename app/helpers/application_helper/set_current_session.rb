@@ -8,6 +8,7 @@ module ApplicationHelper::SetCurrentSession
     session[:pagination] ||= {}    
     session[:back_path] ||= {}    
     session[:locale] ||= I18n.default_locale
+    session[:work_flow] ||= {}
     set_current_tabs_pages
     set_current_accordion_pages
 #    raise(StandardError)

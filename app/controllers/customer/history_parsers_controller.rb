@@ -22,7 +22,7 @@ class Customer::HistoryParsersController < ApplicationController
   def calculation_status
     if !background_process_informer.calculating?   
       if Customer::Call.where(:call_run_id => customer_call_run_id).present?
-        redirect_to tarif_optimizators_main_index_path, {:notice => "Детализация загружена. Можно приступить к подбору тарифа"}
+        redirect_user_to_registration_or_main_tarif_optimization
       else
         redirect_to({:action => :prepare_for_upload}, {:notice => "Не загрузился ни один звонок. Выберите другую детализацию или сообщите нам"})
       end
