@@ -4,6 +4,8 @@ class Comparison::OptimizationsController < ApplicationController
   include Crudable
   crudable_actions :all
 
+  before_filter :check_before_freindly_url, only: [:show]
+
   before_action :check_current_id_exists, only: [:show]
   before_action :set_back_path, only: [:show]
   before_action :validate_tarifs, only: [:show, :update_comparison_results]
@@ -74,6 +76,13 @@ class Comparison::OptimizationsController < ApplicationController
       result_of_update = object_to_run.send(method_to_run, *arg)
       redirect_to comparison_optimization_path(params[:id]), :notice => "#{method_to_run.to_s} executed: #{result_of_update}"
     end
+  end
+
+  def check_before_freindly_url
+    @rating = Comparison::Optimization.where(:id => params[:id]).first
+    if @rating and request.path != comparison_optimization_path(@rating)
+      redirect_to comparison_optimization_path(@rating), :status => :moved_permanently
+    end if params[:id]
   end
 
 end

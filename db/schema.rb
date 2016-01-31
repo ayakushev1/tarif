@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160126154233) do
+ActiveRecord::Schema.define(version: 20160131010624) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -88,11 +88,13 @@ ActiveRecord::Schema.define(version: 20160126154233) do
     t.integer "publication_status_id"
     t.integer "publication_order"
     t.integer "optimization_type_id"
+    t.string  "slug"
   end
 
   add_index "comparison_optimizations", ["optimization_type_id"], name: "index_comparison_optimizations_on_optimization_type_id", using: :btree
   add_index "comparison_optimizations", ["publication_order"], name: "index_comparison_optimizations_on_publication_order", using: :btree
   add_index "comparison_optimizations", ["publication_status_id"], name: "index_comparison_optimizations_on_publication_status_id", using: :btree
+  add_index "comparison_optimizations", ["slug"], name: "index_comparison_optimizations_on_slug", unique: true, using: :btree
 
   create_table "content_articles", force: :cascade do |t|
     t.integer  "author_id"
@@ -451,6 +453,7 @@ ActiveRecord::Schema.define(version: 20160126154233) do
     t.jsonb   "service_categories_select"
     t.jsonb   "categ_ids"
     t.integer "comparison_group_id"
+    t.string  "slug"
   end
 
   add_index "result_runs", ["accounting_period"], name: "index_result_runs_on_accounting_period", using: :btree
@@ -466,6 +469,7 @@ ActiveRecord::Schema.define(version: 20160126154233) do
   add_index "result_runs", ["services_by_operator"], name: "index_result_runs_on_services_by_operator", using: :btree
   add_index "result_runs", ["services_for_calculation_select"], name: "index_result_runs_on_services_for_calculation_select", using: :btree
   add_index "result_runs", ["services_select"], name: "index_result_runs_on_services_select", using: :btree
+  add_index "result_runs", ["slug"], name: "index_result_runs_on_slug", unique: true, using: :btree
   add_index "result_runs", ["temp_value"], name: "index_result_runs_on_temp_value", using: :btree
   add_index "result_runs", ["user_id"], name: "index_result_runs_on_user_id", using: :btree
 

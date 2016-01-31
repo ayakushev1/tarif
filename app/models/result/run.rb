@@ -21,11 +21,15 @@
 #  service_categories_select       :jsonb
 #  categ_ids                       :jsonb
 #  comparison_group_id             :integer
+#  slug                :string
 #
 
 class Result::Run < ActiveRecord::Base
-  include WhereHelper #PgJsonHelper
+  include WhereHelper#, FriendlyIdHelper #PgJsonHelper
   extend BatchInsert
+
+#  friendly_id :slug_candidates, use: [:slugged, :finders]
+
   belongs_to :user, :class_name =>'User', :foreign_key => :user_id
   belongs_to :call_run, :class_name =>'Customer::CallRun', :foreign_key => :call_run_id
   belongs_to :comparison_group, :class_name =>'Comparison::Group', :foreign_key => :comparison_group_id
@@ -39,6 +43,28 @@ class Result::Run < ActiveRecord::Base
 #  serialize :calculation_choices, HashSerializer
 #  store_accessor :calculation_choices, :blog, :github, :twitter
   
+  def slug_candidates
+    [
+      :short_name_for_slug,
+      :name_for_slug,
+    ]
+  end
+  
+  def short_name_for_slug
+    max_word_in_slug = 20;  excluded_short_word_length = 3;
+    result = []
+    i = 0
+    name_for_slug.split(" ").each do |word|
+      result << word
+      i += 1 if word.length > excluded_short_word_length
+    end if name
+    result[0..max_word_in_slug].join(" ")
+  end
+  
+  def name_for_slug
+    comparison_group ? "#{comparison_group.optimization.name}, корзина: #{comparison_group.name}" : "#{name} #{id}"
+  end
+
   def full_name
     "#{optimization_type}: #{name}" + (call_run ? " - #{call_run.full_name}" : "")
   end

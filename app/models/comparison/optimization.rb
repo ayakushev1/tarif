@@ -8,9 +8,13 @@
 #  publication_status_id :integer
 #  publication_order     :integer
 #  optimization_type_id  :integer
+#  slug                :string
 #
 
 class Comparison::Optimization < ActiveRecord::Base
+  include FriendlyIdHelper
+  friendly_id :slug_candidates, use: [:slugged, :finders]
+  
   belongs_to :publication_status, :class_name =>'Content::Category', :foreign_key => :publication_status_id
   belongs_to :type, :class_name =>'Comparison::OptimizationType', :foreign_key => :optimization_type_id
   has_many :groups, :class_name =>'Comparison::Group', :foreign_key => :optimization_id
@@ -20,6 +24,24 @@ class Comparison::Optimization < ActiveRecord::Base
   scope :reviewed, -> {where(:publication_status_id => 101)}
   scope :published, -> {where(:publication_status_id => 102)}
   scope :hidden, -> {where(:publication_status_id => 103)}
+
+  def slug_candidates
+    [
+      :short_name_for_slug,
+      :name,
+    ]
+  end
+  
+  def short_name_for_slug
+    max_word_in_slug = 6;  excluded_short_word_length = 3;
+    result = []
+    i = 0
+    name.split(" ").each do |word|
+      result << word
+      i += 1 if word.length > excluded_short_word_length
+    end if name
+    result[0..max_word_in_slug].join(" ")
+  end
 
   def self.clean_comparison_results
     all.collect{|optimization| optimization.clean_comparison_results}
@@ -70,7 +92,8 @@ class Comparison::Optimization < ActiveRecord::Base
           :operators => [call_run.operator_id],
           :for_service_categories => optimization_type[:for_service_categories],
           :for_services_by_operator => optimization_type[:for_services_by_operator],
-          :comparison_group_id => group.id
+          :comparison_group_id => group.id,
+          :result_run_name => "#{name}, #{group.name}"
         }
         optimization_type_options = optimization_type.deep_merge(local_options)
         raise(StandardError, [
@@ -107,7 +130,7 @@ class Comparison::Optimization < ActiveRecord::Base
   
   def result_run_update_options(options)
     {
-      :name => name,
+      :name => options[:result_run_name],
       :description => description,
       :user_id => nil,
       :run => 1,

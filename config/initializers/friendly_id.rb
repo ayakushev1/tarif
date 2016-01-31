@@ -1,5 +1,5 @@
-#  TarifClass.find_each(&:save)
-#  TarifClass.update_all(slug: nil)
+#  Result::Run.find_each(&:save)
+#  Result::Run.update_all(slug: nil)
 
 # FriendlyId Global Configuration
 #
