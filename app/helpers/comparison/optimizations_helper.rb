@@ -72,7 +72,7 @@ module Comparison::OptimizationsHelper
   end
   
   def call_run
-    operator_id = session_filtr_params(operator_choicer).try(:operator_id).try(:to_i) || operator_options[0]
+    operator_id = session_filtr_params(operator_choicer).try(:[], :operator_id).try(:to_i) || operator_options[0]
     call_runs.where(:operator_id => operator_id).first
   end
 

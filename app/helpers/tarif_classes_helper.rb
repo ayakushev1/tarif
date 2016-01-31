@@ -34,7 +34,7 @@ module TarifClassesHelper
   end
 
   def full_category_groups(filtr = :fixed)
-    return @full_category_groups[filtr] if @full_category_groups.try(:filtr)
+    return @full_category_groups[filtr] if @full_category_groups.try(:[], :filtr)
     @full_category_groups ||= {}
     @full_category_groups[filtr] = Service::CategoryGroup.
       includes(service_category_tarif_classes: [:service_category_rouming, :service_category_geo, :service_category_partner_type,
