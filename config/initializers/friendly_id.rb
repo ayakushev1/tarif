@@ -1,3 +1,6 @@
+#  TarifClass.find_each(&:save)
+#  TarifClass.update_all(slug: nil)
+
 # FriendlyId Global Configuration
 #
 # Use this to set up shared configuration options for your entire application.
@@ -57,7 +60,7 @@ FriendlyId.defaults do |config|
   # separator. If you're upgrading from FriendlyId 4, you may wish to replace this
   # with two dashes.
   #
-  # config.sequence_separator = '-'
+  # config.sequence_separator = '_'
   #
   #  ## Tips and Tricks
   #
