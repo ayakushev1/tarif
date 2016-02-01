@@ -45,15 +45,14 @@ class TarifOptimization::TarifOptimizatorRunner
       end if options[:services_by_operator][:tarifs] and options[:services_by_operator][:tarifs][operator]
     end if options[:services_by_operator] and options[:services_by_operator][:operators]       
     
+    begin
     base_worker_add_number = (options[:tarif_optimizator_input][:max_number_of_tarif_optimization_workers] || 3).to_i
     base_worker_add_number = options[:user_input][:user_id] == 1 ? base_worker_add_number : 1
-    number_of_workers_to_add = 0
-    begin
-      number_of_workers_to_add = [
-        base_worker_add_number - Background::WorkerManager::Manager.worker_quantity('tarif_optimization'),
-        number_of_workers_to_add
-      ].min
-      Background::WorkerManager::Manager.start_number_of_worker('tarif_optimization', number_of_workers_to_add)
+    number_of_workers_to_add = [
+      base_worker_add_number - Background::WorkerManager::Manager.worker_quantity('tarif_optimization'),
+      number_of_workers_to_add
+    ].min
+    Background::WorkerManager::Manager.start_number_of_worker('tarif_optimization', number_of_workers_to_add)
     rescue
     end
     i = 0
