@@ -17,7 +17,7 @@ Rails.application.routes.draw do
   end
 
 #  user_type == :guest ? (root 'home#index') : (root "comparison/optimizations/2")
-  get '/' => 'comparison/optimizations#index', :constraints => lambda { |request| request.env['warden'].authenticated? }
+#  get '/' => 'comparison/optimizations#index', :constraints => lambda { |request| request.env['warden'].authenticated? }
   root :to => 'comparison/optimizations#choose_your_tarif_from_ratings'
   resources :users
   resources :tarif_classes
