@@ -28,12 +28,12 @@ SitemapGenerator::Sitemap.create do
   Comparison::Optimization.published.find_each do |comparison|
     add comparison_optimization_path(comparison), defaults_params
     comparison.groups.each do |group|
-      add result_service_sets_result_path(group.result_run.id), defaults_params
-      Result::ServiceSet.where(:run_id => group.result_run.id).find_each do |detailed_result|
-        add result_service_sets_detailed_results_path(group.result_run.id, {:service_set_id => detailed_result.service_set_id}), defaults_params
+      add result_service_sets_result_path(group.result_run), defaults_params
+      Result::ServiceSet.where(:run_id => group.result_run).find_each do |detailed_result|
+        add result_service_sets_detailed_results_path(group.result_run, {:service_set_id => detailed_result.service_set_id}), defaults_params
       end
-      add result_compare_path(group.result_run.id), defaults_params
-      add comparison_call_stat_path(comparison.id), defaults_params
+      add result_compare_path(group.result_run), defaults_params
+      add comparison_call_stat_path(comparison), defaults_params
     end
   end
   
