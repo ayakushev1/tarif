@@ -25,7 +25,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
        params[:user][:name] = params[:user][:email] if !params[:user][:name]
      end 
      if params[:user] and User.where(:email => params[:user][:email]).present?
-       redirect_to login_path(:user => {:email => params[:user][:email]}), {:alert => "Пользователь с таким электронным адресом уже существует. Входите, если это вы."}
+       if user_signed_in?
+        redirect_to after_sign_up_path_for(resource)
+       else
+         redirect_to login_path(:user => {:email => params[:user][:email]}), {:alert => "Пользователь с таким электронным адресом уже существует. Входите, если это вы."}
+       end       
      else
        super
      end

@@ -49,7 +49,7 @@ module ApplicationHelper::Authorization
   def match_param_user_with_signed_user
     param_user_id = (params[:id] || params[:user][:id] || -1).to_i
     signed_user_id = current_or_guest_user ? current_or_guest_user.id.to_i : -2
-    param_user_id == signed_user_id
+    param_user_id == signed_user_id or (current_user and current_user.password.blank?)
   end
     
   def match_user_password
@@ -145,7 +145,7 @@ module ApplicationHelper::Authorization
         :methods => [], :actions => {
           'passwords' => ['edit', 'update'],
           'users' => ['show', 'edit'],
-          'users/registrations' => ['show', 'edit'],
+          'users/registrations' => ['show', 'edit', 'create'],
         }
       },
       :password_user_actions_with_devise => {
