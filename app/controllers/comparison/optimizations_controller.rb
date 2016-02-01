@@ -1,8 +1,8 @@
 class Comparison::OptimizationsController < ApplicationController
-  include Comparison::OptimizationsHelper, Customer::HistoryParsersBackgroundHelper
-  helper Comparison::OptimizationsHelper, Customer::HistoryParsersBackgroundHelper
   include Crudable
   crudable_actions :all
+  include Comparison::OptimizationsHelper, Customer::HistoryParsersBackgroundHelper
+  helper Comparison::OptimizationsHelper, Customer::HistoryParsersBackgroundHelper
 
   before_filter :check_before_freindly_url, only: [:show]
 
@@ -10,7 +10,7 @@ class Comparison::OptimizationsController < ApplicationController
   before_action :set_back_path, only: [:show]
   before_action :validate_tarifs, only: [:show, :update_comparison_results]
 
-  after_action :set_run_id, only: :show
+  after_action :set_run_id, only: [:show]
   
   add_breadcrumb I18n.t(:comparison_optimizations_path), :comparison_optimizations_path
       
@@ -25,10 +25,9 @@ class Comparison::OptimizationsController < ApplicationController
   end
   
   def call_stat
-    comparison_name = Comparison::Optimization.where(:id => session[:current_id]['comparison_optimization_id']).first.try(:name)
+    comparison = Comparison::Optimization.where(:id => session[:current_id]['comparison_optimization_id']).first
     comparison_group_name = Comparison::Group.where(:id => session[:current_id]['comparison_group_id']).first.try(:name)
-    add_breadcrumb comparison_name, comparison_optimization_path(session[:current_id]['comparison_optimization_id'])
-    add_breadcrumb comparison_group_name, comparison_optimization_path(session[:current_id]['comparison_optimization_id'])
+    add_breadcrumb comparison.try(:name) + ", " + comparison_group_name, comparison_optimization_path(comparison)
     add_breadcrumb "Статистика звонков", comparison_call_stat_path(params[:id])
   end
   
@@ -39,12 +38,12 @@ class Comparison::OptimizationsController < ApplicationController
   end
   
   def generate_calls_for_optimization
-    calculate_on_back_ground(true, Comparison::Optimization.where(:id => params[:id]), :generate_calls, false)
+    calculate_on_back_ground(true, Comparison::Optimization.where(id_name => params[:id]), :generate_calls, false)
   end
 
   def calculate_optimizations
     calculation_options = {:only_new => false, :test => false, :update_comparison => false, :tarifs => []}
-    calculate_on_back_ground(true, Comparison::Optimization.where(:id => params[:id]), :calculate_optimizations, calculation_options)
+    calculate_on_back_ground(true, Comparison::Optimization.where(id_name => params[:id]), :calculate_optimizations, calculation_options)
   end
 
   def update_selected_optimizations
@@ -56,11 +55,11 @@ class Comparison::OptimizationsController < ApplicationController
   def update_optimizations
     tarifs = session_filtr_params(tarifs_to_update_comparison)["tarifs"] || []
     calculation_options = {:only_new => false, :test => false, :update_comparison => true, :tarifs => tarifs}
-    calculate_on_back_ground(true, Comparison::Optimization.where(:id => params[:id]), :calculate_optimizations, calculation_options)
+    calculate_on_back_ground(true, Comparison::Optimization.where(id_name => params[:id]), :calculate_optimizations, calculation_options)
   end
 
   def update_comparison_results
-    calculate_on_back_ground(true, Comparison::Optimization.where(:id => params[:id]), :update_comparison_results)
+    calculate_on_back_ground(true, Comparison::Optimization.where(id_name => params[:id]), :update_comparison_results)
   end
 
   def calculate_on_back_ground(if_calculate_on_back_ground, object_to_run, method_to_run, *arg)
@@ -79,10 +78,10 @@ class Comparison::OptimizationsController < ApplicationController
   end
 
   def check_before_freindly_url
-    @rating = Comparison::Optimization.where(:id => params[:id]).first
+    @rating = Comparison::Optimization.friendly.find(params[:id])
     if @rating and request.path != comparison_optimization_path(@rating)
       redirect_to comparison_optimization_path(@rating), :status => :moved_permanently
     end if params[:id]
   end
-
+  
 end

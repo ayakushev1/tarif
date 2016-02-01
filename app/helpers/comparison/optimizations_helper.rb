@@ -15,7 +15,8 @@ module Comparison::OptimizationsHelper
   end
   
   def check_current_id_exists
-    session[:current_id]['comparison_optimization_id'] = params[:id] if session[:current_id]['comparison_optimization_id'].blank?
+#    session[:current_id]['comparison_optimization_id'] = params[:id] if session[:current_id]['comparison_optimization_id'].blank?
+    session[:current_id]['comparison_optimization_id'] = Comparison::Optimization.friendly.find(params[:id]).try(:id) if session[:current_id]['comparison_optimization_id'].blank?
   end
   
   def set_run_id
@@ -85,6 +86,10 @@ module Comparison::OptimizationsHelper
     call_run_array = call_run ? call_run.calls_stat_array(calls_stat_options) : [{}]
 #    @calls_stat ||= 
     create_array_of_hashable(call_run_array, options )
+  end
+
+  def id_name
+    Comparison::Optimization.respond_to?(:friendly) ? :slug : :id
   end
 
 end

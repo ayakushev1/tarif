@@ -13,7 +13,7 @@
 
 class Comparison::Optimization < ActiveRecord::Base
   include FriendlyIdHelper
-  friendly_id :slug_candidates, use: [:slugged, :finders]
+  friendly_id :slug_candidates, use: [:slugged]#, :finders]
   
   belongs_to :publication_status, :class_name =>'Content::Category', :foreign_key => :publication_status_id
   belongs_to :type, :class_name =>'Comparison::OptimizationType', :foreign_key => :optimization_type_id

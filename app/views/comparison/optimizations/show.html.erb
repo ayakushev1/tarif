@@ -4,10 +4,10 @@
 <header id="first">
     <div class="header-content header-content-smaller">
         <div class="inner">
-            <h1 class="cursive"><small><%= controller.comparison_optimization_form.model.name %></small></h1>
+            <h1 class="cursive"><small><%= comparison_optimization_form.model.name %></small></h1>
             <hr />
             <ul >
-            <% controller.comparison_optimization_form.model.description.split(". ").each do |desc_item| %>
+            <% comparison_optimization_form.model.description.split(". ").each do |desc_item| %>
             	<li class="pull-left"><%= desc_item %></li><br />
             <% end %>	
             </ul>    
@@ -19,7 +19,7 @@
 </header>
 
 
-<%= render :partial => 'optimization', :layout => 'application/layouts/model_show', :locals => {:form_item => controller.comparison_optimization_form} %>
+<%= render :partial => 'optimization', :layout => 'application/layouts/model_show', :locals => {:form_item => comparison_optimization_form} %>
 
 <%if false %>
 	<%= render :partial => 'groups_table', :layout => 'application/layouts/model_table', 
