@@ -4,8 +4,9 @@ module Result::RunsHelper
   def result_runs_table
 #    return @result_runs_table if @result_runs_table and @result_runs_table.model.exists?
     options = {:base_name => 'result_runs', :current_id_name => 'result_run_id', :id_name => 'id', :pagination_per_page => 10}
+    condition_for_admin_user = session_filtr_params(result_runs_select).try(:[], :user_id).blank? ? {:user_id => nil} : true
     result_runs_to_show = user_type == :admin ? 
-      Result::Run.includes(:user, :call_run, :comparison_group).query_from_filtr(session_filtr_params(result_runs_select)) :
+      Result::Run.includes(:user, :call_run, :comparison_group).query_from_filtr(session_filtr_params(result_runs_select)).where(condition_for_admin_user) :
       Result::Run.includes(:user, :call_run, :comparison_group).where(:user_id => current_or_guest_user_id)
 #    @result_runs_table = 
     create_tableable(result_runs_to_show, options)
