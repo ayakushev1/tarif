@@ -1,8 +1,8 @@
 class TarifClassesController < ApplicationController
-  include TarifClassesHelper
-  helper TarifClassesHelper, Service::CategoryTarifClassPresenter
   include Crudable
   crudable_actions :all
+  include TarifClassesHelper
+  helper TarifClassesHelper, Service::CategoryTarifClassPresenter
   
   before_filter :check_before_freindly_url, only: [:show]
   

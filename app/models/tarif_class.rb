@@ -18,7 +18,7 @@
 class TarifClass < ActiveRecord::Base
   include WhereHelper, FriendlyIdHelper
 #  extend FriendlyId
-  friendly_id :slug_candidates, use: [:slugged, :finders]
+  friendly_id :slug_candidates, use: [:slugged]#, :finders]
   
   belongs_to :operator, :class_name =>'Category', :foreign_key => :operator_id
   belongs_to :privacy, :class_name =>'Category', :foreign_key => :privacy_id

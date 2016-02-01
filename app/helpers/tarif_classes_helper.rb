@@ -7,11 +7,6 @@ module TarifClassesHelper
 #    raise(StandardError, session[:filtr])
   end
 
-  def tarif_class_form
-    condition = params[:id] ? {:slug => params[:id]} : {:id => session[:current_id]['tarif_class_id']}
-    create_formable(TarifClass.where(condition).first)
-  end
-
   def tarif_classes
 #    raise(StandardError, session[:filtr])
     filtr = session_filtr_params(tarif_class_filtr)
