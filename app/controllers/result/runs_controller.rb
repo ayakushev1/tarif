@@ -16,11 +16,11 @@ class Result::RunsController < ApplicationController
   add_breadcrumb I18n.t(:result_runs_path), :result_runs_path
   
   def show
-    add_breadcrumb result_run_form.model.try(:name), result_run_path(params[:id])
+    add_breadcrumb result_run_form.model.try(:name), result_run_path(result_run_form.model)
   end
   
   def edit
-    add_breadcrumb "Редактирование #{result_run_form.model.try(:name)}", edit_result_run_path(params[:id])
+    add_breadcrumb "Редактирование #{result_run_form.model.try(:name)}", edit_result_run_path(result_run_form.model)
   end
   
   def check_before_freindly_url

@@ -20,7 +20,7 @@ class Result::ServiceSetsController < ApplicationController
   end
   
   def detailed_results
-    add_breadcrumb results_service_set.try(:full_name), result_service_sets_detailed_results_path(run_id)
+    add_breadcrumb results_service_set.try(:full_name), result_service_sets_detailed_results_path(results_service_set.try(:run))
   end
   
 end

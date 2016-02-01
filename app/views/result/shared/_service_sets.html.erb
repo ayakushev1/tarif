@@ -38,7 +38,7 @@ table.init do |t|
         "[ #{identical_services_for_one_group} ]"
     end.join(', ').html_safe if f.identical_services
   	[
-     link_to('', result_service_sets_detailed_results_path(f.run_id, {:service_set_id => f.service_set_id}), 
+     link_to('', result_service_sets_detailed_results_path(f.run, {:service_set_id => f.service_set_id}), 
      	{:my_remote => true, :class => "fa fa-random fa-lg center", :'aria-hidden' => "true", :'aria-label' => "Просмотр"}),
   	 (f.price.round(0).to_s(:delimited, precision: 0) if f.price),    
      (f.operator.name if f.operator),     

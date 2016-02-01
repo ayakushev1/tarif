@@ -22,6 +22,8 @@ SitemapGenerator::Sitemap.create do
   #   end
   defaults_params = {:priority => nil, :changefreq => nil, :lastmod => nil}
   add comparison_optimizations_path, defaults_params
+  add comparison_choose_your_tarif_from_ratings_path, defaults_params
+  add customer_calls_choose_your_tarif_with_our_help_path, defaults_params  
   
   Comparison::Optimization.published.find_each do |comparison|
     add comparison_optimization_path(comparison), defaults_params

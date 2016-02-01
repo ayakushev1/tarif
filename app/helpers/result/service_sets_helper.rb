@@ -8,8 +8,11 @@ module Result::ServiceSetsHelper
 
   def run_id
     session[:filtr]['results_select_filtr'] ||= {}
-    session[:filtr]['results_select_filtr']['result_run_id'] = params[:result_run_id] if params[:result_run_id]
-    params[:result_run_id] || (session_filtr_params(results_select)['result_run_id'] || -1).to_i
+    if params[:result_run_id]
+      session[:filtr]['results_select_filtr']['result_run_id'] = Result::Run.friendly.find(params[:result_run_id]).try(:id) 
+    else
+      (session_filtr_params(results_select)['result_run_id'] || -1).to_i
+    end
   end
   
   def service_set_id
@@ -167,7 +170,7 @@ module Result::ServiceSetsHelper
     back_path = session[:back_path]['result_service_sets_detailed_results_path'] || 'result_service_sets_results_path'
     case back_path
     when 'result_service_sets_result_path'
-      result_service_sets_result_path(run_id)
+      result_service_sets_result_path(result_service_sets.model.first.try(:run))
     else
       result_service_sets_results_path
     end
@@ -199,10 +202,10 @@ module Result::ServiceSetsHelper
       add_breadcrumb "Сохраненные результаты подбора", result_service_sets_results_path
       add_breadcrumb result_service_sets.model.first.try(:run).try(:name), result_service_sets_results_path
     when 'result_service_sets_result_path'
-      add_breadcrumb " Результаты подбора", result_service_sets_result_path(run_id)
+      add_breadcrumb " Результаты подбора", result_service_sets_result_path(result_service_sets.model.first.try(:run))
     when 'result_runs_path'
       add_breadcrumb "Список описаний подборов", result_runs_path
-      add_breadcrumb result_service_sets.model.first.try(:run).try(:name), result_run_path(run_id)        
+      add_breadcrumb result_service_sets.model.first.try(:run).try(:name), result_run_path(result_service_sets.model.first.try(:run))        
     end
   end
   
