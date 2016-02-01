@@ -2,7 +2,7 @@ class Comparison::OptimizationsController < ApplicationController
   include Crudable
   crudable_actions :all
   include Comparison::OptimizationsHelper, Customer::HistoryParsersBackgroundHelper
-  helper Comparison::OptimizationsHelper, Customer::HistoryParsersBackgroundHelper
+  helper Comparison::OptimizationsHelper, Customer::HistoryParsersBackgroundHelper, Comparison::OptimizationPresenter
 
   before_filter :check_before_freindly_url, only: [:show]
 

@@ -1,17 +1,23 @@
 <div class="row">
     <div class="col-lg-4 col-md-4 text-center">
         <div class="feature">
-        	<%= render :partial => 'group_panel', :locals => {:heading => "Изредка", :group_result_description => @group_result_description[50]}%>
+        	<%= render :partial => 'group_panel', :locals => {
+        		:heading => "Изредка", :group_result_description => @group_result_description[50], 
+        	 	:popover_content => "Общая длительность звонков 120 минут" }%>
         </div>
     </div>
     <div class="col-lg-4 col-md-4 text-center">
         <div class="feature">
-        	<%= render :partial => 'group_panel', :locals => {:heading => "Умеренно", :group_result_description => @group_result_description[52]}%>
+        	<%= render :partial => 'group_panel', :locals => {
+        		:heading => "Умеренно", :group_result_description => @group_result_description[52], 
+        	 	:popover_content => "Общая длительность звонков 600 минут" }%>
         </div>
     </div>
     <div class="col-lg-4 col-md-4 text-center">
         <div class="feature">
-        	<%= render :partial => 'group_panel', :locals => {:heading => "Активно", :group_result_description => @group_result_description[54]}%>
+        	<%= render :partial => 'group_panel', :locals => {
+        		:heading => "Активно", :group_result_description => @group_result_description[54], 
+        	 	:popover_content => "Общая длительность звонков 1500 минут" }%>
         </div>
     </div>
 </div>

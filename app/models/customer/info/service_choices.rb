@@ -124,8 +124,11 @@ class Customer::Info::ServiceChoices < ActiveType::Record[Customer::Info]
   end  
 
   def self.tarif_options_for_demo(user_type = :guest)
-    demo_option_types = {:guest => [], :trial => [:calls, :sms, :internet], :user => [:international_rouming, :country_rouming, :mms, :calls, :sms, :internet],
-                         :admin => [:international_rouming, :country_rouming, :mms, :calls, :sms, :internet]}[user_type]
+    demo_option_types = {
+      :guest => [], 
+      :trial => [:calls, :sms, :internet], 
+      :user => [:international_rouming, :country_rouming, :mms, :calls, :sms, :internet],
+      :admin => [:international_rouming, :country_rouming, :mms, :calls, :sms, :internet]}[user_type]
 #    demo_option_types = [:international_rouming, :country_rouming, :calls, :sms, :internet]
     {
       1023 => tarif_options_by_type[1023].map{|t| t[1] if demo_option_types.include?(t[0])}.flatten.compact,

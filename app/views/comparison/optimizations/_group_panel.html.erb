@@ -1,5 +1,5 @@
 <div class="panel panel-primary" >
-	<div class="panel-heading"><%= "#{heading}#{}" %></div>
+	<div class="panel-heading"><%= show_as_popover(heading, popover_content) %></div>
 	<div class="panel-body">
 		  <ul class="list-group equal-item-flex" >
 		  <% group_result_description.each do |place, desc| %>
