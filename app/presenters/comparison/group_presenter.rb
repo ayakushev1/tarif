@@ -23,7 +23,8 @@ module Comparison::GroupPresenter
           :operator_name => operators_desc[detail['operator_id']],
           :tarif => tarifs_desc[detail['tarif_id']],
           :price => detail['price'],
-          :group_name => group.name
+          :group_name => group.name,
+          :optimization_slug => group.optimization.slug
         }
       end if group.result and group.result['place']      
     end

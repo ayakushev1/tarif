@@ -1,7 +1,7 @@
 <div class="panel panel-primary" >
 	<div class="panel-heading"><%= show_as_popover(heading, popover_content) %></div>
-	<div class="panel-body">
-		  <ul class="list-group equal-item-flex" >
+	<div class="panel-body1">
+		  <ul class="list-group" >
 		  <% group_result_description.each do |place, desc| %>
 		  	<li class="list-group-item text-left">
 		  		<span><%= "#{desc[:price].round(0)} руб.		" %></span>
@@ -9,5 +9,8 @@
 		  	</li>
 		  <% end if group_result_description %>
 		  </ul>
+	</div>
+	<div class="panel-footer">
+		<%= footer %>
 	</div>
 </div>
