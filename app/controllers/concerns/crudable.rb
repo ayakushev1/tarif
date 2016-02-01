@@ -54,6 +54,8 @@ module Crudable
       self.send(:define_method, form_model_name.to_sym) do
         @form_model
       end
+      
+      helper_method model_name.to_sym, form_model_name.to_sym
 
     end
   end
@@ -122,8 +124,10 @@ module Crudable
       model_class.new
     end
     @form_model = create_formable(@model )    
-    params[form_model_name] = session_model_params(@form_model)
-    @model.assign_attributes(model_params) 
+    if [:edit, :update, :create].include?(action_name.to_sym)
+      params[form_model_name] = session_model_params(@form_model) 
+      @model.assign_attributes(model_params) 
+    end
   end
 
   def model_name
