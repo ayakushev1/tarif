@@ -9,7 +9,7 @@
     :general_priority => _gp_tarif_option_without_limits,#_gp_tarif_option_with_limits,
     :other_tarif_priority => {:lower => [], :higher => [ _tele_add_speed_3gb, _tele_add_speed_100mb]},
     :prerequisites => [],
-    :forbidden_tarifs => {:to_switch_on => [_tele_black, _tele_very_black, _tele_most_black], :to_serve => []},
+    :forbidden_tarifs => {:to_switch_on => [_tele_black, _tele_very_black, _tele_most_black, _tele_mostest_black], :to_serve => []},
     :multiple_use => false
   } } )
 

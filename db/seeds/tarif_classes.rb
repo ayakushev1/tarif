@@ -283,6 +283,7 @@ TarifClass.create(id: _tele_green, operator_id: Category::Operator::Const::Tele2
 TarifClass.create(id: _tele_internet_for_devices, operator_id: Category::Operator::Const::Tele2, privacy_id: 2, standard_service_id: 40, name: 'Интернет для устройств')
 
 TarifClass.create(id: _tele_most_black, operator_id: Category::Operator::Const::Tele2, privacy_id: 2, standard_service_id: 40, name: 'Самый черный')
+TarifClass.create(id: _tele_mostest_black, operator_id: Category::Operator::Const::Tele2, privacy_id: 2, standard_service_id: 40, name: 'Сверхчерный')
 
 #Теле, роуминг
 TarifClass.create(id: _tele_country_rouming , operator_id: Category::Operator::Const::Tele2, privacy_id: 2, standard_service_id: 41, name: 'Путешествия по России')
