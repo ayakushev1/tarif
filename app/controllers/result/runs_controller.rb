@@ -5,7 +5,7 @@ class Result::RunsController < ApplicationController
   include Crudable
   crudable_actions :all
   
-  before_filter :check_before_freindly_url, only: [:show]
+#  before_filter :check_before_freindly_url, only: [:show]
 
   before_action :create_result_run_if_not_exists, only: [:index]
 #  before_action :check_if_allowed_new_result_run, only: [:new, :create]
