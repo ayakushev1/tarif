@@ -3,9 +3,9 @@ table.init do |t|
 #  t.caption = 'Listing users'
   link_html = {:my_remote => true}
   t.heads = if user_type == :admin
-  	['Название', 'Описание звонков', 'Календарный период', 'Тип подбора', 'Номер подбора','', '', '', '', '', '', '', '']
+  	['Название', 'Описание звонков', 'Календарный период', 'Тип подбора', 'Номер подбора', 'Дата обновления','', '', '', '', '', '', '', '']
   else
-  	['Название', 'Описание звонков', 'Календарный период', 'Тип подбора', 'Номер подбора', '', '', '', '']
+  	['Название', 'Описание звонков', 'Календарный период', 'Тип подбора', 'Номер подбора', 'Дата обновления', '', '', '', '']
   end 
   
   t.set_fields do |run| 
@@ -16,7 +16,7 @@ table.init do |t|
     run.accounting_period,
     run.optimization_type,
     run.run,
-#    run.updated_at.try(:to_formatted_s, :short),
+    run.updated_at.try(:to_formatted_s, :short),
     link_to( content_tag(:span, "", { :class => "fa fa-pencil-square-o fa-lg"}), edit_result_run_path(run), link_html.merge({:title => "Редактировать"})), 
     link_to( content_tag(:span, "", { :class => "fa fa-times-circle fa-lg"}), run, method: :delete, data: { confirm: 'Are you sure?'}, :title => "Удалить"),
     link_to( t('result.runs.index.show_result_link'), result_service_sets_result_path(run), link_html.merge({:title => "Нажмите для просмотр результатов подбора"})), 
