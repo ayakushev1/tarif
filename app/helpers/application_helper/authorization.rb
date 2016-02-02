@@ -21,8 +21,17 @@ module ApplicationHelper::Authorization
     when match_with_lists([:root_url, :external_api_processing])
     when match_with_lists([:public_url])
     when (match_with_lists([:comparison]) and [:stranger, :guest, :trial, :user].include?(user_type))
-    when (match_with_lists([:call_generation_and_parsing]) and [:stranger, :guest, :trial, :user].include?(user_type))
+    when (match_with_lists([:call_generation_and_parsing]) and [:stranger, :guest, :trial, :user].include?(user_type))      
+    when match_with_lists([:customer_call_run_changing])
+      if !Customer::CallRun.where(:id => params[:id], :user_id => current_or_guest_user_id).present?
+        redirect_to(root_path, alert: "Доступ к разделу сайта #{controller_path}/#{action_name} for #{user_type} ограничен")
+      end
     when (match_with_lists([:tarif_optimization]) and [:stranger, :guest, :trial, :user].include?(user_type))
+    when match_with_lists([:result_run_changing])
+      if !Result::Run.where(:slug => params[:id], :user_id => current_or_guest_user_id).present? #or
+#         !(Result::Run.where(:id => params[:id], :user_id => nil).present? and action_name == 'show')
+        redirect_to(root_path, alert: "Доступ к разделу сайта #{controller_path}/#{action_name} for #{user_type} ограничен")
+      end
     when match_with_lists([:any_user_actions_with_devise])
     when (match_with_lists([:new_user_actions_with_devise]) and user_type == :guest)
     when match_with_lists([:signed_user_actions_with_devise]) 
@@ -30,6 +39,7 @@ module ApplicationHelper::Authorization
     when match_with_lists([:password_user_actions_with_devise]) 
       redirect_to(root_path, alert: "У вас нет доступа к чужому счету") if !(match_param_user_with_signed_user and match_user_password)
     else 
+      raise(StandardError)
       redirect_to(root_path, alert: "Доступ к разделу сайта #{controller_path}/#{action_name} for #{user_type} ограничен")
     end
   end 
@@ -37,8 +47,9 @@ module ApplicationHelper::Authorization
   def my_skip_authenticate
     match_with_lists([:root_url, :external_api_processing]) or 
     ([:bot].include?(user_type) and match_with_lists([:root_url, :public_url])) or 
-    (user_type == :guest and match_with_lists([:root_url, 
-        :public_url, :new_user_actions_with_devise, :comparison, :call_generation_and_parsing, :tarif_optimization]))
+    (user_type == :guest and match_with_lists([
+        :root_url, :public_url, :new_user_actions_with_devise, :comparison, :call_generation_and_parsing, :tarif_optimization, ])) or
+     match_with_lists([:customer_call_run_changing, :result_run_changing])
 #    match_with_lists([:root_url, :public_url, :new_user_actions_with_devise, :call_generation_and_parsing, :tarif_optimization, :external_api_processing])
   end
   
@@ -73,7 +84,7 @@ module ApplicationHelper::Authorization
       end
     end
     raise(StandardError, [request_method, action_list, controller_path, action_name]) if action_list_name.to_sym == :comparison and
-      controller_name == 'results'
+      controller_name == 'results1'
     false
   end
   
@@ -114,17 +125,27 @@ module ApplicationHelper::Authorization
         :methods => [], :actions => {
           'customer/calls' =>['index', 'set_calls_generation_params', 'set_default_calls_generation_params', 
             'generate_calls', 'choose_your_tarif_with_our_help', 'generate_calls_from_simple_form'],
-          'customer/call_runs' =>[],
+          'customer/call_runs' =>['index'],
           'customer/history_parsers' => ['prepare_for_upload', 'upload', 'calculation_status'],
+        }
+      },
+      :customer_call_run_changing => {
+        :methods => [], :actions => {
+          'customer/call_runs' =>['show', 'create', 'edit', 'update', 'destroy'],
         }
       },
       :tarif_optimization => {
         :methods => [], :actions => {
-          'result/runs' => [],
+          'result/runs' => ['index'],
           'tarif_optimizators/main' => ['index', 'recalculate', 'select_services'],
           'tarif_optimizators/fixed_services' => ['index', 'recalculate', 'select_services'],
           'tarif_optimizators/limited_scope' => ['index', 'recalculate', 'select_services'],
           'tarif_optimizators/fixed_operators' => ['index', 'recalculate', 'select_services'],
+        }
+      },
+      :result_run_changing => {
+        :methods => [], :actions => {
+          'result/runs' => ['show', 'create', 'edit', 'update', 'destroy'],
         }
       },
       :any_user_actions_with_devise => {
