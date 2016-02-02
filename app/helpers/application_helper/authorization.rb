@@ -36,10 +36,11 @@ module ApplicationHelper::Authorization
     when (match_with_lists([:new_user_actions_with_devise]) and user_type == :guest)
     when match_with_lists([:signed_user_actions_with_devise]) 
       redirect_to(root_path, alert: "Вы пытаетесь получить доступ к чужому счету") if !match_param_user_with_signed_user
+    when match_with_lists([:signing_user_actions_with_devise]) 
+      redirect_to(root_path, alert: "Вы пытаетесь получить доступ к чужому счету") if !match_param_user_with_signing_user
     when match_with_lists([:password_user_actions_with_devise]) 
       redirect_to(root_path, alert: "У вас нет доступа к чужому счету") if !(match_param_user_with_signed_user and match_user_password)
     else 
-      raise(StandardError)
       redirect_to(root_path, alert: "Доступ к разделу сайта #{controller_path}/#{action_name} for #{user_type} ограничен")
     end
   end 
@@ -60,7 +61,14 @@ module ApplicationHelper::Authorization
   def match_param_user_with_signed_user
     param_user_id = (params[:id] || params[:user][:id] || -1).to_i
     signed_user_id = current_or_guest_user ? current_or_guest_user.id.to_i : -2
+    param_user_id == signed_user_id 
+  end
+    
+  def match_param_user_with_signing_user
+    param_user_id = (params[:id] || params[:user][:id] || -1).to_i
+    signed_user_id = current_or_guest_user ? current_or_guest_user.id.to_i : -2
     param_user_id == signed_user_id or (current_user and current_user.password.blank?)
+#    raise(StandardError, [param_user_id, signed_user_id, current_user])
   end
     
   def match_user_password
@@ -166,6 +174,10 @@ module ApplicationHelper::Authorization
         :methods => [], :actions => {
           'passwords' => ['edit', 'update'],
           'users' => ['show', 'edit'],
+        }
+      },
+      :signing_user_actions_with_devise => {
+        :methods => [], :actions => {
           'users/registrations' => ['show', 'edit', 'create'],
         }
       },
