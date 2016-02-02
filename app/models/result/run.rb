@@ -66,7 +66,8 @@ class Result::Run < ActiveRecord::Base
   end
 
   def full_name
-    "#{optimization_type}: #{name}" + (updated_at ? ", " + updated_at.try(:to_formatted_s, :short) : "") + 
+#    "#{optimization_type}: #{name}" + (updated_at ? ", " + updated_at.try(:to_formatted_s, :short) : "") + 
+    "#{optimization_type}: #{name}" +  
     (call_run ? " - #{call_run.full_name}" : "")
   end
   
