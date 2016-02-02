@@ -23,7 +23,7 @@ class TarifOptimizators::FixedServicesController < ApplicationController
     update_customer_infos
     TarifOptimization::TarifOptimizatorRunner.clean_new_results(session_filtr_params(calculation_choices)['result_run_id'].to_i)
     TarifOptimization::TarifOptimizatorRunner.recalculate_direct(options)
-    redirect_to({:action => :index}, {:alert => "Расчет выполнен. Можете перейти к просмотру результатов"})
+    redirect_to result_runs_path, {:alert => "Расчет выполнен. Можете перейти к просмотру результатов"}
   end 
   
   def check_inputs_for_recalculate    

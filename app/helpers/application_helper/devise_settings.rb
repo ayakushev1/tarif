@@ -7,7 +7,12 @@ module ApplicationHelper::DeviseSettings
   end  
 
   def after_sign_in_path_for(resource)
-    root_path
+    if session[:work_flow].try(:[], :tarif_optimization).try(:[], :status) == "ready_to_calculate"
+      session[:work_flow][:tarif_optimization][:status] = "sent_to_calculate"
+      tarif_optimizators_main_recalculate_path
+    else
+      root_path
+    end    
   end
     
   private

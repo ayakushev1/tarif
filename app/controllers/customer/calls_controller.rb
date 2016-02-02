@@ -6,22 +6,26 @@ class Customer::CallsController < ApplicationController
   before_action :create_call_run_if_not_exists, only: [:set_calls_generation_params, :choose_your_tarif_with_our_help]
   before_action :update_usage_pattern, only: [:set_calls_generation_params]
   before_action :setting_if_nil_default_calls_generation_params, only: [:set_calls_generation_params, :generate_calls, :choose_your_tarif_with_our_help]
-  after_action -> {update_customer_infos}, only: :generate_calls
+  after_action -> {update_customer_infos}, only: [:generate_calls, :generate_calls_from_simple_form]
 
   def choose_your_tarif_with_our_help
-    customer_call_run = Customer::CallRun.where(:user_id => current_or_guest_user_id).first
-    add_breadcrumb "Сохраненные загрузки или моделирования звонков: #{customer_call_run.try(:name)}", customer_call_runs_path
+    add_breadcrumb "Сохраненные загрузки или моделирования звонков", customer_call_runs_path
     add_breadcrumb "Моделирование звонков, задание главных параметров", customer_calls_choose_your_tarif_with_our_help_path
-    session[:work_flow]= {:offer_to_provide_email => true, :path_to_go => tarif_optimizators_main_recalculate_path}
+    session[:work_flow] = {:offer_to_provide_email => true, :path_to_go => tarif_optimizators_main_recalculate_path}
   end
   
   def generate_calls_from_simple_form
-    customer_call_run = Customer::CallRun.where(:user_id => current_or_guest_user_id).first
+    customer_call_run = Customer::CallRun.where(:user_id => current_or_guest_user_id, :source => [0, 1]).
+      where.not(:operator_id => nil).first_or_create(:name => "Пробные звонки", :source => 0, :description => "", :user_id => current_or_guest_user_id)
+
+    session[:filtr]["call_run_choice_filtr"] ||= {}
+    session[:filtr]["call_run_choice_filtr"]['customer_call_run_id'] = customer_call_run.id
+
     generation_params = session_filtr_params(simple_call_generation_params)
     calls_generation_params = Customer::Call::Init::SimpleForm::OwnAndHomeRegionsOnly.symbolize_keys.
       deep_merge({:own_region => generation_params, :home_region => generation_params, :general => {:operator_id => generation_params['operator_id']}})
       
-    customer_call_run.update(:init_params => calls_generation_params, :init_class => 'Customer::Call::Init::SimpleForm::OwnAndHomeRegionsOnly', :operator_id => generation_params['operator_id'])
+    customer_call_run.update(:init_params => calls_generation_params, :init_class => 'Customer::Call::Init::SimpleForm::OwnAndHomeRegionsOnly', :operator_id => (generation_params['operator_id'] || 1030))
     
     user_params = {"call_run_id" => customer_call_run.id, "user_id" => current_or_guest_user_id}
     Customer::Call.where(user_params).delete_all
@@ -128,7 +132,7 @@ class Customer::CallsController < ApplicationController
         Calls::Generator.default_calls_generation_params(key, usage_pattern_id)[key]
       else
         saved_call_generation_param[key.to_s]
-      end  if session[:filtr][value.filtr_name].blank?
+      end if session[:filtr][value.filtr_name].blank?
     end
   end
   
@@ -184,13 +188,17 @@ class Customer::CallsController < ApplicationController
   end
   
   def customer_call_run_id
-    session_filtr_params(call_run_choice)['customer_call_run_id'] || Customer::CallRun.where(:user_id => current_or_guest_user_id).
-      first_or_create(:name => "Моделирование звонков", :source => 0, :description => "", :user_id => current_or_guest_user_id).id
+    session[:filtr]["call_run_choice_filtr"] ||= {}
+    if session[:filtr]["call_run_choice_filtr"]['customer_call_run_id'].blank?
+      session[:filtr]["call_run_choice_filtr"]['customer_call_run_id'] = Customer::CallRun.where(:user_id => current_or_guest_user_id, :source => [0, 1]).
+      where.not(:operator_id => nil).first_or_create(:name => "Пробное моделирование звонков", :source => 0, :description => "", :user_id => current_or_guest_user_id).id
+    end
+    session_filtr_params(call_run_choice)['customer_call_run_id'].to_i
   end
   
   def create_call_run_if_not_exists
     Customer::CallRun.min_new_call_run(user_type).times.each do |i|
-      Customer::CallRun.create(:name => "Моделирование звонков №#{i}", :source => 1, :description => "", :user_id => current_or_guest_user_id)
-    end  if !Customer::CallRun.where(:user_id => current_or_guest_user_id).present?
+      Customer::CallRun.create(:name => "Моделирование звонков №#{i}", :source => 0, :description => "", :user_id => current_or_guest_user_id)
+    end  if !Customer::CallRun.where(:user_id => current_or_guest_user_id, :source => [0, 1]).present?
   end
 end

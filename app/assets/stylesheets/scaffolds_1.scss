@@ -22,6 +22,10 @@ table thead {
 /*  color: #ffffff !important;*/
   
 }
+
+.table > tbody > tr.active > td {
+  background-color: lighten(#28A1E7, 36.5%) !important;
+}
 .table thead tr th {
   vertical-align: middle;
   text-align: center;

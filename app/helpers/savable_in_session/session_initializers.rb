@@ -44,7 +44,7 @@ module SavableInSession::SessionInitializers
       end
     else
       if params_to_set[form_name]
-        session[:form][form_name][:id] = nil if !(formable.model.class.respond_to?(:friendly) and col.to_sym == :id)
+        session[:form][form_name][:id] = nil if !formable.model.class.respond_to?(:friendly)
         session[:form][form_name] = params_to_set[form_name]
       end
     end

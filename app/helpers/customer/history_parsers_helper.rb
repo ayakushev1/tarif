@@ -59,7 +59,7 @@ module Customer::HistoryParsersHelper
     return result = {:file_is_good => false, 'message' => message} if !parsing_params[:allowed_call_history_file_types].include?(file_type)
     
     message = "Тип файла не совпадает с разрешенным типом файла для оператора"
-    return result = {:file_is_good => false, 'message' => message} if (user_params[:operator_id] > 0) and !check_if_file_type_match_with_operator(file_type)
+    return result = {:file_is_good => false, 'message' => message} if false and (user_params[:operator_id] > 0) and !check_if_file_type_match_with_operator(file_type)
     
     result
   end
@@ -77,15 +77,18 @@ module Customer::HistoryParsersHelper
   end
 
   def customer_call_run_id
-    session_filtr_params(call_run_choice)['customer_call_run_id'] ||
-    Customer::CallRun.where(:user_id => current_or_guest_user_id).
-      first_or_create(:name => "Загрузка детализации №1", :source => 1, :description => "", :user_id => current_or_guest_user_id).id
+    session[:filtr]["call_run_choice_filtr"] ||= {}
+    if session[:filtr]["call_run_choice_filtr"]['customer_call_run_id'].blank?
+      session[:filtr]["call_run_choice_filtr"]['customer_call_run_id'] = Customer::CallRun.where(:user_id => current_or_guest_user_id, :source => [0, 1]).
+      where.not(:operator_id => nil).first_or_create(:name => "Пробная загрузка детализации", :source => 1, :description => "", :user_id => current_or_guest_user_id).id
+    end
+    session_filtr_params(call_run_choice)['customer_call_run_id'].to_i
   end
   
   def create_call_run_if_not_exists
     Customer::CallRun.min_new_call_run(user_type).times.each do |i|
       Customer::CallRun.create(:name => "Загрузка детализации №#{i}", :source => 1, :description => "", :user_id => current_or_guest_user_id)
-    end if !Customer::CallRun.where(:user_id => current_or_guest_user_id).present?
+    end if !Customer::CallRun.where(:user_id => current_or_guest_user_id, :source => [0, 1]).present?
   end
 
   def user_params
@@ -95,7 +98,7 @@ module Customer::HistoryParsersHelper
       :call_run_id => customer_call_run_id,
 
       :own_phone_number => (user_params_filtr_session_filtr_params['own_phone_number']),
-      :operator_id => user_params_filtr_session_filtr_params['operator_id'].to_i,
+      :operator_id => 0, #user_params_filtr_session_filtr_params['operator_id'].to_i,
       :region_id => (user_params_filtr_session_filtr_params['region_id'].to_i), 
       :country_id => (user_params_filtr_session_filtr_params['country_id'].to_i), 
       :accounting_period_month => (user_params_filtr_session_filtr_params['accounting_period_month']),

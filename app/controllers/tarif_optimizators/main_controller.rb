@@ -26,7 +26,7 @@ class TarifOptimizators::MainController < ApplicationController
     update_customer_infos
     TarifOptimization::TarifOptimizatorRunner.clean_new_results(session_filtr_params(calculation_choices)['result_run_id'].to_i)
     TarifOptimization::TarifOptimizatorRunner.recalculate_with_delayed_job(options)
-    redirect_to root_path, {:alert => "Мы сообщим вам электронным письмом об окончании расчетов"}
+    redirect_to result_runs_path, {:alert => "Мы сообщим вам электронным письмом об окончании расчетов"}
   end 
   
   def init_inputs_for_autocalculate_for_just_registered_user
@@ -34,8 +34,7 @@ class TarifOptimizators::MainController < ApplicationController
       session[:work_flow][:tarif_optimization][:status] = "calculating"
       session[:work_flow][:offer_to_provide_email] = false
       session[:work_flow][:path_to_go] = nil
-      create_result_run_if_not_exists
-      init_calculation_choices_after_first_creating_result_runs
+      init_calculation_choices_after_first_creating_result_runs(session[:work_flow][:tarif_optimization][:call_run_id])
     end
   end
   

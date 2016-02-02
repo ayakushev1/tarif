@@ -30,16 +30,22 @@ module ApplicationHelper::GuestUser
   # called (once) when the user logs in, insert any code your application needs
   # to hand off from guest_user to current_user.
   def logging_in
-    return if (Customer::Info.where(:user_id => current_user.id).present? or Customer::Call.where(:user_id => current_user.id).present?)
-    Customer::Call.where(:user_id => session[:guest_user_id]).update_all("user_id = #{current_user.id}")
-    Customer::CallRun.where(:user_id => session[:guest_user_id]).update_all("user_id = #{current_user.id}")
-    Customer::Demand.where(:customer_id => session[:guest_user_id]).update_all("customer_id = #{current_user.id}")
-    Customer::Info.where(:user_id => session[:guest_user_id]).update_all("user_id = #{current_user.id}")
-    Customer::Info::ServicesUsed.update_free_trials_by_cash_amount(current_user.id, (100.0 / 0.98), false)
-    Customer::Service.where(:user_id => session[:guest_user_id]).update_all("user_id = #{current_user.id}")
-    Customer::Stat.where(:user_id => session[:guest_user_id]).update_all("user_id = #{current_user.id}")
-    Customer::Transaction.where(:user_id => session[:guest_user_id]).update_all("user_id = #{current_user.id}")
-    Result::Run.where(:user_id => session[:guest_user_id]).update_all("user_id = #{current_user.id}")
+    if (Customer::Info.where(:user_id => current_user.id).present? or Customer::Call.where(:user_id => current_user.id).present?)
+      call_run_ids = Customer::Call.where(:user_id => session[:guest_user_id]).pluck(:call_run_id).uniq
+      Customer::Call.where(:user_id => session[:guest_user_id]).update_all("user_id = #{current_user.id}")
+      Customer::CallRun.where(:id => call_run_ids).update_all("user_id = #{current_user.id}")
+      Result::Run.where(:user_id => session[:guest_user_id]).where.not(:accounting_period => nil).update_all("user_id = #{current_user.id}")
+    else
+      Customer::Call.where(:user_id => session[:guest_user_id]).update_all("user_id = #{current_user.id}")
+      Customer::CallRun.where(:user_id => session[:guest_user_id]).update_all("user_id = #{current_user.id}")
+      Customer::Demand.where(:customer_id => session[:guest_user_id]).update_all("customer_id = #{current_user.id}")
+      Customer::Info.where(:user_id => session[:guest_user_id]).update_all("user_id = #{current_user.id}")
+      Customer::Info::ServicesUsed.update_free_trials_by_cash_amount(current_user.id, (100.0 / 0.98), false)
+      Customer::Service.where(:user_id => session[:guest_user_id]).update_all("user_id = #{current_user.id}")
+      Customer::Stat.where(:user_id => session[:guest_user_id]).update_all("user_id = #{current_user.id}")
+      Customer::Transaction.where(:user_id => session[:guest_user_id]).update_all("user_id = #{current_user.id}")
+      Result::Run.where(:user_id => session[:guest_user_id]).update_all("user_id = #{current_user.id}")
+    end
   end
 
   def create_guest_user

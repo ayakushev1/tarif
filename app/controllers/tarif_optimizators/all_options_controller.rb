@@ -26,10 +26,10 @@ class TarifOptimizators::AllOptionsController < ApplicationController
     TarifOptimization::TarifOptimizatorRunner.clean_new_results(session_filtr_params(calculation_choices)['result_run_id'].to_i)
     if session_filtr_params(calculation_choices)['calculate_with_fixed_services'] == 'false'
       TarifOptimization::TarifOptimizatorRunner.recalculate_with_delayed_job(options)
-      redirect_to root_path, {:alert => "Мы сообщим вам электронным письмом об окончании расчетов"}
+      redirect_to result_runs_path, {:alert => "Мы сообщим вам электронным письмом об окончании расчетов"}
     else
       TarifOptimization::TarifOptimizatorRunner.recalculate_direct(options)
-      redirect_to({:action => :index}, {:alert => "Расчет выполнен. Можете перейти к просмотру результатов"})
+      redirect_to result_runs_path, {:alert => "Расчет выполнен. Можете перейти к просмотру результатов"}
     end    
   end 
   

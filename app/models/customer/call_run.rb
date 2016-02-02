@@ -22,7 +22,7 @@ class Customer::CallRun < ActiveRecord::Base
   has_many :group_call_runs, :class_name =>'Comparison::GroupCallRun', :foreign_key => :call_run_id
 
   def full_name
-    "#{source_name}: #{name}"
+    "#{source_name}: #{name}" + (updated_at ? ", " + updated_at.try(:to_formatted_s, :short) : "")
   end
   
   def source_name

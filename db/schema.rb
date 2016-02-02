@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160131010624) do
+ActiveRecord::Schema.define(version: 20160202060409) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -139,20 +139,24 @@ ActiveRecord::Schema.define(version: 20160131010624) do
   add_index "customer_background_stats", ["user_id"], name: "index_customer_background_stats_on_user_id", using: :btree
 
   create_table "customer_call_runs", force: :cascade do |t|
-    t.integer "user_id"
-    t.string  "name"
-    t.integer "source"
-    t.text    "description"
-    t.integer "operator_id"
-    t.string  "init_class"
-    t.jsonb   "init_params"
-    t.jsonb   "stat"
+    t.integer  "user_id"
+    t.string   "name"
+    t.integer  "source"
+    t.text     "description"
+    t.integer  "operator_id"
+    t.string   "init_class"
+    t.jsonb    "init_params"
+    t.jsonb    "stat"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
+  add_index "customer_call_runs", ["created_at"], name: "index_customer_call_runs_on_created_at", using: :btree
   add_index "customer_call_runs", ["init_params"], name: "index_customer_call_runs_on_init_params", using: :gin
   add_index "customer_call_runs", ["operator_id"], name: "index_customer_call_runs_on_operator_id", using: :btree
   add_index "customer_call_runs", ["source"], name: "index_customer_call_runs_on_source", using: :btree
   add_index "customer_call_runs", ["stat"], name: "index_customer_call_runs_on_stat", using: :gin
+  add_index "customer_call_runs", ["updated_at"], name: "index_customer_call_runs_on_updated_at", using: :btree
   add_index "customer_call_runs", ["user_id"], name: "index_customer_call_runs_on_user_id", using: :btree
 
   create_table "customer_calls", force: :cascade do |t|
@@ -435,25 +439,27 @@ ActiveRecord::Schema.define(version: 20160131010624) do
   add_index "result_call_stats", ["stat"], name: "index_result_call_stats_on_stat", using: :gin
 
   create_table "result_runs", force: :cascade do |t|
-    t.string  "name"
-    t.text    "description"
-    t.integer "user_id"
-    t.integer "call_run_id"
-    t.string  "accounting_period"
-    t.integer "optimization_type_id"
-    t.integer "run"
-    t.jsonb   "optimization_params"
-    t.jsonb   "calculation_choices"
-    t.jsonb   "selected_service_categories"
-    t.jsonb   "services_by_operator"
-    t.jsonb   "temp_value"
-    t.jsonb   "service_choices"
-    t.jsonb   "services_select"
-    t.jsonb   "services_for_calculation_select"
-    t.jsonb   "service_categories_select"
-    t.jsonb   "categ_ids"
-    t.integer "comparison_group_id"
-    t.string  "slug"
+    t.string   "name"
+    t.text     "description"
+    t.integer  "user_id"
+    t.integer  "call_run_id"
+    t.string   "accounting_period"
+    t.integer  "optimization_type_id"
+    t.integer  "run"
+    t.jsonb    "optimization_params"
+    t.jsonb    "calculation_choices"
+    t.jsonb    "selected_service_categories"
+    t.jsonb    "services_by_operator"
+    t.jsonb    "temp_value"
+    t.jsonb    "service_choices"
+    t.jsonb    "services_select"
+    t.jsonb    "services_for_calculation_select"
+    t.jsonb    "service_categories_select"
+    t.jsonb    "categ_ids"
+    t.integer  "comparison_group_id"
+    t.string   "slug"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "result_runs", ["accounting_period"], name: "index_result_runs_on_accounting_period", using: :btree

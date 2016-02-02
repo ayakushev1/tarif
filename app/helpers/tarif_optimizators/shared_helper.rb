@@ -16,7 +16,7 @@ module TarifOptimizators::SharedHelper
   end
   
   def customer_call_runs
-    Customer::CallRun.where(:user_id => current_or_guest_user_id, :id => customer_call_run_ids_and_accounting_periods_with_generated_calls[:call_run_ids])
+    Customer::CallRun.where(:user_id => current_or_guest_user_id, :id => customer_call_run_ids_and_accounting_periods_with_generated_calls[:call_run_ids]).order("updated_at desc")
   end
 
   def customer_call_run_ids_and_accounting_periods_with_generated_calls    
@@ -68,11 +68,15 @@ module TarifOptimizators::SharedHelper
     end if !Result::Run.where(:user_id => current_or_guest_user_id).present?
   end
   
-  def init_calculation_choices_after_first_creating_result_runs
-    result_run = Result::Run.where(:user_id => current_or_guest_user_id).where.not(:call_run_id => nil).first
-    if result_run
-      session[:filtr]["calculation_choices_filtr"] = {"result_run_id" => result_run.id, "call_run_id" => result_run.call_run_id, "accounting_period" => result_run.accounting_period} 
-    end
+  def init_calculation_choices_after_first_creating_result_runs(call_run_id)
+    accounting_period_from_call_run = Customer::Call.where(:call_run_id => call_run_id).first.try(:description).try(:[], "accounting_period")
+    update_hash = {
+      :call_run_id => call_run_id, :accounting_period => accounting_period_from_call_run, 
+      :name => "Пробный подбор тарифа", :description => "", :user_id => current_or_guest_user_id, :run => 1, :optimization_type_id => optimization_type_from_controller_name
+    }
+    result_run = Result::Run.where(:user_id => current_or_guest_user_id, :call_run_id => nil).first_or_create
+    result_run.update(update_hash)
+    session[:filtr]["calculation_choices_filtr"] = {"result_run_id" => result_run.id, "call_run_id" => result_run.call_run_id, "accounting_period" => result_run.accounting_period} 
   end
     
   def update_call_run_on_result_run_change
@@ -89,6 +93,10 @@ module TarifOptimizators::SharedHelper
   
   def update_result_run_on_calculation(options)
     session_filtr_params_calculation_choices = session_filtr_params(calculation_choices)
+    session[:current_id] = {
+      'call_run_id' => session_filtr_params_calculation_choices['call_run_id'].try(:to_i),
+      'result_run_id' => session_filtr_params_calculation_choices['result_run_id'].try(:to_i)
+      }
     Result::Run.find(session_filtr_params_calculation_choices['result_run_id'].to_i).update({
       :call_run_id => session_filtr_params_calculation_choices['call_run_id'],
       :accounting_period => session_filtr_params_calculation_choices['accounting_period'],

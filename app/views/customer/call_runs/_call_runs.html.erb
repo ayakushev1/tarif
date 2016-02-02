@@ -1,22 +1,22 @@
 <%
 table.init do |t|
 #  t.caption = 'Listing users'
-  t.heads = ['Название', 'Источник данные', 'Описание', 'Оператор', ] + 
-  			(user_type == :admin ? ["Пользователь", ''] : []) + ['', '', '',]
+  t.heads = ['Название', 'Источник данные', 'Оператор', 'Дата обновления'] + 
+  			(user_type == :admin ? ["Пользователь", ''] : []) + ['', '', '']
   t.set_fields do |call_run| 
   [
-    call_run.name,
+    link_to(call_run.name, customer_call_run_path(call_run), {:title => "Нажмите для просмотра"}), 
     call_run.source_name,
-    call_run.description,
-    (call_run.operator.name if call_run.operator),      
+#    call_run.description,
+    (call_run.operator.name if call_run.operator),     
+    call_run.updated_at.try(:to_formatted_s, :short)
   ] + (user_type != :admin ? [] : [
   	(call_run.user.name if call_run.user and user_type == :admin),
-    link_to( 'Удалить', call_run, method: :delete, data: { confirm: 'Are you sure?'}),
 #  	call_run.id, 
   	]) + [
-    link_to( t('customer.call_runs.index.call_runs.show_link'), customer_call_run_path(call_run), ), 
-    link_to( t('customer.call_runs.index.call_runs.edit_link'), edit_customer_call_run_path(call_run)), 
     link_to( t('customer.call_runs.index.call_runs.call_stat_link'), customer_call_stat_path(call_run)), 
+    link_to( content_tag(:span, "", { :class => "fa fa-pencil-square-o fa-lg"}), edit_customer_call_run_path(call_run), {:title => "Редактировать"}), 
+    link_to( content_tag(:span, "", { :class => "fa fa-times-circle fa-lg"}), call_run, method: :delete, data: { confirm: 'Are you sure?'}, :title => "Удалить"),
   	]
   end
 end

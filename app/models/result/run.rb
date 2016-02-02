@@ -66,7 +66,8 @@ class Result::Run < ActiveRecord::Base
   end
 
   def full_name
-    "#{optimization_type}: #{name}" + (call_run ? " - #{call_run.full_name}" : "")
+    "#{optimization_type}: #{name}" + (updated_at ? ", " + updated_at.try(:to_formatted_s, :short) : "") + 
+    (call_run ? " - #{call_run.full_name}" : "")
   end
   
   def optimization_type
@@ -74,11 +75,11 @@ class Result::Run < ActiveRecord::Base
   end
 
   def self.allowed_new_result_run(user_type = :guest)
-    {:guest => 4, :trial => 10, :user => 20, :admin => 100000}[user_type]
+    {:guest => 3, :trial => 10, :user => 20, :admin => 100000}[user_type]
   end
   
   def self.allowed_min_result_run(user_type = :guest)
-    {:guest => 4, :trial => 5, :user => 5, :admin => 5}[user_type]
+    {:guest => 3, :trial => 5, :user => 5, :admin => 5}[user_type]
   end
   
 
