@@ -16,7 +16,7 @@ table.init do |t|
   	]) + [
     link_to( t('customer.call_runs.index.call_runs.call_stat_link'), customer_call_stat_path(call_run)), 
     link_to( content_tag(:span, "", { :class => "fa fa-pencil-square-o fa-lg"}), edit_customer_call_run_path(call_run), {:title => "Редактировать"}), 
-    link_to( content_tag(:span, "", { :class => "fa fa-times-circle fa-lg"}), call_run, method: :delete, data: { confirm: 'Are you sure?'}, :title => "Удалить"),
+    link_to( content_tag(:span, "", { :class => "fa fa-times-circle fa-lg"}), call_run, method: :delete, data: { confirm: 'Вы уверены, что хотите удалить запись?'}, :title => "Удалить"),
   	]
   end
 end

@@ -18,7 +18,7 @@ table.init do |t|
     run.run,
     run.updated_at.try(:to_formatted_s, :short),
     link_to( content_tag(:span, "", { :class => "fa fa-pencil-square-o fa-lg"}), edit_result_run_path(run), link_html.merge({:title => "Редактировать"})), 
-    link_to( content_tag(:span, "", { :class => "fa fa-times-circle fa-lg"}), run, method: :delete, data: { confirm: 'Are you sure?'}, :title => "Удалить"),
+    link_to( content_tag(:span, "", { :class => "fa fa-times-circle fa-lg"}), run, method: :delete, data: { confirm: 'Вы уверены, что хотите удалить запись?'}, :title => "Удалить"),
     link_to( t('result.runs.index.show_result_link'), result_service_sets_result_path(run), link_html.merge({:title => "Нажмите для просмотр результатов подбора"})), 
     link_to( t('result.runs.index.compare_result_link'), result_compare_path(run), link_html.merge({:title => "Нажмите для сравнение результатов подбора"})), 
   ] + (user_type != :admin ? [] : [
