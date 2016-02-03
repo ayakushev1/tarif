@@ -1,0 +1,14 @@
+<%
+table.init do |t|
+#  t.caption = 'Price formulas'
+  t.heads = ['order', 'params']
+  t.set_fields do |f| 
+  [
+    f.calculation_order, 
+    f.formula['params']
+  ] 
+  end
+end
+%>
+
+

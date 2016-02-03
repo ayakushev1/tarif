@@ -16,7 +16,7 @@ class Comparison::OptimizationsController < ApplicationController
   add_breadcrumb I18n.t(:comparison_optimizations_path), :comparison_optimizations_path
       
   def choose_your_tarif_from_ratings
-    add_breadcrumb "Подбор тарифа на основании данных рейтингов", comparison_choose_your_tarif_from_ratings_path
+    add_breadcrumb "Рекомендации по выбору выгодного тарифа", comparison_choose_your_tarif_from_ratings_path
     group_ids = [10, 11, 12,  21, 23, 27,  50, 52, 54]
     @group_result_description = Comparison::GroupPresenter.result_description(group_ids)
   end

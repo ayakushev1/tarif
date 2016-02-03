@@ -1,0 +1,45 @@
+<%
+form_item.init do |fi|
+#  fi.caption = 'Show tarif class'
+  fi.set_fields do |tarif_class| 
+  	 incompatibility = {}
+  	 if tarif_class.dependency and tarif_class.dependency['incompatibility']
+  	 	tarif_class.dependency['incompatibility'].each do |key, value|
+  	 		incompatibility[key] = TarifClass.where(:id => value).map(&:name)
+  	 	end  	 	 
+  	 end
+  	 general_priority = if tarif_class.dependency and tarif_class.dependency['general_priority']
+  	 	Category.where(:id => tarif_class.dependency['general_priority']).map(&:name).first 
+  	 end
+  	 lower_tarif_priority = if tarif_class.dependency and tarif_class.dependency['other_tarif_priority'] and tarif_class.dependency['other_tarif_priority']['lower'] 
+  	 	TarifClass.where(:id => tarif_class.dependency['other_tarif_priority']['lower']).map(&:name)
+  	 end
+  	 higher_tarif_priority = if tarif_class.dependency and tarif_class.dependency['other_tarif_priority'] and tarif_class.dependency['other_tarif_priority']['higher'] 
+  	 	TarifClass.where(:id => tarif_class.dependency['other_tarif_priority']['higher']).map(&:name)
+  	 end
+  	 prerequisites = if tarif_class.dependency and tarif_class.dependency['prerequisites']
+  	 	TarifClass.where(:id => tarif_class.dependency['prerequisites']).map(&:name).join(", ") 
+  	 end
+  	
+	[
+	  ['Оператор', (tarif_class.operator.name if tarif_class.operator) ], 
+	  ['Кто может подключить', (tarif_class.privacy.name if tarif_class.privacy) ], 
+	  ['Тариф или опция', (tarif_class.standard_service.name if tarif_class.standard_service) ], 
+	  ['Описание у оператора', link_to_if(tarif_class.features, "Перейти на сайт оператора", tarif_class.features['http'], :target => "_blank", :rel => "nofollow") ], 
+	  (['Купить у оператора', link_to("Перейти на сайт оператора", tarif_class.features['buy_http'], :target => "_blank", :rel => "nofollow") ] if tarif_class.features['buy_http']), 
+	  (['Требуемые тарифы или опции', prerequisites] if tarif_class.standard_service_id != 40), 
+	  ['Является архивным?', ((tarif_class.dependency['is_archived'] || "Нет") if tarif_class.dependency) ], 
+	].compact + (user_type == :admin ? [
+	  ["", ""],	
+      ["", 
+       link_to('Edit', edit_tarif_class_path(tarif_class), {:class => "btn btn-primary", :type =>"button", :remote => true})],  
+	  ['Возможность использовать несколько раз', (tarif_class.dependency['multiple_use'] if tarif_class.dependency) ], 
+	  ['Автоматически подобранные категории', (tarif_class.dependency['parts'] if tarif_class.dependency) ], 
+	  ['Несовместимость', incompatibility], 
+	  ['Общий приоритет', general_priority ], 
+	  ['Тарифы с меньшим приоритетом', lower_tarif_priority], 
+	  ['Тарифы с большим приоритетом', higher_tarif_priority], 
+	] : [])
+  end
+end	
+%>

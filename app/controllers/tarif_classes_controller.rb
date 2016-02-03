@@ -1,4 +1,5 @@
 class TarifClassesController < ApplicationController
+  @new_actions = [:admin_tarif_class]
   include Crudable
   crudable_actions :all
   include TarifClassesHelper

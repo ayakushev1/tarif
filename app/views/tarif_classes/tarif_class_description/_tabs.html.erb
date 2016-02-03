@@ -1,0 +1,22 @@
+<%
+
+content_in :tabs do |user| 
+  [
+    [
+     'Общее описание', 
+     render( :partial => 'tarif_classes/admin_tarif_class_description/full_tarif_class', :layout => 'application/layouts/model_show', :locals => {:form_item => controller.tarif_class_form})    
+    ], 
+    [
+     'Цены', 
+     render( :partial => 'tarif_classes/admin_tarif_class_description/full_category_groups')    
+    ], 
+    ([
+     'Админ',
+     render( :partial => 'tarif_classes/admin_tarif_class_description/category_groups', :layout => 'application/layouts/model_table', :locals => {:table => controller.category_groups }) +
+     render( :partial => 'tarif_classes/admin_tarif_class_description/service_categories', :layout => 'application/layouts/model_table', :locals => {:table => controller.service_categories }) +
+     render( :partial => 'tarif_classes/admin_tarif_class_description/price_formulas', :layout => 'application/layouts/model_table', :locals => {:table => controller.price_formulas}) +
+     render( :partial => 'tarif_classes/admin_tarif_class_description/price_standard_formulas', :layout => 'application/layouts/model_table', :locals => {:table => controller.price_standard_formulas})
+    ] if user_type == :admin), 
+  ].compact 
+end
+%>

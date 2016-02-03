@@ -1,0 +1,17 @@
+<%
+table.init do |t|
+#  t.caption = 'Price formulas'
+  t.heads = ['name', 'formula', 'price unit', 'volume', 'volume uint']
+  t.set_fields do |f| 
+  [
+  	f.name,
+  	f.formula,
+  	(f.price_unit.name if f.price_unit), 
+  	(f.volume.name if f.volume), 
+  	(f.volume_unit.name if f.volume_unit),   	
+  ] 
+  end
+end
+%>
+
+

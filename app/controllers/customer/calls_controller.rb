@@ -10,7 +10,7 @@ class Customer::CallsController < ApplicationController
 
   def choose_your_tarif_with_our_help
     add_breadcrumb "Сохраненные загрузки или моделирования звонков", customer_call_runs_path
-    add_breadcrumb "Моделирование звонков, задание главных параметров", customer_calls_choose_your_tarif_with_our_help_path
+    add_breadcrumb "Задание параметров моделирования звонков, или загрузка детализации", customer_calls_choose_your_tarif_with_our_help_path
     session[:work_flow] = {:offer_to_provide_email => true, :path_to_go => tarif_optimizators_main_recalculate_path}
   end
   

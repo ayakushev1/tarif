@@ -21,6 +21,9 @@ Rails.application.routes.draw do
   root :to => 'comparison/optimizations#choose_your_tarif_from_ratings'
   resources :users
   resources :tarif_classes
+  controller :tarif_classes do
+    get 'tarif_classes/admin/:id', action: :admin_tarif_class, as: :admin_tarif_class
+  end
 
   controller :home do
     get 'home/change_locale', action: :change_locale, as: :change_locale
