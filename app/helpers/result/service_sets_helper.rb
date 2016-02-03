@@ -182,7 +182,7 @@ module Result::ServiceSetsHelper
       comparison_group = result_service_sets.model.first.try(:run).try(:comparison_group)
       comparison = comparison_group.try(:optimization)
       add_breadcrumb I18n.t(:comparison_optimizations_path), comparison_optimizations_path
-      add_breadcrumb comparison.try(:name) + ", " + comparison_group.try(:name), comparison_optimization_path(comparison)
+      add_breadcrumb "#{comparison.try(:name)}, #{comparison_group.try(:name)}", comparison_optimization_path(comparison)
     when "tarif_optimizators_main_index_path"; tarif_optimizators_main_index_path
     when "tarif_optimizators_fixed_services_index_path"; tarif_optimizators_fixed_services_index_path
     when "tarif_optimizators_limited_scope_index_path"; tarif_optimizators_limited_scope_index_path
