@@ -1,4 +1,7 @@
-<% title t('.title') %>
+<% title (result_service_sets.model.first.try(:run).try(:comparison_group) ? "Список лучших тарифов для рейтинга: \
+	#{result_service_sets.model.first.run.comparison_group.optimization.name}, \
+	корзина: #{result_service_sets.model.first.run.comparison_group.name}" :
+	"Список лучших тарифов для подбора тарифов пользователя") %>
 <% content_for :hide_title, 'true' %>
 
 <header id="first">

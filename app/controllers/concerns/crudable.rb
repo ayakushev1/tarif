@@ -6,7 +6,7 @@ module Crudable
   
   included do
     add_access_methods
-    before_action :set_model, only: [:new, :create, :show, :edit, :update, :destroy]
+    before_action :set_model, only: ([:new, :create, :show, :edit, :update, :destroy] + (@new_actions || []))
         
   end
   
@@ -14,7 +14,7 @@ module Crudable
   
   module ClassMethods
     def crudable_actions(*arr)
-      crudable_actions = (arr.empty? or arr.include?(:all) ) ? CRUDABLE_ACTIONS : arr
+      crudable_actions = (@new_actions || []) + ((arr.empty? or arr.include?(:all) ) ? CRUDABLE_ACTIONS : arr)
       
       delete_actions(CRUDABLE_ACTIONS - crudable_actions)
     end   

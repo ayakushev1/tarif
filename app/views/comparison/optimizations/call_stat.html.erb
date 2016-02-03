@@ -1,12 +1,36 @@
-<% title t('.title') %>
+<%
+	comparison_group = controller.comparison_groups.model.try(:first)
+%>
+
+<% title (comparison_group ? "Статистика использования мобильной связи для рейтинга: \
+	#{comparison_group.optimization.name}, корзина: #{comparison_group.name}" : "Статистика использования мобильной связи для подбора тарифов пользователя") %>
+<% content_for :hide_title, 'true' %>
+
+<header id="first">
+    <div class="header-content header-content-smaller">
+        <div class="inner">
+            <h1 class="cursive"><%= t('.title') %></h1>
+            <h5>Статистика использования мобильной связи показывает на основаниие каких данных получен результат.</h5>
+            <hr>
+        </div>
+    </div>
+</header>
+
 
 <% link_to_html = {:class => "btn btn-success", :type =>"button", :remote => true} %>
-<p>
-<%= render :partial => 'comparison/optimizations/call_stat/information' %>
-<%= link_to( "Вернуться к описанию рейтинга", comparison_optimization_path(params[:id]), link_to_html) %>
-</p>
-<p>
-	
+
+<div class="panel panel-default">
+	<div class="panel-heading"><h4>Описание подбора тарифа</h4></div>
+		<ul class="list-group" >
+			<li class="list-group-item"><strong>Название рейтинга: </strong><%= comparison_group.optimization.name %></li>
+			<li class="list-group-item"><strong>Название корзины: </strong><%= comparison_group.name %></li>
+		</ul>
+	<div class="panel-footer">
+		<%= render :partial => 'comparison/optimizations/call_stat/information' %>
+		<%= link_to( "Вернуться к описанию рейтинга", comparison_optimization_path(params[:id]), link_to_html) %>
+	</div>
+</div>
+
 </p>
 <%= render(:partial => 'comparison/optimizations/call_stat/operator_choicer', 
 	:layout => 'application/layouts/filtr_form_n_columns', :locals => {:form_item => calls_stat_options} ) if user_type == :admin %> 

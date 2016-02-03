@@ -33,7 +33,7 @@ table.init do |t|
 	:footer => (content_tag(:div, {:class => "btn-toolbar"}) do
 	    link_to( t('comparison.optimizations.show.groups.detailed_results_link'), result_service_sets_result_path(group.result_run), link_html.merge({:class => "btn btn-primary"})) + 
 	    link_to( t('comparison.optimizations.show.groups.result_comparison_link'), result_compare_path(group.result_run), link_html.merge({:class => "btn btn-primary"})) +
-	    link_to( t('comparison.optimizations.show.groups.call_stat_link'), comparison_call_stat_path(params[:id]), link_html.merge({:class => "btn btn-primary"}) ) if group.call_runs.exists?
+	    link_to( t('comparison.optimizations.show.groups.call_stat_link'), comparison_call_stat_path(params[:id], {:group => group.id}), link_html.merge({:class => "btn btn-primary"}) ) if group.call_runs.exists?
 	  end if group.result_run)
   	}
   end

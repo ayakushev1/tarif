@@ -1,4 +1,5 @@
 class Comparison::OptimizationsController < ApplicationController
+  @new_actions = [:call_stat]
   include Crudable
   crudable_actions :all
   include Comparison::OptimizationsHelper, Customer::HistoryParsersBackgroundHelper
