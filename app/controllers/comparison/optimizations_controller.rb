@@ -28,7 +28,7 @@ class Comparison::OptimizationsController < ApplicationController
   def call_stat
     comparison = Comparison::Optimization.where(:id => session[:current_id]['comparison_optimization_id']).first
     comparison_group_name = Comparison::Group.where(:id => session[:current_id]['comparison_group_id']).first.try(:name)
-    add_breadcrumb comparison.try(:name) + ", " + comparison_group_name, comparison_optimization_path(comparison)
+    add_breadcrumb "#{comparison.try(:name)}, #{comparison_group_name}", comparison_optimization_path(comparison)
     add_breadcrumb "Статистика звонков", comparison_call_stat_path(params[:id])
   end
   
