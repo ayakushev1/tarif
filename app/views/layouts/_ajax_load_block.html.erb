@@ -1,7 +1,8 @@
 <ol class="breadcrumb">
   <%= render_breadcrumbs :tag => :li, :separator => "" %>
 </ol>        	
-<%= controller.env["SERVER_NAME"] if user_type == :admin %>
+<%= controller.env["SERVER_NAME"] if user_type == :admin and controller.env['SERVER_NAME'] == '46.101.146.117' %>
+
 <% if yield(:hide_title) != 'true'  %>
 	<h1><%= title %></h1>
 <% end %>

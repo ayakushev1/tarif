@@ -49,6 +49,9 @@ SitemapGenerator::Sitemap.create do
   add result_service_sets_results_path, defaults_params
 
   add tarif_classes_path, defaults_params
+  Category::Operator.operators_with_tarifs.find_each do |operator|
+    add tarif_classes_by_operator_path(operator), defaults_params
+  end
   TarifClass.find_each do |tarif_class|
     add tarif_class_path(tarif_class), defaults_params
   end
