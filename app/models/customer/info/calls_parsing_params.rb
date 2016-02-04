@@ -30,7 +30,7 @@ class Customer::Info::CallsParsingParams < ActiveType::Record[Customer::Info]
       'file_upload_remote_mode' => 'false',
       'file_upload_turbolink_mode' => 'false',
       'file_upload_form_method' => 'post',
-      'file_upload_max_size' => 1,
+      'file_upload_max_size' => 3,
       'call_history_max_line_to_process' => call_history_max_line_to_process,
       'background_update_frequency' => 100,
     }
