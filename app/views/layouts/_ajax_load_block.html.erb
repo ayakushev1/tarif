@@ -1,7 +1,7 @@
 <ol class="breadcrumb">
   <%= render_breadcrumbs :tag => :li, :separator => "" %>
 </ol>        	
-
+<%= controller.env["SERVER_NAME"]%>
 <% if yield(:hide_title) != 'true'  %>
 	<h1><%= title %></h1>
 <% end %>
