@@ -10,7 +10,7 @@
 #
 
 class Category < ActiveRecord::Base
-  include WhereHelper
+  include WhereHelper, FriendlyIdHelper
   belongs_to :type, :class_name =>'CategoryType', :foreign_key => :type_id
   belongs_to :level, :class_name =>'CategoryLevel', :foreign_key => :level_id
   belongs_to :parent, :class_name =>'Category', :foreign_key => :parent_id
@@ -20,6 +20,7 @@ class Category < ActiveRecord::Base
   scope :locations, -> {where(:type_id => 0)}
   scope :countries, -> {where(:type_id => 0, :level_id => 2)}
   scope :regions, -> {where(:type_id => 0, :level_id => 3)}
+  #scope :operators, -> {where(:type_id => 2).where.not(:parent_id => nil)}
   scope :privacy, -> {where(:type_id => 3)}
   scope :standard_services, -> {where(:type_id => 4)}
   scope :base_services, -> {where(:type_id => 5)}

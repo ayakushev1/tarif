@@ -1,0 +1,18 @@
+<% title t('.title') %>
+<% content_for :hide_title, 'true' %>
+
+<header id="first">
+    <div class="header-content header-content-smaller">
+        <div class="inner">
+            <h1 class="">Список описаний тарифов и опций</h1>
+            <h5>Здесь вы можете выбрать и посмотреть подробное описание тарифов и опций. 
+            	Найти нужный тариф можно с помощью фильтра</h5>
+            <hr>
+        </div>
+    </div>
+</header>
+
+<%= render :partial => 'tarif_class_by_operator_filtr', :layout => 'application/layouts/filtr_form_n_columns', :locals => {:form_item => tarif_class_by_operator_filtr}%>
+<br />
+<%= render :partial => 'tarif_classes', :layout => 'application/layouts/model_table', :locals => {:table => tarif_classes_by_operator}%>
+

@@ -2,30 +2,53 @@ module TarifClassesHelper
   include SavableInSession::Filtrable, SavableInSession::Formable, SavableInSession::ArrayOfHashable, 
     SavableInSession::Tableable, SavableInSession::SessionInitializers
 
+  def tarif_class_by_operator_filtr
+    create_filtrable("tarif_class_by_operator")
+#    raise(StandardError, session[:filtr])
+  end
+  
+  def tarif_classes_by_operator
+    filtr = session_filtr_params(tarif_class_by_operator_filtr)
+    filtr.extract!('operator_id')
+    
+    model = TarifClass.joins(:operator).where(:categories => {:slug => params[:operator_id]}).query_from_filtr(filtr).
+      where(where_for_service_category(filtr)).where(is_service_archived(filtr)).where(service_features_not_blank)
+
+    options = {:base_name => 'tarif_classes_by_operator', :current_id_name => 'tarif_class_by_operator_id', :pagination_per_page => 10}
+    create_tableable(model, options)
+  end
+
   def tarif_class_filtr
     create_filtrable("tarif_class")
 #    raise(StandardError, session[:filtr])
   end
-
+  
   def tarif_classes
-#    raise(StandardError, session[:filtr])
     filtr = session_filtr_params(tarif_class_filtr)
-    category = filtr.extract!('dependency_parts')['dependency_parts'] #(filtr.extract!('dependency_parts')['dependency_parts'] || []) - ['']
-    where_for_category = category.blank? ? "true" : "(dependency->>'parts')::jsonb ?& array['#{category}']"
     
+    options = {:base_name => 'tarif_classes', :current_id_name => 'tarif_class_id', :pagination_per_page => 10}
+    create_tableable(TarifClass.query_from_filtr(filtr).where(where_for_service_category(filtr)).where(is_service_archived(filtr)).where(service_features_not_blank), options)
+  end
+  
+  def where_for_service_category(filtr)
+    category = filtr.extract!('dependency_parts')['dependency_parts']
+    category.blank? ? "true" : "(dependency->>'parts')::jsonb ?& array['#{category}']"
+  end
+  
+  def service_features_not_blank
+    "features is not null"
+  end
+  
+  def is_service_archived(filtr)
     is_archived = filtr.extract!('dependency_is_archived')['dependency_is_archived']
-    where_for_is_archived = case is_archived
+    case is_archived
       when is_archived.blank?
         "true"
       when 'false' 
         "(dependency->>'is_archived')::boolean = false or (dependency->>'is_archived') is null"
       when 'true'
         "(dependency->>'is_archived')::boolean = true"
-      end 
-    
-    where_not_blank = "features is not null"  
-    options = {:base_name => 'tarif_classes', :current_id_name => 'tarif_class_id', :pagination_per_page => 10}
-    create_tableable(TarifClass.query_from_filtr(filtr).where(where_for_category).where(where_for_is_archived).where(where_not_blank), options)
+      end     
   end
 
   def full_category_groups(filtr = :fixed)

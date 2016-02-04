@@ -10,7 +10,8 @@
 #
 
 class Category::Operator < ActiveType::Record[Category]
-  include Category::Operator::Const
+  include Category::Operator::Const, FriendlyIdHelper
+  friendly_id :slug_candidates, use: [:slugged]
   
   scope :operators, -> {where(:type_id => 2).where.not(:parent_id => nil)}
   scope :russian_operators, -> {where(:type_id => 2).where(:parent_id => 3001)}
@@ -21,6 +22,12 @@ class Category::Operator < ActiveType::Record[Category]
   
   def self.default_scope
     where(:type_id => 2)
+  end
+
+  def slug_candidates
+    [
+      :name,
+    ]
   end
 
 end

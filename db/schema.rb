@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160202111017) do
+ActiveRecord::Schema.define(version: 20160204082801) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,11 +33,13 @@ ActiveRecord::Schema.define(version: 20160202111017) do
     t.integer "type_id"
     t.integer "level_id"
     t.integer "parent_id"
+    t.string  "slug"
   end
 
   add_index "categories", ["level_id"], name: "index_categories_on_level_id", using: :btree
   add_index "categories", ["name"], name: "index_categories_on_name", using: :btree
   add_index "categories", ["parent_id"], name: "index_categories_on_parent_id", using: :btree
+  add_index "categories", ["slug"], name: "index_categories_on_slug", unique: true, using: :btree
   add_index "categories", ["type_id"], name: "index_categories_on_type_id", using: :btree
 
   create_table "category_levels", force: :cascade do |t|

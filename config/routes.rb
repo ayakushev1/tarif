@@ -19,11 +19,15 @@ Rails.application.routes.draw do
 #  user_type == :guest ? (root 'home#index') : (root "comparison/optimizations/2")
 #  get '/' => 'comparison/optimizations#index', :constraints => lambda { |request| request.env['warden'].authenticated? }
   root :to => 'comparison/optimizations#choose_your_tarif_from_ratings'
+  
   resources :users
-  resources :tarif_classes
+  
   controller :tarif_classes do
+    get 'tarif_classes/:operator_id', action: :by_operator, as: :tarif_classes_by_operator, 
+      :constraints => lambda { |request| Category::Operator.where(:slug => request.path_parameters[:operator_id]).first }
     get 'tarif_classes/admin/:id', action: :admin_tarif_class, as: :admin_tarif_class
   end
+  resources :tarif_classes
 
   controller :home do
     get 'home/change_locale', action: :change_locale, as: :change_locale
