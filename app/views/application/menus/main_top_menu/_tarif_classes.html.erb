@@ -1,0 +1,6 @@
+<ul class="dropdown-menu">
+	<li><%= link_to "Все тарифы", tarif_classes_path %></li>
+	<% Category::Operator.operators_with_tarifs.find_each do |operator| %>
+		<li><%= link_to operator.name, tarif_classes_by_operator_path(operator) %></li>
+	<% end %>
+</ul>

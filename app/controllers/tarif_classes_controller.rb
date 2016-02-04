@@ -7,10 +7,10 @@ class TarifClassesController < ApplicationController
   
   before_filter :check_before_freindly_url, only: [:show]
   
-  add_breadcrumb "Список тарифов и опций", :tarif_classes_path
+  add_breadcrumb "Тарифы и опции", :tarif_classes_path
   
   def show
-    add_breadcrumb "Описание сервиса '#{tarif_class_form.model.try(:name)}'", tarif_class_path(params[:id])
+    add_breadcrumb "#{tarif_class_form.model.try(:name)}", tarif_class_path(params[:id])
   end
   
   def edit
@@ -18,7 +18,8 @@ class TarifClassesController < ApplicationController
   end
   
   def by_operator
-    
+    @operator = Category::Operator.friendly.find(params[:operator_id])
+    add_breadcrumb "#{@operator.try(:name)}", tarif_classes_by_operator_path(@operator)
   end
   
   def check_before_freindly_url

@@ -25,9 +25,16 @@
 			<li><%= link_to  t(:result_service_sets_results_path), result_service_sets_results_path, {:rel => "nofollow"} %></li>					 
 		</ul>
 	</li>
+	<li><%= "Описание тарифов" %>
+		<ul class="">
+			<li><%= link_to "Все тарифы", tarif_classes_path %></li>
+			<% Category::Operator.operators_with_tarifs.find_each do |operator| %>
+				<li><%= link_to operator.name, tarif_classes_by_operator_path(operator) %></li>
+			<% end %>
+		</ul>		
+	</li>
 	<li><%= t(:service_description) %>
 		<ul class="">
-			<li><%= link_to "Описание тарифов", tarif_classes_path %></li>		
 			<li><%= link_to t(:home_detailed_description_path), home_detailed_description_path %></li>		
 			<li><%= link_to t(:home_news_path), home_news_path %></li>		
 			<li><%= link_to("Контакты", home_contacts_path) %></li>

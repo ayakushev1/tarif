@@ -1,10 +1,10 @@
-<% title t('.title') %>
+<% title "Список тарифов и опций, #{@operator.try(:name)}" %>
 <% content_for :hide_title, 'true' %>
 
 <header id="first">
     <div class="header-content header-content-smaller">
         <div class="inner">
-            <h1 class="">Список описаний тарифов и опций</h1>
+            <h1 class="">Список описаний тарифов и опций, оператор <%= @operator.try(:name) %></h1>
             <h5>Здесь вы можете выбрать и посмотреть подробное описание тарифов и опций. 
             	Найти нужный тариф можно с помощью фильтра</h5>
             <hr>
