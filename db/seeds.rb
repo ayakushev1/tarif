@@ -10,6 +10,9 @@ when "seeds_for_tarif_related"
   Customer::Stat::StatAndQuery.save_stat_function_collector # возникает ошибка в Parameter если customer_calls empty
 when "seeds_for_comparison_related"
   Dir[Rails.root.join("db/seeds/seeds_for_comparison_related.rb")].each { |f| require f }
+when "test_load"
+  Dir[Rails.root.join("db/seeds/seeds_for_users.rb")].each { |f| require f }
+  Dir[Rails.root.join("db/seeds/seeds_for_tarif_related.rb")].each { |f| require f }
 end
 
 #to set correct id for new records
