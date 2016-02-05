@@ -5,7 +5,7 @@
         		:heading => "Изредка", :group_result_description => @group_result_description[50], 
         	 	:popover_content => "Общая длительность звонков 120 минут",
         	 	:footer => link_to( "Детальные результы", comparison_optimization_path(@group_result_description[50][0][:optimization_slug]), 
-        	 		{:class => "btn btn-primary", :target => "_blank"}) }%>
+        	 		{:class => "btn btn-primary", :target => "_blank"}) } if @group_result_description[50] %>
         </div>
     </div>
     <div class="col-lg-4 col-md-4 text-center">
@@ -14,7 +14,7 @@
         		:heading => "Умеренно", :group_result_description => @group_result_description[52], 
         	 	:popover_content => "Общая длительность звонков 600 минут",
         	 	:footer => link_to( "Детальные результы", comparison_optimization_path(@group_result_description[52][0][:optimization_slug]), 
-        	 		{:class => "btn btn-primary", :target => "_blank"}) }%>
+        	 		{:class => "btn btn-primary", :target => "_blank"}) } if @group_result_description[52] %>
         </div>
     </div>
     <div class="col-lg-4 col-md-4 text-center">
@@ -23,7 +23,7 @@
         		:heading => "Активно", :group_result_description => @group_result_description[54], 
         	 	:popover_content => "Общая длительность звонков 1500 минут",
         	 	:footer => link_to( "Детальные результы", comparison_optimization_path(@group_result_description[54][0][:optimization_slug]), 
-        	 		{:class => "btn btn-primary", :target => "_blank"}) }%>
+        	 		{:class => "btn btn-primary", :target => "_blank"}) } if @group_result_description[52] %>
         </div>
     </div>
 </div>

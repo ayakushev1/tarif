@@ -5,7 +5,7 @@
         		:heading => "Изредка", :group_result_description => @group_result_description[10], 
         	 	:popover_content => "80 мин звонков, 110 смс",
         	 	:footer => link_to( "Детальные результы", comparison_optimization_path(@group_result_description[10][0][:optimization_slug]), 
-        	 		{:class => "btn btn-primary", :target => "_blank"}) } %>
+        	 		{:class => "btn btn-primary", :target => "_blank"}) } if @group_result_description[10] %>
         </div>
     </div>
     <div class="col-lg-4 col-md-4 text-center">
@@ -14,7 +14,7 @@
         		:heading => "Умеренно", :group_result_description => @group_result_description[11], 
         	 	:popover_content => "400 мин звонков, 240 смс, 1Гб интернета",
         	 	:footer => link_to( "Детальные результы", comparison_optimization_path(@group_result_description[11][0][:optimization_slug]), 
-        	 		{:class => "btn btn-primary", :target => "_blank"}) }%>
+        	 		{:class => "btn btn-primary", :target => "_blank"}) } if @group_result_description[11] %>
         </div>
     </div>
     <div class="col-lg-4 col-md-4 text-center">
@@ -23,7 +23,7 @@
         		:heading => "Активно", :group_result_description => @group_result_description[12], 
         	 	:popover_content => "1200 мин звонков, 420 смс, 3Гб интернета",
         	 	:footer => link_to( "Детальные результы", comparison_optimization_path(@group_result_description[12][0][:optimization_slug]), 
-        	 		{:class => "btn btn-primary", :target => "_blank"}) }%>
+        	 		{:class => "btn btn-primary", :target => "_blank"}) }  if @group_result_description[12] %>
         </div>
     </div>
 </div>

@@ -5,7 +5,7 @@
         		:heading => "Читаю новости и проверяю почту", :group_result_description => @group_result_description[21], 
         	 	:popover_content => "Объем потребления интернета 300 Мб",
         	 	:footer => link_to( "Детальные результы", comparison_optimization_path(@group_result_description[21][0][:optimization_slug]), 
-        	 		{:class => "btn btn-primary", :target => "_blank"}) }%>
+        	 		{:class => "btn btn-primary", :target => "_blank"}) } if @group_result_description[21] %>
         </div>
     </div>
     <div class="col-lg-4 col-md-4 text-center">
@@ -14,7 +14,7 @@
         		:heading => "Смотрю видео-ролики и пользуюсь интернетом", :group_result_description => @group_result_description[23], 
         	 	:popover_content => "Объем потребления интернета 1 Гб",
         	 	:footer => link_to( "Детальные результы", comparison_optimization_path(@group_result_description[23][0][:optimization_slug]), 
-        	 		{:class => "btn btn-primary", :target => "_blank"}) }%>
+        	 		{:class => "btn btn-primary", :target => "_blank"}) } if @group_result_description[23] %>
         </div>
     </div>
     <div class="col-lg-4 col-md-4 text-center">
@@ -23,7 +23,7 @@
         		:heading => "Смотрю фильмы и пользуюсь интернетом", :group_result_description => @group_result_description[27], 
         	 	:popover_content => "Объем потребления интернета 10 Гб",
         	 	:footer => link_to( "Детальные результы", comparison_optimization_path(@group_result_description[27][0][:optimization_slug]), 
-        	 		{:class => "btn btn-primary", :target => "_blank"}) }%>
+        	 		{:class => "btn btn-primary", :target => "_blank"}) } if @group_result_description[27] %>
         </div>
     </div>
 </div>
