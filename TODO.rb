@@ -1,3 +1,7 @@
+#TODO  db:seed не работает - надо убирать Friendly
+#TODO Customer::Stat::StatAndQuery.save_stat_function_collector не работает - надо сначала добавить запись in Customer::Call
+
+
 #TODO ПОСТОЯННЫЕ 
 #TODO Обновить сайтмап
 

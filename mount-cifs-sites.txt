@@ -3,7 +3,7 @@ lanch server to get access to pg from host TRUSTED_IP=10.0.2.2 rails s (Puma)
 list of rubies - rvm list
 set defulat ruby - rvm --default use ruby-2.1.1
 or rvm use 2.1.1
-to load seed data in test db - rake db:seed RAILS_ENV=test
+to load seed data in test db - foreman run rake db:seed RAILS_ENV=test
 to clear log - rake log:clear 
 
 RAILS_ENV=production foreman run rails s
@@ -17,6 +17,8 @@ foreman start -f Procfile.development_with_jobs
 foreman run rake db:seed
 
 testing
+set in .env    	seed_option=test_load
+				foreman run rake db:test:prepare 
 foreman run bin/spring rake test test/models/customer/payment_instruction_to_yandex_test.rb
 foreman run spring rake test:integration
 
