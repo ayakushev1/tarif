@@ -3,7 +3,11 @@
 <head>
     <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">    
 
-	<%= display_meta_tags site: 'www.mytarifs.ru' %>
+	<% if controller.request.path == root_path %>
+		<%= display_meta_tags site: 'www.mytarifs.ru:', separator: ' ' %>
+	<% else %>
+		<%= display_meta_tags site: 'www.mytarifs.ru', reverse: true %>
+	<% end %>
 
   	<%= csrf_meta_tags %>
     <%= favicon_link_tag "favicon.ico" %>
