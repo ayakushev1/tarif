@@ -99,9 +99,8 @@ module ApplicationHelper::Authorization
   def action_lists
     {
       :external_api_processing => {
-        :methods => ['get'], :actions => {
-          'customer/payments' =>['process_payment'],
-#          'tarif_optimizators/admin' => ['recalculate', 'index'],
+        :methods => ['post'], :actions => {
+          'customer/payments' =>['create', 'process_payment'],
         },
       },
       :root_url => {
@@ -114,7 +113,7 @@ module ApplicationHelper::Authorization
           'home' => ['index', 'short_description', 'detailed_description', 'update_tabs', 'news', 'change_locale', 
             'introduction', 'sitemap', 'contacts'],
           'content/articles' => ['show', 'index', 'call_statistic', 'detailed_results'],
-          'customer/payments' => ['create', 'new', 'edit', 'show', 'update', 'wait_for_payment_being_processed', 'process_payment'],
+          'customer/payments' => [ 'new', 'edit', 'show', 'update', 'wait_for_payment_being_processed'],
           'customer/optimization_steps' => ['choose_load_calls_options', 'check_loaded_calls', 'choose_optimization_options', 'optimize_tarifs', 'show_optimized_tarifs'],
           'customer/optimization_results' => ['show_customer_results', 'show_customer_detailed_results'],
           'result/service_sets' => ['result', 'results', 'detailed_results', 'compare'],
@@ -159,20 +158,20 @@ module ApplicationHelper::Authorization
       :any_user_actions_with_devise => {
         :methods => [], :actions => {
           'users/sessions' => [],
-          'users/confirmations' => ['new', 'show', 'create', 'confirm'],
-          'unlocks' => ['new', 'show', 'create'],
-          'passwords' => ['new', 'create'],
         }
       },
       :new_user_actions_with_devise => {
         :methods => [], :actions => {
 #          'users' => ['new', 'create'],
           'users/registrations' => ['new', 'create'],
+          'devise/passwords' => ['new', 'create'],
+          'users/confirmations' => ['new', 'show', 'create', 'confirm'],
+          'devise/unlocks' => ['new', 'show', 'create'],
         }
       },
       :signed_user_actions_with_devise => {
         :methods => [], :actions => {
-          'passwords' => ['edit', 'update'],
+          'devise/passwords' => ['edit', 'update'],
           'users' => ['show', 'edit'],
         }
       },
