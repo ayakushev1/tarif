@@ -12,7 +12,7 @@ describe HomeController do
   describe 'skip verifying authenticity token' do
     it 'must skip if user-agent in allowed_user_agents lists and url is root' do
       @request.headers["CONTENT_TYPE"] = 'ANY_FORMAT'
-      get :index, format: :js
+      get :sitemap, format: :js
       assert_response :success, [@controller.controller_name, @response.redirect_url, @response.message, flash[:alert], @controller.params]
     end
   end
@@ -31,7 +31,7 @@ describe Customer::OptimizationResultsController do
   
   describe 'skip verifying authenticity token' do
     it 'must skip if user-agent in allowed_user_agents lists and url is public' do
-      @request.headers["CONTENT_TYPE"] = 'ANY_FORMAT'
+#      @request.headers["CONTENT_TYPE"] = 'ANY_FORMAT'
 #      get :show_customer_results, format: :js
 #      assert_response :success, [@controller.controller_name, @response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params]
     end

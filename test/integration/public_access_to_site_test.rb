@@ -11,7 +11,7 @@ describe HomeController do
   end
 
   it 'unsigned user must have access to root' do
-    get :index  
+    get :sitemap
     assert_response :success, [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params, @controller.user_type]
   end
      
@@ -144,7 +144,7 @@ describe Users::RegistrationsController do
      
   it 'signed user should not have access to edit and update actions of other user account' do
     sign_in @user
-    get :edit, :id => 20  
+    get :edit, :id => @another_user.id  
     assert_redirected_to root_path,    [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params, @controller.user_type]
     post :update, :id => 20  
     assert_redirected_to root_path , [@response.redirect_url, @response.message, flash[:alert], @user.id, @controller.params, @controller.user_type]   

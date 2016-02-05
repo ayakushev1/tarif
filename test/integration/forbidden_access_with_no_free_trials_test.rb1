@@ -2,7 +2,7 @@ require 'test_helper'
 require 'minitest/mock'
 #    ['optimization_steps', 'calls', 'history_parsers', 'tarif_optimizators'].include?(controller_name)
 
-describe Customer::TarifOptimizatorsController do
+describe TarifOptimizators::MainController do
   before do
     @user = User.new(:name => "Гость", :email => "guest@example.com", :password => '111111', :password_confirmation => '111111', :confirmed_at => Time.zone.now)
     @user.skip_confirmation_notification!
