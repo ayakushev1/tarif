@@ -4,12 +4,12 @@
 				для анализа услуг в области мобильной связи." %>
 <% keywords "контакты" %>	
 
-<div class="panel panel-default" >
-	<div class="panel-heading"><h4> Компания WWW.MYTARIFS.RU </h4></div>
-	<div class="panel-body">
-		<p>Адрес: Москва, 6-й Новоподмосковный переулок, дом 3</p>
-		<p>Email: <%= mail_to "mytarifs@yandex.ru "%></p>
-		<p>Телефон: <a href="tel:+74957082016">+7 495 708 20-16</a></p>		
+<div class="panel panel-default" itemscope itemtype="http://schema.org/Organization">
+	<div class="panel-heading"><h4 itemprop="name"> Компания WWW.MYTARIFS.RU </h4></div>
+	<div class="panel-body" >
+		<p itemprop="address">Адрес: Москва, 6-й Новоподмосковный переулок, дом 3</p>
+		<p>Email: <%= mail_to "mytarifs@yandex.ru", nil, {:itemprop => "email"} %></p>
+		<p>Телефон: <a itemprop="telephone" href="tel:+74957082016">+7 495 708 20-16</a></p>		
 	</div>
 	<div class="panel-footer">
 		
