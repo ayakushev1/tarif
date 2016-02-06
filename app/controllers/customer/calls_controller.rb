@@ -6,7 +6,7 @@ class Customer::CallsController < ApplicationController
   before_action :create_call_run_if_not_exists, only: [:set_calls_generation_params, :choose_your_tarif_with_our_help]
   before_action :update_usage_pattern, only: [:set_calls_generation_params]
   before_action :setting_if_nil_default_calls_generation_params, only: [:set_calls_generation_params, :generate_calls]
-  after_action -> {update_customer_infos}, only: [:generate_calls, :generate_calls_from_simple_form]
+  after_action -> {update_customer_infos}, only: [:generate_calls]
 
   def choose_your_tarif_with_our_help
     add_breadcrumb "Сохраненные загрузки или моделирования звонков", customer_call_runs_path
@@ -28,10 +28,10 @@ class Customer::CallsController < ApplicationController
       deep_merge({:own_region => generation_params, :home_region => generation_params, :general => {'operator_id' => (generation_params['operator_id'] || 1030).to_i}})
       
     customer_call_run.update(:init_params => calls_generation_params, :init_class => 'Customer::Call::Init::SimpleForm::OwnAndHomeRegionsOnly', :operator_id => (generation_params['operator_id'] || 1030).to_i)
+#    raise(StandardError, [customer_call_run.attributes, generation_params])
     
     user_params = {"call_run_id" => customer_call_run.id, "user_id" => current_or_guest_user_id}
     Customer::Call.where(user_params).delete_all
-#    raise(StandardError, [calls_generation_params, user_params])
     Calls::Generator.new(calls_generation_params, user_params).generate_calls
     customer_call_run.calculate_call_stat
     
@@ -67,7 +67,7 @@ class Customer::CallsController < ApplicationController
       :operator_id => (customer_calls_generation_params[:general]['operator_id'] || 1030).to_i,
       :init_params => customer_calls_generation_params
     ) 
-#    raise(StandardError, customer_calls_generation_params[:general]['operator_id']) 
+    raise(StandardError, customer_calls_generation_params[:general]['operator_id']) 
   end
   
   def call_run_choice

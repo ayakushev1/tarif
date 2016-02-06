@@ -121,6 +121,15 @@ class TarifOptimization::QueryConstructor
       collect { |category_id| category_id ? categories_where_hash[category_id] : true }.compact.join(' and ')
   end
   
+  def joined_service_categories_where_hash(category_ids)
+    where = ["true"]
+    category_ids.each do |category_id|
+      cat = categories_where_hash[category_id] 
+      where << "( #{cat} )" if cat 
+    end
+    where.join(' and '.freeze)
+  end
+  
   def calculate_service_categories_where_hash
     @categories_where_hash = []
 
@@ -163,30 +172,30 @@ class TarifOptimization::QueryConstructor
   
   def calculate_service_criteria_where_hash
     @criteria_where_hash = []
-    crit = criterium_ids ? Service::Criterium.where(:id => criterium_ids) : Service::Criterium.all
-    crit.each { |c| criteria_where_hash[c.id] = criterium_where_hash(c)}
+    crit = criterium_ids ? Service::Criterium.where(:id => criterium_ids) : Service::Criterium.all    
+    crit.each_with_index { |c, index| 
+      #raise(StandardError, c.attributes) if index == 132
+      criteria_where_hash[c.id] = criterium_where_hash(c)
+      }
   end
   
   def criterium_where_hash(criterium)
     criteria_param = parameter_class_sql_name(parameters[criterium['criteria_param_id'.freeze]], context)
-
     comparison_operator = comparison_operators[criterium['comparison_operator_id'.freeze]]
-    
-    value_param = criterium['value'.freeze]
-    value_param = parameter_class_instance_value(parameters[criterium['value_param_id'.freeze]], context, criterium['value'.freeze]) if criterium['value_param_id'.freeze]
-    begin      
-      value_param = eval(criterium['eval_string'.freeze]) if criterium['eval_string'.freeze]
-    rescue
-      raise(StandardError, [criterium, criterium['eval_string'.freeze]])
-    end
-    
+        
     if criterium.value_choose_option_id == 153#_value_param_is_criterium_param
       value_param_string = parameter_class_sql_name(parameters[criterium['value_param_id'.freeze]], context)
     else
+      value_param = criterium['value'.freeze]
+      value_param = parameter_class_instance_value(parameters[criterium['value_param_id'.freeze]], context, criterium['value'.freeze]) if criterium['value_param_id'.freeze]
+      #raise(StandardError, [criterium.attributes, value_param]) if criterium.id == 1870
+      begin      
+        value_param = eval(criterium['eval_string'.freeze]) if criterium['eval_string'.freeze]
+      rescue
+        raise(StandardError, [criterium, criterium['eval_string'.freeze]])
+      end
       value_param_string = "'#{value_param}'".freeze
     end
-    
-     
     
     result = case comparison_operator
     when 'in'
@@ -197,7 +206,7 @@ class TarifOptimization::QueryConstructor
       "(#{criteria_param} #{comparison_operator} #{value_param_string})".freeze
     end 
     
-#    raise(StandardError, result) if Customer::Call.where(result).size < 0
+#    raise(StandardError, result) if criterium.id == 1870 #Customer::Call.where(result).size < 0
     
     result     
   end
