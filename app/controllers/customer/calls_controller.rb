@@ -23,9 +23,9 @@ class Customer::CallsController < ApplicationController
 
     generation_params = session_filtr_params(simple_call_generation_params)
     calls_generation_params = Customer::Call::Init::SimpleForm::OwnAndHomeRegionsOnly.symbolize_keys.
-      deep_merge({:own_region => generation_params, :home_region => generation_params, :general => {:operator_id => generation_params['operator_id']}})
+      deep_merge({:own_region => generation_params, :home_region => generation_params, :general => {:operator_id => (generation_params['operator_id'] || 1030).to_i}})
       
-    customer_call_run.update(:init_params => calls_generation_params, :init_class => 'Customer::Call::Init::SimpleForm::OwnAndHomeRegionsOnly', :operator_id => (generation_params['operator_id'] || 1030))
+    customer_call_run.update(:init_params => calls_generation_params, :init_class => 'Customer::Call::Init::SimpleForm::OwnAndHomeRegionsOnly', :operator_id => (generation_params['operator_id'] || 1030).to_i)
     
     user_params = {"call_run_id" => customer_call_run.id, "user_id" => current_or_guest_user_id}
     Customer::Call.where(user_params).delete_all
@@ -61,7 +61,7 @@ class Customer::CallsController < ApplicationController
     Customer::Info::CallsGenerationParams.update_info(current_or_guest_user_id, customer_calls_generation_params)
     Customer::Info::ServicesUsed.decrease_one_free_trials_by_one(current_or_guest_user_id, 'calls_modelling_count')
     Customer::CallRun.find(customer_call_run_id).update(
-      :operator_id => customer_calls_generation_params[:general]['operator_id'].to_i,
+      :operator_id => (customer_calls_generation_params[:general]['operator_id'] || 1030).to_i,
       :init_params => customer_calls_generation_params
     ) 
 #    raise(StandardError, customer_calls_generation_params[:general]['operator_id']) 

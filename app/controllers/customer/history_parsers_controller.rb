@@ -41,7 +41,6 @@ class Customer::HistoryParsersController < ApplicationController
     if message[:file_is_good] == true       
       update_customer_infos
       if parsing_params[:calculate_on_background]
-#        raise(StandardError, [user_params, parsing_params])
         message = Calls::HistoryParser::Runner.new(user_params, parsing_params).recalculate_on_back_ground(params[:call_history], true)
         if message[:file_is_good]
           redirect_to :action => :calculation_status 
