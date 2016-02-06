@@ -8,8 +8,7 @@ form_item.init do |f|
     action_name = customer_calls_path
     user_choice_id = user_type == :admin ?  (s["user_id"] || current_user_id) : current_or_guest_user_id
     query = Customer::Call.joins(:call_run).where(:customer_call_runs => {:user_id => current_or_guest_user_id}).query_hash_from_filtr_with_all_keys_excluded(session[:filtr][filtr_name])
-    user_calls_query = user_type != :admin ? Customer::Call.joins(:call_run).where(:customer_call_runs => {:user_id => current_or_guest_user_id}) :
-    	Customer::Call.joins(:call_run).where(:customer_call_runs => {:user_id => user_choice_id})
+    user_calls_query = Customer::Call.joins(:call_run).where(:customer_call_runs => {:user_id => user_choice_id})
   (user_type == :admin ? [
   	[
 	label(filtr_name, "user_id", "Выбор пользователя", label_html),	
@@ -23,11 +22,11 @@ form_item.init do |f|
 	collection_select(filtr_name, "call_run_id", Customer::CallRun.where(:id => user_calls_query.query_from_filtr(s, "call_run_id").pluck(:call_run_id).uniq ), :id, :name, 
 	  	   {:include_blank => "выберите описания моделирования", :selected => s["call_run_id"] }, input_html ),
 
-  	 label(filtr_name, "description[accounting_period]", "Календарный период", label_html),
-  	 select(filtr_name, "description[accounting_period]", 
-	  	 user_calls_query.query_from_filtr(s, "description[accounting_period]").collect { |q| q.description['accounting_period'] }.uniq,
+  	 label(filtr_name, "customer_calls.description[accounting_period]", "Календарный период", label_html),
+  	 select(filtr_name, "customer_calls.description[accounting_period]", 
+	  	 user_calls_query.query_from_filtr(s, "customer_calls.description[accounting_period]").collect { |q| q.description['accounting_period'] }.uniq,
 #  		 accounting_periods(s["call_run_id"]), 
-  	 	 {:include_blank => "выберите календарный период", :selected => (s["description"]["accounting_period"] if s["description"] )}, input_html ),
+  	 	 {:include_blank => "выберите календарный период", :selected => (s["customer_calls.description"]["accounting_period"] if s["customer_calls.description"] )}, input_html ),
 
   	 label(filtr_name, "base_service_id", "Услуга", label_html),
   	 collection_select(filtr_name, "base_service_id", Category.where(:id => user_calls_query.query_from_filtr(s, "base_service_id").pluck(:base_service_id).uniq ), :id, :name, 

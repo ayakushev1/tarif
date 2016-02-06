@@ -164,15 +164,13 @@ module ApplicationHelper::Authorization
         :methods => [], :actions => {
 #          'users' => ['new', 'create'],
           'users/registrations' => ['new', 'create'],
-          'users/passwords' => ['new', 'create'],
-          'devise/passwords' => ['new', 'create'],
+          'devise/passwords' => ['new', 'create', 'edit', 'update'],
           'users/confirmations' => ['new', 'show', 'create', 'confirm'],
           'devise/unlocks' => ['new', 'show', 'create'],
         }
       },
       :signed_user_actions_with_devise => {
         :methods => [], :actions => {
-          'users/passwords' => ['edit', 'update'],
           'devise/passwords' => ['edit', 'update'],
           'users' => ['show', 'edit'],
         }
