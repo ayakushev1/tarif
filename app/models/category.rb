@@ -11,6 +11,8 @@
 
 class Category < ActiveRecord::Base
   include WhereHelper, FriendlyIdHelper
+  friendly_id :slug_candidates, use: [:slugged]
+
   belongs_to :type, :class_name =>'CategoryType', :foreign_key => :type_id
   belongs_to :level, :class_name =>'CategoryLevel', :foreign_key => :level_id
   belongs_to :parent, :class_name =>'Category', :foreign_key => :parent_id
@@ -53,6 +55,12 @@ class Category < ActiveRecord::Base
   scope :customer_demand_types, -> {where(:type_id => 28)}
   scope :customer_demand_status, -> {where(:type_id => 29)}
   
+  def slug_candidates
+    [
+      :name,
+    ]
+  end
+
   def self.type1(type_id)
     if type_id.blank?
       where("true")
