@@ -5,7 +5,7 @@ class Customer::CallsController < ApplicationController
 #  crudable_actions :index
   before_action :create_call_run_if_not_exists, only: [:set_calls_generation_params, :choose_your_tarif_with_our_help]
   before_action :update_usage_pattern, only: [:set_calls_generation_params]
-  before_action :setting_if_nil_default_calls_generation_params, only: [:set_calls_generation_params, :generate_calls, :choose_your_tarif_with_our_help]
+  before_action :setting_if_nil_default_calls_generation_params, only: [:set_calls_generation_params, :generate_calls]
   after_action -> {update_customer_infos}, only: [:generate_calls, :generate_calls_from_simple_form]
 
   def choose_your_tarif_with_our_help
@@ -15,6 +15,8 @@ class Customer::CallsController < ApplicationController
   end
   
   def generate_calls_from_simple_form
+    return redirect_to customer_calls_choose_your_tarif_with_our_help_path, {:alert => "Вы не поменяли ни одного параметра."} if session_filtr_params(simple_call_generation_params).blank?
+    
     customer_call_run = Customer::CallRun.where(:user_id => current_or_guest_user_id, :source => [0, 1]).
       where.not(:operator_id => nil).first_or_create(:name => "Пробные звонки", :source => 0, :description => "", :user_id => current_or_guest_user_id)
 
@@ -23,12 +25,13 @@ class Customer::CallsController < ApplicationController
 
     generation_params = session_filtr_params(simple_call_generation_params)
     calls_generation_params = Customer::Call::Init::SimpleForm::OwnAndHomeRegionsOnly.symbolize_keys.
-      deep_merge({:own_region => generation_params, :home_region => generation_params, :general => {:operator_id => (generation_params['operator_id'] || 1030).to_i}})
+      deep_merge({:own_region => generation_params, :home_region => generation_params, :general => {'operator_id' => (generation_params['operator_id'] || 1030).to_i}})
       
     customer_call_run.update(:init_params => calls_generation_params, :init_class => 'Customer::Call::Init::SimpleForm::OwnAndHomeRegionsOnly', :operator_id => (generation_params['operator_id'] || 1030).to_i)
     
     user_params = {"call_run_id" => customer_call_run.id, "user_id" => current_or_guest_user_id}
     Customer::Call.where(user_params).delete_all
+#    raise(StandardError, [calls_generation_params, user_params])
     Calls::Generator.new(calls_generation_params, user_params).generate_calls
     customer_call_run.calculate_call_stat
     

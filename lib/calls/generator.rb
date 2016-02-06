@@ -165,7 +165,7 @@ class Calls::Generator
       "own_country_id".freeze => customer_generation_params[:general]["country_id".freeze].to_i, 
     }
       rescue
-        raise(StandardError, customer_generation_params)
+        raise(StandardError, [result, customer_generation_params[:general]])
       end
   end
   
