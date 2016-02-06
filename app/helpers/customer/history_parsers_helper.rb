@@ -46,11 +46,11 @@ module Customer::HistoryParsersHelper
   def check_uploaded_call_history_file(call_history_file)
     result = {:file_is_good => true, 'message' => nil}
 
-#    raise(StandardError, user_params[:operator_id])    
 #    message = "Не выбран оператор. Выберите вашего оператора"
 #    return result = {:file_is_good => false, 'message' => message} if user_params[:operator_id].blank? or user_params[:operator_id] == 0
 
     file_size = (call_history_file.size / 1000000.0).round(2) if call_history_file
+#    raise(StandardError, [file_size, parsing_params[:file_upload_max_size], parsing_params["file_upload_max_size"], user_params, parsing_params])    
     message = "Файл слишком большой: #{file_size}Mb. Он должен быть не больше #{parsing_params[:file_upload_max_size]}Mb"
     return result = {:file_is_good => false, 'message' => message} if file_size > parsing_params[:file_upload_max_size]
 
@@ -99,8 +99,8 @@ module Customer::HistoryParsersHelper
 
       :own_phone_number => (user_params_filtr_session_filtr_params['own_phone_number']),
       :operator_id => 0, #user_params_filtr_session_filtr_params['operator_id'].to_i,
-      :region_id => (user_params_filtr_session_filtr_params['region_id'].to_i), 
-      :country_id => (user_params_filtr_session_filtr_params['country_id'].to_i), 
+      :region_id => (user_params_filtr_session_filtr_params['region_id'].to_i || 1238), 
+      :country_id => (user_params_filtr_session_filtr_params['country_id'].to_i || 1100), 
       :accounting_period_month => (user_params_filtr_session_filtr_params['accounting_period_month']),
       :accounting_period_year => (user_params_filtr_session_filtr_params['accounting_period_year']),
     }

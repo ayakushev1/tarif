@@ -30,7 +30,7 @@ module ApplicationHelper::Authorization
     when match_with_lists([:result_run_changing])
       if !Result::Run.where(:slug => params[:id], :user_id => current_or_guest_user_id).present? #or
 #         !(Result::Run.where(:id => params[:id], :user_id => nil).present? and action_name == 'show')
-        redirect_to(root_path, alert: "Доступ к разделу сайта #{controller_path}/#{action_name} for #{user_type} ограничен")
+        redirect_to(root_path, alert: "Доступ к разделу сайта #{controller_path}/#{action_name} for #{user_type} ограничен.")
       end
     when match_with_lists([:any_user_actions_with_devise])
     when (match_with_lists([:new_user_actions_with_devise]) and user_type == :guest)
@@ -41,7 +41,7 @@ module ApplicationHelper::Authorization
     when match_with_lists([:password_user_actions_with_devise]) 
       redirect_to(root_path, alert: "У вас нет доступа к чужому счету") if !(match_param_user_with_signed_user and match_user_password)
     else 
-      redirect_to(root_path, alert: "Доступ к разделу сайта #{controller_path}/#{action_name} for #{user_type} ограничен")
+      redirect_to(root_path, alert: "Доступ к разделу сайта #{controller_path}/#{action_name} for #{user_type} ограничен .")
     end
   end 
 
@@ -138,7 +138,7 @@ module ApplicationHelper::Authorization
       },
       :customer_call_run_changing => {
         :methods => [], :actions => {
-          'customer/call_runs' =>['show', 'create', 'edit', 'update', 'destroy'],
+          'customer/call_runs' =>['show', 'create', 'edit', 'update', 'destroy', 'call_stat'],
         }
       },
       :tarif_optimization => {
