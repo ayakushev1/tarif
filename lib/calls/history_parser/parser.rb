@@ -22,8 +22,13 @@ class Calls::HistoryParser::Parser
       parser = nil
   
       Calls::HistoryParser::ClassLoader.allowed_operators_by_file_type[file_type].each do |operator_id|
-        parser = Calls::HistoryParser::Parser.new(call_history_file, user_params.merge!({:operator_id => operator_id}), parsing_params)
-        message = parser.check_if_file_is_good
+        begin
+          parser = Calls::HistoryParser::Parser.new(call_history_file, user_params.merge!({:operator_id => operator_id}), parsing_params)
+          message = parser.check_if_file_is_good
+        rescue Ole::Storage::FormatError => e
+          message = {:file_is_good => false, 'message' => "Файл неправильного типа, хотя и расширение у него .xls. Откройте файл в екселе и сохраните как xls или xlsx."}
+        end        
+        
         if message[:file_is_good]
           Customer::CallRun.find(user_params[:call_run_id]).update_columns({:operator_id => operator_id})
           break 
