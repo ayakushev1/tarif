@@ -1,10 +1,9 @@
 Dir[Rails.root.join("db/seeds/definitions/01_service_categories.rb")].sort.each { |f| require f }
 
 class Customer::Call::StatCalculator
-  attr_reader :user_id, :accounting_period, :call_run_id, :calculation_scope, :calculation_scope_where_hash
+  attr_reader :accounting_period, :call_run_id, :calculation_scope, :calculation_scope_where_hash
   
   def initialize(options = {})
-    @user_id = options[:user_id] || 0
     @accounting_period = options[:accounting_period]
     @call_run_id = options[:call_run_id]
     @calculation_scope = {:where_hash => {}}
@@ -20,7 +19,8 @@ class Customer::Call::StatCalculator
         service_category_criteria.each do |criteria_type, criteria_value|
           service_category_where_condition << query_constructor.categories_where_hash[criteria_value] if criteria_value
           
-          raise(StandardError) if Customer::Call.where(query_constructor.categories_where_hash[criteria_value]).size < 0 and criteria_value
+#Uncomment for testing new global_id or service_category
+#          raise(StandardError) if Customer::Call.where(query_constructor.categories_where_hash[criteria_value]).size < 0 and criteria_value
           
         end if service_category_criteria
         service_categories_where_condition << "(#{service_category_where_condition.join(' and ')})".freeze
@@ -105,8 +105,9 @@ class Customer::Call::StatCalculator
 
       part = uniq_parts_by_operator[i]
       where_condition = where_part.join(' and '.freeze) if !where_part.blank?
-
-      calls_count_by_parts[part] = Customer::Call.where( where_condition ).where(calculation_scope_where_hash).count(:id)
+#      raise(StandardError, [where_condition, calculation_scope_where_hash]) if part == "own-country-rouming/calls"
+      calls_count_by_parts[part] = Customer::Call.where(:call_run_id => call_run_id).where("description->>'accounting_period' = '#{accounting_period}'".freeze).
+        where( where_condition ).where(calculation_scope_where_hash).count(:id)
       i += 1
     end
     calls_count_by_parts
