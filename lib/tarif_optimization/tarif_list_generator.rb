@@ -229,6 +229,7 @@ class TarifOptimization::TarifListGenerator
         end
       end
     end
+    @service_packs
   end
   
   def calculate_service_packs_by_parts

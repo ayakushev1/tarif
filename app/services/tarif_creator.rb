@@ -27,7 +27,8 @@ class TarifCreator #ServiceHelper::TarifCreator
       conditions = {:parts => parts, :parts_criteria => parts_criteria}.merge(condition_when_apply_sctc)
 
       tarif_category = Service::CategoryTarifClass.create( 
-        {:tarif_class_id => tarif_class_id, :is_active => true}.merge(service_category_tarif_class_field_values).merge(:conditions => conditions)  )
+        {:tarif_class_id => tarif_class_id, :is_active => true, :uniq_service_category => uniq_service_category(service_category_tarif_class_field_values)}.
+          merge(service_category_tarif_class_field_values).merge(:conditions => conditions)  )
     rescue ActiveRecord::RecordNotUnique
       retry
     ensure
@@ -45,8 +46,9 @@ class TarifCreator #ServiceHelper::TarifCreator
       formulas = Price::Formula.create({:price_list_id => price[:id], :calculation_order => 0}.merge(formula_field_values) ) 
       
       tarif_category = Service::CategoryTarifClass.create( 
-        {:tarif_class_id => tarif_class_id, :as_standard_category_group_id => service_category_group[:id], :is_active => true}.
-        merge(service_category_tarif_class_field_values)  )
+        {:tarif_class_id => tarif_class_id, :as_standard_category_group_id => service_category_group[:id], :is_active => true, 
+          :uniq_service_category => uniq_service_category(service_category_tarif_class_field_values)}.
+          merge(service_category_tarif_class_field_values)  )
 
       classified_service_parts = classify_service_parts(service_category_full_paths(service_category_tarif_class_field_values)) 
       parts = classified_service_parts[0]
@@ -63,8 +65,9 @@ class TarifCreator #ServiceHelper::TarifCreator
   
   def add_grouped_service_category_tarif_class(service_category_tarif_class_field_values, standard_category_group_id, condition_when_apply_sctc = {})
       tarif_category = Service::CategoryTarifClass.create( 
-        {:tarif_class_id => tarif_class_id, :as_standard_category_group_id => standard_category_group_id, :is_active => true}.
-        merge(service_category_tarif_class_field_values)  )
+        {:tarif_class_id => tarif_class_id, :as_standard_category_group_id => standard_category_group_id, :is_active => true, 
+            :uniq_service_category => uniq_service_category(service_category_tarif_class_field_values)}.
+            merge(service_category_tarif_class_field_values)  )
 
       classified_service_parts = classify_service_parts(service_category_full_paths(service_category_tarif_class_field_values)) 
       parts = classified_service_parts[0]
@@ -137,6 +140,12 @@ class TarifCreator #ServiceHelper::TarifCreator
 
     Service::CategoryGroup.update(service_category_group_id, 
       {:conditions => (service_category_group['conditions'] || {}).merge(parts).merge(parts_criteria) } )
+  end
+  
+  def uniq_service_category(service_category_tarif_class_field_values)
+      [:service_category_calls_id, :service_category_rouming_id, :service_category_geo_id, :service_category_partner_type_id].map do |category_id|
+        (service_category_tarif_class_field_values[category_id] || -1).to_s
+      end.join("_")
   end
   
   def service_category_full_paths(where_condition)

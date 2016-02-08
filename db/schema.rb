@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160204082801) do
+ActiveRecord::Schema.define(version: 20160205230538) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -368,9 +368,11 @@ ActiveRecord::Schema.define(version: 20160204082801) do
     t.integer "volume_id"
     t.integer "volume_unit_id"
     t.text    "description"
+    t.jsonb   "stat_params"
   end
 
   add_index "price_standard_formulas", ["name"], name: "index_price_standard_formulas_on_name", using: :btree
+  add_index "price_standard_formulas", ["stat_params"], name: "index_price_standard_formulas_on_stat_params", using: :gin
 
   create_table "relations", force: :cascade do |t|
     t.integer "type_id"
@@ -625,6 +627,7 @@ ActiveRecord::Schema.define(version: 20160204082801) do
     t.json     "conditions"
     t.integer  "tarif_option_id"
     t.integer  "tarif_option_order"
+    t.string   "uniq_service_category"
   end
 
   add_index "service_category_tarif_classes", ["as_standard_category_group_id"], name: "service_category_tarif_classes_as_standard_category_group_id", using: :btree
@@ -640,6 +643,7 @@ ActiveRecord::Schema.define(version: 20160204082801) do
   add_index "service_category_tarif_classes", ["tarif_class_id"], name: "service_category_tarif_classes_tarif_class_id", using: :btree
   add_index "service_category_tarif_classes", ["tarif_class_service_categories"], name: "service_category_tarif_classes_tarif_class_service_categories", using: :gin
   add_index "service_category_tarif_classes", ["tarif_option_id"], name: "index_service_category_tarif_classes_on_tarif_option_id", using: :btree
+  add_index "service_category_tarif_classes", ["uniq_service_category"], name: "index_service_category_tarif_classes_on_uniq_service_category", using: :btree
 
   create_table "service_criteria", force: :cascade do |t|
     t.integer "service_category_id"

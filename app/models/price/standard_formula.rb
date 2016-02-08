@@ -9,6 +9,7 @@
 #  volume_id      :integer
 #  volume_unit_id :integer
 #  description    :text
+#  stat_params    :jsonb
 #
 
 class Price::StandardFormula < ActiveRecord::Base

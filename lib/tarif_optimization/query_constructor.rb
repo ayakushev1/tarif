@@ -8,11 +8,15 @@ class TarifOptimization::QueryConstructor
   attr_reader :performance_checker
   
   def initialize(context, options = {}, operator_id = nil, region_id = nil, if_to_load = true)
-    @context = context
+    @context = context || self
     @options = options
     @tarif_class_ids = options[:tarif_class_ids]
     @criterium_ids = options[:criterium_ids]
     @performance_checker = options[:performance_checker]
+
+    @fq_tarif_operator_id = operator_id || context.instance_values["fq_tarif_operator_id"]
+    @fq_tarif_region_id = region_id || context.instance_values["fq_tarif_region_id"]
+
     load_or_calculate_query(operator_id, region_id, if_to_load)  
 #    raise(StandardError)  
   end
@@ -104,6 +108,15 @@ class TarifOptimization::QueryConstructor
     where.join(' or '.freeze)
   end
   
+  def joined_service_categories_where_hash(category_ids)
+    where = ["true"]
+    category_ids.each do |category_id|
+      cat = categories_where_hash[category_id] 
+      where << "( #{cat} )" if cat 
+    end
+    where.join(' and '.freeze)
+  end
+  
   def tarif_classes_category_where_hash(tarif_classes_category_id)
     tcc = tarif_class_categories[tarif_classes_category_id]
     tcc ? tarif_classes_categories_where_hash[tcc['id'.freeze]] : nil
@@ -119,15 +132,6 @@ class TarifOptimization::QueryConstructor
     [t['service_category_rouming_id'.freeze], t['service_category_geo_id'.freeze], t['service_category_partner_type_id'.freeze], 
     t['service_category_calls_id'.freeze], t['service_category_one_time_id'.freeze], t['service_category_periodic_id'.freeze]].
       collect { |category_id| category_id ? categories_where_hash[category_id] : true }.compact.join(' and ')
-  end
-  
-  def joined_service_categories_where_hash(category_ids)
-    where = ["true"]
-    category_ids.each do |category_id|
-      cat = categories_where_hash[category_id] 
-      where << "( #{cat} )" if cat 
-    end
-    where.join(' and '.freeze)
   end
   
   def calculate_service_categories_where_hash

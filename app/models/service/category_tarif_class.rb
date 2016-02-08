@@ -21,6 +21,7 @@
 #  conditions                         :json
 #  tarif_option_id                    :integer
 #  tarif_option_order                 :integer
+#  uniq_service_category              :string
 #
 
 #should be deleted -  as_tarif_class_service_category_id, tarif_option_id, tarif_option_order, tarif_class_service_categories, standard_category_groups
