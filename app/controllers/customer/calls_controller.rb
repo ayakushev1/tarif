@@ -67,7 +67,7 @@ class Customer::CallsController < ApplicationController
       :operator_id => (customer_calls_generation_params[:general]['operator_id'] || 1030).to_i,
       :init_params => customer_calls_generation_params
     ) 
-    raise(StandardError, customer_calls_generation_params[:general]['operator_id']) 
+#    raise(StandardError, customer_calls_generation_params[:general]['operator_id']) 
   end
   
   def call_run_choice
