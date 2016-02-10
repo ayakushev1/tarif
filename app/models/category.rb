@@ -55,11 +55,20 @@ class Category < ActiveRecord::Base
   scope :customer_demand_types, -> {where(:type_id => 28)}
   scope :customer_demand_status, -> {where(:type_id => 29)}
   
+  def default_name
+    case id
+    when Category::Operator::Const::Beeline; 'beeline'
+    when Category::Country::Const::Russia; 'russia'
+    else name
+    end
+  end
+
   def slug_candidates
     [
-      :name,
+      :default_name,
     ]
   end
+
 
   def self.type1(type_id)
     if type_id.blank?

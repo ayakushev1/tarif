@@ -200,7 +200,8 @@ end
     _liechtenstein, _lithuania, _luxembourg, _macedonia, _malta, _moldova, _monaco, _netherlands, _norway, _poland, _portugal,
     _romania, _san_marino, _serbia, _slovakia, _turkey, _ukraiun, _finland, _france, _croatia,
     _montenegro, _czech_republic, _switzerland, _sweden, _estonia, _south_ossetia]
-     
+
+#beeline     
   _bln_sic = _mts_sic_countries
   _bln_other_world = _world_countries_without_russia - _bln_sic
   
@@ -252,6 +253,7 @@ end
   _bln_my_abroad_countries_2 = _mts_europe_countries + [_turkey]
   _bln_my_abroad_countries_3 = _world_countries_without_russia - _mts_sic_countries - _bln_my_abroad_countries_1 - _bln_my_abroad_countries_2
 
+#tele2
 _tele_service_to_tele_international_1 = _mts_sic_countries
 _tele_service_to_tele_international_2 = _mts_europe_countries
 _tele_service_to_tele_international_3 = [_usa, _canada]

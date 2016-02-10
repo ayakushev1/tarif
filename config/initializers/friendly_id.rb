@@ -1,5 +1,5 @@
-#  Category::Operator.find_each(&:save)
-#  Category::Operator.update_all(slug: nil)
+#  Category.find_each(&:save)
+#  Category.update_all(slug: nil)
 
 # FriendlyId Global Configuration
 #

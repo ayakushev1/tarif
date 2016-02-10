@@ -1,3 +1,6 @@
+#TODO Обновить тарифы Теле2 (добавить интернет 5ГБ и их стоимость)
+#TODO Обновить тарифы Билайн. http://www.beeline.ru/customers/press/news/details/novie-tarifi-vse?fromletter=170187&utm_source=email&utm_medium=news&utm_campaign=distribution_of_mail 
+
 #TODO  db:seed не работает - надо убирать Friendly
 #TODO Customer::Stat::StatAndQuery.save_stat_function_collector не работает - надо сначала добавить запись in Customer::Call
 
