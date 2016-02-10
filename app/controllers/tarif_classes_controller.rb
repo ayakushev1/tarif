@@ -7,8 +7,7 @@ class TarifClassesController < ApplicationController
   
   before_filter :check_before_freindly_url, only: [:show]
   
-  add_breadcrumb "Тарифы и опции", :tarif_classes_path, only: [:index, :show, :edit]
-  add_breadcrumb "Тарифы и опции", :tarif_classes_by_operator_path, only: [:by_operator, :show_by_operator]
+  add_breadcrumb "Тарифы и опции", :tarif_classes_path#, only: [:index, :show, :edit]
   
   def show
     add_breadcrumb "#{tarif_class_form.model.try(:name)}", tarif_class_path(params[:id])
