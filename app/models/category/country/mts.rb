@@ -45,10 +45,10 @@ module Category::Country::Mts
   o::Sic_3_countries = [ c::Uzhnaya_osetiya]  
 
   o::Other_countries = c::World_countries_without_russia - o::Europe_countries - o::Sic_countries
-  o::Other_countries_60_60_60_60 = [_egypt, ]
-  o::Other_countries_65_65_65_135 = [_south_korea, ]
-  o::Other_countries_99_99_99_155 = [_japan, ]
-  o::Other_countries_200_200_200_200 = [_canada, _usa, ]
+  o::Other_countries_60_60_60_60 = [c::Egipet, ]
+  o::Other_countries_65_65_65_135 = [c::Koreya_uzhnaya, ]
+  o::Other_countries_99_99_99_155 = [c::Yaponiya, ]
+  o::Other_countries_200_200_200_200 = [c::Kanada, c::Ssha, ]
   o::Other_countries_250_250_250_250 = (c::Africa_countries - o::Other_countries_60_60_60_60 + [
     c::Boliviya, c::Venesuela, c::Vetnam, c::Dominikanskaya_respublika, c::Indiya, c::Indoneziya, c::Iordaniya, c::Irak, c::Iran, c::Iemen, c::Kambodzha, c::Katar, 
     c::Kolumbiya, c::Kosta_rika, c::Kuba, c::Kuveit, c::Laos, c::Livan, c::Maldivskie_o_va, c::Meksika, c::Nepal, c::Oae, c::Oman, c::Pakistan, c::Palestina, c::Paragvai, 

@@ -33,7 +33,7 @@ module Category::Country::Bln
   o::Welcome_10 = [c::Indiya, c::Koreya_uzhnaya].sort
   o::Welcome_11 = [c::Turtsiya]
   
-  o::Welcome_12 = [_kyrgyzstan, ] #3,5 9
+  o::Welcome_12 = [c::Kyrgyzstan, ] #3,5 9
   o::Welcome_13 = [c::Gruziya, ] #8 12
   o::Welcome_14 = [c::Abhaziya, c::Uzhnaya_osetiya].sort #12
   
