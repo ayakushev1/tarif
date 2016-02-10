@@ -120,7 +120,7 @@ module ApplicationHelper::Authorization
           'customer/demands' => ['index', 'create', 'new'],
           'errors' => ['error404', 'error422', 'error500'],
           'comparison/optimizations' =>['index', 'show', 'call_stat', 'choose_your_tarif_from_ratings'],
-          'tarif_classes' =>['index', 'show', 'by_operator'],
+          'tarif_classes' =>['index', 'show', 'by_operator', 'show_by_operator'],
         }
       }, 
       :comparison => {

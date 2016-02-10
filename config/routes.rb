@@ -25,6 +25,8 @@ Rails.application.routes.draw do
   controller :tarif_classes do
     get 'tarif_classes/:operator_id', action: :by_operator, as: :tarif_classes_by_operator, 
       :constraints => lambda { |request| Category::Operator.where(:slug => request.path_parameters[:operator_id]).first }
+    get 'tarif_classes/:operator_id/:id', action: :show_by_operator, as: :tarif_class_by_operator, 
+      :constraints => lambda { |request| Category::Operator.where(:slug => request.path_parameters[:operator_id]).first }
     get 'tarif_classes/admin/:id', action: :admin_tarif_class, as: :admin_tarif_class
   end
   resources :tarif_classes

@@ -1,0 +1,18 @@
+<% title "Описание тарифа или опции, #{tarif_class_form.model.name}, #{tarif_class_form.model.operator.name}" %>
+<% content_for :hide_title, 'true' %>
+
+<header id="first">
+    <div class="header-content header-content-smaller">
+        <div class="inner">
+            <h1 class="">Описание "<%= tarif_class_form.model.name %>", <%= tarif_class_form.model.operator.name %></h1>
+            <hr>
+        </div>
+    </div>
+</header>
+
+<p>
+<%= link_to('Список тарифов', tarif_classes_by_operator_path(params[:operator_id]), {:class => "btn btn-primary", :type =>"button", :remote => true}) %>
+</p>
+<% render :partial => 'tarif_class', :layout => 'application/layouts/model_show', :locals => {:form_item => tarif_class_form} %>
+
+<%= render :partial => 'tarif_classes/admin_tarif_class_description/tabs', :layout => 'application/layouts/tabs', :locals => {:name => 'tarif_class_description_tabs', :active => session[:current_tabs_page]['tarif_class_description_tabs'].to_i} %>

@@ -34,11 +34,19 @@ class TarifClass < ActiveRecord::Base
   scope :special_services, -> {where(:standard_service_id => 42)}
   scope :options_of_tarif, -> {where(:standard_service_id => 43)}
 
+  def default_name
+    case id
+    when 681; 'moy_beeline'
+    when 682; 'moy_beeline_postoplatnaya'
+    else name
+    end
+  end
+
   def slug_candidates
     [
-      :name,
-      [:operator_name, :name],
-      [:operator_name, :standard_service_name, :name]
+      :default_name,
+      [:operator_name, :default_name],
+      [:operator_name, :standard_service_name, :default_name]
     ]
   end
   

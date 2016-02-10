@@ -16,6 +16,14 @@
     </div>
 </header>
 
+<div class="btn-group" role="group" aria-label="...">
+	<% operator_link_html = {:class => "btn", :type =>"button", :remote => false} %>
+	<%= link_to( image_tag('mts.png'), tarif_classes_by_operator_path(Category::Operator.find(Category::Operator::Const::Mts)), operator_link_html) %>
+	<%= link_to( image_tag('beeline.png'), tarif_classes_by_operator_path(Category::Operator.find(Category::Operator::Const::Beeline)), operator_link_html) %>
+	<%= link_to( image_tag('megafon.png'), tarif_classes_by_operator_path(Category::Operator.find(Category::Operator::Const::Megafon)), operator_link_html) %>
+	<%= link_to( image_tag('tele2.png'), tarif_classes_by_operator_path(Category::Operator.find(Category::Operator::Const::Tele2)), operator_link_html) %>
+</div>
+
 <%= render :partial => 'tarif_class_filtr', :layout => 'application/layouts/filtr_form_n_columns', :locals => {:form_item => tarif_class_filtr}%>
 <br />
 <%= render :partial => 'tarif_classes', :layout => 'application/layouts/model_table', :locals => {:table => tarif_classes}%>
