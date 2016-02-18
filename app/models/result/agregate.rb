@@ -53,6 +53,7 @@ class Result::Agregate < ActiveRecord::Base
     
     includes(:tarif).ids_from_run_and_service_set_ids(service_sets_by_run_ids).each do |item|
       heads[item.service_set_id] ||= item.tarif.full_name if item.tarif
+#      raise(StandardError, item.attributes)
       item.categ_ids.each do |global_category_id|      
         global_category_group_name = Customer::Call::StatCalculator.new.global_category_group_name(global_category_id, group_by)
         result[global_category_group_name] ||= {}
@@ -64,7 +65,7 @@ class Result::Agregate < ActiveRecord::Base
           result[global_category_group_name][item.service_set_id][field][:volume] += 
             ([item['sum_duration_minute'], item['sum_volume'], item['count_volume']].compact.map(&:to_f).sum || 0.0) / item.categ_ids.size.to_f
         end          
-      end
+      end if item.categ_ids
       fixed_group = (group_by.compact[0] || 'fixed')
 
       if true and item.categ_ids.blank? and !(item.periodic_ids + item.fix_ids).compact.blank?
@@ -86,6 +87,7 @@ class Result::Agregate < ActiveRecord::Base
 
     end
     output = []
+#    raise(StandardError, result)
     result.each do |global_category_group_name, result_by_category|
       temp = {}
       result_by_category.each do |service_set, result_by_service_set|
