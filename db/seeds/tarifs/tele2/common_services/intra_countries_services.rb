@@ -14,19 +14,23 @@
 
 
 #Own and home regions, calls, outcoming, to sic
-  category = {:name => '_sctcg_own_home_regions_calls_to_sic', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_tele_international_1}
+  category = {:name => '_sctcg_own_home_regions_calls_to_sic', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_tele_international_1, 
+  :filtr => {:to_abroad_countries => {:in => Category::Country::Tel::Service_to_tele_international_1 }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 20.0} } })  
 
 #Own and home regions, calls, outcoming, to Europe
-  category = {:name => '_sctcg_own_home_regions_calls_to_europe', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_tele_international_2}
+  category = {:name => '_sctcg_own_home_regions_calls_to_europe', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_tele_international_2, 
+  :filtr => {:to_abroad_countries => {:in => Category::Country::Tel::Service_to_tele_international_2 }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 45.0} } })  
 
 #Own and home regions, calls, outcoming, to USA and Canada
-  category = {:name => '_sctcg_own_home_regions_calls_to_usa_canada', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_tele_international_3}
+  category = {:name => '_sctcg_own_home_regions_calls_to_usa_canada', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_tele_international_3, 
+  :filtr => {:to_abroad_countries => {:in => Category::Country::Tel::Service_to_tele_international_3 }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 65.0} } })  
 
 #Own and home regionsIC, calls, outcoming, to other countries
-  category = {:name => '_sctcg_own_home_regions_calls_to_other_countries', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_tele_international_4}
+  category = {:name => '_sctcg_own_home_regions_calls_to_other_countries', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_tele_international_4, 
+  :filtr => {:to_abroad_countries => {:in => Category::Country::Tel::Service_to_tele_international_4 }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 65.0} } })  
 
 

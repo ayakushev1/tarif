@@ -24,11 +24,25 @@
 =end
 
 #Own and home regions, mms, outcoming, to all own country regions, to own operator
-#  category = { :name => '_sctcg_own_home_regions_mms_to_own_country_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _mms_out, :service_category_geo_id => _service_to_all_own_country_regions, :service_category_partner_type_id => _service_to_own_operator}
+#  category = { :name => '_sctcg_own_home_regions_mms_to_own_country_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _mms_out, :service_category_geo_id => _service_to_all_own_country_regions, :service_category_partner_type_id => _service_to_own_operator, 
+#  :filtr => {:to_operators => {:in => [Category::Operator::Const::Mts] }}}
 #  @tc.add_only_service_category_tarif_class(category)  
 
 #Intranet rouming, mms, outcoming, to all own country regions, to own operator
-  category = { :name => '_sctcg_own_home_regions_mms_to_own_country_own_operator', :service_category_rouming_id => _all_russia_rouming, :service_category_calls_id => _mms_out, :service_category_geo_id => _service_to_all_own_country_regions, :service_category_partner_type_id => _service_to_own_operator}
+  category = { :name => '_sctcg_own_home_regions_mms_to_own_country_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _mms_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_own_operator, 
+  :filtr => {:to_operators => {:in => [Category::Operator::Const::Mts] }}}
+  @tc.add_only_service_category_tarif_class(category)  
+
+  category = { :name => '_sctcg_own_home_regions_mms_to_own_country_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _mms_out, :service_category_geo_id => _service_to_own_country, :service_category_partner_type_id => _service_to_own_operator, 
+  :filtr => {:to_operators => {:in => [Category::Operator::Const::Mts] }}}
+  @tc.add_only_service_category_tarif_class(category)  
+
+  category = { :name => '_sctcg_own_home_regions_mms_to_own_country_own_operator', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _mms_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_own_operator, 
+  :filtr => {:to_operators => {:in => [Category::Operator::Const::Mts] }}}
+  @tc.add_only_service_category_tarif_class(category)  
+
+  category = { :name => '_sctcg_own_home_regions_mms_to_own_country_own_operator', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _mms_out, :service_category_geo_id => _service_to_own_country, :service_category_partner_type_id => _service_to_own_operator, 
+  :filtr => {:to_operators => {:in => [Category::Operator::Const::Mts] }}}
   @tc.add_only_service_category_tarif_class(category)  
 
 @tc.add_tarif_class_categories

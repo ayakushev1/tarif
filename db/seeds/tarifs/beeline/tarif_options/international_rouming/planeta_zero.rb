@@ -18,34 +18,52 @@
   @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => Price::StandardFormula::Const::PriceByMonth, :formula => {:params => {:price => 0.0} }})
 
 #bln_my_planet_groups_1 (Европа, СНГ и популярные страны), calls, incoming
-category = {:name => '_sctcg_bln_all_world_rouming_calls_incoming', :service_category_rouming_id => _sc_bln_my_planet_groups_1, :service_category_calls_id => _calls_in}
+category = {:name => '_sctcg_bln_all_world_rouming_calls_incoming', :service_category_rouming_id => _sc_bln_my_planet_groups_1, :service_category_calls_id => _calls_in, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Bln::My_planet_groups_1 }}}
   @tc.add_one_service_category_tarif_class(category, {},  
     {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxDurationMinuteForFixedPriceIfUsed,  
       :formula => {:params => {:max_duration_minute => 20.0, :price => 60.0}, :window_over => 'day' } } )
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration,:formula => {:params => {:price => 10.0} } })
 
 #bln_my_planet_groups_1 (Европа, СНГ и популярные страны), calls, outcoming, 
-category = {:name => '_sctcg_bln_planeta_zero_groups_1_calls', :service_category_rouming_id => _sc_bln_my_planet_groups_1, :service_category_calls_id => _calls_out}
+category = {:name => '_sctcg_bln_planeta_zero_groups_1_calls_to_russia', :service_category_rouming_id => _sc_bln_my_planet_groups_1, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_russia, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Bln::My_planet_groups_1 }}}
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 20.0} } })  
+category = {:name => '_sctcg_bln_planeta_zero_groups_1_calls_to_rouming_country', :service_category_rouming_id => _sc_bln_my_planet_groups_1, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_rouming_country, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Bln::My_planet_groups_1 }}}
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 20.0} } })  
+category = {:name => '_sctcg_bln_planeta_zero_groups_1_calls_to_other_countries', :service_category_rouming_id => _sc_bln_my_planet_groups_1, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_not_rouming_not_russia, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Bln::My_planet_groups_1 }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 20.0} } })  
 
 #bln_my_planet_groups_1 (Европа, СНГ и популярные страны), sms, outcoming
-category = {:name => '_sctcg_bln_planeta_zero_groups_1_sms_outcoming', :service_category_rouming_id => _sc_bln_my_planet_groups_1, :service_category_calls_id => _sms_out}
+category = {:name => '_sctcg_bln_planeta_zero_groups_1_sms_outcoming', :service_category_rouming_id => _sc_bln_my_planet_groups_1, :service_category_calls_id => _sms_out, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Bln::My_planet_groups_1 }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::PriceByCountVolumeItem, :formula => {:params => {:price => 7.0} } })  
 
 
 #bln_my_planet_groups_2 (остальные страны), calls, incoming
-category = {:name => '_sctcg_bln_all_world_rouming_calls_incoming', :service_category_rouming_id => _sc_bln_my_planet_groups_2, :service_category_calls_id => _calls_in}
+category = {:name => '_sctcg_bln_all_world_rouming_calls_incoming', :service_category_rouming_id => _sc_bln_my_planet_groups_2, :service_category_calls_id => _calls_in, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Bln::My_planet_groups_2 }}}
   @tc.add_one_service_category_tarif_class(category, {},  
     {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxDurationMinuteForFixedPriceIfUsed,  
       :formula => {:params => {:max_duration_minute => 20.0, :price => 100.0}, :window_over => 'day' } } )
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 15.0} } })
 
 #bln_my_planet_groups_2 (остальные страны), calls, outcoming, 
-category = {:name => '_sctcg_bln_planeta_zero_groups_2_calls', :service_category_rouming_id => _sc_bln_my_planet_groups_2, :service_category_calls_id => _calls_out}
+category = {:name => '_sctcg_bln_planeta_zero_groups_2_calls_to_russia', :service_category_rouming_id => _sc_bln_my_planet_groups_2, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_russia, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Bln::My_planet_groups_2 }}}
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 45.0} } })  
+category = {:name => '_sctcg_bln_planeta_zero_groups_2_calls_to_rouming_country', :service_category_rouming_id => _sc_bln_my_planet_groups_2, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_rouming_country, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Bln::My_planet_groups_2 }}}
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 45.0} } })  
+category = {:name => '_sctcg_bln_planeta_zero_groups_2_calls_to_other_countries', :service_category_rouming_id => _sc_bln_my_planet_groups_2, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_not_rouming_not_russia, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Bln::My_planet_groups_2 }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 45.0} } })  
 
 #bln_my_planet_groups_2 (остальные страны), sms, outcoming
-category = {:name => '_sctcg_bln_planeta_zero_groups_2_sms_outcoming', :service_category_rouming_id => _sc_bln_my_planet_groups_2, :service_category_calls_id => _sms_out}
+category = {:name => '_sctcg_bln_planeta_zero_groups_2_sms_outcoming', :service_category_rouming_id => _sc_bln_my_planet_groups_2, :service_category_calls_id => _sms_out, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Bln::My_planet_groups_2 }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::PriceByCountVolumeItem, :formula => {:params => {:price => 9.0} } })  
 
 

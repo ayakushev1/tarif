@@ -30,12 +30,14 @@
 
 
 #Own and home regions, Calls, Outcoming, to_own_and_home_regions, to_own_operator
-category = {:name => '_sctcg_own_home_regions_calls_to_own_and_home_regions_to_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_own_operator}
+category = {:name => '_sctcg_own_home_regions_calls_to_own_and_home_regions_to_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_own_operator, 
+  :filtr => {:to_operators => {:in => [Category::Operator::Const::Beeline] }}}
   @tc.add_grouped_service_category_tarif_class(category, scg_bln_my_beeline_calls[:id])
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 2.0} } })
 
 #Own and home regions, Calls, Outcoming, to_own_country, to_own_operator
-category = {:name => '_sctcg_own_home_regions_calls_to_own_country_to_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country, :service_category_partner_type_id => _service_to_own_operator}
+category = {:name => '_sctcg_own_home_regions_calls_to_own_country_to_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country, :service_category_partner_type_id => _service_to_own_operator, 
+  :filtr => {:to_operators => {:in => [Category::Operator::Const::Beeline] }}}
   @tc.add_grouped_service_category_tarif_class(category, scg_bln_my_beeline_calls[:id])
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 2.0} } })
 

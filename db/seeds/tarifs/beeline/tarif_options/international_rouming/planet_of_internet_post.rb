@@ -12,14 +12,16 @@
   } } )
 
 #bln_the_best_internet_in_rouming_1, Internet
-category = {:name => '_sctcg_bln_planet_of_internet_post_1_internet', :service_category_rouming_id => _sc_bln_the_best_internet_in_rouming_groups_1, :service_category_calls_id => _internet}
+category = {:name => '_sctcg_bln_planet_of_internet_post_1_internet', :service_category_rouming_id => _sc_bln_the_best_internet_in_rouming_groups_1, :service_category_calls_id => _internet, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Bln::The_best_internet_in_rouming_groups_1 }}}
   @tc.add_one_service_category_tarif_class(category, {}, 
     {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteForFixedPriceIfUsed,  
       :formula => {:params => {:max_sum_volume => 40.0, :price => 200.0}, :window_over => 'day' } } )
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1, :standard_formula_id => Price::StandardFormula::Const::PriceBySumVolumeMByte, :formula => {:params => {:price => 5.0} } })  
 
 #bln_the_best_internet_in_rouming_1, Internet
-category = {:name => '_sctcg_bln_planet_of_internet_post_2_internet', :service_category_rouming_id => _sc_bln_the_best_internet_in_rouming_groups_2, :service_category_calls_id => _internet}
+category = {:name => '_sctcg_bln_planet_of_internet_post_2_internet', :service_category_rouming_id => _sc_bln_the_best_internet_in_rouming_groups_2, :service_category_calls_id => _internet, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Bln::The_best_internet_in_rouming_groups_2 }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::PriceBySumVolumeMByte, :formula => {:params => {:price => 90.0} } })  
 
 

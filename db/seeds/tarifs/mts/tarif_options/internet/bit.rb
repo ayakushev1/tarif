@@ -29,7 +29,7 @@
 #Own and home regions rouming, internet
   category = {:name => '_sctcg_own_home_regions_internet', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _internet}
   @tc.add_one_service_category_tarif_class(category, {}, 
-    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxCountVolumeForSpecialPrice,  
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteForSpecialPrice,  
       :formula => {:params => {:max_sum_volume => 75.0, :price => 0.0}, :window_over => 'day' } } )
   @tc.add_grouped_service_category_tarif_class(category, scg_mts_add_speed_100mb[:id], :tarif_set_must_include_tarif_options => [_mts_turbo_button_100_mb] )
     

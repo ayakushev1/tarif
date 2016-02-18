@@ -15,25 +15,29 @@
 
 
 #SIC
-  category = {:name => '_sctcg_tele_internet_abroad', :service_category_rouming_id => _sc_tele_sic_rouming, :service_category_calls_id => _internet}
+  category = {:name => '_sctcg_tele_internet_abroad', :service_category_rouming_id => _sc_tele_sic_rouming, :service_category_calls_id => _internet, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Tel::Service_to_tele_international_1 }}}
   @tc.add_one_service_category_tarif_class(category, {}, 
     {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteWithMultipleUseDay,  
       :formula => {:params => {:max_sum_volume => 10.0, :price => 10.0} } } )
 
 #Europe
-  category = {:name => '_sctcg_tele_internet_abroad', :service_category_rouming_id => _sc_tele_europe_rouming, :service_category_calls_id => _internet}
+  category = {:name => '_sctcg_tele_internet_abroad', :service_category_rouming_id => _sc_tele_europe_rouming, :service_category_calls_id => _internet, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Tel::Service_to_tele_international_2 }}}
   @tc.add_one_service_category_tarif_class(category, {}, 
     {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteWithMultipleUseDay,  
       :formula => {:params => {:max_sum_volume => 10.0, :price => 10.0} } } )
 
 #Asia, Africa and Australia
-  category = {:name => '_sctcg_tele_internet_abroad', :service_category_rouming_id => _sc_tele_asia_afr_aust_rouming, :service_category_calls_id => _internet}
+  category = {:name => '_sctcg_tele_internet_abroad', :service_category_rouming_id => _sc_tele_asia_afr_aust_rouming, :service_category_calls_id => _internet, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Tel::Service_to_tele_international_5 }}}
   @tc.add_one_service_category_tarif_class(category, {}, 
     {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteWithMultipleUseDay,  
       :formula => {:params => {:max_sum_volume => 10.0, :price => 30.0} } } )
 
 #South and North America
-  category = {:name => '_sctcg_tele_internet_abroad', :service_category_rouming_id => _sc_tele_americas_rouming, :service_category_calls_id => _internet}
+  category = {:name => '_sctcg_tele_internet_abroad', :service_category_rouming_id => _sc_tele_americas_rouming, :service_category_calls_id => _internet, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Tel::Service_to_tele_international_6 }}}
   @tc.add_one_service_category_tarif_class(category, {}, 
     {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteWithMultipleUseDay,  
       :formula => {:params => {:max_sum_volume => 10.0, :price => 30.0} } } )

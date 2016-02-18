@@ -29,7 +29,11 @@ category = {:name => 'sctcg_own_country_rouming_calls', :service_category_roumin
   @tc.add_only_service_category_tarif_class(category)  
 
 #All Russia except for Own and home regions, sms
-category = {:name => '_sctcg_own_country_rouming_sms', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _sms_out}
+category = {:name => '_sctcg_own_country_rouming_sms_to_own_and_home_regions', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_own_and_home_regions}
+  @tc.add_only_service_category_tarif_class(category)  
+category = {:name => '_sctcg_own_country_rouming_sms_to_own_country', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_own_country}
+  @tc.add_only_service_category_tarif_class(category)  
+category = {:name => '_sctcg_own_country_rouming_sms_to_not_own_country', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_not_own_country}
   @tc.add_only_service_category_tarif_class(category)  
 
 #All Russia except for Own and home regions, Internet

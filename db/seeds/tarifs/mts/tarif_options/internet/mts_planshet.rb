@@ -18,6 +18,13 @@
 
 #auto_turbo_buttons 
 
+  #internet included in tarif
+  scg_s_mts_planshet = @tc.add_service_category_group(
+    {:name => 'scg_s_mts_planshet' }, 
+    {:name => "price for scg_s_mts_planshet"}, 
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteForFixedPrice,  
+      :formula => {:params => {:max_sum_volume => 4000.0, :price => 0.0}, :window_over => 'month' } } )
+
 #Ежемесячная плата
   @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => Price::StandardFormula::Const::PriceByMonth, :formula => {:params => {:price => 450.0} } })
 
@@ -25,10 +32,14 @@
   @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => Price::StandardFormula::Const::PriceByMonth, :formula => {:params => {:price => -50.0} } })
 
 #All Russia rouming, internet, with turbo-buttons
-  category = {:name => '_sctcg_all_russia_rouming_internet', :service_category_rouming_id => _all_russia_rouming, :service_category_calls_id => _internet}
-  @tc.add_one_service_category_tarif_class(category, {}, 
-    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteForFixedPrice,  
-      :formula => {:params => {:max_sum_volume => 4000.0, :price => 0.0}, :window_over => 'month' } } )
+#Own and home regions, Internet
+  category = {:name => 'own_and_home_regions_internet', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _internet}
+  @tc.add_grouped_service_category_tarif_class(category, scg_s_mts_planshet[:id])
+
+#Own country, Internet
+  category = {:name => 'own_country_internet', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _internet}
+  @tc.add_grouped_service_category_tarif_class(category, scg_s_mts_planshet[:id])
+
 
 @tc.add_tarif_class_categories
 

@@ -19,63 +19,86 @@
 
 #TODO проверить действует ли тариф на звонки в своем регионе
 #Own and home regions, Calls, Outcoming, to_russia, to own operator
-category = {:name => '_sctcg__own_home_regions_calls_to_russia_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_russia, :service_category_partner_type_id => _service_to_own_operator}
+category = {:name => '_sctcg__own_home_regions_calls_to_russia_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_own_operator, 
+  :filtr => {:to_operators => {:in => [Category::Operator::Const::Mts] }}}
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 2.5} } })
+
+category = {:name => '_sctcg__own_home_regions_calls_to_russia_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country, :service_category_partner_type_id => _service_to_own_operator, 
+  :filtr => {:to_operators => {:in => [Category::Operator::Const::Mts] }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 2.5} } })
 
 #Own and home regions, Calls, Outcoming, to_russia, to not own operator
-category = {:name => '_sctcg__own_home_regions_calls_to_russia_not_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_russia, :service_category_partner_type_id => _service_to_not_own_operator}
+category = {:name => '_sctcg__own_home_regions_calls_to_russia_not_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_not_own_operator, 
+  :filtr => {:to_operators => {:not_in => [Category::Operator::Const::Mts] }}}
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 3.5} } })
+
+category = {:name => '_sctcg__own_home_regions_calls_to_russia_not_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country, :service_category_partner_type_id => _service_to_not_own_operator, 
+  :filtr => {:to_operators => {:not_in => [Category::Operator::Const::Mts] }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 3.5} } })
 
 #Own and home regions, Calls, Outcoming, to_mts_love_countries_4_9
-category = {:name => '_sctcg_own_home_regions_calls_to_mts_love_countries_4_9', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_love_countries_4_9}
+category = {:name => '_sctcg_own_home_regions_calls_to_mts_love_countries_4_9', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_love_countries_4_9, 
+  :filtr => {:to_abroad_countries => {:in => Category::Country::Mts::Love_countries_4_9 }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 4.9} } })
 
 #Own and home regions, Calls, Outcoming, to_mts_love_countries_5_5
-category = {:name => '_sctcg_own_home_regions_calls_to_mts_love_countries_5_5', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_love_countries_5_5}
+category = {:name => '_sctcg_own_home_regions_calls_to_mts_love_countries_5_5', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_love_countries_5_5, 
+  :filtr => {:to_abroad_countries => {:in => Category::Country::Mts::Love_countries_5_5 }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 5.5} } })
 
 #Own and home regions, Calls, Outcoming, to_mts_love_countries_5_9
-category = {:name => '_sctcg_own_home_regions_calls_to_mts_love_countries_5_9', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_love_countries_5_9}
+category = {:name => '_sctcg_own_home_regions_calls_to_mts_love_countries_5_9', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_love_countries_5_9, 
+  :filtr => {:to_abroad_countries => {:in => Category::Country::Mts::Love_countries_5_9 }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 5.9} } })
 
 #Own and home regions, Calls, Outcoming, to_mts_love_countries_6_9
-category = {:name => '_sctcg_own_home_regions_calls_to_mts_love_countries_6_9', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_love_countries_6_9}
+category = {:name => '_sctcg_own_home_regions_calls_to_mts_love_countries_6_9', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_love_countries_6_9, 
+  :filtr => {:to_abroad_countries => {:in => Category::Country::Mts::Love_countries_6_9 }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 6.9} } })
 
 #Own and home regions, Calls, Outcoming, to_mts_love_countries_7_9
-category = {:name => '_sctcg_own_home_regions_calls_to_mts_love_countries_7_9', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_love_countries_7_9}
+category = {:name => '_sctcg_own_home_regions_calls_to_mts_love_countries_7_9', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_love_countries_7_9, 
+  :filtr => {:to_abroad_countries => {:in => Category::Country::Mts::Love_countries_7_9 }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 7.9} } })
 
 #Own and home regions, Calls, Outcoming, to_mts_love_countries_8_9
-category = {:name => '_sctcg_own_home_regions_calls_to_mts_love_countries_8_9', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_love_countries_8_9}
+category = {:name => '_sctcg_own_home_regions_calls_to_mts_love_countries_8_9', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_love_countries_8_9, 
+  :filtr => {:to_abroad_countries => {:in => Category::Country::Mts::Love_countries_8_9 }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 8.9} } })
 
 #Own and home regions, Calls, Outcoming, to_mts_love_countries_9_9
-category = {:name => '_sctcg_own_home_regions_calls_to_mts_love_countries_9_9', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_love_countries_9_9}
+category = {:name => '_sctcg_own_home_regions_calls_to_mts_love_countries_9_9', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_love_countries_9_9, 
+  :filtr => {:to_abroad_countries => {:in => Category::Country::Mts::Love_countries_9_9 }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 9.9} } })
 
 #Own and home regions, Calls, Outcoming, to_mts_love_countries_11_5
-category = {:name => '_sctcg_own_home_regions_calls_to_mts_love_countries_11_5', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_love_countries_11_5}
+category = {:name => '_sctcg_own_home_regions_calls_to_mts_love_countries_11_5', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_love_countries_11_5, 
+  :filtr => {:to_abroad_countries => {:in => Category::Country::Mts::Love_countries_11_5 }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 11.5} } })
 
 #Own and home regions, Calls, Outcoming, to_mts_love_countries_12_9
-category = {:name => '_sctcg_own_home_regions_calls_to_mts_love_countries_12_9', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_love_countries_12_9}
+category = {:name => '_sctcg_own_home_regions_calls_to_mts_love_countries_12_9', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_love_countries_12_9, 
+  :filtr => {:to_abroad_countries => {:in => Category::Country::Mts::Love_countries_12_9 }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 12.9} } })
 
 #Own and home regions, Calls, Outcoming, to_mts_love_countries_14_9
-category = {:name => '_sctcg_own_home_regions_calls_to_mts_love_countries_14_9', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_love_countries_14_9}
+category = {:name => '_sctcg_own_home_regions_calls_to_mts_love_countries_14_9', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_love_countries_14_9, 
+  :filtr => {:to_abroad_countries => {:in => Category::Country::Mts::Love_countries_14_9 }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 14.9} } })
 
 #Own and home regions, Calls, Outcoming, to_mts_love_countries_19_9
-category = {:name => '_sctcg_own_home_regions_calls_to_mts_love_countries_19_9', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_love_countries_19_9}
+category = {:name => '_sctcg_own_home_regions_calls_to_mts_love_countries_19_9', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_love_countries_19_9, 
+  :filtr => {:to_abroad_countries => {:in => Category::Country::Mts::Love_countries_19_9 }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 19.9} } })
 
 #Own and home regions, Calls, Outcoming, to_mts_love_countries_29_9
-category = {:name => '_sctcg_own_home_regions_calls_to_mts_love_countries_29_9', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_love_countries_29_9}
+category = {:name => '_sctcg_own_home_regions_calls_to_mts_love_countries_29_9', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_love_countries_29_9, 
+  :filtr => {:to_abroad_countries => {:in => Category::Country::Mts::Love_countries_29_9 }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 29.9} } })
 
 #Own and home regions, Calls, Outcoming, to_mts_love_countries_49_9
-category = {:name => '_sctcg_own_home_regions_calls_to_mts_love_countries_49_9', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_love_countries_49_9}
+category = {:name => '_sctcg_own_home_regions_calls_to_mts_love_countries_49_9', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_mts_love_countries_49_9, 
+  :filtr => {:to_abroad_countries => {:in => Category::Country::Mts::Love_countries_49_9 }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 49.9} } })
 
 @tc.add_tarif_class_categories

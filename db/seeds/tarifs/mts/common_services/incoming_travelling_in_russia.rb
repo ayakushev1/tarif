@@ -13,10 +13,6 @@
     :multiple_use => false
   } } )
 
-_sctcg_own_country_calls_from_rouming_region_own_operator = {:name => '_sctcg_own_country_calls_from_rouming_region_own_operator', 
-  :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_in, :service_category_geo_id => _service_to_rouming_region, 
-  :service_category_partner_type_id => _service_to_own_operator}
-
 #Подключение опции
 #  @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => Price::StandardFormula::Const::PriceByItemIfUsed, :formula => {:params => {:price => 0.0} } })  
 
@@ -24,7 +20,10 @@ _sctcg_own_country_calls_from_rouming_region_own_operator = {:name => '_sctcg_ow
 #  @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => Price::StandardFormula::Const::PriceByMonth, :formula => {:params => {:price => 0.0} } })
 
 #Own country, calls, from rouming region, from own_operator
-  @tc.add_one_service_category_tarif_class(_sctcg_own_country_calls_from_rouming_region_own_operator, {}, 
+category = {:name => '_sctcg_own_country_calls_from_rouming_region_own_operator', 
+  :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_in, :service_category_partner_type_id => _service_to_own_operator, 
+  :filtr => {:to_operators => {:in => [Category::Operator::Const::Mts] }}} # temporary :service_category_geo_id => _service_to_rouming_region,
+  @tc.add_one_service_category_tarif_class(category, {}, 
     {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 0.0} } })
 
 @tc.add_tarif_class_categories

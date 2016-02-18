@@ -1,51 +1,51 @@
 module Price::StandardFormula::Const
-  Price::StandardFormula::Const::PriceByMonth = 0
-  Price::StandardFormula::Const::PriceByItem = 2
+  PriceByMonth = 0
+  PriceByItem = 2
 
-  Price::StandardFormula::Const::PriceBySumDurationSecond = 13
-  Price::StandardFormula::Const::PriceByCountVolumeItem = 14
+  PriceBySumDurationSecond = 13
+  PriceByCountVolumeItem = 14
 
-  Price::StandardFormula::Const::PriceBySumVolumeMByte = 15
-  Price::StandardFormula::Const::PriceBySumVolumeKByte = 16
-  Price::StandardFormula::Const::PriceBySumDuration = 17
+  PriceBySumVolumeMByte = 15
+  PriceBySumVolumeKByte = 16
+  PriceBySumDuration = 17
 
-  Price::StandardFormula::Const::FixedPriceIfUsedInOneDayDuration = 18
-  Price::StandardFormula::Const::FixedPriceIfUsedInOneDayVolume = 19
-  Price::StandardFormula::Const::FixedPriceIfUsedInOneDayAny = 20
-  Price::StandardFormula::Const::PriceByMonthIfUsed = 21
-  Price::StandardFormula::Const::PriceByItemIfUsed = 22
+  FixedPriceIfUsedInOneDayDuration = 18
+  FixedPriceIfUsedInOneDayVolume = 19
+  FixedPriceIfUsedInOneDayAny = 20
+  PriceByMonthIfUsed = 21
+  PriceByItemIfUsed = 22
 
-  Price::StandardFormula::Const::MaxVolumesForFixedPriceConst = [30, 31, 32]
-  Price::StandardFormula::Const::MaxDurationMinuteForFixedPrice = 30
-  Price::StandardFormula::Const::MaxCountVolumeForFixedPrice = 31
-  Price::StandardFormula::Const::MaxSumVolumeMByteForFixedPrice = 32
+  MaxVolumesForFixedPriceConst = [30, 31, 32]
+  MaxDurationMinuteForFixedPrice = 30
+  MaxCountVolumeForFixedPrice = 31
+  MaxSumVolumeMByteForFixedPrice = 32
   
-  Price::StandardFormula::Const::MaxVolumesForFixedPriceIfUsedConst = [33, 34, 35]
-  Price::StandardFormula::Const::MaxDurationMinuteForFixedPriceIfUsed = 33
-  Price::StandardFormula::Const::MaxCountVolumeForFixedPriceIfUsed = 34
-  Price::StandardFormula::Const::MaxSumVolumeMByteForFixedPriceIfUsed = 35
+  MaxVolumesForFixedPriceIfUsedConst = [33, 34, 35]
+  MaxDurationMinuteForFixedPriceIfUsed = 33
+  MaxCountVolumeForFixedPriceIfUsed = 34
+  MaxSumVolumeMByteForFixedPriceIfUsed = 35
 
-  Price::StandardFormula::Const::MaxDurationMinuteForSpecialPrice = 36
-  Price::StandardFormula::Const::MaxCountVolumeForSpecialPrice = 37
-  Price::StandardFormula::Const::MaxSumVolumeMByteForSpecialPrice = 38
+  MaxDurationMinuteForSpecialPrice = 36
+  MaxCountVolumeForSpecialPrice = 37
+  MaxSumVolumeMByteForSpecialPrice = 38
 
-  Price::StandardFormula::Const::TurbobuttonsConst = [40, 41]
-  Price::StandardFormula::Const::TurbobuttonMByteForFixedPrice = 40
-  Price::StandardFormula::Const::TurbobuttonMByteForFixedPriceDay = 41
+  TurbobuttonsConst = [40, 41]
+  TurbobuttonMByteForFixedPrice = 40
+  TurbobuttonMByteForFixedPriceDay = 41
 
-#  Price::StandardFormula::Const::MaxDurationMinuteWithMultipleUseMonth = 50
-#  Price::StandardFormula::Const::MaxDurationMinuteWithMultipleUseDay = 51
+#  MaxDurationMinuteWithMultipleUseMonth = 50
+#  MaxDurationMinuteWithMultipleUseDay = 51
 
-  Price::StandardFormula::Const::MaxCountVolumeWithMultipleUseMonth = 52
-  Price::StandardFormula::Const::MaxCountVolumeWithMultipleUseDay = 53
+  MaxCountVolumeWithMultipleUseMonth = 52
+  MaxCountVolumeWithMultipleUseDay = 53
 
-  Price::StandardFormula::Const::MaxSumVolumeMByteWithMultipleUseMonth = 54
-  Price::StandardFormula::Const::MaxSumVolumeMByteWithMultipleUseDay = 55
+  MaxSumVolumeMByteWithMultipleUseMonth = 54
+  MaxSumVolumeMByteWithMultipleUseDay = 55
   
-  Price::StandardFormula::Const::TwoStepPriceMaxDurationMinute = 61
+  TwoStepPriceMaxDurationMinute = 61
 
-  Price::StandardFormula::Const::TwoStepPriceDurationMinute = 70
-  Price::StandardFormula::Const::ThreeStepPriceDurationMinute = 71
+  TwoStepPriceDurationMinute = 70
+  ThreeStepPriceDurationMinute = 71
   
   
 end

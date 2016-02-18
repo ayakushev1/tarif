@@ -13,7 +13,12 @@
 
 
 #_own_and_home_regions_rouming, calls, outcoming, to all own country regions
-  category = {:name => '_sctcg_own_and_home_regions_calls_to_all_own_country_regions', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_all_own_country_regions}
+  category = {:name => '_sctcg_own_and_home_regions_calls_to_all_own_country_regions', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions}
+  @tc.add_one_service_category_tarif_class(category, {}, 
+  {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::ThreeStepPriceDurationMinute, 
+    :formula => {:params => {:duration_minute_1 => 1.0, :duration_minute_2 => 10.0, :price_0 => 15.0, :price_1 => 0.0, :price_2 => 2.5} } } )
+
+  category = {:name => '_sctcg_own_and_home_regions_calls_to_all_own_country_regions', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country}
   @tc.add_one_service_category_tarif_class(category, {}, 
   {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::ThreeStepPriceDurationMinute, 
     :formula => {:params => {:duration_minute_1 => 1.0, :duration_minute_2 => 10.0, :price_0 => 15.0, :price_1 => 0.0, :price_2 => 2.5} } } )
@@ -29,7 +34,13 @@
     :tarif_set_must_include_tarif_options => [_mgf_be_as_home] )  
 
 #_own_country_regions_rouming, calls, outcoming, to all own country regions
-  category = {:name => '_sctcg_own_country_calls_to_all_own_country_regions', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_all_own_country_regions}
+  category = {:name => '_sctcg_own_country_calls_to_all_own_country_regions', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions}
+  @tc.add_one_service_category_tarif_class(category, {}, 
+  {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::ThreeStepPriceDurationMinute, 
+    :formula => {:params => {:duration_minute_1 => 1.0, :duration_minute_2 => 10.0, :price_0 => 15.0, :price_1 => 0.0, :price_2 => 2.5} } },
+   :tarif_set_must_include_tarif_options => [_mgf_be_as_home] )  
+
+  category = {:name => '_sctcg_own_country_calls_to_all_own_country_regions', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country}
   @tc.add_one_service_category_tarif_class(category, {}, 
   {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::ThreeStepPriceDurationMinute, 
     :formula => {:params => {:duration_minute_1 => 1.0, :duration_minute_2 => 10.0, :price_0 => 15.0, :price_1 => 0.0, :price_2 => 2.5} } },

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160205230538) do
+ActiveRecord::Schema.define(version: 20160213035443) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -587,8 +587,10 @@ ActiveRecord::Schema.define(version: 20160205230538) do
     t.integer "parent_id"
     t.integer "level"
     t.integer "path",      default: [], array: true
+    t.string  "global"
   end
 
+  add_index "service_categories", ["global"], name: "index_service_categories_on_global", using: :btree
   add_index "service_categories", ["level"], name: "index_service_categories_on_level", using: :btree
   add_index "service_categories", ["parent_id"], name: "index_service_categories_on_parent_id", using: :btree
   add_index "service_categories", ["path"], name: "index_service_categories_on_path", using: :gin
@@ -628,10 +630,12 @@ ActiveRecord::Schema.define(version: 20160205230538) do
     t.integer  "tarif_option_id"
     t.integer  "tarif_option_order"
     t.string   "uniq_service_category"
+    t.jsonb    "filtr"
   end
 
   add_index "service_category_tarif_classes", ["as_standard_category_group_id"], name: "service_category_tarif_classes_as_standard_category_group_id", using: :btree
   add_index "service_category_tarif_classes", ["as_tarif_class_service_category_id"], name: "service_category_tarif_classes_as_tarif_class_service_category", using: :btree
+  add_index "service_category_tarif_classes", ["filtr"], name: "index_service_category_tarif_classes_on_filtr", using: :gin
   add_index "service_category_tarif_classes", ["is_active"], name: "index_service_category_tarif_classes_on_is_active", using: :btree
   add_index "service_category_tarif_classes", ["service_category_calls_id"], name: "service_category_tarif_classes_service_category_calls_id", using: :btree
   add_index "service_category_tarif_classes", ["service_category_geo_id"], name: "service_category_tarif_classes_service_category_geo_id", using: :btree

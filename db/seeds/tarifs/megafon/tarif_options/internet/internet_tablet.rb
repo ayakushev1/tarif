@@ -17,15 +17,28 @@
 #Ежемесячная плата
   @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => Price::StandardFormula::Const::PriceByMonth, :formula => {:params => {:price => 0.0} } })
 
-
-#_all_russia_rouming, Internet
-  category = {:name => '_sctcg_own_home_regions_internet', :service_category_rouming_id => _all_russia_rouming, :service_category_calls_id => _internet}
-  @tc.add_one_service_category_tarif_class(category, {}, 
+  #internet included in tarif
+  scg_mgf_internet_tablet_20 = @tc.add_service_category_group(
+    {:name => 'scg_mgf_internet_tablet_20' }, 
+    {:name => "price for scg_mgf_internet_tablet_20"}, 
     {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteForFixedPrice,  
       :formula => {:params => {:max_sum_volume => 20.0, :price => 0.0}, :window_over => 'day' } } )
-  @tc.add_one_service_category_tarif_class(category, {}, 
+
+  scg_mgf_internet_tablet_300 = @tc.add_service_category_group(
+    {:name => 'scg_mgf_internet_tablet_300' }, 
+    {:name => "price for scg_mgf_internet_tablet_300"}, 
     {:calculation_order => 1, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteForFixedPriceIfUsed,  
       :formula => {:params => {:max_sum_volume => 300.0, :price => 30.0}, :window_over => 'day' } } )
+
+#Own and home regions, Internet
+  category = {:name => 'own_and_home_regions_internet', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _internet}
+  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_internet_tablet_20[:id])
+  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_internet_tablet_300[:id])
+
+#Own country, Internet
+  category = {:name => 'own_country_internet', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _internet}
+  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_internet_tablet_20[:id])
+  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_internet_tablet_300[:id])
 
 
 @tc.add_tarif_class_categories

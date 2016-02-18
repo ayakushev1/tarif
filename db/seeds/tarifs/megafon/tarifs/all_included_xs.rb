@@ -62,21 +62,25 @@ category = {:name => '_sctcg_own_home_regions_calls_incoming', :service_category
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 0.0} } })
 
 #Own and home regions, Calls, Outcoming, to_own_and_home_region, to_own_operator
-category = {:name => '_sctcg_own_home_regions_calls_to_own_home_regions_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_own_operator}
+category = {:name => '_sctcg_own_home_regions_calls_to_own_home_regions_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_own_operator, 
+  :filtr => {:to_operators => {:in => [Category::Operator::Const::Megafon] }}}
 #  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_all_included_xs_calls[:id])
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 0.0} } })
 
 #Own and home regions, Calls, Outcoming, to_own_and_home_region, to_not_own_operator
-category = {:name => '_sctcg_own_home_regions_calls_to_own_home_regions_not_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_not_own_operator}
+category = {:name => '_sctcg_own_home_regions_calls_to_own_home_regions_not_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_not_own_operator, 
+  :filtr => {:to_operators => {:not_in => [Category::Operator::Const::Megafon] }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 2.5} } })
 
 #Own and home regions, Calls, Outcoming, to_own_country, to_own_operator
-category = {:name => '_sctcg_own_home_regions_calls_to_own_country_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country, :service_category_partner_type_id => _service_to_own_operator}
+category = {:name => '_sctcg_own_home_regions_calls_to_own_country_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country, :service_category_partner_type_id => _service_to_own_operator, 
+  :filtr => {:to_operators => {:in => [Category::Operator::Const::Megafon] }}}
   @tc.add_grouped_service_category_tarif_class(category, scg_mgf_all_included_xs_calls[:id])
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 3.0} } })
 
 #Own and home regions, Calls, Outcoming, to_own_country, to_not_own_operator
-category = {:name => '_sctcg_own_home_regions_calls_to_own_country_not_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country, :service_category_partner_type_id => _service_to_not_own_operator}
+category = {:name => '_sctcg_own_home_regions_calls_to_own_country_not_own_operator', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country, :service_category_partner_type_id => _service_to_not_own_operator, 
+  :filtr => {:to_operators => {:not_in => [Category::Operator::Const::Megafon] }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 12.5} } })
 
 #Own and home regions, sms, incoming
@@ -122,58 +126,69 @@ category = {:name => '_sctcg_own_home_regions_mms_to_own_country', :service_cate
     :tarif_set_must_include_tarif_options => [_mgf_everywhere_moscow_in_central_region] )  
 
 #Central regions RF except for Own and home regions, Calls, Incoming
-category = {:name => 'sctcg_cenral_regions_not_own_and_home_region_calls_incoming', :service_category_rouming_id => _sc_mgf_cenral_regions_not_own_and_home_region, :service_category_calls_id => _calls_in}
+category = {:name => 'sctcg_cenral_regions_not_own_and_home_region_calls_incoming', :service_category_rouming_id => _sc_mgf_cenral_regions_not_own_and_home_region, :service_category_calls_id => _calls_in, 
+  :filtr => {:own_country_regions => {:in => Category::Region::Const::Mgf_central_region }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 0.0} } },
     :tarif_set_must_include_tarif_options => [_mgf_everywhere_moscow_in_central_region] )  
 
 #Central regions RF except for Own and home regions, Calls, Outcoming, to_own_and_home_region, to_own_operator
-category = {:name => '_sctcg_cenral_regions_not_own_and_home_region_calls_to_own_home_regions_own_operator', :service_category_rouming_id => _sc_mgf_cenral_regions_not_own_and_home_region, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_own_operator}
+category = {:name => '_sctcg_cenral_regions_not_own_and_home_region_calls_to_own_home_regions_own_operator', :service_category_rouming_id => _sc_mgf_cenral_regions_not_own_and_home_region, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_own_operator, 
+  :filtr => {:own_country_regions => {:in => Category::Region::Const::Mgf_central_region }, :to_operators => {:in => [Category::Operator::Const::Megafon] }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 0.0} } },
     :tarif_set_must_include_tarif_options => [_mgf_everywhere_moscow_in_central_region] )  
 
 #Central regions RF except for Own and home regions, Calls, Outcoming, to_own_and_home_region, to_not_own_operator
-category = {:name => '_sctcg_cenral_regions_not_own_and_home_region_calls_to_own_home_regions_not_own_operator', :service_category_rouming_id => _sc_mgf_cenral_regions_not_own_and_home_region, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_not_own_operator}
+category = {:name => '_sctcg_cenral_regions_not_own_and_home_region_calls_to_own_home_regions_not_own_operator', :service_category_rouming_id => _sc_mgf_cenral_regions_not_own_and_home_region, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_not_own_operator, 
+  :filtr => {:own_country_regions => {:in => Category::Region::Const::Mgf_central_region }, :to_operators => {:not_in => [Category::Operator::Const::Megafon] }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 2.5} } },
     :tarif_set_must_include_tarif_options => [_mgf_everywhere_moscow_in_central_region] )  
 
 #Central regions RF except for Own and home regions, Calls, Outcoming, to_own_country, to_own_operator
-category = {:name => '_sctcg_cenral_regions_not_own_and_home_region_calls_to_own_country_own_operator', :service_category_rouming_id => _sc_mgf_cenral_regions_not_own_and_home_region, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country, :service_category_partner_type_id => _service_to_own_operator}
+category = {:name => '_sctcg_cenral_regions_not_own_and_home_region_calls_to_own_country_own_operator', :service_category_rouming_id => _sc_mgf_cenral_regions_not_own_and_home_region, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country, :service_category_partner_type_id => _service_to_own_operator, 
+  :filtr => {:own_country_regions => {:in => Category::Region::Const::Mgf_central_region }, :to_operators => {:in => [Category::Operator::Const::Megafon] }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 3.0} } },
     :tarif_set_must_include_tarif_options => [_mgf_everywhere_moscow_in_central_region] )  
 
 #Central regions RF except for Own and home regions, Calls, Outcoming, to_own_country, to_not_own_operator
-category = {:name => '_sctcg_cenral_regions_not_own_and_home_region_calls_to_own_country_not_own_operator', :service_category_rouming_id => _sc_mgf_cenral_regions_not_own_and_home_region, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country, :service_category_partner_type_id => _service_to_not_own_operator}
+category = {:name => '_sctcg_cenral_regions_not_own_and_home_region_calls_to_own_country_not_own_operator', :service_category_rouming_id => _sc_mgf_cenral_regions_not_own_and_home_region, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country, :service_category_partner_type_id => _service_to_not_own_operator, 
+  :filtr => {:own_country_regions => {:in => Category::Region::Const::Mgf_central_region }, :to_operators => {:not_in => [Category::Operator::Const::Megafon] }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 12.5} } },
     :tarif_set_must_include_tarif_options => [_mgf_everywhere_moscow_in_central_region] )  
   
 
 #Central regions RF except for Own and home regions, sms, incoming
-category = {:name => 'sctcg_cenral_regions_not_own_and_home_region_sms_incoming', :service_category_rouming_id => _sc_mgf_cenral_regions_not_own_and_home_region, :service_category_calls_id => _sms_in}
+category = {:name => 'sctcg_cenral_regions_not_own_and_home_region_sms_incoming', :service_category_rouming_id => _sc_mgf_cenral_regions_not_own_and_home_region, :service_category_calls_id => _sms_in, 
+  :filtr => {:own_country_regions => {:in => Category::Region::Const::Mgf_central_region }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceByCountVolumeItem, :formula => {:params => {:price => 0.0} } },
     :tarif_set_must_include_tarif_options => [_mgf_everywhere_moscow_in_central_region] )  
 
 #Central regions RF except for Own and home regions, sms, Outcoming, to_own_home_regions
-category = {:name => '_sctcg_cenral_regions_not_own_and_home_region_sms_to_own_home_regions', :service_category_rouming_id => _sc_mgf_cenral_regions_not_own_and_home_region, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_own_and_home_regions}
+category = {:name => '_sctcg_cenral_regions_not_own_and_home_region_sms_to_own_home_regions', :service_category_rouming_id => _sc_mgf_cenral_regions_not_own_and_home_region, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_own_and_home_regions, 
+  :filtr => {:own_country_regions => {:in => Category::Region::Const::Mgf_central_region }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceByCountVolumeItem, :formula => {:params => {:price => 1.9} } },
     :tarif_set_must_include_tarif_options => [_mgf_everywhere_moscow_in_central_region] )  
 
 #Central regions RF except for Own and home regions, sms, Outcoming, to_own country
-category = {:name => '_sctcg_cenral_regions_not_own_and_home_region_sms_to_own_country', :service_category_rouming_id => _sc_mgf_cenral_regions_not_own_and_home_region, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_own_country}
+category = {:name => '_sctcg_cenral_regions_not_own_and_home_region_sms_to_own_country', :service_category_rouming_id => _sc_mgf_cenral_regions_not_own_and_home_region, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_own_country, 
+  :filtr => {:own_country_regions => {:in => Category::Region::Const::Mgf_central_region }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceByCountVolumeItem, :formula => {:params => {:price => 3.9} } },
     :tarif_set_must_include_tarif_options => [_mgf_everywhere_moscow_in_central_region] )  
 
 #Central regions RF except for Own and home regions, mms, incoming
-category = {:name => 'sctcg_cenral_regions_not_own_and_home_region_mms_incoming', :service_category_rouming_id => _sc_mgf_cenral_regions_not_own_and_home_region, :service_category_calls_id => _mms_in}
+category = {:name => 'sctcg_cenral_regions_not_own_and_home_region_mms_incoming', :service_category_rouming_id => _sc_mgf_cenral_regions_not_own_and_home_region, :service_category_calls_id => _mms_in, 
+  :filtr => {:own_country_regions => {:in => Category::Region::Const::Mgf_central_region }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceByCountVolumeItem, :formula => {:params => {:price => 0.0} } },
     :tarif_set_must_include_tarif_options => [_mgf_everywhere_moscow_in_central_region] )  
 
 #Central regions RF except for Own and home regions, mms, Outcoming, to_own_home_regions
-category = {:name => '_sctcg_cenral_regions_not_own_and_home_region_mms_to_own_home_regions', :service_category_rouming_id => _sc_mgf_cenral_regions_not_own_and_home_region, :service_category_calls_id => _mms_out, :service_category_geo_id => _service_to_own_and_home_regions}
+category = {:name => '_sctcg_cenral_regions_not_own_and_home_region_mms_to_own_home_regions', :service_category_rouming_id => _sc_mgf_cenral_regions_not_own_and_home_region, :service_category_calls_id => _mms_out, :service_category_geo_id => _service_to_own_and_home_regions, 
+  :filtr => {:own_country_regions => {:in => Category::Region::Const::Mgf_central_region }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceByCountVolumeItem, :formula => {:params => {:price => 9.0} } },
     :tarif_set_must_include_tarif_options => [_mgf_everywhere_moscow_in_central_region] )  
 
 #Central regions RF except for Own and home regions, mms, Outcoming, to_own country
-category = {:name => '_sctcg_cenral_regions_not_own_and_home_region_mms_to_own_country', :service_category_rouming_id => _sc_mgf_cenral_regions_not_own_and_home_region, :service_category_calls_id => _mms_out, :service_category_geo_id => _service_to_own_country}
+category = {:name => '_sctcg_cenral_regions_not_own_and_home_region_mms_to_own_country', :service_category_rouming_id => _sc_mgf_cenral_regions_not_own_and_home_region, :service_category_calls_id => _mms_out, :service_category_geo_id => _service_to_own_country, 
+  :filtr => {:own_country_regions => {:in => Category::Region::Const::Mgf_central_region }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceByCountVolumeItem, :formula => {:params => {:price => 9.0} } },
     :tarif_set_must_include_tarif_options => [_mgf_everywhere_moscow_in_central_region] )  
 
@@ -211,22 +226,26 @@ category = {:name => 'sctcg_cenral_regions_not_own_and_home_region_calls_incomin
     :tarif_set_must_include_tarif_options => [_mgf_be_as_home] )  
 
 #All Russia except for Own and home regions, Calls, Outcoming, to_own_and_home_region, to_own_operator
-category = {:name => '_sctcg_cenral_regions_not_own_and_home_region_calls_to_own_home_regions_own_operator', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_own_operator}
+category = {:name => '_sctcg_cenral_regions_not_own_and_home_region_calls_to_own_home_regions_own_operator', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_own_operator, 
+  :filtr => {:to_operators => {:in => [Category::Operator::Const::Megafon] }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 0.0} } },
     :tarif_set_must_include_tarif_options => [_mgf_be_as_home] )  
 
 #All Russia except for Own and home regions, Calls, Outcoming, to_own_and_home_region, to_not_own_operator
-category = {:name => '_sctcg_cenral_regions_not_own_and_home_region_calls_to_own_home_regions_not_own_operator', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_not_own_operator}
+category = {:name => '_sctcg_cenral_regions_not_own_and_home_region_calls_to_own_home_regions_not_own_operator', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_not_own_operator, 
+  :filtr => {:to_operators => {:not_in => [Category::Operator::Const::Megafon] }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 2.5} } },
     :tarif_set_must_include_tarif_options => [_mgf_be_as_home] )  
 
 #All Russia except for Own and home regions, Calls, Outcoming, to_own_country, to_own_operator
-category = {:name => '_sctcg_cenral_regions_not_own_and_home_region_calls_to_own_country_own_operator', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country, :service_category_partner_type_id => _service_to_own_operator}
+category = {:name => '_sctcg_cenral_regions_not_own_and_home_region_calls_to_own_country_own_operator', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country, :service_category_partner_type_id => _service_to_own_operator, 
+  :filtr => {:to_operators => {:in => [Category::Operator::Const::Megafon] }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 3.0} } },
     :tarif_set_must_include_tarif_options => [_mgf_be_as_home] )  
 
 #All Russia except for Own and home regions, Calls, Outcoming, to_own_country, to_not_own_operator
-category = {:name => '_sctcg_cenral_regions_not_own_and_home_region_calls_to_own_country_not_own_operator', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country, :service_category_partner_type_id => _service_to_not_own_operator}
+category = {:name => '_sctcg_cenral_regions_not_own_and_home_region_calls_to_own_country_not_own_operator', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country, :service_category_partner_type_id => _service_to_not_own_operator, 
+  :filtr => {:to_operators => {:not_in => [Category::Operator::Const::Megafon] }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 12.5} } },
     :tarif_set_must_include_tarif_options => [_mgf_be_as_home] )  
   

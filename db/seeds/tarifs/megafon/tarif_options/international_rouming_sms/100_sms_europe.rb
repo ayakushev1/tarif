@@ -11,7 +11,8 @@
     :multiple_use => true
   } } )
 
-category = {:name => '_sctcg_100_sms_europe_rouming_sms_outcoming', :service_category_rouming_id => _sc_mgf_rouming_in_50_sms_europe, :service_category_calls_id => _sms_out}
+category = {:name => '_sctcg_100_sms_europe_rouming_sms_outcoming', :service_category_rouming_id => _sc_mgf_rouming_in_50_sms_europe, :service_category_calls_id => _sms_out, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Mgf::C50_sms_europe_group }}}
 
 #Европа и СНГ (в основном), sms, Outcoming
   @tc.add_one_service_category_tarif_class(category, {}, 

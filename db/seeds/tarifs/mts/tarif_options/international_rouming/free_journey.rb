@@ -24,12 +24,14 @@ scg_mts_free_journey = @tc.add_service_category_group(
   @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => Price::StandardFormula::Const::FixedPriceIfUsedInOneDayDuration, :formula => {:params => {:price => 250.0} } })
 
 #Chosen countries, calls, incoming, Австралия, Австрия, Армения, Великобритания, Венгрия, Германия, Греция, Израиль, Ирландия, Италия, Нидерланды, ОАЭ, Польша, Португалия, Франция, Чехия
-  category = {:name => '_sctcg_mts_europe_calls_incoming', :service_category_rouming_id => _sc_rouming_mts_free_journey, :service_category_calls_id => _calls_in}
+  category = {:name => '_sctcg_mts_europe_calls_incoming', :service_category_rouming_id => _sc_rouming_mts_free_journey, :service_category_calls_id => _calls_in, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Mts::From_free_journey }}}
   @tc.add_grouped_service_category_tarif_class(category, scg_mts_free_journey[:id])
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 10.0} } })
 
 #Chosen countries, calls, outcoming, to Russia, Австралия, Австрия, Армения, Великобритания, Венгрия, Германия, Греция, Израиль, Ирландия, Италия, Нидерланды, ОАЭ, Польша, Португалия, Франция, Чехия
-  category = {:name => '_sctcg_mts_europe_calls_to_russia', :service_category_rouming_id => _sc_rouming_mts_free_journey, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_russia}
+  category = {:name => '_sctcg_mts_europe_calls_to_russia', :service_category_rouming_id => _sc_rouming_mts_free_journey, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_russia, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Mts::From_free_journey }}}
   @tc.add_grouped_service_category_tarif_class(category, scg_mts_free_journey[:id])
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 10.0} } })
 

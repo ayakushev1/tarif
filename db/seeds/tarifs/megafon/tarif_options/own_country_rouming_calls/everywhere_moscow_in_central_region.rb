@@ -28,15 +28,24 @@
 #  @tc.add_only_service_category_tarif_class(_sctcg_periodic_day_fee)  
 
 #Central regions RF except for Own and home regions, Calls
-category = {:name => 'sctcg_cenral_regions_not_own_and_home_region_calls', :service_category_rouming_id => _sc_mgf_cenral_regions_not_own_and_home_region, :service_category_calls_id => _calls_in}
+category = {:name => 'sctcg_cenral_regions_not_own_and_home_region_calls', :service_category_rouming_id => _sc_mgf_cenral_regions_not_own_and_home_region, :service_category_calls_id => _calls_in, 
+  :filtr => {:own_country_regions => {:in => Category::Region::Const::Mgf_central_region }}}
   @tc.add_only_service_category_tarif_class(category)  
 
 #Central regions RF except for Own and home regions, sms
-category = {:name => '_sctcg_cenral_regions_not_own_and_home_region_sms', :service_category_rouming_id => _sc_mgf_cenral_regions_not_own_and_home_region, :service_category_calls_id => _sms_out}
+category = {:name => '_sctcg_cenral_regions_not_own_and_home_region_sms_to_own_and_home_regions', :service_category_rouming_id => _sc_mgf_cenral_regions_not_own_and_home_region, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_own_and_home_regions, 
+  :filtr => {:own_country_regions => {:in => Category::Region::Const::Mgf_central_region }}}
+  @tc.add_only_service_category_tarif_class(category)  
+category = {:name => '_sctcg_cenral_regions_not_own_and_home_region_sms_to_own_country', :service_category_rouming_id => _sc_mgf_cenral_regions_not_own_and_home_region, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_own_country, 
+  :filtr => {:own_country_regions => {:in => Category::Region::Const::Mgf_central_region }}}
+  @tc.add_only_service_category_tarif_class(category)  
+category = {:name => '_sctcg_cenral_regions_not_own_and_home_region_sms_to_not_own_country', :service_category_rouming_id => _sc_mgf_cenral_regions_not_own_and_home_region, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_not_own_country, 
+  :filtr => {:own_country_regions => {:in => Category::Region::Const::Mgf_central_region }}}
   @tc.add_only_service_category_tarif_class(category)  
 
 #Central regions RF except for Own and home regions, mms
-category = {:name => 'sctcg_cenral_regions_not_own_and_home_region_mms', :service_category_rouming_id => _sc_mgf_cenral_regions_not_own_and_home_region, :service_category_calls_id => _mms_in}
+category = {:name => 'sctcg_cenral_regions_not_own_and_home_region_mms', :service_category_rouming_id => _sc_mgf_cenral_regions_not_own_and_home_region, :service_category_calls_id => _mms_in, 
+  :filtr => {:own_country_regions => {:in => Category::Region::Const::Mgf_central_region }}}
   @tc.add_only_service_category_tarif_class(category)  
 
 

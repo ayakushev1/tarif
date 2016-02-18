@@ -15,7 +15,8 @@
     :multiple_use => true,
   } } )
 
-_sctcg_litva_and_latvia_rouming_internet = {:name => '_sctcg_litva_and_latvia_rouming_internet', :service_category_rouming_id => _sc_lithuania_and_latvia_rouming, :service_category_calls_id => _internet}
+_sctcg_litva_and_latvia_rouming_internet = {:name => '_sctcg_litva_and_latvia_rouming_internet', :service_category_rouming_id => _sc_lithuania_and_latvia_rouming, :service_category_calls_id => _internet, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Mts::Lithuania_and_latvia }}}
 
 #Ежемесячная плата
 #  @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => Price::StandardFormula::Const::FixedPriceIfUsedInOneDayVolume, :formula => {:params => {:price => 350.0} } })

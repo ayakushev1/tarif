@@ -15,13 +15,15 @@
 
 
 #bit_abrod_1 rouming, internet
-  category = {:name => '_sctcg_bit_abrod_1_rouming_internet', :service_category_rouming_id => _sc_mts_rouming_in_bit_abrod_option_countries_1, :service_category_calls_id => _internet}
+  category = {:name => '_sctcg_bit_abrod_1_rouming_internet', :service_category_rouming_id => _sc_mts_rouming_in_bit_abrod_option_countries_1, :service_category_calls_id => _internet, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Mts::Bit_abrod_1 }}}
   @tc.add_one_service_category_tarif_class(category, {}, 
     {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteForFixedPriceIfUsed, 
       :formula => {:params => {:max_sum_volume => 30.0, :price => 10.0}, :window_over => 'day' } } )
 
 #bit_abrod_4 rouming, internet
-  category = {:name => '_sctcg_bit_abrod_4_rouming_internet', :service_category_rouming_id => _sc_mts_rouming_in_bit_abrod_option_countries_4, :service_category_calls_id => _internet}
+  category = {:name => '_sctcg_bit_abrod_4_rouming_internet', :service_category_rouming_id => _sc_mts_rouming_in_bit_abrod_option_countries_4, :service_category_calls_id => _internet, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Mts::Bit_abrod_4 }}}
   @tc.add_one_service_category_tarif_class(category, {}, 
     {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteForFixedPriceIfUsed, 
       :formula => {:params => {:max_sum_volume => 5.0, :price => 240.0}, :window_over => 'day' } } )

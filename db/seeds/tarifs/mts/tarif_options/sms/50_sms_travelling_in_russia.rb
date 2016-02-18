@@ -13,12 +13,26 @@
     :multiple_use => true
   } } )
 
-_sctcg_own_country_sms_outcoming = {:name => '_sctcg_own_country_sms_outcoming', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _sms_out}
+  scg_mts_50_sms_travelling_in_russia_included_in_tarif_sms = @tc.add_service_category_group(
+    {:name => 'scg_mts_50_sms_travelling_in_russia_included_in_tarif_sms' }, 
+    {:name => "price for _scg_mts_50_sms_travelling_in_russia_included_in_tarif_sms"}, 
+    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxCountVolumeWithMultipleUseMonth,  
+      :formula => {:params => {:max_count_volume => 50.0, :price => 135.0} } }
+    )
 
 #Own country, sms, Outcoming
-  @tc.add_one_service_category_tarif_class(_sctcg_own_country_sms_outcoming, {}, 
-    {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxCountVolumeWithMultipleUseMonth,  
-      :formula => {:params => {:max_count_volume => 50.0, :price => 135.0} } } )
+#Own country rouming, sms, Outcoming, to_own_home_regions
+  category = {:name => '_sctcg_own_country_sms_to_own_home_regions', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_own_and_home_regions}
+  @tc.add_grouped_service_category_tarif_class(category, scg_mts_50_sms_travelling_in_russia_included_in_tarif_sms[:id])
+
+#Own country rouming, sms, Outcoming, to_own_country
+  category = {:name => '_sctcg_own_country_sms_to_own_country', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_own_country}
+  @tc.add_grouped_service_category_tarif_class(category, scg_mts_50_sms_travelling_in_russia_included_in_tarif_sms[:id])
+
+#Own country rouming, sms, Outcoming, to_not_own_country
+  category = {:name => '_sctcg_own_country_sms_to_not_own_country', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_not_own_country}
+  @tc.add_grouped_service_category_tarif_class(category, scg_mts_50_sms_travelling_in_russia_included_in_tarif_sms[:id])
+
 
 @tc.add_tarif_class_categories
 

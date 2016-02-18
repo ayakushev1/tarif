@@ -29,7 +29,10 @@ scg_mts_additional_internet_smart = @tc.add_service_category_group(
 
 
 #All Russia rouming, Internet
-  category = {:name => '_sctcg_all_russia_internet', :service_category_rouming_id => _all_russia_rouming, :service_category_calls_id => _internet}
+  category = {:name => '_sctcg_all_russia_internet', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _internet}
+  @tc.add_grouped_service_category_tarif_class(category, scg_mts_additional_internet_smart[:id])
+
+  category = {:name => '_sctcg_all_russia_internet', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _internet}
   @tc.add_grouped_service_category_tarif_class(category, scg_mts_additional_internet_smart[:id])
 
 @tc.add_tarif_class_categories

@@ -1,10 +1,14 @@
-class TarifCreator #ServiceHelper::TarifCreator
-  
+class TarifCreator #ServiceHelper::TarifCreator  
   attr_reader :options, :operator_id, :tarif_class_id
+  attr_reader :tarif_country_id, :tarif_region_id, :tarif_home_region_ids, :tarif_own_and_home_region_ids
 
   def initialize(operator_id, options = {})
     @operator_id = operator_id
     @options = options
+    @tarif_country_id = options[:tarif_country_id] || 1100
+    @tarif_region_id = options[:tarif_region_id] || 1238
+    @tarif_home_region_ids = options[:tarif_home_region_ids] || [1127]
+    @tarif_own_and_home_region_ids = @tarif_home_region_ids + [@tarif_region_id]
   end
   
   def create_tarif_class(tarif_class_values)
@@ -19,9 +23,10 @@ class TarifCreator #ServiceHelper::TarifCreator
     tarif_class = TarifClass.update(tarif_class[:id], {:operator_id => operator_id}.merge(tarif_class_values) )
   end    
   
-  def add_only_service_category_tarif_class(service_category_tarif_class_field_values, condition_when_apply_sctc = {})
+  def add_only_service_category_tarif_class(service_category_tarif_class_field_values, condition_when_apply_sctc = {})    
     begin
-      classified_service_parts = classify_service_parts(service_category_full_paths(service_category_tarif_class_field_values)) 
+      service_category_tarif_class_field_values_without_filtr = service_category_tarif_class_field_values.except(:filtr)
+      classified_service_parts = classify_service_parts(service_category_full_paths(service_category_tarif_class_field_values_without_filtr)) 
       parts = classified_service_parts[0]
       parts_criteria = classified_service_parts[1] 
       conditions = {:parts => parts, :parts_criteria => parts_criteria}.merge(condition_when_apply_sctc)
@@ -50,7 +55,8 @@ class TarifCreator #ServiceHelper::TarifCreator
           :uniq_service_category => uniq_service_category(service_category_tarif_class_field_values)}.
           merge(service_category_tarif_class_field_values)  )
 
-      classified_service_parts = classify_service_parts(service_category_full_paths(service_category_tarif_class_field_values)) 
+      service_category_tarif_class_field_values_without_filtr = service_category_tarif_class_field_values.except(:filtr)
+      classified_service_parts = classify_service_parts(service_category_full_paths(service_category_tarif_class_field_values_without_filtr)) 
       parts = classified_service_parts[0]
       parts_criteria = classified_service_parts[1] 
       conditions = {:parts => parts, :parts_criteria => parts_criteria}.merge(condition_when_apply_sctc)
@@ -69,7 +75,8 @@ class TarifCreator #ServiceHelper::TarifCreator
             :uniq_service_category => uniq_service_category(service_category_tarif_class_field_values)}.
             merge(service_category_tarif_class_field_values)  )
 
-      classified_service_parts = classify_service_parts(service_category_full_paths(service_category_tarif_class_field_values)) 
+      service_category_tarif_class_field_values_without_filtr = service_category_tarif_class_field_values.except(:filtr)
+      classified_service_parts = classify_service_parts(service_category_full_paths(service_category_tarif_class_field_values_without_filtr)) 
       parts = classified_service_parts[0]
       parts_criteria = classified_service_parts[1] 
       conditions = {:parts => parts, :parts_criteria => parts_criteria}.merge(condition_when_apply_sctc)
@@ -143,9 +150,10 @@ class TarifCreator #ServiceHelper::TarifCreator
   end
   
   def uniq_service_category(service_category_tarif_class_field_values)
-      [:service_category_calls_id, :service_category_rouming_id, :service_category_geo_id, :service_category_partner_type_id].map do |category_id|
-        (service_category_tarif_class_field_values[category_id] || -1).to_s
-      end.join("_")
+    categories = [:service_category_rouming_id, :service_category_calls_id, :service_category_geo_id, :service_category_partner_type_id].map do |category_id|
+      Service::Category.find(service_category_tarif_class_field_values[category_id]).global if service_category_tarif_class_field_values[category_id]
+    end.compact
+    Optimization::Global::Base::StructureName.new.name(categories)
   end
   
   def service_category_full_paths(where_condition)

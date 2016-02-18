@@ -24,49 +24,57 @@ scg_mts_zero_without_limits_calls_first_200_minites = @tc.add_service_category_g
   @tc.add_one_service_category_tarif_class(_sctcg_periodic_day_fee, {}, {:standard_formula_id => Price::StandardFormula::Const::FixedPriceIfUsedInOneDayDuration, :formula => {:params => {:price => 95.0} } })
 
 #Europe, calls, incoming
-category = {:name => '_sctcg_mts_europe_calls_incoming', :service_category_rouming_id => _sc_mts_europe_rouming, :service_category_calls_id => _calls_in}
+category = {:name => '_sctcg_mts_europe_calls_incoming', :service_category_rouming_id => _sc_mts_europe_rouming, :service_category_calls_id => _calls_in, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Mts::Europe_countries }}}
   @tc.add_grouped_service_category_tarif_class(category, scg_mts_zero_without_limits_calls_first_200_minites[:id])
   @tc.add_one_service_category_tarif_class(category, {}, 
     {:calculation_order => 1, :standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 9.0} } })
 
 #Europe, calls, outcoming, to Russia
-category = {:name => '_sctcg_mts_europe_calls_to_russia', :service_category_rouming_id => _sc_mts_europe_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_russia}
+category = {:name => '_sctcg_mts_europe_calls_to_russia', :service_category_rouming_id => _sc_mts_europe_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_russia, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Mts::Europe_countries }}}
   @tc.add_one_service_category_tarif_class(category, {}, 
   {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::ThreeStepPriceDurationMinute, 
     :formula => {:params => {:duration_minute_1 => 2.0, :duration_minute_2 => 5.0, :price_0 => 50.0, :price_1 => 25.0, :price_2 => 50.0} } } )
 
 #SIC_1, calls, incoming
-category = {:name => '_sctcg_mts_sic_1_calls_incoming', :service_category_rouming_id => _sc_mts_sic_1_rouming, :service_category_calls_id => _calls_in}
+category = {:name => '_sctcg_mts_sic_1_calls_incoming', :service_category_rouming_id => _sc_mts_sic_1_rouming, :service_category_calls_id => _calls_in, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Mts::Sic_1_countries }}}
   @tc.add_grouped_service_category_tarif_class(category, scg_mts_zero_without_limits_calls_first_200_minites[:id])
   @tc.add_one_service_category_tarif_class(category, {}, 
     {:calculation_order => 1, :standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 9.0} } })
 
 #SIC_1, calls, outcoming, to Russia
-category = {:name => '_sctcg_mts_sic_1_calls_to_russia', :service_category_rouming_id => _sc_mts_sic_1_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_russia}
+category = {:name => '_sctcg_mts_sic_1_calls_to_russia', :service_category_rouming_id => _sc_mts_sic_1_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_russia, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Mts::Sic_1_countries }}}
   @tc.add_one_service_category_tarif_class(category, {}, 
   {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::ThreeStepPriceDurationMinute, 
     :formula => {:params => {:duration_minute_1 => 2.0, :duration_minute_2 => 5.0, :price_0 => 75.0, :price_1 => 25.0, :price_2 => 75.0} } } )
 
 #SIC_2_1, calls, incoming
-category = {:name => '_sctcg_mts_sic_2_1_calls_incoming', :service_category_rouming_id => _sc_mts_sic_2_1_rouming, :service_category_calls_id => _calls_in}
+category = {:name => '_sctcg_mts_sic_2_1_calls_incoming', :service_category_rouming_id => _sc_mts_sic_2_1_rouming, :service_category_calls_id => _calls_in, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Mts::Sic_2_1_countries }}}
   @tc.add_grouped_service_category_tarif_class(category, scg_mts_zero_without_limits_calls_first_200_minites[:id])
   @tc.add_one_service_category_tarif_class(category, {}, 
     {:calculation_order => 1, :standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 9.0} } })
 
 #SIC_2_1, calls, outcoming, to Russia
-category = {:name => '_sctcg_mts_sic_2_1_calls_to_russia', :service_category_rouming_id => _sc_mts_sic_2_1_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_russia}
+category = {:name => '_sctcg_mts_sic_2_1_calls_to_russia', :service_category_rouming_id => _sc_mts_sic_2_1_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_russia, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Mts::Sic_2_1_countries }}}
   @tc.add_one_service_category_tarif_class(category, {}, 
   {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::ThreeStepPriceDurationMinute, 
     :formula => {:params => {:duration_minute_1 => 2.0, :duration_minute_2 => 5.0, :price_0 => 115.0, :price_1 => 25.0, :price_2 => 115.0} } } )
 
 #Other countries, calls, incoming
-category = {:name => '_sctcg_mts_other_countries_calls_incoming', :service_category_rouming_id => _sc_mts_other_countries_rouming, :service_category_calls_id => _calls_in}
+category = {:name => '_sctcg_mts_other_countries_calls_incoming', :service_category_rouming_id => _sc_mts_other_countries_rouming, :service_category_calls_id => _calls_in, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Mts::Other_countries }}}
   @tc.add_grouped_service_category_tarif_class(category, scg_mts_zero_without_limits_calls_first_200_minites[:id])
   @tc.add_one_service_category_tarif_class(category, {}, 
     {:calculation_order => 1, :standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 9.0} } })
 
 #Other countries, calls, to Russia
-category = {:name => '_sctcg_mts_other_countries_calls_to_russia', :service_category_rouming_id => _sc_mts_other_countries_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_russia}
+category = {:name => '_sctcg_mts_other_countries_calls_to_russia', :service_category_rouming_id => _sc_mts_other_countries_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_russia, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Mts::Other_countries }}}
   @tc.add_one_service_category_tarif_class(category, {}, 
   {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::ThreeStepPriceDurationMinute, 
     :formula => {:params => {:duration_minute_1 => 2.0, :duration_minute_2 => 5.0, :price_0 => 149.0, :price_1 => 25.0, :price_2 => 149.0} } } )

@@ -29,9 +29,6 @@
   category = {:name => 'own_country_internet', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _internet}
   @tc.add_only_service_category_tarif_class(category)  
 
-#All_russia_rouming, Internet
-  category = {:name => '_sctcg_all_russia_internet', :service_category_rouming_id => _all_russia_rouming, :service_category_calls_id => _internet}
-  @tc.add_only_service_category_tarif_class(category)  
 
 @tc.add_tarif_class_categories
 

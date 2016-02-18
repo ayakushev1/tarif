@@ -41,22 +41,28 @@
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 0.0} } })
 
 #Own country, calls, outcoming, to own and home regions, to own operator
-  category = {:name => '_sctcg_own_country_calls_to_own_and_home_region_own_operator', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_own_operator}
+  category = {:name => '_sctcg_own_country_calls_to_own_and_home_region_own_operator', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_own_operator, 
+  :filtr => {:to_operators => {:in => [Category::Operator::Const::Megafon] }}}
   @tc.add_grouped_service_category_tarif_class(category, scg_mgf_travel_without_worry_calls[:id])
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 0.0} } })
 
 #Own country, calls, outcoming, to own and home regions, to other operators
-  category = {:name => '_sctcg_own_country_calls_to_own_and_home_region_other_operators', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_not_own_operator}
+  category = {:name => '_sctcg_own_country_calls_to_own_and_home_region_other_operators', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :service_category_partner_type_id => _service_to_not_own_operator, 
+  :filtr => {:to_operators => {:not_in => [Category::Operator::Const::Megafon] }}}
   @tc.add_grouped_service_category_tarif_class(category, scg_mgf_travel_without_worry_calls[:id])
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 3.0} } })
 
 #Own country, calls, outcoming, to not own and home regions, to all operators
-  category = {:name => '_sctcg_own_country_calls_to_not_own_and_home_regions_all_operators', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_not_own_and_home_region}
+  category = {:name => '_sctcg_own_country_calls_to_not_own_and_home_regions_all_operators', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_country}
   @tc.add_grouped_service_category_tarif_class(category, scg_mgf_travel_without_worry_calls[:id])
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 3.0} } })
 
 #Own country, sms, outcoming, to all own country regions, to all operators
-  category = {:name => '_sctcg_own_country_sms_to_all_own_country_regions', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_all_own_country_regions}
+  category = {:name => '_sctcg_own_country_sms_to_all_own_country_regions', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_own_and_home_regions}
+  @tc.add_grouped_service_category_tarif_class(category, scg_mgf_travel_without_worry_sms[:id])
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => Price::StandardFormula::Const::PriceByCountVolumeItem, :formula => {:params => {:price => 3.9} } })
+
+  category = {:name => '_sctcg_own_country_sms_to_all_own_country_regions', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_own_country}
   @tc.add_grouped_service_category_tarif_class(category, scg_mgf_travel_without_worry_sms[:id])
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 1,:standard_formula_id => Price::StandardFormula::Const::PriceByCountVolumeItem, :formula => {:params => {:price => 3.9} } })
 

@@ -294,7 +294,7 @@ stf << { :id => Price::StandardFormula::Const::TwoStepPriceMaxDurationMinute, :p
    :method => "full_cost" },
   :stat_params => {
     :sum_duration_minute => {:formula => "sum(ceil(((description->>'duration')::float)/60.0))"},
-    :sum_call_by_minutes => {:formula => ""}
+    :sum_call_by_minutes => {:formula => Price::StandardFormula.sum_call_by_minutes_formula_constructor([10.0])}
   } } 
 
 
@@ -312,7 +312,7 @@ stf << { :id => Price::StandardFormula::Const::TwoStepPriceDurationMinute, :pric
    :method => "full_cost" },
   :stat_params => {
     :sum_duration_minute => {:formula => "sum(ceil(((description->>'duration')::float)/60.0))"},
-    :sum_call_by_minutes => {:formula => ""}
+    :sum_call_by_minutes => {:formula => Price::StandardFormula.sum_call_by_minutes_formula_constructor([1.0])}
   } } 
 
 #Three Step Price Duration Minute
@@ -334,7 +334,7 @@ stf << { :id => Price::StandardFormula::Const::ThreeStepPriceDurationMinute, :pr
    :method => "full_cost" },
   :stat_params => {
     :sum_duration_minute => {:formula => "sum(ceil(((description->>'duration')::float)/60.0))"},
-    :sum_call_by_minutes => {:formula => ""}    
+    :sum_call_by_minutes => {:formula => Price::StandardFormula.sum_call_by_minutes_formula_constructor([1.0, 2.0, 5.0, 10.0])}    
   } } 
 
 

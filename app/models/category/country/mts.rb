@@ -44,6 +44,8 @@ module Category::Country::Mts
   o::Sic_2_2_countries = [c::Azerbaidzhan, c::Uzbekistan]  
   o::Sic_3_countries = [ c::Uzhnaya_osetiya]  
 
+  o::Lithuania_and_latvia = [c::Latviya, c::Litva]  
+
   o::Other_countries = c::World_countries_without_russia - o::Europe_countries - o::Sic_countries
   o::Other_countries_60_60_60_60 = [c::Egipet, ]
   o::Other_countries_65_65_65_135 = [c::Koreya_uzhnaya, ]

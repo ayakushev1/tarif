@@ -22,7 +22,10 @@
   @tc.add_one_service_category_tarif_class(_sctcg_one_time_tarif_switch_on, {}, {:standard_formula_id => Price::StandardFormula::Const::PriceByItemIfUsed, :formula => {:params => {:price => 20.0} } })  
 
 #Own and home regions, sms, to_own_country
-category = {:name => '_sctcg_own_home_regions_sms_service_to_all_own_country_regions', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_all_own_country_regions}
+category = {:name => '_sctcg_own_home_regions_sms_service_to_all_own_country_regions', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_own_and_home_regions}
+  @tc.add_grouped_service_category_tarif_class(category, scg_tele_day_sms[:id])
+
+category = {:name => '_sctcg_own_home_regions_sms_service_to_all_own_country_regions', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _sms_out, :service_category_geo_id => _service_to_own_country}
   @tc.add_grouped_service_category_tarif_class(category, scg_tele_day_sms[:id])
 
 @tc.add_tarif_class_categories

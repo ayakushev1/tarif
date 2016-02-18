@@ -311,7 +311,7 @@ class TarifOptimization::StatFunctionCollector
   def collect_tarif_class_parts
     @tarif_class_parts = {}
     TarifClass.where(:id => tarif_class_ids).select("id, dependency->>'parts' as parts").all.each do |r|
-      tarif_class_parts[r['id']] = eval(r['parts'])
+      tarif_class_parts[r['id']] = eval((r['parts'] || ""))
     end
   end
 

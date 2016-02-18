@@ -13,25 +13,29 @@
 
 
 #Ukraine, internet
-category = {:name => '_sctcg_mgf_ukraine_internet', :service_category_rouming_id => _sc_mgf_ukraine_internet_abroad, :service_category_calls_id => _internet}
+category = {:name => '_sctcg_mgf_ukraine_internet', :service_category_rouming_id => _sc_mgf_ukraine_internet_abroad, :service_category_calls_id => _internet, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Mgf::Ukraine_internet_abroad }}}
   @tc.add_one_service_category_tarif_class(category, {}, 
     {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteWithMultipleUseDay,  
       :formula => {:params => {:max_sum_volume => 30.0, :price => 129.0} } } )
 
 #Europe, internet
-category = {:name => '_sc_mgf_countries_vacation_online', :service_category_rouming_id => _sc_mgf_europe_internet_abroad, :service_category_calls_id => _internet}
+category = {:name => '_sc_mgf_countries_vacation_online', :service_category_rouming_id => _sc_mgf_europe_internet_abroad, :service_category_calls_id => _internet, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Mgf::Europe_internet_abroad }}} 
   @tc.add_one_service_category_tarif_class(category, {}, 
     {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteWithMultipleUseDay,  
       :formula => {:params => {:max_sum_volume => 30.0, :price => 329.0} } } )
 
 #Popular countries plus SIC, internet
-category = {:name => '_sctcg_mgf_popular_countries_internet', :service_category_rouming_id => _sc_mgf_popular_countries_internet_abroad, :service_category_calls_id => _internet}
+category = {:name => '_sctcg_mgf_popular_countries_internet', :service_category_rouming_id => _sc_mgf_popular_countries_internet_abroad, :service_category_calls_id => _internet, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Mgf::Popular_countries_internet_abroad }}} 
   @tc.add_one_service_category_tarif_class(category, {}, 
     {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteWithMultipleUseDay,  
       :formula => {:params => {:max_sum_volume => 30.0, :price => 829.0} } } )
 
 #Other countries, internet
-category = {:name => '_sctcg_mgf_other_countries_internet', :service_category_rouming_id => _sc_mgf_other_countries_internet_abroad, :service_category_calls_id => _internet}
+category = {:name => '_sctcg_mgf_other_countries_internet', :service_category_rouming_id => _sc_mgf_other_countries_internet_abroad, :service_category_calls_id => _internet, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Mgf::Other_countries_internet_abroad }}} 
   @tc.add_one_service_category_tarif_class(category, {}, 
     {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::MaxSumVolumeMByteWithMultipleUseDay,  
       :formula => {:params => {:max_sum_volume => 30.0, :price => 4990.0} } } ) 

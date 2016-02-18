@@ -62,7 +62,7 @@ def access_methods_to_constant_service_categories
   _service_to_not_own_and_home_region = 189;
   
   _sc_service_to_russia = 109; _sc_service_to_rouming_country = 110;  _sc_service_to_not_rouming_not_russia = 111;
-  _sc_service_not_rouming_not_russia_to_sic = 112;  _sc_service_to_not_rouming_not_russia_not_sic = 113;
+  _sc_service_not_rouming_not_russia_to_sic = 112;  _sc_service_to_not_rouming_not_russia_not_sic = 113; _to_any_abroad_country = 114;
 
   _sc_service_to_mts_love_countries_4_9 = 115; _sc_service_to_mts_love_countries_5_5 = 116; _sc_service_to_mts_love_countries_5_9 = 117;
   _sc_service_to_mts_love_countries_6_9 = 118; _sc_service_to_mts_love_countries_7_9 = 119; _sc_service_to_mts_love_countries_8_9 = 120;
@@ -95,6 +95,8 @@ def access_methods_to_constant_service_categories
   _sc_service_to_mgf_international_1 = 400; _sc_service_to_mgf_international_2 = 401; _sc_service_to_mgf_international_3 = 402;
   _sc_service_to_mgf_international_4 = 403; _sc_service_to_mgf_international_5 = 404;
   
+  _sc_service_mgf_from_abroad_to_sic_plus = 406; _sc_service_mgf_from_abroad_to_other_countries = 407;
+  
   _sc_service_to_bln_international_1 = 410; _sc_service_to_bln_international_2 = 411; _sc_service_to_bln_international_3 = 412;
   _sc_service_to_bln_international_4 = 413; _sc_service_to_bln_international_5 = 414; _sc_service_to_bln_international_6 = 416;
   _sc_service_to_bln_international_7 = 417; _sc_service_to_bln_international_8 = 418; _sc_service_to_bln_international_9 = 419;
@@ -110,6 +112,9 @@ def access_methods_to_constant_service_categories
   
   _sc_service_to_tele_international_1 = 450; _sc_service_to_tele_international_2 = 451; _sc_service_to_tele_international_3 = 452; _sc_service_to_tele_international_4 = 453;
   _sc_service_to_tele_international_5 = 454; _sc_service_to_tele_international_6 = 455;
+
+  _sc_service_to_tele_from_abroad_to_international_1 = 456; _sc_service_to_tele_from_abroad_to_international_2 = 457; 
+  _sc_service_to_tele_from_abroad_to_international_5 = 458; _sc_service_to_tele_from_abroad_to_international_6 = 459;
   
   _sc_service_to_tele_sic_1 = 460; _sc_service_to_tele_sic_2 = 461; _sc_service_to_tele_sic_3 = 462;
   _sc_tele_service_to_uzbekistan = 463; _sc_tele_service_to_sic_not_uzbekistan = 464;

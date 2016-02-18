@@ -21,89 +21,109 @@
 
 
 #Own and home regions, Calls, Outcoming, service_to_bln_welcome_1 (Таджикистан), телефоны Билайн
-category = {:name => '_sctcg_own_home_regions_calls_to_bln_welcome_1_to_bln_partner', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_welcome_1, :service_category_partner_type_id =>  _service_to_bln_partner_operator}
+category = {:name => '_sctcg_own_home_regions_calls_to_bln_welcome_1_to_bln_partner', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_welcome_1, :service_category_partner_type_id =>  _service_to_bln_partner_operator, 
+  :filtr => {:to_abroad_countries => {:in => Category::Country::Bln::Welcome_1 }, :to_operators => {:in => Category::Operator::Const::BeelinePartnerOperators }}}
   @tc.add_one_service_category_tarif_class(category, {}, 
   {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::TwoStepPriceDurationMinute, 
     :formula => {:params => {:duration_minute_1 => 1.0, :price_0 => 5.0, :price_1 => 1.0} } } )
 
 #Own and home regions, Calls, Outcoming, service_to_bln_welcome_1 (Таджикистан), другие телефоны
-category = {:name => '_sctcg_own_home_regions_calls_to_bln_welcome_1_to_not_bln_partner', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_welcome_1, :service_category_partner_type_id =>  _service_to_not_bln_partner_operator}
+category = {:name => '_sctcg_own_home_regions_calls_to_bln_welcome_1_to_not_bln_partner', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_welcome_1, :service_category_partner_type_id =>  _service_to_not_bln_partner_operator, 
+  :filtr => {:to_abroad_countries => {:in => Category::Country::Bln::Welcome_1 }, :to_operators => {:not_in => Category::Operator::Const::BeelinePartnerOperators }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 7.0} } })
 
 
 #Own and home regions, Calls, Outcoming, service_to_bln_welcome_2 (Армения), телефоны Билайн
-category = {:name => '_sctcg_own_home_regions_calls_to_bln_welcome_2_to_bln_partner', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_welcome_2, :service_category_partner_type_id =>  _service_to_bln_partner_operator}
+category = {:name => '_sctcg_own_home_regions_calls_to_bln_welcome_2_to_bln_partner', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_welcome_2, :service_category_partner_type_id =>  _service_to_bln_partner_operator, 
+  :filtr => {:to_abroad_countries => {:in => Category::Country::Bln::Welcome_2 }, :to_operators => {:in => Category::Operator::Const::BeelinePartnerOperators }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 2.5} } })
 
 #Own and home regions, Calls, Outcoming, service_to_bln_welcome_2 (Армения), другие телефоны
-category = {:name => '_sctcg_own_home_regions_calls_to_bln_welcome_2_to_not_bln_partner', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_welcome_2, :service_category_partner_type_id =>  _service_to_not_bln_partner_operator}
+category = {:name => '_sctcg_own_home_regions_calls_to_bln_welcome_2_to_not_bln_partner', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_welcome_2, :service_category_partner_type_id =>  _service_to_not_bln_partner_operator, 
+  :filtr => {:to_abroad_countries => {:in => Category::Country::Bln::Welcome_2 }, :to_operators => {:not_in => Category::Operator::Const::BeelinePartnerOperators }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 7.0} } })
 
 
 #Own and home regions, Calls, Outcoming, service_to_bln_welcome_3 (Украина, Казахстан), телефоны Билайн
-category = {:name => '_sctcg_own_home_regions_calls_to_bln_welcome_3_to_bln_partner', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_welcome_3, :service_category_partner_type_id =>  _service_to_bln_partner_operator}
+category = {:name => '_sctcg_own_home_regions_calls_to_bln_welcome_3_to_bln_partner', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_welcome_3, :service_category_partner_type_id =>  _service_to_bln_partner_operator, 
+  :filtr => {:to_abroad_countries => {:in => Category::Country::Bln::Welcome_3 }, :to_operators => {:in => Category::Operator::Const::BeelinePartnerOperators }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 2.5} } })
 
 #Own and home regions, Calls, Outcoming, service_to_bln_welcome_3 (Украина, Казахстан), другие телефоны
-category = {:name => '_sctcg_own_home_regions_calls_to_bln_welcome_3_to_not_bln_partner', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_welcome_3, :service_category_partner_type_id =>  _service_to_not_bln_partner_operator}
+category = {:name => '_sctcg_own_home_regions_calls_to_bln_welcome_3_to_not_bln_partner', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_welcome_3, :service_category_partner_type_id =>  _service_to_not_bln_partner_operator, 
+  :filtr => {:to_abroad_countries => {:in => Category::Country::Bln::Welcome_3 }, :to_operators => {:not_in => Category::Operator::Const::BeelinePartnerOperators }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 7.0} } })
 
 
 #Own and home regions, Calls, Outcoming, service_to_bln_welcome_4 (Узбекистан), телефоны Билайн
-category = {:name => '_sctcg_own_home_regions_calls_to_bln_welcome_4_to_bln_partner', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_welcome_4, :service_category_partner_type_id =>  _service_to_bln_partner_operator}
+category = {:name => '_sctcg_own_home_regions_calls_to_bln_welcome_4_to_bln_partner', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_welcome_4, :service_category_partner_type_id =>  _service_to_bln_partner_operator, 
+  :filtr => {:to_abroad_countries => {:in => Category::Country::Bln::Welcome_4 }, :to_operators => {:in => Category::Operator::Const::BeelinePartnerOperators }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 3.5} } })
 
 #Own and home regions, Calls, Outcoming, service_to_bln_welcome_4 (Узбекистан), другие телефоны
-category = {:name => '_sctcg_own_home_regions_calls_to_bln_welcome_4_to_not_bln_partner', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_welcome_4, :service_category_partner_type_id =>  _service_to_not_bln_partner_operator}
+category = {:name => '_sctcg_own_home_regions_calls_to_bln_welcome_4_to_not_bln_partner', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_welcome_4, :service_category_partner_type_id =>  _service_to_not_bln_partner_operator, 
+  :filtr => {:to_abroad_countries => {:in => Category::Country::Bln::Welcome_4 }, :to_operators => {:not_in => Category::Operator::Const::BeelinePartnerOperators }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 3.5} } })
 
 
 #Own and home regions, Calls, Outcoming, service_to_bln_welcome_12 (Кыргызстан), телефоны Билайн
-category = {:name => '_sctcg_own_home_regions_calls_to_bln_welcome_12_to_bln_partner', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_welcome_12, :service_category_partner_type_id =>  _service_to_bln_partner_operator}
+category = {:name => '_sctcg_own_home_regions_calls_to_bln_welcome_12_to_bln_partner', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_welcome_12, :service_category_partner_type_id =>  _service_to_bln_partner_operator, 
+  :filtr => {:to_abroad_countries => {:in => Category::Country::Bln::Welcome_12 }, :to_operators => {:in => Category::Operator::Const::BeelinePartnerOperators }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 2.5} } })
 
 #Own and home regions, Calls, Outcoming, service_to_bln_welcome_12 (Кыргызстан), телефоны не Билайн
-category = {:name => '_sctcg_own_home_regions_calls_to_bln_welcome_12_to_not_bln_partner', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_welcome_12, :service_category_partner_type_id =>  _service_to_not_bln_partner_operator}
+category = {:name => '_sctcg_own_home_regions_calls_to_bln_welcome_12_to_not_bln_partner', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_welcome_12, :service_category_partner_type_id =>  _service_to_not_bln_partner_operator, 
+  :filtr => {:to_abroad_countries => {:in => Category::Country::Bln::Welcome_12 }, :to_operators => {:not_in => Category::Operator::Const::BeelinePartnerOperators }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 7.0} } })
 
 #Own and home regions, Calls, Outcoming, service_to_bln_welcome_13 (Грузия), телефоны Билайн
-category = {:name => '_sctcg_own_home_regions_calls_to_bln_welcome_13_to_bln_partner', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_welcome_13, :service_category_partner_type_id =>  _service_to_bln_partner_operator}
+category = {:name => '_sctcg_own_home_regions_calls_to_bln_welcome_13_to_bln_partner', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_welcome_13, :service_category_partner_type_id =>  _service_to_bln_partner_operator, 
+  :filtr => {:to_abroad_countries => {:in => Category::Country::Bln::Welcome_13 }, :to_operators => {:in => Category::Operator::Const::BeelinePartnerOperators }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 8.0} } })
 
 #Own and home regions, Calls, Outcoming, service_to_bln_welcome_13 (Грузия), телефоны не Билайн
-category = {:name => '_sctcg_own_home_regions_calls_to_bln_welcome_13_to_not_bln_partner', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_welcome_13, :service_category_partner_type_id =>  _service_to_not_bln_partner_operator}
+category = {:name => '_sctcg_own_home_regions_calls_to_bln_welcome_13_to_not_bln_partner', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_welcome_13, :service_category_partner_type_id =>  _service_to_not_bln_partner_operator, 
+  :filtr => {:to_abroad_countries => {:in => Category::Country::Bln::Welcome_13 }, :to_operators => {:not_in => Category::Operator::Const::BeelinePartnerOperators }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 8.0} } })
 
 #Own and home regions, Calls, Outcoming, service_to_bln_welcome_5 (Туркменистан)
-category = {:name => '_sctcg_own_home_regions_calls_to_bln_welcome_5', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_welcome_5}
+category = {:name => '_sctcg_own_home_regions_calls_to_bln_welcome_5', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_welcome_5, 
+  :filtr => {:to_abroad_countries => {:in => Category::Country::Bln::Welcome_5 }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 7.0} } })
 
 #Own and home regions, Calls, Outcoming, service_to_bln_welcome_14 (Абхазия, Южная Осетия)
-category = {:name => '_sctcg_own_home_regions_calls_to_bln_welcome_14', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_welcome_14}
+category = {:name => '_sctcg_own_home_regions_calls_to_bln_welcome_14', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_welcome_14, 
+  :filtr => {:to_abroad_countries => {:in => Category::Country::Bln::Welcome_14 }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 7.0} } })
 
 #Own and home regions, Calls, Outcoming, service_to_bln_welcome_6 (Молдова)
-category = {:name => '_sctcg_own_home_regions_calls_to_bln_welcome_6', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_welcome_6}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 9.0} } })
+category = {:name => '_sctcg_own_home_regions_calls_to_bln_welcome_6', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_welcome_6, 
+  :filtr => {:to_abroad_countries => {:in => Category::Country::Bln::Welcome_6 }}}
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 9.0} } }) 
 
 #Own and home regions, Calls, Outcoming, service_to_bln_welcome_7 (Беларусь, Азербайджан)
-category = {:name => '_sctcg_own_home_regions_calls_to_bln_welcome_7', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_welcome_7}
+category = {:name => '_sctcg_own_home_regions_calls_to_bln_welcome_7', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_welcome_7, 
+  :filtr => {:to_abroad_countries => {:in => Category::Country::Bln::Welcome_7 }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 13.0} } })
 
 #Own and home regions, Calls, Outcoming, service_to_bln_welcome_8 (Вьетнам)
-category = {:name => '_sctcg_own_home_regions_calls_to_bln_welcome_8', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_welcome_8}
+category = {:name => '_sctcg_own_home_regions_calls_to_bln_welcome_8', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_welcome_8, 
+  :filtr => {:to_abroad_countries => {:in => Category::Country::Bln::Welcome_8 }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 3.5} } })
 
 #Own and home regions, Calls, Outcoming, service_to_bln_welcome_9 (Китай)
-category = {:name => '_sctcg_own_home_regions_calls_to_bln_welcome_9', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_welcome_9}
-  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 2.0} } })
+category = {:name => '_sctcg_own_home_regions_calls_to_bln_welcome_9', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_welcome_9, 
+  :filtr => {:to_abroad_countries => {:in => Category::Country::Bln::Welcome_9 }}}
+  @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 2.0} } }) 
 
 #Own and home regions, Calls, Outcoming, service_to_bln_welcome_10 (Индия, Южная Корея)
-category = {:name => '_sctcg_own_home_regions_calls_to_bln_welcome_10', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_welcome_10}
+category = {:name => '_sctcg_own_home_regions_calls_to_bln_welcome_10', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_welcome_10, 
+  :filtr => {:to_abroad_countries => {:in => Category::Country::Bln::Welcome_10 }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 2.5} } })
 
 #Own and home regions, Calls, Outcoming, service_to_bln_welcome_11 (Турция)
-category = {:name => '_sctcg_own_home_regions_calls_to_bln_welcome_11', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_welcome_11}
+category = {:name => '_sctcg_own_home_regions_calls_to_bln_welcome_11', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_bln_welcome_11, 
+  :filtr => {:to_abroad_countries => {:in => Category::Country::Bln::Welcome_11 }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0,:standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 6.0} } })
 
 

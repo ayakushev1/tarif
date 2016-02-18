@@ -13,68 +13,84 @@
   } } )
 
 #SIC, calls, incoming
-category = {:name => '_sctcg_bln_sic_calls_incoming', :service_category_rouming_id => _sc_bln_sic, :service_category_calls_id => _calls_in}
+category = {:name => '_sctcg_bln_sic_calls_incoming', :service_category_rouming_id => _sc_bln_sic, :service_category_calls_id => _calls_in, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Bln::Sic }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 49.0} } })  
 
 #SIC, calls, outcoming, to Russia
-category = {:name => '_sctcg_bln_sic_calls_to_russia', :service_category_rouming_id => _sc_bln_sic, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_russia}
+category = {:name => '_sctcg_bln_sic_calls_to_russia', :service_category_rouming_id => _sc_bln_sic, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_russia, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Bln::Sic }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 49.0} } })  
 
 #SIC, calls, outcoming, to rouming country
-category = {:name => '_sctcg_bln_sic_calls_to_rouming_country', :service_category_rouming_id => _sc_bln_sic, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_rouming_country}
+category = {:name => '_sctcg_bln_sic_calls_to_rouming_country', :service_category_rouming_id => _sc_bln_sic, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_rouming_country, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Bln::Sic }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 49.0} } })  
 
 #SIC, calls, outcoming, to not rouming country and not Russia
-category = {:name => '_sctcg_bln_sic_calls_to_not_rouming_country', :service_category_rouming_id => _sc_bln_sic, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_not_rouming_not_russia}
+category = {:name => '_sctcg_bln_sic_calls_to_not_rouming_country', :service_category_rouming_id => _sc_bln_sic, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_not_rouming_not_russia, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Bln::Sic }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 129.0} } })  
 
 #SIC, sms, incoming
-category = {:name => '_sctcg_bln_sic_sms_incoming', :service_category_rouming_id => _sc_bln_sic, :service_category_calls_id => _sms_in}
+category = {:name => '_sctcg_bln_sic_sms_incoming', :service_category_rouming_id => _sc_bln_sic, :service_category_calls_id => _sms_in, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Bln::Sic }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::PriceByCountVolumeItem, :formula => {:params => {:price => 0.0} } })  
 
 #SIC, sms, outcoming
-category = {:name => '_sctcg_bln_sic_sms_outcoming', :service_category_rouming_id => _sc_bln_sic, :service_category_calls_id => _sms_out}
+category = {:name => '_sctcg_bln_sic_sms_outcoming', :service_category_rouming_id => _sc_bln_sic, :service_category_calls_id => _sms_out, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Bln::Sic }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::PriceByCountVolumeItem, :formula => {:params => {:price => 19.0} } })  
 
 #SIC, mms, incoming
-category = {:name => '_sctcg_bln_sic_mms_incoming', :service_category_rouming_id => _sc_bln_sic, :service_category_calls_id => _mms_in}
+category = {:name => '_sctcg_bln_sic_mms_incoming', :service_category_rouming_id => _sc_bln_sic, :service_category_calls_id => _mms_in, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Bln::Sic }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::PriceByCountVolumeItem, :formula => {:params => {:price => 5.0} } })  
 
 #SIC, mms, outcoming
-category = {:name => '_sctcg_bln_sic_mms_outcoming', :service_category_rouming_id => _sc_bln_sic, :service_category_calls_id => _mms_out}
+category = {:name => '_sctcg_bln_sic_mms_outcoming', :service_category_rouming_id => _sc_bln_sic, :service_category_calls_id => _mms_out, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Bln::Sic }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::PriceByCountVolumeItem, :formula => {:params => {:price => 14.95} } })  
 
 
 #Other countries, calls, incoming
-category = {:name => '_sctcg_bln_other_countries_calls_incoming', :service_category_rouming_id => _sc_bln_other_world, :service_category_calls_id => _calls_in}
+category = {:name => '_sctcg_bln_other_countries_calls_incoming', :service_category_rouming_id => _sc_bln_other_world, :service_category_calls_id => _calls_in, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Bln::Other_world }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 69.0} } })  
 
 #other_countries, calls, outcoming, to Russia
-category = {:name => '_sctcg_bln_other_countries_calls_to_russia', :service_category_rouming_id => _sc_bln_other_world, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_russia}
+category = {:name => '_sctcg_bln_other_countries_calls_to_russia', :service_category_rouming_id => _sc_bln_other_world, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_russia, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Bln::Other_world }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 69.0} } })  
 
 #other_countries, calls, outcoming, to rouming country
-category = {:name => '_sctcg_bln_other_countries_calls_to_rouming_country', :service_category_rouming_id => _sc_bln_other_world, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_rouming_country}
+category = {:name => '_sctcg_bln_other_countries_calls_to_rouming_country', :service_category_rouming_id => _sc_bln_other_world, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_rouming_country, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Bln::Other_world }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 69.0} } })  
 
 #other_countries, calls, outcoming, to not rouming country and not Russia
-category = {:name => '_sctcg_bln_other_countries_calls_to_not_rouming_country_not_russia', :service_category_rouming_id => _sc_bln_other_world, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_not_rouming_not_russia}
+category = {:name => '_sctcg_bln_other_countries_calls_to_not_rouming_country_not_russia', :service_category_rouming_id => _sc_bln_other_world, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_not_rouming_not_russia, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Bln::Other_world }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::PriceBySumDuration, :formula => {:params => {:price => 129.0} } })  
 
 #other_countries, sms, incoming
-category = {:name => '_sctcg_bln_other_countries_sms_incoming', :service_category_rouming_id => _sc_bln_other_world, :service_category_calls_id => _sms_in}
+category = {:name => '_sctcg_bln_other_countries_sms_incoming', :service_category_rouming_id => _sc_bln_other_world, :service_category_calls_id => _sms_in, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Bln::Other_world }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::PriceByCountVolumeItem, :formula => {:params => {:price => 0.0} } })  
 
 #other_countries, sms, outcoming 
-category = {:name => '_sctcg_bln_other_countries_sms_outcoming', :service_category_rouming_id => _sc_bln_other_world, :service_category_calls_id => _sms_out}
+category = {:name => '_sctcg_bln_other_countries_sms_outcoming', :service_category_rouming_id => _sc_bln_other_world, :service_category_calls_id => _sms_out, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Bln::Other_world }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::PriceByCountVolumeItem, :formula => {:params => {:price => 19.0} } })  
 
 #other_countries, mms, incoming
-category = {:name => '_sctcg_bln_other_countries_mms_incoming', :service_category_rouming_id => _sc_bln_other_world, :service_category_calls_id => _mms_in}
+category = {:name => '_sctcg_bln_other_countries_mms_incoming', :service_category_rouming_id => _sc_bln_other_world, :service_category_calls_id => _mms_in, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Bln::Other_world }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::PriceByCountVolumeItem, :formula => {:params => {:price => 5.0} } })  
 
 #other_countries, mms, outcoming
-category = {:name => '_sctcg_bln_other_countries_mms_outcoming', :service_category_rouming_id => _sc_bln_other_world, :service_category_calls_id => _mms_out}
+category = {:name => '_sctcg_bln_other_countries_mms_outcoming', :service_category_rouming_id => _sc_bln_other_world, :service_category_calls_id => _mms_out, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Bln::Other_world }}}
   @tc.add_one_service_category_tarif_class(category, {}, {:calculation_order => 0, :standard_formula_id => Price::StandardFormula::Const::PriceByCountVolumeItem, :formula => {:params => {:price => 14.95} } })   
 
  

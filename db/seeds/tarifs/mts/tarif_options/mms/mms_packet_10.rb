@@ -23,7 +23,10 @@
 
  
 #_all_russia_rouming, mms, Outcoming
-  category = {:name => '_sctcg_all_russia_rouming_mms', :service_category_rouming_id => _all_russia_rouming, :service_category_calls_id => _mms_out}
+  category = {:name => '_sctcg_all_russia_rouming_mms', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _mms_out}
+  @tc.add_grouped_service_category_tarif_class(category, scg_mts_mms_packet_10[:id]) 
+
+  category = {:name => '_sctcg_all_russia_rouming_mms', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _mms_out}
   @tc.add_grouped_service_category_tarif_class(category, scg_mts_mms_packet_10[:id]) 
 
 #_all_world_rouming, mms, Outcoming

@@ -13,7 +13,8 @@
     :multiple_use => true
   } } )
 
-_sctcg_mts_europe_rouming_sms_outcoming = {:name => '_sctcg_mts_europe_rouming_sms_outcoming', :service_category_rouming_id => _sc_mts_europe_rouming, :service_category_calls_id => _sms_out}
+_sctcg_mts_europe_rouming_sms_outcoming = {:name => '_sctcg_mts_europe_rouming_sms_outcoming', :service_category_rouming_id => _sc_mts_europe_rouming, :service_category_calls_id => _sms_out, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Mts::Europe_countries }}}
 
 #Own country, sms, Outcoming
   @tc.add_one_service_category_tarif_class(_sctcg_mts_europe_rouming_sms_outcoming, {}, 

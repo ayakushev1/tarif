@@ -17,7 +17,8 @@
 #TODO добавить разную тарификацию для разных регионов. В Московской области - 1 руб, а в Ленинградской - 47 коп.
   
 #own region rouming    
-_sctcg_home_region_calls_to_own_home_regions = {:name => '_sctcg_home_region_calls_to_own_home_regions', :service_category_rouming_id => _home_region_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions}
+_sctcg_home_region_calls_to_own_home_regions = {:name => '_sctcg_home_region_calls_to_own_home_regions', :service_category_rouming_id => _home_region_rouming, 
+  :service_category_calls_id => _calls_out, :service_category_geo_id => _service_to_own_and_home_regions, :filtr => {:own_and_home_regions => {:in => @tc.tarif_home_region_ids }}}
  
  
 #Переход на тариф

@@ -24,53 +24,65 @@ scg_minute_packs_50_world = @tc.add_service_category_group(
       :formula => {:params => {:max_duration_minute => 50.0, :price => 1429.0}, :window_over => 'month' } } )
 
 #Europe, calls, incoming
-category = {:name => '_sctcg_mgf_europe_calls_incoming', :service_category_rouming_id => _sc_mgf_europe_international_rouming, :service_category_calls_id => _calls_in}
+category = {:name => '_sctcg_mgf_europe_calls_incoming', :service_category_rouming_id => _sc_mgf_europe_international_rouming, :service_category_calls_id => _calls_in, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Mgf::Europe_international_rouming }}}
   @tc.add_grouped_service_category_tarif_class(category, scg_minute_packs_50_world[:id])  
 
 #Europe, calls, outcoming, to Russia
-category = {:name => '_sctcg_mgf_europe_calls_to_russia', :service_category_rouming_id => _sc_mgf_europe_international_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_russia}
+category = {:name => '_sctcg_mgf_europe_calls_to_russia', :service_category_rouming_id => _sc_mgf_europe_international_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_russia, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Mgf::Europe_international_rouming }}}
   @tc.add_grouped_service_category_tarif_class(category, scg_minute_packs_50_world[:id])  
 
 #Europe, calls, outcoming, to rouming country
-category = {:name => '_sctcg_mgf_europe_calls_to_rouming_country', :service_category_rouming_id => _sc_mgf_europe_international_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_rouming_country}
+category = {:name => '_sctcg_mgf_europe_calls_to_rouming_country', :service_category_rouming_id => _sc_mgf_europe_international_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_rouming_country, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Mgf::Europe_international_rouming }}}
   @tc.add_grouped_service_category_tarif_class(category, scg_minute_packs_50_world[:id])  
 
 #Europe, calls, outcoming, to not rouming country and not Russia
-category = {:name => '_sctcg_mgf_europe_calls_to_not_rouming_country', :service_category_rouming_id => _sc_mgf_europe_international_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_not_rouming_not_russia}
+category = {:name => '_sctcg_mgf_europe_calls_to_not_rouming_country', :service_category_rouming_id => _sc_mgf_europe_international_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_not_rouming_not_russia, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Mgf::Europe_international_rouming }}}
   @tc.add_grouped_service_category_tarif_class(category, scg_minute_packs_50_world[:id])  
 
 
 #sic, calls, incoming
-category = {:name => '_sctcg_mgf_sic_calls_incoming', :service_category_rouming_id => _sc_mgf_sic_international_rouming, :service_category_calls_id => _calls_in}
+category = {:name => '_sctcg_mgf_sic_calls_incoming', :service_category_rouming_id => _sc_mgf_sic_international_rouming, :service_category_calls_id => _calls_in, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Mgf::Sic_international_rouming }}}
   @tc.add_grouped_service_category_tarif_class(category, scg_minute_packs_50_world[:id])  
 
 #sic, calls, outcoming, to Russia
-category = {:name => '_sctcg_mgf_sic_calls_to_russia', :service_category_rouming_id => _sc_mgf_sic_international_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_russia}
+category = {:name => '_sctcg_mgf_sic_calls_to_russia', :service_category_rouming_id => _sc_mgf_sic_international_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_russia, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Mgf::Sic_international_rouming }}}
   @tc.add_grouped_service_category_tarif_class(category, scg_minute_packs_50_world[:id])  
 
 #sic, calls, outcoming, to rouming country
-category = {:name => '_sctcg_mgf_sic_calls_to_rouming_country', :service_category_rouming_id => _sc_mgf_sic_international_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_rouming_country}
+category = {:name => '_sctcg_mgf_sic_calls_to_rouming_country', :service_category_rouming_id => _sc_mgf_sic_international_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_rouming_country, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Mgf::Sic_international_rouming }}}
   @tc.add_grouped_service_category_tarif_class(category, scg_minute_packs_50_world[:id])  
 
 #sic, calls, outcoming, to not rouming country and not Russia
-category = {:name => '_sctcg_mgf_sic_calls_to_not_rouming_country', :service_category_rouming_id => _sc_mgf_sic_international_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_not_rouming_not_russia}
+category = {:name => '_sctcg_mgf_sic_calls_to_not_rouming_country', :service_category_rouming_id => _sc_mgf_sic_international_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_not_rouming_not_russia, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Mgf::Sic_international_rouming }}}
   @tc.add_grouped_service_category_tarif_class(category, scg_minute_packs_50_world[:id])  
 
 
 #Extended countries, calls, incoming
-category = {:name => '_sctcg_mgf_extended_countries_calls_incoming', :service_category_rouming_id => _sc_mgf_extended_countries_international_rouming, :service_category_calls_id => _calls_in}
+category = {:name => '_sctcg_mgf_extended_countries_calls_incoming', :service_category_rouming_id => _sc_mgf_extended_countries_international_rouming, :service_category_calls_id => _calls_in, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Mgf::Extended_countries_international_rouming }}}
   @tc.add_grouped_service_category_tarif_class(category, scg_minute_packs_50_world[:id])  
 
 #Extended countries, calls, outcoming, to Russia
-category = {:name => '_sctcg_mgf_extended_countries_calls_to_russia', :service_category_rouming_id => _sc_mgf_extended_countries_international_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_russia}
+category = {:name => '_sctcg_mgf_extended_countries_calls_to_russia', :service_category_rouming_id => _sc_mgf_extended_countries_international_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_russia, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Mgf::Extended_countries_international_rouming }}}
   @tc.add_grouped_service_category_tarif_class(category, scg_minute_packs_50_world[:id])  
 
 #Extended countries, calls, outcoming, to rouming country
-category = {:name => '_sctcg_mgf_extended_countries_calls_to_rouming_country', :service_category_rouming_id => _sc_mgf_extended_countries_international_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_rouming_country}
+category = {:name => '_sctcg_mgf_extended_countries_calls_to_rouming_country', :service_category_rouming_id => _sc_mgf_extended_countries_international_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_rouming_country, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Mgf::Extended_countries_international_rouming }}}
   @tc.add_grouped_service_category_tarif_class(category, scg_minute_packs_50_world[:id])  
 
 #Extended countries, calls, outcoming, to not rouming country and not Russia
-category = {:name => '_sctcg_mgf_extended_countries_calls_to_not_rouming_country', :service_category_rouming_id => _sc_mgf_extended_countries_international_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_not_rouming_not_russia}
+category = {:name => '_sctcg_mgf_extended_countries_calls_to_not_rouming_country', :service_category_rouming_id => _sc_mgf_extended_countries_international_rouming, :service_category_calls_id => _calls_out, :service_category_geo_id => _sc_service_to_not_rouming_not_russia, 
+  :filtr => {:abroad_countries => {:in => Category::Country::Mgf::Extended_countries_international_rouming }}}
   @tc.add_grouped_service_category_tarif_class(category, scg_minute_packs_50_world[:id])  
 
 @tc.add_tarif_class_categories

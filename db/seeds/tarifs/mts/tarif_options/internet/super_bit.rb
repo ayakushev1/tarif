@@ -50,7 +50,14 @@
   @tc.add_one_service_category_tarif_class(_sctcg_periodic_monthly_fee, {}, {:standard_formula_id => Price::StandardFormula::Const::PriceByMonth, :formula => {:params => {:price => 0.0} } })
 
 #Intranet rouming, internet
-  category = {:name => '_sctcg_intranet_rouming_internet', :service_category_rouming_id => _all_russia_rouming, :service_category_calls_id => _internet}
+  category = {:name => '_sctcg_intranet_rouming_internet', :service_category_rouming_id => _own_and_home_regions_rouming, :service_category_calls_id => _internet}
+#  @tc.add_only_service_category_tarif_class(category)  
+  @tc.add_grouped_service_category_tarif_class(category, scg_mts_super_bit_included_in_tarif_internet[:id])
+  @tc.add_grouped_service_category_tarif_class(category, scg_mts_add_speed_500mb[:id], :tarif_set_must_include_tarif_options => [_mts_turbo_button_500_mb] )
+  @tc.add_grouped_service_category_tarif_class(category, scg_mts_add_speed_2gb[:id], :tarif_set_must_include_tarif_options => [_mts_turbo_button_2_gb] )
+  @tc.add_grouped_service_category_tarif_class(category, scg_mts_add_speed_5gb[:id], :tarif_set_must_include_tarif_options => [_mts_turbo_button_5_gb] )
+
+  category = {:name => '_sctcg_intranet_rouming_internet', :service_category_rouming_id => _own_country_rouming, :service_category_calls_id => _internet}
 #  @tc.add_only_service_category_tarif_class(category)  
   @tc.add_grouped_service_category_tarif_class(category, scg_mts_super_bit_included_in_tarif_internet[:id])
   @tc.add_grouped_service_category_tarif_class(category, scg_mts_add_speed_500mb[:id], :tarif_set_must_include_tarif_options => [_mts_turbo_button_500_mb] )

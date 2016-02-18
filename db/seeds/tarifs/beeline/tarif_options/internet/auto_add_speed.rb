@@ -22,16 +22,19 @@
   @tc.add_only_service_category_tarif_class(category)  
 
 #_sc_rouming_bln_cenral_regions_not_moscow_regions, Internet
-  category = {:name => 'own_country_internet', :service_category_rouming_id => _sc_rouming_bln_cenral_regions_not_moscow_regions, :service_category_calls_id => _internet}
+  category = {:name => 'own_country_internet', :service_category_rouming_id => _sc_rouming_bln_cenral_regions_not_moscow_regions, :service_category_calls_id => _internet, 
+  :filtr => {:own_country_regions => {:in => Category::Region::Const::Bln_cenral_regions_not_moscow_regions }}}
   @tc.add_only_service_category_tarif_class(category)  
 
 #_sc_rouming_bln_all_russia_except_some_regions_for_internet, Internet
-  category = {:name => 'all_russia_except_some_regions_for_internet_internet', :service_category_rouming_id => _sc_rouming_bln_all_russia_except_some_regions_for_internet, :service_category_calls_id => _internet}
+  category = {:name => 'all_russia_except_some_regions_for_internet_internet', :service_category_rouming_id => _sc_rouming_bln_all_russia_except_some_regions_for_internet, :service_category_calls_id => _internet, 
+  :filtr => {:own_country_regions => {:in => Category::Region::Const::Bln_all_russia_except_some_regions_for_internet }}}
   @tc.add_only_service_category_tarif_class(category)  
 
 
 #_sc_rouming_bln_all_russia_except_some_regions_for_internet, Internet
-  category = {:name => 'all_russia_except_some_regions_for_internet_internet', :service_category_rouming_id => _sc_rouming_bln_bad_internet_regions, :service_category_calls_id => _internet}
+  category = {:name => 'all_russia_except_some_regions_for_internet_internet', :service_category_rouming_id => _sc_rouming_bln_bad_internet_regions, :service_category_calls_id => _internet, 
+  :filtr => {:own_country_regions => {:in => Category::Region::Const::Bln_bad_internet_regions }}}
   @tc.add_only_service_category_tarif_class(category)  
 
 @tc.add_tarif_class_categories
