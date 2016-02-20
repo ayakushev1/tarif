@@ -66,6 +66,7 @@ Disallow: /customer/services
 Disallow: /customer/call_runs
 Disallow: /customer/calls
 Allow: /customer/calls/set_calls_generation_params
+Allow: /customer/calls/choose_your_tarif_with_our_help
 Disallow: /customer/history_parsers
 Allow: /customer/history_parsers/prepare_for_upload
 Disallow: /customer/payments
