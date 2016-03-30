@@ -1,0 +1,29 @@
+FROM ubuntu:14.04
+
+RUN apt-get update && \
+    apt-get install -y software-properties-common && \
+    apt-add-repository ppa:brightbox/ruby-ng && \
+    apt-get update && \
+    apt-get remove -f ruby rubygems ruby1.8 ruby1.8-dev && \
+    apt-get install -y ruby2.2 ruby2.2-dev autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm3 libgdbm-dev libpq-dev git nodejs libmagickwand-dev
+
+RUN gem install foreman bundler --no-ri --no-rdoc
+
+RUN mkdir -p /app /app/log /app/tmp && \
+    useradd -d /app app
+
+COPY /app/Gemfile* /app/
+
+RUN cd /app && \
+    bundle install --without development:test -j4
+
+COPY app/ /app/
+
+# COPY docker/ /
+COPY docker/app/config/database.yml  /app/config/database.yml
+COPY docker/app/config/unicorn.rb  /app/config/unicorn.rb
+COPY docker/*.sh /
+
+EXPOSE 30000
+
+CMD exec /entry.sh

@@ -1,5 +1,4 @@
 source 'http://rubygems.org'
-ruby "2.2.1"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 #TODO обновить до 4.1.0
@@ -102,6 +101,7 @@ group :production do
   gem 'rails_12factor'
   gem 'rack-timeout'
   gem 'heroku-deflater'
+  gem 'unicorn'
 end
 
 gem 'spawnling', '~>2.1' #background processing
@@ -149,9 +149,6 @@ gem 'babosa' #transliterate Russian Cyrillic slugs to ASCII
 gem "breadcrumbs_on_rails"
 
 gem 'sitemap_generator'
-
-# Use unicorn as the app server
-# gem 'unicorn'
 
 # Use Capistrano for deployment
 # gem 'capistrano-rails', group: :development

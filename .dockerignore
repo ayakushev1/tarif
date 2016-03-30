@@ -1,0 +1,5 @@
+/.git
+app/.bundle
+app/log/
+app/tmp/
+.DS_Store

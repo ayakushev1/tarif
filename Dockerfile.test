@@ -1,0 +1,34 @@
+FROM ubuntu:14.04
+
+RUN apt-get update && \
+    apt-get install -y software-properties-common && \
+    apt-add-repository ppa:brightbox/ruby-ng && \
+    apt-get update && \
+    apt-get remove -f ruby rubygems ruby1.8 ruby1.8-dev && \
+    apt-get install -y ruby2.2 ruby2.2-dev autoconf bison build-essential libssl-dev libyaml-dev libreadline6-dev zlib1g-dev libncurses5-dev libffi-dev libgdbm3 libgdbm-dev libpq-dev git nodejs libmagickwand-dev
+
+RUN gem install foreman bundler --no-ri --no-rdoc
+
+RUN apt-get update && \
+    apt-get install -y wget apt-transport-https && \
+    add-apt-repository "deb https://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main" && \
+    wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add - && \
+    apt-get update && \
+    apt-get install -y postgresql-9.4 postgresql-contrib-9.4
+
+COPY /app/Gemfile* /app/
+
+RUN cd /app && \
+    bundle install -j4
+
+COPY app/ /app/
+
+RUN mkdir -p /app/tmp && \
+    printf "test:\n    url: postgres://root:root@localhost/test\n" > /app/config/database.yml && \
+    printf "production:\n    url: postgres://root:root@localhost/test" >> /app/config/database.yml && \
+    /etc/init.d/postgresql start && \
+    sleep 5 && \
+    su -c "psql -c \"CREATE USER root WITH PASSWORD 'root' SUPERUSER\"" postgres && \
+    su -c "psql -c 'CREATE DATABASE test WITH OWNER root'" postgres && \
+    cd /app && \
+    RAILS_ENV=production bundle exec rake assets:precompile

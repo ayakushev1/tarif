@@ -1,0 +1,14 @@
+version: '2'
+
+services:
+  mytariffs:
+    image: mytariffs:latest
+    environment:
+      SECRET_KEY_BASE: "ca93ef92c40b4a8c93e4751c56290217a34a507c15484a02a755b142ddc0757c705a2ea56d4948deb41d9879ca2bf7f0"
+    ports:
+      - "80:30000"
+
+  db:
+    image: postgres:9.4
+    ports:
+      - "172.17.0.1:5432:5432"
